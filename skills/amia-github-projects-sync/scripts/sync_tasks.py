@@ -12,9 +12,9 @@ import re
 from pathlib import Path
 from typing import Any
 
-# Import thresholds from lib module (canonical source of truth)
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
-from lib.thresholds import TechnicalTimeouts, GitHubThresholds  # type: ignore[import-not-found]
+# Import thresholds from shared module (canonical source of truth)
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
+from shared.thresholds import TechnicalTimeouts, GitHubThresholds
 
 TIMEOUTS = TechnicalTimeouts()
 GH_THRESHOLDS = GitHubThresholds()

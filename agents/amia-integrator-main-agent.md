@@ -1,6 +1,7 @@
 ---
 name: amia-integrator-main-agent
 description: Integrator main agent - quality gates, code review, PR merge, release management. Requires AI Maestro installed.
+type: orchestrator
 model: opus
 auto_skills:
   - amia-code-review-patterns

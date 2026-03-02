@@ -33,6 +33,24 @@ CI_CHECK_TIMEOUT_SECONDS = 600
 MAX_CI_RETRIES = 2
 
 
+class TechnicalTimeouts:
+    """Timeout values in seconds for various operation types."""
+
+    API: int = GH_API_TIMEOUT_SECONDS
+    GIT: int = 60
+    COMMAND: int = REVIEW_TIMEOUT_SECONDS
+    CI: int = CI_CHECK_TIMEOUT_SECONDS
+
+
+class GitHubThresholds:
+    """GitHub-specific thresholds and limits."""
+
+    MAX_PR_SIZE_LINES: int = MAX_PR_SIZE_LINES
+    MAX_FILES_PER_PR: int = MAX_FILES_PER_PR
+    MAX_RETRIES: int = GH_MAX_RETRIES
+    API_TIMEOUT: int = GH_API_TIMEOUT_SECONDS
+
+
 class WorktreeThresholds:
     """Thresholds and configuration for worktree management."""
 
