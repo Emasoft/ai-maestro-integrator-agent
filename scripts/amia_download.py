@@ -23,6 +23,7 @@ import stat
 import subprocess
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -257,10 +258,12 @@ def download_document(
     now = datetime.now(timezone.utc)
     timestamp = now.strftime("%Y%m%d_%H%M%S")
     if doc_type:
-        filename = f"{timestamp}_{doc_type}.md"
+        doc_type_safe = re.sub(r'[/\\:*?"<>|]', '_', doc_type)
+        filename = f"{timestamp}_{doc_type_safe}.md"
     else:
         # Extract from URL or use default
-        url_filename = url.split("/")[-1]
+        url_filename = urllib.parse.urlparse(url).path.split("/")[-1]
+        url_filename = re.sub(r'[/\\:*?"<>|]', '_', url_filename)
         if url_filename.endswith(".md"):
             filename = f"{timestamp}_{url_filename}"
         else:
@@ -281,6 +284,10 @@ def download_document(
     # Download file
     print(f"Downloading: {download_url}")
     print(f"Target: {file_path}")
+
+    if not download_url.startswith("https://"):
+        print(f"ERROR: Only HTTPS URLs allowed, got: {download_url[:50]}")
+        return None
 
     try:
         # Use urllib.request instead of curl for cross-platform compatibility (CC-XP-002)

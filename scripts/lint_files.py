@@ -20,6 +20,7 @@ Supported languages:
 from __future__ import annotations
 
 import json
+import os
 import platform
 import shutil
 import subprocess
@@ -28,15 +29,23 @@ from collections.abc import Callable
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
-# Terminal colors
+# Terminal colors (CC-XP-016: disable on Windows cmd.exe without VT support)
 # ---------------------------------------------------------------------------
 
-RED = "\033[0;31m"
-GREEN = "\033[0;32m"
-YELLOW = "\033[1;33m"
-BLUE = "\033[0;34m"
-BOLD = "\033[1m"
-NC = "\033[0m"
+def _colors_supported() -> bool:
+    """Check if terminal supports ANSI escape codes."""
+    if os.name == "nt":
+        # Windows Terminal and modern PowerShell support ANSI, legacy cmd.exe does not
+        return os.environ.get("WT_SESSION") is not None or "ANSICON" in os.environ
+    return True
+
+_USE_COLOR = _colors_supported()
+RED = "\033[0;31m" if _USE_COLOR else ""
+GREEN = "\033[0;32m" if _USE_COLOR else ""
+YELLOW = "\033[1;33m" if _USE_COLOR else ""
+BLUE = "\033[0;34m" if _USE_COLOR else ""
+BOLD = "\033[1m" if _USE_COLOR else ""
+NC = "\033[0m" if _USE_COLOR else ""
 
 # ---------------------------------------------------------------------------
 # Tool resolution via smart_exec TOOL_DB

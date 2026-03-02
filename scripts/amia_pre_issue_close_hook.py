@@ -227,11 +227,14 @@ def verify_tdd_sequence(commits: list[str]) -> tuple[bool, str, int, int]:
     if green_count == 0:
         return False, "No GREEN (implementation) commit found", red_count, 0
 
-    # gh pr view shows commits newest-first, so GREEN index should be LESS than RED index
+    # gh pr view shows commits newest-first: index 0 = newest commit
+    # In TDD, RED must come BEFORE GREEN chronologically.
+    # newest-first means RED (older) has HIGHER index than GREEN (newer).
+    # So GREEN index should be LESS than RED index for correct TDD order.
     first_red = red_commits[0]
     first_green = green_commits[0]
 
-    if first_green > first_red:
+    if first_green < first_red:
         return (
             False,
             "GREEN commit appears BEFORE RED commit in history",

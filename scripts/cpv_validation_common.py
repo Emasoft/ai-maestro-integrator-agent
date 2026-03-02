@@ -617,13 +617,17 @@ def is_path_gitignored(rel_path: str, patterns: list[str]) -> bool:
     rel_path = rel_path.replace("\\", "/")
     path_parts = rel_path.split("/")
 
+    # Gitignore uses last-match-wins semantics: iterate all patterns and track
+    # the final ignored state rather than returning early on any single match.
+    ignored = False
+
     for pattern in patterns:
-        # Handle negation (!) - un-ignore previously matched paths
+        # Handle negation (!) - un-ignore previously matched paths (last-match-wins)
         if pattern.startswith("!"):
             neg_pattern = pattern[1:]
-            # If the path matches the negation pattern, it should NOT be ignored
+            # If the path matches the negation pattern, mark as NOT ignored (but keep going)
             if fnmatch.fnmatch(rel_path, neg_pattern) or fnmatch.fnmatch(str(Path(rel_path).name), neg_pattern):
-                return False
+                ignored = False
             continue
 
         # Handle directory-only patterns (ending with /)
@@ -646,36 +650,36 @@ def is_path_gitignored(rel_path: str, patterns: list[str]) -> bool:
                     or fnmatch.fnmatch(rel_path, f"*/{suffix}")
                     or f"/{suffix}" in f"/{rel_path}"
                 ):
-                    return True
+                    ignored = True
                 continue
             elif pattern.endswith("/**"):
                 # build/** matches any file under the prefix directory
                 prefix = pattern[:-3]  # e.g., "build" from "build/**"
                 if rel_path.startswith(prefix + "/") or rel_path == prefix:
-                    return True
+                    ignored = True
                 continue
             else:
                 # General ** — replace with regex-like matching
                 regex = pattern.replace(".", r"\.").replace("**", ".*").replace("*", "[^/]*").replace("?", "[^/]")
                 if re.match(regex + "$", rel_path):
-                    return True
+                    ignored = True
                 continue
 
         # Check if pattern matches any component or the full path
         if is_anchored:
             # Anchored patterns only match from root
             if fnmatch.fnmatch(rel_path, pattern):
-                return True
+                ignored = True
         else:
             # Non-anchored patterns can match any component
             if fnmatch.fnmatch(rel_path, pattern):
-                return True
+                ignored = True
             # Also check if any path component matches
             for part in path_parts:
                 if fnmatch.fnmatch(part, pattern):
-                    return True
+                    ignored = True
 
-    return False
+    return ignored
 
 
 def get_skip_dirs_with_gitignore(root_path: Path, additional_skip: set[str] | None = None) -> set[str]:

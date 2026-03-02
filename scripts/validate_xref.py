@@ -32,7 +32,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-import yaml
+try:
+    import yaml
+except ImportError as e:
+    raise SystemExit("PyYAML required: pip install pyyaml (or use: uv run --with pyyaml)") from e
+
 from cpv_validation_common import (
     COLORS,
     SKIP_DIRS,
@@ -256,12 +260,12 @@ def validate_subagent_type_matching(
     """Validate subagent_type values match actual agent filenames.
 
     Scans all markdown files for subagent_type references and verifies
-    that agents/NAME.md exists for each referenced NAME.
+    that agents/NAME.md exists in available_agents.
 
     Args:
         plugin_root: Root path of the plugin
         report: Validation report to add results to
-        available_agents: Set of available agent names
+        available_agents: Set of available agent stem names (without .md)
     """
     # Scan all .md files in the plugin
     for md_file in plugin_root.rglob("*.md"):
@@ -278,8 +282,8 @@ def validate_subagent_type_matching(
         matches = SUBAGENT_TYPE_PATTERN.findall(content)
 
         for ref_agent in matches:
-            expected_file = plugin_root / "agents" / f"{ref_agent}.md"
-            if not expected_file.exists():
+            # Use the pre-computed available_agents set instead of file checks
+            if ref_agent not in available_agents:
                 report.major(
                     f"subagent_type '{ref_agent}' has no matching agents/{ref_agent}.md",
                     rel_path,

@@ -923,6 +923,7 @@ class PipelineSetup:
                 else:
                     try:
                         hook_path.write_text(content, encoding="utf-8")
+                        # Note: chmod executable bits are a no-op on Windows (CC-XP-006)
                         hook_path.chmod(hook_path.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
                         print(f"{GREEN}✓{NC} Installed {name} hook")
                         fixed += 1
@@ -1036,6 +1037,7 @@ class PipelineSetup:
                     else:
                         try:
                             hook_path.write_text(content, encoding="utf-8")
+                            # Note: chmod executable bits are a no-op on Windows (CC-XP-006)
                             hook_path.chmod(hook_path.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
                             print(f"{GREEN}✓{NC} Installed {submodule}/{name} hook")
                             fixed += 1

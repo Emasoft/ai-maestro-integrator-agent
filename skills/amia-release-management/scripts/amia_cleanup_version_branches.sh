@@ -1,4 +1,5 @@
 #!/bin/bash
+# NOTE: This is a bash-only utility script. On Windows, use Git Bash or WSL (CC-XP-009).
 
 ###############################################################################
 # AMIA Release Management - Version Branch Cleanup Script

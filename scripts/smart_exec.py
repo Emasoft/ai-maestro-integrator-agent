@@ -60,8 +60,9 @@ class ToolSpec:
     command: str | None = None
     # whether to prefer "latest" (where supported)
     prefer_latest: bool = True
-    # optional docker fallback: (image, argv_prefix)
-    docker: tuple[str, list[str]] | None = None
+    # optional docker fallback: (image, argv_prefix) — argv_prefix must be a tuple to keep
+    # the dataclass hashable and truly immutable (frozen=True forbids mutable fields).
+    docker: tuple[str, tuple[str, ...]] | None = None
 
 
 # A starting tool database. Extend freely.
@@ -108,21 +109,21 @@ TOOL_DB: dict[str, ToolSpec] = {
         "native",
         package="shellcheck",  # npm wrapper exists
         command="shellcheck",
-        docker=("koalaman/shellcheck:stable", ["shellcheck"]),
+        docker=("koalaman/shellcheck:stable", ("shellcheck",)),
     ),
     "hadolint": ToolSpec(
         "hadolint",
         "native",
         package="hadolint",  # npm wrapper exists
         command="hadolint",
-        docker=("hadolint/hadolint", ["hadolint"]),
+        docker=("hadolint/hadolint", ("hadolint",)),
     ),
     "xmllint": ToolSpec(
         "xmllint",
         "native",
         package=None,
         command="xmllint",
-        docker=("alpine", ["sh", "-lc", "apk add --no-cache libxml2-utils >/dev/null && xmllint --noout"]),
+        docker=("alpine", ("sh", "-lc", "apk add --no-cache libxml2-utils >/dev/null && xmllint --noout")),
     ),
     # ---- PowerShell module tools ----
     "PSScriptAnalyzer": ToolSpec(
@@ -256,6 +257,13 @@ def npm_exec_argv(pkg: str, cmd: str, tool_args: list[str]) -> list[str]:
 def deno_npm_argv(pkg: str, cmd: str, tool_args: list[str], latest: bool = True) -> list[str]:
     ver = "@latest" if latest else ""
     spec = f"npm:{pkg}{ver}"
+    if cmd == pkg:
+        # When the command name equals the package name, the npm specifier already
+        # resolves to the right entry-point binary — passing cmd again would forward
+        # the tool's own name as a literal argument to itself.
+        return ["deno", "run", "-A", spec, "--"] + tool_args
+    # When cmd differs from pkg (e.g. package "eslint-cli" runs binary "eslint"),
+    # pass cmd so deno knows which sub-command / binary to invoke.
     return ["deno", "run", "-A", spec, "--", cmd] + tool_args
 
 
@@ -285,9 +293,9 @@ def deno_builtin_argv(subcmd: str, tool_args: list[str]) -> list[str]:
     return ["deno", subcmd] + tool_args
 
 
-def docker_argv(image: str, prefix: list[str], tool_args: list[str]) -> list[str]:
+def docker_argv(image: str, prefix: tuple[str, ...], tool_args: list[str]) -> list[str]:
     cwd = os.getcwd()
-    return ["docker", "run", "--rm", "-v", f"{cwd}:/w", "-w", "/w", image] + prefix + tool_args
+    return ["docker", "run", "--rm", "-v", f"{cwd}:/w", "-w", "/w", image] + list(prefix) + tool_args
 
 
 def ps_quote(s: str) -> str:

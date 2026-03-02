@@ -17,7 +17,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-import yaml
+try:
+    import yaml
+except ImportError as e:
+    raise SystemExit("PyYAML required: pip install pyyaml (or use: uv run --with pyyaml)") from e
 
 # State file locations
 PLAN_STATE_FILE = Path(".claude/orchestrator-plan-phase.local.md")

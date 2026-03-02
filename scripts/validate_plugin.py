@@ -42,7 +42,11 @@ import sys
 from pathlib import Path
 from typing import Any, cast
 
-import yaml
+try:
+    import yaml
+except ImportError as e:
+    raise SystemExit("PyYAML required: pip install pyyaml (or use: uv run --with pyyaml)") from e
+
 from cpv_validation_common import ValidationReport, resolve_tool_command, validate_toc_embedding
 from gitignore_filter import GitignoreFilter
 from validate_hook import validate_hooks as validate_hook_file

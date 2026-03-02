@@ -38,7 +38,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-import yaml
+try:
+    import yaml
+except ImportError as e:
+    raise SystemExit("PyYAML required: pip install pyyaml (or use: uv run --with pyyaml)") from e
+
 from cpv_validation_common import (
     BUILTIN_AGENT_TYPES,
     EXIT_CRITICAL,

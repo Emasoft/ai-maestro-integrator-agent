@@ -96,7 +96,7 @@ PATH_TRAVERSAL_PATTERNS = [
     # Absolute paths (except environment variable placeholders)
     (
         re.compile(
-            r"(?<!\$\{CLAUDE_PLUGIN_ROOT\})(?<!\$\{CLAUDE_PROJECT_DIR\})(?<![\w$\{])/(?:usr|etc|var|tmp|opt|bin|sbin|lib|root)/"
+            r"(?<!\$\{CLAUDE_PLUGIN_ROOT\})(?<!\$\{CLAUDE_PROJECT_DIR\})(?<![\w$\{])/(?:usr|etc|var|tmp|opt|bin|sbin|lib|root|home|Users|proc|sys|dev|mnt|media|srv)/"
         ),
         "Absolute Unix system path detected",
     ),
@@ -240,6 +240,13 @@ def scan_for_injection(content: str, file_path: str, report: ValidationReport) -
     # Skip command substitution checks for shell scripts (it's expected) and markdown/tests
     skip_command_sub = is_shell_script or is_markdown or is_test_file
 
+    # Pre-compute Python-file context flags once, outside the per-line loop
+    is_python_file = file_lower.endswith(".py")
+    # Shell-style patterns (\beval\s+ and \bexec\s+) are irrelevant in Python files
+    shell_eval_set = {EVAL_PATTERNS[0], EVAL_PATTERNS[1]}
+    # Python-specific patterns (\beval\s*\( and \bexec\s*\() - downgraded to WARNING
+    python_eval_set = {EVAL_PATTERNS[2], EVAL_PATTERNS[3]}
+
     for line_num, line in enumerate(lines, start=1):
         # Skip comment-only lines in shell scripts
         stripped = line.strip()
@@ -262,10 +269,17 @@ def scan_for_injection(content: str, file_path: str, report: ValidationReport) -
                 report.critical(f"{msg}: {line.strip()[:80]}", file_path, line_num)
                 issues_found += 1
 
-        # Check eval patterns (CRITICAL)
+        # Check eval patterns (CRITICAL for shell patterns; WARNING for Python exec/eval)
         for pattern, msg in EVAL_PATTERNS:
+            if is_python_file and (pattern, msg) in shell_eval_set:
+                # Skip shell-style exec/eval patterns for Python files (not applicable)
+                continue
             if pattern.search(line):
-                report.critical(f"{msg}: {line.strip()[:80]}", file_path, line_num)
+                if is_python_file and (pattern, msg) in python_eval_set:
+                    # Downgrade exec()/eval() to WARNING in Python (many legitimate uses)
+                    report.major(f"{msg}: {line.strip()[:80]}", file_path, line_num)
+                else:
+                    report.critical(f"{msg}: {line.strip()[:80]}", file_path, line_num)
                 issues_found += 1
 
         # Check unsafe variable expansion (MAJOR - context-dependent)
@@ -407,13 +421,13 @@ def check_script_permissions(plugin_path: Path, report: ValidationReport) -> int
                     file_stat = file_path.stat()
                     mode = file_stat.st_mode
 
-                    # Check if executable
-                    if not (mode & stat.S_IXUSR):
+                    # Check if executable (Unix-only; Windows has no S_IXUSR concept)
+                    if sys.platform != "win32" and not (mode & stat.S_IXUSR):
                         report.minor(f"Shell script is not executable: {rel_path}")
                         issues_found += 1
 
-                    # Check for world-writable (security risk)
-                    if mode & stat.S_IWOTH:
+                    # Check for world-writable (security risk; Unix-only)
+                    if sys.platform != "win32" and (mode & stat.S_IWOTH):
                         report.critical(f"Script is world-writable: {rel_path}")
                         issues_found += 1
 
@@ -436,8 +450,8 @@ def check_script_permissions(plugin_path: Path, report: ValidationReport) -> int
                     file_stat = file_path.stat()
                     mode = file_stat.st_mode
 
-                    # Check for world-writable
-                    if mode & stat.S_IWOTH:
+                    # Check for world-writable (Unix-only; S_IWOTH is meaningless on Windows)
+                    if sys.platform != "win32" and (mode & stat.S_IWOTH):
                         report.critical(f"Python script is world-writable: {rel_path}")
                         issues_found += 1
 

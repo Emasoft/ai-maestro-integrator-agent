@@ -174,14 +174,26 @@ def parse_frontmatter(content: str) -> tuple[dict[str, str | list[str]], str]:
             elif value_str.startswith("'") and value_str.endswith("'"):
                 value_str = value_str[1:-1]
             # Handle arrays (simple parsing)
-            # WARNING: Does not support YAML block scalars, multiline values, or values with apostrophes in array syntax
+            # WARNING: Does not support YAML block scalars or multiline values
             elif value_str.startswith("[") and value_str.endswith("]"):
+                # Try parsing as JSON array first (handles double-quoted values)
                 try:
-                    parsed = json.loads(value_str.replace("'", '"'))
+                    parsed = json.loads(value_str)
                     frontmatter[key] = parsed
                     continue
                 except json.JSONDecodeError:
                     pass
+                # Fallback: parse comma-separated values within brackets
+                # (handles single-quoted values and values with apostrophes)
+                inner = value_str[1:-1].strip()
+                if inner:
+                    items = []
+                    for item in inner.split(","):
+                        item = item.strip().strip("'\"")
+                        if item:
+                            items.append(item)
+                    frontmatter[key] = items
+                    continue
             frontmatter[key] = value_str
 
     body = "\n".join(lines[end_idx + 1 :])

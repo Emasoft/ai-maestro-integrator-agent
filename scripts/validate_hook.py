@@ -455,7 +455,11 @@ def validate_script(script_path: Path, report: ValidationReport) -> None:
 
     # Check executable permission (skip on Windows where os.access X_OK is unreliable)
     if sys.platform != "win32" and not os.access(script_path, os.X_OK):
-        report.major(f"Script not executable: {script_path.name}")
+        # Python/JS scripts invoked via interpreter don't need X bit (CC-P1-A0-004)
+        if script_path.suffix.lower() in (".py", ".js", ".ts", ".mjs"):
+            report.info(f"Script not executable (ok for interpreted scripts): {script_path.name}", str(script_path))
+        else:
+            report.major(f"Script not executable: {script_path.name}")
     else:
         report.passed(f"Script executable: {script_path.name}")
 
