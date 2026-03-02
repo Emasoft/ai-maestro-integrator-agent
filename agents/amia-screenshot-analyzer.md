@@ -32,6 +32,8 @@ You are a specialized worker agent that protects the orchestrator's context memo
 > For quality gate rules, requirement compliance, and reporting standards, see [amia-quality-gates](../skills/amia-quality-gates/SKILL.md)
 
 > For sub-agent role boundaries and orchestrator handoff protocols, see [amia-integration-protocols/references/sub-agent-role-boundaries-template.md](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
+>
+> **Contents:** Purpose, Core Identity: Worker Agent (Not Orchestrator), Standard Output Format, Communication Rules, Tool Restrictions, Common Constraints Template, IRON RULES, Success/Completion Conditions, Anti-Patterns to Avoid, Template Usage, References
 
 > For detailed screenshot analysis procedures, UI deviation protocols, and visual requirement traceability, see [amia-integration-protocols/SKILL.md](../skills/amia-integration-protocols/SKILL.md)
 

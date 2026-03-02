@@ -134,6 +134,31 @@ This SKILL.md is a **map** to detailed reference documents. Each section below s
 - If you're in REFACTOR phase and unsure what's allowed → Refactor Phase Rules
 - When you need to know what actions are forbidden → Forbidden Actions
 
+**Contents:**
+- The Iron Law (Absolute)
+- Rule 1: No Code Without a Failing Test
+- Rule 2: Test Must Fail Before Implementation
+- Rule 3: Only Modify Tests or Code, Never Both
+- Red Phase Rules
+- Allowed in RED Phase
+- Forbidden in RED Phase
+- RED Phase Checklist
+- Green Phase Rules
+- Allowed in GREEN Phase
+- Forbidden in GREEN Phase
+- GREEN Phase Checklist
+- Refactor Phase Rules
+- Allowed in REFACTOR Phase
+- Forbidden in REFACTOR Phase
+- REFACTOR Phase Checklist
+- Forbidden Actions
+- Never Allowed (Any Phase)
+- Violation Recovery Procedure
+- When You Realize You Violated TDD
+- Enforcement Scripts
+- Pre-Commit Hook
+- Test-First Verification
+
 ---
 
 ## Problem Solving
@@ -317,6 +342,8 @@ git log --oneline | grep -E "^[a-f0-9]+ (RED|GREEN|REFACTOR):"
 **Cause**: TDD discipline violation.
 
 **Solution**: Revert the production code, write the failing test first, then reimplement. Use the Violation Recovery Procedure in [references/rules-and-constraints.md](references/rules-and-constraints.md).
+
+**Contents:** The Iron Law (Absolute) · Rule 1: No Code Without a Failing Test · Rule 2: Test Must Fail Before Implementation · Violation Recovery Procedure · Forbidden Actions
 
 ### Issue: Refactoring breaks tests
 

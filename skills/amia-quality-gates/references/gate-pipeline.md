@@ -1,5 +1,19 @@
 # Gate Pipeline Flow
 
+## Table of Contents
+
+- Overview
+- Pipeline Diagram
+- Gate Transitions
+  - Transition: Pre-Review -> Review
+  - Transition: Review -> Pre-Merge
+  - Transition: Pre-Merge -> Merge
+  - Transition: Merge -> Post-Merge
+  - Transition: Post-Merge -> Complete
+- Failure Handling
+- Parallel Gates
+- Gate Bypass
+
 ## Overview
 
 The quality gate pipeline consists of four sequential gates that code must pass through before reaching production. This document describes the complete flow and gate transitions.

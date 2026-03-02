@@ -148,13 +148,13 @@ For understanding what worktrees are and how they work, see [worktree-fundamenta
 For implementing parallel PR processing with worktrees, see [parallel-pr-workflow.md](references/parallel-pr-workflow.md):
 
 **Contents:**
-- 2.1 Creating worktrees for multiple simultaneous PRs
-- 2.2 Isolation requirements and enforcement rules
-- 2.3 Working directory management for subagents
-- 2.4 Path validation rules and common violations
-- 2.5 Handling concurrent git operation limitations
-- 2.6 Example workflow: Processing 3 PRs in parallel
-- 2.7 Error recovery when isolation is violated
+- 2.1 Creating Worktrees for Multiple Simultaneous PRs
+- 2.2 Isolation Requirements and Enforcement Rules
+- 2.3 Working Directory Management for Subagents
+- 2.4 Path Validation Rules and Common Violations
+- 2.5 Handling Concurrent Git Operation Limitations
+- 2.6 Example Workflow: Processing 3 PRs in Parallel
+- 2.7 Error Recovery When Isolation is Violated
 
 ### 3. Worktree Cleanup
 
@@ -280,24 +280,28 @@ python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/
 **Cause:** Attempting to checkout a branch that exists in another worktree.
 
 **Solution:** See [worktree-fundamentals.md](references/worktree-fundamentals.md) section 1.5 for branch constraint details.
+- **Contents:** What is a git worktree and why it exists, Worktree vs clone vs checkout - choosing the right approach, The shared git directory model explained, When worktrees provide measurable benefits, Common misconceptions about worktrees, Prerequisites and git version requirements
 
 ### Problem: "worktree is dirty, cannot remove"
 
 **Cause:** Attempting to remove a worktree with uncommitted changes.
 
 **Solution:** See [worktree-cleanup.md](references/worktree-cleanup.md) section 3.2 for handling uncommitted changes.
+- **Contents:** When to clean up worktrees (timing and triggers), Verifying no uncommitted changes exist, Safe removal procedure step-by-step, Handling stuck worktrees and lock files, Force removal scenarios and their risks, Pruning stale worktree entries, Disk space recovery after cleanup
 
 ### Problem: Files appearing in main repo after worktree work
 
 **Cause:** Isolation violation - files were written outside the worktree.
 
 **Solution:** See [worktree-verification.md](references/worktree-verification.md) section 4.2 for detection and remediation.
+- **Contents:** Pre-cleanup verification checklist, Detecting files written outside worktree boundaries, Branch state verification procedures, Remote sync verification steps, Automated verification script usage, Manual verification when scripts fail, Reporting isolation violations
 
 ### Problem: "fatal: unable to create new worktree"
 
 **Cause:** Lock file exists or path already in use.
 
 **Solution:** See [worktree-cleanup.md](references/worktree-cleanup.md) section 3.4 for handling stuck worktrees.
+- **Contents:** When to clean up worktrees (timing and triggers), Verifying no uncommitted changes exist, Safe removal procedure step-by-step, Handling stuck worktrees and lock files, Force removal scenarios and their risks, Pruning stale worktree entries, Disk space recovery after cleanup
 
 ### Problem: Git operations hanging or failing
 
@@ -305,14 +309,24 @@ python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/
 
 **Solution:** See [parallel-pr-workflow.md](references/parallel-pr-workflow.md) section 2.5 for serialization strategies.
 
+**Contents:** Part 1: Creating Worktrees and Isolation, 2.5 Handling Concurrent Git Operation Limitations, Problematic concurrent operations (commit, fetch, push conflicts), Safe concurrent operations (status, diff, log, file mods)
+
 ---
 
 ## Resources
 
 - [references/worktree-fundamentals.md](references/worktree-fundamentals.md) - What worktrees are and how they work
+  - **Contents:** What is a git worktree and why it exists, Worktree vs clone vs checkout - choosing the right approach, The shared git directory model explained, When worktrees provide measurable benefits, Common misconceptions about worktrees, Prerequisites and git version requirements
 - [references/parallel-pr-workflow.md](references/parallel-pr-workflow.md) - Processing multiple PRs simultaneously
+  - **Contents:**
+    - Creating Worktrees for Multiple Simultaneous PRs
+    - Isolation Requirements and Enforcement Rules
+    - Handling Concurrent Git Operation Limitations
+    - Example Workflow: Processing 3 PRs in Parallel
 - [references/worktree-cleanup.md](references/worktree-cleanup.md) - Safe worktree removal procedures
+  - **Contents:** When to clean up worktrees (timing and triggers), Verifying no uncommitted changes exist, Safe removal procedure step-by-step, Handling stuck worktrees and lock files, Force removal scenarios and their risks, Pruning stale worktree entries, Disk space recovery after cleanup
 - [references/worktree-verification.md](references/worktree-verification.md) - Isolation and integrity checks
+  - **Contents:** Pre-cleanup verification checklist, Detecting files written outside worktree boundaries, Branch state verification procedures, Remote sync verification steps, Automated verification script usage, Manual verification when scripts fail, Reporting isolation violations
 
 ---
 

@@ -2,6 +2,12 @@
 
 Gate overrides should be rare. This document describes when and how overrides can be applied.
 
+## Table of Contents
+
+- Overrides Are Exceptions
+- Override Authority Matrix
+- Override Procedure
+
 ## Overrides Are Exceptions
 
 Every override must be:

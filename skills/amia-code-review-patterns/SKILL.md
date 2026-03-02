@@ -28,11 +28,7 @@ This skill teaches the **two-stage code review methodology** for comprehensive P
 
 ## Prerequisites
 
-Before using this skill, ensure:
-1. Intermediate software development experience
-2. Familiarity with code review basics and pull request workflows
-3. Access to the repository containing the PR to review
-4. Python 3.8+ for running helper scripts
+Intermediate software development experience, familiarity with code review basics and PR workflows, access to the target repository, and Python 3.8+ for helper scripts.
 
 ## Output
 
@@ -209,16 +205,67 @@ Code review examines code across 8 dimensions simultaneously:
 - 6.4 Automation - Scripts to run before every PR
 
 ### Commit Conventions ([references/commit-conventions.md](references/commit-conventions.md))
-- When writing commit messages after review approval → Commit message format and conventions
-- If you need to verify commit message compliance → Commit message validation rules
-- When squashing commits before merge → Squash commit best practices
-- If you're reviewing commit history → Commit structure guidelines
+- **Contents:**
+  - Writing descriptive commit messages with WHAT and WHY sections
+    - Commit message structure and required sections
+    - Documenting file changes (ADDED, MODIFIED, REMOVED, RENAMED)
+    - Documenting symbol changes (functions, classes, variables)
+    - Documenting configuration changes
+  - Choosing the correct commit category prefix
+    - Category prefix reference table
+    - When to use each category
+  - Making commits searchable for future decision archaeology
+    - Search scenarios and requirements
+    - Indexing best practices
+  - Managing dual-git repositories (project vs design)
+    - When to commit to project git
+    - When to commit to design git
+    - Setting up dual-git configuration
+  - Documenting removals and renames with supersedes information
+    - Supersedes section format
+    - Migration instructions
+    - Breaking change indicators
 
 ### Review Workflow ([references/review-workflow.md](references/review-workflow.md))
-- When coordinating review with other agents → Review coordination workflow
-- If you need to delegate review tasks → Task delegation patterns
-- When receiving review requests → Request handling procedures
-- If you're reporting review results → Review reporting format
+- **Contents:**
+  - When starting a code review task
+    - Receiving and parsing review requests
+    - Extracting PR metadata and specifications
+  - When gathering context before review
+    - Loading specification documents
+    - Reading changed files and test files
+    - Collecting previous review comments
+  - When executing Gate 1: Specification Compliance
+    - Verifying user requirements compliance
+    - Checking functional requirements match
+    - Validating architectural compliance
+    - Assessing interface contracts
+    - Determining Gate 1 outcome (PASS/FAIL/BLOCKED)
+  - When executing Gate 2: Code Quality Evaluation
+    - Evaluating correctness and security
+    - Assessing performance and maintainability
+    - Checking reliability and style compliance
+    - Running automated analysis tools
+    - Determining Gate 2 outcome (PASS/FAIL/CONDITIONAL)
+  - When generating review reports
+    - Creating structured review reports
+    - Documenting findings with 80%+ confidence
+    - Saving reports to correct locations
+  - When creating fix instructions for developers
+    - Writing WHAT/WHY/WHERE descriptions
+    - Specifying verification criteria
+    - Avoiding code examples and implementations
+  - When communicating findings via AI Maestro
+    - Formatting AI Maestro messages
+    - Including report file references
+  - When updating GitHub Projects tracking
+    - Adding PR labels
+    - Updating project board status
+    - Posting PR summary comments
+  - When archiving review artifacts
+    - Saving review reports and fix instructions
+    - Creating JSON log entries
+    - Preparing minimal orchestrator output
 
 ---
 
@@ -289,46 +336,49 @@ Code review examines code across 8 dimensions simultaneously:
 - If you suspect breaking changes → Common Issues to Look For
 
 ### Documentation ([references/documentation-analysis.md](references/documentation-analysis.md))
-- When reviewing code documentation → Verification Checklist: Code Documentation
-- If you need to evaluate docstring quality → Verification Checklist: Docstring Quality
-- When checking API documentation → Verification Checklist: API Documentation
-- If you're reviewing architecture documentation → Verification Checklist: Architecture Documentation
-- When assessing code comments → Verification Checklist: Code Comments
-- If you're reviewing README → Verification Checklist: README
-- When evaluating configuration documentation → Verification Checklist: Configuration Documentation
-- If you're checking error messages → Verification Checklist: Error Messages
+- When reviewing code documentation → See Verification Checklists
+- If you need to evaluate docstring quality → See Part 1: Checklists
+- When identifying documentation issues → See Part 2: Common Issues
+- When scoring documentation quality → See Part 3: Scoring and Practices
 
 ---
 
 ## Troubleshooting References
 
 ### Slow Reviews ([references/troubleshooting-performance.md](references/troubleshooting-performance.md))
-- If you need to understand the problem → Problem Description
-- When analyzing why reviews are slow → Root Causes
-- If you're looking for immediate fixes → Solutions and Workarounds
-- When preventing slow reviews → Prevention Strategies
-- If you need to measure improvement → Measuring Improvement
+- **Contents:**
+  - If you need to understand the problem → Problem Description
+  - When analyzing why reviews are slow → Root Causes
+  - If you're looking for immediate fixes → Solutions and Workarounds
+  - When preventing slow reviews → Prevention Strategies
+  - If you need to measure improvement → Measuring Improvement
+  - When to escalate issues → When to Escalate
+  - For overarching guidance → Key Principles
 
 ### Reviewer Calibration ([references/troubleshooting-calibration.md](references/troubleshooting-calibration.md))
-- If you need to understand the problem → Problem Description
-- When analyzing why calibration issues occur → Root Causes
-- If you're looking for fixes → Solutions and Workarounds
-- When preventing calibration issues → Prevention Strategies
-- If you need to measure improvement → Measuring Calibration
+- **Contents:**
+  - If you need to understand the problem → Problem Description
+  - When analyzing why calibration issues occur → Root Causes
+  - If you're looking for fixes → Solutions and Workarounds
+  - When preventing calibration issues → Prevention Strategies
+  - If you need to measure improvement → Measuring Calibration
+  - When resolving specific disagreements → Handling Calibration Conflicts
 
 ### Coverage Gaps ([references/troubleshooting-coverage.md](references/troubleshooting-coverage.md))
-- If you need to understand the problem → Problem Description
-- When analyzing why coverage is incomplete → Root Causes
-- If you're looking for solutions → Solutions and Workarounds
-- When preventing coverage gaps → Prevention Strategies
-- If you need to identify gaps → Identifying Coverage Gaps
+- **Contents:**
+  - If you need to understand the problem → Problem Description
+  - When analyzing why coverage is incomplete → Root Causes
+  - If you're looking for solutions → Solutions and Workarounds
+  - When preventing coverage gaps → Prevention Strategies
+  - If you need to identify gaps → Identifying Coverage Gaps
 
 ### Reviewer Disagreements ([references/troubleshooting-agreement.md](references/troubleshooting-agreement.md))
-- If you need to understand the problem → Problem Description
-- When analyzing why disagreements occur → Root Causes
-- If you're looking for solutions → Solutions and Workarounds
-- When preventing disagreements → Prevention Strategies
-- When dealing with specific disagreement scenarios → Specific Disagreement Scenarios
+- **Contents:**
+  - If you need to understand the problem → Problem Description
+  - When analyzing why disagreements occur → Root Causes
+  - If you're looking for solutions → Solutions and Workarounds
+  - When preventing disagreements → Prevention Strategies
+  - When dealing with specific disagreement scenarios → Specific Disagreement Scenarios
 
 ---
 
@@ -376,17 +426,10 @@ For detailed examples with code, see [references/examples.md](references/example
 
 ## Error Handling
 
-### Slow Reviews
-If reviews are taking too long, see [references/troubleshooting-performance.md](references/troubleshooting-performance.md) for optimization strategies.
-
-### Reviewer Calibration Issues
-If confidence scores vary significantly between reviewers, see [references/troubleshooting-calibration.md](references/troubleshooting-calibration.md).
-
-### Coverage Gaps
-If dimensions are not being adequately covered, see [references/troubleshooting-coverage.md](references/troubleshooting-coverage.md).
-
-### Reviewer Disagreements
-If reviewers disagree on findings, see [references/troubleshooting-agreement.md](references/troubleshooting-agreement.md).
+- **Slow reviews** → See [Troubleshooting References](#troubleshooting-references) → Slow Reviews section
+- **Reviewer calibration** → See [Troubleshooting References](#troubleshooting-references) → Reviewer Calibration section
+- **Coverage gaps** → See [Troubleshooting References](#troubleshooting-references) → Coverage Gaps section
+- **Reviewer disagreements** → See [Troubleshooting References](#troubleshooting-references) → Reviewer Disagreements section
 
 ## AI Maestro Communication Templates
 
@@ -440,20 +483,4 @@ When a critical quality gate fails, send a message using the `agent-messaging` s
 - [references/backward-compatibility.md](references/backward-compatibility.md) - Dimension 7 details
 - [references/documentation-analysis.md](references/documentation-analysis.md) - Dimension 8 details
 
-## Getting Started
-
-1. Read this SKILL.md file for methodology overview
-2. Review [references/requirement-compliance.md](references/requirement-compliance.md) for Gate 0
-3. Review [references/stage-one-quick-scan.md](references/stage-one-quick-scan.md) for Stage One process
-4. Review [references/stage-two-deep-dive.md](references/stage-two-deep-dive.md) for Stage Two process
-5. Use `scripts/quick_scan_template.py` to create your first review
-6. Calculate confidence using `scripts/deep_dive_calculator.py`
-7. Generate report with `scripts/review_report_generator.py`
-
----
-
-**Version**: 1.0
-**Last Updated**: 2025-01-01
-**Skill Type**: Code Review Methodology
-**Difficulty**: Intermediate
-**Required Knowledge**: Software development, code review basics
+**Version**: 1.0 | **Updated**: 2025-01-01 | **Difficulty**: Intermediate

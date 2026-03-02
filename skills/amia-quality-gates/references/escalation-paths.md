@@ -2,6 +2,13 @@
 
 When a gate fails, escalation follows a defined path based on the gate and failure type.
 
+## Table of Contents
+
+- Escalation Path A: Pre-Review Gate Failure
+- Escalation Path B: Review Gate Failure
+- Escalation Path C: Pre-Merge Gate Failure
+- Escalation Path D: Post-Merge Gate Failure
+
 ## Escalation Path A: Pre-Review Gate Failure
 
 **Escalation Order:**

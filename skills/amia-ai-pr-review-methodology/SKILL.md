@@ -75,6 +75,7 @@ Applying this skill produces a structured review document containing:
 - A confidence level: High, Medium, or Low
 
 The template for this output is provided in [review-output-template.md](references/review-output-template.md).
+**Contents:** When to generate the review output, The complete review output template (copy-paste ready), How to fill each section of the template, Choosing the final recommendation: APPROVE, REQUEST CHANGES, or COMMENT, Setting the confidence level: High, Medium, or Low, Writing the author note, Example: A completed review output.
 
 ---
 
@@ -285,6 +286,7 @@ Copy this checklist and track your progress through the PR review workflow:
 - [ ] Provide constructive, specific, actionable feedback
 
 The full checklist with detailed explanations is in [quick-reference-checklist.md](references/quick-reference-checklist.md).
+**Contents:** When to use this checklist, The 12-item pre-approval checklist, How to handle checklist failures, Example: Walking through the checklist for a sample PR.
 
 ---
 
@@ -292,27 +294,27 @@ The full checklist with detailed explanations is in [quick-reference-checklist.m
 
 ### The PR has too many file changes to review thoroughly
 
-Break the review into logical groups of related files. Apply Phase 1 (context gathering) to each group separately. Focus the 5 dimensions on the files most likely to contain issues: files with path changes, configuration changes, or security-sensitive code. See [phase-1-context-gathering.md](references/phase-1-context-gathering.md) section 1.2 for guidance on prioritizing which files to read in full.
+Break the review into logical groups of related files. Apply Phase 1 (context gathering) to each group separately. Focus the 5 dimensions on the files most likely to contain issues: files with path changes, configuration changes, or security-sensitive code. See [phase-1-context-gathering.md](references/phase-1-context-gathering.md) section 1.2 for guidance on prioritizing which files to read in full. **Contents:** When to perform context gathering, Read complete files not just diffs, Search for existing solutions and duplicates, Understand the problem (root cause vs symptoms), Verify all claims made in the PR, Completion checkpoint for Phase 1.
 
 ### The author cannot reproduce the reported bug
 
-This is a red flag for false positive detection. See [dimension-5-false-positive-detection.md](references/dimension-5-false-positive-detection.md) section D5.4 (placebo effect check) and D5.7 (the ultimate reversibility test). If the bug cannot be reproduced, the fix cannot be validated. Request reproduction steps and evidence before proceeding.
+This is a red flag for false positive detection. See [dimension-5-false-positive-detection.md](references/dimension-5-false-positive-detection.md) section D5.4 (placebo effect check) and D5.7 (the ultimate reversibility test). If the bug cannot be reproduced, the fix cannot be validated. Request reproduction steps and evidence before proceeding. **Contents:** Assumption identification and verification, Placebo effect check methodology, Cargo cult programming detection, The ultimate test: reversibility verification, Red flags for false positives.
 
 ### The PR modifies paths but the reviewer has no access to the target system
 
-Request the author to provide terminal output (`ls -la`, `which`, `type`, or equivalent commands) showing the paths exist on each supported platform. See [scenario-path-changes.md](references/scenario-path-changes.md) section S-PATH.3 for the specific verification commands to request.
+Request the author to provide terminal output (`ls -la`, `which`, `type`, or equivalent commands) showing the paths exist on each supported platform. See [scenario-path-changes.md](references/scenario-path-changes.md) section S-PATH.3 for the specific verification commands to request. **Contents:** When to use this scenario protocol, Mandatory verification steps for path changes, Verification commands to request from the author, Evidence requirements specific to path changes.
 
 ### The reviewer is unsure whether a change is redundant
 
-See [dimension-2-redundancy-check.md](references/dimension-2-redundancy-check.md) section D2.2 for search strategies to find existing code that might already handle the case. If you find a potential duplicate, ask the author to explain why the existing solution is insufficient.
+See [dimension-2-redundancy-check.md](references/dimension-2-redundancy-check.md) section D2.2 for search strategies to find existing code that might already handle the case. If you find a potential duplicate, ask the author to explain why the existing solution is insufficient. **Contents:** Searching for similar patterns in the codebase, Identifying when existing code already handles the case, List and array addition analysis: priority order and placement justification, Red flags for redundancy.
 
 ### The author becomes defensive when asked for evidence
 
-Reiterate that evidence requirements are standard practice, not personal criticism. Frame questions as "help me understand" rather than "prove you are right." See [review-output-template.md](references/review-output-template.md) section T.6 for guidance on writing constructive author notes.
+Reiterate that evidence requirements are standard practice, not personal criticism. Frame questions as "help me understand" rather than "prove you are right." See [review-output-template.md](references/review-output-template.md) section T.6 for guidance on writing constructive author notes. **Contents:** Writing the author note, How to fill each section of the template, Choosing the final recommendation: APPROVE, REQUEST CHANGES, or COMMENT.
 
 ### The PR is a dependency update with no visible code changes
 
-Even if the code diff is small, dependency updates require their own review protocol. See [scenario-dependency-updates.md](references/scenario-dependency-updates.md) for the full checklist including security scanning, license checking, and bundle size assessment.
+Even if the code diff is small, dependency updates require their own review protocol. See [scenario-dependency-updates.md](references/scenario-dependency-updates.md) for the full checklist including security scanning, license checking, and bundle size assessment. **Contents:** Justification requirements for new or updated dependencies, Security vulnerability scanning, License compatibility checking, Bundle size and performance impact assessment, Checking for alternatives using existing dependencies.
 
 ---
 
@@ -320,11 +322,11 @@ Even if the code diff is small, dependency updates require their own review prot
 
 ### Error: Reviewer skips Phase 1 and jumps directly to analysis
 
-Skipping context gathering (Phase 1) leads to incorrect conclusions because the reviewer is working from partial information (the diff alone). Resolution: Always complete all 4 actions in [phase-1-context-gathering.md](references/phase-1-context-gathering.md) before writing any analysis. If you realize mid-review that you skipped context gathering, stop the analysis, go back to Phase 1, and restart from Step 1.
+Skipping context gathering (Phase 1) leads to incorrect conclusions because the reviewer is working from partial information (the diff alone). Resolution: Always complete all 4 actions in [phase-1-context-gathering.md](references/phase-1-context-gathering.md) before writing any analysis. If you realize mid-review that you skipped context gathering, stop the analysis, go back to Phase 1, and restart from Step 1. **Contents:** When to perform context gathering, Read complete files not just diffs, Verify all claims made in the PR, Completion checkpoint for Phase 1.
 
 ### Error: Conflicting findings across analysis dimensions
 
-When Dimension 1 (Problem Verification) says the fix is correct but Dimension 5 (False Positive Detection) flags it as a potential false positive, this is not a contradiction -- it means the fix addresses the symptom but may not address the root cause. Resolution: Apply the reversibility test from [dimension-5-false-positive-detection.md](references/dimension-5-false-positive-detection.md) section D5.7. If removing the change brings the problem back, the fix is real. If it does not, the fix is a false positive regardless of what Dimension 1 found.
+When Dimension 1 (Problem Verification) says the fix is correct but Dimension 5 (False Positive Detection) flags it as a potential false positive, this is not a contradiction -- it means the fix addresses the symptom but may not address the root cause. Resolution: Apply the reversibility test from [dimension-5-false-positive-detection.md](references/dimension-5-false-positive-detection.md) section D5.7. If removing the change brings the problem back, the fix is real. If it does not, the fix is a false positive regardless of what Dimension 1 found. **Contents:** The ultimate test: reversibility verification, Confirmation bias detection, Alternative explanation analysis.
 
 ### Error: Insufficient evidence to complete the review
 
@@ -344,7 +346,7 @@ A PR adds `$HOME/.local/bin` to the PATH lookup for a CLI tool. During Phase 1, 
 
 ### Example 3: Reviewing a performance optimization PR
 
-A PR replaces a linear search with a hash map lookup, claiming 10x speedup. During Phase 1, the reviewer reads the full module to understand the data flow. During Dimension 1, the reviewer confirms the linear search was indeed the bottleneck. During Dimension 4 (Senior Developer Review), the reviewer notes the hash map increases memory usage and checks whether the tradeoff is acceptable for the expected data sizes. The reviewer requests benchmark output showing before/after timing across at least 3 runs with statistical variance. The review is COMMENT with a list of required benchmark evidence, referencing the protocol in [scenario-performance.md](references/scenario-performance.md).
+A PR replaces a linear search with a hash map lookup, claiming 10x speedup. During Phase 1, the reviewer reads the full module to understand the data flow. During Dimension 1, the reviewer confirms the linear search was indeed the bottleneck. During Dimension 4 (Senior Developer Review), the reviewer notes the hash map increases memory usage and checks whether the tradeoff is acceptable for the expected data sizes. The reviewer requests benchmark output showing before/after timing across at least 3 runs with statistical variance. The review is COMMENT with a list of required benchmark evidence, referencing the protocol in [scenario-performance.md](references/scenario-performance.md). **Contents:** Benchmark requirements (before and after), Multiple test runs and statistical significance, Verifying no functionality regressions, Significance justification (complexity vs improvement tradeoff).
 
 ---
 

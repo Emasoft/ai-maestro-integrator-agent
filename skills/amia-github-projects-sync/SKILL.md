@@ -134,9 +134,13 @@ Read this when performing day-to-day GitHub Projects operations.
 
 Read this when you need complete GraphQL query/mutation syntax.
 
-**Index File Contents:**
-- Links to read operations (project discovery, fields, items, issues, PRs)
-- Links to mutations (create, update, archive items)
+**Contents:**
+- When listing projects
+- When getting project items
+- When updating item status
+- When creating issues via GraphQL
+- When working with custom fields
+- Detailed Query References
 
 **Sub-Files:**
 - [graphql-queries-part1-read-operations.md](references/graphql-queries-part1-read-operations.md) - All read queries
@@ -291,16 +295,17 @@ Read this when using the included Python automation scripts.
 Read this when synchronizing GitHub Projects state with external systems.
 
 **Contents:**
-- 12.1 When understanding the sync workflow overview
-- 12.2 When configuring sync source and destination
-- 12.3 When mapping external states to GitHub Projects columns
-- 12.4 When handling sync conflicts and resolution strategies
-- 12.5 When scheduling automatic sync operations
-- 12.6 When manually triggering sync procedures
-- 12.7 When monitoring sync health and audit logs
-- 12.8 When troubleshooting failed sync operations
-- 12.9 When integrating with CI/CD pipelines for sync
-- 12.10 When using sync APIs and webhooks
+- 1.1 Authenticating and verifying GitHub CLI access
+- 1.2 Configuring GitHub Projects V2 environment variables
+- 1.3 Fetching project board data via GraphQL API
+- 1.4 Synchronizing GitHub issues to local task state
+- 1.5 Synchronizing local changes back to GitHub
+- 1.6 Managing GitHub issue labels across priority, status, and type dimensions
+- 1.7 Syncing Project V2 custom fields bidirectionally
+- 1.8 Integrating Claude Tasks with GitHub issue checklists
+- 1.9 Handling sync errors and conflicts
+- 1.10 Generating sync reports and logs
+- 1.11 Troubleshooting API rate limits, label conflicts, and task parse errors
 
 ---
 
@@ -309,11 +314,26 @@ Read this when synchronizing GitHub Projects state with external systems.
 Read this when mapping planning phases to GitHub status.
 
 **Contents:**
-- Phase-to-Status Mapping
-- Automatic Transitions
-- Manual Override Rules
+- When mapping planning phases to GitHub statuses
+- When you need the phase-to-status mapping table
+- When status should automatically transition
+- When manually overriding automatic transitions
+- When integrating with other automation
+- When you need workflow examples
 
 See also: [references/iteration-cycle-rules.md](references/iteration-cycle-rules.md) for sprint/iteration management.
+
+**Contents (Iteration Cycle Rules):**
+- When understanding iteration cycle requirements
+- When determining if task is complete
+- When following the review iteration flow
+- When reviewing PRs for approval
+- When tracking review iterations
+- When updating the iteration counter
+- If too many iterations occur
+- If considering partial approval
+- When waiting for next iteration
+- When labeling PRs by iteration count
 
 ---
 
@@ -417,17 +437,43 @@ For worked examples (finding/querying projects, updating issue status) and inlin
 - E.6 Inline Troubleshooting: Rate limiting from GitHub API
 - E.7 Inline Troubleshooting: Claude Tasks and GitHub Project out of sync
 
-For comprehensive error handling patterns, see also [references/error-handling.md](references/error-handling.md).
+For comprehensive error handling patterns, see also [references/error-handling.md](references/error-handling.md):
+
+- When encountering GitHub API errors
+- When hitting rate limits
+- When project or item is not found
+- When item updates fail
+- When authentication fails
+- When webhook delivery fails
+- When implementing retry logic
 
 ## Error Handling
 
 When GitHub API calls or sync operations fail, consult [references/error-handling.md](references/error-handling.md) for retry logic, rate-limit handling, and authentication troubleshooting. All errors should be logged and, if unresolvable after retries, escalated via AI Maestro.
+
+**Contents:**
+- When encountering GitHub API errors
+- When hitting rate limits
+- When project or item is not found
+- When item updates fail
+- When authentication fails
+- When webhook delivery fails
+- When implementing retry logic
 
 ---
 
 ## Examples
 
 For worked examples of finding projects, querying items, and updating issue status, see [references/examples-and-inline-troubleshooting.md](references/examples-and-inline-troubleshooting.md). That reference also covers inline troubleshooting for common failures such as missing projects, sync conflicts, and rate limiting.
+
+**Contents:**
+- E.1 Example 1: Find and Query a Project
+- E.2 Example 2: Update Issue Status
+- E.3 Inline Troubleshooting: Cannot find GitHub Project
+- E.4 Inline Troubleshooting: Issue not appearing on project board
+- E.5 Inline Troubleshooting: Column/status sync fails
+- E.6 Inline Troubleshooting: Rate limiting from GitHub API
+- E.7 Inline Troubleshooting: Claude Tasks and GitHub Project out of sync
 
 ---
 

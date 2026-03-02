@@ -89,6 +89,16 @@ CI failures fall into six main categories:
 | Bot Categories | PR author classification for automation | [bot-categories.md](references/bot-categories.md) |
 | Claude PR Handling | Workflow for Claude Code Action PRs | [claude-pr-handling.md](references/claude-pr-handling.md) |
 
+**Category contents overview:**
+- **Cross-Platform**: Temporary Path Differences, Path Separator Differences, Line Ending Differences, Case Sensitivity Differences
+- **Exit Codes**: Exit Code Persistence, Common Exit Codes by Tool, GitHub Actions Exit Code Handling
+- **Syntax**: Here-String and Heredoc Terminator Issues, Shell Quoting Differences, Command Substitution Syntax
+- **Dependencies**: Module Import Path Issues, Missing Dependencies in CI, Version Mismatches
+- **Infrastructure**: Missing Labels, Platform Exceptions and Documentation, Runner Architecture
+- **Language-Specific**: Python CI Patterns, JavaScript/TypeScript CI Patterns, Rust CI Patterns, Go CI Patterns
+- **Bot Categories**: Overview, Category Table, Detailed Category Definitions, Signal Interpretation Guide, Priority Matrix, Implementation Example, Best Practices, Troubleshooting
+- **Claude PR Handling**: Overview, When to Use This Workflow, Claude Code Action Integration, Integration with Monitoring Cycle, Response Patterns for Claude, Complete Workflow Example, Troubleshooting, Best Practices
+
 ## Diagnosis Decision Tree
 
 Follow this decision tree to identify the failure category:
@@ -247,40 +257,51 @@ Contents:
 **File**: [references/bot-categories.md](references/bot-categories.md)
 
 Contents:
-- 7.1 Category Table
-  - 7.1.1 agent-controlled (100% reliability)
-  - 7.1.2 mention-triggered (60-70% reliability)
-  - 7.1.3 human (variable reliability)
-- 7.2 Signal Interpretation
-  - 7.2.1 Understanding reliability percentages
-  - 7.2.2 Decision matrix by author category
-- 7.3 Classifying PR Authors
-  - 7.3.1 Pattern matching for bot identification
-  - 7.3.2 Handling PRs by category
-- 7.4 Best Practices and Troubleshooting
+- Overview
+- Category Table
+- Detailed Category Definitions
+  - 1. Claude Code Action (60-80% Reliability)
+  - 2. Human (Variable Reliability)
+- Signal Interpretation Guide
+  - Understanding Reliability Percentages
+  - Decision Matrix
+- Priority Matrix
+- Implementation Example
+  - Classifying PR Authors
+  - Handling PRs by Category
+- Claude Code Action Workflow Setup
+- Best Practices
+- Troubleshooting
+  - Issue: Claude Code Action not responding
+  - Issue: Claude provides incomplete review
+  - Issue: Misclassified reviewer
 
 ### Claude PR Handling
 **File**: [references/claude-pr-handling.md](references/claude-pr-handling.md)
 
 Contents:
-- 8.1 Claude Code Action Integration
-  - 8.1.1 GitHub Actions workflow setup
-  - 8.1.2 Detecting PRs needing review
-- 8.2 Collecting Previous Feedback
-  - 8.2.1 Extracting previous Claude feedback
-  - 8.2.2 Synthesizing feedback for @claude mention
-- 8.3 Requesting Claude Review via @claude Mention
-  - 8.3.1 Creating actionable summaries
-  - 8.3.2 Posting with @claude mention
-- 8.4 Integration with Monitoring Cycle
-  - 8.4.1 Autonomous monitoring loop
-  - 8.4.2 ActionRequired classification
-- 8.5 Response Patterns
-  - 8.5.1 Simple fix requests
-  - 8.5.2 Multiple issues
-  - 8.5.3 CI failure analysis
-  - 8.5.4 Code review requests
-- 8.6 Troubleshooting Claude Code Action
+- Overview
+- When to Use This Workflow
+- Claude Code Action Integration
+  - GitHub Actions Workflow Setup
+  - Step 1: Detect PRs Needing Review
+  - Step 2: Collect Previous Claude Feedback
+  - Step 3: Request Claude Review via @claude Mention
+  - Step 4: Monitor Claude's Response
+- Integration with Monitoring Cycle
+  - Autonomous Monitoring Loop
+  - ActionRequired Classification
+- Response Patterns for Claude
+  - Pattern 1: Simple Fix Request
+  - Pattern 2: Multiple Issues
+  - Pattern 3: CI Failure Analysis
+  - Pattern 4: Code Review Request
+- Complete Workflow Example
+- Troubleshooting
+  - Claude Not Responding to Mentions
+  - Workflow Not Triggering
+  - Claude Provides Incomplete Review
+- Best Practices
 
 ### Debug Procedures
 **File**: [references/debug-procedures.md](references/debug-procedures.md)
@@ -397,13 +418,21 @@ Check for:
 ## Resources
 
 - [references/cross-platform-patterns.md](references/cross-platform-patterns.md) - OS-specific path and behavior differences
+  - **Contents:** Temporary Path Differences, Path Separator Differences, Line Ending Differences, Case Sensitivity Differences
 - [references/exit-code-patterns.md](references/exit-code-patterns.md) - Shell exit code handling
+  - **Contents:** Exit Code Persistence, Common Exit Codes by Tool, GitHub Actions Exit Code Handling
 - [references/syntax-patterns.md](references/syntax-patterns.md) - Heredoc and quoting issues
+  - **Contents:** Here-String and Heredoc Terminator Issues, Shell Quoting Differences, Command Substitution Syntax
 - [references/dependency-patterns.md](references/dependency-patterns.md) - Import and package issues
+  - **Contents:** Module Import Path Issues, Missing Dependencies in CI, Version Mismatches
 - [references/github-infrastructure-patterns.md](references/github-infrastructure-patterns.md) - Runner and label issues
+  - **Contents:** Missing Labels, Platform Exceptions and Documentation, Runner Architecture
 - [references/language-specific-patterns.md](references/language-specific-patterns.md) - Python, JS, Rust, Go patterns
+  - **Contents:** Python CI Patterns, JavaScript/TypeScript CI Patterns, Rust CI Patterns, Go CI Patterns
 - [references/bot-categories.md](references/bot-categories.md) - PR author classification
+  - **Contents:** Overview, Category Table, Detailed Category Definitions, Signal Interpretation Guide, Priority Matrix, Implementation Example, Best Practices, Troubleshooting
 - [references/claude-pr-handling.md](references/claude-pr-handling.md) - Claude Code Action integration
+  - **Contents:** Overview, When to Use This Workflow, Claude Code Action Integration, Integration with Monitoring Cycle, Response Patterns for Claude, Complete Workflow Example, Troubleshooting, Best Practices
 
 ## See Also
 

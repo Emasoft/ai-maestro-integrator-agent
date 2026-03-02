@@ -124,18 +124,18 @@ def detect_platform() -> PlatformInfo:
             return PlatformInfo(
                 platform=Platform.WSL,
                 is_windows_subsystem=True,
-                shell_type=os.environ.get("SHELL", "/bin/bash").split("/")[-1],
+                shell_type=os.environ.get("SHELL", "bash").rsplit("/", 1)[-1],
             )
         return PlatformInfo(
             platform=Platform.LINUX,
-            shell_type=os.environ.get("SHELL", "/bin/bash").split("/")[-1],
+            shell_type=os.environ.get("SHELL", "bash").rsplit("/", 1)[-1],
         )
 
     elif system == "darwin":
         return PlatformInfo(
             platform=Platform.MACOS,
             ssh_agent_type="keychain",
-            shell_type=os.environ.get("SHELL", "/bin/zsh").split("/")[-1],
+            shell_type=os.environ.get("SHELL", "zsh").rsplit("/", 1)[-1],
         )
 
     elif system == "windows":

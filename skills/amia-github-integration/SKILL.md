@@ -41,6 +41,7 @@ gh auth status
 ```
 
 **For detailed setup instructions**, see [references/prerequisites-and-setup.md](references/prerequisites-and-setup.md).
+  - **Contents:** Initial Setup Requirements, Installing GitHub CLI, Verifying GitHub CLI Version, GitHub CLI Authentication, Step 1: Execute Authentication, Step 2: Choose Authentication Method, Step 3: Grant Permissions, Step 4: Initial Verification, Verify Authentication, Re-authentication, Troubleshooting Authentication, Problem: "Command not found: gh", Problem: "Not logged into any GitHub hosts", Problem: "HTTP 401: Bad credentials", Problem: "Resource not accessible by integration", Security Best Practices, Next Steps
 
 ## Decision Tree: Which Skill to Use?
 
@@ -91,6 +92,7 @@ This skill covers:
 ### I need to perform GitHub API operations
 
 **→ See [references/api-operations.md](references/api-operations.md)**
+  - **Contents:** Executing GitHub Issue Operations, Creating issues with labels milestones and assignees, Updating issue metadata (title body labels), Managing issue lifecycle (close reopen transfer), Executing GitHub Pull Request Operations, Creating PRs from branches, Managing PR reviewers and assignees, Submitting PR reviews (approve request changes comment), Merging PRs with different strategies, Executing GitHub Projects V2 Operations, Adding items to project boards, Moving items between columns, Updating custom field values via GraphQL, Batch updating project items, Managing Conversation Threads on Issues and PRs, Posting comments and replies, Marking threads as resolved, Locking and unlocking conversations, Handling GitHub API Rate Limits, Checking rate limit status before operations, Implementing exponential backoff on rate limit errors, Queuing non-urgent operations during limit pressure, Handling GraphQL-specific point-based rate limits, Running Quality Gates Before API Operations, Gate 1: Verifying authentication status, Gate 2: Verifying repository and project permissions, Gate 3: Verifying resource existence (issue PR label milestone), Gate 4: Validating state before state-changing operations, Gate 5: Pre-flight rate limit check, Coordinating API Operations via AI Maestro, Receiving API operation requests, Sending operation results back to requesting agent, Message format for API requests and responses, Step-by-Step API Operation Workflow, Receiving and parsing operation request, Running all quality gates in sequence, Preparing and executing API call with retry logic, Processing and validating API response, Logging operation to audit file, Reporting result to orchestrator or callback agent, Using GitHub CLI and GraphQL Tools, Common gh CLI commands for issues and PRs, Using gh api for raw REST API calls, Executing GraphQL mutations for Projects V2, Parsing JSON responses with jq
 
 This reference covers:
 - Direct GitHub API calls (REST and GraphQL)
@@ -102,6 +104,7 @@ This reference covers:
 ### I need to manage multiple GitHub identities
 
 **→ See [references/multi-user-workflow.md](references/multi-user-workflow.md)**
+  - **Contents:** Use-Case TOC, Part 1: Setup and Configuration, Part 2: Operations and Troubleshooting, Overview, Why Multiple Identities?, Identity Components, Quick Start, 1. Generate SSH Key for Secondary Account, 2. Add Key to GitHub, 3. Configure SSH Host Alias, 4. Authenticate Secondary Account with gh CLI, 5. Configure Repository for Secondary Identity, Key Files and Locations, Common Commands Quick Reference, See Also
 
 This reference covers:
 - SSH key setup for multiple accounts
@@ -117,6 +120,7 @@ When you need to perform operations that span multiple GitHub areas (e.g., bulk 
 ### Batch Label Operations
 
 **Reference:** [references/batch-operations.md](references/batch-operations.md)
+  - **Contents:** Use-Case TOC, Filtering by Label, Filter by Single Label, Filter by Multiple Labels (AND), Filter by Multiple Labels (OR), Filter by Status, Filter by Assignee, Filter by Date, Advanced Filtering, Complex Filter Examples, Saving Filter Results, Filtering in Projects V2, Batch Issue Updates, Update Labels on Multiple Issues, Update Assignees on Multiple Issues, Update Status in Projects V2, Bulk Label Operations, Add Label to All Matching Issues, Remove Label from All Issues, Replace Label Across All Issues, Bulk Closing Issues, Close All Issues with Specific Label, Close Stale Issues, Safe Batch Operations, Preview Changes Before Applying, Create Audit Trail, Implement Rollback Capability, Best Practices
 
 Use when:
 - Updating labels on multiple issues simultaneously
@@ -183,7 +187,7 @@ This skill produces the following outputs depending on the operation performed:
 
 | Error | Cause | Resolution |
 |-------|-------|------------|
-| `gh: command not found` | GitHub CLI is not installed or not in PATH | Install with `brew install gh` (macOS) or see [references/prerequisites-and-setup.md](references/prerequisites-and-setup.md) |
+| `gh: command not found` | GitHub CLI is not installed or not in PATH | Install with `brew install gh` (macOS) or see [references/prerequisites-and-setup.md](references/prerequisites-and-setup.md). **Contents:** Initial Setup Requirements, Installing GitHub CLI, Verifying GitHub CLI Version, GitHub CLI Authentication, Step 1: Execute Authentication, Step 2: Choose Authentication Method, Step 3: Grant Permissions, Step 4: Initial Verification, Verify Authentication, Re-authentication, Troubleshooting Authentication, Problem: "Command not found: gh", Problem: "Not logged into any GitHub hosts", Problem: "HTTP 401: Bad credentials", Problem: "Resource not accessible by integration", Security Best Practices, Next Steps |
 | `HTTP 401 - Bad credentials` | Authentication token expired or revoked | Re-authenticate with `gh auth login` and verify with `gh auth status` |
 | `HTTP 403 - Resource not accessible` | Insufficient permissions on the target repository | Request write access from the repository owner, or check that your token has the required scopes (`repo`, `project`) |
 | `HTTP 422 - Validation Failed` | Invalid field values (e.g., non-existent label name, malformed project field) | Verify the label exists with `gh label list` or check project field names with `gh project field-list` |
@@ -235,6 +239,7 @@ uv run python scripts/sync-projects-v2.py --repo Emasoft/repo-x --project 3 --di
 ## Troubleshooting
 
 If you encounter issues with any GitHub integration task, see [references/troubleshooting.md](references/troubleshooting.md) for:
+  - **Contents:** Quick Navigation, Use-Case TOC, If you get authentication errors, If Projects V2 sync fails, If pull requests don't link to issues, If labels are rejected, If GitHub CLI commands fail, If API rate limits are hit, General Troubleshooting Steps, Getting Help
 - Authentication failures and re-authentication
 - Projects V2 synchronization issues
 - Pull request linking problems

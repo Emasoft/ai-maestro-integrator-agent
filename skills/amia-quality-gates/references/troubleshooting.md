@@ -2,6 +2,13 @@
 
 Common issues and solutions when working with quality gates.
 
+## Table of Contents
+
+- Gate Appears Stuck
+- False Positive Gate Failure
+- Escalation Not Triggering
+- Override Needed but No Authority
+
 ## Gate Appears Stuck
 
 **Symptom:** PR has gate label but no progress.

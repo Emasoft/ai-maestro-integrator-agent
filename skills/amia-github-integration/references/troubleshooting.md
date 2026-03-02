@@ -2,6 +2,20 @@
 
 This is the main index for GitHub integration troubleshooting. Each section links to detailed troubleshooting guides for specific problem areas.
 
+## Table of Contents
+
+- Quick Navigation
+- Use-Case TOC
+- If you get authentication errors
+- If Projects V2 sync fails
+- If pull requests don't link to issues
+- If labels are rejected
+- If GitHub CLI commands fail
+- If API rate limits are hit
+- If webhooks don't trigger
+- General Troubleshooting Steps
+- Getting Help
+
 ## Quick Navigation
 
 | Problem Area | When to Read | Link |

@@ -163,112 +163,41 @@ Status: docs_dev/integration/status/[task-id].md
 
 ## Examples
 
-### Example 1: PR Review - Approved
-
-```
+<example>
+Context: AMOA sends a PR review request for a feature branch.
 user: Review and merge PR #456 which adds the authentication module
-
 assistant: I'll coordinate the integration of PR #456 through the quality gate process.
+Phase 1 - Route to amia-code-reviewer for expert review (JWT impl, security implications).
+Phase 2 - amia-code-reviewer completed: APPROVED, quality score 9.2/10, all gates passed.
+Phase 3 - Report to AMOA: [DONE] integrator-main - PR_REVIEW PR#456 approved for merge.
+<commentary>
+Routes security-critical PR to code reviewer, aggregates result, reports minimal summary to AMOA.
+</commentary>
+</example>
 
-**Phase 1: Request Reception**
-- Request type: PR_REVIEW for PR #456 (auth module)
-- Priority: HIGH (security-critical component)
-- Status file created: docs_dev/integration/status/pr-456-review.md
-
-**Phase 2: Routing Decision**
-- Analysis: Multi-file change (3 files), JWT implementation, security implications
-- Decision: Route to amia-code-reviewer (expert review needed)
-
-**Phase 3: Delegation**
-- Delegated to amia-code-reviewer via AI Maestro
-- Context: PR #456, branch feature/add-auth, 93% test coverage
-
-**Phase 4: Monitor Completion**
-- amia-code-reviewer completed (46 minutes)
-- Result: APPROVED, quality score 9.2/10, 1 low-priority issue
-- All quality gates passed
-
-**Phase 5: Report to AMOA**
-- Integration status sent to orchestrator-amoa
-- Merge status: APPROVED
-
-[DONE] integrator-main - PR_REVIEW PR#456 approved for merge
-Details: docs_dev/integration/reports/pr-456-report.md
-Status: docs_dev/integration/status/pr-456-review.md
-Quality Gates: All passed
-```
-
-### Example 2: CI Fix - Main Branch Broken
-
-```
+<example>
+Context: CI pipeline is broken on the main branch.
 user: The CI pipeline is failing on main branch, investigate and fix
-
 assistant: I'll coordinate the CI failure investigation and resolution.
+Route to amia-bug-investigator for root cause analysis.
+Result: Missing 'pyjwt' dependency in requirements.txt. Fix applied, CI green.
+Report to AMOA: [DONE] integrator-main - CI_FIX build restored, tests passing.
+<commentary>
+Routes CI failure to bug investigator, validates fix, reports resolution to AMOA.
+</commentary>
+</example>
 
-**Phase 1: Request Reception**
-- Request type: CI_FIX for main branch
-- Priority: CRITICAL (main branch broken)
-- Status file created: docs_dev/integration/status/ci-fix-main-branch.md
-
-**Phase 2: Routing Decision**
-- Analysis: Build failure with dependency error
-- Decision: Route to amia-bug-investigator (root cause analysis needed)
-
-**Phase 3: Delegation**
-- Delegated to amia-bug-investigator via AI Maestro
-- Context: Build log shows ModuleNotFoundError for 'jwt'
-
-**Phase 4: Monitor Completion**
-- amia-bug-investigator completed (17 minutes)
-- Root cause: Missing 'pyjwt' in requirements.txt
-- Fix applied: Added pyjwt==2.8.0, CI now green
-
-**Phase 5: Report to AMOA**
-- Status report sent to orchestrator-amoa
-- Issue resolved: Main branch CI restored
-- Prevention: Added dependency check to pre-commit hook
-
-[DONE] integrator-main - CI_FIX build restored, tests passing
-Details: docs_dev/integration/reports/ci-fix-20260204.md
-Status: docs_dev/integration/status/ci-fix-main-branch.md
-Root Cause: Missing dependency in requirements.txt
-```
-
-### Example 3: Security Blocker - PR Rejected
-
-```
+<example>
+Context: Security scanner flagged a vulnerability in a PR.
 user: PR #789 has a security vulnerability reported by the scanner
-
 assistant: I'll escalate this security blocker to AMOA for decision.
-
-**Phase 1: Request Reception**
-- Request type: PR_REVIEW for PR #789
-- Priority: CRITICAL (security issue)
-- Status file created: docs_dev/integration/status/pr-789-review.md
-
-**Phase 2: Routing Decision**
-- Analysis: Security gate failed (SQL injection detected)
-- Decision: Route to amia-code-reviewer (confirm scanner finding)
-
-**Phase 3: Delegation**
-- Delegated to amia-code-reviewer via AI Maestro
-- Context: Scanner flagged auth.py:42 with SQL injection risk
-
-**Phase 4: Monitor Completion**
-- amia-code-reviewer completed (15 minutes)
-- Confirmation: TRUE POSITIVE, critical severity
-- Details: User input directly interpolated into SQL query
-
-**Phase 5: Escalation**
-- BLOCKED: Cannot merge PR with critical security issue
-- Escalated to orchestrator-amoa via AI Maestro
-- Recommendation: Reject PR, request implementor fix with parameterized query
-
-[FAILED] integrator-main - PR_REVIEW PR#789 blocked by security gate
-Details: docs_dev/integration/reports/pr-789-report.md
-Status: docs_dev/integration/status/pr-789-review.md
-Blocker: SQL injection vulnerability in auth.py:42 (CRITICAL)
-```
+Route to amia-code-reviewer to confirm scanner finding (SQL injection in auth.py:42).
+Result: TRUE POSITIVE, critical severity. Cannot merge.
+Escalate to AMOA: [FAILED] integrator-main - PR_REVIEW PR#789 blocked by security gate.
+<commentary>
+Confirms security finding via code reviewer, blocks PR merge, escalates to AMOA with recommendation.
+</commentary>
+</example>
 
 ## Anti-Tailwind CSS Policy
 

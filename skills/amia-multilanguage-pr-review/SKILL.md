@@ -131,6 +131,31 @@ See [cross-platform-testing.md](references/cross-platform-testing.md):
 - 7.3 Platform-specific test skips and annotations
 - 7.4 Using Docker for reproducible builds
 
+**Contents:**
+- Testing on Multiple Operating Systems
+- Platform categories and key differences
+- Common platform issues (file paths, line endings, permissions, case sensitivity)
+- Testing matrix dimensions
+- Platform detection in tests (Python and TypeScript)
+- CI Matrix Configuration for GitHub Actions
+- Basic matrix configuration (os, python-version)
+- Extended matrix with include/exclude
+- Node.js matrix example
+- Rust matrix example
+- Conditional steps based on matrix
+- Platform-Specific Test Skips and Annotations
+- Python (pytest) platform skips and custom markers
+- JavaScript (Jest/Vitest) conditional tests
+- Rust conditional compilation for tests
+- Go build tags and runtime skips
+- Using Docker for Reproducible Builds
+- Multi-platform Docker build with multi-stage
+- GitHub Actions with Docker services
+- Multi-architecture builds (amd64, arm64)
+- Docker Compose for testing
+- Development containers (devcontainer)
+- Docker testing checklist
+
 ## Decision Tree: PR Review Approach
 
 ```
@@ -316,7 +341,9 @@ Copy this checklist and track your progress:
 - [references/language-detection.md](references/language-detection.md) - Language detection methods
 - [references/python-review-patterns.md](references/python-review-patterns.md) - Python review checklist
 - [references/javascript-review-patterns.md](references/javascript-review-patterns.md) - JavaScript/TypeScript review
+  **Contents:** JavaScript/TypeScript Code Style Checklist, Type Safety Patterns in TypeScript, Module System Considerations (ESM vs CommonJS), Test Framework Patterns with Jest and Vitest, Linting with ESLint and Prettier
 - [references/rust-review-patterns.md](references/rust-review-patterns.md) - Rust review checklist
+  **Contents:** Rust Code Style and Idioms, Memory Safety Patterns and Ownership, Error Handling with Result and Option, Clippy Lints and Configuration, Documentation Standards with rustdoc
 - [references/go-review-patterns.md](references/go-review-patterns.md) - Go review checklist
 - [references/shell-review-patterns.md](references/shell-review-patterns.md) - Shell script review
 - [references/cross-platform-testing.md](references/cross-platform-testing.md) - Multi-OS testing

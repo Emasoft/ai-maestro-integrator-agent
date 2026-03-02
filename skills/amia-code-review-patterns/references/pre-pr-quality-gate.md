@@ -1,5 +1,16 @@
 # Pre-PR Quality Gate
 
+## Table of Contents
+
+- Overview
+- The 4 Validation Steps
+- Step 1: All Tests Pass Locally
+- Step 2: No Linting Errors
+- Step 3: Documentation Updated
+- Step 4: Changelog Entry Added
+- Checklist Template
+- Automation
+
 ## Overview
 
 Before creating a PR, verify all 4 validation steps pass locally.

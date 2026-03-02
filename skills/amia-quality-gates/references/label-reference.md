@@ -2,6 +2,11 @@
 
 This document lists all labels used in quality gate enforcement.
 
+## Table of Contents
+
+- Gate Status Labels
+- Warning Labels
+
 ## Gate Status Labels
 
 | Label | Meaning | Set When |

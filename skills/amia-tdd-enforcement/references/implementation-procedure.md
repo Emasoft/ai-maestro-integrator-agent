@@ -1,5 +1,15 @@
 # Implementation Procedure
 
+## Table of Contents
+
+- Use-Case TOC
+- Part 1: Writing Tests
+- Contents:
+- Part 2: Implementation and Refactoring
+- Contents:
+- Part 3: Complete Example
+- Contents:
+
 ## Use-Case TOC
 - When starting to implement a new feature → [Part 1: Writing Tests](implementation-procedure-part1-writing-tests.md)
 - If you need to write a failing test → [Part 1: Writing Tests](implementation-procedure-part1-writing-tests.md)

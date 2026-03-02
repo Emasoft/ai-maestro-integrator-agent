@@ -2,6 +2,13 @@
 
 Copy and use this checklist when processing a PR through quality gates.
 
+## Table of Contents
+
+- Pre-Review Gate
+- Review Gate
+- Pre-Merge Gate
+- Post-Merge Gate
+
 ## Pre-Review Gate
 - [ ] Verify all tests pass locally
 - [ ] Verify no linting errors

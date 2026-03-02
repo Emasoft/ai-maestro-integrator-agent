@@ -447,8 +447,11 @@ def validate_supporting_files(skill_path: Path, report: ValidationReport) -> Non
         if link_target.startswith("#"):
             continue
 
+        # Strip fragment anchor before path check
+        file_part = link_target.split("#")[0] if "#" in link_target else link_target
+
         # Check if referenced file exists
-        ref_path = skill_path / link_target
+        ref_path = skill_path / file_part
         if not ref_path.exists():
             report.major(
                 f"Referenced file not found: {link_target}",

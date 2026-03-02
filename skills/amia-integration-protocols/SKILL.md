@@ -60,6 +60,13 @@ Standard protocols for handing off work between agents:
 - If you need to document session state → Session State Schema
 - When coordinating multi-agent workflows → Coordination Patterns
 
+**Contents:**
+- Document Delivery Protocol
+- Task Delegation Protocol
+- Acknowledgment Protocol
+- Completion Reporting Protocol
+- Blocker Escalation Protocol
+
 ## Examples
 
 ### Example 1: Agent Handoff Format

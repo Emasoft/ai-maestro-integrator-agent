@@ -175,9 +175,9 @@ Read this when assigning work to agents or checking assignments.
 Read this when moving cards between columns or validating transitions.
 
 **Contents:**
-- 5.1 Valid transition matrix (what moves are allowed)
+- 5.1 Valid transition matrix
 - 5.2 Transition preconditions and postconditions
-- 5.3 Who can move cards (orchestrator vs agent vs auto)
+- 5.3 Who can move cards
 - 5.4 Backlog to Todo transition rules
 - 5.5 Todo to In Progress transition rules
 - 5.6 In Progress to AI Review transition rules
@@ -187,7 +187,7 @@ Read this when moving cards between columns or validating transitions.
 - 5.7 Merge/Release to Done transition rules
 - 5.8 Any status to Blocked transition rules
 - 5.9 Blocked to previous status transition rules
-- 5.10 Invalid transitions and how to handle them
+- 5.10 Invalid transitions and handling
 
 ---
 
@@ -196,13 +196,13 @@ Read this when moving cards between columns or validating transitions.
 Read this when an item becomes blocked or when resolving blockers.
 
 **Contents:**
-- 6.1 What constitutes a blocker
+- 6.1 What constitutes a blocked task
 - 6.2 How to mark an item as blocked
 - 6.3 Required information when blocking
 - 6.4 Blocker escalation timeline
 - 6.5 Resolving blockers and resuming work
 - 6.6 Cross-issue blocking dependencies
-- 6.7 External blockers (outside GitHub)
+- 6.7 External blockers
 - 6.8 Blocker status reporting
 
 ---
@@ -212,14 +212,14 @@ Read this when an item becomes blocked or when resolving blockers.
 Read this when you need GraphQL queries to inspect board state.
 
 **Contents:**
-- 7.1 Get full board state (all items, all columns)
-- 7.2 Get items by status column
-- 7.3 Get items assigned to specific agent
-- 7.4 Get blocked items with blocker reasons
-- 7.5 Get items in review awaiting merge
-- 7.6 Count items per column (summary)
-- 7.7 Get item history and transitions
-- 7.8 Check if all items are Done
+- 7.1 Full Board State - Get complete board with all items and field values
+- 7.2 Items by Status - Get all items in a specific column
+- 7.3 Items by Assignee - Get items assigned to specific agent
+- 7.4 Blocked Items - Get blocked items with blocker info
+- 7.5 Items in AI Review / Human Review / Merge/Release - Get items in review pipeline
+- 7.6 Column Summary - Count items per status column
+- 7.7 Item History - Get timeline and transitions
+- 7.8 Check Completion - Check if all items are Done
 
 ---
 

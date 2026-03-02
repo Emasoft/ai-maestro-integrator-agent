@@ -45,10 +45,16 @@ Key topics:
 - Evaluation workflows and decision matrices
 
 > For detailed PR evaluation procedures, see [amia-quality-gates/references/pr-evaluation.md](../skills/amia-quality-gates/references/pr-evaluation.md).
+>
+> **Contents:** When to evaluate a PR for merge readiness, Evaluation gates that must pass before approval, Evidence requirements for objective evaluation, Verdict decision criteria, Structured reporting requirements
 
 > For handoff validation protocols, see [amia-quality-gates/references/pr-evaluation.md](../skills/amia-quality-gates/references/pr-evaluation.md).
+>
+> (Contents: When to evaluate a PR for merge readiness, Evaluation gates that must pass before approval, Verdict decision criteria, Structured reporting requirements)
 
 > For sub-agent role boundaries with orchestrator, see [amia-integration-protocols/references/sub-agent-role-boundaries-template.md](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md).
+>
+> **Contents:** Purpose, Core Identity: Worker Agent (Not Orchestrator), Standard Output Format, Communication Rules, Tool Restrictions, Common Constraints Template, IRON RULES, Success/Completion Conditions, Anti-Patterns to Avoid, Template Usage, References
 
 ---
 
@@ -113,7 +119,7 @@ assistant: I'll perform a comprehensive evaluation of PR #789. Creating isolated
 </example>
 
 <example>
-orchestrator: Here's the handoff for PR #123 evaluation: [provides document with PR number, repo, branch, success criteria].
+user: Here's the handoff for PR #123 evaluation: [provides document with PR number, repo, branch, success criteria].
 assistant: Validating handoff... UUID present, PR #123 exists, no [TBD] placeholders. Proceeding with evaluation in worktree.
 [Agent validates handoff document, creates worktree, runs comprehensive tests, discovers TDD violation (no RED commit), generates report, and returns: REJECT - TDD workflow not followed. Missing RED commit before GREEN.]
 </example>

@@ -137,11 +137,7 @@ Next Steps:
 ## Examples
 
 See [references/gate-examples.md](references/gate-examples.md) for complete examples including:
-- Pre-Review Gate success and failure scenarios
-- Review Gate failure with low confidence score
-- Pre-Merge Gate failure with merge conflicts
-- Post-Merge Gate failure with main branch broken
-- Gate override application procedures
+- **Contents:** Example 1: Pre-Review Gate Success, Example 2: Review Gate Failure (Low Confidence), Example 3: Pre-Merge Gate Failure (Merge Conflict), Example 4: Post-Merge Gate Failure (Main Branch Broken), Example 5: Gate Override Application
 
 **Purpose of Quality Gates:**
 - Prevent defective code from reaching production
@@ -156,14 +152,12 @@ See [references/gate-examples.md](references/gate-examples.md) for complete exam
 ## Gate Types and Pipeline Position
 
 The integration pipeline has four sequential gates. See [references/gate-pipeline.md](references/gate-pipeline.md) for the complete flow diagram.
+- **Contents:** Overview, Pipeline Diagram, Gate Transitions, Failure Handling, Parallel Gates, Gate Bypass
 
 ## Gate 1: Pre-Review Gate
 
 See [references/pre-review-gate.md](references/pre-review-gate.md) for:
-- Required checks
-- Warning conditions
-- Gate pass criteria
-- Label integration commands
+- **Contents:** Purpose, Required Checks, Tests Pass, Linting Pass, Build Success, PR Description Present, Issue Linked, Warning Conditions (Non-Blocking), Gate Pass Procedure, Gate Fail Procedure, Re-Evaluation Triggers, Troubleshooting, Flaky Test Failures, Infrastructure Issues
 
 ## Gate 2: Review Gate
 
@@ -176,9 +170,7 @@ See [references/review-gate.md](references/review-gate.md) for:
 ## Gate 3: Pre-Merge Gate
 
 See [references/pre-merge-gate.md](references/pre-merge-gate.md) for:
-- Required checks (CI, conflicts, approval validity)
-- Blocking and warning conditions
-- Label integration commands
+- **Contents:** Purpose, Required Checks, CI Pipeline Success, No Merge Conflicts, Valid Approval, Branch Up-to-Date, Warning Conditions (Non-Blocking), Gate Pass Procedure, Gate Fail Procedure, Merge Strategies, Squash Merge (Default), Merge Commit, Rebase Merge, Re-Evaluation Triggers, Troubleshooting, CI Stuck in Pending, Approval Disappeared, Intermittent Merge Conflicts, Fast-Moving Main Branch
 
 ## Gate 4: Post-Merge Gate
 

@@ -1845,7 +1845,13 @@ _TOC_SECTION_RE = re.compile(
 )
 
 # Regex to extract individual TOC heading titles (strip numbering, links, bullets)
-_TOC_ENTRY_RE = re.compile(r"(?m)^[\s]*[-*]?\s*(?:\d+\.?\s*)?(?:\[([^\]]+)\]\([^)]*\)|(.+))")
+# Handles multi-level numbering (1.1, 2.3) and alpha prefixes (D5.2, S-PERF.2)
+_TOC_ENTRY_RE = re.compile(
+    r"(?m)^[\s]*[-*]?\s*"
+    r"(?:[\d.]+[a-z]?\s+)?"
+    r"(?:[A-Z][\w-]*[.][\d.]+\s+)?"
+    r"(?:\[([^\]]+)\]\([^)]*\)|(.+))"
+)
 
 # Regex to find markdown links pointing to .md files in references/
 _MD_LINK_RE = re.compile(r"\[([^\]]+)\]\(((?:references/)?[^\s)]+\.md)\)")
@@ -1869,8 +1875,21 @@ def extract_toc_headings(md_content: str) -> list[str]:
         title = (entry_match.group(1) or entry_match.group(2) or "").strip()
         if not title or title.startswith("---"):
             continue
-        # Strip leading numbering like "1. " or "3a. "
-        title_clean = re.sub(r"^\d+[a-z]?\.\s*", "", title).strip()
+        # Strip leading numbering like "1. ", "3a. ", "0 ", "1.0 ",
+        # "D5.2 ", "S-PERF.2 ", "C.1 ", "T.3 " (multi-level and prefixed)
+        title_clean = re.sub(
+            r"^(?:[\d.]+[a-z]?\s+|[A-Z][\w-]*\.[\d.]+\s+|\d+[a-z]?\.\s*)",
+            "",
+            title,
+        ).strip()
+        # Strip residual markdown link syntax [text](#anchor) → text
+        title_clean = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", title_clean)
+        # Strip markdown heading prefixes (### , ## , # )
+        title_clean = re.sub(r"^#{1,6}\s+", "", title_clean)
+        # Strip bold/italic markdown markers (**text**, *text*)
+        title_clean = re.sub(r"\*{1,2}([^*]+)\*{1,2}", r"\1", title_clean)
+        # Strip broken bold artifacts like "*File:" or "File:**"
+        title_clean = title_clean.strip("*").strip()
         if title_clean:
             headings.append(title_clean)
 

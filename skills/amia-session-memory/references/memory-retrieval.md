@@ -1,5 +1,16 @@
 # Memory Retrieval
 
+## Table of Contents
+
+- State-Based Triggers
+- Retrieval Decision Tree
+- Memory Retrieval Commands
+- Load PR State
+- Load Handoff Documents
+- Verify Memory Freshness
+- Handling Missing Memory
+- Memory Freshness Checks
+
 ## State-Based Triggers
 
 Memory retrieval is **triggered by user prompts** that indicate continuation of prior work:

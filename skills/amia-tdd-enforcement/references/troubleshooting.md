@@ -2,6 +2,15 @@
 
 This document provides quick navigation to common TDD issues and their solutions.
 
+## Table of Contents
+
+- Use-Case TOC
+- Part 1: Test Failures
+- Part 2: Code Issues
+- Part 3: Passing Tests
+- Part 4: Workflow Issues
+- Quick Reference
+
 ---
 
 ## Use-Case TOC
