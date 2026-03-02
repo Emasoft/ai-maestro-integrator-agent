@@ -2,12 +2,12 @@
 # pre-push hook - Validate plugin before allowing push
 #
 # Auto-syncs validation scripts from claude-plugins-validation (CPV) repo,
-# then runs validate_plugin.py. Only CRITICAL issues block the push.
+# then runs validate_plugin.py. CRITICAL and MAJOR issues block the push.
 #
 # Exit codes from validate_plugin.py:
 #   0 - All checks passed
 #   1 - CRITICAL issues found (blocks push)
-#   2 - MAJOR issues found (non-blocking warning)
+#   2 - MAJOR issues found (blocks push)
 #   3 - MINOR issues found (non-blocking note)
 #
 # To install:
@@ -175,9 +175,7 @@ set -e
 
 echo ""
 
-# Handle exit codes - only CRITICAL blocks push (exit 1)
-# MAJOR/MINOR/WARNING are reported but don't block (reference docs have
-# legitimate absolute paths like /bin/sh that trigger false positives)
+# Handle exit codes - CRITICAL and MAJOR block push
 case $VALIDATION_EXIT_CODE in
     0)
         echo -e "${GREEN}========================================${NC}"
@@ -189,17 +187,16 @@ case $VALIDATION_EXIT_CODE in
     1)
         echo -e "${RED}========================================${NC}"
         echo -e "${RED}  BLOCKED: CRITICAL issues found${NC}"
-        echo -e "${RED}  Fix CRITICAL issues before pushing.${NC}"
+        echo -e "${RED}  Fix ALL issues before pushing.${NC}"
         echo -e "${RED}========================================${NC}"
         exit 1
         ;;
     2)
-        echo -e "${YELLOW}========================================${NC}"
-        echo -e "${YELLOW}  WARNING: MAJOR issues found (non-blocking)${NC}"
-        echo -e "${YELLOW}  Review and fix when possible.${NC}"
-        echo -e "${GREEN}  Push allowed.${NC}"
-        echo -e "${YELLOW}========================================${NC}"
-        exit 0
+        echo -e "${RED}========================================${NC}"
+        echo -e "${RED}  BLOCKED: MAJOR issues found${NC}"
+        echo -e "${RED}  Fix ALL issues before pushing.${NC}"
+        echo -e "${RED}========================================${NC}"
+        exit 1
         ;;
     3)
         echo -e "${BLUE}========================================${NC}"
