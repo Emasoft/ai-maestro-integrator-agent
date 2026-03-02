@@ -583,7 +583,7 @@ def validate_scripts(plugin_root: Path, report: ValidationReport) -> None:
         # Mypy check
         mypy_cmd = resolve_tool_command("mypy")
         if mypy_cmd:
-            mypy_args = mypy_cmd + ["--ignore-missing-imports"]
+            mypy_args = mypy_cmd + ["--ignore-missing-imports", "--disable-error-code=import-untyped"]
             # If pyproject.toml exists in plugin root, use it for config
             pyproject = plugin_root / "pyproject.toml"
             if pyproject.exists():

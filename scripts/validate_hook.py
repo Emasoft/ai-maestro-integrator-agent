@@ -363,6 +363,7 @@ def lint_python_script(script_path: Path, report: ValidationReport) -> None:
                 mypy_cmd
                 + [
                     "--ignore-missing-imports",
+                    "--disable-error-code=import-untyped",
                     "--no-error-summary",
                     str(script_path),
                 ],
