@@ -65,7 +65,7 @@ def get_pr_checks(pr_number: int, repo: str | None = None) -> dict[str, Any]:
         return {"error": "json_parse_error", "message": str(e)}
 
 
-def analyze_checks(checks: list[dict], required_only: bool = False) -> dict[str, Any]:
+def analyze_checks(checks: list[dict]) -> dict[str, Any]:
     """Analyze check status and determine if complete."""
     passing = []
     failing = []
@@ -134,7 +134,7 @@ def main() -> int:
         if elapsed >= args.timeout:
             result = get_pr_checks(args.pr, args.repo)
             checks = result.get("checks", [])
-            analysis = analyze_checks(checks, args.required_only)
+            analysis = analyze_checks(checks)
 
             output = {
                 "pr_number": args.pr,

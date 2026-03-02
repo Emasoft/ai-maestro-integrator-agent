@@ -257,6 +257,10 @@ def main() -> None:
         help="Check specific stage only",
     )
     args = parser.parse_args()
+    # Validate repo format before any split("/") calls downstream
+    if "/" not in args.repo or args.repo.count("/") != 1:
+        print(json.dumps({"error": f"Invalid repo format: {args.repo!r}, expected 'owner/name'"}))
+        sys.exit(1)
     result = verify_completion(args.repo, args.pr, args.stage)
     print(json.dumps(result, indent=2))
     sys.exit(0 if result["complete"] else 1)

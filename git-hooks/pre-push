@@ -37,10 +37,11 @@ echo ""
 REMOTE="$1"
 URL="$2"
 
-echo -e "${BLUE}Pushing to:${NC} ${REMOTE} (${URL})"
+echo -e "${BLUE}Pushing to:${NC} ${REMOTE} (${URL})"  # SC-P1-006: variables are safe here (echo only, no eval)
 echo ""
 
 # Check if plugin files changed in the commits being pushed
+NEEDS_VALIDATION=false
 while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
     if [ "$LOCAL_SHA" = "0000000000000000000000000000000000000000" ]; then
         # Branch deletion, skip validation
@@ -49,8 +50,13 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
     fi
 
     if [ "$REMOTE_SHA" = "0000000000000000000000000000000000000000" ]; then
-        # New branch, check all files
-        CHANGED_FILES=$(git diff --name-only "$LOCAL_SHA" HEAD~10 2>/dev/null || git ls-tree -r --name-only "$LOCAL_SHA")
+        # New branch: compare against merge-base with main/master, fall back to listing all files
+        MERGE_BASE=$(git merge-base "$LOCAL_SHA" origin/main 2>/dev/null || git merge-base "$LOCAL_SHA" origin/master 2>/dev/null || true)
+        if [ -n "$MERGE_BASE" ]; then
+            CHANGED_FILES=$(git diff --name-only "$MERGE_BASE" "$LOCAL_SHA")
+        else
+            CHANGED_FILES=$(git ls-tree -r --name-only "$LOCAL_SHA")
+        fi
     else
         # Existing branch, check changed files
         CHANGED_FILES=$(git diff --name-only "$REMOTE_SHA..$LOCAL_SHA" 2>/dev/null || true)
@@ -70,7 +76,7 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
     fi
 done
 
-if [ "${NEEDS_VALIDATION:-false}" = false ]; then
+if [ "$NEEDS_VALIDATION" = false ]; then
     echo -e "${GREEN}No plugin files changed in any ref. Skipping validation.${NC}"
     exit 0
 fi
@@ -80,74 +86,13 @@ echo ""
 
 cd "$REPO_ROOT"
 
-# --- Auto-sync validation scripts from CPV repo ---
-CPV_REPO="Emasoft/claude-plugins-validation"
-CPV_BRANCH="main"
-CPV_SCRIPTS_DIR="scripts"
-
-# List of CPV scripts to sync (validation + utilities)
-CPV_FILES=(
-    "cpv_validation_common.py"
-    "validate_agent.py"
-    "validate_command.py"
-    "validate_documentation.py"
-    "validate_encoding.py"
-    "validate_enterprise.py"
-    "validate_hook.py"
-    "validate_lsp.py"
-    "validate_marketplace_pipeline.py"
-    "validate_marketplace.py"
-    "validate_mcp.py"
-    "validate_plugin.py"
-    "validate_rules.py"
-    "validate_scoring.py"
-    "validate_security.py"
-    "validate_skill_comprehensive.py"
-    "validate_skill.py"
-    "validate_xref.py"
-    "bump_version.py"
-    "check_version_consistency.py"
-    "gitignore_filter.py"
-    "lint_files.py"
-    "setup_git_hooks.py"
-    "setup_marketplace_automation.py"
-    "setup_plugin_pipeline.py"
-    "smart_exec.py"
-    "update_marketplace_metadata.py"
-)
-
-echo -e "${BLUE}Syncing validation scripts from ${CPV_REPO}...${NC}"
-SYNC_FAILED=false
-if command -v gh &> /dev/null; then
-    for cpv_file in "${CPV_FILES[@]}"; do
-        # Download raw file from GitHub via gh api
-        if gh api "repos/${CPV_REPO}/contents/${CPV_SCRIPTS_DIR}/${cpv_file}?ref=${CPV_BRANCH}" \
-            --jq '.content' 2>/dev/null | base64 -d > "${REPO_ROOT}/scripts/${cpv_file}.tmp" 2>/dev/null; then
-            # Only replace if download succeeded and file is non-empty
-            if [ -s "${REPO_ROOT}/scripts/${cpv_file}.tmp" ]; then
-                mv "${REPO_ROOT}/scripts/${cpv_file}.tmp" "${REPO_ROOT}/scripts/${cpv_file}"
-            else
-                rm -f "${REPO_ROOT}/scripts/${cpv_file}.tmp"
-                SYNC_FAILED=true
-            fi
-        else
-            rm -f "${REPO_ROOT}/scripts/${cpv_file}.tmp"
-            SYNC_FAILED=true
-        fi
-    done
-
-    if [ "$SYNC_FAILED" = true ]; then
-        echo -e "${YELLOW}  Some scripts failed to sync. Using existing local copies.${NC}"
-    else
-        echo -e "${GREEN}  Synced ${#CPV_FILES[@]} validation scripts from ${CPV_REPO}.${NC}"
-        echo -e "${YELLOW}  NOTE: CPV validation scripts updated locally. Commit them separately before next push.${NC}"
-    fi
-else
-    echo -e "${YELLOW}  gh CLI not found. Skipping CPV sync. Using existing local copies.${NC}"
-fi
+# --- CPV Script Sync DISABLED (SC-P2-002: supply-chain integrity) ---
+# Previously, this hook downloaded 22+ scripts from Emasoft/claude-plugins-validation
+# on every push and executed them without integrity checks. This was a supply-chain
+# vulnerability (CWE-494). The scripts are now vendored locally in scripts/ and must
+# be updated manually via: scripts/sync_cpv.sh (or by copying from the CPV repo).
+echo -e "${BLUE}Using local validation scripts (CPV auto-sync disabled for security).${NC}"
 echo ""
-# --- End auto-sync ---
-# NOTE: Downloaded scripts are used in-place. For full supply-chain integrity, pin to a specific CPV release tag.
 
 # Check that the validator script exists
 if [ ! -f "scripts/validate_plugin.py" ]; then

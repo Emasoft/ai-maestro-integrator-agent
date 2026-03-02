@@ -109,7 +109,10 @@ Implementation of the {name} module.
 
 def update_issue_labels(issue_num: str, status: str) -> bool:
     """Update issue labels based on module status."""
-    issue = issue_num.replace("#", "")
+    issue = issue_num.replace("#", "").strip()
+    if not issue.isdigit():
+        print(f"ERROR: Invalid issue number: {issue_num!r}")
+        return False
 
     # Map status to labels
     status_labels = {
@@ -145,7 +148,10 @@ def update_issue_labels(issue_num: str, status: str) -> bool:
 
 def close_issue(issue_num: str, reason: str) -> bool:
     """Close a GitHub issue."""
-    issue = issue_num.replace("#", "")
+    issue = issue_num.replace("#", "").strip()
+    if not issue.isdigit():
+        print(f"ERROR: Invalid issue number: {issue_num!r}")
+        return False
 
     try:
         result = subprocess.run(

@@ -70,6 +70,14 @@ CATEGORIES: dict[str, dict[str, Any]] = {
 }
 
 # Document type to category mapping
+def sanitize_task_id(task_id: str) -> str:
+    """Sanitize task_id to prevent path traversal attacks (SC-P2-001)."""
+    sanitized = re.sub(r'[^a-zA-Z0-9_\-.]', '', task_id)
+    if not sanitized or sanitized.startswith('.'):
+        raise ValueError(f"Invalid task_id: {task_id!r}")
+    return sanitized
+
+
 DOCUMENT_TYPE_MAP: dict[str, tuple[str, str | None]] = {
     "delegation": ("tasks", None),
     "toolchain-spec": ("tasks", None),
@@ -240,6 +248,9 @@ def download_document(
         print(f"Valid categories: {list(CATEGORIES.keys())}")
         return None
 
+    # Sanitize task_id to prevent path traversal (SC-P2-001)
+    task_id = sanitize_task_id(task_id)
+
     # Determine target folder
     cat_config = CATEGORIES[category]
     folder_template = cat_config["path"]
@@ -248,6 +259,10 @@ def download_document(
         folder_path = storage_root / folder_template.format(task_id=task_id)
     else:
         folder_path = storage_root / folder_template
+
+    # Guard against path traversal after substitution (SC-P2-001)
+    if not str(folder_path.resolve()).startswith(str(storage_root.resolve())):
+        raise ValueError(f"Path traversal detected in task_id: {task_id!r}")
 
     if subcategory and subcategory in cat_config["subfolders"]:
         folder_path = folder_path / subcategory
@@ -289,11 +304,25 @@ def download_document(
         print(f"ERROR: Only HTTPS URLs allowed, got: {download_url[:50]}")
         return None
 
+    # Validate hostname against allowlist to prevent SSRF (SC-P2-004)
+    parsed_url = urllib.parse.urlparse(download_url)
+    allowed_hosts = {"github.com", "raw.githubusercontent.com", "objects.githubusercontent.com"}
+    if parsed_url.hostname not in allowed_hosts:
+        print(f"ERROR: URL host not allowed: {parsed_url.hostname}")
+        return None
+
+    # Cap download size to prevent unbounded memory consumption (SC-P2-005)
+    MAX_DOWNLOAD_SIZE = 10 * 1024 * 1024  # 10 MB
+
     try:
         # Use urllib.request instead of curl for cross-platform compatibility (CC-XP-002)
         req = urllib.request.Request(download_url, headers={"User-Agent": "amia-download/1.0"})
         with urllib.request.urlopen(req, timeout=60) as response:
-            file_path.write_bytes(response.read())
+            data = response.read(MAX_DOWNLOAD_SIZE + 1)
+            if len(data) > MAX_DOWNLOAD_SIZE:
+                print(f"ERROR: Download exceeds {MAX_DOWNLOAD_SIZE // (1024 * 1024)}MB limit")
+                return None
+            file_path.write_bytes(data)
     except (urllib.error.URLError, urllib.error.HTTPError, OSError) as e:
         print(f"ERROR: Download failed: {e}")
         return None
@@ -362,8 +391,9 @@ def lookup_documents(
         if not cat_path.exists():
             continue
 
-        # Search for task_id folders
-        for task_folder in cat_path.rglob(task_id):
+        # Search for task_id folders; sanitize to prevent glob injection (SC-P2-001)
+        safe_task_id = sanitize_task_id(task_id)
+        for task_folder in cat_path.rglob(safe_task_id):
             if task_folder.is_dir():
                 for md_file in task_folder.glob("*.md"):
                     metadata_file = md_file.with_suffix("").with_name(
@@ -524,7 +554,7 @@ def main() -> int:
     elif args.command == "download":
         result = download_document(
             url=args.url,
-            task_id=args.task_id,
+            task_id=sanitize_task_id(args.task_id),
             category=args.category,
             subcategory=args.subcategory,
             doc_type=args.doc_type,
@@ -535,7 +565,7 @@ def main() -> int:
 
     elif args.command == "lookup":
         results = lookup_documents(
-            task_id=args.task_id,
+            task_id=sanitize_task_id(args.task_id),
             project_root=args.project_root,
             category=args.category,
         )

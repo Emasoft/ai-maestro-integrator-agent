@@ -303,7 +303,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.ci_event:
-        branch, status, run_id = args.ci_event
+        branch, status, _run_id = args.ci_event
         on_ci_status_change(args.owner, args.repo, branch, status)
         print(f"Handled CI event: {status} on {branch}")
 

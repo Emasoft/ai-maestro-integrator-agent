@@ -85,12 +85,12 @@ class GitHubProjectSync:
         # Handle HTTPS URLs
         https_match = re.search(r"github\.com[/:]([^/]+/[^/]+?)(\.git)?$", url)
         if https_match:
-            return https_match.group(1).rstrip(".git")
+            return https_match.group(1).removesuffix(".git")
 
         # Handle SSH URLs
         ssh_match = re.search(r"git@github\.com:([^/]+/[^/]+?)(\.git)?$", url)
         if ssh_match:
-            return ssh_match.group(1).rstrip(".git")
+            return ssh_match.group(1).removesuffix(".git")
 
         return None
 

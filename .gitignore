@@ -41,10 +41,15 @@ env/
 # examples_dev, downloads_dev, libs_dev, builds_dev, etc.
 *_dev/
 
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Node (used by some skills/tools)
+node_modules/
+
 # Logs and temp files
 *.log
 *.tmp
-
-# Rust
-target/
-Cargo.lock
+*.bak

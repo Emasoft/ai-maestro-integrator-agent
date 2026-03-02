@@ -422,8 +422,8 @@ Examples:
             print(f"Error: File verification failed: {e}", file=sys.stderr)
             return 1
 
-    # WHY: Explicit success exit ensures proper exit code even if called as module
-    sys.exit(0)
+    # WHY: Return 0 so the caller (sys.exit in __main__) receives the exit code
+    return 0
 
 
 if __name__ == "__main__":

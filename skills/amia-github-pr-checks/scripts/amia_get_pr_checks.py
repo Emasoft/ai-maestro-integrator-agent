@@ -61,11 +61,9 @@ def get_pr_checks(pr_number: int, repo: str | None = None) -> dict[str, Any]:
         return {"error": "json_parse_error", "message": str(e)}
 
 
-def get_required_checks(repo: str | None = None, branch: str = "main") -> list[str]:
+def get_required_checks(repo: str, branch: str = "main") -> list[str]:
     """Get list of required check names from branch protection."""
-    cmd = ["api", f"repos/{{owner}}/{{repo}}/branches/{branch}/protection"]
-    if repo:
-        cmd = ["api", f"repos/{repo}/branches/{branch}/protection"]
+    cmd = ["api", f"repos/{repo}/branches/{branch}/protection"]
 
     exit_code, stdout, stderr = run_gh_command(cmd)
     if exit_code != 0:

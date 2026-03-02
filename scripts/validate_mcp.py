@@ -105,7 +105,7 @@ def validate_path_value(value: str, report: ValidationReport, context: str, plug
     """Validate a path value in MCP configuration."""
     # Check for absolute paths (without env var substitution)
     if is_absolute_path(value):
-        report.major(f"Absolute path found in {context}: {value} - use ${{{{CLAUDE_PLUGIN_ROOT}}}} for portability")
+        report.major(f"Absolute path found in {context}: {value} - use ${{CLAUDE_PLUGIN_ROOT}} for portability")
         return
 
     # Check if path uses CLAUDE_PLUGIN_ROOT for plugin-relative paths
@@ -385,12 +385,8 @@ def validate_mcp_config(
     report.info(f"Found {len(servers)} MCP server(s) in {rel_path}")
 
     # Validate each server
-    server_names = set()
+    # NOTE: JSON objects already deduplicate keys, so duplicate server names are handled by the parser.
     for server_name, server_config in servers.items():
-        # Check for duplicate names
-        if server_name in server_names:
-            report.major(f"Duplicate server name: {server_name}")
-        server_names.add(server_name)
 
         # Validate server name format
         if not re.match(r"^[a-zA-Z][a-zA-Z0-9_-]*$", server_name):

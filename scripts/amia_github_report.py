@@ -12,7 +12,7 @@ import json
 import subprocess
 import sys
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -110,13 +110,17 @@ def get_repo_info() -> tuple[str, str]:
 
 
 def parse_datetime(dt_str: Optional[str]) -> Optional[datetime]:
-    """Parse ISO datetime string to datetime object."""
+    """Parse ISO datetime string to UTC-aware datetime object."""
     if not dt_str:
         return None
     try:
         # Handle ISO format with Z suffix
         dt_str = dt_str.replace("Z", "+00:00")
-        return datetime.fromisoformat(dt_str)
+        dt = datetime.fromisoformat(dt_str)
+        # Always return UTC-aware datetime: convert aware to UTC, assume UTC for naive
+        if dt.tzinfo is not None:
+            return dt.astimezone(timezone.utc)
+        return dt.replace(tzinfo=timezone.utc)
     except ValueError:
         return None
 
@@ -293,7 +297,7 @@ def calculate_metrics(
         metrics.by_status[status] = metrics.by_status.get(status, 0) + 1
 
     # Count completed (closed or Done status)
-    now = datetime.now()
+    now = datetime.now(tz=timezone.utc)
     completed_in_period = 0
     completion_times: list[int] = []
 
@@ -309,7 +313,7 @@ def calculate_metrics(
 
             # Check if completed within velocity period
             if item.closed_at:
-                days_ago = (now - item.closed_at.replace(tzinfo=None)).days
+                days_ago = (now - item.closed_at).days
                 if days_ago <= velocity_days:
                     completed_in_period += 1
 
@@ -318,7 +322,7 @@ def calculate_metrics(
 
             # Track oldest in-progress
             if item.updated_at:
-                days = (now - item.updated_at.replace(tzinfo=None)).days
+                days = (now - item.updated_at).days
                 metrics.oldest_in_progress_days = max(
                     metrics.oldest_in_progress_days,
                     days,
@@ -330,7 +334,7 @@ def calculate_metrics(
         # Check at-risk: in progress > 7 days without update
         if status_lower in ("in progress", "in-progress"):
             if item.updated_at:
-                days_since_update = (now - item.updated_at.replace(tzinfo=None)).days
+                days_since_update = (now - item.updated_at).days
                 if days_since_update > 7:
                     metrics.at_risk_count += 1
 

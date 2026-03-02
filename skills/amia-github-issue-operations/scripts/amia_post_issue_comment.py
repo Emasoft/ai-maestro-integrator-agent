@@ -107,12 +107,11 @@ def post_comment(
         marker_tag = f"<!-- {marker} -->"
         body = f"{body}\n\n{marker_tag}"
 
-    # Post the comment
-    success, output = run_gh_command([
-        "issue", "comment", str(issue_number),
-        "--repo", repo,
-        "--body", body
-    ])
+    # Post the comment via stdin to avoid exposing body in process table
+    cmd = ["gh", "issue", "comment", str(issue_number), "--repo", repo, "--body-file", "-"]
+    result = subprocess.run(cmd, input=body, capture_output=True, text=True)
+    success = result.returncode == 0
+    output = result.stdout.strip() if success else result.stderr.strip()
 
     if not success:
         if "not logged in" in output.lower():

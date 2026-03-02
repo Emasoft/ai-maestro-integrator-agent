@@ -114,7 +114,7 @@ def format_table(worktrees: list[dict[str, Any]]) -> str:
     lines.append("-" * 80)
 
     for wt in worktrees:
-        branch = wt.get("branch") or "(detached)" if wt.get("is_detached") else "-"
+        branch = wt.get("branch") or ("(detached)" if wt.get("is_detached") else "-")
         commit = (wt.get("commit") or "-")[:10]
         status = "clean" if wt.get("status", {}).get("clean", True) else "dirty"
         lines.append(f"{wt['path']:<40} {branch:<20} {commit:<12} {status:<8}")

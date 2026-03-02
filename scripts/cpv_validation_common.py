@@ -603,6 +603,63 @@ def parse_gitignore(gitignore_path: Path) -> list[str]:
     return patterns
 
 
+def _matches_glob(rel_path: str, pattern: str) -> bool:
+    """Check if rel_path matches a single gitignore-style pattern (may contain **).
+
+    Handles the three ** forms used by gitignore:
+      - ``**/foo``   – matches ``foo`` at any directory depth
+      - ``foo/**``   – matches anything under directory ``foo``
+      - ``a/**/b``   – general double-star via regex conversion
+    Also handles non-** simple fnmatch patterns against the full path or any
+    individual path component (non-anchored behaviour).
+
+    Args:
+        rel_path: Normalised (forward-slash) relative path to test.
+        pattern:  A single gitignore pattern with ``**``, ``/``, and ``!``
+                  already stripped by the caller.
+
+    Returns:
+        True if the pattern matches rel_path.
+    """
+    path_parts = rel_path.split("/")
+
+    # Handle directory-only patterns (ending with /)
+    is_dir_pattern = pattern.endswith("/")
+    if is_dir_pattern:
+        pattern = pattern[:-1]
+
+    # Handle patterns starting with /
+    is_anchored = pattern.startswith("/")
+    if is_anchored:
+        pattern = pattern[1:]
+
+    if "**" in pattern:
+        if pattern.startswith("**/"):
+            # **/foo matches foo at any depth
+            suffix = pattern[3:]
+            return (
+                fnmatch.fnmatch(rel_path, suffix)
+                or fnmatch.fnmatch(rel_path, f"*/{suffix}")
+                or f"/{suffix}" in f"/{rel_path}"
+            )
+        elif pattern.endswith("/**"):
+            # build/** matches any file under the prefix directory
+            prefix = pattern[:-3]
+            return rel_path.startswith(prefix + "/") or rel_path == prefix
+        else:
+            # General ** — convert to regex for matching
+            regex = pattern.replace(".", r"\.").replace("**", ".*").replace("*", "[^/]*").replace("?", "[^/]")
+            return bool(re.match(regex + "$", rel_path))
+
+    # Plain pattern (no **): match against full path or any path component
+    if is_anchored:
+        return fnmatch.fnmatch(rel_path, pattern)
+    else:
+        if fnmatch.fnmatch(rel_path, pattern):
+            return True
+        return any(fnmatch.fnmatch(part, pattern) for part in path_parts)
+
+
 def is_path_gitignored(rel_path: str, patterns: list[str]) -> bool:
     """Check if a relative path matches any gitignore pattern.
 
@@ -615,7 +672,6 @@ def is_path_gitignored(rel_path: str, patterns: list[str]) -> bool:
     """
     # Normalize path separators
     rel_path = rel_path.replace("\\", "/")
-    path_parts = rel_path.split("/")
 
     # Gitignore uses last-match-wins semantics: iterate all patterns and track
     # the final ignored state rather than returning early on any single match.
@@ -625,59 +681,15 @@ def is_path_gitignored(rel_path: str, patterns: list[str]) -> bool:
         # Handle negation (!) - un-ignore previously matched paths (last-match-wins)
         if pattern.startswith("!"):
             neg_pattern = pattern[1:]
-            # If the path matches the negation pattern, mark as NOT ignored (but keep going)
-            if fnmatch.fnmatch(rel_path, neg_pattern) or fnmatch.fnmatch(str(Path(rel_path).name), neg_pattern):
+            # Use the shared helper so that ** inside negation patterns is also
+            # handled correctly (plain fnmatch alone silently ignored ** forms).
+            if _matches_glob(rel_path, neg_pattern) or fnmatch.fnmatch(str(Path(rel_path).name), neg_pattern):
                 ignored = False
             continue
 
-        # Handle directory-only patterns (ending with /)
-        is_dir_pattern = pattern.endswith("/")
-        if is_dir_pattern:
-            pattern = pattern[:-1]
-
-        # Handle patterns starting with /
-        is_anchored = pattern.startswith("/")
-        if is_anchored:
-            pattern = pattern[1:]
-
-        # Handle ** patterns properly for recursive directory matching
-        if "**" in pattern:
-            if pattern.startswith("**/"):
-                # **/foo matches foo at any depth
-                suffix = pattern[3:]  # e.g., "dist" from "**/dist"
-                if (
-                    fnmatch.fnmatch(rel_path, suffix)
-                    or fnmatch.fnmatch(rel_path, f"*/{suffix}")
-                    or f"/{suffix}" in f"/{rel_path}"
-                ):
-                    ignored = True
-                continue
-            elif pattern.endswith("/**"):
-                # build/** matches any file under the prefix directory
-                prefix = pattern[:-3]  # e.g., "build" from "build/**"
-                if rel_path.startswith(prefix + "/") or rel_path == prefix:
-                    ignored = True
-                continue
-            else:
-                # General ** — replace with regex-like matching
-                regex = pattern.replace(".", r"\.").replace("**", ".*").replace("*", "[^/]*").replace("?", "[^/]")
-                if re.match(regex + "$", rel_path):
-                    ignored = True
-                continue
-
-        # Check if pattern matches any component or the full path
-        if is_anchored:
-            # Anchored patterns only match from root
-            if fnmatch.fnmatch(rel_path, pattern):
-                ignored = True
-        else:
-            # Non-anchored patterns can match any component
-            if fnmatch.fnmatch(rel_path, pattern):
-                ignored = True
-            # Also check if any path component matches
-            for part in path_parts:
-                if fnmatch.fnmatch(part, pattern):
-                    ignored = True
+        # Delegate all pattern matching (including **, /, anchoring) to the helper.
+        if _matches_glob(rel_path, pattern):
+            ignored = True
 
     return ignored
 

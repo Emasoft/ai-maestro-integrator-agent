@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from dataclasses import dataclass, field
@@ -156,7 +157,7 @@ def get_available_skills(plugin_root: Path) -> set[str]:
     skills = set()
     for skill_dir in skills_dir.iterdir():
         if skill_dir.is_dir() and not skill_dir.name.startswith("."):
-            skills.add(skill_dir.name)
+            skills.add(skill_dir.name.lower())
     return skills
 
 
@@ -564,8 +565,6 @@ def validate_hook_script_refs(
             else:
                 # Check if script is executable (for shell scripts)
                 if resolved_path.suffix in {".sh", ".bash"}:
-                    import os
-
                     # Skip executable check on Windows where os.access X_OK is unreliable
                     if sys.platform != "win32" and not os.access(resolved_path, os.X_OK):
                         report.minor(

@@ -159,7 +159,7 @@ def validate_top_level_structure(data: Any, report: ValidationReport) -> bool:
         if not isinstance(desc, str):
             report.major(f"'description' must be a string, got {type(desc).__name__}")
         else:
-            report.passed(f"Description: {desc[:50]}...")
+            report.passed(f"Description: {desc[:50]}{'...' if len(desc) > 50 else ''}")
 
     # Check for 'hooks' key
     if "hooks" not in data:
@@ -495,7 +495,7 @@ def validate_command_hook(
         report.critical("'command' cannot be empty")
         return False
 
-    report.passed(f"Command: {command[:60]}...")
+    report.passed(f"Command: {command[:60]}{'...' if len(command) > 60 else ''}")
 
     # Check for hardcoded absolute paths — plugins must use env vars for portability
     cmd_first_token = command.strip().split()[0] if command.strip() else ""
@@ -592,7 +592,7 @@ def validate_prompt_hook(
     if "$ARGUMENTS" not in prompt:
         report.info("Prompt doesn't contain $ARGUMENTS placeholder (input JSON will be appended automatically)")
 
-    report.passed(f"Prompt: {prompt[:60]}...")
+    report.passed(f"Prompt: {prompt[:60]}{'...' if len(prompt) > 60 else ''}")
 
     # Validate optional model field
     if "model" in hook:

@@ -517,10 +517,17 @@ def main() -> None:
 
         # Filter trusted comments
         trusted_sources = config["trusted_sources"]
-        assert isinstance(trusted_sources, dict)
+        if not isinstance(trusted_sources, dict):
+            print(f"ERROR: Expected dict, got {type(trusted_sources).__name__}", file=sys.stderr)
+            sys.exit(1)
         maintainers = trusted_sources["maintainers"]
         ai_agents = trusted_sources["ai_agents"]
-        assert isinstance(maintainers, list) and isinstance(ai_agents, list)
+        if not isinstance(maintainers, list):
+            print(f"ERROR: Expected list, got {type(maintainers).__name__}", file=sys.stderr)
+            sys.exit(1)
+        if not isinstance(ai_agents, list):
+            print(f"ERROR: Expected list, got {type(ai_agents).__name__}", file=sys.stderr)
+            sys.exit(1)
         trusted_comments = filter_trusted_comments(
             comments,
             maintainers,
@@ -531,9 +538,13 @@ def main() -> None:
         if args.prepare_context_only:
             context_file = create_context_file(issue, trusted_comments, args.issue)
             synthesis_config = config["synthesis"]
-            assert isinstance(synthesis_config, dict)
+            if not isinstance(synthesis_config, dict):
+                print(f"ERROR: Expected dict, got {type(synthesis_config).__name__}", file=sys.stderr)
+                sys.exit(1)
             synthesis_marker = synthesis_config["marker"]
-            assert isinstance(synthesis_marker, str)
+            if not isinstance(synthesis_marker, str):
+                print(f"ERROR: Expected str, got {type(synthesis_marker).__name__}", file=sys.stderr)
+                sys.exit(1)
             existing = find_existing_synthesis(comments, synthesis_marker)
 
             result: dict[str, Any] = {

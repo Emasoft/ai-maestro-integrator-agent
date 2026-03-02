@@ -115,7 +115,7 @@ def detect_platform() -> PlatformInfo:
         # WSL detection methods
         wsl_indicators = [
             Path("/proc/version").exists()
-            and "microsoft" in Path("/proc/version").read_text().lower(),
+            and "microsoft" in Path("/proc/version").read_text(encoding="utf-8").lower(),
             Path("/proc/sys/fs/binfmt_misc/WSLInterop").exists(),
             "WSL_DISTRO_NAME" in os.environ,
             "WSL_INTEROP" in os.environ,
@@ -611,7 +611,7 @@ class SSHManager:
         """Read the public key content."""
         pub_path = identity.public_key_path
         if pub_path.exists():
-            return pub_path.read_text().strip()
+            return pub_path.read_text(encoding="utf-8").strip()
         return None
 
     def add_ssh_config_entry(self, identity: Identity) -> bool:
@@ -629,7 +629,7 @@ class SSHManager:
         # Read existing config
         existing_content = ""
         if config_path.exists():
-            existing_content = config_path.read_text()
+            existing_content = config_path.read_text(encoding="utf-8")
 
         # Check if entry already exists
         if f"Host {host_alias}" in existing_content:
@@ -936,8 +936,8 @@ class GitManager:
         return True
 
     @staticmethod
-    def bulk_configure(root: Path, identity: Identity) -> Tuple[int, int, int]:
-        """Bulk configure all repos under a directory. Returns (success, skipped, failed)."""
+    def bulk_configure(root: Path, identity: Identity) -> Tuple[int, int]:
+        """Bulk configure all repos under a directory. Returns (success, failed)."""
         info(f"Scanning for git repositories under: {root}")
 
         repos = []
@@ -950,12 +950,11 @@ class GitManager:
 
         if not repos:
             info("No git repositories found")
-            return 0, 0, 0
+            return 0, 0
 
         info(f"Found {len(repos)} repositories")
 
         success = 0
-        skipped = 0
         failed = 0
 
         for repo in repos:
@@ -964,8 +963,8 @@ class GitManager:
             else:
                 failed += 1
 
-        info(f"\nConfigured: {success}, Skipped: {skipped}, Failed: {failed}")
-        return success, skipped, failed
+        info(f"\nConfigured: {success}, Failed: {failed}")
+        return success, failed
 
 
 class GHCLIManager:
@@ -1132,7 +1131,7 @@ class Diagnostics:
             if identity.ssh_host_alias != "github.com":
                 config_path = PLATFORM.ssh_dir / "config"
                 if config_path.exists():
-                    content = config_path.read_text()
+                    content = config_path.read_text(encoding="utf-8")
                     if f"Host {identity.ssh_host_alias}" not in content:
                         issues.append(
                             (
@@ -1172,7 +1171,7 @@ class Diagnostics:
                 config_path = PLATFORM.ssh_dir / "config"
                 if (
                     not config_path.exists()
-                    or f"Host {identity.ssh_host_alias}" not in config_path.read_text()
+                    or f"Host {identity.ssh_host_alias}" not in config_path.read_text(encoding="utf-8")
                 ):
                     if identity.expanded_key_path.exists():
                         if self.ssh_manager.add_ssh_config_entry(identity):
@@ -1310,7 +1309,7 @@ def cmd_bulk_repo(config: Config, args: argparse.Namespace) -> int:
         error(f"Not a directory: {root}")
         return 1
 
-    success, skipped, failed = GitManager.bulk_configure(root, identity)
+    success, failed = GitManager.bulk_configure(root, identity)
     return 0 if failed == 0 else 1
 
 

@@ -116,12 +116,6 @@ def main() -> int:
         help="Commit message",
     )
     parser.add_argument(
-        "--push",
-        action="store_true",
-        default=True,
-        help="Push after commit (default: True)",
-    )
-    parser.add_argument(
         "--no-push",
         action="store_true",
         help="Do not push after commit",
@@ -134,7 +128,7 @@ def main() -> int:
     args = parser.parse_args()
 
     worktree_path = str(Path(args.worktree_path).resolve())
-    should_push = args.push and not args.no_push
+    should_push = not args.no_push
 
     # Verify worktree exists
     if not Path(worktree_path).exists():

@@ -237,8 +237,10 @@ def scan_for_injection(content: str, file_path: str, report: ValidationReport) -
     if is_validator:
         return 0
 
-    # Skip command substitution checks for shell scripts (it's expected) and markdown/tests
-    skip_command_sub = is_shell_script or is_markdown or is_test_file
+    # Backtick substitution is safe to skip in markdown (code formatting) and shell scripts/tests
+    skip_backtick_sub = is_shell_script or is_markdown or is_test_file
+    # Dollar-paren $(...) should still be checked in markdown — it can be a real injection vector
+    skip_dollar_sub = is_shell_script or is_test_file
 
     # Pre-compute Python-file context flags once, outside the per-line loop
     is_python_file = file_lower.endswith(".py")
@@ -253,12 +255,17 @@ def scan_for_injection(content: str, file_path: str, report: ValidationReport) -
         if stripped.startswith("#") and not stripped.startswith("#!"):
             continue
 
-        # Check command substitution (CRITICAL) - but not in shell scripts where it's expected
-        if not skip_command_sub:
-            for pattern, msg in COMMAND_SUBSTITUTION_PATTERNS:
-                if pattern.search(line):
-                    report.critical(f"{msg}: {line.strip()[:80]}", file_path, line_num)
-                    issues_found += 1
+        # Check command substitution (CRITICAL) - use per-pattern skip flags
+        # $(...) is checked in markdown too (real injection vector); backticks are skipped there
+        for pattern, msg in COMMAND_SUBSTITUTION_PATTERNS:
+            is_dollar_paren = "$(..." in msg
+            if is_dollar_paren and skip_dollar_sub:
+                continue
+            if not is_dollar_paren and skip_backtick_sub:
+                continue
+            if pattern.search(line):
+                report.critical(f"{msg}: {line.strip()[:80]}", file_path, line_num)
+                issues_found += 1
 
         # Check pipe to shell (CRITICAL) - dangerous in any context
         for pattern, msg in PIPE_TO_SHELL_PATTERNS:

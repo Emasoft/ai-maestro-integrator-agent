@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any, TypedDict
 
@@ -98,7 +99,10 @@ def detect_language(filepath: str) -> str:
 def get_pr_files(repo: str, pr_number: int) -> list[dict[str, Any]]:
     """Get changed files from a GitHub PR using gh CLI."""
     cmd = ["gh", "pr", "view", str(pr_number), "--repo", repo, "--json", "files"]
-    result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+    result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    if result.returncode != 0:
+        print(json.dumps({"error": f"gh command failed: {result.stderr.strip()}"}))
+        sys.exit(1)
     data: dict[str, Any] = json.loads(result.stdout)
     files: list[dict[str, Any]] = data.get("files", [])
     return files
@@ -107,7 +111,7 @@ def get_pr_files(repo: str, pr_number: int) -> list[dict[str, Any]]:
 def parse_diff_file(diff_path: str) -> list[str]:
     """Parse a diff file to extract changed file paths."""
     files = []
-    with open(diff_path, "r") as f:
+    with open(diff_path, "r", encoding="utf-8") as f:
         for line in f:
             if line.startswith("diff --git"):
                 parts = line.split()
@@ -154,7 +158,7 @@ def analyze_files(files: list[str | dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def main() -> None:
+def main() -> int:
     """Main entry point."""
     parser = argparse.ArgumentParser(description="Detect languages in PR changed files")
     parser.add_argument("--repo", help="GitHub repository (owner/repo)")
@@ -188,6 +192,8 @@ def main() -> None:
         ):
             print(f"  {lang}: {data['files']} files")
 
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

@@ -785,10 +785,9 @@ def validate_cross_platform(plugin_root: Path, report: ValidationReport) -> None
                     f"Consider providing cross-platform alternatives.",
                 )
     else:
+        # Reuse already-collected all_files instead of walking the filesystem a second time
         has_scripts = any(
-            any(f.endswith(ext) for ext in CROSSPLATFORM_EXTENSIONS)
-            for _, _, files in (_gi.walk(plugin_root, skip_dirs=skip_dirs) if _gi else os.walk(plugin_root))
-            for f in files
+            any(f.endswith(ext) for ext in CROSSPLATFORM_EXTENSIONS) for f in all_files
         )
         if has_scripts:
             report.passed("All scripts use cross-platform languages")

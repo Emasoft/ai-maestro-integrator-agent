@@ -47,7 +47,7 @@ def get_author_type(user: dict[str, Any]) -> str:
         if "actions" in login:
             return "mention-bot"
         return "agent-bot"
-    bot_patterns = ["[bot]", "-bot", "_bot", "-ai", "_ai", "agent"]
+    bot_patterns = ["[bot]", "-bot", "_bot", "-ai", "_ai", "-agent"]
     if any(pattern in login for pattern in bot_patterns):
         return "agent-bot"
     return "human"
@@ -152,6 +152,8 @@ def poll_prs(
         if not isinstance(pr, dict):
             continue
         pr_num = pr.get("number")
+        if pr_num is None:
+            continue
         checks_result = run_gh_command(["pr", "checks", str(pr_num), "--repo", repo])
         checks_str = checks_result if isinstance(checks_result, str) else ""
         ci_status = "passing"

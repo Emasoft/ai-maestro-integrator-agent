@@ -46,9 +46,10 @@ def run_gh_command(args: list[str]) -> tuple[bool, str]:
 
 def get_milestone_by_title(repo: str, title: str) -> dict[str, Any] | None:
     """Find a milestone by its title."""
+    escaped_title = title.replace("\\", "\\\\").replace('"', '\\"')
     success, output = run_gh_command([
         "api", f"repos/{repo}/milestones",
-        "--jq", f'.[] | select(.title=="{title}")'
+        "--jq", f'.[] | select(.title=="{escaped_title}")'
     ])
     if not success or not output:
         return None

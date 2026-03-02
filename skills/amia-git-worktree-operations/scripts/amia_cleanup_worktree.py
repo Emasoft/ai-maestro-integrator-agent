@@ -36,7 +36,7 @@ def find_main_repo(worktree_path: str) -> str | None:
         return None
 
     if git_file.is_file():
-        content = git_file.read_text().strip()
+        content = git_file.read_text(encoding="utf-8").strip()
         if content.startswith("gitdir:"):
             gitdir = content[7:].strip()
             # gitdir points to .git/worktrees/<name>, go up to find main repo

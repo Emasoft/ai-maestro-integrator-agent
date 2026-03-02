@@ -278,6 +278,12 @@ def check_bom(content: bytes, file_path: str, report: EncodingValidationReport) 
         report.stats["bom_issues"] += 1
         return False
 
+    # UTF-32 LE BOM must be checked before UTF-16 LE because both start with \xff\xfe
+    if content.startswith(b"\xff\xfe\x00\x00"):
+        report.critical(f"File has UTF-32 LE BOM (must use UTF-8): {file_path}")
+        report.stats["bom_issues"] += 1
+        return False
+
     # UTF-16 LE BOM
     if content.startswith(b"\xff\xfe"):
         report.critical(f"File has UTF-16 LE BOM (must use UTF-8): {file_path}")
@@ -287,12 +293,6 @@ def check_bom(content: bytes, file_path: str, report: EncodingValidationReport) 
     # UTF-16 BE BOM
     if content.startswith(b"\xfe\xff"):
         report.critical(f"File has UTF-16 BE BOM (must use UTF-8): {file_path}")
-        report.stats["bom_issues"] += 1
-        return False
-
-    # UTF-32 LE BOM
-    if content.startswith(b"\xff\xfe\x00\x00"):
-        report.critical(f"File has UTF-32 LE BOM (must use UTF-8): {file_path}")
         report.stats["bom_issues"] += 1
         return False
 
@@ -365,7 +365,7 @@ def check_escape_sequences(content: str, file_path: str, report: EncodingValidat
         # Detect bare newlines inside string values (should be \n)
         # This is a heuristic - proper parsing would require JSON parsing
         lines = content.split("\n")
-        for _line_num, line in enumerate(lines, 1):
+        for line in lines:
             # Check for tabs that might need escaping in JSON strings
             if "\t" in line and '"' in line:
                 # Very rough heuristic: tab between quotes might need escaping
@@ -392,7 +392,6 @@ def check_line_endings(content: bytes, file_path: str, suffix: str, report: Enco
         True if line endings are valid, False otherwise
     """
     has_crlf = b"\r\n" in content
-    _has_lf = b"\n" in content and not has_crlf
     has_cr_only = b"\r" in content and b"\n" not in content
     has_mixed = has_crlf and (content.replace(b"\r\n", b"").count(b"\n") > 0)
 

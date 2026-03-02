@@ -31,9 +31,15 @@ WEBHOOK_SECRET = os.environ.get("GITHUB_WEBHOOK_SECRET", "")
 WATCHED_BRANCHES = {"main", "master", "develop"}
 # SC-P1-003: Maximum allowed request body size (1 MB)
 MAX_CONTENT_LENGTH = 1_048_576
-EMASOFT_DIR = Path.cwd() / ".emasoft"
+EMASOFT_DIR = Path(os.environ.get("EMASOFT_DIR", str(Path.home() / ".emasoft")))
 LOG_DIR = EMASOFT_DIR / "webhook_logs"
 AIMAESTRO_API = os.environ.get("AIMAESTRO_API", "http://localhost:23000")
+# SC-P2-003: Validate AIMAESTRO_API must point to localhost to prevent SSRF
+from urllib.parse import urlparse as _urlparse
+_parsed_api = _urlparse(AIMAESTRO_API)
+if _parsed_api.hostname not in ("localhost", "127.0.0.1", "::1"):
+    print("ERROR: AIMAESTRO_API must point to localhost for security", file=sys.stderr)
+    sys.exit(1)
 
 
 def atomic_write_json(data: Any, path: Path) -> None:
@@ -65,8 +71,8 @@ def _send_maestro_message(subject: str, message: str, priority: str = "normal") 
             method="POST",
         )
         urllib.request.urlopen(req, timeout=10)
-    except (OSError, urllib.error.URLError):
-        pass
+    except (OSError, urllib.error.URLError) as e:
+        print(f"WARNING: Failed to send AI Maestro notification: {e}", file=sys.stderr)
 
 
 def handle_github_webhook(event_type: str, payload: dict[str, Any]) -> tuple[bool, str]:
@@ -144,7 +150,13 @@ class WebhookHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:
         # SC-P1-003: Enforce maximum content length to prevent memory exhaustion
-        content_length = int(self.headers.get("Content-Length", 0))
+        try:
+            content_length = int(self.headers.get("Content-Length", 0))
+        except (ValueError, TypeError):
+            self.send_response(400)
+            self.end_headers()
+            self.wfile.write(b"Invalid Content-Length")
+            return
         if content_length > MAX_CONTENT_LENGTH:
             self.send_response(413)
             self.end_headers()
@@ -284,7 +296,7 @@ if __name__ == "__main__":
 
     if args.test:
         # Test mode: process a JSON file
-        with open(args.test) as f:
+        with open(args.test, encoding="utf-8") as f:
             payload = json.load(f)
         event_type = payload.pop("_event_type", "workflow_run")
         success, msg = handle_github_webhook(event_type, payload)

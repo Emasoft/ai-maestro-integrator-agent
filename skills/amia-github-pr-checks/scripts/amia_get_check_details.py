@@ -27,6 +27,7 @@ import argparse
 import json
 import subprocess
 import sys
+from datetime import datetime
 from typing import Any
 
 
@@ -54,11 +55,9 @@ def get_pr_head_sha(pr_number: int, repo: str | None = None) -> str | None:
         return None
 
 
-def get_check_runs_for_sha(sha: str, repo: str | None = None) -> list[dict[str, Any]]:
+def get_check_runs_for_sha(sha: str, repo: str) -> list[dict[str, Any]]:
     """Get all check runs for a commit SHA."""
-    endpoint = "repos/{owner}/{repo}/commits/" + sha + "/check-runs"
-    if repo:
-        endpoint = f"repos/{repo}/commits/{sha}/check-runs"
+    endpoint = f"repos/{repo}/commits/{sha}/check-runs"
 
     cmd = ["api", endpoint, "--jq", ".check_runs"]
     exit_code, stdout, _ = run_gh_command(cmd)
@@ -102,8 +101,6 @@ def format_check_details(
     # Calculate duration if both timestamps available
     duration = None
     if started and completed:
-        from datetime import datetime
-
         try:
             start_dt = datetime.fromisoformat(started.replace("Z", "+00:00"))
             end_dt = datetime.fromisoformat(completed.replace("Z", "+00:00"))

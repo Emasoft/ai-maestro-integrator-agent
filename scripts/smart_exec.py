@@ -303,6 +303,7 @@ def ps_quote(s: str) -> str:
     return "'" + s.replace("'", "''") + "'"
 
 
+# NOTE: module and cmdlet values come from TOOL_DB (allowlist). If this function is ever exposed to user input, switch to -File with a temp script instead of -Command with string interpolation.
 def powershell_module_argv(module: str, cmdlet: str, cmdlet_args: list[str]) -> list[str]:
     """
     Download module to temp dir, import it, run cmdlet.
@@ -408,7 +409,7 @@ def build_argv_for_executor(executor: str, spec: ToolSpec, tool_args: list[str])
 def choose_best(spec: ToolSpec, tool_args: list[str], executors: dict[str, bool]) -> tuple[list[str], str]:
     # Prefer direct if already available (fast, avoids downloads)
     direct_cmd = spec.command or spec.name
-    if have(direct_cmd):
+    if executors.get("direct", True) and have(direct_cmd):
         return [direct_cmd] + tool_args, "direct"
 
     for ex in PRIORITY.get(spec.ecosystem, []):
