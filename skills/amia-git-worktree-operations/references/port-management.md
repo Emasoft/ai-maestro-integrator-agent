@@ -63,9 +63,9 @@ This document has been split into 5 parts for easier navigation and consumption.
 ---
 
 **Related Documents:**
-- [Worktree Fundamentals](worktree-fundamentals-index.md)
+- [Worktree Fundamentals](worktree-fundamentals.md)
 - [Registry System](registry-system.md)
 - [Creating Worktrees](creating-worktrees.md)
-- [Troubleshooting](troubleshooting-index.md)
+- [Troubleshooting](troubleshooting.md)
 
 **Last Updated:** 2026-01-10

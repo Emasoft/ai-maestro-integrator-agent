@@ -357,9 +357,9 @@ Port management in Integrator Agent provides:
 ---
 
 **Related Documents:**
-- [Worktree Fundamentals](worktree-fundamentals-index.md) - Understanding Git worktrees
+- [Worktree Fundamentals](worktree-fundamentals.md) - Understanding Git worktrees
 - [Registry System](registry-system.md) - Worktree registry structure
 - [Creating Worktrees](creating-worktrees.md) - Step-by-step worktree creation
-- [Troubleshooting](troubleshooting-index.md) - General worktree troubleshooting
+- [Troubleshooting](troubleshooting.md) - General worktree troubleshooting
 
 **Last Updated:** 2025-12-31

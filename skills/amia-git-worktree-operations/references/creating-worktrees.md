@@ -286,11 +286,11 @@ Creating git worktrees follows this standard process:
 
 ## Related Documentation
 
-- [Understanding Worktrees](./worktree-fundamentals-concepts.md) - What worktrees are and when to use them
+- [Understanding Worktrees](./worktree-fundamentals.md) - What worktrees are and when to use them
 - [Worktree Registry](./registry-system.md) - Complete registry format and management
 - [Managing Worktrees](./worktree-operations-management.md) - Ongoing maintenance and cleanup
 - [Worktree Workflows](./quick-start-workflows.md) - Common workflows and patterns
-- [Troubleshooting Guide](./troubleshooting-index.md) - In-depth troubleshooting
+- [Troubleshooting Guide](./troubleshooting.md) - In-depth troubleshooting
 
 ### Part Files
 - [Part 1: Standard Creation Flow](./creating-worktrees-part1-standard-flow.md)

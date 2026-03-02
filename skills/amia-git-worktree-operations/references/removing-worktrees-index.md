@@ -51,9 +51,9 @@ For overview and standard removal procedures, see [removing-worktrees.md](./remo
 
 ## Related Documents
 
-- [Troubleshooting](./troubleshooting-index.md) - When removal fails
+- [Troubleshooting](./troubleshooting.md) - When removal fails
 - [Registry System](./registry-system.md) - Understanding registry cleanup
-- [Worktree Fundamentals](./worktree-fundamentals-index.md) - Understanding worktree lifecycle
+- [Worktree Fundamentals](./worktree-fundamentals.md) - Understanding worktree lifecycle
 
 ---
 
