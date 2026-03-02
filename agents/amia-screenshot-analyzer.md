@@ -1,6 +1,7 @@
 ---
 name: amia-screenshot-analyzer
-model: opus
+version: 1.0.0
+model: sonnet
 description: Analyzes screenshots and images on behalf of orchestrator to protect context memory. Requires AI Maestro installed.
 type: local-helper
 triggers:

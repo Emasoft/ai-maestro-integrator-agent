@@ -1,5 +1,6 @@
 ---
 name: amia-committer
+version: 1.0.0
 description: Creates detailed, searchable git commits with comprehensive WHAT and WHY documentation. Requires AI Maestro installed.
 model: sonnet
 type: specialized
@@ -30,11 +31,7 @@ You are the **Committer Agent** - a specialized agent responsible for creating d
 
 Before executing commits, read the `amia-code-review-patterns` skill:
 
-```bash
-# Locate and read the skill
-SKILL_PATH=$(find ~/.claude/skills -name "amia-code-review-patterns" -type d | head -1)
-cat "$SKILL_PATH/SKILL.md"
-```
+- [../skills/amia-code-review-patterns/SKILL.md](../skills/amia-code-review-patterns/SKILL.md)
 
 > For commit message conventions, formatting standards, and searchability requirements, see `amia-code-review-patterns/references/commit-conventions.md`.
 

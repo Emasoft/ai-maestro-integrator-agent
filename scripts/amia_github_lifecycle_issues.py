@@ -13,7 +13,7 @@ Part of the Integrator GitHub Lifecycle Automation suite.
 import json
 import re
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -139,7 +139,7 @@ def attach_document_to_issue(
 | Type | {doc.doc_type} |
 | Status | {doc.status} |
 | Source | `{doc_path}` |
-| Attached | {datetime.now().strftime("%Y-%m-%d %H:%M")} |
+| Attached | {datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M")} |
 
 <details>
 <summary>Full Document Content</summary>
@@ -230,7 +230,7 @@ def attach_multiple_documents(
         + f"""
 
 ---
-*{len(docs)} documents attached by Integrator Agent at {datetime.now().strftime("%Y-%m-%d %H:%M")}*
+*{len(docs)} documents attached by Integrator Agent at {datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M")}*
 """
     )
 

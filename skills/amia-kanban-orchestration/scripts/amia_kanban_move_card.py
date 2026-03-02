@@ -106,7 +106,9 @@ def get_project_info(owner: str, repo: str, project_number: int) -> dict[str, An
         print(f"Error: Project {project_number} not found", file=sys.stderr)
         sys.exit(1)
 
-    assert isinstance(project, dict)
+    if not isinstance(project, dict):
+        print("Error: Unexpected project format from GraphQL response", file=sys.stderr)
+        sys.exit(1)
     return project
 
 

@@ -1,5 +1,6 @@
 ---
 name: amia-code-reviewer
+version: 1.0.0
 model: opus
 description: Reviews code changes for quality, security, and best practices. Requires AI Maestro installed.
 type: evaluator

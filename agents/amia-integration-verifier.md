@@ -1,8 +1,13 @@
 ---
 name: amia-integration-verifier
-model: opus
+version: 1.0.0
+model: sonnet
 description: Verifies feature integration and cross-component compatibility. Requires AI Maestro installed.
 type: evaluator
+triggers:
+  - Integration between components needs verification
+  - API contracts need validation
+  - Orchestrator assigns integration testing task
 auto_skills:
   - amia-session-memory
   - amia-tdd-enforcement

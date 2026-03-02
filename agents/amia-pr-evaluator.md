@@ -1,5 +1,6 @@
 ---
 name: amia-pr-evaluator
+version: 1.0.0
 model: opus
 description: Evaluates pull requests for merge readiness and quality standards. Requires AI Maestro installed.
 type: evaluator

@@ -15,7 +15,7 @@ This is a companion module to amia_github_report.py.
 import json
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import TYPE_CHECKING, Callable
 
@@ -57,7 +57,7 @@ def get_at_risk_items(
     Returns:
         List of at-risk items sorted by update time (oldest first).
     """
-    now = datetime.now()
+    now = datetime.now(tz=timezone.utc)
     at_risk = []
 
     for item in items:
@@ -92,7 +92,7 @@ def generate_markdown_report(
     Returns:
         Markdown formatted report string.
     """
-    now = datetime.now()
+    now = datetime.now(tz=timezone.utc)
     report_lines = [
         f"# Project #{project_number} Status Report",
         "",
@@ -212,7 +212,7 @@ def generate_json_report(
     Returns:
         JSON formatted report string.
     """
-    now = datetime.now()
+    now = datetime.now(tz=timezone.utc)
 
     report = {
         "project_number": project_number,

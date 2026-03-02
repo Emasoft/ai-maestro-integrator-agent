@@ -16,10 +16,25 @@ from pathlib import Path
 from typing import Any, Optional, Literal
 from dataclasses import dataclass
 
-SKILLS_DIR = Path(__file__).parent.parent.parent
-sys.path.insert(0, str(SKILLS_DIR / "shared"))
-from cross_platform import run_command, atomic_write_json  # type: ignore[import-not-found]  # noqa: E402
-from aimaestro_notify import notify_task_blocked  # type: ignore[import-not-found]  # noqa: E402
+PLUGIN_ROOT = Path(__file__).resolve().parent.parent.parent.parent
+sys.path.insert(0, str(PLUGIN_ROOT / "shared"))
+
+try:
+    from cross_platform import run_command, atomic_write_json  # noqa: E402
+except ImportError:
+    raise SystemExit(
+        "ERROR: shared/cross_platform.py not found. "
+        "This module is planned but not yet implemented."
+    )
+
+try:
+    from aimaestro_notify import notify_task_blocked  # noqa: E402
+except ImportError:
+    raise SystemExit(
+        "ERROR: shared/aimaestro_notify.py not found. "
+        "This module is planned but not yet implemented."
+    )
+
 
 # Status column mapping
 STATUS_COLUMNS = {

@@ -1,5 +1,6 @@
 ---
 name: amia-bug-investigator
+version: 1.0.0
 model: sonnet
 description: Investigates and reproduces bugs with systematic debugging approach. Requires AI Maestro installed.
 type: task-agent

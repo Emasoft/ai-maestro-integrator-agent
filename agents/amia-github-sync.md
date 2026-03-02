@@ -1,6 +1,7 @@
 ---
 name: amia-github-sync
-model: opus
+version: 1.0.0
+model: sonnet
 description: Synchronizes GitHub issues, PRs, and project boards. Requires AI Maestro installed.
 type: local-helper
 auto_skills:
