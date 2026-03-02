@@ -171,6 +171,12 @@ class WebhookHandler(BaseHTTPRequestHandler):
 
         # Verify signature
         signature = self.headers.get("X-Hub-Signature-256", "")
+        # Explicitly reject requests with no signature header before HMAC comparison
+        if not signature:
+            self.send_response(401)
+            self.end_headers()
+            self.wfile.write(b"Missing X-Hub-Signature-256 header")
+            return
         if not verify_signature(payload_bytes, signature, WEBHOOK_SECRET):
             self.send_response(401)
             self.end_headers()

@@ -359,17 +359,25 @@ def create_context_file(
 
     # SC-P1-007: Use secure temp file creation to avoid predictable path attacks
     fd, context_file = tempfile.mkstemp(
-        suffix=".md", prefix=f"issue-{issue_number}-context-"
+        prefix=f"issue-{issue_number}-", suffix=".md"
     )
-    with os.fdopen(fd, "w", encoding="utf-8") as f:
-        f.write(content)
+    # Restrict file permissions to owner only before writing any content
+    os.chmod(context_file, 0o600)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(content)
+    except BaseException:
+        os.unlink(context_file)
+        raise
 
     return context_file
 
 
 def post_comment(owner: str, repo: str, issue_number: int, body: str) -> dict[str, Any]:
     """Post a new comment on an issue."""
-    # SC-P1-005: Pipe body via stdin to avoid shell injection from user-controlled content
+    # SC-P1-005: Send body as JSON via --input stdin to avoid shell injection
+    # from user-controlled content and ensure proper encoding of special characters
+    payload = json.dumps({"body": body}).encode("utf-8")
     result = subprocess.run(
         [
             "gh",
@@ -377,27 +385,29 @@ def post_comment(owner: str, repo: str, issue_number: int, body: str) -> dict[st
             f"repos/{owner}/{repo}/issues/{issue_number}/comments",
             "-X",
             "POST",
-            "-F",
-            "body=@-",
+            "--input",
+            "-",
         ],
-        input=body,
+        input=payload,
         capture_output=True,
-        text=True,
+        text=False,
         check=False,
     )
 
     if result.returncode != 0:
         raise RuntimeError(
-            f"API_ERROR: Failed to post comment: {result.stderr.strip()}"
+            f"API_ERROR: Failed to post comment: {result.stderr.decode('utf-8', errors='replace').strip()}"
         )
 
-    comment_result: dict[str, Any] = json.loads(result.stdout)
+    comment_result: dict[str, Any] = json.loads(result.stdout.decode("utf-8"))
     return comment_result
 
 
 def update_comment(owner: str, repo: str, comment_id: int, body: str) -> dict[str, Any]:
     """Update an existing comment."""
-    # SC-P1-005: Pipe body via stdin to avoid shell injection from user-controlled content
+    # SC-P1-005: Send body as JSON via --input stdin to avoid shell injection
+    # from user-controlled content and ensure proper encoding of special characters
+    payload = json.dumps({"body": body}).encode("utf-8")
     result = subprocess.run(
         [
             "gh",
@@ -405,21 +415,21 @@ def update_comment(owner: str, repo: str, comment_id: int, body: str) -> dict[st
             f"repos/{owner}/{repo}/issues/comments/{comment_id}",
             "-X",
             "PATCH",
-            "-F",
-            "body=@-",
+            "--input",
+            "-",
         ],
-        input=body,
+        input=payload,
         capture_output=True,
-        text=True,
+        text=False,
         check=False,
     )
 
     if result.returncode != 0:
         raise RuntimeError(
-            f"API_ERROR: Failed to update comment: {result.stderr.strip()}"
+            f"API_ERROR: Failed to update comment: {result.stderr.decode('utf-8', errors='replace').strip()}"
         )
 
-    update_result: dict[str, Any] = json.loads(result.stdout)
+    update_result: dict[str, Any] = json.loads(result.stdout.decode("utf-8"))
     return update_result
 
 

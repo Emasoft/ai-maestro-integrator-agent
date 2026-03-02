@@ -13,6 +13,7 @@ Usage:
 """
 
 import argparse
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -25,6 +26,11 @@ except ImportError as e:
 # State file locations
 PLAN_STATE_FILE = Path(".claude/orchestrator-plan-phase.local.md")
 EXEC_STATE_FILE = Path(".claude/orchestrator-exec-phase.local.md")
+
+
+def _sanitize_md(value: str, max_len: int = 200) -> str:
+    """Sanitize a string for safe embedding in GitHub Markdown."""
+    return re.sub(r'[^\w\s\-.,():/\[\]]', '', str(value))[:max_len]
 
 
 def parse_frontmatter(file_path: Path) -> tuple[dict, str]:
@@ -65,27 +71,34 @@ def write_state_file(file_path: Path, data: dict, body: str) -> bool:
 
 def create_github_issue(module: dict, plan_id: str) -> str | None:
     """Create a GitHub Issue for a module."""
-    name = module.get("name", module.get("id"))
+    name = module.get("name") or module.get("id") or "unknown"
     criteria = module.get("acceptance_criteria", "See specifications")
     priority = module.get("priority", "medium")
 
-    body = f"""## Module: {name}
+    # Sanitize untrusted values before embedding in GitHub Markdown
+    safe_name = _sanitize_md(name)
+    safe_criteria = _sanitize_md(criteria, max_len=500)
+    safe_priority = _sanitize_md(priority, max_len=50)
+    safe_plan_id = _sanitize_md(plan_id, max_len=100)
+    safe_module_id = _sanitize_md(module.get('id', ''), max_len=100)
+
+    body = f"""## Module: {safe_name}
 
 ### Description
-Implementation of the {name} module.
+Implementation of the {safe_name} module.
 
 ### Acceptance Criteria
-- [ ] {criteria}
+- [ ] {safe_criteria}
 
 ### Priority
-{priority}
+{safe_priority}
 
 ### Related
-- Plan ID: {plan_id}
-- Module ID: {module.get('id')}
+- Plan ID: {safe_plan_id}
+- Module ID: {safe_module_id}
 """
 
-    labels = f"module,priority-{priority},status-todo"
+    labels = f"module,priority-{safe_priority},status-todo"
 
     try:
         result = subprocess.run(
