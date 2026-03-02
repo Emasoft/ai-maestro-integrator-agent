@@ -6,14 +6,16 @@ This script fetches the PR branch from the remote and creates an isolated
 worktree directory for parallel PR processing.
 
 Usage:
-    python amia_create_worktree.py --pr 123 --base-path /tmp/worktrees
-    python amia_create_worktree.py --pr 123 --repo /path/to/repo --base-path /tmp/worktrees
+    python amia_create_worktree.py --pr 123
+    python amia_create_worktree.py --pr 123 --repo /path/to/repo --base-path /custom/path
 """
 
 import argparse
 import json
+import os
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 
@@ -70,11 +72,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Create worktree for a PR")
     parser.add_argument("--pr", type=int, required=True, help="PR number")
     parser.add_argument("--repo", type=str, help="Path to main repository")
+    # Use platform-appropriate temp dir instead of hardcoded /tmp (CC-XP-001)
+    default_base_path = os.path.join(tempfile.gettempdir(), "worktrees")
     parser.add_argument(
         "--base-path",
         type=str,
-        default="/tmp/worktrees",
-        help="Base path for worktrees (default: /tmp/worktrees)",
+        default=default_base_path,
+        help=f"Base path for worktrees (default: {default_base_path})",
     )
     parser.add_argument(
         "--branch-name",

@@ -22,6 +22,8 @@ import re
 import stat
 import subprocess
 import sys
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -153,16 +155,22 @@ def compute_sha256(file_path: Path) -> str:
 def set_readonly(path: Path, recursive: bool = False) -> None:
     """Set file or directory to read-only."""
     if path.is_file():
-        # Remove write permissions: r--r--r--
-        current = path.stat().st_mode
-        path.chmod(current & ~stat.S_IWUSR & ~stat.S_IWGRP & ~stat.S_IWOTH)
+        # Remove write permissions cross-platform (CC-XP-003)
+        if sys.platform == "win32":
+            path.chmod(stat.S_IREAD)
+        else:
+            current = path.stat().st_mode
+            path.chmod(current & ~stat.S_IWUSR & ~stat.S_IWGRP & ~stat.S_IWOTH)
     elif path.is_dir():
         if recursive:
             for item in path.rglob("*"):
                 set_readonly(item, recursive=False)
-        # Directory: r-xr-xr-x
-        current = path.stat().st_mode
-        path.chmod(current & ~stat.S_IWUSR & ~stat.S_IWGRP & ~stat.S_IWOTH)
+        # Directory: remove write bits cross-platform (CC-XP-003)
+        if sys.platform == "win32":
+            path.chmod(stat.S_IREAD | stat.S_IEXEC)
+        else:
+            current = path.stat().st_mode
+            path.chmod(current & ~stat.S_IWUSR & ~stat.S_IWGRP & ~stat.S_IWOTH)
 
 
 def extract_attachment_url(comment_url: str) -> str | None:
@@ -275,16 +283,12 @@ def download_document(
     print(f"Target: {file_path}")
 
     try:
-        subprocess.run(
-            ["curl", "-fsSL", download_url, "-o", str(file_path)],
-            capture_output=True,
-            text=True,
-            check=True,
-            timeout=60,
-        )
-    except subprocess.CalledProcessError as e:
+        # Use urllib.request instead of curl for cross-platform compatibility (CC-XP-002)
+        req = urllib.request.Request(download_url, headers={"User-Agent": "amia-download/1.0"})
+        with urllib.request.urlopen(req, timeout=60) as response:
+            file_path.write_bytes(response.read())
+    except (urllib.error.URLError, urllib.error.HTTPError, OSError) as e:
         print(f"ERROR: Download failed: {e}")
-        print(f"stderr: {e.stderr}")
         return None
 
     if not file_path.exists() or file_path.stat().st_size == 0:
@@ -409,9 +413,8 @@ def verify_storage(project_root: Path | None = None) -> dict[str, Any]:
             report["stats"]["total_files"] += 1
             report["stats"]["total_size_bytes"] += md_file.stat().st_size
 
-            # Check read-only
-            mode = md_file.stat().st_mode
-            if mode & stat.S_IWUSR or mode & stat.S_IWGRP or mode & stat.S_IWOTH:
+            # Check read-only using os.access for cross-platform correctness (CC-XP-003)
+            if os.access(md_file, os.W_OK):
                 report["issues"].append({
                     "type": "writable_file",
                     "path": str(md_file),

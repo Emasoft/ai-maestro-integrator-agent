@@ -415,7 +415,8 @@ def validate_directory_structure(skill_path: Path, report: ValidationReport) -> 
     if scripts_dir.is_dir():
         for script in scripts_dir.iterdir():
             if script.is_file() and script.suffix in {".sh", ".py", ".bash"}:
-                if not os.access(script, os.X_OK):
+                # Skip executable check on Windows where os.access X_OK is unreliable
+                if sys.platform != "win32" and not os.access(script, os.X_OK):
                     report.major(
                         f"Script not executable: scripts/{script.name}",
                         f"scripts/{script.name}",

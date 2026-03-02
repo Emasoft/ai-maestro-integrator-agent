@@ -607,7 +607,8 @@ def validate_scripts(plugin_root: Path, report: ValidationReport) -> None:
     # Shell scripts
     sh_files = list(scripts_dir.glob("*.sh"))
     for sh_file in sh_files:
-        if not os.access(sh_file, os.X_OK):
+        # Skip executable check on Windows where os.access X_OK is unreliable
+        if sys.platform != "win32" and not os.access(sh_file, os.X_OK):
             report.major(
                 f"Shell script not executable: {sh_file.name}",
                 f"scripts/{sh_file.name}",
@@ -872,7 +873,8 @@ def validate_cross_platform(plugin_root: Path, report: ValidationReport) -> None
                     base_names.add(base)
                     break
             else:
-                if not item.suffix and os.access(item, os.X_OK):
+                # On Windows os.access X_OK is unreliable; treat extensionless files as potential binaries
+                if not item.suffix and (sys.platform == "win32" or os.access(item, os.X_OK)):
                     binary_files.append(rel_path)
                     base_names.add(name)
                 elif item.suffix == ".exe":

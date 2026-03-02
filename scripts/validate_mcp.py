@@ -172,7 +172,8 @@ def validate_mcp_server(
                 resolved = command.replace("${CLAUDE_PLUGIN_ROOT}", str(plugin_root))
                 resolved_path = Path(resolved)
                 if resolved_path.exists():
-                    if not os.access(resolved_path, os.X_OK):
+                    # Skip executable check on Windows where os.access X_OK is unreliable
+                    if sys.platform != "win32" and not os.access(resolved_path, os.X_OK):
                         report.major(f"Server {server_name} command not executable: {resolved}")
                     else:
                         report.passed(f"Server {server_name} command is executable")

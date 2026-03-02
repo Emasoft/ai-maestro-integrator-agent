@@ -562,7 +562,8 @@ def validate_hook_script_refs(
                 if resolved_path.suffix in {".sh", ".bash"}:
                     import os
 
-                    if not os.access(resolved_path, os.X_OK):
+                    # Skip executable check on Windows where os.access X_OK is unreliable
+                    if sys.platform != "win32" and not os.access(resolved_path, os.X_OK):
                         report.minor(
                             f"Hook script is not executable: {script_path}",
                             rel_hooks_path,

@@ -768,7 +768,8 @@ class PipelineSetup:
                         fix_description=f"Install {hook_name} hook",
                     )
                 )
-            elif not os.access(hook_path, os.X_OK):
+            # Skip executable check on Windows where os.access X_OK is unreliable
+            elif sys.platform != "win32" and not os.access(hook_path, os.X_OK):
                 self.status.issues.append(
                     PipelineIssue(
                         level=IssueLevel.MAJOR,
@@ -942,7 +943,8 @@ class PipelineSetup:
         """Check if a hook file is valid (executable and has content)."""
         if not hook_path.exists():
             return False
-        if not os.access(hook_path, os.X_OK):
+        # Skip executable check on Windows where os.access X_OK is unreliable
+        if sys.platform != "win32" and not os.access(hook_path, os.X_OK):
             return False
         if hook_path.stat().st_size < 100:
             return False

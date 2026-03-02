@@ -16,9 +16,10 @@ import hashlib
 import hmac
 import json
 import os
-import subprocess
 import sys
 import tempfile
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
@@ -56,12 +57,15 @@ def _send_maestro_message(subject: str, message: str, priority: str = "normal") 
         "content": {"type": "notification", "message": message},
     })
     try:
-        subprocess.run(
-            ["curl", "-s", "-X", "POST", f"{AIMAESTRO_API}/api/messages",
-             "-H", "Content-Type: application/json", "-d", payload],
-            capture_output=True, timeout=10,
+        # CC-XP-012: Use urllib instead of subprocess curl for cross-platform compat
+        req = urllib.request.Request(
+            f"{AIMAESTRO_API}/api/messages",
+            data=payload.encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST",
         )
-    except (subprocess.TimeoutExpired, FileNotFoundError):
+        urllib.request.urlopen(req, timeout=10)
+    except (OSError, urllib.error.URLError):
         pass
 
 

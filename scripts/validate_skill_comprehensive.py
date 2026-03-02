@@ -1675,8 +1675,8 @@ def validate_scripts_directory(skill_path: Path, report: ValidationReport) -> No
 
         # Check executable scripts
         if script.suffix in {".sh", ".py", ".bash"}:
-            # Check executable bit
-            if not os.access(script, os.X_OK):
+            # Check executable bit (skip on Windows where os.access X_OK is unreliable)
+            if sys.platform != "win32" and not os.access(script, os.X_OK):
                 report.major(
                     f"Script not executable: scripts/{script.name}",
                     f"scripts/{script.name}",

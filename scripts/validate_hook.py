@@ -453,8 +453,8 @@ def validate_script(script_path: Path, report: ValidationReport) -> None:
         report.major(f"Script not found: {script_path}")
         return
 
-    # Check executable permission
-    if not os.access(script_path, os.X_OK):
+    # Check executable permission (skip on Windows where os.access X_OK is unreliable)
+    if sys.platform != "win32" and not os.access(script_path, os.X_OK):
         report.major(f"Script not executable: {script_path.name}")
     else:
         report.passed(f"Script executable: {script_path.name}")
