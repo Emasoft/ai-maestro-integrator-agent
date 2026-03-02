@@ -17,6 +17,7 @@ import hmac
 import json
 import os
 import subprocess
+import sys
 import tempfile
 from datetime import datetime, timezone
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -27,6 +28,8 @@ from typing import Any
 # Configuration
 WEBHOOK_SECRET = os.environ.get("GITHUB_WEBHOOK_SECRET", "")
 WATCHED_BRANCHES = {"main", "master", "develop"}
+# SC-P1-003: Maximum allowed request body size (1 MB)
+MAX_CONTENT_LENGTH = 1_048_576
 EMASOFT_DIR = Path.cwd() / ".emasoft"
 LOG_DIR = EMASOFT_DIR / "webhook_logs"
 AIMAESTRO_API = os.environ.get("AIMAESTRO_API", "http://localhost:23000")
@@ -92,9 +95,16 @@ def notify_task_blocked(task_id: str, reason: str, issue_number: int | None = No
 
 
 def verify_signature(payload: bytes, signature: str, secret: str) -> bool:
-    """Verify GitHub webhook signature."""
+    """Verify GitHub webhook HMAC-SHA256 signature.
+
+    SC-P1-002: The secret is now required at startup, so it will never be empty
+    when this function is called during normal server operation. The guard is
+    kept as defence-in-depth for any future call-site that bypasses the startup
+    check.
+    """
     if not secret:
-        return True  # Skip verification if no secret configured
+        # Defence-in-depth: reject if secret is somehow missing at runtime
+        return False
 
     expected = (
         "sha256=" + hmac.new(secret.encode(), payload, hashlib.sha256).hexdigest()
@@ -129,9 +139,19 @@ class WebhookHandler(BaseHTTPRequestHandler):
     """HTTP handler for GitHub webhooks."""
 
     def do_POST(self) -> None:
-        # Read payload
+        # SC-P1-003: Enforce maximum content length to prevent memory exhaustion
         content_length = int(self.headers.get("Content-Length", 0))
-        payload_bytes = self.rfile.read(content_length)
+        if content_length > MAX_CONTENT_LENGTH:
+            self.send_response(413)
+            self.end_headers()
+            self.wfile.write(
+                f"Payload too large (max {MAX_CONTENT_LENGTH} bytes)".encode()
+            )
+            return
+
+        # Read payload with bounded size even if Content-Length header is absent
+        # or was tampered with (defence-in-depth)
+        payload_bytes = self.rfile.read(min(content_length, MAX_CONTENT_LENGTH))
 
         # Verify signature
         signature = self.headers.get("X-Hub-Signature-256", "")
@@ -218,10 +238,26 @@ class WebhookHandler(BaseHTTPRequestHandler):
         """Suppress default logging — intentionally ignores all parameters."""
 
 
-def run_server(port: int = 9000) -> None:
-    """Run webhook server."""
-    server = HTTPServer(("0.0.0.0", port), WebhookHandler)
-    print(f"Webhook server running on port {port}")
+def run_server(port: int = 9000, bind: str = "127.0.0.1") -> None:
+    """Run webhook server.
+
+    SC-P1-002: Refuses to start if GITHUB_WEBHOOK_SECRET is not configured.
+    SC-P1-004: Binds to 127.0.0.1 by default (localhost only). Pass --bind
+    0.0.0.0 explicitly if the server must be reachable from outside (e.g.
+    behind a reverse proxy).
+    """
+    # SC-P1-002: Require webhook secret at startup
+    if not WEBHOOK_SECRET:
+        print(
+            "ERROR: GITHUB_WEBHOOK_SECRET environment variable is not set.\n"
+            "The webhook server refuses to start without a shared secret.\n"
+            "Set it with: export GITHUB_WEBHOOK_SECRET='your-secret-here'",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    server = HTTPServer((bind, port), WebhookHandler)
+    print(f"Webhook server running on {bind}:{port}")
     server.serve_forever()
 
 
@@ -231,6 +267,11 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="GitHub CI webhook handler")
     parser.add_argument("--port", type=int, default=9000, help="Server port")
+    parser.add_argument(
+        "--bind",
+        default="127.0.0.1",
+        help="Address to bind to (default: 127.0.0.1, use 0.0.0.0 for all interfaces)",
+    )
     parser.add_argument(
         "--test", type=Path, help="Test with JSON file instead of running server"
     )
@@ -245,4 +286,4 @@ if __name__ == "__main__":
         success, msg = handle_github_webhook(event_type, payload)
         print(f"{'OK' if success else 'FAILED'}: {msg}")
     else:
-        run_server(args.port)
+        run_server(args.port, bind=args.bind)

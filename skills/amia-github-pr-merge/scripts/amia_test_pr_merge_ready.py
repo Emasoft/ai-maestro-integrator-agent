@@ -33,6 +33,7 @@ QUERY = """query($owner: String!, $repo: String!, $number: Int!) {
   }
 }"""
 
+
 def run_gql(query: str, variables: dict[str, Any]) -> dict[str, Any]:
     cmd = ["gh", "api", "graphql", "-f", f"query={query}"]
     for k, v in variables.items():
@@ -41,6 +42,7 @@ def run_gql(query: str, variables: dict[str, Any]) -> dict[str, Any]:
     if r.returncode != 0:
         raise RuntimeError(f"GraphQL failed: {r.stderr}")
     return json.loads(r.stdout)
+
 
 def check_ready(owner: str, repo: str, pr_num: int, skip_ci: bool, skip_threads: bool) -> dict:
     for _ in range(5):
@@ -57,7 +59,11 @@ def check_ready(owner: str, repo: str, pr_num: int, skip_ci: bool, skip_threads:
             break
         time.sleep(2)
 
-    reasons = []
+    # CC-P1-A0-006: If merge state is still UNKNOWN after all retries, flag it as blocking
+    if merge_state == "UNKNOWN":
+        reasons = [{"code": "MERGE_UNKNOWN", "message": "Merge state could not be determined after 5 retries (UNKNOWN)"}]
+    else:
+        reasons = []
     mergeable = pr.get("mergeable")
     if mergeable == "CONFLICTING":
         reasons.append({"code": "CONFLICTS", "message": "Has merge conflicts"})
@@ -83,6 +89,7 @@ def check_ready(owner: str, repo: str, pr_num: int, skip_ci: bool, skip_threads:
     exit_code = 6 if reasons else 0
     return {"ready": not reasons, "blocking_reasons": reasons, "merge_state_status": merge_state,
             "mergeable": mergeable, "review_decision": review, "exit_code": exit_code}
+
 
 def main() -> int:
     p = argparse.ArgumentParser(description="Check if PR is ready to merge")

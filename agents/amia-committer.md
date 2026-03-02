@@ -1,6 +1,7 @@
 ---
 name: amia-committer
 description: Creates detailed, searchable git commits with comprehensive WHAT and WHY documentation. Requires AI Maestro installed.
+model: sonnet
 type: specialized
 triggers:
   - Git commits need detailed WHAT/WHY documentation

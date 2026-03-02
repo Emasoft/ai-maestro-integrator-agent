@@ -400,7 +400,7 @@ github-projects-sync/
 │   └── plan-file-linking.md          # Plan file linking
 └── ../shared/
     ├── thresholds.py                 # Automation thresholds
-    └── aimaestro_notify.py           # AI Maestro CLI wrapper
+    └── aimaestro_notify.py           # AI Maestro CLI wrapper (TODO: not yet implemented)
 ```
 
 ---

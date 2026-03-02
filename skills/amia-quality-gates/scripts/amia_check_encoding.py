@@ -33,6 +33,7 @@ class EncodingChecker:
 
     def __init__(self):
         self.issues = []
+        self.files_with_issues: set[Path] = set()  # Track unique files that have issues
 
     def check_file(self, filepath: Path) -> bool:
         """
@@ -45,9 +46,11 @@ class EncodingChecker:
             content = filepath.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             self.issues.append(f"{filepath}: File is not UTF-8 encoded")
+            self.files_with_issues.add(filepath)  # Track this file as having issues
             return False
         except OSError as e:
             self.issues.append(f"{filepath}: Cannot read file ({e})")
+            self.files_with_issues.add(filepath)  # Track this file as having issues
             return False
 
         file_issues = []
@@ -196,6 +199,8 @@ class EncodingChecker:
             )
 
         self.issues.extend(file_issues)
+        if file_issues:
+            self.files_with_issues.add(filepath)  # Track this file as having issues
         return len(file_issues) == 0
 
     def check_files(self, filepaths: list[Path]) -> int:
@@ -214,7 +219,7 @@ class EncodingChecker:
 
             self.check_file(filepath)
 
-        return len([f for f in self.issues if f])
+        return len(self.files_with_issues)  # Count unique files with issues, not individual issue strings
 
 
 def main():

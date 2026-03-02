@@ -2,7 +2,7 @@
 name: amia-integrator-main-agent
 description: Integrator main agent - quality gates, code review, PR merge, release management. Requires AI Maestro installed.
 model: opus
-skills:
+auto_skills:
   - amia-code-review-patterns
   - amia-ai-pr-review-methodology
   - amia-quality-gates
@@ -189,7 +189,7 @@ assistant: I'll coordinate the integration of PR #456 through the quality gate p
 - All quality gates passed
 
 **Phase 5: Report to AMOA**
-- Integration status sent to orchestrator-eoa
+- Integration status sent to orchestrator-amoa
 - Merge status: APPROVED
 
 [DONE] integrator-main - PR_REVIEW PR#456 approved for merge
@@ -224,7 +224,7 @@ assistant: I'll coordinate the CI failure investigation and resolution.
 - Fix applied: Added pyjwt==2.8.0, CI now green
 
 **Phase 5: Report to AMOA**
-- Status report sent to orchestrator-eoa
+- Status report sent to orchestrator-amoa
 - Issue resolved: Main branch CI restored
 - Prevention: Added dependency check to pre-commit hook
 
@@ -261,7 +261,7 @@ assistant: I'll escalate this security blocker to AMOA for decision.
 
 **Phase 5: Escalation**
 - BLOCKED: Cannot merge PR with critical security issue
-- Escalated to orchestrator-eoa via AI Maestro
+- Escalated to orchestrator-amoa via AI Maestro
 - Recommendation: Reject PR, request implementor fix with parameterized query
 
 [FAILED] integrator-main - PR_REVIEW PR#789 blocked by security gate

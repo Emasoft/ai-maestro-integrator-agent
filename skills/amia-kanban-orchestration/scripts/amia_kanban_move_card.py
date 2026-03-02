@@ -217,6 +217,8 @@ def update_status(
         ]
     )
 
+    if isinstance(result, str):
+        return False
     return "errors" not in result
 
 
@@ -260,10 +262,10 @@ def main() -> None:
         sys.exit(1)
 
     new_status = sys.argv[5]
-    if new_status not in VALID_TRANSITIONS and new_status not in ["Done"]:
+    if new_status not in VALID_TRANSITIONS:
         print(f"Error: Invalid status '{new_status}'", file=sys.stderr)
         print(
-            f"Valid statuses: {list(VALID_TRANSITIONS.keys()) + ['Done']}",
+            f"Valid statuses: {list(VALID_TRANSITIONS.keys())}",
             file=sys.stderr,
         )
         sys.exit(1)

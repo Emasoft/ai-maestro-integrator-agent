@@ -35,7 +35,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_stop_hook.py"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_stop_hook.py",
+            "timeout": 60
           }
         ]
       }

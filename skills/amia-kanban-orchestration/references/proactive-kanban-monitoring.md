@@ -73,7 +73,7 @@ When changes are detected, notify relevant agents using the `agent-messaging` sk
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Status change notification:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Kanban Update: Issue #123 moved to AI Review`
 - **Priority**: `normal`
 - **Content**: `{"type": "kanban-status-change", "message": "Issue #123 moved from In Progress to AI Review by agent-name. PR likely created."}`

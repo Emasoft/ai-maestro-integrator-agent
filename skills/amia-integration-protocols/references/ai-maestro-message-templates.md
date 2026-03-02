@@ -50,7 +50,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Expected Message Format from AMOA:**
 ```json
 {
-  "from": "orchestrator-eoa",
+  "from": "orchestrator-amoa",
   "to": "ai-maestro-integrator",
   "subject": "Integration Request: <brief description>",
   "priority": "urgent|high|normal|low",
@@ -75,7 +75,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Received handoff document fails validation (missing UUID, invalid references, TBD placeholders).
 
 **Action:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[HANDOFF REJECTED] Invalid handoff document`
 - **Priority**: `high`
 - **Content**:
@@ -144,7 +144,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: PR review completed successfully, all quality gates passed, ready to merge.
 
 **Action:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456 - COMPLETED`
 - **Priority**: `normal`
 - **Content**:
@@ -169,7 +169,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Integration task in progress, awaiting sub-agent completion.
 
 **Action:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456 - IN PROGRESS`
 - **Priority**: `normal`
 - **Content**:
@@ -194,7 +194,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Integration task failed due to quality gate failure or technical issue.
 
 **Action:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456 - FAILED`
 - **Priority**: `high`
 - **Content**:
@@ -220,7 +220,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Critical blocker prevents integration (security vulnerability, resource conflict, policy unclear).
 
 **Action:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[BLOCKER] PR #456 Security Issue`
 - **Priority**: `urgent`
 - **Content**:
@@ -255,7 +255,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: PR review finished, all quality gates passed, no issues found.
 
 **Action:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `PR Review Complete: PR #456 - ALL GATES PASSED`
 - **Priority**: `normal`
 - **Content**:
@@ -286,7 +286,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: PR review found test failures or insufficient test coverage.
 
 **Action:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `PR Review Complete: PR #456 - TESTS FAILED`
 - **Priority**: `high`
 - **Content**:
@@ -321,7 +321,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Quality gates passed, PR approved for merge into main branch.
 
 **Action:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Merge Approved: PR #456`
 - **Priority**: `normal`
 - **Content**:
@@ -345,7 +345,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Quality gates failed, PR rejected and cannot be merged.
 
 **Action:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Merge Rejected: PR #456`
 - **Priority**: `high`
 - **Content**:
@@ -379,7 +379,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: All PRs merged, tests passed, release candidate ready for tagging.
 
 **Action:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Release Ready: v1.2.0`
 - **Priority**: `high`
 - **Content**:

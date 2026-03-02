@@ -41,6 +41,10 @@ env/
 # examples_dev, downloads_dev, libs_dev, builds_dev, etc.
 *_dev/
 
+# Logs and temp files
+*.log
+*.tmp
+
 # Rust
 target/
 Cargo.lock

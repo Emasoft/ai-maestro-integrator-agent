@@ -203,7 +203,7 @@ gh pr close <NUMBER>
 ### Notify Stakeholders
 
 Send a notification using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `PR #<NUMBER> Review Complete: <DECISION>`
 - **Priority**: `normal`
 - **Content**: `{"type": "review-complete", "message": "PR #<NUMBER> review completed. Decision: <DECISION>. Confidence: XX%. Report: <PATH>"}`

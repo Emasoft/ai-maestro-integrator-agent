@@ -92,7 +92,7 @@ def get_storage_root(project_root: Path | None = None) -> Path:
     if project_root:
         return project_root / ".eia" / "received"
 
-    env_root = os.environ.get("EIA_STORAGE_ROOT")
+    env_root = os.environ.get("AMIA_STORAGE_ROOT")
     if env_root:
         return Path(env_root)
 
@@ -246,7 +246,8 @@ def download_document(
     folder_path.mkdir(parents=True, exist_ok=True)
 
     # Determine filename
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    now = datetime.now(timezone.utc)
+    timestamp = now.strftime("%Y%m%d_%H%M%S")
     if doc_type:
         filename = f"{timestamp}_{doc_type}.md"
     else:
@@ -307,8 +308,8 @@ def download_document(
             "download_url": download_url,
         },
         "download": {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "agent": os.environ.get("EIA_AGENT_NAME", "unknown"),
+            "timestamp": now.isoformat(),
+            "agent": os.environ.get("AMIA_AGENT_NAME", "unknown"),
             "sha256": sha256,
             "file_size_bytes": file_path.stat().st_size,
         },
@@ -326,7 +327,6 @@ def download_document(
     # Set read-only
     set_readonly(file_path)
     set_readonly(metadata_path)
-    set_readonly(folder_path)
 
     print(f"Downloaded and locked: {file_path}")
     print(f"SHA256: {sha256}")

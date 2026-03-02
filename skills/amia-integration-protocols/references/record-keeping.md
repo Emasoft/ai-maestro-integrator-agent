@@ -92,7 +92,7 @@ Track the full lifecycle of an integration task from creation to completion.
 ## Request Details
 - **PR Number**: #456
 - **Branch**: feature/add-auth
-- **Requestor**: orchestrator-eoa
+- **Requestor**: orchestrator-amoa
 - **Priority**: high
 
 ## Routing

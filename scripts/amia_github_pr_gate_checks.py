@@ -110,10 +110,10 @@ def check_spec_gate(pr: PRInfo, project_root: Path) -> GateResult:
             str(search_script),
             "--uuid",
             spec_uuid,
-            "--output",
+            "--format",
             "json",
-            "--project-root",
-            str(project_root),
+            "--design-dir",
+            str(project_root / "design"),
         ]
         search_result = subprocess.run(cmd, capture_output=True, text=True)
 

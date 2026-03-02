@@ -1,6 +1,6 @@
 # Full Project Workflow: From Requirements to Delivery
 
-**Version**: 1.1.0
+**Version**: 1.1.8
 **Last Updated**: 2026-02-07
 
 This document describes the complete workflow for how the Emasoft agent system handles a project from initial requirements to delivery. All agents must understand this workflow to coordinate effectively.

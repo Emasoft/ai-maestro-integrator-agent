@@ -216,7 +216,7 @@ STATE=$(echo "$PR_COMMENTS" | jq -r '
 
 ```bash
 # If state passed via env var
-STATE=$(echo "$EIA_SESSION_STATE" | base64 -d | jq '.')
+STATE=$(echo "$AMIA_SESSION_STATE" | base64 -d | jq '.')
 ```
 
 ## Complete Deserialization Script

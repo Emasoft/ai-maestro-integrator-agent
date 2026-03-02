@@ -212,6 +212,7 @@ class DesignDocumentSearcher:
                 try:
                     content = file_path.read_text(encoding="utf-8")
                 except (OSError, UnicodeDecodeError):
+                    print(f"WARNING: Could not read {file_path}, skipping", file=sys.stderr)
                     content = ""
 
                 keyword_lower = keyword.lower()

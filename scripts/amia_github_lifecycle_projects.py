@@ -77,9 +77,8 @@ def get_project_id(project_number: int) -> Optional[str]:
     }
     """
 
-    variables = json.dumps({"owner": owner, "repo": repo, "number": project_number})
     result = run_gh_command(
-        ["api", "graphql", "-f", f"query={query}", "-f", f"variables={variables}"]
+        ["api", "graphql", "-f", f"query={query}", "-f", f"owner={owner}", "-f", f"repo={repo}", "-F", f"number={project_number}"]
     )
 
     if result.returncode != 0:
@@ -121,9 +120,8 @@ def get_project_field_id(
     }
     """
 
-    variables = json.dumps({"projectId": project_id})
     result = run_gh_command(
-        ["api", "graphql", "-f", f"query={query}", "-f", f"variables={variables}"]
+        ["api", "graphql", "-f", f"query={query}", "-f", f"projectId={project_id}"]
     )
 
     if result.returncode != 0:
@@ -163,9 +161,8 @@ def get_project_item_id(project_id: str, issue_number: int) -> Optional[str]:
     }
     """
 
-    variables = json.dumps({"owner": owner, "repo": repo, "issueNumber": issue_number})
     result = run_gh_command(
-        ["api", "graphql", "-f", f"query={query}", "-f", f"variables={variables}"]
+        ["api", "graphql", "-f", f"query={query}", "-f", f"owner={owner}", "-f", f"repo={repo}", "-F", f"issueNumber={issue_number}"]
     )
 
     if result.returncode != 0:
@@ -244,17 +241,8 @@ def move_issue_in_project(
     }
     """
 
-    variables = json.dumps(
-        {
-            "projectId": project_id,
-            "itemId": item_id,
-            "fieldId": field_id,
-            "valueId": status_id,
-        }
-    )
-
     result = run_gh_command(
-        ["api", "graphql", "-f", f"query={mutation}", "-f", f"variables={variables}"]
+        ["api", "graphql", "-f", f"query={mutation}", "-f", f"projectId={project_id}", "-f", f"itemId={item_id}", "-f", f"fieldId={field_id}", "-f", f"valueId={status_id}"]
     )
     if result.returncode != 0:
         print(f"ERROR: Failed to move issue: {result.stderr}", file=sys.stderr)

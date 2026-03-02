@@ -397,7 +397,7 @@ When receiving a PR review request from AMOA or another agent, check your inbox 
 ### Template 2: Reporting Review Completion to AMOA
 
 After completing a code review, notify the requesting agent. Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Code Review Complete: PR #123`
 - **Priority**: `normal`
 - **Content**: `{"type": "review-complete", "message": "PR #123 review completed. Confidence: 85%. Decision: APPROVED. Details: docs_dev/integration/reports/pr-123-review.md"}`
@@ -415,7 +415,7 @@ When review requires author input, send a message using the `agent-messaging` sk
 ### Template 4: Escalating Quality Gate Failure
 
 When a critical quality gate fails, send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[QUALITY GATE FAILED] PR #123`
 - **Priority**: `urgent`
 - **Content**: `{"type": "quality-gate-failure", "message": "PR #123 failed quality gate: SECURITY. Issue: SQL injection in auth.py:42. Action required: reject and request fix."}`

@@ -214,6 +214,8 @@ When verification fails, follow this escalation order:
 
 ## Scripts Reference
 
+> **Note:** The following scripts are planned but not yet implemented: `amia_release_verify.py`, `amia_changelog_generate.py`, `amia_version_bump.py`, `amia_create_release.py`, `amia_rollback.py`. Only `amia_cleanup_version_branches.sh` is currently available.
+
 ### amia_release_verify.py
 **Location**: `scripts/amia_release_verify.py`
 **Purpose**: Run pre-release verification checklist
@@ -237,6 +239,7 @@ python scripts/amia_release_verify.py --repo owner/repo --version 1.2.3
   "blockers": []
 }
 ```
+<!-- TODO: Script not yet implemented -->
 
 ### amia_changelog_generate.py
 **Location**: `scripts/amia_changelog_generate.py`
@@ -250,6 +253,7 @@ python scripts/amia_changelog_generate.py --repo owner/repo --from v1.2.2 --to H
 
 # Output: Markdown formatted changelog
 ```
+<!-- TODO: Script not yet implemented -->
 
 ### amia_version_bump.py
 **Location**: `scripts/amia_version_bump.py`
@@ -268,6 +272,7 @@ python scripts/amia_version_bump.py --repo owner/repo --type patch|minor|major
   "files_modified": ["package.json", "pyproject.toml", "VERSION"]
 }
 ```
+<!-- TODO: Script not yet implemented -->
 
 ### amia_create_release.py
 **Location**: `scripts/amia_create_release.py`
@@ -286,6 +291,7 @@ python scripts/amia_create_release.py --repo owner/repo --version 1.2.3 --notes 
   "status": "published"
 }
 ```
+<!-- TODO: Script not yet implemented -->
 
 ### amia_rollback.py
 **Location**: `scripts/amia_rollback.py`
@@ -309,6 +315,7 @@ python scripts/amia_rollback.py --repo owner/repo --from v1.2.3 --to v1.2.2 --re
   ]
 }
 ```
+<!-- TODO: Script not yet implemented -->
 
 ### amia_cleanup_version_branches.sh
 **Location**: `scripts/amia_cleanup_version_branches.sh`
@@ -429,7 +436,7 @@ Check for incoming release requests by checking your inbox using the `agent-mess
 ### Template 2: Reporting Release Readiness
 
 Notify requesting agent that release verification is complete. Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Release Verification: v1.2.3`
 - **Priority**: `high`
 - **Content**: `{"type": "release-ready", "message": "Release v1.2.3 verification complete. All gates passed. Awaiting user approval to publish."}`
@@ -438,7 +445,7 @@ Notify requesting agent that release verification is complete. Send a message us
 ### Template 3: Reporting Release Completion
 
 After successful release, send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Release Published: v1.2.3`
 - **Priority**: `normal`
 - **Content**: `{"type": "release-complete", "message": "Release v1.2.3 published successfully. URL: https://github.com/owner/repo/releases/tag/v1.2.3"}`
@@ -447,7 +454,7 @@ After successful release, send a message using the `agent-messaging` skill with:
 ### Template 4: Escalating Release Blocker
 
 When a critical issue blocks release, send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[RELEASE BLOCKED] v1.2.3`
 - **Priority**: `urgent`
 - **Content**: `{"type": "release-blocked", "message": "Release v1.2.3 blocked. Blocker: CI pipeline failure in security scan. Requires resolution before release."}`
@@ -456,7 +463,7 @@ When a critical issue blocks release, send a message using the `agent-messaging`
 ### Template 5: Initiating Rollback Notification
 
 When rollback is initiated, send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[ROLLBACK] v1.2.3 -> v1.2.2`
 - **Priority**: `urgent`
 - **Content**: `{"type": "rollback-initiated", "message": "Rollback initiated from v1.2.3 to v1.2.2. Reason: Critical regression in API. ETA: 15 minutes."

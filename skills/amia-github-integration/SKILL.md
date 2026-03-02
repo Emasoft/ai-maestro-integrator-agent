@@ -136,12 +136,14 @@ gh issue list --label "feature" --state open --json number --jq '.[].number' | \
 
 **Reference:** [references/automation-scripts.md](references/automation-scripts.md)
 
+> **Note:** The following automation scripts are planned but not yet implemented: `sync-projects-v2.py`, `bulk-label-assignment.py`, `monitor-pull-requests.py`, `bulk-create-issues.py`, `generate-project-report.py`. Currently only `gh_multiuser.py` is available in the `scripts/` directory.
+
 Use when:
-- Syncing GitHub Projects V2 with agent tasks (`sync-projects-v2.py`)
-- Bulk assigning labels at scale (`bulk-label-assignment.py`)
-- Monitoring PR status and CI/CD failures (`monitor-pull-requests.py`)
-- Importing issues from CSV/JSON (`bulk-create-issues.py`)
-- Generating project status reports (`generate-project-report.py`)
+- Syncing GitHub Projects V2 with agent tasks (`sync-projects-v2.py`) — **NOT YET IMPLEMENTED**
+- Bulk assigning labels at scale (`bulk-label-assignment.py`) — **NOT YET IMPLEMENTED**
+- Monitoring PR status and CI/CD failures (`monitor-pull-requests.py`) — **NOT YET IMPLEMENTED**
+- Importing issues from CSV/JSON (`bulk-create-issues.py`) — **NOT YET IMPLEMENTED**
+- Generating project status reports (`generate-project-report.py`) — **NOT YET IMPLEMENTED**
 
 ## Instructions
 
@@ -173,7 +175,7 @@ This skill produces the following outputs depending on the operation performed:
 
 - **Routing decision**: The name of the specialized skill to invoke (e.g., `amia-github-pr-workflow`, `amia-github-projects-sync`).
 - **Batch operation results**: A summary of affected items (issue numbers, PR numbers) and the changes applied (labels added/removed, statuses changed).
-- **Automation script output**: JSON or plain-text reports from the Python automation scripts (e.g., `generate-project-report.py` produces a Markdown status report).
+- **Automation script output**: JSON or plain-text reports from the Python automation scripts (e.g., `generate-project-report.py` produces a Markdown status report). **Note:** Most automation scripts are planned but not yet implemented; currently only `gh_multiuser.py` is available.
 - **Verification output**: Confirmation messages from `gh` CLI commands showing the current state of issues, PRs, or project boards after modifications.
 - **Dry-run previews**: Lists of items that would be affected by a batch operation, displayed before execution for review.
 
@@ -225,6 +227,8 @@ This is a GitHub Projects V2 synchronization task. According to the decision tre
 gh project list --owner Emasoft --format json
 
 # Then follow the amia-github-projects-sync skill instructions for bidirectional sync
+# NOTE: sync-projects-v2.py is planned but NOT YET IMPLEMENTED.
+# The command below is illustrative of the intended usage once the script is available:
 uv run python scripts/sync-projects-v2.py --repo Emasoft/repo-x --project 3 --direction bidirectional
 ```
 

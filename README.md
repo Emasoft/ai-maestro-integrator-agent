@@ -1,6 +1,6 @@
 # Integrator Agent (amia-)
 
-**Version**: 1.0.0
+**Version**: 1.1.8
 
 ## Overview
 
@@ -51,6 +51,11 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 | `amia-ci-failure-patterns` | CI failure patterns |
 | `amia-git-worktree-operations` | Worktree operations |
 | `amia-integration-protocols` | Shared utilities |
+| `amia-quality-gates` | Quality gate pipelines and enforcement |
+| `amia-release-management` | Release verification and changelog |
+| `amia-ai-pr-review-methodology` | AI-assisted PR review methodology |
+| `amia-label-taxonomy` | Issue/PR label taxonomy and standards |
+| `amia-session-memory` | Session state persistence |
 
 ### Hooks
 
@@ -58,6 +63,7 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 |------|-------|-------------|
 | `amia-branch-protection` | PreToolUse | Block pushes to main/master |
 | `amia-issue-closure-gate` | PreToolUse | Verify before issue closure |
+| `amia-stop-check` | Stop | Block exit until integration work is complete |
 
 ## Quality Gates
 
@@ -77,6 +83,13 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 5. Creates/reviews PR
 6. Merges when approved
 7. Reports to Assistant Manager
+
+## Prerequisites
+
+- **Python 3.8+** (recommended: 3.12)
+- **`gh` CLI** installed and authenticated (`gh auth login`)
+- **`uv`** for running Python scripts (`pip install uv`)
+- **AI Maestro** installed and running (for inter-agent messaging)
 
 ## Installation
 

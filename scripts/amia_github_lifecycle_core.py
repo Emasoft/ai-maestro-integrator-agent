@@ -14,7 +14,6 @@ Part of the Integrator GitHub Lifecycle Automation suite.
 import json
 import re
 import subprocess
-import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
@@ -125,11 +124,9 @@ def run_gh_command(
         )
         return result
     except subprocess.TimeoutExpired:
-        print(f"ERROR: gh command timed out: {' '.join(cmd)}", file=sys.stderr)
-        sys.exit(1)
+        raise TimeoutError(f"gh command timed out: {' '.join(cmd)}")
     except FileNotFoundError:
-        print("ERROR: gh CLI not found. Install with: brew install gh", file=sys.stderr)
-        sys.exit(1)
+        raise RuntimeError("gh CLI not found. Install with: brew install gh")
 
 
 def check_gh_auth() -> bool:
@@ -142,8 +139,7 @@ def get_repo_info() -> tuple[str, str]:
     """Get current repository owner and name."""
     result = run_gh_command(["repo", "view", "--json", "owner,name"])
     if result.returncode != 0:
-        print("ERROR: Not in a GitHub repository", file=sys.stderr)
-        sys.exit(1)
+        raise RuntimeError("Not in a GitHub repository")
     data = json.loads(result.stdout)
     return data["owner"]["login"], data["name"]
 
@@ -169,7 +165,7 @@ def parse_frontmatter(content: str) -> tuple[dict[str, str | list[str]], str]:
     frontmatter: dict[str, str | list[str]] = {}
     for line in lines[1:end_idx]:
         if ":" in line:
-            key, _, value = line.partition(":")
+            key, _, value = line.partition(":")  # NOTE: partition splits on first colon only, preserving URL values correctly
             key = key.strip()
             value_str = value.strip()
             # Handle quoted strings
@@ -178,6 +174,7 @@ def parse_frontmatter(content: str) -> tuple[dict[str, str | list[str]], str]:
             elif value_str.startswith("'") and value_str.endswith("'"):
                 value_str = value_str[1:-1]
             # Handle arrays (simple parsing)
+            # WARNING: Does not support YAML block scalars, multiline values, or values with apostrophes in array syntax
             elif value_str.startswith("[") and value_str.endswith("]"):
                 try:
                     parsed = json.loads(value_str.replace("'", '"'))

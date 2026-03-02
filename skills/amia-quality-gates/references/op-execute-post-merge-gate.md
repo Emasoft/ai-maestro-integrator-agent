@@ -195,7 +195,7 @@ git push origin main
 ### Notification
 
 Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[CRITICAL] Main Branch Broken - PR #<NUMBER>`
 - **Priority**: `urgent`
 - **Content**: `{"type": "post-merge-failure", "message": "PR #<NUMBER> broke main branch. CI failing. Revert recommended."}`

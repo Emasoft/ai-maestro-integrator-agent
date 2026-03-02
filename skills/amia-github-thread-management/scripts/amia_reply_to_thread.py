@@ -93,9 +93,6 @@ def get_pr_review_id_for_thread(thread_id: str) -> str:
 
 def reply_to_thread(thread_id: str, body: str) -> dict[str, Any]:
     """Add a reply comment to a review thread."""
-    # Get the PR review ID first (not currently used but kept for future needs)
-    _ = get_pr_review_id_for_thread(thread_id)
-
     # Use GraphQL variables for secure parameter binding (prevents injection)
     mutation = """
     mutation($threadId: ID!, $body: String!) {

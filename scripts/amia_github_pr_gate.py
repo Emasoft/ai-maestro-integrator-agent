@@ -96,7 +96,8 @@ def get_pr_info(pr_number: int, repo: Optional[str] = None) -> Optional[PRInfo]:
 
     # Parse status checks
     checks = data.get("statusCheckRollup", [])
-    checks_passing = all(
+    # bool(checks) prevents vacuous truth: if no checks exist, checks_passing must be False
+    checks_passing = bool(checks) and all(
         c.get("conclusion") == "SUCCESS" for c in checks if c.get("conclusion")
     )
     checks_pending = any(

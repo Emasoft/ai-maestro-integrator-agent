@@ -28,7 +28,7 @@ Exit codes:
 Environment variables:
     CLAUDE_PROJECT_ROOT - Project root directory (defaults to current directory)
     ORCHESTRATOR_DEBUG - Enable debug logging (1=enabled, 0=disabled)
-    EIA_PROJECT_NUMBER - GitHub Projects number to check (optional)
+    AMIA_PROJECT_NUMBER - GitHub Projects number to check (optional)
 """
 
 import json
@@ -238,11 +238,12 @@ def get_project_items_in_progress(project_number: Optional[int], log_file: Path)
     }
     """
 
-    variables = json.dumps({"owner": owner, "repo": repo, "number": project_number})
     result = run_gh_command([
         "api", "graphql",
         "-f", f"query={query}",
-        "-f", f"variables={variables}",
+        "-f", f"owner={owner}",
+        "-f", f"repo={repo}",
+        "-F", f"number={project_number}",
     ], timeout=60)
 
     if result.returncode != 0:
@@ -437,7 +438,7 @@ def main() -> int:
         ]
 
     # Check 2: GitHub Projects items in progress
-    project_number_str = os.environ.get("EIA_PROJECT_NUMBER", "")
+    project_number_str = os.environ.get("AMIA_PROJECT_NUMBER", "")
     project_number = int(project_number_str) if project_number_str.isdigit() else None
     project_items = get_project_items_in_progress(project_number, log_file)
     if project_items:

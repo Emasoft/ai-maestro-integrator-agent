@@ -132,7 +132,7 @@ Follow the appropriate escalation path when a quality gate fails. Ensures proper
 2. **Document findings in review report**
 
 3. **Notify author and assigned reviewers:** Send a message using the `agent-messaging` skill with:
-   - **Recipient**: `orchestrator-eoa`
+   - **Recipient**: `orchestrator-amoa`
    - **Subject**: `Review Gate Failed: PR #<NUMBER>`
    - **Priority**: `high`
    - **Content**: `{"type": "gate-failure", "message": "PR #<NUMBER> failed review gate. Confidence: XX%. Issues: <SUMMARY>"}`
@@ -192,7 +192,7 @@ For urgent cases, overrides may be requested:
 2. **Assess severity and rollback need**
 
 3. **Notify maintainers immediately:** Send a message using the `agent-messaging` skill with:
-   - **Recipient**: `orchestrator-eoa`
+   - **Recipient**: `orchestrator-amoa`
    - **Subject**: `[CRITICAL] Post-Merge Failure: PR #<NUMBER>`
    - **Priority**: `urgent`
    - **Content**: `{"type": "post-merge-failure", "message": "CRITICAL: PR #<NUMBER> broke main branch. Immediate action required."}`
@@ -248,7 +248,7 @@ EOF
 
 # Step 3: Notify via AI Maestro
 # Send a message using the agent-messaging skill with:
-#   Recipient: orchestrator-eoa
+#   Recipient: orchestrator-amoa
 #   Subject: Security Gate Failure: PR #123
 #   Priority: high
 #   Content: {"type": "security-gate-failure", "message": "PR #123 failed security gate (65%). SQL injection and hardcoded credentials found. Requires fixes before merge."}

@@ -127,7 +127,7 @@ This document provides step-by-step procedures for each integration phase. Follo
 - **Verification**: Report is comprehensive
 
 ### 2. Send to AMOA
-- Execute curl POST to orchestrator-eoa
+- Execute curl POST to orchestrator-amoa
 - Include link to detailed report file
 - **Verification**: Message sent
 

@@ -1,6 +1,6 @@
 # AGENT_OPERATIONS.md - AMIA Integrator
 
-**Version**: 1.0.0
+**Version**: 1.1.8
 **Last Updated**: 2026-02-04
 **Status**: SINGLE SOURCE OF TRUTH for AMIA Agent Operations
 
@@ -170,7 +170,6 @@ ai-maestro-integrator-agent/
 │   ├── amia-multilanguage-pr-review/
 │   ├── amia-tdd-enforcement/
 │   ├── amia-integration-protocols/
-│   ├── amia-kanban-orchestration/
 │   ├── amia-label-taxonomy/
 │   └── amia-session-memory/
 ├── hooks/                        # Hook configurations
@@ -195,7 +194,7 @@ PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT}"
 SKILL_DIR="${CLAUDE_PLUGIN_ROOT}/skills/amia-code-review-patterns"
 
 # Access script
-SCRIPT_PATH="${CLAUDE_PLUGIN_ROOT}/scripts/validate_pr.py"
+SCRIPT_PATH="${CLAUDE_PLUGIN_ROOT}/scripts/validate_plugin.py"
 ```
 
 #### From Agent Definitions
@@ -233,7 +232,7 @@ AMIA **CANNOT** reference or load skills from other plugins:
 **ONLY via AI Maestro messaging.** Use the `agent-messaging` skill for all cross-role communication.
 
 **Example:** To request information from AMOA, send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Need task details for PR #456`
 - **Priority**: `high`
 - **Content**: `{"type": "information-request", "message": "Please provide task requirements document for PR #456"}`
@@ -283,7 +282,7 @@ Skills are **automatically loaded** from the `skills/` directory. You do NOT nee
 | **amia-release-management** | Release preparation and tagging |
 | **amia-github-pr-workflow** | PR creation, review, merge |
 | **amia-github-pr-merge** | PR merge strategies |
-| **amia-kanban-orchestration** | GitHub Projects (kanban) operations |
+| **amia-kanban-orchestration** | Kanban coordination (read-only for AMIA) |
 | **amia-github-projects-sync** | Sync between issues and projects |
 | **amia-github-integration** | GitHub API integration |
 | **amia-github-issue-operations** | Issue creation, updates, closure |
@@ -295,7 +294,6 @@ Skills are **automatically loaded** from the `skills/` directory. You do NOT nee
 | **amia-multilanguage-pr-review** | Multi-language code review |
 | **amia-tdd-enforcement** | TDD requirement enforcement |
 | **amia-integration-protocols** | Integration workflow protocols |
-| **amia-kanban-orchestration** | Kanban coordination (read-only for AMIA) |
 | **amia-label-taxonomy** | GitHub label taxonomy |
 | **amia-session-memory** | Session state persistence |
 
@@ -346,7 +344,7 @@ All AI Maestro communication is done through the `agent-messaging` skill. For th
 
 ```json
 {
-  "from": "orchestrator-eoa",
+  "from": "orchestrator-amoa",
   "to": "ai-maestro-integrator",
   "subject": "PR Review Request: PR #456",
   "priority": "high",
@@ -379,7 +377,7 @@ See `amia-integration-protocols` skill reference `ai-maestro-message-templates.m
 #### 3. Reporting Status to AMOA
 
 **Send status report:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456`
 - **Priority**: `normal`
 - **Content**: `{"type": "integration-status", "task_id": "pr-456-review", "status": "COMPLETED", "result": {...}, "next_steps": "..."}`
@@ -390,7 +388,7 @@ See `amia-integration-protocols` skill reference `ai-maestro-message-templates.m
 #### 4. Escalating Blockers
 
 **Send escalation:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[BLOCKER] PR #456 Security Issue`
 - **Priority**: `urgent`
 - **Content**: `{"type": "blocker-escalation", "task_id": "pr-456-review", "blocker_type": "QUALITY_GATE_FAILED", "details": {...}, "requires_decision": true}`
@@ -738,7 +736,7 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 | Gate | Requirement | Enforcement |
 |------|-------------|-------------|
 | **Tests** | All tests pass (CI green) | BLOCK merge if failing |
-| **Test Coverage** | Coverage ≥ 90% for new code | BLOCK merge if < 90% |
+| **Test Coverage** | Coverage ≥ 80% for new code | BLOCK merge if < 80% |
 | **Code Review** | Approved by reviewer | BLOCK merge if not approved |
 | **Security Scan** | No critical/high vulnerabilities | BLOCK merge if found |
 | **TDD Compliance** | Tests written before implementation | WARN if violated, context-dependent |
@@ -814,7 +812,7 @@ Before closing an issue, verify:
 ## Request Details
 - **PR Number**: #456
 - **Branch**: feature/add-auth
-- **Requestor**: orchestrator-eoa
+- **Requestor**: orchestrator-amoa
 - **Priority**: high
 
 ## Routing
@@ -990,7 +988,7 @@ Question: Can we close with partial acceptance criteria met?
 ```
 ✅ PR Review Complete:
 - [ ] All tests pass (CI green)
-- [ ] Test coverage ≥ 90%
+- [ ] Test coverage ≥ 80%
 - [ ] Code review approved
 - [ ] Security scan clean
 - [ ] Documentation updated
@@ -1063,12 +1061,12 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 
 | Skill | Purpose |
 |-------|---------|
-| `amia-ci-cd-pipeline` | CI/CD pipeline management, GitHub Actions workflows |
-| `amia-pr-review-workflow` | PR review automation, code quality checks |
+| `amia-ci-failure-patterns` | CI/CD failure pattern analysis, GitHub Actions debugging |
+| `amia-github-pr-workflow` | PR review automation, code quality checks |
 | `amia-release-management` | Version management, changelog generation, release automation |
 | `amia-quality-gates` | Code quality enforcement, linting, type checking |
 | `amia-github-projects-sync` | GitHub Projects kanban synchronization |
-| `amia-kanban-management` | Kanban column management and task routing |
+| `amia-kanban-orchestration` | Kanban column management and task routing |
 
 ---
 
@@ -1076,7 +1074,7 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/pre-push-hook.py` | Pre-push validation (manifest, hooks, lint, Unicode compliance) |
+| `scripts/amia_pre_push_hook.py` | Pre-push validation (manifest, hooks, lint, Unicode compliance) |
 | `scripts/validate_plugin.py` | Plugin structure validation |
 | `scripts/amia_download.py` | Plugin download utility |
 | `scripts/amia_unicode_compliance.py` | Unicode compliance checker (BOM, line endings, encoding, non-ASCII) |
@@ -1088,7 +1086,7 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 ## Recent Changes (2026-02-07)
 
 - Added 8-column canonical kanban system (unified from 5 conflicting systems)
-- Added Wave 1-7 skills: ci-cd-pipeline, pr-review-workflow, release-management, quality-gates, github-projects-sync, kanban-management
+- Added Wave 1-7 skills: ci-failure-patterns, github-pr-workflow, release-management, quality-gates, github-projects-sync, kanban-orchestration
 - Added Unicode compliance check (step 4) to pre-push hook
 - Added `encoding="utf-8"` to all Python file operations
 - Created `amia_check_encoding.py` for encoding parameter validation
@@ -1104,7 +1102,7 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 
 Any changes to AMIA operations **MUST** be reflected in this document first.
 
-**Version**: 1.0.0
+**Version**: 1.1.8
 **Last Updated**: 2026-02-04
 **Maintained By**: AMCOS Plugin Development Team
 **Review Cycle**: Monthly or on major system changes

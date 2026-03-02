@@ -277,12 +277,12 @@ def main() -> int:
         return 0
 
     # Log hook fired
-    log("FIRED", f"PreToolUse(Bash) - command: {command[:100]}...", log_file)
+    log("FIRED", f"PreToolUse(Bash) - command: {command[:100]}{'...' if len(command) > 100 else ''}", log_file)
 
     # Check if this is a git push command
     if not is_git_push_command(command):
         # Not a git push - allow command without branch checks
-        debug(f"Not a git push command, allowing: {command[:50]}...", log_file)
+        debug(f"Not a git push command, allowing: {command[:50]}{'...' if len(command) > 50 else ''}", log_file)
         return 0
 
     debug("Git push detected - checking branch protection", log_file)

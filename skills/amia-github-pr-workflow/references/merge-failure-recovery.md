@@ -170,7 +170,7 @@ git push origin main
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Notify orchestrator:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[CI FAILURE] Main branch temporarily broken`
 - **Priority**: `urgent`
 - **Content**: `{"type": "main-branch-issue", "message": "Main branch CI failing after PR #123 merge. Recovery action: [REVERT/HOTFIX]. ETA for resolution: [TIME]."}`
@@ -279,7 +279,7 @@ Notify reviewer if their approved PR caused issues. Send a message using the `ag
 ### Notify Orchestrator
 
 Always notify orchestrator of significant merge issues. Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[MERGE STATUS] PR #123`
 - **Priority**: `high`
 - **Content**: `{"type": "merge-status", "message": "PR #123 merge status: [FAILED/REVERTED/RECOVERED]. Reason: [REASON]. Next steps: [STEPS]."}`
@@ -302,7 +302,7 @@ Rollback immediately if:
 # (If using branch protection, CI failure should block this automatically)
 
 # Alert team: Send a message using the agent-messaging skill with:
-#   Recipient: orchestrator-eoa
+#   Recipient: orchestrator-amoa
 #   Subject: [CRITICAL] Main branch corrupted - Rollback in progress
 #   Priority: urgent
 #   Content: {"type": "critical-rollback", "message": "Main branch corrupted by PR #123. Initiating immediate rollback. All merges blocked until resolved."}

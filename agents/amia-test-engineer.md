@@ -39,8 +39,7 @@ The Test Engineer Agent is a **TDD ENFORCEMENT SPECIALIST** responsible for ensu
 > Start with: `amia-tdd-enforcement/SKILL.md`
 >
 > Key references:
-> - `amia-tdd-enforcement/references/test-engineering.md` - Full test procedures, coverage analysis, quality review
-> - `amia-tdd-enforcement/references/test-engineering.md` - RED-GREEN-REFACTOR verification steps
+> - `amia-tdd-enforcement/references/test-engineering.md` - Full test procedures, coverage analysis, quality review, RED-GREEN-REFACTOR verification steps
 > - `amia-quality-gates/SKILL.md` - Three-gate system implementation
 > - `amia-tdd-enforcement/SKILL.md` - RULE 14 compliance (USER_REQUIREMENTS.md)
 >

@@ -101,13 +101,19 @@ def check_quiet_period(pr_number, owner, repo):
     from datetime import datetime, timezone
 
     # Get latest activity timestamps
-    cmd = f"gh api repos/{owner}/{repo}/issues/{pr_number}/comments --jq '.[].created_at' | tail -1"
-    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    # Use list form to avoid shell injection (CWE-78)
+    result = subprocess.run(
+        ["gh", "api", f"repos/{owner}/{repo}/issues/{pr_number}/comments", "--jq", ".[].created_at"],
+        capture_output=True, text=True
+    )
+    # Get last line (equivalent to | tail -1)
+    lines = result.stdout.strip().splitlines()
+    last_line = lines[-1] if lines else ""
 
-    if not result.stdout.strip():
+    if not last_line:
         return True  # No comments at all
 
-    last_comment = datetime.fromisoformat(result.stdout.strip().replace('Z', '+00:00'))
+    last_comment = datetime.fromisoformat(last_line.replace('Z', '+00:00'))
     now = datetime.now(timezone.utc)
 
     # Use judgment - is this recent enough to indicate ongoing activity?

@@ -37,7 +37,7 @@ echo ""
 REMOTE="$1"
 URL="$2"
 
-echo -e "${BLUE}Pushing to:${NC} $REMOTE ($URL)"
+echo -e "${BLUE}Pushing to:${NC} ${REMOTE} (${URL})"
 echo ""
 
 # Check if plugin files changed in the commits being pushed
@@ -65,11 +65,15 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
         esac
     done <<< "$CHANGED_FILES"
 
-    if [ "$PLUGIN_FILES_CHANGED" = false ]; then
-        echo -e "${GREEN}No plugin files changed. Skipping validation.${NC}"
-        exit 0
+    if [ "$PLUGIN_FILES_CHANGED" = true ]; then
+        NEEDS_VALIDATION=true
     fi
 done
+
+if [ "${NEEDS_VALIDATION:-false}" = false ]; then
+    echo -e "${GREEN}No plugin files changed in any ref. Skipping validation.${NC}"
+    exit 0
+fi
 
 echo -e "${BLUE}Running plugin validation...${NC}"
 echo ""
@@ -136,24 +140,14 @@ if command -v gh &> /dev/null; then
         echo -e "${YELLOW}  Some scripts failed to sync. Using existing local copies.${NC}"
     else
         echo -e "${GREEN}  Synced ${#CPV_FILES[@]} validation scripts from ${CPV_REPO}.${NC}"
-        # Stage the updated scripts so they're included in the push
-        git add scripts/validate_*.py scripts/cpv_validation_common.py \
-            scripts/bump_version.py scripts/check_version_consistency.py \
-            scripts/gitignore_filter.py scripts/lint_files.py \
-            scripts/setup_git_hooks.py scripts/setup_marketplace_automation.py \
-            scripts/setup_plugin_pipeline.py scripts/smart_exec.py \
-            scripts/update_marketplace_metadata.py 2>/dev/null || true
-        # If any scripts changed, amend the latest commit to include them
-        if ! git diff --cached --quiet 2>/dev/null; then
-            echo -e "${BLUE}  Updated scripts differ from committed versions. Amending commit...${NC}"
-            git commit --amend --no-edit --quiet 2>/dev/null || true
-        fi
+        echo -e "${YELLOW}  NOTE: CPV validation scripts updated locally. Commit them separately before next push.${NC}"
     fi
 else
     echo -e "${YELLOW}  gh CLI not found. Skipping CPV sync. Using existing local copies.${NC}"
 fi
 echo ""
 # --- End auto-sync ---
+# NOTE: Downloaded scripts are used in-place. For full supply-chain integrity, pin to a specific CPV release tag.
 
 # Check that the validator script exists
 if [ ! -f "scripts/validate_plugin.py" ]; then
@@ -176,7 +170,7 @@ set -e
 echo ""
 
 # Handle exit codes - CRITICAL and MAJOR block push
-case $VALIDATION_EXIT_CODE in
+case "$VALIDATION_EXIT_CODE" in
     0)
         echo -e "${GREEN}========================================${NC}"
         echo -e "${GREEN}  PASSED: All validation checks passed${NC}"

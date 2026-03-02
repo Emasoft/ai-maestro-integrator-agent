@@ -119,7 +119,7 @@ Send a message using the `agent-messaging` skill with:
 ### Status Change Notification
 
 Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Kanban Update: Issue #123 moved to AI Review`
 - **Priority**: `normal`
 - **Content**: `{"type": "kanban-status-change", "message": "Issue #123 moved from In Progress to AI Review by agent-name. PR likely created."}`

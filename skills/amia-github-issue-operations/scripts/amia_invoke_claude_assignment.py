@@ -357,11 +357,11 @@ def create_context_file(
         author = comment.get("user", {}).get("login", "unknown")
         content += f"\n### Comment by {author}\n\n{comment.get('body', '')}\n\n---\n"
 
-    # Write to temp file
-    context_file = os.path.join(
-        tempfile.gettempdir(), f"issue-{issue_number}-context.md"
+    # SC-P1-007: Use secure temp file creation to avoid predictable path attacks
+    fd, context_file = tempfile.mkstemp(
+        suffix=".md", prefix=f"issue-{issue_number}-context-"
     )
-    with open(context_file, "w", encoding="utf-8") as f:
+    with os.fdopen(fd, "w", encoding="utf-8") as f:
         f.write(content)
 
     return context_file
@@ -369,6 +369,7 @@ def create_context_file(
 
 def post_comment(owner: str, repo: str, issue_number: int, body: str) -> dict[str, Any]:
     """Post a new comment on an issue."""
+    # SC-P1-005: Pipe body via stdin to avoid shell injection from user-controlled content
     result = subprocess.run(
         [
             "gh",
@@ -376,9 +377,10 @@ def post_comment(owner: str, repo: str, issue_number: int, body: str) -> dict[st
             f"repos/{owner}/{repo}/issues/{issue_number}/comments",
             "-X",
             "POST",
-            "-f",
-            f"body={body}",
+            "-F",
+            "body=@-",
         ],
+        input=body,
         capture_output=True,
         text=True,
         check=False,
@@ -395,6 +397,7 @@ def post_comment(owner: str, repo: str, issue_number: int, body: str) -> dict[st
 
 def update_comment(owner: str, repo: str, comment_id: int, body: str) -> dict[str, Any]:
     """Update an existing comment."""
+    # SC-P1-005: Pipe body via stdin to avoid shell injection from user-controlled content
     result = subprocess.run(
         [
             "gh",
@@ -402,9 +405,10 @@ def update_comment(owner: str, repo: str, comment_id: int, body: str) -> dict[st
             f"repos/{owner}/{repo}/issues/comments/{comment_id}",
             "-X",
             "PATCH",
-            "-f",
-            f"body={body}",
+            "-F",
+            "body=@-",
         ],
+        input=body,
         capture_output=True,
         text=True,
         check=False,

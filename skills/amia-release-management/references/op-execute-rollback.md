@@ -192,7 +192,7 @@ echo "Rollback issue created"
 ### Step 8: Notify stakeholders
 
 Send a message using the `agent-messaging` skill with:
-- **Recipient**: `orchestrator-eoa`
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[ROLLBACK COMPLETE] v<ROLLBACK_FROM> -> v<ROLLBACK_TO>`
 - **Priority**: `urgent`
 - **Content**: `{"type": "rollback-complete", "message": "Rollback from v<ROLLBACK_FROM> to v<ROLLBACK_TO> completed. Reason: <REASON>"}`
