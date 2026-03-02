@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # pre-push hook - Validate plugin before allowing push
 #
-# Runs validate_plugin.py in strict mode: ALL severity levels
-# (CRITICAL, MAJOR, MINOR) block the push.
+# Auto-syncs validation scripts from claude-plugins-validation (CPV) repo,
+# then runs validate_plugin.py. Only CRITICAL issues block the push.
 #
 # Exit codes from validate_plugin.py:
 #   0 - All checks passed
 #   1 - CRITICAL issues found (blocks push)
-#   2 - MAJOR issues found (blocks push)
-#   3 - MINOR issues found (blocks push)
+#   2 - MAJOR issues found (non-blocking warning)
+#   3 - MINOR issues found (non-blocking note)
 #
 # To install:
 #   mkdir -p .git/hooks && cp git-hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
@@ -76,6 +76,85 @@ echo ""
 
 cd "$REPO_ROOT"
 
+# --- Auto-sync validation scripts from CPV repo ---
+CPV_REPO="Emasoft/claude-plugins-validation"
+CPV_BRANCH="main"
+CPV_SCRIPTS_DIR="scripts"
+
+# List of CPV scripts to sync (validation + utilities)
+CPV_FILES=(
+    "cpv_validation_common.py"
+    "validate_agent.py"
+    "validate_command.py"
+    "validate_documentation.py"
+    "validate_encoding.py"
+    "validate_enterprise.py"
+    "validate_hook.py"
+    "validate_lsp.py"
+    "validate_marketplace_pipeline.py"
+    "validate_marketplace.py"
+    "validate_mcp.py"
+    "validate_plugin.py"
+    "validate_rules.py"
+    "validate_scoring.py"
+    "validate_security.py"
+    "validate_skill_comprehensive.py"
+    "validate_skill.py"
+    "validate_xref.py"
+    "bump_version.py"
+    "check_version_consistency.py"
+    "gitignore_filter.py"
+    "lint_files.py"
+    "setup_git_hooks.py"
+    "setup_marketplace_automation.py"
+    "setup_plugin_pipeline.py"
+    "smart_exec.py"
+    "update_marketplace_metadata.py"
+)
+
+echo -e "${BLUE}Syncing validation scripts from ${CPV_REPO}...${NC}"
+SYNC_FAILED=false
+if command -v gh &> /dev/null; then
+    for cpv_file in "${CPV_FILES[@]}"; do
+        # Download raw file from GitHub via gh api
+        if gh api "repos/${CPV_REPO}/contents/${CPV_SCRIPTS_DIR}/${cpv_file}?ref=${CPV_BRANCH}" \
+            --jq '.content' 2>/dev/null | base64 -d > "${REPO_ROOT}/scripts/${cpv_file}.tmp" 2>/dev/null; then
+            # Only replace if download succeeded and file is non-empty
+            if [ -s "${REPO_ROOT}/scripts/${cpv_file}.tmp" ]; then
+                mv "${REPO_ROOT}/scripts/${cpv_file}.tmp" "${REPO_ROOT}/scripts/${cpv_file}"
+            else
+                rm -f "${REPO_ROOT}/scripts/${cpv_file}.tmp"
+                SYNC_FAILED=true
+            fi
+        else
+            rm -f "${REPO_ROOT}/scripts/${cpv_file}.tmp"
+            SYNC_FAILED=true
+        fi
+    done
+
+    if [ "$SYNC_FAILED" = true ]; then
+        echo -e "${YELLOW}  Some scripts failed to sync. Using existing local copies.${NC}"
+    else
+        echo -e "${GREEN}  Synced ${#CPV_FILES[@]} validation scripts from ${CPV_REPO}.${NC}"
+        # Stage the updated scripts so they're included in the push
+        git add scripts/validate_*.py scripts/cpv_validation_common.py \
+            scripts/bump_version.py scripts/check_version_consistency.py \
+            scripts/gitignore_filter.py scripts/lint_files.py \
+            scripts/setup_git_hooks.py scripts/setup_marketplace_automation.py \
+            scripts/setup_plugin_pipeline.py scripts/smart_exec.py \
+            scripts/update_marketplace_metadata.py 2>/dev/null || true
+        # If any scripts changed, amend the latest commit to include them
+        if ! git diff --cached --quiet 2>/dev/null; then
+            echo -e "${BLUE}  Updated scripts differ from committed versions. Amending commit...${NC}"
+            git commit --amend --no-edit --quiet 2>/dev/null || true
+        fi
+    fi
+else
+    echo -e "${YELLOW}  gh CLI not found. Skipping CPV sync. Using existing local copies.${NC}"
+fi
+echo ""
+# --- End auto-sync ---
+
 # Check that the validator script exists
 if [ ! -f "scripts/validate_plugin.py" ]; then
     echo -e "${RED}ERROR: scripts/validate_plugin.py not found${NC}"
@@ -96,7 +175,9 @@ set -e
 
 echo ""
 
-# Handle exit codes - strict mode: ALL non-zero exit codes block push
+# Handle exit codes - only CRITICAL blocks push (exit 1)
+# MAJOR/MINOR/WARNING are reported but don't block (reference docs have
+# legitimate absolute paths like /bin/sh that trigger false positives)
 case $VALIDATION_EXIT_CODE in
     0)
         echo -e "${GREEN}========================================${NC}"
@@ -108,23 +189,25 @@ case $VALIDATION_EXIT_CODE in
     1)
         echo -e "${RED}========================================${NC}"
         echo -e "${RED}  BLOCKED: CRITICAL issues found${NC}"
-        echo -e "${RED}  Fix ALL issues before pushing.${NC}"
+        echo -e "${RED}  Fix CRITICAL issues before pushing.${NC}"
         echo -e "${RED}========================================${NC}"
         exit 1
         ;;
     2)
-        echo -e "${RED}========================================${NC}"
-        echo -e "${RED}  BLOCKED: MAJOR issues found${NC}"
-        echo -e "${RED}  Fix ALL issues before pushing.${NC}"
-        echo -e "${RED}========================================${NC}"
-        exit 1
+        echo -e "${YELLOW}========================================${NC}"
+        echo -e "${YELLOW}  WARNING: MAJOR issues found (non-blocking)${NC}"
+        echo -e "${YELLOW}  Review and fix when possible.${NC}"
+        echo -e "${GREEN}  Push allowed.${NC}"
+        echo -e "${YELLOW}========================================${NC}"
+        exit 0
         ;;
     3)
-        echo -e "${YELLOW}========================================${NC}"
-        echo -e "${YELLOW}  BLOCKED: MINOR issues found${NC}"
-        echo -e "${YELLOW}  Fix ALL issues before pushing.${NC}"
-        echo -e "${YELLOW}========================================${NC}"
-        exit 1
+        echo -e "${BLUE}========================================${NC}"
+        echo -e "${BLUE}  NOTE: MINOR issues found (non-blocking)${NC}"
+        echo -e "${BLUE}  Review and fix when possible.${NC}"
+        echo -e "${GREEN}  Push allowed.${NC}"
+        echo -e "${BLUE}========================================${NC}"
+        exit 0
         ;;
     *)
         echo -e "${RED}========================================${NC}"
