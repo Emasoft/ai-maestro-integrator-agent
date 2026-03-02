@@ -45,6 +45,7 @@ env:
 
 jobs:
   notify:
+    if: false  # Disabled: marketplace TBD for ai-maestro plugins
     runs-on: ubuntu-latest
     steps:
       - name: Get plugin info

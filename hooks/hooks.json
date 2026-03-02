@@ -4,25 +4,25 @@
   "hooks": {
     "PreToolUse": [
       {
-        "_id": "eia-branch-protection",
+        "_id": "amia-branch-protection",
         "_description": "Blocks direct push to main/master branches",
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/eia_pre_push_hook.py",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_pre_push_hook.py",
             "timeout": 30
           }
         ]
       },
       {
-        "_id": "eia-issue-closure-gate",
+        "_id": "amia-issue-closure-gate",
         "_description": "Blocks premature issue closure - requires merged PR, checkboxes, evidence, TDD",
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/eia_pre_issue_close_hook.py",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_pre_issue_close_hook.py",
             "timeout": 60
           }
         ]
@@ -30,12 +30,12 @@
     ],
     "Stop": [
       {
-        "_id": "eia-stop-check",
+        "_id": "amia-stop-check",
         "_description": "Blocks exit until all integration work is complete",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/eia_stop_hook.py"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_stop_hook.py"
           }
         ]
       }

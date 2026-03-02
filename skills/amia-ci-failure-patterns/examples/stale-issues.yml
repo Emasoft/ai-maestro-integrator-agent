@@ -1,0 +1,137 @@
+# =============================================================================
+# Stale Issues & PRs Management (Generic Template)
+# =============================================================================
+#
+# WHAT: Automatically marks inactive issues and pull requests as stale after
+#       a configurable period, then closes them if no activity follows.
+#       Keeps the issue tracker clean and focused on active work.
+#
+# KEY PATTERNS DEMONSTRATED:
+#   - Stale issue/PR management with configurable timeouts
+#   - Separate stale messages for issues vs PRs (different audiences)
+#   - Exempt labels to protect important items from auto-closure
+#   - Operations-per-run limit to avoid GitHub API rate limits
+#   - Scheduled execution (weekly) with manual trigger option
+#   - Minimal permissions (only what is needed)
+#
+# HOW TO CUSTOMIZE:
+#   - Adjust `days-before-stale` and `days-before-close` for your workflow
+#   - Add exempt labels for items that should never be auto-closed
+#   - Change the stale messages to match your project's tone
+#   - Adjust `operations-per-run` based on your repo's issue volume
+#   - Add `stale-pr-message` and PR-specific settings as needed
+#   - Change the schedule frequency (daily for active repos, weekly for smaller)
+#
+# REFERENCE: amia-ci-failure-patterns/references/issue-lifecycle.md
+# =============================================================================
+
+name: Stale Issues
+
+on:
+  schedule:
+    # WHY weekly (Sunday midnight UTC): Less aggressive than daily.
+    # Gives contributors the full work week to respond before the next check.
+    # CUSTOMIZE: Use daily for high-traffic repos: '0 0 * * *'
+    - cron: '0 0 * * 0'
+  # WHY: Allow manual trigger for testing or one-off cleanup runs.
+  workflow_dispatch:
+
+# WHY: Minimal permissions. Only needs to read/write issues and PRs.
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    name: Mark Stale Issues and PRs
+    runs-on: ubuntu-latest
+    # WHY timeout: Prevents runaway execution if the API is slow.
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/stale@v9
+        with:
+          # =================================================================
+          # STALE ISSUE CONFIGURATION
+          # =================================================================
+
+          # WHY 60 days: Long enough for contributors to return from vacation
+          # or finish other work. Short enough to keep the tracker relevant.
+          # CUSTOMIZE: 30 days for fast-moving projects, 90 for slow ones.
+          days-before-stale: 60
+
+          # WHY 14 days: Two weeks after being marked stale gives plenty of
+          # time to respond. The stale label serves as a visible warning.
+          days-before-close: 14
+
+          # WHY this message: Explains what happened, what will happen, and
+          # gives the contributor clear actions to prevent closure.
+          stale-issue-message: |
+            This issue has been inactive for 60 days. It will be closed in 14 days if there is no further activity.
+
+            To keep this issue open:
+            - Comment with an update on the status
+            - Add the `in-progress` label if you are working on it
+            - Add the `pinned` label if this should never be auto-closed
+
+          # WHY separate PR message: PRs have different context than issues.
+          # Contributors need to know they should rebase or update their code.
+          stale-pr-message: |
+            This pull request has been inactive for 60 days. It will be closed in 14 days if there is no further activity.
+
+            To keep this PR open:
+            - Push new commits or rebase onto the latest main branch
+            - Comment with an update on the status
+            - Add the `in-progress` label if you are actively working on it
+
+          # WHY different close messages: Provides closure-specific guidance.
+          close-issue-message: 'Closed due to inactivity. Feel free to reopen if this is still relevant.'
+          close-pr-message: 'Closed due to inactivity. Feel free to reopen or create a new PR if this change is still needed.'
+
+          # WHY stale label: Makes stale items visually distinct in the
+          # issue list. Also serves as a search filter.
+          stale-issue-label: 'stale'
+          stale-pr-label: 'stale'
+
+          # =================================================================
+          # EXEMPT LABELS - Items that should NEVER be auto-closed
+          # =================================================================
+          # WHY exempt labels: Some issues represent long-term goals,
+          # security concerns, or blocked work that should not be closed
+          # just because nobody commented recently.
+          # CUSTOMIZE: Add your project's "do not close" labels here.
+          exempt-issue-labels: >-
+            pinned,
+            security,
+            priority/critical,
+            priority/high,
+            in-progress,
+            blocked,
+            good-first-issue
+          exempt-pr-labels: >-
+            pinned,
+            security,
+            in-progress,
+            blocked,
+            do-not-close
+
+          # =================================================================
+          # RATE LIMITING
+          # =================================================================
+          # WHY limit: The stale action processes issues one at a time via
+          # the GitHub API. Without a limit, repos with thousands of issues
+          # could hit API rate limits or cause very long-running workflows.
+          # 50 per run is safe for weekly execution.
+          # CUSTOMIZE: Increase for repos with high issue volume.
+          operations-per-run: 50
+
+          # WHY ascending: Process oldest issues first so the most stale
+          # items get handled before hitting the operations limit.
+          ascending: true
+
+          # =================================================================
+          # OPTIONAL: Close reason
+          # =================================================================
+          # WHY 'not_planned': Distinguishes auto-closed stale issues from
+          # issues closed because they were completed. Helps with metrics.
+          close-issue-reason: 'not_planned'

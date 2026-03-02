@@ -1,25 +1,25 @@
-# AGENT_OPERATIONS.md - EIA Integrator
+# AGENT_OPERATIONS.md - AMIA Integrator
 
 **Version**: 1.0.0
 **Last Updated**: 2026-02-04
-**Status**: SINGLE SOURCE OF TRUTH for EIA Agent Operations
+**Status**: SINGLE SOURCE OF TRUTH for AMIA Agent Operations
 
 ---
 
 ## Document Purpose
 
-This document is the **SINGLE SOURCE OF TRUTH** for all EIA (Emasoft Integrator Agent) operations. Every EIA agent instance MUST follow these specifications exactly. Any deviation from this document is a violation of system architecture.
+This document is the **SINGLE SOURCE OF TRUTH** for all AMIA (Emasoft Integrator Agent) operations. Every AMIA agent instance MUST follow these specifications exactly. Any deviation from this document is a violation of system architecture.
 
 ---
 
 ## Table of Contents
 
 1. [Session Naming Convention](#1-session-naming-convention)
-2. [How EIA is Created](#2-how-eia-is-created)
+2. [How AMIA is Created](#2-how-amia-is-created)
 3. [Plugin Paths](#3-plugin-paths)
 4. [Plugin Mutual Exclusivity](#4-plugin-mutual-exclusivity)
 5. [Skill References](#5-skill-references)
-6. [EIA Responsibilities](#6-eia-responsibilities)
+6. [AMIA Responsibilities](#6-amia-responsibilities)
 7. [AI Maestro Communication](#7-ai-maestro-communication)
 8. [Environment Variables](#8-environment-variables)
 9. [Agent Identity and GitHub Bot Account](#9-agent-identity-and-github-bot-account)
@@ -40,50 +40,50 @@ This document is the **SINGLE SOURCE OF TRUTH** for all EIA (Emasoft Integrator 
 ### Format
 
 ```
-eia-<project>-<descriptive>
+amia-<project>-<descriptive>
 ```
 
 ### Components
 
 | Component | Description | Rules |
 |-----------|-------------|-------|
-| `eia-` | Plugin prefix (REQUIRED) | NEVER omit this prefix |
+| `amia-` | Plugin prefix (REQUIRED) | NEVER omit this prefix |
 | `<project>` | Project name (kebab-case) | Matches GitHub repo name |
-| `<descriptive>` | Role descriptor | Describes specific EIA role |
+| `<descriptive>` | Role descriptor | Describes specific AMIA role |
 
 ### Examples
 
 | Session Name | Project | Role |
 |--------------|---------|------|
-| `eia-svgbbox-integrator` | svgbbox | Main integrator |
-| `eia-main-reviewer` | main | Code reviewer |
-| `eia-authlib-quality` | authlib | Quality gate enforcer |
-| `eia-webapp-release` | webapp | Release manager |
+| `amia-svgbbox-integrator` | svgbbox | Main integrator |
+| `amia-main-reviewer` | main | Code reviewer |
+| `amia-authlib-quality` | authlib | Quality gate enforcer |
+| `amia-webapp-release` | webapp | Release manager |
 
 ### Selection Rules
 
-- **ECOS chooses** the session name when spawning
-- **Session name MUST** match the pattern `eia-<project>-<descriptive>`
+- **AMCOS chooses** the session name when spawning
+- **Session name MUST** match the pattern `amia-<project>-<descriptive>`
 - **Project portion MUST** match the GitHub repository name (lowercase, kebab-case)
-- **Descriptive portion MUST** indicate the EIA role (integrator, reviewer, quality, release, etc.)
+- **Descriptive portion MUST** indicate the AMIA role (integrator, reviewer, quality, release, etc.)
 
 ---
 
-## 2. How EIA is Created
+## 2. How AMIA is Created
 
-### Spawner: ECOS (Chief of Staff)
+### Spawner: AMCOS (Chief of Staff)
 
-**ONLY** ECOS can create EIA instances. EIA **CANNOT** create itself or other agents.
+**ONLY** AMCOS can create AMIA instances. AMIA **CANNOT** create itself or other agents.
 
 ### Creation Method
 
-ECOS creates EIA instances using the `ai-maestro-agents-management` skill. The creation specifies:
+AMCOS creates AMIA instances using the `ai-maestro-agents-management` skill. The creation specifies:
 
-- **Session name**: `eia-<project>-integrator`
+- **Session name**: `amia-<project>-integrator`
 - **Working directory**: `~/agents/<session-name>`
 - **Task**: `Review and integrate code for <project>`
-- **Plugin**: `emasoft-integrator-agent`
-- **Starting agent**: `eia-integrator-main-agent`
+- **Plugin**: `ai-maestro-integrator-agent`
+- **Starting agent**: `amia-integrator-main-agent`
 
 Refer to the `ai-maestro-agents-management` skill for the exact creation commands and syntax.
 
@@ -91,22 +91,22 @@ Refer to the `ai-maestro-agents-management` skill for the exact creation command
 
 | Parameter | Value | Purpose |
 |-----------|-------|---------|
-| `SESSION_NAME` | `eia-<project>-<descriptive>` | Unique identifier |
+| `SESSION_NAME` | `amia-<project>-<descriptive>` | Unique identifier |
 | `--dir` | `~/agents/$SESSION_NAME` | Working directory |
 | `--task` | Task description | Initial task assignment |
-| `--plugin-dir` | Path to plugin | Loads EIA plugin |
-| `--agent` | `eia-integrator-main-agent` | Starting agent |
+| `--plugin-dir` | Path to plugin | Loads AMIA plugin |
+| `--agent` | `amia-integrator-main-agent` | Starting agent |
 
-### ECOS Responsibilities
+### AMCOS Responsibilities
 
 1. **Create session** with appropriate naming
 2. **Configure working directory** at `~/agents/<session-name>/`
-3. **Install plugin** at `~/agents/<session-name>/.claude/plugins/emasoft-integrator-agent/`
+3. **Install plugin** at `~/agents/<session-name>/.claude/plugins/ai-maestro-integrator-agent/`
 4. **Assign initial task** via `--task` parameter
 5. **Register in team** via Team Registry (see [docs/TEAM_REGISTRY_SPECIFICATION.md](./TEAM_REGISTRY_SPECIFICATION.md))
-6. **Notify EOA** that EIA is ready
+6. **Notify AMOA** that AMIA is ready
 
-### EIA Cannot
+### AMIA Cannot
 
 - ❌ Create itself
 - ❌ Create other agents
@@ -124,55 +124,55 @@ Refer to the `ai-maestro-agents-management` skill for the exact creation command
 ${CLAUDE_PLUGIN_ROOT}
 ```
 
-**This variable** always points to the **emasoft-integrator-agent** plugin directory.
+**This variable** always points to the **ai-maestro-integrator-agent** plugin directory.
 
 ### Path Resolution
 
 | Environment | Plugin Location |
 |-------------|----------------|
-| **Local development** | `~/agents/<session-name>/.claude/plugins/emasoft-integrator-agent/` |
-| **Installed globally** | `~/.claude/plugins/emasoft-integrator-agent/` |
+| **Local development** | `~/agents/<session-name>/.claude/plugins/ai-maestro-integrator-agent/` |
+| **Installed globally** | `~/.claude/plugins/ai-maestro-integrator-agent/` |
 | **Marketplace installed** | `~/.claude/plugins/cache/<marketplace>/<plugin>/<version>/` |
 
 ### Internal Plugin Structure
 
 ```
-emasoft-integrator-agent/
+ai-maestro-integrator-agent/
 ├── .claude-plugin/
 │   └── plugin.json              # Plugin manifest
 ├── agents/                       # Agent definitions
-│   ├── eia-integrator-main-agent.md
-│   ├── eia-api-coordinator.md
-│   ├── eia-code-reviewer.md
-│   ├── eia-pr-evaluator.md
-│   ├── eia-integration-verifier.md
-│   ├── eia-bug-investigator.md
-│   ├── eia-github-sync.md
-│   ├── eia-committer.md
-│   ├── eia-screenshot-analyzer.md
-│   ├── eia-debug-specialist.md
-│   └── eia-test-engineer.md
+│   ├── amia-integrator-main-agent.md
+│   ├── amia-api-coordinator.md
+│   ├── amia-code-reviewer.md
+│   ├── amia-pr-evaluator.md
+│   ├── amia-integration-verifier.md
+│   ├── amia-bug-investigator.md
+│   ├── amia-github-sync.md
+│   ├── amia-committer.md
+│   ├── amia-screenshot-analyzer.md
+│   ├── amia-debug-specialist.md
+│   └── amia-test-engineer.md
 ├── skills/                       # Skills (loaded automatically)
-│   ├── eia-code-review-patterns/
-│   ├── eia-quality-gates/
-│   ├── eia-release-management/
-│   ├── eia-github-pr-workflow/
-│   ├── eia-github-pr-merge/
-│   ├── eia-kanban-orchestration/
-│   ├── eia-github-projects-sync/
-│   ├── eia-github-integration/
-│   ├── eia-github-issue-operations/
-│   ├── eia-github-pr-checks/
-│   ├── eia-github-pr-context/
-│   ├── eia-github-thread-management/
-│   ├── eia-ci-failure-patterns/
-│   ├── eia-git-worktree-operations/
-│   ├── eia-multilanguage-pr-review/
-│   ├── eia-tdd-enforcement/
-│   ├── eia-integration-protocols/
-│   ├── eia-kanban-orchestration/
-│   ├── eia-label-taxonomy/
-│   └── eia-session-memory/
+│   ├── amia-code-review-patterns/
+│   ├── amia-quality-gates/
+│   ├── amia-release-management/
+│   ├── amia-github-pr-workflow/
+│   ├── amia-github-pr-merge/
+│   ├── amia-kanban-orchestration/
+│   ├── amia-github-projects-sync/
+│   ├── amia-github-integration/
+│   ├── amia-github-issue-operations/
+│   ├── amia-github-pr-checks/
+│   ├── amia-github-pr-context/
+│   ├── amia-github-thread-management/
+│   ├── amia-ci-failure-patterns/
+│   ├── amia-git-worktree-operations/
+│   ├── amia-multilanguage-pr-review/
+│   ├── amia-tdd-enforcement/
+│   ├── amia-integration-protocols/
+│   ├── amia-kanban-orchestration/
+│   ├── amia-label-taxonomy/
+│   └── amia-session-memory/
 ├── hooks/                        # Hook configurations
 │   └── hooks.json
 ├── scripts/                      # Utility scripts
@@ -192,7 +192,7 @@ emasoft-integrator-agent/
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT}"
 
 # Access skill directory
-SKILL_DIR="${CLAUDE_PLUGIN_ROOT}/skills/eia-code-review-patterns"
+SKILL_DIR="${CLAUDE_PLUGIN_ROOT}/skills/amia-code-review-patterns"
 
 # Access script
 SCRIPT_PATH="${CLAUDE_PLUGIN_ROOT}/scripts/validate_pr.py"
@@ -201,7 +201,7 @@ SCRIPT_PATH="${CLAUDE_PLUGIN_ROOT}/scripts/validate_pr.py"
 #### From Agent Definitions
 
 ```markdown
-Read the skill at: ${CLAUDE_PLUGIN_ROOT}/skills/eia-code-review-patterns/SKILL.md
+Read the skill at: ${CLAUDE_PLUGIN_ROOT}/skills/amia-code-review-patterns/SKILL.md
 ```
 
 ---
@@ -210,29 +210,29 @@ Read the skill at: ${CLAUDE_PLUGIN_ROOT}/skills/eia-code-review-patterns/SKILL.m
 
 ### Critical Constraint
 
-**EIA has ONLY emasoft-integrator-agent loaded.**
+**AMIA has ONLY ai-maestro-integrator-agent loaded.**
 
-### Plugins NOT Available to EIA
+### Plugins NOT Available to AMIA
 
 | Plugin | Reason |
 |--------|--------|
-| **emasoft-orchestrator-agent** | EOA's plugin - task assignment, kanban management |
-| **emasoft-architect-agent** | EAA's plugin - architecture, design decisions |
-| **emasoft-assistant-manager-agent** | EAMA's plugin - user communication, project creation |
+| **ai-maestro-orchestrator-agent** | AMOA's plugin - task assignment, kanban management |
+| **ai-maestro-architect-agent** | AMAA's plugin - architecture, design decisions |
+| **ai-maestro-assistant-manager-agent** | AMAMA's plugin - user communication, project creation |
 
-### Skills NOT Available to EIA
+### Skills NOT Available to AMIA
 
-EIA **CANNOT** reference or load skills from other plugins:
+AMIA **CANNOT** reference or load skills from other plugins:
 
-- ❌ `eoa-*` skills (from emasoft-orchestrator-agent)
-- ❌ `eaa-*` skills (from emasoft-architect-agent)
-- ❌ `eama-*` skills (from emasoft-assistant-manager-agent)
+- ❌ `amoa-*` skills (from ai-maestro-orchestrator-agent)
+- ❌ `amaa-*` skills (from ai-maestro-architect-agent)
+- ❌ `amama-*` skills (from ai-maestro-assistant-manager-agent)
 
 ### Cross-Role Communication
 
 **ONLY via AI Maestro messaging.** Use the `agent-messaging` skill for all cross-role communication.
 
-**Example:** To request information from EOA, send a message using the `agent-messaging` skill with:
+**Example:** To request information from AMOA, send a message using the `agent-messaging` skill with:
 - **Recipient**: `orchestrator-eoa`
 - **Subject**: `Need task details for PR #456`
 - **Priority**: `high`
@@ -242,7 +242,7 @@ EIA **CANNOT** reference or load skills from other plugins:
 ### Why This Matters
 
 1. **Prevents skill collisions** - No duplicate or conflicting skills
-2. **Enforces role boundaries** - EIA cannot assign tasks (that's EOA's job)
+2. **Enforces role boundaries** - AMIA cannot assign tasks (that's AMOA's job)
 3. **Reduces context size** - Only skills relevant to integration role
 4. **Clarifies responsibility** - One role, one plugin, clear boundaries
 
@@ -257,51 +257,51 @@ EIA **CANNOT** reference or load skills from other plugins:
 ### Correct References
 
 ```markdown
-✅ Read skill: eia-code-review-patterns
-✅ Use skill: eia-github-pr-workflow
-✅ Follow: eia-quality-gates
+✅ Read skill: amia-code-review-patterns
+✅ Use skill: amia-github-pr-workflow
+✅ Follow: amia-quality-gates
 ```
 
 ### Incorrect References
 
 ```markdown
-❌ Read: ${CLAUDE_PLUGIN_ROOT}/skills/eia-code-review-patterns/SKILL.md
-❌ Use: /skills/eia-github-pr-workflow/SKILL.md
-❌ Follow: ./skills/eia-quality-gates/SKILL.md
+❌ Read: ${CLAUDE_PLUGIN_ROOT}/skills/amia-code-review-patterns/SKILL.md
+❌ Use: /skills/amia-github-pr-workflow/SKILL.md
+❌ Follow: ./skills/amia-quality-gates/SKILL.md
 ```
 
 ### Skill Loading
 
 Skills are **automatically loaded** from the `skills/` directory. You do NOT need to manually load them.
 
-### Available Skills (All EIA Agents)
+### Available Skills (All AMIA Agents)
 
 | Skill | Purpose |
 |-------|---------|
-| **eia-code-review-patterns** | Code review best practices |
-| **eia-quality-gates** | Quality gate enforcement |
-| **eia-release-management** | Release preparation and tagging |
-| **eia-github-pr-workflow** | PR creation, review, merge |
-| **eia-github-pr-merge** | PR merge strategies |
-| **eia-kanban-orchestration** | GitHub Projects (kanban) operations |
-| **eia-github-projects-sync** | Sync between issues and projects |
-| **eia-github-integration** | GitHub API integration |
-| **eia-github-issue-operations** | Issue creation, updates, closure |
-| **eia-github-pr-checks** | PR status checks |
-| **eia-github-pr-context** | PR context extraction |
-| **eia-github-thread-management** | Comment threads, reviews |
-| **eia-ci-failure-patterns** | Common CI failure patterns |
-| **eia-git-worktree-operations** | Git worktree management |
-| **eia-multilanguage-pr-review** | Multi-language code review |
-| **eia-tdd-enforcement** | TDD requirement enforcement |
-| **eia-integration-protocols** | Integration workflow protocols |
-| **eia-kanban-orchestration** | Kanban coordination (read-only for EIA) |
-| **eia-label-taxonomy** | GitHub label taxonomy |
-| **eia-session-memory** | Session state persistence |
+| **amia-code-review-patterns** | Code review best practices |
+| **amia-quality-gates** | Quality gate enforcement |
+| **amia-release-management** | Release preparation and tagging |
+| **amia-github-pr-workflow** | PR creation, review, merge |
+| **amia-github-pr-merge** | PR merge strategies |
+| **amia-kanban-orchestration** | GitHub Projects (kanban) operations |
+| **amia-github-projects-sync** | Sync between issues and projects |
+| **amia-github-integration** | GitHub API integration |
+| **amia-github-issue-operations** | Issue creation, updates, closure |
+| **amia-github-pr-checks** | PR status checks |
+| **amia-github-pr-context** | PR context extraction |
+| **amia-github-thread-management** | Comment threads, reviews |
+| **amia-ci-failure-patterns** | Common CI failure patterns |
+| **amia-git-worktree-operations** | Git worktree management |
+| **amia-multilanguage-pr-review** | Multi-language code review |
+| **amia-tdd-enforcement** | TDD requirement enforcement |
+| **amia-integration-protocols** | Integration workflow protocols |
+| **amia-kanban-orchestration** | Kanban coordination (read-only for AMIA) |
+| **amia-label-taxonomy** | GitHub label taxonomy |
+| **amia-session-memory** | Session state persistence |
 
 ---
 
-## 6. EIA Responsibilities
+## 6. AMIA Responsibilities
 
 ### Core Responsibilities
 
@@ -316,15 +316,15 @@ Skills are **automatically loaded** from the `skills/` directory. You do NOT nee
 | **CI/CD Monitoring** | Monitor CI pipeline, investigate failures | INVESTIGATE |
 | **Integration Verification** | Post-merge verification, integration testing | VERIFY |
 
-### Responsibilities EIA Does NOT Have
+### Responsibilities AMIA Does NOT Have
 
 | Not Responsible For | Reason |
 |---------------------|--------|
-| **Task assignment** | EOA's job (Orchestrator) |
-| **Agent creation** | ECOS's job (Chief of Staff) |
-| **Architecture decisions** | EAA's job (Architect) |
-| **User communication** | EAMA's job (Manager) |
-| **Project creation** | EAMA's job (Manager) |
+| **Task assignment** | AMOA's job (Orchestrator) |
+| **Agent creation** | AMCOS's job (Chief of Staff) |
+| **Architecture decisions** | AMAA's job (Architect) |
+| **User communication** | AMAMA's job (Manager) |
+| **Project creation** | AMAMA's job (Manager) |
 
 ### Read the Role Boundaries Document
 
@@ -338,7 +338,7 @@ All AI Maestro communication is done through the `agent-messaging` skill. For th
 
 ### Communication Patterns
 
-#### 1. Receiving Integration Requests (from EOA)
+#### 1. Receiving Integration Requests (from AMOA)
 
 **Check inbox:** Check your inbox using the `agent-messaging` skill. Filter for messages with `content.type == "integration-request"`.
 
@@ -347,7 +347,7 @@ All AI Maestro communication is done through the `agent-messaging` skill. For th
 ```json
 {
   "from": "orchestrator-eoa",
-  "to": "emasoft-integrator",
+  "to": "ai-maestro-integrator",
   "subject": "PR Review Request: PR #456",
   "priority": "high",
   "content": {
@@ -368,15 +368,15 @@ All AI Maestro communication is done through the `agent-messaging` skill. For th
 #### 2. Routing to Sub-Agents
 
 **Send delegation:** Send a message using the `agent-messaging` skill with:
-- **Recipient**: The appropriate sub-agent (e.g., `eia-code-reviewer`)
+- **Recipient**: The appropriate sub-agent (e.g., `amia-code-reviewer`)
 - **Subject**: `Review PR #456: Add auth module`
 - **Priority**: `high`
-- **Content**: `{"type": "task-delegation", "task": "review-pr", "context": {...}, "success_criteria": "...", "callback_agent": "emasoft-integrator"}`
+- **Content**: `{"type": "task-delegation", "task": "review-pr", "context": {...}, "success_criteria": "...", "callback_agent": "ai-maestro-integrator"}`
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
-See `eia-integration-protocols` skill reference `ai-maestro-message-templates.md` for the complete content structure.
+See `amia-integration-protocols` skill reference `ai-maestro-message-templates.md` for the complete content structure.
 
-#### 3. Reporting Status to EOA
+#### 3. Reporting Status to AMOA
 
 **Send status report:** Send a message using the `agent-messaging` skill with:
 - **Recipient**: `orchestrator-eoa`
@@ -385,7 +385,7 @@ See `eia-integration-protocols` skill reference `ai-maestro-message-templates.md
 - **Content**: `{"type": "integration-status", "task_id": "pr-456-review", "status": "COMPLETED", "result": {...}, "next_steps": "..."}`
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
-See `eia-integration-protocols` skill reference `ai-maestro-message-templates.md` for the complete content structure.
+See `amia-integration-protocols` skill reference `ai-maestro-message-templates.md` for the complete content structure.
 
 #### 4. Escalating Blockers
 
@@ -396,7 +396,7 @@ See `eia-integration-protocols` skill reference `ai-maestro-message-templates.md
 - **Content**: `{"type": "blocker-escalation", "task_id": "pr-456-review", "blocker_type": "QUALITY_GATE_FAILED", "details": {...}, "requires_decision": true}`
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
-See `eia-integration-protocols` skill reference `ai-maestro-message-templates.md` for the complete content structure.
+See `amia-integration-protocols` skill reference `ai-maestro-message-templates.md` for the complete content structure.
 
 ### Message Priority Levels
 
@@ -430,7 +430,7 @@ Example:
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `${CLAUDE_PLUGIN_ROOT}` | Plugin directory | `~/agents/eia-main/.claude/plugins/emasoft-integrator-agent/` |
+| `${CLAUDE_PLUGIN_ROOT}` | Plugin directory | `~/agents/amia-main/.claude/plugins/ai-maestro-integrator-agent/` |
 | `${CLAUDE_PROJECT_DIR}` | Project root (if in project mode) | `~/projects/my-app/` |
 
 ### AI Maestro Variables
@@ -443,7 +443,7 @@ Example:
 
 | Variable | Description | Set By |
 |----------|-------------|--------|
-| `SESSION_NAME` | Current session name | ECOS at spawn |
+| `SESSION_NAME` | Current session name | AMCOS at spawn |
 | `TMUX_SESSION` | tmux session name | Set by `ai-maestro-agents-management` skill at agent creation |
 
 ### GitHub Variables
@@ -451,8 +451,8 @@ Example:
 | Variable | Description | Source |
 |----------|-------------|--------|
 | `GITHUB_TOKEN` | Bot account token | `.env` file |
-| `GITHUB_OWNER` | Repository owner | ECOS at spawn |
-| `GITHUB_REPO` | Repository name | ECOS at spawn |
+| `GITHUB_OWNER` | Repository owner | AMCOS at spawn |
+| `GITHUB_REPO` | Repository name | AMCOS at spawn |
 
 ---
 
@@ -460,10 +460,10 @@ Example:
 
 ### Shared Bot Account
 
-All EIA agents use the **same GitHub bot account**:
+All AMIA agents use the **same GitHub bot account**:
 
 ```
-emasoft-bot
+${GITHUB_BOT_USERNAME}
 ```
 
 ### Real Agent Identity Tracking
@@ -477,8 +477,8 @@ Since all agents share the bot account, real identity is tracked via:
 
 | Field | Value |
 |-------|-------|
-| Agent Name | eia-main-reviewer |
-| Session ID | eia-main-reviewer-20260204-143256 |
+| Agent Name | amia-main-reviewer |
+| Session ID | amia-main-reviewer-20260204-143256 |
 | Created | 2026-02-04 14:32:56 |
 | Role | Code Reviewer |
 ```
@@ -492,8 +492,8 @@ feat: Add authentication module
 - Add role-based access control
 - Include comprehensive tests
 
-Agent: eia-main-reviewer
-Co-authored-by: emasoft-bot <bot@emasoft.com>
+Agent: amia-main-reviewer
+Co-authored-by: ${GITHUB_BOT_USERNAME} <${GITHUB_BOT_EMAIL}>
 ```
 
 #### 3. PR Comments (Agent Signature)
@@ -502,8 +502,8 @@ Co-authored-by: emasoft-bot <bot@emasoft.com>
 Code review completed. All quality gates passed.
 
 ---
-**Agent**: eia-main-reviewer
-**Session**: eia-main-reviewer-20260204-143256
+**Agent**: amia-main-reviewer
+**Session**: amia-main-reviewer-20260204-143256
 **Report**: docs_dev/integration/reports/pr-456-report.md
 ```
 
@@ -518,7 +518,7 @@ Code review completed. All quality gates passed.
 
 ## 10. Role Boundaries (CRITICAL)
 
-### EIA CAN
+### AMIA CAN
 
 | Action | Authority | Notes |
 |--------|-----------|-------|
@@ -532,23 +532,23 @@ Code review completed. All quality gates passed.
 | ✅ Comment on PRs | COMMENT | Review feedback |
 | ✅ Request sub-agents | DELEGATE | Route to specialized agents |
 
-### EIA CANNOT
+### AMIA CANNOT
 
 | Action | Reason | Who Can |
 |--------|--------|---------|
-| ❌ Assign tasks | Not EIA's role | EOA (Orchestrator) |
-| ❌ Create agents | Not EIA's role | ECOS (Chief of Staff) |
-| ❌ Create projects | Not EIA's role | EAMA (Manager) |
-| ❌ Make architecture decisions | Not EIA's role | EAA (Architect) |
-| ❌ Talk to user | Not EIA's role | EAMA (Manager) |
-| ❌ Modify kanban tasks | Read-only access | EOA (Orchestrator) |
-| ❌ Close issues directly | Must verify first | EOA (Orchestrator) after EIA approval |
+| ❌ Assign tasks | Not AMIA's role | AMOA (Orchestrator) |
+| ❌ Create agents | Not AMIA's role | AMCOS (Chief of Staff) |
+| ❌ Create projects | Not AMIA's role | AMAMA (Manager) |
+| ❌ Make architecture decisions | Not AMIA's role | AMAA (Architect) |
+| ❌ Talk to user | Not AMIA's role | AMAMA (Manager) |
+| ❌ Modify kanban tasks | Read-only access | AMOA (Orchestrator) |
+| ❌ Close issues directly | Must verify first | AMOA (Orchestrator) after AMIA approval |
 
 ### Boundary Violations
 
 **Attempting any "CANNOT" action is a system architecture violation.**
 
-If EIA needs something from another role:
+If AMIA needs something from another role:
 1. **Send AI Maestro message** to the appropriate agent
 2. **Wait for response** (do NOT proceed without approval)
 3. **Log the request** in the routing log
@@ -561,16 +561,16 @@ If EIA needs something from another role:
 
 | Task Category | Route To | When to Use |
 |---------------|----------|-------------|
-| **All GitHub API operations** | `eia-api-coordinator` | Issues, PRs, projects API calls |
-| **Code review** | `eia-code-reviewer` | PR review, code quality assessment |
-| **PR evaluation** | `eia-pr-evaluator` | PR readiness check before merge |
-| **Integration verification** | `eia-integration-verifier` | Post-merge verification, integration testing |
-| **Bug investigation** | `eia-bug-investigator` | CI failures, test failures, reported bugs |
-| **GitHub sync** | `eia-github-sync` | Repository state sync, branch cleanup |
-| **Commits** | `eia-committer` | Creating commits with proper metadata |
-| **Screenshot analysis** | `eia-screenshot-analyzer` | Visual regression testing, UI verification |
-| **Debugging** | `eia-debug-specialist` | Complex debugging scenarios |
-| **Test engineering** | `eia-test-engineer` | Test creation, test coverage analysis |
+| **All GitHub API operations** | `amia-api-coordinator` | Issues, PRs, projects API calls |
+| **Code review** | `amia-code-reviewer` | PR review, code quality assessment |
+| **PR evaluation** | `amia-pr-evaluator` | PR readiness check before merge |
+| **Integration verification** | `amia-integration-verifier` | Post-merge verification, integration testing |
+| **Bug investigation** | `amia-bug-investigator` | CI failures, test failures, reported bugs |
+| **GitHub sync** | `amia-github-sync` | Repository state sync, branch cleanup |
+| **Commits** | `amia-committer` | Creating commits with proper metadata |
+| **Screenshot analysis** | `amia-screenshot-analyzer` | Visual regression testing, UI verification |
+| **Debugging** | `amia-debug-specialist` | Complex debugging scenarios |
+| **Test engineering** | `amia-test-engineer` | Test creation, test coverage analysis |
 
 ### Sub-Agent Definitions
 
@@ -578,17 +578,17 @@ All sub-agents are defined in `agents/` directory:
 
 ```
 agents/
-├── eia-integrator-main-agent.md       # Coordinator (you)
-├── eia-api-coordinator.md             # GitHub API specialist
-├── eia-code-reviewer.md               # Code review specialist
-├── eia-pr-evaluator.md                # PR evaluation specialist
-├── eia-integration-verifier.md        # Integration testing specialist
-├── eia-bug-investigator.md            # Bug investigation specialist
-├── eia-github-sync.md                 # GitHub sync specialist
-├── eia-committer.md                   # Commit creation specialist
-├── eia-screenshot-analyzer.md         # Screenshot analysis specialist
-├── eia-debug-specialist.md            # Debugging specialist
-└── eia-test-engineer.md               # Test engineering specialist
+├── amia-integrator-main-agent.md       # Coordinator (you)
+├── amia-api-coordinator.md             # GitHub API specialist
+├── amia-code-reviewer.md               # Code review specialist
+├── amia-pr-evaluator.md                # PR evaluation specialist
+├── amia-integration-verifier.md        # Integration testing specialist
+├── amia-bug-investigator.md            # Bug investigation specialist
+├── amia-github-sync.md                 # GitHub sync specialist
+├── amia-committer.md                   # Commit creation specialist
+├── amia-screenshot-analyzer.md         # Screenshot analysis specialist
+├── amia-debug-specialist.md            # Debugging specialist
+└── amia-test-engineer.md               # Test engineering specialist
 ```
 
 ### When to Route
@@ -616,7 +616,7 @@ agents/
 
 Example:
 ```
-~/agents/eia-svgbbox-integrator/
+~/agents/amia-svgbbox-integrator/
 ```
 
 ### Required Subdirectories
@@ -625,7 +625,7 @@ Example:
 ~/agents/<session-name>/
 ├── .claude/                          # Claude Code configuration
 │   └── plugins/                      # Plugin directory
-│       └── emasoft-integrator-agent/ # EIA plugin (installed by ECOS)
+│       └── ai-maestro-integrator-agent/ # AMIA plugin (installed by AMCOS)
 ├── docs_dev/                         # Development documents (gitignored)
 │   ├── integration/                  # Integration records
 │   │   ├── routing-log.md            # Routing decisions log
@@ -643,9 +643,9 @@ Example:
 
 ### Directory Creation
 
-**ECOS creates** the base directory structure when spawning EIA.
+**AMCOS creates** the base directory structure when spawning AMIA.
 
-**EIA creates** subdirectories as needed:
+**AMIA creates** subdirectories as needed:
 
 ```bash
 mkdir -p ~/agents/$SESSION_NAME/docs_dev/integration/status
@@ -714,11 +714,11 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 - [ ] Results are complete
 - [ ] Status file updated
 
-### Phase 5: Report to EOA
+### Phase 5: Report to AMOA
 
 **Steps:**
 1. Prepare status report (use template)
-2. Send to EOA via AI Maestro
+2. Send to AMOA via AI Maestro
 3. Include: result, quality gates, merge status, next steps
 4. Handle blockers if any (escalate with urgency)
 5. Final logging to routing log
@@ -786,7 +786,7 @@ Before closing an issue, verify:
 - **Status**: DELEGATED
 
 ### HH:MM - COMPLETE task-id
-- **Sub-Agent**: eia-code-reviewer
+- **Sub-Agent**: amia-code-reviewer
 - **Result**: SUCCESS/FAILURE
 - **Details**: docs_dev/integration/reports/pr-456-report.md
 ```
@@ -818,7 +818,7 @@ Before closing an issue, verify:
 - **Priority**: high
 
 ## Routing
-- **Sub-Agent**: eia-code-reviewer
+- **Sub-Agent**: amia-code-reviewer
 - **Delegated**: 2026-02-04 14:32
 - **Completed**: 2026-02-04 15:18
 - **Duration**: 46 minutes
@@ -849,7 +849,7 @@ Before closing an issue, verify:
 ```markdown
 # Code Review Report: PR #456
 
-**Reviewer**: eia-code-reviewer
+**Reviewer**: amia-code-reviewer
 **Date**: 2026-02-04 15:18
 **PR**: #456 - Add authentication module
 **Branch**: feature/add-auth
@@ -890,7 +890,7 @@ Before closing an issue, verify:
 
 ## 16. Output Format Standards
 
-### Minimal Reports to EOA
+### Minimal Reports to AMOA
 
 **Format**:
 ```
@@ -947,12 +947,12 @@ Question: Can we close with partial acceptance criteria met?
 
 | Error Type | Severity | Action |
 |------------|----------|--------|
-| **Quality gate failed** | BLOCKING | Escalate to EOA with rejection reason |
+| **Quality gate failed** | BLOCKING | Escalate to AMOA with rejection reason |
 | **CI failure** | HIGH | Route to bug-investigator, then report |
 | **Security vulnerability** | CRITICAL | BLOCK merge, escalate immediately |
-| **Sub-agent unavailable** | MEDIUM | Wait or route to backup, inform EOA |
+| **Sub-agent unavailable** | MEDIUM | Wait or route to backup, inform AMOA |
 | **GitHub API error** | MEDIUM | Retry 3 times, then escalate |
-| **Policy unclear** | LOW | Escalate to EOA for clarification |
+| **Policy unclear** | LOW | Escalate to AMOA for clarification |
 
 ### Escalation Template
 
@@ -1059,16 +1059,16 @@ All projects use the canonical **8-column kanban system** on GitHub Projects:
 
 ## Wave 1-7 Skill Additions
 
-The following skills were added to EIA (2026-02-06 — 2026-02-07):
+The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 
 | Skill | Purpose |
 |-------|---------|
-| `eia-ci-cd-pipeline` | CI/CD pipeline management, GitHub Actions workflows |
-| `eia-pr-review-workflow` | PR review automation, code quality checks |
-| `eia-release-management` | Version management, changelog generation, release automation |
-| `eia-quality-gates` | Code quality enforcement, linting, type checking |
-| `eia-github-projects-sync` | GitHub Projects kanban synchronization |
-| `eia-kanban-management` | Kanban column management and task routing |
+| `amia-ci-cd-pipeline` | CI/CD pipeline management, GitHub Actions workflows |
+| `amia-pr-review-workflow` | PR review automation, code quality checks |
+| `amia-release-management` | Version management, changelog generation, release automation |
+| `amia-quality-gates` | Code quality enforcement, linting, type checking |
+| `amia-github-projects-sync` | GitHub Projects kanban synchronization |
+| `amia-kanban-management` | Kanban column management and task routing |
 
 ---
 
@@ -1078,10 +1078,10 @@ The following skills were added to EIA (2026-02-06 — 2026-02-07):
 |--------|---------|
 | `scripts/pre-push-hook.py` | Pre-push validation (manifest, hooks, lint, Unicode compliance) |
 | `scripts/validate_plugin.py` | Plugin structure validation |
-| `scripts/eia_download.py` | Plugin download utility |
-| `scripts/eia_unicode_compliance.py` | Unicode compliance checker (BOM, line endings, encoding, non-ASCII) |
-| `skills/eia-quality-gates/scripts/eia_check_encoding.py` | Python file encoding parameter checker |
-| `skills/eia-release-management/scripts/eia_cleanup_version_branches.sh` | Tag/branch collision detection |
+| `scripts/amia_download.py` | Plugin download utility |
+| `scripts/amia_unicode_compliance.py` | Unicode compliance checker (BOM, line endings, encoding, non-ASCII) |
+| `skills/amia-quality-gates/scripts/amia_check_encoding.py` | Python file encoding parameter checker |
+| `skills/amia-release-management/scripts/amia_cleanup_version_branches.sh` | Tag/branch collision detection |
 
 ---
 
@@ -1091,22 +1091,22 @@ The following skills were added to EIA (2026-02-06 — 2026-02-07):
 - Added Wave 1-7 skills: ci-cd-pipeline, pr-review-workflow, release-management, quality-gates, github-projects-sync, kanban-management
 - Added Unicode compliance check (step 4) to pre-push hook
 - Added `encoding="utf-8"` to all Python file operations
-- Created `eia_check_encoding.py` for encoding parameter validation
-- Created `eia_cleanup_version_branches.sh` for tag/branch collision detection
-- Created `eia_unicode_compliance.py` for full Unicode compliance auditing
+- Created `amia_check_encoding.py` for encoding parameter validation
+- Created `amia_cleanup_version_branches.sh` for tag/branch collision detection
+- Created `amia_unicode_compliance.py` for full Unicode compliance auditing
 - Synchronized FULL_PROJECT_WORKFLOW.md, TEAM_REGISTRY_SPECIFICATION.md, ROLE_BOUNDARIES.md across all plugins
 
 ---
 
 ## Document Status
 
-**This document is the SINGLE SOURCE OF TRUTH for EIA operations.**
+**This document is the SINGLE SOURCE OF TRUTH for AMIA operations.**
 
-Any changes to EIA operations **MUST** be reflected in this document first.
+Any changes to AMIA operations **MUST** be reflected in this document first.
 
 **Version**: 1.0.0
 **Last Updated**: 2026-02-04
-**Maintained By**: ECOS Plugin Development Team
+**Maintained By**: AMCOS Plugin Development Team
 **Review Cycle**: Monthly or on major system changes
 
 ---

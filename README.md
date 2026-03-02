@@ -1,4 +1,4 @@
-# Integrator Agent (eia-)
+# Integrator Agent (amia-)
 
 **Version**: 1.0.0
 
@@ -20,44 +20,44 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 
 | Agent | Description |
 |-------|-------------|
-| `eia-integrator-main-agent.md` | Main integrator agent |
-| `eia-api-coordinator.md` | Coordinates GitHub API operations |
-| `eia-bug-investigator.md` | Investigates reported bugs |
-| `eia-code-reviewer.md` | Reviews code for quality |
-| `eia-committer.md` | Handles git commit operations |
-| `eia-debug-specialist.md` | Debugs CI/CD and test failures |
-| `eia-github-sync.md` | Syncs GitHub state |
-| `eia-integration-verifier.md` | Verifies integration success |
-| `eia-pr-evaluator.md` | Evaluates PR readiness |
-| `eia-screenshot-analyzer.md` | Analyzes screenshots for visual regressions |
-| `eia-test-engineer.md` | Manages test execution and coverage |
+| `amia-integrator-main-agent.md` | Main integrator agent |
+| `amia-api-coordinator.md` | Coordinates GitHub API operations |
+| `amia-bug-investigator.md` | Investigates reported bugs |
+| `amia-code-reviewer.md` | Reviews code for quality |
+| `amia-committer.md` | Handles git commit operations |
+| `amia-debug-specialist.md` | Debugs CI/CD and test failures |
+| `amia-github-sync.md` | Syncs GitHub state |
+| `amia-integration-verifier.md` | Verifies integration success |
+| `amia-pr-evaluator.md` | Evaluates PR readiness |
+| `amia-screenshot-analyzer.md` | Analyzes screenshots for visual regressions |
+| `amia-test-engineer.md` | Manages test execution and coverage |
 
 ### Skills
 
 | Skill | Description |
 |-------|-------------|
-| `eia-github-integration` | GitHub API integration |
-| `eia-github-pr-workflow` | PR workflow patterns |
-| `eia-github-pr-checks` | PR check patterns |
-| `eia-github-pr-merge` | PR merge strategies |
-| `eia-github-pr-context` | PR context management |
-| `eia-github-issue-operations` | Issue CRUD operations |
-| `eia-kanban-orchestration` | Kanban board patterns |
-| `eia-github-projects-sync` | Projects sync |
-| `eia-github-thread-management` | Thread management |
-| `eia-code-review-patterns` | Code review patterns |
-| `eia-multilanguage-pr-review` | Multi-language reviews |
-| `eia-tdd-enforcement` | TDD enforcement |
-| `eia-ci-failure-patterns` | CI failure patterns |
-| `eia-git-worktree-operations` | Worktree operations |
-| `eia-integration-protocols` | Shared utilities |
+| `amia-github-integration` | GitHub API integration |
+| `amia-github-pr-workflow` | PR workflow patterns |
+| `amia-github-pr-checks` | PR check patterns |
+| `amia-github-pr-merge` | PR merge strategies |
+| `amia-github-pr-context` | PR context management |
+| `amia-github-issue-operations` | Issue CRUD operations |
+| `amia-kanban-orchestration` | Kanban board patterns |
+| `amia-github-projects-sync` | Projects sync |
+| `amia-github-thread-management` | Thread management |
+| `amia-code-review-patterns` | Code review patterns |
+| `amia-multilanguage-pr-review` | Multi-language reviews |
+| `amia-tdd-enforcement` | TDD enforcement |
+| `amia-ci-failure-patterns` | CI failure patterns |
+| `amia-git-worktree-operations` | Worktree operations |
+| `amia-integration-protocols` | Shared utilities |
 
 ### Hooks
 
 | Hook | Event | Description |
 |------|-------|-------------|
-| `eia-branch-protection` | PreToolUse | Block pushes to main/master |
-| `eia-issue-closure-gate` | PreToolUse | Verify before issue closure |
+| `amia-branch-protection` | PreToolUse | Block pushes to main/master |
+| `amia-issue-closure-gate` | PreToolUse | Verify before issue closure |
 
 ## Quality Gates
 
@@ -78,37 +78,26 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 6. Merges when approved
 7. Reports to Assistant Manager
 
-## Installation (Production)
+## Installation
 
-Install from the Emasoft marketplace. Role plugins are installed with `--scope local` inside the specific agent's working directory (`~/agents/<agent-name>/`). This ensures the plugin is only available to that agent.
-
-```bash
-# Add Emasoft marketplace (first time only)
-claude plugin marketplace add emasoft-plugins --url https://github.com/Emasoft/emasoft-plugins
-
-# Install plugin (--scope local = this agent's directory only, recommended)
-claude plugin install emasoft-integrator-agent@emasoft-plugins --scope local
-
-# RESTART Claude Code after installing (required!)
-```
-
-Once installed, start a session with the main agent:
+Clone the plugin repo and load it with `--plugin-dir`:
 
 ```bash
-claude --agent eia-integrator-main-agent
+git clone https://github.com/Emasoft/ai-maestro-integrator-agent.git
+claude --plugin-dir ./ai-maestro-integrator-agent
 ```
 
-## Development Only (--plugin-dir)
-
-`--plugin-dir` loads a plugin directly from a local directory without marketplace installation. Use only during plugin development.
+Or start a session with the main agent directly:
 
 ```bash
-claude --plugin-dir ./OUTPUT_SKILLS/emasoft-integrator-agent
+claude --agent amia-integrator-main-agent --plugin-dir ./ai-maestro-integrator-agent
 ```
+
+> **Note:** Marketplace distribution is TBD. For now, use `--plugin-dir` with a local clone.
 
 ## Validation
 
 ```bash
-cd OUTPUT_SKILLS/emasoft-integrator-agent
+cd ai-maestro-integrator-agent
 uv run python scripts/validate_plugin.py . --verbose
 ```
