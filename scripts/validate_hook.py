@@ -22,6 +22,7 @@ Exit codes:
 from __future__ import annotations
 
 import argparse
+import difflib
 import json
 import os
 import re
@@ -159,7 +160,7 @@ def validate_top_level_structure(data: Any, report: ValidationReport) -> bool:
         if not isinstance(desc, str):
             report.major(f"'description' must be a string, got {type(desc).__name__}")
         else:
-            report.passed(f"Description: {desc[:50]}{'...' if len(desc) > 50 else ''}")
+            report.passed(f"Description: {desc[:50]}...")
 
     # Check for 'hooks' key
     if "hooks" not in data:
@@ -178,7 +179,15 @@ def validate_top_level_structure(data: Any, report: ValidationReport) -> bool:
 def validate_event_name(event_name: str, report: ValidationReport) -> bool:
     """Validate a hook event name."""
     if event_name not in VALID_HOOK_EVENTS:
-        report.critical(f"Unknown hook event: '{event_name}'. Valid events: {sorted(VALID_HOOK_EVENTS)}")
+        # Fuzzy match for "did you mean?" suggestions
+        close = difflib.get_close_matches(event_name, VALID_HOOK_EVENTS, n=1, cutoff=0.6)
+        if close:
+            report.critical(
+                f"Unknown hook event: '{event_name}' — did you mean '{close[0]}'? "
+                f"Valid events: {sorted(VALID_HOOK_EVENTS)}"
+            )
+        else:
+            report.critical(f"Unknown hook event: '{event_name}'. Valid events: {sorted(VALID_HOOK_EVENTS)}")
         return False
     return True
 
@@ -216,6 +225,39 @@ def validate_matcher(matcher: Any, event_name: str, report: ValidationReport) ->
                 # Could be a regex pattern or custom tool
                 if re.match(r"^[A-Z][a-zA-Z]+$", part):
                     report.info(f"Matcher '{part}' is not a common tool name (may be custom or MCP tool)")
+
+    # Validate Notification matcher types
+    if event_name == "Notification":
+        parts = re.split(r"[|()]", matcher)
+        for part in parts:
+            part = part.strip()
+            if part and part != "*" and part not in COMMON_NOTIFICATION_TYPES:
+                report.info(
+                    f"Notification matcher '{part}' is not a common type — "
+                    f"known types: {', '.join(sorted(COMMON_NOTIFICATION_TYPES))}"
+                )
+
+    # Validate SessionStart matcher sources
+    if event_name == "SessionStart":
+        parts = re.split(r"[|()]", matcher)
+        for part in parts:
+            part = part.strip()
+            if part and part != "*" and part not in SESSION_START_SOURCES:
+                report.info(
+                    f"SessionStart matcher '{part}' is not a known source — "
+                    f"known values: {', '.join(sorted(SESSION_START_SOURCES))}"
+                )
+
+    # Validate PreCompact matcher triggers
+    if event_name == "PreCompact":
+        parts = re.split(r"[|()]", matcher)
+        for part in parts:
+            part = part.strip()
+            if part and part != "*" and part not in COMPACT_TRIGGERS:
+                report.info(
+                    f"PreCompact matcher '{part}' is not a known trigger — "
+                    f"known values: {', '.join(sorted(COMPACT_TRIGGERS))}"
+                )
 
     return True
 
@@ -363,7 +405,6 @@ def lint_python_script(script_path: Path, report: ValidationReport) -> None:
                 mypy_cmd
                 + [
                     "--ignore-missing-imports",
-                    "--disable-error-code=import-untyped",
                     "--no-error-summary",
                     str(script_path),
                 ],
@@ -453,13 +494,9 @@ def validate_script(script_path: Path, report: ValidationReport) -> None:
         report.major(f"Script not found: {script_path}")
         return
 
-    # Check executable permission (skip on Windows where os.access X_OK is unreliable)
-    if sys.platform != "win32" and not os.access(script_path, os.X_OK):
-        # Python/JS scripts invoked via interpreter don't need X bit (CC-P1-A0-004)
-        if script_path.suffix.lower() in (".py", ".js", ".ts", ".mjs"):
-            report.info(f"Script not executable (ok for interpreted scripts): {script_path.name}", str(script_path))
-        else:
-            report.major(f"Script not executable: {script_path.name}")
+    # Check executable permission
+    if not os.access(script_path, os.X_OK):
+        report.major(f"Script not executable: {script_path.name}")
     else:
         report.passed(f"Script executable: {script_path.name}")
 
@@ -495,7 +532,7 @@ def validate_command_hook(
         report.critical("'command' cannot be empty")
         return False
 
-    report.passed(f"Command: {command[:60]}{'...' if len(command) > 60 else ''}")
+    report.passed(f"Command: {command[:60]}...")
 
     # Check for hardcoded absolute paths — plugins must use env vars for portability
     cmd_first_token = command.strip().split()[0] if command.strip() else ""
@@ -509,6 +546,50 @@ def validate_command_hook(
         report.major(
             f"Command uses absolute path '{cmd_first_token}' — "
             "use ${CLAUDE_PLUGIN_ROOT} or ${CLAUDE_PROJECT_DIR} for portability"
+        )
+
+    # Bash command portability checks
+    stripped_cmd = command.strip()
+
+    # 3a: Script file without interpreter prefix
+    script_extensions = {".py", ".js", ".ts", ".sh", ".rb", ".pl"}
+    if cmd_first_token and any(cmd_first_token.endswith(ext) for ext in script_extensions):
+        # Check if it's being run directly (first token IS the script, no interpreter before it)
+        interpreter_prefixes = {"python", "python3", "node", "bun", "deno", "bash", "sh", "ruby", "perl"}
+        if not any(cmd_first_token.startswith(pfx) for pfx in interpreter_prefixes):
+            # It's a script file as first token — warn if no shebang guarantee
+            report.minor(
+                f"Command runs '{cmd_first_token}' without an explicit interpreter — "
+                "add one (e.g. python3, node, bash) for cross-platform reliability"
+            )
+
+    # 3b: Tilde path that may not expand in hook commands
+    if stripped_cmd.startswith("~/"):
+        report.minor(
+            "Command starts with '~/' — tilde expansion may not work in hook commands. "
+            "Use $HOME/ or ${CLAUDE_PLUGIN_ROOT}/ instead."
+        )
+
+    # 3c: Bare 'cd' without chained command (no effect in fresh shell)
+    if stripped_cmd.startswith("cd ") and "&&" not in stripped_cmd and ";" not in stripped_cmd:
+        report.minor(
+            "'cd' alone has no effect — each hook runs in a fresh shell. "
+            "Combine with your command: 'cd /dir && your-command'"
+        )
+
+    # 3d: Windows backslash paths (cross-platform warning — always check, not just on Windows)
+    if "\\" in command and "${CLAUDE_PLUGIN_ROOT}" not in command and "\\n" not in command and "\\t" not in command:
+        report.minor("Command contains backslash paths — use forward slashes for cross-platform compatibility")
+
+    # Relative path without $CLAUDE_PLUGIN_ROOT — may not resolve at runtime
+    if (
+        cmd_first_token.startswith("./")
+        and "${CLAUDE_PLUGIN_ROOT}" not in command
+        and "$CLAUDE_PLUGIN_ROOT" not in command
+    ):
+        report.minor(
+            f"Command uses relative path '{cmd_first_token}' without ${{CLAUDE_PLUGIN_ROOT}} — "
+            "hook working directory is not guaranteed. Use ${CLAUDE_PLUGIN_ROOT}/... for reliability."
         )
 
     # Security warning for package executors running remote packages in hooks
@@ -592,7 +673,7 @@ def validate_prompt_hook(
     if "$ARGUMENTS" not in prompt:
         report.info("Prompt doesn't contain $ARGUMENTS placeholder (input JSON will be appended automatically)")
 
-    report.passed(f"Prompt: {prompt[:60]}{'...' if len(prompt) > 60 else ''}")
+    report.passed(f"Prompt: {prompt[:60]}...")
 
     # Validate optional model field
     if "model" in hook:

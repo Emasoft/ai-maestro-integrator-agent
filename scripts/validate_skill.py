@@ -28,11 +28,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-try:
-    import yaml
-except ImportError as e:
-    raise SystemExit("PyYAML required: pip install pyyaml (or use: uv run --with pyyaml)") from e
-
+import yaml
 from cpv_validation_common import BUILTIN_AGENT_TYPES, VALID_CONTEXT_VALUES, ValidationReport
 
 # Maximum recommended SKILL.md line count per Anthropic docs
@@ -419,8 +415,7 @@ def validate_directory_structure(skill_path: Path, report: ValidationReport) -> 
     if scripts_dir.is_dir():
         for script in scripts_dir.iterdir():
             if script.is_file() and script.suffix in {".sh", ".py", ".bash"}:
-                # Skip executable check on Windows where os.access X_OK is unreliable
-                if sys.platform != "win32" and not os.access(script, os.X_OK):
+                if not os.access(script, os.X_OK):
                     report.major(
                         f"Script not executable: scripts/{script.name}",
                         f"scripts/{script.name}",
@@ -452,11 +447,8 @@ def validate_supporting_files(skill_path: Path, report: ValidationReport) -> Non
         if link_target.startswith("#"):
             continue
 
-        # Strip fragment anchor before path check
-        file_part = link_target.split("#")[0] if "#" in link_target else link_target
-
         # Check if referenced file exists
-        ref_path = skill_path / file_part
+        ref_path = skill_path / link_target
         if not ref_path.exists():
             report.major(
                 f"Referenced file not found: {link_target}",

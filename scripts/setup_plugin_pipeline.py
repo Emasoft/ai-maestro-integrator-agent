@@ -49,32 +49,39 @@ import argparse
 import configparser
 import json
 import os
-
-# ANSI Colors - Enable Windows support
-import platform as _platform
 import stat
 import sys
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
-if _platform.system() == "Windows":
-    # Enable ANSI escape sequences on Windows 10+
-    try:
-        import ctypes
 
-        kernel32 = ctypes.windll.kernel32  # type: ignore[attr-defined]
-        kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
-    except (AttributeError, OSError):
-        pass  # Not Windows or older Windows without ANSI support
+def _colors_supported() -> bool:
+    """Return True only when the terminal supports ANSI escape sequences."""
+    if os.environ.get("NO_COLOR"):
+        return False
+    if os.name == "nt":  # type: ignore[unreachable]
+        # Enable ANSI on Windows 10+
+        try:
+            import ctypes
 
-RED = "\033[0;31m"
-GREEN = "\033[0;32m"
-YELLOW = "\033[1;33m"
-BLUE = "\033[0;34m"
-CYAN = "\033[0;36m"
-BOLD = "\033[1m"
-NC = "\033[0m"
+            kernel32 = ctypes.windll.kernel32  # type: ignore[attr-defined]
+            kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
+        except (AttributeError, OSError):
+            pass
+        return bool(os.environ.get("WT_SESSION") or os.environ.get("ANSICON"))
+    return hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+
+
+_USE_COLOR = _colors_supported()
+
+RED = "\033[0;31m" if _USE_COLOR else ""
+GREEN = "\033[0;32m" if _USE_COLOR else ""
+YELLOW = "\033[1;33m" if _USE_COLOR else ""
+BLUE = "\033[0;34m" if _USE_COLOR else ""
+CYAN = "\033[0;36m" if _USE_COLOR else ""
+BOLD = "\033[1m" if _USE_COLOR else ""
+NC = "\033[0m" if _USE_COLOR else ""
 
 
 class ProjectType(Enum):
@@ -768,8 +775,7 @@ class PipelineSetup:
                         fix_description=f"Install {hook_name} hook",
                     )
                 )
-            # Skip executable check on Windows where os.access X_OK is unreliable
-            elif sys.platform != "win32" and not os.access(hook_path, os.X_OK):
+            elif not os.access(hook_path, os.X_OK):
                 self.status.issues.append(
                     PipelineIssue(
                         level=IssueLevel.MAJOR,
@@ -923,7 +929,6 @@ class PipelineSetup:
                 else:
                     try:
                         hook_path.write_text(content, encoding="utf-8")
-                        # Note: chmod executable bits are a no-op on Windows (CC-XP-006)
                         hook_path.chmod(hook_path.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
                         print(f"{GREEN}✓{NC} Installed {name} hook")
                         fixed += 1
@@ -944,8 +949,7 @@ class PipelineSetup:
         """Check if a hook file is valid (executable and has content)."""
         if not hook_path.exists():
             return False
-        # Skip executable check on Windows where os.access X_OK is unreliable
-        if sys.platform != "win32" and not os.access(hook_path, os.X_OK):
+        if not os.access(hook_path, os.X_OK):
             return False
         if hook_path.stat().st_size < 100:
             return False
@@ -1037,7 +1041,6 @@ class PipelineSetup:
                     else:
                         try:
                             hook_path.write_text(content, encoding="utf-8")
-                            # Note: chmod executable bits are a no-op on Windows (CC-XP-006)
                             hook_path.chmod(hook_path.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
                             print(f"{GREEN}✓{NC} Installed {submodule}/{name} hook")
                             fixed += 1

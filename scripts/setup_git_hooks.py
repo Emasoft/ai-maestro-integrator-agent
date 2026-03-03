@@ -168,8 +168,7 @@ def _make_executable(path: Path) -> None:
     bits, but calling it keeps the logic unconditional.
     """
     current_mode = path.stat().st_mode
-    # Only add execute bits, don't inadvertently add read/write (CC-XP-015)
-    path.chmod(current_mode | 0o111)
+    path.chmod(current_mode | 0o755)
 
 
 # ---------------------------------------------------------------------------

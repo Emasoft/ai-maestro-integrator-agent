@@ -28,11 +28,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-try:
-    import yaml
-except ImportError as e:
-    raise SystemExit("PyYAML required: pip install pyyaml (or use: uv run --with pyyaml)") from e
-
+import yaml
 from cpv_validation_common import (
     COLORS,
     EXIT_CRITICAL,

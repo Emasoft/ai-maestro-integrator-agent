@@ -156,8 +156,7 @@ def validate_lsp_server(
             if plugin_root and "${CLAUDE_PLUGIN_ROOT}" in command:
                 resolved = command.replace("${CLAUDE_PLUGIN_ROOT}", str(plugin_root))
                 if Path(resolved).exists():
-                    # Skip executable check on Windows where os.access X_OK is unreliable
-                    if sys.platform != "win32" and not os.access(resolved, os.X_OK):
+                    if not os.access(resolved, os.X_OK):
                         report.major(f"Server {server_name} command not executable")
                     else:
                         report.passed(f"Server {server_name} command is executable")

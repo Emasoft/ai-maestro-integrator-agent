@@ -41,11 +41,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Literal
 
-try:
-    import yaml
-except ImportError as e:
-    raise SystemExit("PyYAML required: pip install pyyaml (or use: uv run --with pyyaml)") from e
-
+import yaml
 from cpv_validation_common import (
     BUILTIN_AGENT_TYPES,
     EXIT_CRITICAL,
@@ -1679,8 +1675,8 @@ def validate_scripts_directory(skill_path: Path, report: ValidationReport) -> No
 
         # Check executable scripts
         if script.suffix in {".sh", ".py", ".bash"}:
-            # Check executable bit (skip on Windows where os.access X_OK is unreliable)
-            if sys.platform != "win32" and not os.access(script, os.X_OK):
+            # Check executable bit
+            if not os.access(script, os.X_OK):
                 report.major(
                     f"Script not executable: scripts/{script.name}",
                     f"scripts/{script.name}",

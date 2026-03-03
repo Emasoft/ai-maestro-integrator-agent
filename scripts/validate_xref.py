@@ -26,18 +26,13 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-try:
-    import yaml
-except ImportError as e:
-    raise SystemExit("PyYAML required: pip install pyyaml (or use: uv run --with pyyaml)") from e
-
+import yaml
 from cpv_validation_common import (
     COLORS,
     SKIP_DIRS,
@@ -157,7 +152,7 @@ def get_available_skills(plugin_root: Path) -> set[str]:
     skills = set()
     for skill_dir in skills_dir.iterdir():
         if skill_dir.is_dir() and not skill_dir.name.startswith("."):
-            skills.add(skill_dir.name.lower())
+            skills.add(skill_dir.name)
     return skills
 
 
@@ -261,12 +256,12 @@ def validate_subagent_type_matching(
     """Validate subagent_type values match actual agent filenames.
 
     Scans all markdown files for subagent_type references and verifies
-    that agents/NAME.md exists in available_agents.
+    that agents/NAME.md exists for each referenced NAME.
 
     Args:
         plugin_root: Root path of the plugin
         report: Validation report to add results to
-        available_agents: Set of available agent stem names (without .md)
+        available_agents: Set of available agent names
     """
     # Scan all .md files in the plugin
     for md_file in plugin_root.rglob("*.md"):
@@ -283,8 +278,8 @@ def validate_subagent_type_matching(
         matches = SUBAGENT_TYPE_PATTERN.findall(content)
 
         for ref_agent in matches:
-            # Use the pre-computed available_agents set instead of file checks
-            if ref_agent not in available_agents:
+            expected_file = plugin_root / "agents" / f"{ref_agent}.md"
+            if not expected_file.exists():
                 report.major(
                     f"subagent_type '{ref_agent}' has no matching agents/{ref_agent}.md",
                     rel_path,
@@ -565,8 +560,9 @@ def validate_hook_script_refs(
             else:
                 # Check if script is executable (for shell scripts)
                 if resolved_path.suffix in {".sh", ".bash"}:
-                    # Skip executable check on Windows where os.access X_OK is unreliable
-                    if sys.platform != "win32" and not os.access(resolved_path, os.X_OK):
+                    import os
+
+                    if not os.access(resolved_path, os.X_OK):
                         report.minor(
                             f"Hook script is not executable: {script_path}",
                             rel_hooks_path,

@@ -53,9 +53,7 @@ class GitignoreFilter:
             rel = dirpath.relative_to(self.root).as_posix()
         except ValueError:
             return False
-        # Check both with and without trailing slash (gitignore treats dir/ specially).
-        # This dual-check approach handles nested dirs like src/build/ correctly because
-        # is_path_gitignored also checks individual path components (CC-P1-A0-016).
+        # Check both with and without trailing slash (gitignore treats dir/ specially)
         return is_path_gitignored(rel, self.patterns) or is_path_gitignored(rel + "/", self.patterns)
 
     def _walk_pathlib(

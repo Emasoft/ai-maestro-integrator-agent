@@ -14,6 +14,7 @@ All individual validators should import from this module to ensure consistency.
 from __future__ import annotations
 
 import fnmatch
+import getpass
 import json
 import os
 import re
@@ -404,8 +405,6 @@ def _get_private_usernames() -> set[str]:
 
     # Get current user's login name
     try:
-        import getpass
-
         username = getpass.getuser().lower()
         if username and username not in EXAMPLE_USERNAMES:
             usernames.add(username)
@@ -603,63 +602,6 @@ def parse_gitignore(gitignore_path: Path) -> list[str]:
     return patterns
 
 
-def _matches_glob(rel_path: str, pattern: str) -> bool:
-    """Check if rel_path matches a single gitignore-style pattern (may contain **).
-
-    Handles the three ** forms used by gitignore:
-      - ``**/foo``   – matches ``foo`` at any directory depth
-      - ``foo/**``   – matches anything under directory ``foo``
-      - ``a/**/b``   – general double-star via regex conversion
-    Also handles non-** simple fnmatch patterns against the full path or any
-    individual path component (non-anchored behaviour).
-
-    Args:
-        rel_path: Normalised (forward-slash) relative path to test.
-        pattern:  A single gitignore pattern with ``**``, ``/``, and ``!``
-                  already stripped by the caller.
-
-    Returns:
-        True if the pattern matches rel_path.
-    """
-    path_parts = rel_path.split("/")
-
-    # Handle directory-only patterns (ending with /)
-    is_dir_pattern = pattern.endswith("/")
-    if is_dir_pattern:
-        pattern = pattern[:-1]
-
-    # Handle patterns starting with /
-    is_anchored = pattern.startswith("/")
-    if is_anchored:
-        pattern = pattern[1:]
-
-    if "**" in pattern:
-        if pattern.startswith("**/"):
-            # **/foo matches foo at any depth
-            suffix = pattern[3:]
-            return (
-                fnmatch.fnmatch(rel_path, suffix)
-                or fnmatch.fnmatch(rel_path, f"*/{suffix}")
-                or f"/{suffix}" in f"/{rel_path}"
-            )
-        elif pattern.endswith("/**"):
-            # build/** matches any file under the prefix directory
-            prefix = pattern[:-3]
-            return rel_path.startswith(prefix + "/") or rel_path == prefix
-        else:
-            # General ** — convert to regex for matching
-            regex = pattern.replace(".", r"\.").replace("**", ".*").replace("*", "[^/]*").replace("?", "[^/]")
-            return bool(re.match(regex + "$", rel_path))
-
-    # Plain pattern (no **): match against full path or any path component
-    if is_anchored:
-        return fnmatch.fnmatch(rel_path, pattern)
-    else:
-        if fnmatch.fnmatch(rel_path, pattern):
-            return True
-        return any(fnmatch.fnmatch(part, pattern) for part in path_parts)
-
-
 def is_path_gitignored(rel_path: str, patterns: list[str]) -> bool:
     """Check if a relative path matches any gitignore pattern.
 
@@ -672,26 +614,67 @@ def is_path_gitignored(rel_path: str, patterns: list[str]) -> bool:
     """
     # Normalize path separators
     rel_path = rel_path.replace("\\", "/")
-
-    # Gitignore uses last-match-wins semantics: iterate all patterns and track
-    # the final ignored state rather than returning early on any single match.
-    ignored = False
+    path_parts = rel_path.split("/")
 
     for pattern in patterns:
-        # Handle negation (!) - un-ignore previously matched paths (last-match-wins)
+        # Handle negation (!) - un-ignore previously matched paths
         if pattern.startswith("!"):
             neg_pattern = pattern[1:]
-            # Use the shared helper so that ** inside negation patterns is also
-            # handled correctly (plain fnmatch alone silently ignored ** forms).
-            if _matches_glob(rel_path, neg_pattern) or fnmatch.fnmatch(str(Path(rel_path).name), neg_pattern):
-                ignored = False
+            # If the path matches the negation pattern, it should NOT be ignored
+            if fnmatch.fnmatch(rel_path, neg_pattern) or fnmatch.fnmatch(str(Path(rel_path).name), neg_pattern):
+                return False
             continue
 
-        # Delegate all pattern matching (including **, /, anchoring) to the helper.
-        if _matches_glob(rel_path, pattern):
-            ignored = True
+        # Handle directory-only patterns (ending with /)
+        is_dir_pattern = pattern.endswith("/")
+        if is_dir_pattern:
+            pattern = pattern[:-1]
 
-    return ignored
+        # Handle patterns starting with /
+        is_anchored = pattern.startswith("/")
+        if is_anchored:
+            pattern = pattern[1:]
+
+        # Handle ** patterns properly for recursive directory matching
+        if "**" in pattern:
+            if pattern.startswith("**/"):
+                # **/foo matches foo at any depth
+                suffix = pattern[3:]  # e.g., "dist" from "**/dist"
+                if (
+                    fnmatch.fnmatch(rel_path, suffix)
+                    or fnmatch.fnmatch(rel_path, f"*/{suffix}")
+                    or f"/{suffix}" in f"/{rel_path}"
+                ):
+                    return True
+                continue
+            elif pattern.endswith("/**"):
+                # build/** matches any file under the prefix directory
+                prefix = pattern[:-3]  # e.g., "build" from "build/**"
+                if rel_path.startswith(prefix + "/") or rel_path == prefix:
+                    return True
+                continue
+            else:
+                # General ** — replace with regex-like matching
+                regex = pattern.replace(".", r"\.").replace("**", ".*").replace("*", "[^/]*").replace("?", "[^/]")
+                if re.match(regex + "$", rel_path):
+                    return True
+                continue
+
+        # Check if pattern matches any component or the full path
+        if is_anchored:
+            # Anchored patterns only match from root
+            if fnmatch.fnmatch(rel_path, pattern):
+                return True
+        else:
+            # Non-anchored patterns can match any component
+            if fnmatch.fnmatch(rel_path, pattern):
+                return True
+            # Also check if any path component matches
+            for part in path_parts:
+                if fnmatch.fnmatch(part, pattern):
+                    return True
+
+    return False
 
 
 def get_skip_dirs_with_gitignore(root_path: Path, additional_skip: set[str] | None = None) -> set[str]:
@@ -1861,13 +1844,7 @@ _TOC_SECTION_RE = re.compile(
 )
 
 # Regex to extract individual TOC heading titles (strip numbering, links, bullets)
-# Handles multi-level numbering (1.1, 2.3) and alpha prefixes (D5.2, S-PERF.2)
-_TOC_ENTRY_RE = re.compile(
-    r"(?m)^[\s]*[-*]?\s*"
-    r"(?:[\d.]+[a-z]?\s+)?"
-    r"(?:[A-Z][\w-]*[.][\d.]+\s+)?"
-    r"(?:\[([^\]]+)\]\([^)]*\)|(.+))"
-)
+_TOC_ENTRY_RE = re.compile(r"(?m)^[\s]*[-*]?\s*(?:\d+\.?\s*)?(?:\[([^\]]+)\]\([^)]*\)|(.+))")
 
 # Regex to find markdown links pointing to .md files in references/
 _MD_LINK_RE = re.compile(r"\[([^\]]+)\]\(((?:references/)?[^\s)]+\.md)\)")
@@ -1891,21 +1868,8 @@ def extract_toc_headings(md_content: str) -> list[str]:
         title = (entry_match.group(1) or entry_match.group(2) or "").strip()
         if not title or title.startswith("---"):
             continue
-        # Strip leading numbering like "1. ", "3a. ", "0 ", "1.0 ",
-        # "D5.2 ", "S-PERF.2 ", "C.1 ", "T.3 " (multi-level and prefixed)
-        title_clean = re.sub(
-            r"^(?:[\d.]+[a-z]?\s+|[A-Z][\w-]*\.[\d.]+\s+|\d+[a-z]?\.\s*)",
-            "",
-            title,
-        ).strip()
-        # Strip residual markdown link syntax [text](#anchor) → text
-        title_clean = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", title_clean)
-        # Strip markdown heading prefixes (### , ## , # )
-        title_clean = re.sub(r"^#{1,6}\s+", "", title_clean)
-        # Strip bold/italic markdown markers (**text**, *text*)
-        title_clean = re.sub(r"\*{1,2}([^*]+)\*{1,2}", r"\1", title_clean)
-        # Strip broken bold artifacts like "*File:" or "File:**"
-        title_clean = title_clean.strip("*").strip()
+        # Strip leading numbering like "1. " or "3a. "
+        title_clean = re.sub(r"^\d+[a-z]?\.\s*", "", title).strip()
         if title_clean:
             headings.append(title_clean)
 
