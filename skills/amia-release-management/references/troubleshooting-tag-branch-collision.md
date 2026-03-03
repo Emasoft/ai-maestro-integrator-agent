@@ -3,7 +3,7 @@
 ## Contents
 - What is a tag-branch name collision
 - How collisions cause HTTP 300 errors
-- How to detect collisions using amia_cleanup_version_branches.sh
+- How to detect collisions using amia_cleanup_version_branches.py
 - How to resolve collisions safely
 - Best practices to prevent future collisions
 
@@ -35,7 +35,7 @@ The fix is to use explicit `refs/tags/` prefix in API calls. But for older tool 
 Run the cleanup script:
 
 ```bash
-bash scripts/amia_cleanup_version_branches.sh
+uv run scripts/amia_cleanup_version_branches.py
 ```
 
 The script will:

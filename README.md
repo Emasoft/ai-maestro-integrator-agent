@@ -117,7 +117,7 @@ claude --agent amia-integrator-main-agent --plugin-dir ./ai-maestro-integrator-a
 
 ## Platform Requirements
 
-This plugin includes 1 Bash/Shell script (`amia_cleanup_version_branches.sh`) for release branch cleanup. This script requires a Unix-like environment (Linux or macOS). On Windows, use WSL or Git Bash.
+All plugin scripts are written in Python for cross-platform compatibility (Linux, macOS, Windows).
 
 ## Validation
 

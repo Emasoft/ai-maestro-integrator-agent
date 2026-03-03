@@ -1079,7 +1079,7 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 | `scripts/amia_download.py` | Plugin download utility |
 | `scripts/amia_unicode_compliance.py` | Unicode compliance checker (BOM, line endings, encoding, non-ASCII) |
 | `skills/amia-quality-gates/scripts/amia_check_encoding.py` | Python file encoding parameter checker |
-| `skills/amia-release-management/scripts/amia_cleanup_version_branches.sh` | Tag/branch collision detection |
+| `skills/amia-release-management/scripts/amia_cleanup_version_branches.py` | Tag/branch collision detection |
 
 ---
 
@@ -1090,7 +1090,7 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 - Added Unicode compliance check (step 4) to pre-push hook
 - Added `encoding="utf-8"` to all Python file operations
 - Created `amia_check_encoding.py` for encoding parameter validation
-- Created `amia_cleanup_version_branches.sh` for tag/branch collision detection
+- Created `amia_cleanup_version_branches.py` for tag/branch collision detection
 - Created `amia_unicode_compliance.py` for full Unicode compliance auditing
 - Synchronized FULL_PROJECT_WORKFLOW.md, TEAM_REGISTRY_SPECIFICATION.md, ROLE_BOUNDARIES.md across all plugins
 

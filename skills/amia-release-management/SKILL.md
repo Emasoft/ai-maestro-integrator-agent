@@ -127,9 +127,9 @@ Release Request Received
 
 ### 9. Tag-Branch Collision Troubleshooting
 [references/troubleshooting-tag-branch-collision.md](references/troubleshooting-tag-branch-collision.md) - Tag-branch collision detection and resolution
-- **Contents:** What is a tag-branch name collision, How collisions cause HTTP 300 errors, How to detect collisions using amia_cleanup_version_branches.sh, How to resolve collisions safely, Best practices to prevent future collisions
+- **Contents:** What is a tag-branch name collision, How collisions cause HTTP 300 errors, How to detect collisions using amia_cleanup_version_branches.py, How to resolve collisions safely, Best practices to prevent future collisions
 
-**Script**: `scripts/amia_cleanup_version_branches.sh` -- Detects and reports version tag/branch name collisions (safe, print-only)
+**Script**: `scripts/amia_cleanup_version_branches.py` -- Detects and reports version tag/branch name collisions (safe, print-only)
 
 ---
 
@@ -170,7 +170,7 @@ UNVERIFIED --> VERIFICATION_IN_PROGRESS
 
 ## Scripts Reference
 
-> **Note:** Only `amia_cleanup_version_branches.sh` is currently available. The following are planned: `amia_release_verify.py`, `amia_changelog_generate.py`, `amia_version_bump.py`, `amia_create_release.py`, `amia_rollback.py`.
+> **Note:** Only `amia_cleanup_version_branches.py` is currently available. The following are planned: `amia_release_verify.py`, `amia_changelog_generate.py`, `amia_version_bump.py`, `amia_create_release.py`, `amia_rollback.py`.
 
 | Script | Purpose | Usage |
 |--------|---------|-------|
@@ -179,7 +179,7 @@ UNVERIFIED --> VERIFICATION_IN_PROGRESS
 | `amia_version_bump.py` | Bump version | `python scripts/amia_version_bump.py --repo owner/repo --type patch\|minor\|major` |
 | `amia_create_release.py` | Create GitHub release | `python scripts/amia_create_release.py --repo owner/repo --version 1.2.3 --notes release_notes.md` |
 | `amia_rollback.py` | Rollback release | `python scripts/amia_rollback.py --repo owner/repo --from v1.2.3 --to v1.2.2 --reason "reason"` |
-| `amia_cleanup_version_branches.sh` | Detect tag/branch collisions | `bash scripts/amia_cleanup_version_branches.sh` |
+| `amia_cleanup_version_branches.py` | Detect tag/branch collisions | `uv run scripts/amia_cleanup_version_branches.py` |
 
 ---
 
