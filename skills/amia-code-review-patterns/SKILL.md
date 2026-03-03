@@ -33,12 +33,24 @@ Intermediate software development experience, familiarity with code review basic
 
 1. **Receive PR review request** from AMOA or user via AI Maestro
 2. **Perform Gate 0 compliance check** - Verify requirements using [references/requirement-compliance.md](references/requirement-compliance.md)
+   <!-- TOC: requirement-compliance.md -->
+   - 1 Gate 0: Requirement Compliance Overview
+   - 2 Gate 0 Checklist Template
+   <!-- /TOC -->
 3. **Execute Stage 1: Quick Scan** - Surface-level assessment using [references/stage-one-quick-scan.md](references/stage-one-quick-scan.md)
+   <!-- TOC: stage-one-quick-scan.md -->
+   - 1 Objective and Purpose
+   - 2 Scope Targets by PR Size
+   <!-- /TOC -->
    - Assess file structure and diff magnitude
    - Identify obvious issues and red flags
    - Calculate initial confidence score
    - Make Go/No-Go decision (proceed if ≥70% confidence)
 4. **Execute Stage 2: Deep Dive** - Full 8-dimension analysis using [references/stage-two-deep-dive.md](references/stage-two-deep-dive.md)
+   <!-- TOC: stage-two-deep-dive.md -->
+   - 1 Objective and Purpose
+   - 2 Scope Coverage by PR Size
+   <!-- /TOC -->
    - Evaluate all 8 dimensions (Functional, Architecture, Quality, Performance, Security, Testing, Compatibility, Documentation)
    - Calculate final confidence score
    - Make approval/rejection decision (approve if ≥80% confidence)
@@ -480,18 +492,88 @@ When a critical quality gate fails, send a message using the `agent-messaging` s
 ## Resources
 
 - [references/requirement-compliance.md](references/requirement-compliance.md) - Gate 0 compliance checklist
+  <!-- TOC: requirement-compliance.md -->
+  - 1 Gate 0: Requirement Compliance Overview
+  - 2 Gate 0 Checklist Template
+  - 3 Review Checklist Additions
+  <!-- /TOC -->
 - [references/stage-one-quick-scan.md](references/stage-one-quick-scan.md) - Stage One process
+  <!-- TOC: stage-one-quick-scan.md -->
+  - 1 Objective and Purpose
+  - 2 Scope Targets by PR Size
+  - 1 Small PRs (1-10 files)
+  <!-- /TOC -->
 - [references/stage-two-deep-dive.md](references/stage-two-deep-dive.md) - Stage Two 8-dimension analysis
+  <!-- TOC: stage-two-deep-dive.md -->
+  - 1 Objective and Purpose
+  - 2 Scope Coverage by PR Size
+  - 3 Eight Dimension Analysis Overview
+  <!-- /TOC -->
 - [references/workflow-and-decision-tree.md](references/workflow-and-decision-tree.md) - Decision flow
+  <!-- TOC: workflow-and-decision-tree.md -->
+  - 1 Four-Phase Workflow Overview
+  - 1 Phase 1: Initial Assessment
+  - 2 Phase 2: Quick Scan (Stage One)
+  <!-- /TOC -->
 - [references/implementation-checklist.md](references/implementation-checklist.md) - Complete checklist
+  <!-- TOC: implementation-checklist.md -->
+  - 1 Complete Implementation Checklist
+  - 1 Setup Phase Checklist
+  - 2 Stage One: Quick Scan Checklist
+  <!-- /TOC -->
 - [references/pre-pr-quality-gate.md](references/pre-pr-quality-gate.md) - Pre-PR validation
+  <!-- TOC: pre-pr-quality-gate.md -->
+  - Overview
+  - The 4 Validation Steps
+  - Step 1: All Tests Pass Locally
+  <!-- /TOC -->
 - [references/functional-correctness.md](references/functional-correctness.md) - Dimension 1 details
+  <!-- TOC: functional-correctness.md -->
+  - When you need to verify core functionality → Verification Checklist: Core Functionality
+  - If you need to check logic correctness → Verification Checklist: Logic Correctness
+  - When reviewing data flow → Verification Checklist: Data Flow
+  <!-- /TOC -->
 - [references/architecture-design.md](references/architecture-design.md) - Dimension 2 details
+  <!-- TOC: architecture-design.md -->
+  - When evaluating SOLID principles adherence → Verification Checklist: Architectural Principles
+  - If you're concerned about code organization → Verification Checklist: Code Organization
+  - When verifying design patterns are appropriate → Verification Checklist: Design Patterns
+  <!-- /TOC -->
 - [references/code-quality.md](references/code-quality.md) - Dimension 3 details
+  <!-- TOC: code-quality.md -->
+  - When checking if code is readable → Verification Checklist: Readability
+  - If you need to verify naming conventions → Verification Checklist: Naming Conventions
+  - When assessing code complexity → Verification Checklist: Code Complexity
+  <!-- /TOC -->
 - [references/performance-analysis.md](references/performance-analysis.md) - Dimension 4 details
+  <!-- TOC: performance-analysis.md -->
+  - When reviewing algorithm efficiency → Verification Checklist: Algorithm Efficiency
+  - If you need to evaluate data structure choices → Verification Checklist: Data Structure Selection
+  - When assessing database performance → Verification Checklist: Database Performance
+  <!-- /TOC -->
 - [references/security-analysis.md](references/security-analysis.md) - Dimension 5 details
+  <!-- TOC: security-analysis.md -->
+  - When validating input handling → Verification Checklist: Input Validation
+  - If you're reviewing authentication and authorization → Verification Checklist: Authentication & Authorization
+  - When checking sensitive data protection → Verification Checklist: Data Protection
+  <!-- /TOC -->
 - [references/testing-analysis.md](references/testing-analysis.md) - Dimension 6 details
+  <!-- TOC: testing-analysis.md -->
+  - When reviewing test coverage → Verification Checklist: Test Coverage
+  - If you need to evaluate test quality → Verification Checklist: Test Quality
+  - When assessing test types used → Verification Checklist: Test Types
+  <!-- /TOC -->
 - [references/backward-compatibility.md](references/backward-compatibility.md) - Dimension 7 details
+  <!-- TOC: backward-compatibility.md -->
+  - When reviewing API compatibility → Verification Checklist: API Compatibility
+  - If you need to verify data compatibility → Verification Checklist: Data Compatibility
+  - When checking behavioral compatibility → Verification Checklist: Behavioral Compatibility
+  <!-- /TOC -->
 - [references/documentation-analysis.md](references/documentation-analysis.md) - Dimension 8 details
+  <!-- TOC: documentation-analysis.md -->
+  - ### When to Use This Document
+  - When reviewing code documentation → See [Verification Checklists](#verification-checklists-summary)
+  - --
+  <!-- /TOC -->
 
 **Version**: 1.0 | **Updated**: 2025-01-01 | **Difficulty**: Intermediate

@@ -340,4 +340,14 @@ All scripts use standardized exit codes for consistent error handling:
 ## Resources
 
 - [references/thread-resolution-protocol.md](references/thread-resolution-protocol.md) - Thread resolution workflow
+  <!-- TOC: thread-resolution-protocol.md -->
+  - 1 Why thread resolution is separate from replying
+  - 2 Single thread resolution workflow
+  - 1 Getting the thread's GraphQL node ID
+  <!-- /TOC -->
 - [references/thread-conversation-tracking.md](references/thread-conversation-tracking.md) - Conversation tracking patterns
+  <!-- TOC: thread-conversation-tracking.md -->
+  - 1 Getting thread history via GraphQL
+  - 1 Query structure for review threads
+  - 2 Pagination for threads with many comments
+  <!-- /TOC -->

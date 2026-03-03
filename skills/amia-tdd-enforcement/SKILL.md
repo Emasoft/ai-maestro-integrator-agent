@@ -213,12 +213,47 @@ REFACTOR: improve [aspect] in [feature]
 **New to TDD? Read in this order:**
 
 1. Start with [The Iron Law](references/iron-law.md) - understand the fundamental principle
+   <!-- TOC: iron-law.md -->
+   - Use-Case TOC
+   - The Iron Law
+   - Pre-Code Checklist
+   <!-- /TOC -->
 2. Read [RED-GREEN-REFACTOR Cycle](references/red-green-refactor-cycle.md) - understand the three phases
+   <!-- TOC: red-green-refactor-cycle.md -->
+   - Use-Case TOC
+   - Phase 1: RED (Write Failing Test)
+   - Phase 2: GREEN (Write Minimum Implementation)
+   <!-- /TOC -->
 3. Study [Implementation Procedure](references/implementation-procedure.md) - learn step-by-step process
+   <!-- TOC: implementation-procedure.md -->
+   - Use-Case TOC
+   - Part 1: Writing Tests
+   - Contents:
+   <!-- /TOC -->
 4. Review [Common Patterns](references/common-patterns.md) - learn good practices
+   <!-- TOC: common-patterns.md -->
+   - Use-Case TOC
+   - Testing Behavior, Not Implementation
+   - The Rule
+   <!-- /TOC -->
 5. Memorize [Rules and Constraints](references/rules-and-constraints.md) - know what's allowed
+   <!-- TOC: rules-and-constraints.md -->
+   - The Iron Law (Absolute)
+   - Rule 1: No Code Without a Failing Test
+   - Rule 2: Test Must Fail Before Implementation
+   <!-- /TOC -->
 6. Bookmark [Troubleshooting](references/troubleshooting.md) - for when things go wrong
+   <!-- TOC: troubleshooting.md -->
+   - Use-Case TOC
+   - Part 1: Test Failures
+   - Part 2: Code Issues
+   <!-- /TOC -->
 7. Use [Status Tracking](references/status-tracking.md) - track your progress
+   <!-- TOC: status-tracking.md -->
+   - Use-Case TOC
+   - Status States
+   - State Descriptions
+   <!-- /TOC -->
 
 **Enforcing TDD on Remote Agents?**
 
@@ -352,10 +387,50 @@ git log --oneline | grep -E "^[a-f0-9]+ (RED|GREEN|REFACTOR):"
 ## Resources
 
 - [references/iron-law.md](references/iron-law.md) - The fundamental TDD principle
+  <!-- TOC: iron-law.md -->
+  - Use-Case TOC
+  - The Iron Law
+  - Pre-Code Checklist
+  <!-- /TOC -->
 - [references/red-green-refactor-cycle.md](references/red-green-refactor-cycle.md) - Cycle details
+  <!-- TOC: red-green-refactor-cycle.md -->
+  - Use-Case TOC
+  - Phase 1: RED (Write Failing Test)
+  - Phase 2: GREEN (Write Minimum Implementation)
+  <!-- /TOC -->
 - [references/implementation-procedure.md](references/implementation-procedure.md) - Step-by-step guide
+  <!-- TOC: implementation-procedure.md -->
+  - Use-Case TOC
+  - Part 1: Writing Tests
+  - Contents:
+  <!-- /TOC -->
 - [references/common-patterns.md](references/common-patterns.md) - TDD best practices
+  <!-- TOC: common-patterns.md -->
+  - Use-Case TOC
+  - Testing Behavior, Not Implementation
+  - The Rule
+  <!-- /TOC -->
 - [references/rules-and-constraints.md](references/rules-and-constraints.md) - Strict rules
+  <!-- TOC: rules-and-constraints.md -->
+  - The Iron Law (Absolute)
+  - Rule 1: No Code Without a Failing Test
+  - Rule 2: Test Must Fail Before Implementation
+  <!-- /TOC -->
 - [references/troubleshooting.md](references/troubleshooting.md) - Problem solving
+  <!-- TOC: troubleshooting.md -->
+  - Use-Case TOC
+  - Part 1: Test Failures
+  - Part 2: Code Issues
+  <!-- /TOC -->
 - [references/status-tracking.md](references/status-tracking.md) - Progress tracking
+  <!-- TOC: status-tracking.md -->
+  - Use-Case TOC
+  - Status States
+  - State Descriptions
+  <!-- /TOC -->
 - [references/test-engineering.md](references/test-engineering.md) - Test engineering procedures from AMIA Test Engineer
+  <!-- TOC: test-engineering.md -->
+  - 1 When verifying TDD cycle compliance (RED-GREEN-REFACTOR pattern)
+  - 1 RED Phase verification checklist
+  - 2 GREEN Phase verification checklist
+  <!-- /TOC -->

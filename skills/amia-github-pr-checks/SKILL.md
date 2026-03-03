@@ -364,4 +364,14 @@ All scripts use standardized exit codes for consistent error handling:
 ## Resources
 
 - [references/ci-status-interpretation.md](references/ci-status-interpretation.md) - Understanding check conclusions and required checks
+  <!-- TOC: ci-status-interpretation.md -->
+  - Understanding GitHub Check Conclusions
+  - 1 Complete list of conclusion values
+  - 2 When each conclusion occurs
+  <!-- /TOC -->
 - [references/polling-strategies.md](references/polling-strategies.md) - When and how to poll for check completion
+  <!-- TOC: polling-strategies.md -->
+  - When to Poll for Check Completion
+  - 1 Scenarios requiring polling
+  - 2 Avoiding unnecessary polling
+  <!-- /TOC -->

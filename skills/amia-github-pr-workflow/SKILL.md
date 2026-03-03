@@ -309,8 +309,38 @@ python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 ## Resources
 
 - [references/orchestrator-responsibilities.md](references/orchestrator-responsibilities.md) - Orchestrator role definition
+  <!-- TOC: orchestrator-responsibilities.md -->
+  - 1 What the orchestrator MUST do
+  - 1 Monitor PR status periodically
+  - 2 Delegate review work to subagents
+  <!-- /TOC -->
 - [references/delegation-rules.md](references/delegation-rules.md) - Subagent delegation patterns
+  <!-- TOC: delegation-rules.md -->
+  - 1 When to spawn subagents
+  - 1 Task complexity thresholds
+  - 2 Time-based triggers
+  <!-- /TOC -->
 - [references/verification-workflow.md](references/verification-workflow.md) - Verification procedures
+  <!-- TOC: verification-workflow.md -->
+  - 1 Pre-review verification checklist
+  - 2 Post-review verification checklist
+  - 3 CI check verification
+  <!-- /TOC -->
 - [references/completion-criteria.md](references/completion-criteria.md) - PR completion requirements
+  <!-- TOC: completion-criteria.md -->
+  - 1 ALL criteria that must be true
+  - 1 Review comments addressed
+  - 2 PR comments acknowledged
+  <!-- /TOC -->
 - [references/polling-schedule.md](references/polling-schedule.md) - Polling frequency configuration
+  <!-- TOC: polling-schedule.md -->
+  - 1 Base polling frequency
+  - 2 What to check on each poll
+  - 3 Adaptive polling rules
+  <!-- /TOC -->
 - [references/merge-failure-recovery.md](references/merge-failure-recovery.md) - Merge failure and recovery procedures
+  <!-- TOC: merge-failure-recovery.md -->
+  - Overview
+  - Types of Merge Failures
+  - Merge Conflict Resolution
+  <!-- /TOC -->

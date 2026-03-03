@@ -68,7 +68,17 @@ Follow these numbered steps to retrieve and analyze GitHub PR context:
 
 6. **Extract specific information as needed**
    - For metadata fields, see [references/pr-metadata.md](references/pr-metadata.md)
+     <!-- TOC: pr-metadata.md -->
+     - PR Metadata JSON Structure
+     - 1 Core identification fields (number, title, state)
+     - 2 Author and assignee information
+     <!-- /TOC -->
    - For diff analysis, see [references/diff-analysis.md](references/diff-analysis.md)
+     <!-- TOC: diff-analysis.md -->
+     - Understanding Diff Output
+     - 1 Unified diff format explanation
+     - 2 File headers and hunks
+     <!-- /TOC -->
 
 ### Checklist
 
@@ -260,4 +270,14 @@ For additional troubleshooting, run scripts with `--verbose` flag for detailed l
 ## Resources
 
 - [references/pr-metadata.md](references/pr-metadata.md) - PR metadata JSON structure and field extraction
+  <!-- TOC: pr-metadata.md -->
+  - PR Metadata JSON Structure
+  - 1 Core identification fields (number, title, state)
+  - 2 Author and assignee information
+  <!-- /TOC -->
 - [references/diff-analysis.md](references/diff-analysis.md) - Understanding and analyzing PR diffs
+  <!-- TOC: diff-analysis.md -->
+  - Understanding Diff Output
+  - 1 Unified diff format explanation
+  - 2 File headers and hunks
+  <!-- /TOC -->

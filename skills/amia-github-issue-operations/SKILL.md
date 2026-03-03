@@ -341,5 +341,20 @@ See the main Integrator Agent documentation for workflow integration details.
 ## Resources
 
 - [references/label-management.md](references/label-management.md) - Label creation and naming conventions
+  <!-- TOC: label-management.md -->
+  - 1 Creating labels via GitHub API
+  - 1 Using gh CLI to create labels
+  - 2 Specifying label colors
+  <!-- /TOC -->
 - [references/issue-templates.md](references/issue-templates.md) - Bug report, feature request, task templates
+  <!-- TOC: issue-templates.md -->
+  - ### Part 1: Bug Report Templates
+  - 1 Bug report template
+  - 1 Required sections (description, steps, expected/actual behavior)
+  <!-- /TOC -->
 - [references/milestone-tracking.md](references/milestone-tracking.md) - Milestone creation and assignment
+  <!-- TOC: milestone-tracking.md -->
+  - ### Part 1: Creating Milestones
+  - 1 Creating milestones
+  - 1 Milestone title conventions
+  <!-- /TOC -->

@@ -311,8 +311,23 @@ Use these HTML comments for machine-readable state:
 ## Resources
 
 - [references/memory-file-templates.md](references/memory-file-templates.md) - Copy-paste templates
+  <!-- TOC: memory-file-templates.md -->
+  - PR State Comment Template
+  - Current Work Handoff Template
+  - Patterns Learned Template
+  <!-- /TOC -->
 - [references/retrieval-patterns.md](references/retrieval-patterns.md) - Detailed retrieval logic
+  <!-- TOC: retrieval-patterns.md -->
+  - Pattern 1: PR Review Continuation
+  - Pattern 2: Integration Work Continuation
+  - Pattern 3: Pattern Lookup
+  <!-- /TOC -->
 - [references/update-patterns.md](references/update-patterns.md) - Detailed update logic
+  <!-- TOC: update-patterns.md -->
+  - Pattern 1: Immediate PR State Update
+  - Pattern 2: Append to Patterns Learned
+  - Pattern 3: Release History Update
+  <!-- /TOC -->
 
 ---
 

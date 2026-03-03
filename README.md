@@ -108,9 +108,20 @@ claude --agent amia-integrator-main-agent --plugin-dir ./ai-maestro-integrator-a
 
 > **Note:** Marketplace distribution is TBD. For now, use `--plugin-dir` with a local clone.
 
+## Non-Standard Directories
+
+| Directory | Purpose |
+|-----------|---------|
+| `shared/` | Shared Python modules (thresholds, constants) used by multiple plugin scripts across skills and hooks |
+| `git-hooks/` | Git hook scripts (e.g., `pre-push`) for local repository protection; installed via `cp git-hooks/pre-push .git/hooks/pre-push` |
+
+## Platform Requirements
+
+This plugin includes 1 Bash/Shell script (`amia_cleanup_version_branches.sh`) for release branch cleanup. This script requires a Unix-like environment (Linux or macOS). On Windows, use WSL or Git Bash.
+
 ## Validation
 
 ```bash
 cd ai-maestro-integrator-agent
-uv run python scripts/validate_plugin.py . --verbose
+uv run --with pyyaml python scripts/validate_plugin.py . --verbose
 ```

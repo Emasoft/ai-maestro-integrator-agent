@@ -461,19 +461,9 @@ python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/
   <!-- /TOC -->
 - [references/parallel-pr-workflow.md](references/parallel-pr-workflow.md) - Processing multiple PRs simultaneously
   <!-- TOC: parallel-pr-workflow.md -->
-  - Part 1: Creating Worktrees and Isolation
-    - 2.1 Creating Worktrees for Multiple Simultaneous PRs
-    - 2.2 Isolation Requirements and Enforcement Rules
-  - Part 2: Subagent Management and Path Validation
-    - 2.3 Working Directory Management for Subagents
-    - 2.4 Path Validation Rules and Common Violations
-  - Part 3: Concurrent Operations and Example Workflow
-    - 2.5 Handling Concurrent Git Operation Limitations
-    - 2.6 Example Workflow: Processing 3 PRs in Parallel
-  - Part 4: Error Recovery
-    - 2.7 Error Recovery When Isolation is Violated
-  - Quick Reference
-  - Related Documents
+  ### Part 1: Creating Worktrees and Isolation
+  **2.1 Creating Worktrees for Multiple Simultaneous PRs**
+  **2.2 Isolation Requirements and Enforcement Rules**
   <!-- /TOC -->
 - [references/worktree-cleanup.md](references/worktree-cleanup.md) - Safe worktree removal procedures
   <!-- TOC: worktree-cleanup.md -->

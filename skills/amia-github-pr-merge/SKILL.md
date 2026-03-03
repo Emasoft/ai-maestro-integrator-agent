@@ -436,5 +436,20 @@ Each script outputs JSON to stdout for easy parsing by automation tools.
 ## Resources
 
 - [references/merge-state-verification.md](references/merge-state-verification.md) - GraphQL merge state verification
+  <!-- TOC: merge-state-verification.md -->
+  - 1 Why `gh pr view --json state` can be stale
+  - 1 REST API caching behavior
+  - 2 Race conditions in merge state
+  <!-- /TOC -->
 - [references/merge-strategies.md](references/merge-strategies.md) - Merge strategy selection guide
+  <!-- TOC: merge-strategies.md -->
+  - 1 Merge commit strategy
+  - 1 When to use merge commits
+  - 2 Commit history implications
+  <!-- /TOC -->
 - [references/auto-merge.md](references/auto-merge.md) - Auto-merge configuration reference
+  <!-- TOC: auto-merge.md -->
+  - 1 Setting up auto-merge via GraphQL API
+  - 1 EnablePullRequestAutoMerge mutation
+  - 2 Required permissions
+  <!-- /TOC -->

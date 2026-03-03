@@ -557,6 +557,11 @@ python3 scripts/amia_kanban_check_completion.py owner repo 1
   - 6.8 [Blocker status reporting](#68-status-reporting)
   <!-- /TOC -->
 - [references/board-queries.md](references/board-queries.md) - GraphQL queries for board state
+  <!-- TOC: board-queries.md -->
+  - ### Part 1: Basic Queries
+  - 1 Full Board State - Get complete board with all items and field values
+  - 1 GraphQL query for full project state
+  <!-- /TOC -->
 - [references/stop-hook-integration.md](references/stop-hook-integration.md) - Stop hook completion checks
   <!-- TOC: stop-hook-integration.md -->
   - 8.1 [The stop hook's role in orchestration](#81-stop-hook-role)
@@ -569,9 +574,29 @@ python3 scripts/amia_kanban_check_completion.py owner repo 1
   - 8.8 [Stop hook error handling](#88-error-handling)
   <!-- /TOC -->
 - [references/ai-agent-vs-human-workflow.md](references/ai-agent-vs-human-workflow.md) - Different workflows for AI vs humans
+  <!-- TOC: ai-agent-vs-human-workflow.md -->
+  - ### Part 1: Fundamentals and Communication
+  - 1 Key differences in AI vs human workflow
+  - 1 Comparison matrix (availability, response time, context)
+  <!-- /TOC -->
 - [references/instruction-templates.md](references/instruction-templates.md) - Message and assignment templates
+  <!-- TOC: instruction-templates.md -->
+  - Task Assignment Template
+  - GitHub Issue Template for Subtasks
+  - Integration Assignment Template
+  <!-- /TOC -->
 - [references/failure-scenarios.md](references/failure-scenarios.md) - Failure handling and recovery patterns
+  <!-- TOC: failure-scenarios.md -->
+  - Subtask Reports Failure After Others In Progress
+  - Integration Reports Failures
+  - Agent Becomes Unresponsive
+  <!-- /TOC -->
 - [references/troubleshooting.md](references/troubleshooting.md) - Common issues and solutions
+  <!-- TOC: troubleshooting.md -->
+  - ### Part 1: Issue and Status Problems
+  - 1 Issue not appearing on board after creation
+  - Cause 1: Issue Not Added to Project
+  <!-- /TOC -->
 
 ---
 

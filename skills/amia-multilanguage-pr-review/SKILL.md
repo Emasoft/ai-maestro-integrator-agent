@@ -389,11 +389,46 @@ Copy this checklist and track your progress:
 ## Resources
 
 - [references/language-detection.md](references/language-detection.md) - Language detection methods
+  <!-- TOC: language-detection.md -->
+  - 1 Detecting language from file extensions
+  - 2 Detecting language from shebang lines
+  - 3 Using .gitattributes linguist hints
+  <!-- /TOC -->
 - [references/python-review-patterns.md](references/python-review-patterns.md) - Python review checklist
+  <!-- TOC: python-review-patterns.md -->
+  - ### Part 1: Style, Types, and Documentation
+  - 1 Python code style and formatting checklist
+  - 1 Essential style rules table (PEP 8)
+  <!-- /TOC -->
 - [references/javascript-review-patterns.md](references/javascript-review-patterns.md) - JavaScript/TypeScript review
+  <!-- TOC: javascript-review-patterns.md -->
+  - ### Part 1: Style, Types, and Modules
+  - **3.1 JavaScript/TypeScript Code Style Checklist**
+  - 1 Essential style rules table (indentation, naming, etc.)
+  <!-- /TOC -->
   **Contents:** JavaScript/TypeScript Code Style Checklist, Type Safety Patterns in TypeScript, Module System Considerations (ESM vs CommonJS), Test Framework Patterns with Jest and Vitest, Linting with ESLint and Prettier
 - [references/rust-review-patterns.md](references/rust-review-patterns.md) - Rust review checklist
+  <!-- TOC: rust-review-patterns.md -->
+  - ### 4.1 Rust Code Style and Idioms
+  - Essential Style Rules (naming, indentation, line length)
+  - rustfmt Configuration (complete rustfmt.toml example)
+  <!-- /TOC -->
   **Contents:** Rust Code Style and Idioms, Memory Safety Patterns and Ownership, Error Handling with Result and Option, Clippy Lints and Configuration, Documentation Standards with rustdoc
 - [references/go-review-patterns.md](references/go-review-patterns.md) - Go review checklist
+  <!-- TOC: go-review-patterns.md -->
+  - 1 Go Code Style and Idioms
+  - 2 Error Handling Patterns
+  - 3 Package Organization and Naming
+  <!-- /TOC -->
 - [references/shell-review-patterns.md](references/shell-review-patterns.md) - Shell script review
+  <!-- TOC: shell-review-patterns.md -->
+  - ### Part 1: Bash/Shell Script Review Checklist
+  - 1 Bash/Shell script review checklist
+  - 1 Essential script header with shebang and set options
+  <!-- /TOC -->
 - [references/cross-platform-testing.md](references/cross-platform-testing.md) - Multi-OS testing
+  <!-- TOC: cross-platform-testing.md -->
+  - ### Part 1: Testing on Multiple Operating Systems
+  - 1 Platform categories and key differences
+  - 2 Common platform issues (file paths, line endings, permissions, case sensitivity)
+  <!-- /TOC -->

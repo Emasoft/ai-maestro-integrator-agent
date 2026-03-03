@@ -97,6 +97,11 @@ Release Request Received
 
 ### 2. Release Types
 [references/release-types.md](references/release-types.md) - Patch, minor, major, pre-release definitions
+  <!-- TOC: release-types.md -->
+  - Overview
+  - Major Release
+  - Definition
+  <!-- /TOC -->
 
 ### 3. Semantic Versioning Rules
 [references/semantic-versioning.md](references/semantic-versioning.md) - Version format and incrementing rules
@@ -240,12 +245,47 @@ Always verify message delivery via the skill's send confirmation.
 
 - [references/semantic-versioning.md](references/semantic-versioning.md) - Semantic versioning rules
 - [references/release-types.md](references/release-types.md) - Release categories (patch/minor/major)
+  <!-- TOC: release-types.md -->
+  - Overview
+  - Major Release
+  - Definition
+  <!-- /TOC -->
 - [references/release-process.md](references/release-process.md) - Full release process
 - [references/release-workflow-chain.md](references/release-workflow-chain.md) - Workflow chain
+  <!-- TOC: release-workflow-chain.md -->
+  - Why release automation uses two separate workflows instead of one
+  - How the prepare-release workflow works
+  - Version detection from project metadata
+  <!-- /TOC -->
 - [references/pre-release-verification.md](references/pre-release-verification.md) - Pre-release checklist
+  <!-- TOC: pre-release-verification.md -->
+  - Overview
+  - Verification Principles
+  - Core Principles
+  <!-- /TOC -->
 - [references/post-release-verification.md](references/post-release-verification.md) - Post-release checklist
+  <!-- TOC: post-release-verification.md -->
+  - Overview
+  - Verification Timeline
+  - Immediate (0-4 hours)
+  <!-- /TOC -->
 - [references/rollback-procedures.md](references/rollback-procedures.md) - Rollback procedures
+  <!-- TOC: rollback-procedures.md -->
+  - Overview
+  - Rollback Fundamentals
+  - What is a Rollback?
+  <!-- /TOC -->
 - [references/cicd-integration.md](references/cicd-integration.md) - CI/CD integration
+  <!-- TOC: cicd-integration.md -->
+  - Overview
+  - CI/CD Fundamentals
+  - Continuous Integration (CI)
+  <!-- /TOC -->
 - [references/release-responsibilities.md](references/release-responsibilities.md) - Agent responsibilities
+  <!-- TOC: release-responsibilities.md -->
+  - Overview
+  - Core Roles
+  - Release Manager
+  <!-- /TOC -->
 
 **Version**: 1.0.0 | **Updated**: 2025-02-04

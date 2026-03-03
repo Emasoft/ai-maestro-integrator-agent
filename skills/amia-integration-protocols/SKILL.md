@@ -115,8 +115,38 @@ Standard protocols for handing off work between agents:
 ## Resources
 
 - [references/handoff-protocols.md](references/handoff-protocols.md) - Complete handoff protocol reference
+  <!-- TOC: handoff-protocols.md -->
+  - Document Delivery Protocol
+  - Task Delegation Protocol
+  - Acknowledgment Protocol
+  <!-- /TOC -->
 - [references/ai-maestro-message-templates.md](references/ai-maestro-message-templates.md) - AI Maestro curl command templates for inter-agent messaging
+  <!-- TOC: ai-maestro-message-templates.md -->
+  - 0 Standard AI Maestro Messaging Approach
+  - 0 Receiving Messages from Orchestrator (AMOA)
+  - 1 Integration Request from AMOA
+  <!-- /TOC -->
 - [references/sub-agent-role-boundaries-template.md](references/sub-agent-role-boundaries-template.md) - Worker agent role boundary template for task delegation
+  <!-- TOC: sub-agent-role-boundaries-template.md -->
+  - Purpose
+  - Core Identity: Worker Agent (Not Orchestrator)
+  - What Worker Agents Are
+  <!-- /TOC -->
 - [references/routing-checklist.md](references/routing-checklist.md) - Task routing checklist for agent coordination
+  <!-- TOC: routing-checklist.md -->
+  - Sub-Agent Routing Table
+  - Routing Decision Guidelines
+  - Route to code-reviewer when:
+  <!-- /TOC -->
 - [references/record-keeping.md](references/record-keeping.md) - Session record-keeping formats and state management
+  <!-- TOC: record-keeping.md -->
+  - Routing Log Format
+  - Integration Status Files
+  - Quality Reports
+  <!-- /TOC -->
 - [references/phase-procedures.md](references/phase-procedures.md) - Integration phase procedures and workflow steps
+  <!-- TOC: phase-procedures.md -->
+  - Phase 1: Request Reception
+  - Check AI Maestro Inbox
+  - Extract Request Details
+  <!-- /TOC -->

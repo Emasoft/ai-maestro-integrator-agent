@@ -178,6 +178,11 @@ Use when:
 6. For batch operations, always run a dry-run first by previewing the affected items with `gh issue list` or `gh pr list` before executing changes.
 7. After completing your GitHub operation, verify the result by checking the repository state (e.g., `gh issue view <number>`, `gh pr status`).
 8. If errors occur, consult the **Error Handling** section below or the detailed [references/troubleshooting.md](references/troubleshooting.md).
+   <!-- TOC: troubleshooting.md -->
+   - Quick Navigation
+   - Use-Case TOC
+   - If you get authentication errors
+   <!-- /TOC -->
 
 ### Checklist
 
@@ -191,6 +196,10 @@ Copy this checklist and track your progress:
 - [ ] Execute the GitHub operation using the appropriate skill or batch command
 - [ ] Verify the result by checking repository state (`gh issue view`, `gh pr status`)
 - [ ] If errors occurred, consult Error Handling section or [references/troubleshooting.md](references/troubleshooting.md)
+  <!-- TOC: troubleshooting.md -->
+  - Quick Navigation
+  - Use-Case TOC
+  <!-- /TOC -->
 
 ## Output
 
@@ -271,7 +280,17 @@ If you encounter issues with any GitHub integration task, see [references/troubl
 
 **Core References:**
 - [references/prerequisites-and-setup.md](references/prerequisites-and-setup.md) - GitHub CLI installation and authentication
+  <!-- TOC: prerequisites-and-setup.md -->
+  - Initial Setup Requirements
+  - Installing GitHub CLI
+  - Verifying GitHub CLI Version
+  <!-- /TOC -->
 - [references/multi-user-workflow.md](references/multi-user-workflow.md) - Managing multiple GitHub identities
+  <!-- TOC: multi-user-workflow.md -->
+  - Use-Case TOC
+  - Part 1: Setup and Configuration
+  - Part 2: Operations and Troubleshooting
+  <!-- /TOC -->
 - [references/api-operations.md](references/api-operations.md) - Direct API operations
   <!-- TOC: api-operations.md -->
   - 1.1 [Executing GitHub Issue Operations](#11-executing-github-issue-operations)
@@ -321,8 +340,23 @@ If you encounter issues with any GitHub integration task, see [references/troubl
     - 1.9.4 Parsing JSON responses with jq
   <!-- /TOC -->
 - [references/batch-operations.md](references/batch-operations.md) - Bulk operations and filtering
+  <!-- TOC: batch-operations.md -->
+  - Use-Case TOC
+  - Filtering by Label
+  - Filter by Single Label
+  <!-- /TOC -->
 - [references/automation-scripts.md](references/automation-scripts.md) - Python automation scripts
+  <!-- TOC: automation-scripts.md -->
+  - Use-Case TOC
+  - Sync Projects V2 Script
+  - When to Use
+  <!-- /TOC -->
 - [references/troubleshooting.md](references/troubleshooting.md) - Common issues and solutions
+  <!-- TOC: troubleshooting.md -->
+  - Quick Navigation
+  - Use-Case TOC
+  - If you get authentication errors
+  <!-- /TOC -->
 
 **Specialized Skills:**
 - `amia-github-pr-workflow` - Pull request operations

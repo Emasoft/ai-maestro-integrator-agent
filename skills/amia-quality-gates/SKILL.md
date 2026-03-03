@@ -292,30 +292,119 @@ All scripts are located in the **root `scripts/` directory** of the ai-maestro-i
 
 ### Gate Details
 - [references/gate-pipeline.md](references/gate-pipeline.md) - Complete pipeline flow diagram
+  <!-- TOC: gate-pipeline.md -->
+  - Overview
+  - Pipeline Diagram
+  - Gate Transitions
+  <!-- /TOC -->
 - [references/pre-review-gate.md](references/pre-review-gate.md) - Pre-Review Gate details
+  <!-- TOC: pre-review-gate.md -->
+  - Purpose
+  - Required Checks
+  - Tests Pass
+  <!-- /TOC -->
 - [references/review-gate.md](references/review-gate.md) - Review Gate details
 - [references/pre-merge-gate.md](references/pre-merge-gate.md) - Pre-Merge Gate details
+  <!-- TOC: pre-merge-gate.md -->
+  - Purpose
+  - Required Checks
+  - CI Pipeline Success
+  <!-- /TOC -->
 - [references/post-merge-gate.md](references/post-merge-gate.md) - Post-Merge Gate details
+  <!-- TOC: post-merge-gate.md -->
+  - Purpose
+  - Required Checks
+  - Main Branch Build Success
+  <!-- /TOC -->
 
 ### Code Quality Checks
 - [references/encoding-compliance-checker.md](references/encoding-compliance-checker.md) - UTF-8 encoding compliance checker
+  <!-- TOC: encoding-compliance-checker.md -->
+  - When to run the encoding compliance checker
+  - How to run amia_check_encoding.py on specific files
+  - How to run amia_check_encoding.py on an entire directory
+  <!-- /TOC -->
 - [references/unicode-enforcement-hook.md](references/unicode-enforcement-hook.md) - Unicode enforcement hook (BOM, line endings, encoding, non-ASCII identifiers)
+  <!-- TOC: unicode-enforcement-hook.md -->
+  - When the Unicode enforcement hook runs
+  - What the hook checks (4 checks)
+  - How to fix each type of Unicode violation
+  <!-- /TOC -->
 
 ### Procedures and Examples
 - [references/gate-examples.md](references/gate-examples.md) - Practical examples for all gates
+  <!-- TOC: gate-examples.md -->
+  - Example 1: Pre-Review Gate Success
+  - Example 2: Review Gate Failure (Low Confidence)
+  - Example 3: Pre-Merge Gate Failure (Merge Conflict)
+  <!-- /TOC -->
 - [references/gate-checklist.md](references/gate-checklist.md) - Copy-paste enforcement checklist
+  <!-- TOC: gate-checklist.md -->
+  - Pre-Review Gate
+  - Review Gate
+  - Pre-Merge Gate
+  <!-- /TOC -->
 - [references/escalation-paths.md](references/escalation-paths.md) - Escalation paths A, B, C, D
+  <!-- TOC: escalation-paths.md -->
+  - Escalation Path A: Pre-Review Gate Failure
+  - Escalation Path B: Review Gate Failure
+  - Escalation Path C: Pre-Merge Gate Failure
+  <!-- /TOC -->
 - [references/escalation-procedures.md](references/escalation-procedures.md) - Detailed escalation procedures
+  <!-- TOC: escalation-procedures.md -->
+  - Overview
+  - Escalation Path A: Pre-Review Gate Failure
+  - Level 1: Author Notification
+  <!-- /TOC -->
 - [references/override-policies.md](references/override-policies.md) - Override authority and procedures
+  <!-- TOC: override-policies.md -->
+  - Overrides Are Exceptions
+  - Override Authority Matrix
+  - Override Procedure
+  <!-- /TOC -->
 - [references/override-examples.md](references/override-examples.md) - Override documentation examples
+  <!-- TOC: override-examples.md -->
+  - Overview
+  - Example 1: Pre-Review Gate Override (Urgent Hotfix)
+  - Example 2: Review Gate Override (Style Issues)
+  <!-- /TOC -->
 
 ### Reference Materials
 - [references/gate-decision-flowchart.md](references/gate-decision-flowchart.md) - Visual decision flowchart
+  <!-- TOC: gate-decision-flowchart.md -->
+  - Visual Decision Tree
+  - Pre-Review Gate Decision
+  - Review Gate Decision
+  <!-- /TOC -->
 - [references/label-reference.md](references/label-reference.md) - Complete label list
+  <!-- TOC: label-reference.md -->
+  - Gate Status Labels
+  - Warning Labels
+  <!-- /TOC -->
 - [references/troubleshooting.md](references/troubleshooting.md) - Common issues and solutions
+  <!-- TOC: troubleshooting.md -->
+  - Gate Appears Stuck
+  - False Positive Gate Failure
+  - Escalation Not Triggering
+  <!-- /TOC -->
 - [references/rule-14-enforcement.md](references/rule-14-enforcement.md) - RULE 14 canonical text and enforcement procedures
+  <!-- TOC: rule-14-enforcement.md -->
+  - 1 When handling user requirements in any workflow
+  - 2 When detecting potential requirement deviations
+  - 3 When a technical constraint conflicts with a requirement
+  <!-- /TOC -->
 - [references/pr-evaluation.md](references/pr-evaluation.md) - PR evaluation procedures from amia-pr-evaluator
+  <!-- TOC: pr-evaluation.md -->
+  - 0 When to evaluate a PR for merge readiness
+  - 0 Evaluation gates that must pass before approval
+  - 1 Gate 0: Requirement Compliance (verifying PR implements what user requested)
+  <!-- /TOC -->
 - [references/integration-verification.md](references/integration-verification.md) - Integration verification from amia-integration-verifier
+  <!-- TOC: integration-verification.md -->
+  - Verifying Component Integration Readiness
+  - 1 Environment baseline verification
+  - 2 Service connectivity testing
+  <!-- /TOC -->
 
 ---
 

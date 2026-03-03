@@ -142,6 +142,11 @@ Read this when you need complete GraphQL query/mutation syntax.
 
 **Sub-Files:**
 - [graphql-queries-part1-read-operations.md](references/graphql-queries-part1-read-operations.md) - All read queries
+  <!-- TOC: graphql-queries-part1-read-operations.md -->
+  - When starting with GitHub Projects API
+  - When you need to find projects and their IDs
+  - 1 List All Projects for Organization
+  <!-- /TOC -->
 - [graphql-queries-part2-mutations.md](references/graphql-queries-part2-mutations.md) - All mutations
 
 ---
@@ -338,7 +343,17 @@ See also: [references/iteration-cycle-rules.md](references/iteration-cycle-rules
 ### Review & Plan Files
 
 - [references/review-worktree-workflow.md](references/review-worktree-workflow.md) - Isolated review environment setup
+  <!-- TOC: review-worktree-workflow.md -->
+  - When understanding review worktrees
+  - When creating a review worktree
+  - When reviewing PRs in isolated environment
+  <!-- /TOC -->
 - [references/plan-file-linking.md](references/plan-file-linking.md) - GitHub issue to plan file linking
+  <!-- TOC: plan-file-linking.md -->
+  - When understanding plan files
+  - When naming plan files
+  - When creating plan file content
+  <!-- /TOC -->
 
 ---
 
@@ -478,8 +493,38 @@ For worked examples of finding projects, querying items, and updating issue stat
 ## Resources
 
 - [references/core-operations.md](references/core-operations.md) - Day-to-day operations
+  <!-- TOC: core-operations.md -->
+  - When starting with GitHub Projects operations
+  - When creating issues with project items
+  - When updating project item status
+  <!-- /TOC -->
 - [references/graphql-queries.md](references/graphql-queries.md) - Complete GraphQL reference
+  <!-- TOC: graphql-queries.md -->
+  - When listing projects
+  - When getting project items
+  - When updating item status
+  <!-- /TOC -->
 - [references/status-management.md](references/status-management.md) - Status transition rules
+  <!-- TOC: status-management.md -->
+  - When starting with status management
+  - When you need to understand status meanings and metadata
+  - When moving issues between statuses
+  <!-- /TOC -->
 - [references/label-taxonomy.md](references/label-taxonomy.md) - Label system reference
+  <!-- TOC: label-taxonomy.md -->
+  - When starting with the label system
+  - When you need to know available label categories
+  - When creating or managing labels via CLI
+  <!-- /TOC -->
 - [references/automation-scripts.md](references/automation-scripts.md) - Script documentation
+  <!-- TOC: automation-scripts.md -->
+  - When using skill automation scripts
+  - When bulk creating issues from task lists
+  - When receiving GitHub webhook events
+  <!-- /TOC -->
 - [references/error-handling.md](references/error-handling.md) - Error handling patterns
+  <!-- TOC: error-handling.md -->
+  - When encountering GitHub API errors
+  - When hitting rate limits
+  - When project or item is not found
+  <!-- /TOC -->
