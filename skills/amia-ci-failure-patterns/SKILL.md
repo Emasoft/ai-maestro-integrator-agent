@@ -335,7 +335,11 @@ Check for:
 - [references/claude-pr-handling.md](references/claude-pr-handling.md) - Claude Code Action integration
   - **Contents:** Overview, When to Use This Workflow, Claude Code Action Integration, Integration with Monitoring Cycle, Response Patterns for Claude, Complete Workflow Example, Troubleshooting, Best Practices
 - [references/debug-procedures.md](references/debug-procedures.md) - Systematic debugging workflow
-  - **Contents:** Systematic Debugging Workflow, CI-Specific Debugging Techniques, Common Debug Patterns, Debug Tools and Commands
+  <!-- TOC: debug-procedures.md -->
+  - 1 When a CI/CD pipeline fails and needs systematic diagnosis
+  - 2 When identifying which failure pattern category applies
+  - 3 When performing deep root cause analysis by category
+  <!-- /TOC -->
 
 ## See Also
 

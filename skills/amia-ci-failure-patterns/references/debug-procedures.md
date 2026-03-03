@@ -1,6 +1,6 @@
 # Debug Procedures for CI Failure Analysis
 
-## Contents (Use-Case-Oriented)
+## Table of Contents
 
 - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
   - 1.1.1 Log collection and initial triage procedures
