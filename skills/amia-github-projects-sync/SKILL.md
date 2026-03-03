@@ -402,76 +402,14 @@ The `../shared/thresholds.py` module defines automation thresholds:
 
 See [references/automation-scripts.md](references/automation-scripts.md#thresholds-configuration) for usage.
 
----
-
-## Skill Files
-
-```
-github-projects-sync/
-├── SKILL.md                          # This file (map/TOC)
-├── scripts/
-│   ├── sync_tasks.py                 # Bulk issue creation
-│   ├── ci_webhook_handler.py         # Webhook receiver
-│   └── amia_kanban_sync.py                # CI status sync
-├── references/
-│   ├── core-operations.md            # Day-to-day operations
-│   ├── graphql-queries-index.md      # GraphQL library index
-│   ├── graphql-queries-part1-*.md    # Read operations
-│   ├── graphql-queries-part2-*.md    # Mutations
-│   ├── status-management.md          # Status transitions & lifecycle
-│   ├── label-taxonomy.md             # Label system
-│   ├── issue-templates.md            # Issue/PR templates
-│   ├── sub-issue-tracking.md         # Epic/sub-issue management
-│   ├── skill-integrations.md         # AMOA skill integration
-│   ├── ci-notification-setup.md      # Webhook configuration
-│   ├── error-handling.md             # Error handling patterns
-│   ├── best-practices.md             # Best practices guide
-│   ├── automation-scripts.md         # Script documentation
-│   ├── planning-phase-mapping.md     # Planning phase mapping
-│   ├── iteration-cycle-rules.md      # Sprint/iteration rules
-│   ├── review-worktree-workflow.md   # Review environment
-│   └── plan-file-linking.md          # Plan file linking
-└── ../shared/
-    ├── thresholds.py                 # Automation thresholds
-    └── aimaestro_notify.py           # AI Maestro CLI wrapper (TODO: not yet implemented)
-```
-
----
-
-## Examples and Inline Troubleshooting
-
-For worked examples (finding/querying projects, updating issue status) and inline troubleshooting (project not found, issues not appearing, sync failures, rate limiting), see [references/examples-and-inline-troubleshooting.md](references/examples-and-inline-troubleshooting.md):
-
-- E.1 Example 1: Find and Query a Project
-- E.2 Example 2: Update Issue Status
-- E.3 Inline Troubleshooting: Cannot find GitHub Project
-- E.4 Inline Troubleshooting: Issue not appearing on project board
-- E.5 Inline Troubleshooting: Column/status sync fails
-- E.6 Inline Troubleshooting: Rate limiting from GitHub API
-- E.7 Inline Troubleshooting: Claude Tasks and GitHub Project out of sync
-
-For comprehensive error handling patterns, see also [references/error-handling.md](references/error-handling.md):
-
-- When encountering GitHub API errors
-- When hitting rate limits
-- When project or item is not found
-- When item updates fail
-- When authentication fails
-- When webhook delivery fails
-- When implementing retry logic
-
 ## Error Handling
 
 When GitHub API calls or sync operations fail, consult [references/error-handling.md](references/error-handling.md) for retry logic, rate-limit handling, and authentication troubleshooting. All errors should be logged and, if unresolvable after retries, escalated via AI Maestro.
-
-**Contents:**
-- When encountering GitHub API errors
-- When hitting rate limits
-- When project or item is not found
-- When item updates fail
-- When authentication fails
-- When webhook delivery fails
-- When implementing retry logic
+  <!-- TOC: error-handling.md -->
+  - When encountering GitHub API errors
+  - When hitting rate limits
+  - When project or item is not found
+  <!-- /TOC -->
 
 ---
 

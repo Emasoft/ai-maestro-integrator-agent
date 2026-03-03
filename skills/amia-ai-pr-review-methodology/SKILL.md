@@ -2,7 +2,7 @@
 name: amia-ai-pr-review-methodology
 description: "Trigger with /amia-ai-pr-review. Use when performing deep evidence-based PR reviews, investigating false-positive fixes, or validating integration changes."
 license: Apache-2.0
-compatibility: Requires intermediate software development experience and familiarity with code review basics. Designed for reviewers performing deep, evidence-based pull request reviews using a 4-phase, 5-dimension evaluation framework. Requires access to the full codebase and ability to run verification commands.
+compatibility: Requires intermediate software development experience, code review basics, and access to the full codebase for running verification commands.
 metadata:
   author: Emasoft
   version: 1.0.0
@@ -15,7 +15,7 @@ user-invocable: false
 
 ## Overview
 
-This skill teaches a systematic, evidence-based approach to reviewing pull requests. It is organized into 4 sequential phases and 5 analysis dimensions. The methodology is designed to catch false positives (changes that appear to fix a problem but do not), redundant code, unverified assumptions, and cargo cult programming before they are merged into the main branch.
+This skill teaches a systematic, evidence-based approach to reviewing pull requests using 4 sequential phases and 5 analysis dimensions. It catches false positives, redundant code, unverified assumptions, and cargo cult programming before merge.
 
 The 4 phases are:
 
