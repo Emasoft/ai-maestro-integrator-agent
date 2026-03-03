@@ -134,53 +134,141 @@ START: Need to work on a PR?
 ### 1. Worktree Fundamentals
 
 For understanding what worktrees are and how they work, see [worktree-fundamentals.md](references/worktree-fundamentals.md):
-
-**Contents:**
-- 1.1 What is a git worktree and why it exists
-- 1.2 Worktree vs clone vs checkout - choosing the right approach
-- 1.3 The shared git directory model explained
-- 1.4 When worktrees provide measurable benefits
-- 1.5 Common misconceptions about worktrees
-- 1.6 Prerequisites and git version requirements
+  <!-- TOC: worktree-fundamentals.md -->
+  - 1.1 What is a git worktree and why it exists
+  - 1.2 Worktree vs clone vs checkout - choosing the right approach
+  - 1.3 The shared git directory model explained
+  - 1.4 When worktrees provide measurable benefits
+  - 1.5 Common misconceptions about worktrees
+  - 1.6 Prerequisites and git version requirements
+  <!-- /TOC -->
 
 ### 2. Parallel PR Workflow
 
 For implementing parallel PR processing with worktrees, see [parallel-pr-workflow.md](references/parallel-pr-workflow.md):
-
-**Contents:**
-- 2.1 Creating Worktrees for Multiple Simultaneous PRs
-- 2.2 Isolation Requirements and Enforcement Rules
-- 2.3 Working Directory Management for Subagents
-- 2.4 Path Validation Rules and Common Violations
-- 2.5 Handling Concurrent Git Operation Limitations
-- 2.6 Example Workflow: Processing 3 PRs in Parallel
-- 2.7 Error Recovery When Isolation is Violated
+  <!-- TOC: parallel-pr-workflow.md -->
+  - Table of Contents
+    - Part 1: Creating Worktrees and Isolation
+      - 2.1 Creating Worktrees for Multiple Simultaneous PRs
+        - 2.1.1 Standard worktree creation process (fetch, create, verify)
+        - 2.1.2 Naming convention for worktree paths
+        - 2.1.3 Creating worktree from remote branch
+        - 2.1.4 Creating worktree for a new branch
+      - 2.2 Isolation Requirements and Enforcement Rules
+        - 2.2.1 The golden rule: all operations within assigned worktree
+        - 2.2.2 Why isolation matters (merge conflicts, lost work, corruption)
+        - 2.2.3 Enforcement rules for agents (path validation, directory lock)
+        - 2.2.4 Automated isolation checking with verification script
+    - Part 2: Subagent Management and Path Validation
+      - 2.3 Working Directory Management for Subagents
+        - 2.3.1 Information each agent must receive (worktree path, PR info, rules)
+        - 2.3.2 Subagent prompt template for isolation enforcement
+        - 2.3.3 Multi-agent coordination diagram
+        - 2.3.4 Preventing cross-worktree contamination
+      - 2.4 Path Validation Rules and Common Violations
+        - 2.4.1 Valid paths (within worktree)
+        - 2.4.2 Invalid paths (isolation violations)
+        - 2.4.3 Common violation patterns (hardcoded paths, escapes, symlinks, tool defaults)
+        - 2.4.4 Path validation function (Python implementation)
+    - Part 3: Concurrent Operations and Example Workflow
+      - 2.5 Handling Concurrent Git Operation Limitations
+        - 2.5.1 The concurrency problem (shared .git locks)
+        - 2.5.2 Problematic concurrent operations (commit, fetch, push conflicts)
+        - 2.5.3 Safe concurrent operations (status, diff, log, file mods)
+        - 2.5.4 Serialization strategies (orchestrator-controlled, queuing, locking)
+        - 2.5.5 Best practice: git operation sequencing
+      - 2.6 Example Workflow: Processing 3 PRs in Parallel
+        - 2.6.1 Setup phase (creating 3 worktrees)
+        - 2.6.2 Agent assignment phase (task delegation)
+        - 2.6.3 Parallel work phase (simultaneous editing)
+        - 2.6.4 Git operations phase (serialized commits)
+        - 2.6.5 Cleanup phase (worktree removal)
+    - Part 4: Error Recovery
+      - 2.7 Error Recovery When Isolation is Violated
+        - 2.7.1 Detecting violations with verification script
+        - 2.7.2 Recovery procedure for main repo contamination
+        - 2.7.3 Recovery procedure for cross-worktree contamination
+        - 2.7.4 Preventing future violations
+      - Summary
+  - Quick Reference
+    - Creating a Worktree for a PR
+    - Subagent Isolation Rules (Copy to All Subagent Prompts)
+    - Safe vs Unsafe Concurrent Operations
+    - Violation Recovery Quick Steps
+  - Related Documents
+  <!-- /TOC -->
 
 ### 3. Worktree Cleanup
 
 For safely removing worktrees after PR completion, see [worktree-cleanup.md](references/worktree-cleanup.md):
-
-**Contents:**
-- 3.1 When to clean up worktrees (timing and triggers)
-- 3.2 Verifying no uncommitted changes exist
-- 3.3 Safe removal procedure step-by-step
-- 3.4 Handling stuck worktrees and lock files
-- 3.5 Force removal scenarios and their risks
-- 3.6 Pruning stale worktree entries
-- 3.7 Disk space recovery after cleanup
+  <!-- TOC: worktree-cleanup.md -->
+  - Table of Contents
+  - Overview
+  - Part 1: Timing and Verification
+    - 3.1 When to clean up worktrees (timing and triggers)
+    - 3.2 Verifying no uncommitted changes exist
+  - Part 2: Removal Procedures
+    - 3.3 Safe removal procedure step-by-step
+    - 3.4 Handling stuck worktrees and lock files
+  - Part 3: Force Removal and Recovery
+    - 3.5 Force removal scenarios and their risks
+    - 3.6 Pruning stale worktree entries
+    - 3.7 Disk space recovery after cleanup
+  - Quick Reference
+  - Summary
+  <!-- /TOC -->
 
 ### 4. Worktree Verification
 
 For verifying worktree integrity and isolation, see [worktree-verification.md](references/worktree-verification.md):
-
-**Contents:**
-- 4.1 Pre-cleanup verification checklist
-- 4.2 Detecting files written outside worktree boundaries
-- 4.3 Branch state verification procedures
-- 4.4 Remote sync verification steps
-- 4.5 Automated verification script usage
-- 4.6 Manual verification when scripts fail
-- 4.7 Reporting isolation violations
+  <!-- TOC: worktree-verification.md -->
+  - Table of Contents
+    - Part 1: Pre-Cleanup and Isolation Detection
+      - 4.1 Pre-cleanup verification checklist
+        - Complete Verification Checklist
+        - Quick Verification Commands
+      - 4.2 Detecting files written outside worktree boundaries
+        - The Isolation Violation Problem
+        - Detection Method 1: Main Repo Status Check
+        - Detection Method 2: Timestamp Analysis
+        - Detection Method 3: Git Diff Against Expected State
+        - Detection Method 4: File System Monitoring
+        - Detection Method 5: Hash Comparison
+        - Automated Isolation Check
+    - Part 2: Branch and Remote Sync Verification
+      - 4.3 Branch state verification procedures
+        - Verifying Branch is Complete
+        - Verifying Branch Against Base
+        - Verifying Branch Merge Status
+        - Verifying No Dependent Branches
+        - Branch State Decision Tree
+      - 4.4 Remote sync verification steps
+        - Step 1: Verify Remote Tracking
+        - Step 2: Verify No Unpushed Commits
+        - Step 3: Verify Remote Branch Exists
+        - Step 4: Verify Local and Remote Match
+        - Step 5: Verify Push Was Successful
+        - Remote Sync Verification Script
+    - Part 3: Automated and Manual Verification
+      - 4.5 Automated verification script usage
+        - Using amia_verify_worktree_isolation.py
+        - Interpreting Script Output
+        - Integrating Verification into Workflow
+      - 4.6 Manual verification when scripts fail
+        - When to Use Manual Verification
+        - Manual Verification Procedure
+        - Manual Verification Checklist
+    - Part 4: Reporting Violations
+      - 4.7 Reporting isolation violations
+        - Violation Report Format
+        - Escalation Criteria
+        - Violation Categories
+        - Reporting Template for Orchestrator
+  - Overview
+  - Quick Reference
+    - Essential Commands
+    - Verification Decision Tree
+  <!-- /TOC -->
 
 ---
 
@@ -280,53 +368,135 @@ python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/
 **Cause:** Attempting to checkout a branch that exists in another worktree.
 
 **Solution:** See [worktree-fundamentals.md](references/worktree-fundamentals.md) section 1.5 for branch constraint details.
-- **Contents:** What is a git worktree and why it exists, Worktree vs clone vs checkout - choosing the right approach, The shared git directory model explained, When worktrees provide measurable benefits, Common misconceptions about worktrees, Prerequisites and git version requirements
+  <!-- TOC: worktree-fundamentals.md -->
+  - 1.1 What is a git worktree and why it exists
+  - 1.2 Worktree vs clone vs checkout - choosing the right approach
+  - 1.3 The shared git directory model explained
+  - 1.4 When worktrees provide measurable benefits
+  - 1.5 Common misconceptions about worktrees
+  - 1.6 Prerequisites and git version requirements
+  <!-- /TOC -->
 
 ### Problem: "worktree is dirty, cannot remove"
 
 **Cause:** Attempting to remove a worktree with uncommitted changes.
 
 **Solution:** See [worktree-cleanup.md](references/worktree-cleanup.md) section 3.2 for handling uncommitted changes.
-- **Contents:** When to clean up worktrees (timing and triggers), Verifying no uncommitted changes exist, Safe removal procedure step-by-step, Handling stuck worktrees and lock files, Force removal scenarios and their risks, Pruning stale worktree entries, Disk space recovery after cleanup
+  <!-- TOC: worktree-cleanup.md -->
+  - 3.1 When to clean up worktrees (timing and triggers)
+  - 3.2 Verifying no uncommitted changes exist
+  - 3.3 Safe removal procedure step-by-step
+  - 3.4 Handling stuck worktrees and lock files
+  - 3.5 Force removal scenarios and their risks
+  - 3.6 Pruning stale worktree entries
+  - 3.7 Disk space recovery after cleanup
+  <!-- /TOC -->
 
 ### Problem: Files appearing in main repo after worktree work
 
 **Cause:** Isolation violation - files were written outside the worktree.
 
 **Solution:** See [worktree-verification.md](references/worktree-verification.md) section 4.2 for detection and remediation.
-- **Contents:** Pre-cleanup verification checklist, Detecting files written outside worktree boundaries, Branch state verification procedures, Remote sync verification steps, Automated verification script usage, Manual verification when scripts fail, Reporting isolation violations
+  <!-- TOC: worktree-verification.md -->
+  - 4.1 Pre-cleanup verification checklist
+  - 4.2 Detecting files written outside worktree boundaries
+  - 4.3 Branch state verification procedures
+  - 4.4 Remote sync verification steps
+  - 4.5 Automated verification script usage
+  - 4.6 Manual verification when scripts fail
+  - 4.7 Reporting isolation violations
+  <!-- /TOC -->
 
 ### Problem: "fatal: unable to create new worktree"
 
 **Cause:** Lock file exists or path already in use.
 
 **Solution:** See [worktree-cleanup.md](references/worktree-cleanup.md) section 3.4 for handling stuck worktrees.
-- **Contents:** When to clean up worktrees (timing and triggers), Verifying no uncommitted changes exist, Safe removal procedure step-by-step, Handling stuck worktrees and lock files, Force removal scenarios and their risks, Pruning stale worktree entries, Disk space recovery after cleanup
+  <!-- TOC: worktree-cleanup.md -->
+  - 3.1 When to clean up worktrees (timing and triggers)
+  - 3.2 Verifying no uncommitted changes exist
+  - 3.3 Safe removal procedure step-by-step
+  - 3.4 Handling stuck worktrees and lock files
+  - 3.5 Force removal scenarios and their risks
+  - 3.6 Pruning stale worktree entries
+  - 3.7 Disk space recovery after cleanup
+  <!-- /TOC -->
 
 ### Problem: Git operations hanging or failing
 
 **Cause:** Concurrent git operations in multiple worktrees.
 
 **Solution:** See [parallel-pr-workflow.md](references/parallel-pr-workflow.md) section 2.5 for serialization strategies.
-
-**Contents:** Part 1: Creating Worktrees and Isolation, 2.5 Handling Concurrent Git Operation Limitations, Problematic concurrent operations (commit, fetch, push conflicts), Safe concurrent operations (status, diff, log, file mods)
+  <!-- TOC: parallel-pr-workflow.md -->
+  - Part 1: Creating Worktrees and Isolation
+    - 2.1 Creating Worktrees for Multiple Simultaneous PRs
+    - 2.2 Isolation Requirements and Enforcement Rules
+  - Part 2: Subagent Management and Path Validation
+    - 2.3 Working Directory Management for Subagents
+    - 2.4 Path Validation Rules and Common Violations
+  - Part 3: Concurrent Operations and Example Workflow
+    - 2.5 Handling Concurrent Git Operation Limitations
+      - 2.5.1 The concurrency problem (shared .git locks)
+      - 2.5.2 Problematic concurrent operations (commit, fetch, push conflicts)
+      - 2.5.3 Safe concurrent operations (status, diff, log, file mods)
+      - 2.5.4 Serialization strategies (orchestrator-controlled, queuing, locking)
+      - 2.5.5 Best practice: git operation sequencing
+    - 2.6 Example Workflow: Processing 3 PRs in Parallel
+  - Part 4: Error Recovery
+    - 2.7 Error Recovery When Isolation is Violated
+  - Quick Reference
+  - Related Documents
+  <!-- /TOC -->
 
 ---
 
 ## Resources
 
 - [references/worktree-fundamentals.md](references/worktree-fundamentals.md) - What worktrees are and how they work
-  - **Contents:** What is a git worktree and why it exists, Worktree vs clone vs checkout - choosing the right approach, The shared git directory model explained, When worktrees provide measurable benefits, Common misconceptions about worktrees, Prerequisites and git version requirements
+  <!-- TOC: worktree-fundamentals.md -->
+  - 1.1 What is a git worktree and why it exists
+  - 1.2 Worktree vs clone vs checkout - choosing the right approach
+  - 1.3 The shared git directory model explained
+  - 1.4 When worktrees provide measurable benefits
+  - 1.5 Common misconceptions about worktrees
+  - 1.6 Prerequisites and git version requirements
+  <!-- /TOC -->
 - [references/parallel-pr-workflow.md](references/parallel-pr-workflow.md) - Processing multiple PRs simultaneously
-  - **Contents:**
-    - Creating Worktrees for Multiple Simultaneous PRs
-    - Isolation Requirements and Enforcement Rules
-    - Handling Concurrent Git Operation Limitations
-    - Example Workflow: Processing 3 PRs in Parallel
+  <!-- TOC: parallel-pr-workflow.md -->
+  - Part 1: Creating Worktrees and Isolation
+    - 2.1 Creating Worktrees for Multiple Simultaneous PRs
+    - 2.2 Isolation Requirements and Enforcement Rules
+  - Part 2: Subagent Management and Path Validation
+    - 2.3 Working Directory Management for Subagents
+    - 2.4 Path Validation Rules and Common Violations
+  - Part 3: Concurrent Operations and Example Workflow
+    - 2.5 Handling Concurrent Git Operation Limitations
+    - 2.6 Example Workflow: Processing 3 PRs in Parallel
+  - Part 4: Error Recovery
+    - 2.7 Error Recovery When Isolation is Violated
+  - Quick Reference
+  - Related Documents
+  <!-- /TOC -->
 - [references/worktree-cleanup.md](references/worktree-cleanup.md) - Safe worktree removal procedures
-  - **Contents:** When to clean up worktrees (timing and triggers), Verifying no uncommitted changes exist, Safe removal procedure step-by-step, Handling stuck worktrees and lock files, Force removal scenarios and their risks, Pruning stale worktree entries, Disk space recovery after cleanup
+  <!-- TOC: worktree-cleanup.md -->
+  - 3.1 When to clean up worktrees (timing and triggers)
+  - 3.2 Verifying no uncommitted changes exist
+  - 3.3 Safe removal procedure step-by-step
+  - 3.4 Handling stuck worktrees and lock files
+  - 3.5 Force removal scenarios and their risks
+  - 3.6 Pruning stale worktree entries
+  - 3.7 Disk space recovery after cleanup
+  <!-- /TOC -->
 - [references/worktree-verification.md](references/worktree-verification.md) - Isolation and integrity checks
-  - **Contents:** Pre-cleanup verification checklist, Detecting files written outside worktree boundaries, Branch state verification procedures, Remote sync verification steps, Automated verification script usage, Manual verification when scripts fail, Reporting isolation violations
+  <!-- TOC: worktree-verification.md -->
+  - 4.1 Pre-cleanup verification checklist
+  - 4.2 Detecting files written outside worktree boundaries
+  - 4.3 Branch state verification procedures
+  - 4.4 Remote sync verification steps
+  - 4.5 Automated verification script usage
+  - 4.6 Manual verification when scripts fail
+  - 4.7 Reporting isolation violations
+  <!-- /TOC -->
 
 ---
 

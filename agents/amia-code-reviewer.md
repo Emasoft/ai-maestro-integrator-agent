@@ -57,13 +57,60 @@ This skill contains:
 > **For evaluation criteria**, see [amia-code-review-patterns/references/evaluation-criteria.md](../skills/amia-code-review-patterns/references/evaluation-criteria.md)
 
 > **For report templates**, see [amia-code-review-patterns/references/report-templates.md](../skills/amia-code-review-patterns/references/report-templates.md)
+>   <!-- TOC: report-templates.md -->
+>   ### Progress Tracking Reports
+>   - [Progress Report Template](report-templates-part1-progress.md)
+>     - Executive Summary format
+>     - Metrics Overview section
+>     - Task Status tables (Completed, In Progress, Pending, Blocked)
+>     - Milestones tracking table
+>     - Recommendations and Next Actions
 >
-> **Contents:**
-> - Progress Tracking Reports
-> - Code Quality Reports
-> - Test Execution Reports
-> - Task Completion Reports
-> - Summary and Integration Reports
+>   ### Code Quality Reports
+>   - [Quality Report Template](report-templates-part2-quality.md)
+>     - Quality Score breakdown (100-point scale)
+>     - Test Coverage analysis with module-level detail
+>     - Code Quality metrics (linting, type coverage)
+>     - Documentation completeness tracking
+>     - Security scan results
+>     - Performance benchmarks
+>     - Technical debt tracking
+>
+>   ### Test Execution Reports
+>   - [Test Report Template](report-templates-part3-test.md)
+>     - Executive Summary with pass/fail/skip counts
+>     - Test Results table with duration
+>     - Failed Tests detailed analysis
+>     - Error descriptions and recommendations
+>     - Skipped Tests rationale
+>     - Slow Tests identification (with snail emoji for CI-skipped tests)
+>     - Coverage Impact metrics
+>
+>   ### Task Completion Reports
+>   - [Completion Report Template](report-templates-part4-completion.md)
+>     - Task Objective documentation
+>     - Completion Checklist (Implementation, Testing, Documentation, Code Quality, Integration)
+>     - Verification Evidence (Test Results, Code Review, Performance Metrics)
+>     - Known Limitations
+>     - Future Enhancements
+>     - Sign-Off status and rationale
+>
+>   ### Summary and Integration Reports
+>   - [Summary Report Template](report-templates-part5-summary.md)
+>     - Project Health indicator
+>     - Key Metrics Dashboard
+>     - Recent Achievements
+>     - Current Focus Areas
+>     - Upcoming Milestones
+>     - Risk Factors analysis
+>
+>   - [Integration Report Template](report-templates-part6-integration.md)
+>     - Integration Status indicator
+>     - Component Interaction Map
+>     - API Contract Verification
+>     - Integration Test Results
+>     - Issues Detected with resolution recommendations
+>   <!-- /TOC -->
 
 > **For communication guidelines**, see [amia-code-review-patterns/references/communication-guidelines.md](../skills/amia-code-review-patterns/references/communication-guidelines.md)
 

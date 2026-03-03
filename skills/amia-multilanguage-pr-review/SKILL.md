@@ -95,6 +95,19 @@ See [python-review-patterns.md](references/python-review-patterns.md):
 
 ### JavaScript/TypeScript Reviews
 See [javascript-review-patterns.md](references/javascript-review-patterns.md):
+<!-- TOC: javascript-review-patterns.md -->
+- JavaScript/TypeScript Review Patterns Reference
+  - Table of Contents
+    - Part 1: Style, Types, and Modules
+    - Part 2: Testing and Linting
+  - Quick Reference: When to Read Each Part
+  - Summary Checklists
+    - Code Style Quick Check
+    - TypeScript Quick Check
+    - Module System Quick Check
+    - Testing Quick Check
+    - Linting Quick Check
+<!-- /TOC -->
 - 3.1 JavaScript/TypeScript code style checklist
 - 3.2 Type safety patterns in TypeScript
 - 3.3 Module system considerations (ESM vs CommonJS)
@@ -103,6 +116,17 @@ See [javascript-review-patterns.md](references/javascript-review-patterns.md):
 
 ### Rust Reviews
 See [rust-review-patterns.md](references/rust-review-patterns.md):
+<!-- TOC: rust-review-patterns.md -->
+- Rust Review Patterns Reference
+  - Table of Contents
+    - 4.1 Rust Code Style and Idioms
+    - 4.2 Memory Safety Patterns and Ownership
+    - 4.3 Error Handling with Result and Option
+    - 4.4 Clippy Lints and Configuration
+    - 4.5 Documentation Standards with rustdoc
+  - Quick Reference: Review Focus by File Type
+  - Quick Reference: Common Review Issues
+<!-- /TOC -->
 - 4.1 Rust code style and idioms checklist
 - 4.2 Memory safety patterns and ownership
 - 4.3 Error handling with Result and Option
@@ -126,6 +150,34 @@ See [shell-review-patterns.md](references/shell-review-patterns.md):
 
 ## Quick Reference: Cross-Platform Testing
 See [cross-platform-testing.md](references/cross-platform-testing.md):
+<!-- TOC: cross-platform-testing.md -->
+### Part 1: Testing on Multiple Operating Systems
+- 7.1.1 Platform categories and key differences
+- 7.1.2 Common platform issues (file paths, line endings, permissions, case sensitivity)
+- 7.1.3 Testing matrix dimensions
+- 7.1.4 Platform detection in tests (Python and TypeScript)
+
+### Part 2: CI Matrix Configuration for GitHub Actions
+- 7.2.1 Basic matrix configuration (os, python-version)
+- 7.2.2 Extended matrix with include/exclude
+- 7.2.3 Node.js matrix example
+- 7.2.4 Rust matrix example
+- 7.2.5 Conditional steps based on matrix
+
+### Part 3: Platform-Specific Test Skips and Annotations
+- 7.3.1 Python (pytest) platform skips and custom markers
+- 7.3.2 JavaScript (Jest/Vitest) conditional tests
+- 7.3.3 Rust conditional compilation for tests
+- 7.3.4 Go build tags and runtime skips
+
+### Part 4: Using Docker for Reproducible Builds
+- 7.4.1 Multi-platform Docker build with multi-stage
+- 7.4.2 GitHub Actions with Docker services
+- 7.4.3 Multi-architecture builds (amd64, arm64)
+- 7.4.4 Docker Compose for testing
+- 7.4.5 Development containers (devcontainer)
+- 7.4.6 Docker testing checklist
+<!-- /TOC -->
 - 7.1 Testing on multiple operating systems
 - 7.2 CI matrix configuration for GitHub Actions
 - 7.3 Platform-specific test skips and annotations

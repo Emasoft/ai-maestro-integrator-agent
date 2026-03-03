@@ -90,12 +90,12 @@ CI failures fall into six main categories:
 | Claude PR Handling | Workflow for Claude Code Action PRs | [claude-pr-handling.md](references/claude-pr-handling.md) |
 
 **Category contents overview:**
-- **Cross-Platform**: Temporary Path Differences, Path Separator Differences, Line Ending Differences, Case Sensitivity Differences
-- **Exit Codes**: Exit Code Persistence, Common Exit Codes by Tool, GitHub Actions Exit Code Handling
-- **Syntax**: Here-String and Heredoc Terminator Issues, Shell Quoting Differences, Command Substitution Syntax
-- **Dependencies**: Module Import Path Issues, Missing Dependencies in CI, Version Mismatches
-- **Infrastructure**: Missing Labels, Platform Exceptions and Documentation, Runner Architecture
-- **Language-Specific**: Python CI Patterns, JavaScript/TypeScript CI Patterns, Rust CI Patterns, Go CI Patterns
+- **Cross-Platform**: 1 Temporary Path Differences, 2 Path Separator Differences, 3 Line Ending Differences, 4 Case Sensitivity Differences
+- **Exit Codes**: 1 Exit Code Persistence, 2 Common Exit Codes by Tool, 3 GitHub Actions Exit Code Handling
+- **Syntax**: 1 Here-String and Heredoc Terminator Issues, 2 Shell Quoting Differences, 3 Command Substitution Syntax
+- **Dependencies**: 1 Module Import Path Issues, 2 Missing Dependencies in CI, 3 Version Mismatches
+- **Infrastructure**: 1 Missing Labels, 2 Platform Exceptions and Documentation, 3 Runner Architecture
+- **Language-Specific**: 1 Python CI Patterns, 2 JavaScript/TypeScript CI Patterns, 3 Rust CI Patterns, 4 Go CI Patterns
 - **Bot Categories**: Overview, Category Table, Detailed Category Definitions, Signal Interpretation Guide, Priority Matrix, Implementation Example, Best Practices, Troubleshooting
 - **Claude PR Handling**: Overview, When to Use This Workflow, Claude Code Action Integration, Integration with Monitoring Cycle, Response Patterns for Claude, Complete Workflow Example, Troubleshooting, Best Practices
 
@@ -418,17 +418,104 @@ Check for:
 ## Resources
 
 - [references/cross-platform-patterns.md](references/cross-platform-patterns.md) - OS-specific path and behavior differences
-  - **Contents:** Temporary Path Differences, Path Separator Differences, Line Ending Differences, Case Sensitivity Differences
+  <!-- TOC: cross-platform-patterns.md -->
+  - 1.1 Temporary Path Differences
+    - 1.1.1 Windows temp path handling ($env:TEMP)
+    - 1.1.2 Linux/macOS temp path handling (/tmp, $TMPDIR)
+    - 1.1.3 Language-specific solutions (Python, JavaScript, Bash, PowerShell)
+  - 1.2 Path Separator Differences
+    - 1.2.1 Forward slash vs backslash behavior
+    - 1.2.2 Path normalization techniques
+    - 1.2.3 Platform-agnostic path construction
+  - 1.3 Line Ending Differences
+    - 1.3.1 CRLF vs LF detection
+    - 1.3.2 Git autocrlf configuration
+    - 1.3.3 Fixing line ending issues in CI
+  - 1.4 Case Sensitivity Differences
+    - 1.4.1 Filesystem case sensitivity by platform
+    - 1.4.2 Common case-related CI failures
+    - 1.4.3 Enforcing consistent casing
+  <!-- /TOC -->
 - [references/exit-code-patterns.md](references/exit-code-patterns.md) - Shell exit code handling
-  - **Contents:** Exit Code Persistence, Common Exit Codes by Tool, GitHub Actions Exit Code Handling
+  <!-- TOC: exit-code-patterns.md -->
+  - 2.1 Exit Code Persistence
+    - 2.1.1 PowerShell $LASTEXITCODE behavior
+    - 2.1.2 Bash $? behavior and pitfalls
+    - 2.1.3 Solutions for reliable exit code handling
+  - 2.2 Common Exit Codes by Tool
+    - 2.2.1 Git exit codes
+    - 2.2.2 npm/yarn/pnpm exit codes
+    - 2.2.3 pytest exit codes
+    - 2.2.4 cargo exit codes
+  - 2.3 GitHub Actions Exit Code Handling
+    - 2.3.1 Step failure detection
+    - 2.3.2 continue-on-error behavior
+    - 2.3.3 Custom exit code handling
+  <!-- /TOC -->
 - [references/syntax-patterns.md](references/syntax-patterns.md) - Heredoc and quoting issues
-  - **Contents:** Here-String and Heredoc Terminator Issues, Shell Quoting Differences, Command Substitution Syntax
+  <!-- TOC: syntax-patterns.md -->
+  - 3.1 Here-String and Heredoc Terminator Issues
+    - 3.1.1 PowerShell here-string requirements ("@ at column 0)
+    - 3.1.2 Bash heredoc requirements (EOF at column 0)
+    - 3.1.3 YAML multiline string indentation
+  - 3.2 Shell Quoting Differences
+    - 3.2.1 Bash quoting rules
+    - 3.2.2 POSIX sh quoting rules
+    - 3.2.3 Zsh quoting differences
+    - 3.2.4 PowerShell quoting rules
+  - 3.3 Command Substitution Syntax
+    - 3.3.1 Backticks vs $() differences
+    - 3.3.2 Nested command substitution
+  <!-- /TOC -->
 - [references/dependency-patterns.md](references/dependency-patterns.md) - Import and package issues
-  - **Contents:** Module Import Path Issues, Missing Dependencies in CI, Version Mismatches
+  <!-- TOC: dependency-patterns.md -->
+  - 4.1 Module Import Path Issues
+    - 4.1.1 Relative path calculation
+    - 4.1.2 Language-specific import resolution
+    - 4.1.3 Working directory assumptions
+  - 4.2 Missing Dependencies in CI
+    - 4.2.1 Lock file synchronization
+    - 4.2.2 Optional dependencies
+    - 4.2.3 Development vs production dependencies
+  - 4.3 Version Mismatches
+    - 4.3.1 Pinned version conflicts
+    - 4.3.2 Transitive dependency issues
+    - 4.3.3 CI-specific version requirements
+  <!-- /TOC -->
 - [references/github-infrastructure-patterns.md](references/github-infrastructure-patterns.md) - Runner and label issues
-  - **Contents:** Missing Labels, Platform Exceptions and Documentation, Runner Architecture
+  <!-- TOC: github-infrastructure-patterns.md -->
+  - 5.1 Missing Labels
+    - 5.1.1 Creating labels before workflow uses them
+    - 5.1.2 Label API format and authentication
+    - 5.1.3 Label naming conventions
+  - 5.2 Platform Exceptions and Documentation
+    - 5.2.1 Runner operating system differences
+    - 5.2.2 Pre-installed software differences
+    - 5.2.3 Environment variable differences
+  - 5.3 Runner Architecture
+    - 5.3.1 x64 vs ARM runner differences
+    - 5.3.2 Self-hosted runner considerations
+    - 5.3.3 Runner resource limits
+  <!-- /TOC -->
 - [references/language-specific-patterns.md](references/language-specific-patterns.md) - Python, JS, Rust, Go patterns
-  - **Contents:** Python CI Patterns, JavaScript/TypeScript CI Patterns, Rust CI Patterns, Go CI Patterns
+  <!-- TOC: language-specific-patterns.md -->
+  - 6.1 Python CI Patterns
+    - 6.1.1 Virtual environment issues
+    - 6.1.2 pip installation failures
+    - 6.1.3 pytest configuration issues
+  - 6.2 JavaScript/TypeScript CI Patterns
+    - 6.2.1 node_modules caching issues
+    - 6.2.2 npm vs yarn vs pnpm differences
+    - 6.2.3 ESM vs CommonJS issues
+  - 6.3 Rust CI Patterns
+    - 6.3.1 cargo build failures
+    - 6.3.2 Target directory management
+    - 6.3.3 Cross-compilation issues
+  - 6.4 Go CI Patterns
+    - 6.4.1 Module resolution issues
+    - 6.4.2 Go version mismatches
+    - 6.4.3 CGO dependencies
+  <!-- /TOC -->
 - [references/bot-categories.md](references/bot-categories.md) - PR author classification
   - **Contents:** Overview, Category Table, Detailed Category Definitions, Signal Interpretation Guide, Priority Matrix, Implementation Example, Best Practices, Troubleshooting
 - [references/claude-pr-handling.md](references/claude-pr-handling.md) - Claude Code Action integration

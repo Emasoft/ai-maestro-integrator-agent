@@ -106,6 +106,11 @@ All detailed operations are in reference files. Each section shows **WHEN to rea
 ---
 
 ### Why Kanban Is the Single Source of Truth ([references/kanban-as-truth.md](references/kanban-as-truth.md))
+<!-- TOC: kanban-as-truth.md -->
+- 1 [Why centralized truth matters for AI orchestration](#11-why-centralized-truth-matters)
+- 2 [The problems with distributed state tracking](#12-problems-with-distributed-state)
+- 3 [Why GitHub Projects V2 is the ideal choice](#13-why-github-projects-v2)
+<!-- /TOC -->
 
 Read this FIRST to understand the philosophical foundation.
 
@@ -120,6 +125,11 @@ Read this FIRST to understand the philosophical foundation.
 ---
 
 ### Board Column Semantics ([references/board-column-semantics.md](references/board-column-semantics.md))
+<!-- TOC: board-column-semantics.md -->
+- 1 [Overview of the 8-column workflow](#21-overview)
+- 2 [Backlog column - items not yet scheduled](#22-backlog)
+- 3 [Todo column - ready for immediate work](#23-todo)
+<!-- /TOC -->
 
 Read this when you need to understand what each column means and its requirements.
 
@@ -139,6 +149,11 @@ Read this when you need to understand what each column means and its requirement
 ---
 
 ### Issue-to-Module Mapping ([references/issue-to-module-mapping.md](references/issue-to-module-mapping.md))
+<!-- TOC: issue-to-module-mapping.md -->
+- 1 [The 1:1 principle: every module is exactly one issue](#31-the-11-principle)
+- 2 [Module issue template structure](#32-template-structure)
+- 3 [Required fields for module issues](#33-required-fields)
+<!-- /TOC -->
 
 Read this when creating issues for modules or understanding the 1:1 mapping.
 
@@ -155,6 +170,11 @@ Read this when creating issues for modules or understanding the 1:1 mapping.
 ---
 
 ### Agent Assignment via Board ([references/agent-assignment-via-board.md](references/agent-assignment-via-board.md))
+<!-- TOC: agent-assignment-via-board.md -->
+- 1 [Assignment principle: issue assignee = responsible agent](#41-assignment-principle)
+- 2 [How to assign issues via CLI](#42-assign-via-cli)
+- 3 [How to assign issues via GraphQL](#43-assign-via-graphql)
+<!-- /TOC -->
 
 Read this when assigning work to agents or checking assignments.
 
@@ -171,6 +191,11 @@ Read this when assigning work to agents or checking assignments.
 ---
 
 ### Status Transitions ([references/status-transitions.md](references/status-transitions.md))
+<!-- TOC: status-transitions.md -->
+- 1 [Valid transition matrix](#51-transition-matrix)
+- 2 [Transition preconditions and postconditions](#52-preconditions-and-postconditions)
+- 3 [Who can move cards](#53-who-can-move)
+<!-- /TOC -->
 
 Read this when moving cards between columns or validating transitions.
 
@@ -192,6 +217,11 @@ Read this when moving cards between columns or validating transitions.
 ---
 
 ### Blocking Workflow ([references/blocking-workflow.md](references/blocking-workflow.md))
+<!-- TOC: blocking-workflow.md -->
+- 1 [What constitutes a blocked task](#61-what-constitutes-a-blocked-task)
+- 2 [How to mark an item as blocked](#62-marking-as-blocked)
+- 3 [Required information when blocking](#63-required-information)
+<!-- /TOC -->
 
 Read this when an item becomes blocked or when resolving blockers.
 
@@ -224,6 +254,11 @@ Read this when you need GraphQL queries to inspect board state.
 ---
 
 ### Stop Hook Integration ([references/stop-hook-integration.md](references/stop-hook-integration.md))
+<!-- TOC: stop-hook-integration.md -->
+- 1 [The stop hook's role in orchestration](#81-stop-hook-role)
+- 2 [Board state queries performed by stop hook](#82-board-queries)
+- 3 [Completion criteria: when can orchestrator exit](#83-completion-criteria)
+<!-- /TOC -->
 
 Read this to understand how the stop hook uses board state for completion verification.
 
@@ -452,13 +487,89 @@ python3 scripts/amia_kanban_check_completion.py owner repo 1
 ## Resources
 
 - [references/kanban-as-truth.md](references/kanban-as-truth.md) - Why Kanban is the single source of truth
+  <!-- TOC: kanban-as-truth.md -->
+  - 1.1 [Why centralized truth matters for AI orchestration](#11-why-centralized-truth-matters)
+  - 1.2 [The problems with distributed state tracking](#12-problems-with-distributed-state)
+  - 1.3 [Why GitHub Projects V2 is the ideal choice](#13-why-github-projects-v2)
+  - 1.4 [The Iron Rules of Kanban-centric orchestration](#14-the-iron-rules)
+  - 1.5 [What happens when you violate these rules](#15-violation-consequences)
+  - 1.6 [Comparison: Traditional vs Kanban-centric orchestration](#16-comparison)
+  <!-- /TOC -->
 - [references/board-column-semantics.md](references/board-column-semantics.md) - Column meanings and requirements
+  <!-- TOC: board-column-semantics.md -->
+  - 2.1 [Overview of the 8-column workflow](#21-overview)
+  - 2.2 [Backlog column - items not yet scheduled](#22-backlog)
+  - 2.3 [Todo column - ready for immediate work](#23-todo)
+  - 2.4 [In Progress column - active development](#24-in-progress)
+  - 2.5 [AI Review column - Integrator reviews ALL tasks](#25-ai-review)
+  - 2.5a [Human Review column - User reviews BIG tasks only](#25a-human-review)
+  - 2.5b [Merge/Release column - Ready to merge](#25b-merge-release)
+  - 2.6 [Done column - completed and verified](#26-done)
+  - 2.7 [Blocked column - cannot proceed](#27-blocked)
+  - 2.8 [Column metadata and requirements table](#28-metadata-table)
+  - 2.9 [Visual board layout example](#29-visual-layout)
+  <!-- /TOC -->
 - [references/issue-to-module-mapping.md](references/issue-to-module-mapping.md) - Module-to-issue 1:1 mapping
+  <!-- TOC: issue-to-module-mapping.md -->
+  - 3.1 [The 1:1 principle: every module is exactly one issue](#31-the-11-principle)
+  - 3.2 [Module issue template structure](#32-template-structure)
+  - 3.3 [Required fields for module issues](#33-required-fields)
+  - 3.4 [Naming conventions for module issues](#34-naming-conventions)
+  - 3.5 [Linking module issues to parent epics](#35-linking-to-epics)
+  - 3.6 [Creating module issues from plan files](#36-from-plan-files)
+  - 3.7 [Bulk module issue creation workflow](#37-bulk-creation)
+  - 3.8 [Module issue lifecycle from creation to closure](#38-lifecycle)
+  <!-- /TOC -->
 - [references/agent-assignment-via-board.md](references/agent-assignment-via-board.md) - Assignment via issue assignees
+  <!-- TOC: agent-assignment-via-board.md -->
+  - 4.1 [Assignment principle: issue assignee = responsible agent](#41-assignment-principle)
+  - 4.2 [How to assign issues via CLI](#42-assign-via-cli)
+  - 4.3 [How to assign issues via GraphQL](#43-assign-via-graphql)
+  - 4.4 [Agent naming conventions for GitHub](#44-naming-conventions)
+  - 4.5 [Verifying current assignments](#45-verify-assignments)
+  - 4.6 [Reassigning work between agents](#46-reassigning)
+  - 4.7 [Multi-agent collaboration on single issue](#47-multi-agent-collaboration)
+  - 4.8 [Assignment notifications via AI Maestro](#48-notifications)
+  <!-- /TOC -->
 - [references/status-transitions.md](references/status-transitions.md) - Valid state transitions
+  <!-- TOC: status-transitions.md -->
+  - 5.1 [Valid transition matrix](#51-transition-matrix)
+  - 5.2 [Transition preconditions and postconditions](#52-preconditions-and-postconditions)
+  - 5.3 [Who can move cards](#53-who-can-move)
+  - 5.4 [Backlog to Todo transition rules](#54-backlog-to-todo)
+  - 5.5 [Todo to In Progress transition rules](#55-todo-to-in-progress)
+  - 5.6 [In Progress to AI Review transition rules](#56-in-progress-to-ai-review)
+  - 5.6a [AI Review to Human Review transition rules (big tasks)](#56a-ai-review-to-human-review)
+  - 5.6b [AI Review to Merge/Release transition rules (small tasks)](#56b-ai-review-to-merge-release)
+  - 5.6c [Human Review to Merge/Release transition rules](#56c-human-review-to-merge-release)
+  - 5.7 [Merge/Release to Done transition rules](#57-merge-release-to-done)
+  - 5.8 [Any status to Blocked transition rules](#58-any-to-blocked)
+  - 5.9 [Blocked to previous status transition rules](#59-blocked-to-previous)
+  - 5.10 [Invalid transitions and handling](#510-invalid-transitions)
+  <!-- /TOC -->
 - [references/blocking-workflow.md](references/blocking-workflow.md) - Handling blocked items
+  <!-- TOC: blocking-workflow.md -->
+  - 6.1 [What constitutes a blocked task](#61-what-constitutes-a-blocked-task)
+  - 6.2 [How to mark an item as blocked](#62-marking-as-blocked)
+  - 6.3 [Required information when blocking](#63-required-information)
+  - 6.4 [Blocker escalation timeline](#64-escalation-timeline)
+  - 6.5 [Resolving blockers and resuming work](#65-resolving-blockers)
+  - 6.6 [Cross-issue blocking dependencies](#66-cross-issue-blocking)
+  - 6.7 [External blockers](#67-external-blockers)
+  - 6.8 [Blocker status reporting](#68-status-reporting)
+  <!-- /TOC -->
 - [references/board-queries.md](references/board-queries.md) - GraphQL queries for board state
 - [references/stop-hook-integration.md](references/stop-hook-integration.md) - Stop hook completion checks
+  <!-- TOC: stop-hook-integration.md -->
+  - 8.1 [The stop hook's role in orchestration](#81-stop-hook-role)
+  - 8.2 [Board state queries performed by stop hook](#82-board-queries)
+  - 8.3 [Completion criteria: when can orchestrator exit](#83-completion-criteria)
+  - 8.4 [Handling incomplete work at exit time](#84-incomplete-work)
+  - 8.5 [Blocked items and exit policy](#85-blocked-items)
+  - 8.6 [Stop hook configuration options](#86-configuration)
+  - 8.7 [Manual override of stop hook](#87-manual-override)
+  - 8.8 [Stop hook error handling](#88-error-handling)
+  <!-- /TOC -->
 - [references/ai-agent-vs-human-workflow.md](references/ai-agent-vs-human-workflow.md) - Different workflows for AI vs humans
 - [references/instruction-templates.md](references/instruction-templates.md) - Message and assignment templates
 - [references/failure-scenarios.md](references/failure-scenarios.md) - Failure handling and recovery patterns

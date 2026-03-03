@@ -205,26 +205,33 @@ Code review examines code across 8 dimensions simultaneously:
 - 6.4 Automation - Scripts to run before every PR
 
 ### Commit Conventions ([references/commit-conventions.md](references/commit-conventions.md))
-- **Contents:**
-  - Writing descriptive commit messages with WHAT and WHY sections
-    - Commit message structure and required sections
-    - Documenting file changes (ADDED, MODIFIED, REMOVED, RENAMED)
-    - Documenting symbol changes (functions, classes, variables)
-    - Documenting configuration changes
-  - Choosing the correct commit category prefix
-    - Category prefix reference table
-    - When to use each category
-  - Making commits searchable for future decision archaeology
-    - Search scenarios and requirements
-    - Indexing best practices
-  - Managing dual-git repositories (project vs design)
-    - When to commit to project git
-    - When to commit to design git
-    - Setting up dual-git configuration
-  - Documenting removals and renames with supersedes information
-    - Supersedes section format
-    - Migration instructions
-    - Breaking change indicators
+  <!-- TOC: commit-conventions.md -->
+  - Contents
+  - 1.1 Writing Descriptive Commit Messages with WHAT and WHY Sections
+    - 1.1.1 Commit Message Structure and Required Sections
+    - 1.1.2 Documenting File Changes (ADDED, MODIFIED, REMOVED, RENAMED)
+    - 1.1.3 Documenting Symbol Changes (Functions, Classes, Variables)
+    - 1.1.4 Documenting Configuration Changes
+  - 1.2 Choosing the Correct Commit Category Prefix
+    - 1.2.1 Category Prefix Reference Table
+    - 1.2.2 When to Use Each Category
+  - 1.3 Making Commits Searchable for Future Decision Archaeology
+    - 1.3.1 Search Scenarios and Requirements
+    - 1.3.2 Indexing Best Practices
+  - 1.4 Managing Dual-Git Repositories (Project vs Design)
+    - 1.4.1 When to Commit to Project Git
+    - 1.4.2 When to Commit to Design Git
+    - 1.4.3 Setting Up Dual-Git Configuration
+  - 1.5 Documenting Removals and Renames with Supersedes Information
+    - 1.5.1 Supersedes Section Format
+    - 1.5.2 Migration Instructions
+    - 1.5.3 Breaking Change Indicators
+  - IRON RULES for Commit Conventions
+  - Example Commit Messages
+    - Example 1: Removing Obsolete Template
+    - Example 2: Adding New Agent
+    - Example 3: Renaming Symbol
+  <!-- /TOC -->
 
 ### Review Workflow ([references/review-workflow.md](references/review-workflow.md))
 - **Contents:**
@@ -336,6 +343,19 @@ Code review examines code across 8 dimensions simultaneously:
 - If you suspect breaking changes → Common Issues to Look For
 
 ### Documentation ([references/documentation-analysis.md](references/documentation-analysis.md))
+  <!-- TOC: documentation-analysis.md -->
+  ### When to Use This Document
+  - When reviewing code documentation → See Verification Checklists
+  - If you need to evaluate docstring quality → See Part 1: Checklists
+  - When checking API documentation → See Part 1: Checklists
+  - If you're reviewing architecture documentation → See Part 1: Checklists
+  - When assessing code comments → See Part 1: Checklists
+  - If you're reviewing README → See Part 1: Checklists
+  - When evaluating configuration documentation → See Part 1: Checklists
+  - If you're checking error messages → See Part 1: Checklists
+  - When identifying documentation issues → See Part 2: Common Issues
+  - When scoring documentation quality → See Part 3: Scoring and Practices
+  <!-- /TOC -->
 - When reviewing code documentation → See Verification Checklists
 - If you need to evaluate docstring quality → See Part 1: Checklists
 - When identifying documentation issues → See Part 2: Common Issues

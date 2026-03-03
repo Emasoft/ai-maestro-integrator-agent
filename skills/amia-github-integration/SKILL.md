@@ -92,7 +92,28 @@ This skill covers:
 ### I need to perform GitHub API operations
 
 **→ See [references/api-operations.md](references/api-operations.md)**
-  - **Contents:** Executing GitHub Issue Operations, Creating issues with labels milestones and assignees, Updating issue metadata (title body labels), Managing issue lifecycle (close reopen transfer), Executing GitHub Pull Request Operations, Creating PRs from branches, Managing PR reviewers and assignees, Submitting PR reviews (approve request changes comment), Merging PRs with different strategies, Executing GitHub Projects V2 Operations, Adding items to project boards, Moving items between columns, Updating custom field values via GraphQL, Batch updating project items, Managing Conversation Threads on Issues and PRs, Posting comments and replies, Marking threads as resolved, Locking and unlocking conversations, Handling GitHub API Rate Limits, Checking rate limit status before operations, Implementing exponential backoff on rate limit errors, Queuing non-urgent operations during limit pressure, Handling GraphQL-specific point-based rate limits, Running Quality Gates Before API Operations, Gate 1: Verifying authentication status, Gate 2: Verifying repository and project permissions, Gate 3: Verifying resource existence (issue PR label milestone), Gate 4: Validating state before state-changing operations, Gate 5: Pre-flight rate limit check, Coordinating API Operations via AI Maestro, Receiving API operation requests, Sending operation results back to requesting agent, Message format for API requests and responses, Step-by-Step API Operation Workflow, Receiving and parsing operation request, Running all quality gates in sequence, Preparing and executing API call with retry logic, Processing and validating API response, Logging operation to audit file, Reporting result to orchestrator or callback agent, Using GitHub CLI and GraphQL Tools, Common gh CLI commands for issues and PRs, Using gh api for raw REST API calls, Executing GraphQL mutations for Projects V2, Parsing JSON responses with jq
+  <!-- TOC: api-operations.md -->
+  - 1 [Executing GitHub Issue Operations](#11-executing-github-issue-operations)
+  - 1 Creating issues with labels, milestones, and assignees
+  - 2 Updating issue metadata (title, body, labels)
+  - 3 Managing issue lifecycle (close, reopen, transfer)
+  - 2 [Executing GitHub Pull Request Operations](#12-executing-github-pull-request-operations)
+  - 1 Creating PRs from branches
+  - 2 Managing PR reviewers and assignees
+  - 3 Submitting PR reviews (approve, request changes, comment)
+  - 4 Merging PRs with different strategies
+  - 3 [Executing GitHub Projects V2 Operations](#13-executing-github-projects-v2-operations)
+  - 1 Adding items to project boards
+  - 2 Moving items between columns
+  - 3 Updating custom field values via GraphQL
+  - 4 Batch updating project items
+  - 4 [Managing Conversation Threads on Issues and PRs](#14-managing-conversation-threads-on-issues-and-prs)
+  - 5 [Handling GitHub API Rate Limits](#15-handling-github-api-rate-limits)
+  - 6 [Running Quality Gates Before API Operations](#16-running-quality-gates-before-api-operations)
+  - 7 [Coordinating API Operations via AI Maestro](#17-coordinating-api-operations-via-ai-maestro)
+  - 8 [Step-by-Step API Operation Workflow](#18-step-by-step-api-operation-workflow)
+  - 9 [Using GitHub CLI and GraphQL Tools](#19-using-github-cli-and-graphql-tools)
+  <!-- /TOC -->
 
 This reference covers:
 - Direct GitHub API calls (REST and GraphQL)
@@ -254,6 +275,53 @@ If you encounter issues with any GitHub integration task, see [references/troubl
 - [references/prerequisites-and-setup.md](references/prerequisites-and-setup.md) - GitHub CLI installation and authentication
 - [references/multi-user-workflow.md](references/multi-user-workflow.md) - Managing multiple GitHub identities
 - [references/api-operations.md](references/api-operations.md) - Direct API operations
+  <!-- TOC: api-operations.md -->
+  - 1.1 [Executing GitHub Issue Operations](#11-executing-github-issue-operations)
+    - 1.1.1 Creating issues with labels, milestones, and assignees
+    - 1.1.2 Updating issue metadata (title, body, labels)
+    - 1.1.3 Managing issue lifecycle (close, reopen, transfer)
+  - 1.2 [Executing GitHub Pull Request Operations](#12-executing-github-pull-request-operations)
+    - 1.2.1 Creating PRs from branches
+    - 1.2.2 Managing PR reviewers and assignees
+    - 1.2.3 Submitting PR reviews (approve, request changes, comment)
+    - 1.2.4 Merging PRs with different strategies
+  - 1.3 [Executing GitHub Projects V2 Operations](#13-executing-github-projects-v2-operations)
+    - 1.3.1 Adding items to project boards
+    - 1.3.2 Moving items between columns
+    - 1.3.3 Updating custom field values via GraphQL
+    - 1.3.4 Batch updating project items
+  - 1.4 [Managing Conversation Threads on Issues and PRs](#14-managing-conversation-threads-on-issues-and-prs)
+    - 1.4.1 Posting comments and replies
+    - 1.4.2 Marking threads as resolved
+    - 1.4.3 Locking and unlocking conversations
+  - 1.5 [Handling GitHub API Rate Limits](#15-handling-github-api-rate-limits)
+    - 1.5.1 Checking rate limit status before operations
+    - 1.5.2 Implementing exponential backoff on rate limit errors
+    - 1.5.3 Queuing non-urgent operations during limit pressure
+    - 1.5.4 Handling GraphQL-specific point-based rate limits
+  - 1.6 [Running Quality Gates Before API Operations](#16-running-quality-gates-before-api-operations)
+    - 1.6.1 Gate 1: Verifying authentication status
+    - 1.6.2 Gate 2: Verifying repository and project permissions
+    - 1.6.3 Gate 3: Verifying resource existence (issue, PR, label, milestone)
+    - 1.6.4 Gate 4: Validating state before state-changing operations
+    - 1.6.5 Gate 5: Pre-flight rate limit check
+  - 1.7 [Coordinating API Operations via AI Maestro](#17-coordinating-api-operations-via-ai-maestro)
+    - 1.7.1 Receiving API operation requests
+    - 1.7.2 Sending operation results back to requesting agent
+    - 1.7.3 Message format for API requests and responses
+  - 1.8 [Step-by-Step API Operation Workflow](#18-step-by-step-api-operation-workflow)
+    - 1.8.1 Receiving and parsing operation request
+    - 1.8.2 Running all quality gates in sequence
+    - 1.8.3 Preparing and executing API call with retry logic
+    - 1.8.4 Processing and validating API response
+    - 1.8.5 Logging operation to audit file
+    - 1.8.6 Reporting result to orchestrator or callback agent
+  - 1.9 [Using GitHub CLI and GraphQL Tools](#19-using-github-cli-and-graphql-tools)
+    - 1.9.1 Common gh CLI commands for issues and PRs
+    - 1.9.2 Using gh api for raw REST API calls
+    - 1.9.3 Executing GraphQL mutations for Projects V2
+    - 1.9.4 Parsing JSON responses with jq
+  <!-- /TOC -->
 - [references/batch-operations.md](references/batch-operations.md) - Bulk operations and filtering
 - [references/automation-scripts.md](references/automation-scripts.md) - Python automation scripts
 - [references/troubleshooting.md](references/troubleshooting.md) - Common issues and solutions
