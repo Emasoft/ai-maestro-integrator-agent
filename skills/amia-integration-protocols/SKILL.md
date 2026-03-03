@@ -7,8 +7,6 @@ metadata:
   author: Emasoft
   version: 1.0.0
 context: fork
-workflow-instruction: "support"
-procedure: "support-skill"
 user-invocable: false
 ---
 

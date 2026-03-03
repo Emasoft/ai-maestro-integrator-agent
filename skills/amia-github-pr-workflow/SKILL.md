@@ -10,8 +10,6 @@ metadata:
   tags: "pr-review, orchestration, delegation, verification, github"
 agent: api-coordinator
 context: fork
-workflow-instruction: "Step 20"
-procedure: "proc-request-pr-review"
 user-invocable: false
 ---
 

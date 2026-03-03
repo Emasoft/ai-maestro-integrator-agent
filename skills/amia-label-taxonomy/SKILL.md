@@ -7,8 +7,6 @@ metadata:
   version: 1.0.0
 agent: amia-main
 context: fork
-workflow-instruction: "support"
-procedure: "support-skill"
 user-invocable: false
 license: Apache-2.0
 ---

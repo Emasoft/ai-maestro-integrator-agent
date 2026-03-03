@@ -3,20 +3,11 @@ name: amia-code-review-patterns
 description: "Use when reviewing pull requests. Trigger with PR review or code quality requests."
 license: Apache-2.0
 compatibility: Requires intermediate software development experience and familiarity with code review basics. Designed for reviewers analyzing pull requests with 1-30+ file changes using an 8-dimensional evaluation framework. Requires AI Maestro installed.
-triggers:
-  - Review a pull request for quality and issues
-  - Assess code changes before merge
-  - Perform quick scan followed by deep dive analysis
-  - Evaluate code across 8 dimensions (functional, architecture, quality, performance, security, testing, compatibility, documentation)
-  - Review this PR
-  - Check this code for issues
 metadata:
   author: Emasoft
   version: 1.0.0
 agent: amia-main
 context: fork
-workflow-instruction: "Step 21"
-procedure: "proc-evaluate-pr"
 user-invocable: false
 ---
 

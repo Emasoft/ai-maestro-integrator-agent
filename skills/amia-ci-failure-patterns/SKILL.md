@@ -11,8 +11,6 @@ metadata:
   languages: "python, javascript, typescript, rust, go, bash, powershell"
 agent: debug-specialist
 context: fork
-workflow-instruction: "Step 22"
-procedure: "proc-handle-failed-pr"
 user-invocable: false
 ---
 

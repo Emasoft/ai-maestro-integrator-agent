@@ -3,15 +3,6 @@ name: amia-release-management
 description: "Software release management and coordination. Use when creating releases, bumping versions, or rolling back deployments. Trigger with release tasks or /amia-create-release."
 license: Apache-2.0
 compatibility: Requires understanding of semantic versioning, git tagging, and CI/CD pipelines. Designed for release coordinators managing patch, minor, and major releases. Requires AI Maestro installed.
-triggers:
-  - Create a new release
-  - Bump version number
-  - Generate changelog
-  - Create release notes
-  - Tag a release
-  - Verify release readiness
-  - Rollback a release
-  - Prepare release candidate
 metadata:
   author: Emasoft
   version: 1.0.0
@@ -19,8 +10,6 @@ metadata:
   tags: "release, versioning, changelog, tagging, rollback, ci-cd"
 agent: amia-main
 context: fork
-workflow-instruction: "support"
-procedure: "support-skill"
 user-invocable: false
 ---
 

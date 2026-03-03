@@ -3,22 +3,11 @@ name: amia-ai-pr-review-methodology
 description: "Trigger with /amia-ai-pr-review. Use when performing deep evidence-based PR reviews, investigating false-positive fixes, or validating integration changes."
 license: Apache-2.0
 compatibility: Requires intermediate software development experience and familiarity with code review basics. Designed for reviewers performing deep, evidence-based pull request reviews using a 4-phase, 5-dimension evaluation framework. Requires access to the full codebase and ability to run verification commands.
-triggers:
-  - Perform a deep evidence-based PR review
-  - Investigate whether a PR fix is a false positive
-  - Validate system integration changes in a pull request
-  - Review a complex PR with file path or environment changes
-  - Check a bug fix PR for root cause verification
-  - Assess a performance improvement PR with benchmark evidence
-  - Review a dependency update PR for redundancy and security
-  - Catch cargo cult programming or unverified assumptions in a PR
 metadata:
   author: Emasoft
   version: 1.0.0
 agent: amia-main
 context: fork
-workflow-instruction: "Step 21"
-procedure: "proc-deep-pr-review"
 user-invocable: false
 ---
 

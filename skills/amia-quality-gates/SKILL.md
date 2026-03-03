@@ -4,21 +4,11 @@ description: "Quality gate enforcement for PR integration. Use when verifying co
 version: 1.0.0
 license: Apache-2.0
 compatibility: Requires familiarity with CI/CD pipelines, code review processes, and GitHub workflows. Designed for the Integrator Agent role enforcing quality standards. Requires AI Maestro installed.
-triggers:
-  - Enforce quality gates on a PR
-  - Check if code passes pre-review gate
-  - Validate PR before merge
-  - Run post-merge verification
-  - Determine if gate failure should block or warn
-  - Escalate a blocked PR
-  - Apply quality gate labels
 metadata:
   author: Emasoft
   version: 1.0.0
 agent: amia-main
 context: fork
-workflow-instruction: "Step 21"
-procedure: "proc-evaluate-pr"
 user-invocable: false
 ---
 

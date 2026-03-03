@@ -10,8 +10,6 @@ metadata:
   tags: "git, worktree, parallel-development, pr-workflow, isolation"
   requires: "git >= 2.15, python >= 3.9"
 context: fork
-workflow-instruction: "support"
-procedure: "support-skill"
 user-invocable: false
 ---
 

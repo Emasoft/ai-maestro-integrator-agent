@@ -8,8 +8,6 @@ metadata:
   version: 2.0.0
 agent: test-engineer
 context: fork
-workflow-instruction: "Step 21"
-procedure: "proc-evaluate-pr"
 user-invocable: false
 ---
 

@@ -8,8 +8,6 @@ metadata:
   version: 1.0.0
 agent: api-coordinator
 context: fork
-workflow-instruction: "Steps 13, 18"
-procedure: "proc-populate-kanban, proc-update-kanban-status"
 user-invocable: false
 ---
 

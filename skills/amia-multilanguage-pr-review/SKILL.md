@@ -12,8 +12,6 @@ metadata:
   supported_languages: "python, javascript, typescript, rust, go, bash, shell"
 agent: code-reviewer
 context: fork
-workflow-instruction: "Step 21"
-procedure: "proc-evaluate-pr"
 user-invocable: false
 ---
 

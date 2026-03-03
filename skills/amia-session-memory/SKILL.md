@@ -4,20 +4,11 @@ description: "Session memory for PR reviews and integration work. Use when resum
 license: Apache-2.0
 version: 1.0.0
 compatibility: Requires familiarity with AMIA role responsibilities (code review, integration, releases). Designed for maintaining context across Claude Code session boundaries. Requires AI Maestro installed.
-triggers:
-  - Resume a PR review that was started in a previous session
-  - Continue integration work after context compaction
-  - Recall previous feedback given on similar code patterns
-  - Track release history and rollback decisions
-  - Maintain CI/CD pipeline state awareness
-  - Handoff integration work to another session
 metadata:
   author: Emasoft
   version: 1.0.0
 agent: amia-main
 context: fork
-workflow-instruction: "support"
-procedure: "support-skill"
 user-invocable: false
 ---
 

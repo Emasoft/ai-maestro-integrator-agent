@@ -8,11 +8,8 @@ metadata:
   author: Emasoft
   category: github-workflow
   tags: "github, pull-request, merge, graphql, automation"
-  triggers: "merge PR, check if merged, auto-merge, merge readiness, squash merge, rebase merge"
 agent: api-coordinator
 context: fork
-workflow-instruction: "Step 21"
-procedure: "proc-evaluate-pr"
 user-invocable: false
 ---
 

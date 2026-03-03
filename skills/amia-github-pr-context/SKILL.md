@@ -10,8 +10,6 @@ metadata:
   tags: "pull-request, code-review, diff-analysis, github-api"
 agent: api-coordinator
 context: fork
-workflow-instruction: "Step 21"
-procedure: "proc-evaluate-pr"
 user-invocable: false
 ---
 

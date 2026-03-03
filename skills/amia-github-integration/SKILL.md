@@ -8,8 +8,6 @@ metadata:
   version: 1.0.0
 agent: api-coordinator
 context: fork
-workflow-instruction: "support"
-procedure: "support-skill"
 user-invocable: false
 ---
 
