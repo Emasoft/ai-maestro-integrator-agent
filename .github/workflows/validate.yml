@@ -5,6 +5,7 @@ on:
     branches: [main, master]
     paths:
       - '.claude-plugin/**'
+      - '.github/workflows/**'
       - 'agents/**'
       - 'commands/**'
       - 'skills/**'
