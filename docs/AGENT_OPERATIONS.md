@@ -430,6 +430,7 @@ Example:
 |----------|-------------|---------|
 | `${CLAUDE_PLUGIN_ROOT}` | Plugin directory | `~/agents/amia-main/.claude/plugins/ai-maestro-integrator-agent/` |
 | `${CLAUDE_PROJECT_DIR}` | Project root (if in project mode) | `~/projects/my-app/` |
+| `${CLAUDE_SKILL_DIR}` | Skill's own directory (available in SKILL.md content) | `~/...plugins/ai-maestro-integrator-agent/skills/amia-code-review-patterns/` |
 
 ### AI Maestro Variables
 

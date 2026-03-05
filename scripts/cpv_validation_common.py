@@ -157,6 +157,7 @@ VALID_HOOK_EVENTS = {
     "SessionEnd",
     "PreCompact",
     "Setup",
+    "InstructionsLoaded",
     "TeammateIdle",
     "TaskCompleted",
     "ConfigChange",

@@ -43,6 +43,7 @@ EVENTS_WITH_MATCHERS = {
     "Notification",
     "PreCompact",
     "Setup",
+    "InstructionsLoaded",
     "SessionStart",
     "SessionEnd",
     "SubagentStart",
@@ -66,6 +67,7 @@ VALID_HOOK_TYPES = {"command", "prompt", "agent"}
 # Events that ONLY support type: "command" hooks (not prompt or agent)
 COMMAND_ONLY_EVENTS = {
     "ConfigChange",
+    "InstructionsLoaded",
     "Notification",
     "PreCompact",
     "SessionEnd",

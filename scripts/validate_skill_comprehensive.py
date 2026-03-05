@@ -1025,6 +1025,7 @@ def validate_hooks_field(
         "SubagentStart",
         "SubagentStop",
         "Setup",
+        "InstructionsLoaded",
         "SessionStart",
         "SessionEnd",
         "PreCompact",
