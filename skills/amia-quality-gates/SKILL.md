@@ -240,13 +240,11 @@ See [references/troubleshooting.md](references/troubleshooting.md) for solutions
 
 These scripts manage design documents for quality gate integration:
 
-> **Note:** `amia_design_validate.py` is planned but not yet implemented.
-
 | Script | Purpose | Usage |
 |--------|---------|-------|
 | `amia_design_create.py` | Create new design documents with proper GUUID | `python scripts/amia_design_create.py --type <TYPE> --title "<TITLE>"` |
 | `amia_design_search.py` | Search design documents by UUID, type, or status | `python scripts/amia_design_search.py --type <TYPE> --status <STATUS>` |
-| `amia_design_validate.py` | Validate design document frontmatter compliance | `python scripts/amia_design_validate.py --all` | <!-- TODO: Script not yet implemented -->
+| `amia_design_validate.py` | Validate design document frontmatter compliance | `python scripts/amia_design_validate.py --all` |
 
 ### Encoding Compliance Scripts
 

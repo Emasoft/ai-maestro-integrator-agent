@@ -170,8 +170,6 @@ UNVERIFIED --> VERIFICATION_IN_PROGRESS
 
 ## Scripts Reference
 
-> **Note:** Only `amia_cleanup_version_branches.py` is currently available. The following are planned: `amia_release_verify.py`, `amia_changelog_generate.py`, `amia_version_bump.py`, `amia_create_release.py`, `amia_rollback.py`.
-
 | Script | Purpose | Usage |
 |--------|---------|-------|
 | `amia_release_verify.py` | Pre-release verification | `python scripts/amia_release_verify.py --repo owner/repo --version 1.2.3` |
