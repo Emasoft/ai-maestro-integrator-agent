@@ -17,9 +17,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Optional
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str], retry: int = 2) -> tuple[int, str, str]:
@@ -133,11 +137,12 @@ def main() -> int:
     parser.add_argument(
         "--include-patch", action="store_true", help="Include patch for each file"
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     if args.pr <= 0:
-        print(json.dumps({"error": "PR number must be positive", "code": "INVALID_PARAMS"}))
+        write_output({"error": "PR number must be positive", "code": "INVALID_PARAMS"}, "amia_get_pr_files", args.output_file)
         return 1  # Invalid parameters
 
     try:
@@ -149,21 +154,21 @@ def main() -> int:
             if diff_text:
                 patches = extract_file_patches(diff_text)
 
-        output = format_files(files, patches)
-        print(json.dumps(output, indent=2))
+        formatted = format_files(files, patches)
+        write_output({"files": formatted, "total": len(formatted)}, "amia_get_pr_files", args.output_file)
         return 0  # Success
 
     except ValueError as e:
         # PR not found
-        print(json.dumps({"error": str(e), "code": "RESOURCE_NOT_FOUND"}))
+        write_output({"error": str(e), "code": "RESOURCE_NOT_FOUND"}, "amia_get_pr_files", args.output_file)
         return 2  # Resource not found
     except ConnectionError as e:
         # Authentication error
-        print(json.dumps({"error": str(e), "code": "NOT_AUTHENTICATED"}))
+        write_output({"error": str(e), "code": "NOT_AUTHENTICATED"}, "amia_get_pr_files", args.output_file)
         return 4  # Not authenticated
     except RuntimeError as e:
         # API error
-        print(json.dumps({"error": str(e), "code": "API_ERROR"}))
+        write_output({"error": str(e), "code": "API_ERROR"}, "amia_get_pr_files", args.output_file)
         return 3  # API error
 
 

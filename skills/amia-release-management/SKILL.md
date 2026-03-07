@@ -191,6 +191,14 @@ UNVERIFIED --> VERIFICATION_IN_PROGRESS
 
 ---
 
+## Output Discipline
+
+All scripts support the `--output-file <path>` flag:
+- **With flag**: Full JSON written to file; concise summary printed to stderr
+- **Without flag**: Full JSON printed to stdout (backward compatible)
+
+When invoking from agents or automated workflows, always pass `--output-file` to minimize token consumption.
+
 ## Examples
 
 ### Standard Patch Release

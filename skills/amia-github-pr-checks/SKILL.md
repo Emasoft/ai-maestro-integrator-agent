@@ -289,6 +289,14 @@ For guidance on waiting for checks, see [polling-strategies.md](references/polli
   - 4.2 Re-running failed checks
   - 4.3 Determining merge readiness with failures
 
+## Output Discipline
+
+All scripts support the `--output-file <path>` flag:
+- **With flag**: Full JSON written to file; concise summary printed to stderr
+- **Without flag**: Full JSON printed to stdout (backward compatible)
+
+When invoking from agents or automated workflows, always pass `--output-file` to minimize token consumption.
+
 ## Examples
 
 ### Example 1: Check PR Status Before Merge

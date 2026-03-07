@@ -32,7 +32,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, cast
 
-from cpv_validation_common import VALID_HOOK_EVENTS, ValidationReport, resolve_tool_command
+from cpv_validation_common import (
+    COLORS,
+    VALID_HOOK_EVENTS,
+    ValidationReport,
+    resolve_tool_command,
+    save_report_and_print_summary,
+)
 
 # Events that support matchers
 EVENTS_WITH_MATCHERS = {
@@ -43,7 +49,6 @@ EVENTS_WITH_MATCHERS = {
     "Notification",
     "PreCompact",
     "Setup",
-    "InstructionsLoaded",
     "SessionStart",
     "SessionEnd",
     "SubagentStart",
@@ -59,6 +64,7 @@ EVENTS_WITHOUT_MATCHERS = {
     "TaskCompleted",
     "WorktreeCreate",
     "WorktreeRemove",
+    "InstructionsLoaded",
 }
 
 # Valid hook types
@@ -67,7 +73,6 @@ VALID_HOOK_TYPES = {"command", "prompt", "agent"}
 # Events that ONLY support type: "command" hooks (not prompt or agent)
 COMMAND_ONLY_EVENTS = {
     "ConfigChange",
-    "InstructionsLoaded",
     "Notification",
     "PreCompact",
     "SessionEnd",
@@ -141,7 +146,7 @@ def validate_json_structure(hook_path: Path, report: ValidationReport) -> dict[s
         return None
 
     try:
-        content = hook_path.read_text()
+        content = hook_path.read_text(encoding="utf-8")
         data = json.loads(content)
         report.passed("Valid JSON syntax")
         return cast(dict[str, Any], data)
@@ -182,7 +187,7 @@ def validate_event_name(event_name: str, report: ValidationReport) -> bool:
     """Validate a hook event name."""
     if event_name not in VALID_HOOK_EVENTS:
         # Fuzzy match for "did you mean?" suggestions
-        close = difflib.get_close_matches(event_name, VALID_HOOK_EVENTS, n=1, cutoff=0.6)
+        close = difflib.get_close_matches(event_name, sorted(VALID_HOOK_EVENTS), n=1, cutoff=0.6)
         if close:
             report.critical(
                 f"Unknown hook event: '{event_name}' — did you mean '{close[0]}'? "
@@ -192,6 +197,27 @@ def validate_event_name(event_name: str, report: ValidationReport) -> bool:
             report.critical(f"Unknown hook event: '{event_name}'. Valid events: {sorted(VALID_HOOK_EVENTS)}")
         return False
     return True
+
+
+def _check_matcher_values(
+    matcher: str,
+    known_values: set[str],
+    event_label: str,
+    values_label: str,
+    report: ValidationReport,
+) -> None:
+    """Check matcher parts against a set of known values, reporting info for unknowns."""
+    parts = re.split(r"[|()]", matcher)
+    for part in parts:
+        part = part.strip()
+        # Skip empty, wildcard, and regex patterns (contain metacharacters)
+        if not part or part == "*" or re.escape(part) != part:
+            continue
+        if part not in known_values:
+            report.info(
+                f"{event_label} matcher '{part}' is not a known {values_label} — "
+                f"known values: {', '.join(sorted(known_values))}"
+            )
 
 
 def validate_matcher(matcher: Any, event_name: str, report: ValidationReport) -> bool:
@@ -228,38 +254,13 @@ def validate_matcher(matcher: Any, event_name: str, report: ValidationReport) ->
                 if re.match(r"^[A-Z][a-zA-Z]+$", part):
                     report.info(f"Matcher '{part}' is not a common tool name (may be custom or MCP tool)")
 
-    # Validate Notification matcher types
+    # Validate matcher values against known sets for specific event types
     if event_name == "Notification":
-        parts = re.split(r"[|()]", matcher)
-        for part in parts:
-            part = part.strip()
-            if part and part != "*" and part not in COMMON_NOTIFICATION_TYPES:
-                report.info(
-                    f"Notification matcher '{part}' is not a common type — "
-                    f"known types: {', '.join(sorted(COMMON_NOTIFICATION_TYPES))}"
-                )
-
-    # Validate SessionStart matcher sources
+        _check_matcher_values(matcher, COMMON_NOTIFICATION_TYPES, "Notification", "type", report)
     if event_name == "SessionStart":
-        parts = re.split(r"[|()]", matcher)
-        for part in parts:
-            part = part.strip()
-            if part and part != "*" and part not in SESSION_START_SOURCES:
-                report.info(
-                    f"SessionStart matcher '{part}' is not a known source — "
-                    f"known values: {', '.join(sorted(SESSION_START_SOURCES))}"
-                )
-
-    # Validate PreCompact matcher triggers
+        _check_matcher_values(matcher, SESSION_START_SOURCES, "SessionStart", "source", report)
     if event_name == "PreCompact":
-        parts = re.split(r"[|()]", matcher)
-        for part in parts:
-            part = part.strip()
-            if part and part != "*" and part not in COMPACT_TRIGGERS:
-                report.info(
-                    f"PreCompact matcher '{part}' is not a known trigger — "
-                    f"known values: {', '.join(sorted(COMPACT_TRIGGERS))}"
-                )
+        _check_matcher_values(matcher, COMPACT_TRIGGERS, "PreCompact", "trigger", report)
 
     return True
 
@@ -553,35 +554,44 @@ def validate_command_hook(
     # Bash command portability checks
     stripped_cmd = command.strip()
 
-    # 3a: Script file without interpreter prefix
+    # 3a: Script file as first token without an explicit interpreter prefix
     script_extensions = {".py", ".js", ".ts", ".sh", ".rb", ".pl"}
     if cmd_first_token and any(cmd_first_token.endswith(ext) for ext in script_extensions):
-        # Check if it's being run directly (first token IS the script, no interpreter before it)
-        interpreter_prefixes = {"python", "python3", "node", "bun", "deno", "bash", "sh", "ruby", "perl"}
-        if not any(cmd_first_token.startswith(pfx) for pfx in interpreter_prefixes):
-            # It's a script file as first token — warn if no shebang guarantee
+        # Check if the script is being invoked directly (first token) vs via an interpreter
+        # e.g. "python3 script.py" -> first token is "python3", second is script -> OK
+        # e.g. "./script.py" -> first token IS the script -> warn
+        cmd_tokens = command.strip().split()
+        interpreter_names = {"python", "python3", "node", "bun", "deno", "bash", "sh", "ruby", "perl", "env"}
+        has_interpreter = len(cmd_tokens) >= 2 and cmd_tokens[0] in interpreter_names
+        if not has_interpreter:
             report.minor(
                 f"Command runs '{cmd_first_token}' without an explicit interpreter — "
                 "add one (e.g. python3, node, bash) for cross-platform reliability"
             )
 
     # 3b: Tilde path that may not expand in hook commands
-    if stripped_cmd.startswith("~/"):
+    if re.search(r"(^|\s)~/", stripped_cmd):
         report.minor(
-            "Command starts with '~/' — tilde expansion may not work in hook commands. "
+            "Command uses '~/' path — tilde expansion may not work in hook commands. "
             "Use $HOME/ or ${CLAUDE_PLUGIN_ROOT}/ instead."
         )
 
     # 3c: Bare 'cd' without chained command (no effect in fresh shell)
-    if stripped_cmd.startswith("cd ") and "&&" not in stripped_cmd and ";" not in stripped_cmd:
+    if (
+        (stripped_cmd.startswith("cd ") or stripped_cmd == "cd")
+        and "&&" not in stripped_cmd
+        and ";" not in stripped_cmd
+    ):
         report.minor(
             "'cd' alone has no effect — each hook runs in a fresh shell. "
             "Combine with your command: 'cd /dir && your-command'"
         )
 
-    # 3d: Windows backslash paths (cross-platform warning — always check, not just on Windows)
-    if "\\" in command and "${CLAUDE_PLUGIN_ROOT}" not in command and "\\n" not in command and "\\t" not in command:
-        report.minor("Command contains backslash paths — use forward slashes for cross-platform compatibility")
+    # 3d: Windows-style backslash paths (look for drive-letter patterns or consecutive backslash dirs)
+    if re.search(r"[A-Za-z]:\\\\|\\\\[A-Za-z]", command):
+        report.minor(
+            "Command contains Windows-style backslash paths — use forward slashes for cross-platform compatibility"
+        )
 
     # Relative path without $CLAUDE_PLUGIN_ROOT — may not resolve at runtime
     if (
@@ -914,16 +924,7 @@ def validate_hooks(
 def print_results(report: HookValidationReport, verbose: bool = False) -> None:
     """Print validation results in human-readable format."""
     # ANSI colors
-    colors = {
-        "CRITICAL": "\033[91m",  # Red
-        "MAJOR": "\033[93m",  # Yellow
-        "MINOR": "\033[94m",  # Blue
-        "NIT": "\033[96m",  # Cyan
-        "WARNING": "\033[95m",  # Magenta
-        "INFO": "\033[90m",  # Gray
-        "PASSED": "\033[92m",  # Green
-        "RESET": "\033[0m",
-    }
+    colors = COLORS
 
     # Count by level
     counts = {"CRITICAL": 0, "MAJOR": 0, "MINOR": 0, "NIT": 0, "WARNING": 0, "INFO": 0, "PASSED": 0}
@@ -1011,7 +1012,11 @@ def print_json(report: HookValidationReport) -> None:
 
 def main() -> int:
     """Main entry point."""
-    parser = argparse.ArgumentParser(description="Validate a Claude Code hooks.json file")
+    parser = argparse.ArgumentParser(
+        description="Validate a Claude Code hooks.json file.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="Example: uv run python scripts/validate_hook.py hooks/hooks.json --plugin-root .",
+    )
     parser.add_argument("hook_path", help="Path to the hooks.json file")
     parser.add_argument(
         "--plugin-root",
@@ -1024,28 +1029,45 @@ def main() -> int:
         help="Show all results including passed checks",
     )
     parser.add_argument("--json", action="store_true", help="Output as JSON")
+    parser.add_argument(
+        "--report", type=str, default=None, help="Save detailed report to file, print only summary to stdout"
+    )
     parser.add_argument("--strict", action="store_true", help="Strict mode — NIT issues also block validation")
     args = parser.parse_args()
 
     hook_path = Path(args.hook_path).resolve()
     plugin_root = Path(args.plugin_root).resolve() if args.plugin_root else None
 
+    # Early-exit errors: write minimal report if --report is specified
+    early_error = None
     if not hook_path.exists():
-        print(f"Error: {hook_path} does not exist", file=sys.stderr)
-        return 1
+        early_error = f"Error: {hook_path} does not exist"
+    elif not hook_path.is_file():
+        early_error = f"Error: {hook_path} is not a file (expected hooks.json)"
+    elif hook_path.suffix != ".json":
+        early_error = f"Error: {hook_path} is not a JSON file (expected hooks.json)"
 
-    # Verify content type — must be a JSON file (hooks.json)
-    if not hook_path.is_file():
-        print(f"Error: {hook_path} is not a file (expected hooks.json)", file=sys.stderr)
-        return 1
-    if hook_path.suffix != ".json":
-        print(f"Error: {hook_path} is not a JSON file (expected hooks.json)", file=sys.stderr)
+    if early_error:
+        if args.report:
+            report_path = Path(args.report)
+            report_path.parent.mkdir(parents=True, exist_ok=True)
+            report_path.write_text(f"# Hook Validation\n\nCRITICAL: {early_error}\n", encoding="utf-8")
+            print("Hook Validation: FAIL (critical)")
+            print("  CRITICAL:1")
+            print(f"  Report: {report_path}")
+        else:
+            print(early_error, file=sys.stderr)
         return 1
 
     report = validate_hooks(hook_path, plugin_root)
 
     if args.json:
         print_json(report)
+    elif args.report:
+        save_report_and_print_summary(
+            report, Path(args.report), f"Hook Validation: {hook_path}", print_results, args.verbose,
+            plugin_path=args.hook_path,
+        )
     else:
         print_results(report, args.verbose)
 

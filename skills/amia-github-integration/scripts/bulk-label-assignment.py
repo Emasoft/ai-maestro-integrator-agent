@@ -36,9 +36,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> tuple[bool, str]:
@@ -135,15 +139,16 @@ def main() -> None:
     parser.add_argument("--add-label", action="append", default=[], help="Label to add (repeatable)")
     parser.add_argument("--remove-label", action="append", default=[], help="Label to remove (repeatable)")
     parser.add_argument("--dry-run", action="store_true", help="Preview changes without applying")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     if "/" not in args.repo:
-        print(json.dumps({"error": True, "message": "Repository must be in owner/repo format"}))
+        write_output({"error": True, "message": "Repository must be in owner/repo format"}, "bulk-label-assignment", args.output_file)
         sys.exit(1)
 
     if not args.add_label and not args.remove_label:
-        print(json.dumps({"error": True, "message": "Specify at least one --add-label or --remove-label"}))
+        write_output({"error": True, "message": "Specify at least one --add-label or --remove-label"}, "bulk-label-assignment", args.output_file)
         sys.exit(1)
 
     result = apply_labels(
@@ -153,7 +158,7 @@ def main() -> None:
         remove_labels=args.remove_label,
         dry_run=args.dry_run,
     )
-    print(json.dumps(result, indent=2))
+    write_output(result, "bulk-label-assignment", args.output_file)
 
     if result.get("error"):
         code = result.get("code", "")

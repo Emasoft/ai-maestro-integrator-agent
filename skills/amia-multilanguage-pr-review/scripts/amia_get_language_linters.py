@@ -11,7 +11,11 @@ Usage:
 """
 
 import argparse
-import json
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 LANGUAGE_LINTERS = {
     "python": {
@@ -166,6 +170,7 @@ def main():
     parser.add_argument("--all", action="store_true", help="Show all supported languages")
     parser.add_argument("--list", action="store_true", help="List supported languages")
     parser.add_argument("--output", choices=["json", "text"], default="json")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
@@ -193,7 +198,7 @@ def main():
             result[lang] = {"error": f"Unsupported language: {lang}"}
 
     if args.output == "json":
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_get_language_linters", args.output_file)
     else:
         for lang, info in result.items():
             print(f"\n{lang.upper()}")

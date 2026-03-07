@@ -2,8 +2,13 @@
 thresholds.py - Shared constants for Integrator Agent.
 
 These thresholds configure behavior for quality gates,
-testing, and integration workflows.
+testing, integration workflows, and output discipline.
 """
+
+import json
+import sys
+from pathlib import Path
+from typing import Any
 
 # Code review thresholds
 MAX_PR_SIZE_LINES = 500
@@ -71,3 +76,64 @@ class WorktreeThresholds:
             {"purpose": purpose, "start": start, "end": end}
             for purpose, (start, end) in self.PORT_RANGES.items()
         ]
+
+
+class OutputThresholds:
+    """Output discipline thresholds to minimize token consumption."""
+
+    MAX_STDOUT_LINES: int = 5
+    MAX_STDOUT_CHARS: int = 500
+    MAX_JSON_ITEMS_INLINE: int = 10
+
+
+def _build_summary(result: dict[str, Any], script_name: str) -> str:
+    """Build a concise 1-line summary from a result dict."""
+    if result.get("error"):
+        msg = result.get("message", result.get("code", "unknown error"))
+        # Truncate long error messages
+        if len(str(msg)) > 120:
+            msg = str(msg)[:117] + "..."
+        return f"[ERROR] {script_name} — {msg}"
+
+    # Build summary from common result fields
+    parts = []
+    for key in ("total", "total_commits", "matched", "created", "updated",
+                "total_scanned", "valid", "invalid", "matching_prs",
+                "added_to_project", "all_passed", "bump_type", "new_version",
+                "version", "tag"):
+        if key in result:
+            parts.append(f"{key}={result[key]}")
+    summary = ", ".join(parts) if parts else "completed"
+    return f"[OK] {script_name} — {summary}"
+
+
+def write_output(
+    result: dict[str, Any],
+    script_name: str,
+    output_file: str | None = None,
+) -> None:
+    """Write full JSON to file if --output-file given, print summary to stdout.
+
+    When output_file is provided:
+      - Writes full JSON (indent=2) to that file
+      - Prints 2-line summary to stdout:
+        Line 1: [OK/ERROR] script_name — brief summary
+        Line 2: Report: <path>
+
+    When output_file is None (backward compatibility):
+      - Prints full JSON to stdout (legacy behavior)
+    """
+    if output_file is None:
+        # Backward compatibility: full JSON to stdout
+        print(json.dumps(result, indent=2))
+        return
+
+    # Write full JSON to the specified file
+    out_path = Path(output_file)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+
+    # Print concise summary to stdout
+    summary = _build_summary(result, script_name)
+    print(summary, file=sys.stderr)
+    print(f"Report: {out_path}", file=sys.stderr)

@@ -37,10 +37,14 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> tuple[bool, str]:
@@ -136,15 +140,16 @@ def main() -> None:
     parser.add_argument("--from", dest="from_ref", required=True, help="Starting ref (tag, branch, SHA)")
     parser.add_argument("--to", default="HEAD", help="Ending ref (default: HEAD)")
     parser.add_argument("--output", help="Write markdown changelog to this file")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     if "/" not in args.repo:
-        print(json.dumps({"error": True, "message": "Repository must be in owner/repo format"}))
+        write_output({"error": True, "message": "Repository must be in owner/repo format"}, "amia_changelog_generate", args.output_file)
         sys.exit(1)
 
     result = generate_changelog(repo=args.repo, from_ref=args.from_ref, to_ref=args.to)
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_changelog_generate", args.output_file)
 
     if result.get("error"):
         code = result.get("code", "")

@@ -25,10 +25,14 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> tuple[int, str, str]:
@@ -148,6 +152,7 @@ def main() -> int:
     parser.add_argument(
         "--include-logs-url", action="store_true", help="Include URL to view logs"
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     # Get PR HEAD SHA
@@ -158,7 +163,7 @@ def main() -> int:
             "code": "RESOURCE_NOT_FOUND",
             "message": f"Could not find PR #{args.pr}",
         }
-        print(json.dumps(error), file=sys.stderr)
+        write_output(error, "amia_get_check_details", args.output_file)
         return 2  # Resource not found
 
     # Get check runs
@@ -169,7 +174,7 @@ def main() -> int:
             "code": "RESOURCE_NOT_FOUND",
             "message": f"No checks found for PR #{args.pr}",
         }
-        print(json.dumps(error), file=sys.stderr)
+        write_output(error, "amia_get_check_details", args.output_file)
         return 2  # Resource not found (no checks exist)
 
     # Find the specific check
@@ -184,7 +189,7 @@ def main() -> int:
             "message": f"Check '{args.check}' not found",
             "available_checks": available_names,
         }
-        print(json.dumps(not_found_error), file=sys.stderr)
+        write_output(not_found_error, "amia_get_check_details", args.output_file)
         return 2  # Resource not found
 
     # Format and output
@@ -192,7 +197,7 @@ def main() -> int:
     details["pr_number"] = args.pr
     details["commit_sha"] = sha
 
-    print(json.dumps(details, indent=2))
+    write_output(details, "amia_get_check_details", args.output_file)
     return 0
 
 

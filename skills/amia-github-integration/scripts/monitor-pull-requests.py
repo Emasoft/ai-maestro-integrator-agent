@@ -43,9 +43,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> tuple[bool, str]:
@@ -174,11 +178,12 @@ def main() -> None:
     parser.add_argument("--watch-states", required=True,
                         help="Comma-separated states to watch: pending,failed,success,all")
     parser.add_argument("--label", help="Filter PRs by label")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     if "/" not in args.repo:
-        print(json.dumps({"error": True, "message": "Repository must be in owner/repo format"}))
+        write_output({"error": True, "message": "Repository must be in owner/repo format"}, "monitor-pull-requests", args.output_file)
         sys.exit(1)
 
     watch_states = [s.strip() for s in args.watch_states.split(",")]
@@ -188,7 +193,7 @@ def main() -> None:
         watch_states=watch_states,
         label=args.label,
     )
-    print(json.dumps(result, indent=2))
+    write_output(result, "monitor-pull-requests", args.output_file)
 
     if result.get("error"):
         code = result.get("code", "")

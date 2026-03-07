@@ -42,6 +42,9 @@ import tempfile
 from datetime import datetime, timezone
 from typing import Any
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
+
 
 # Default configuration
 # NOTE: Maintainers list should be populated with actual repo maintainers
@@ -491,15 +494,13 @@ def main() -> None:
         action="store_true",
         help="Preview synthesis comment without posting",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     # Check authentication
     if not check_gh_auth():
-        print(
-            json.dumps({"error": "Not authenticated. Run 'gh auth login' first."}),
-            file=sys.stderr,
-        )
+        write_output({"error": "Not authenticated. Run 'gh auth login' first."}, "amia_invoke_claude_assignment", args.output_file)
         sys.exit(4)
 
     try:
@@ -507,10 +508,7 @@ def main() -> None:
         if args.repo:
             parts = args.repo.split("/")
             if len(parts) != 2:
-                print(
-                    json.dumps({"error": "Invalid repo format. Use owner/repo"}),
-                    file=sys.stderr,
-                )
+                write_output({"error": "Invalid repo format. Use owner/repo"}, "amia_invoke_claude_assignment", args.output_file)
                 sys.exit(1)
             owner, repo = parts
         else:
@@ -565,7 +563,7 @@ def main() -> None:
                 "owner": owner,
                 "repo": repo,
             }
-            print(json.dumps(result, indent=2))
+            write_output(result, "amia_invoke_claude_assignment", args.output_file)
             sys.exit(0)
 
         # Extract context
@@ -640,7 +638,7 @@ def main() -> None:
             "workflowTriggered": workflow_triggered,
             "marker": config["synthesis"]["marker"],
         }
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_invoke_claude_assignment", args.output_file)
 
         if not has_content:
             sys.exit(5)  # Idempotency skip
@@ -652,7 +650,7 @@ def main() -> None:
             "issue": args.issue,
             "success": False,
         }
-        print(json.dumps(error_output), file=sys.stderr)
+        write_output(error_output, "amia_invoke_claude_assignment", args.output_file)
 
         # Determine exit code based on error type
         if error_str.startswith("NOT_FOUND"):

@@ -350,6 +350,14 @@ Code review examines code across 8 dimensions simultaneously:
 
 ---
 
+## Output Discipline
+
+All scripts support the `--output-file <path>` flag:
+- **With flag**: Full output written to file; concise summary printed to stderr
+- **Without flag**: Full output printed to stdout (backward compatible)
+
+When invoking from agents or automated workflows, always pass `--output-file` to minimize token consumption.
+
 ## Examples
 
 For detailed examples with code, see [references/examples.md](references/examples.md):

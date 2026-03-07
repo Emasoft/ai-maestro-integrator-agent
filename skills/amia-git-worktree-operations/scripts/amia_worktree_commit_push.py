@@ -12,10 +12,14 @@ Usage:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_git(args: list[str], cwd: str | None = None) -> tuple[int, str, str]:
@@ -125,6 +129,7 @@ def main() -> int:
         action="store_true",
         help="Create commit even if no changes",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     worktree_path = str(Path(args.worktree_path).resolve())
@@ -136,14 +141,14 @@ def main() -> int:
             "status": "error",
             "error": f"Worktree not found: {worktree_path}",
         }
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_worktree_commit_push", args.output_file)
         return 1
 
     # Get current branch
     branch = get_current_branch(worktree_path)
     if not branch:
         result = {"status": "error", "error": "Could not determine current branch"}
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_worktree_commit_push", args.output_file)
         return 1
 
     # Check for changes
@@ -154,21 +159,21 @@ def main() -> int:
             "branch": branch,
             "message": "No changes to commit",
         }
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_worktree_commit_push", args.output_file)
         return 0
 
     # Stage changes
     success, msg = stage_all_changes(worktree_path)
     if not success:
         result = {"status": "error", "error": msg}
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_worktree_commit_push", args.output_file)
         return 1
 
     # Commit
     success, msg, commit_hash = commit_changes(worktree_path, args.message)
     if not success:
         result = {"status": "error", "error": msg}
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_worktree_commit_push", args.output_file)
         return 1
 
     result = {
@@ -193,7 +198,7 @@ def main() -> int:
     # Add remote status
     result["remote_status"] = get_remote_status(worktree_path)
 
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_worktree_commit_push", args.output_file)
     return 0 if result["status"] in ("committed", "pushed", "no_changes") else 1
 
 

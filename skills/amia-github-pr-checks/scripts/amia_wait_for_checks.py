@@ -28,11 +28,15 @@ Note: Timeout waiting for checks returns exit code 3 (API error / timeout).
 
 import argparse
 import json
+import os
 import random
 import subprocess
 import sys
 import time
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> tuple[int, str, str]:
@@ -120,6 +124,7 @@ def main() -> int:
                         help="Only wait for required checks")
     parser.add_argument("--fail-fast", action="store_true",
                         help="Exit immediately on first failure")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     start_time = time.time()
@@ -149,7 +154,7 @@ def main() -> int:
                 },
                 "pending_checks": [c["name"] for c in analysis["pending"]]
             }
-            print(json.dumps(output, indent=2))
+            write_output(output, "amia_wait_for_checks", args.output_file)
             return 3  # API error / timeout
 
         # Fetch current status
@@ -158,7 +163,7 @@ def main() -> int:
         if "error" in result:
             error_type = result["error"]
             result["code"] = error_type.upper()
-            print(json.dumps(result), file=sys.stderr)
+            write_output(result, "amia_wait_for_checks", args.output_file)
             if error_type == "pr_not_found":
                 return 2  # Resource not found
             if "auth" in result.get("message", "").lower():
@@ -166,7 +171,7 @@ def main() -> int:
             return 3  # API error
 
         checks = result.get("checks", [])
-        analysis = analyze_checks(checks, args.required_only)
+        analysis = analyze_checks(checks)
 
         # Fail-fast check
         if args.fail_fast and analysis["has_failures"]:
@@ -184,7 +189,7 @@ def main() -> int:
                 },
                 "failed_checks": [c["name"] for c in analysis["failing"]]
             }
-            print(json.dumps(output, indent=2))
+            write_output(output, "amia_wait_for_checks", args.output_file)
             return 0
 
         # Check if complete
@@ -204,7 +209,7 @@ def main() -> int:
             }
             if analysis["has_failures"]:
                 output["failed_checks"] = [c["name"] for c in analysis["failing"]]
-            print(json.dumps(output, indent=2))
+            write_output(output, "amia_wait_for_checks", args.output_file)
             return 0
 
         # Wait with backoff

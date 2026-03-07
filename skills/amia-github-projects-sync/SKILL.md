@@ -413,6 +413,14 @@ When GitHub API calls or sync operations fail, consult [references/error-handlin
 
 ---
 
+## Output Discipline
+
+All scripts support the `--output-file <path>` flag:
+- **With flag**: Full JSON written to file; concise summary printed to stderr
+- **Without flag**: Full JSON printed to stdout (backward compatible)
+
+When invoking from agents or automated workflows, always pass `--output-file` to minimize token consumption.
+
 ## Examples
 
 For worked examples of finding projects, querying items, and updating issue status, see [references/examples-and-inline-troubleshooting.md](references/examples-and-inline-troubleshooting.md). That reference also covers inline troubleshooting for common failures such as missing projects, sync conflicts, and rate limiting.

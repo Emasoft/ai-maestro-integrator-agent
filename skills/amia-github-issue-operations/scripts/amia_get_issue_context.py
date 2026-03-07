@@ -38,9 +38,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> tuple[bool, str]:
@@ -149,11 +153,12 @@ def main() -> None:
         action="store_true",
         help="Include full comment details in output"
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     result = get_issue_context(args.repo, args.issue, args.include_comments)
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_get_issue_context", args.output_file)
 
     # Exit with appropriate error code based on error type
     if result.get("error"):

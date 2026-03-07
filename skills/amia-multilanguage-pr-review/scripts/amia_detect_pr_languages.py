@@ -14,10 +14,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any, TypedDict
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 class LanguageInfo(TypedDict):
@@ -101,7 +105,7 @@ def get_pr_files(repo: str, pr_number: int) -> list[dict[str, Any]]:
     cmd = ["gh", "pr", "view", str(pr_number), "--repo", repo, "--json", "files"]
     result = subprocess.run(cmd, capture_output=True, text=True, check=False)
     if result.returncode != 0:
-        print(json.dumps({"error": f"gh command failed: {result.stderr.strip()}"}))
+        write_output({"error": f"gh command failed: {result.stderr.strip()}"}, "amia_detect_pr_languages", None)
         sys.exit(1)
     data: dict[str, Any] = json.loads(result.stdout)
     files: list[dict[str, Any]] = data.get("files", [])
@@ -166,6 +170,7 @@ def main() -> int:
     parser.add_argument("--diff-file", help="Path to diff file")
     parser.add_argument("--files", nargs="+", help="List of file paths")
     parser.add_argument("--output", choices=["json", "text"], default="json")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
@@ -182,7 +187,7 @@ def main() -> int:
     result = analyze_files(files)
 
     if args.output == "json":
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_detect_pr_languages", args.output_file)
     else:
         print(f"Primary language: {result['primary_language']}")
         print(f"Total files: {result['total_files']}")

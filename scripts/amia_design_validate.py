@@ -45,11 +45,14 @@ Exit codes (standardized):
 """
 
 import argparse
-import json
+import os
 import re
 import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from shared.thresholds import write_output
 
 
 VALID_STATUSES = {"DRAFT", "REVIEW", "APPROVED", "IMPLEMENTED", "ARCHIVED", "DEPRECATED", "REJECTED"}
@@ -144,6 +147,7 @@ def main() -> None:
     parser.add_argument("--type", help="Validate documents of a specific type (pdr, spec, etc.)")
     parser.add_argument("--design-root", default="design", help="Root directory for design docs (default: design)")
     parser.add_argument("--strict", action="store_true", help="Exit with code 5 if any validation fails")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
@@ -154,18 +158,18 @@ def main() -> None:
     if args.path:
         p = Path(args.path)
         if not p.is_file():
-            print(json.dumps({"error": True, "message": f"File not found: {args.path}"}))
+            write_output({"error": True, "message": f"File not found: {args.path}"}, "amia_design_validate", args.output_file)
             sys.exit(2)
         files = [p]
     else:
         design_root = Path(args.design_root)
         if not design_root.is_dir():
-            print(json.dumps({"error": True, "message": f"Design root not found: {args.design_root}"}))
+            write_output({"error": True, "message": f"Design root not found: {args.design_root}"}, "amia_design_validate", args.output_file)
             sys.exit(2)
         files = find_design_docs(design_root, doc_type=args.type)
 
     if not files:
-        print(json.dumps({"error": True, "message": "No design documents found", "total_scanned": 0}))
+        write_output({"error": True, "message": "No design documents found", "total_scanned": 0}, "amia_design_validate", args.output_file)
         sys.exit(2)
 
     results = [validate_document(f) for f in files]
@@ -178,7 +182,7 @@ def main() -> None:
         "invalid": invalid_count,
         "results": results,
     }
-    print(json.dumps(output, indent=2))
+    write_output(output, "amia_design_validate", args.output_file)
 
     if invalid_count > 0 and args.strict:
         sys.exit(5)

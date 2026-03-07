@@ -42,6 +42,7 @@ from typing import Any
 
 import yaml
 from cpv_validation_common import (
+    COLORS,
     EXIT_CRITICAL,
     EXIT_MAJOR,
     EXIT_MINOR,
@@ -333,7 +334,7 @@ def parse_gitmodules(gitmodules_path: Path) -> dict[str, dict[str, str]]:
                 }
     except Exception:
         # Fallback to regex parsing if configparser fails
-        content = gitmodules_path.read_text()
+        content = gitmodules_path.read_text(encoding="utf-8")
         submodule_pattern = re.compile(
             r'\[submodule\s+"([^"]+)"\]\s*'
             r"(?:path\s*=\s*([^\n]+)\s*)?"
@@ -908,7 +909,7 @@ def validate_marketplace_workflows(
             )
 
         # Check 5: runs sync script (3 pts, MAJOR)
-        workflow_content = update_workflow_path.read_text()
+        workflow_content = update_workflow_path.read_text(encoding="utf-8")
         sync_patterns = [
             r"sync.*script",
             r"python.*sync",
@@ -1040,7 +1041,7 @@ def validate_plugin_workflows(
                         plugins_with_push_trigger += 1
 
                     # Check for repository_dispatch action
-                    workflow_content = notify_workflow.read_text()
+                    workflow_content = notify_workflow.read_text(encoding="utf-8")
                     if "repository_dispatch" in workflow_content or "repository-dispatch" in workflow_content:
                         plugins_with_dispatch += 1
 
@@ -1286,7 +1287,7 @@ def validate_documentation(
     report.passed(category, "README.md exists", 3.0, str(readme_path))
 
     # Read README content
-    readme_content = readme_path.read_text()
+    readme_content = readme_path.read_text(encoding="utf-8")
 
     # Check 2: Architecture diagram (4 pts, MINOR)
     has_mermaid = "```mermaid" in readme_content
@@ -1350,6 +1351,7 @@ def validate_marketplace_pipeline(
     Returns:
         Complete validation report
     """
+    del _verbose  # reserved for future use
     report = PipelineValidationReport(marketplace_path=marketplace_path)
 
     # Run all category validations
@@ -1391,7 +1393,7 @@ def format_text_report(report: PipelineValidationReport, verbose: bool = False) 
 
     # Overall score
     lines.append("-" * 70)
-    lines.append(f"OVERALL SCORE: {report.total_score:.1f}/100 (Grade: {report.grade})")
+    lines.append(f"OVERALL SCORE: {report.total_score:.1f}/100")
     lines.append(f"Status: {report.grade_description}")
     lines.append("-" * 70)
     lines.append("")
@@ -1460,6 +1462,8 @@ def main() -> int:
         description="Validate marketplace publishing pipeline automation",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
+Checks: GitHub Actions workflows, CI scripts, validation pipeline, deployment config.
+
 Examples:
   %(prog)s /path/to/marketplace
   %(prog)s /path/to/marketplace --verbose
@@ -1489,6 +1493,9 @@ Exit Codes:
         help="Output results as JSON",
     )
     parser.add_argument("--strict", action="store_true", help="Strict mode — NIT issues also block validation")
+    parser.add_argument(
+        "--report", type=str, default=None, help="Save detailed report to file, print only summary to stdout"
+    )
 
     args = parser.parse_args()
 
@@ -1519,6 +1526,23 @@ Exit Codes:
     # Output results
     if args.json:
         print(json.dumps(report.to_dict(), indent=2))
+    elif args.report:
+        Path(args.report).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.report).write_text(format_text_report(report, verbose=args.verbose))
+        # Inline compact summary (PipelineValidationReport is not a ValidationReport)
+        grade = report.grade
+        score = report.total_score
+        if report.has_critical():
+            verdict = f"{COLORS['CRITICAL']}FAIL (critical){COLORS['RESET']}"
+        elif report.has_major():
+            verdict = f"{COLORS['MAJOR']}FAIL (major){COLORS['RESET']}"
+        elif grade in ("A", "B"):
+            verdict = f"{COLORS['PASSED']}PASS{COLORS['RESET']}"
+        else:
+            verdict = f"{COLORS['MINOR']}WARN ({grade}){COLORS['RESET']}"
+        print(f"{COLORS['BOLD']}Marketplace Pipeline Validation{COLORS['RESET']}: {verdict}")
+        print(f"  Score: {score:.1f}/100 ({grade})")
+        print(f"  Report: {Path(args.report)}")
     else:
         print(format_text_report(report, verbose=args.verbose))
 

@@ -29,9 +29,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_graphql_with_variables(query: str, variables: dict[str, str]) -> dict[str, Any]:
@@ -171,17 +175,15 @@ def main() -> None:
         action="store_true",
         help="Also resolve the thread after replying",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     if not args.thread_id.startswith("PRRT_"):
-        print(
-            json.dumps({
-                "error": "Invalid thread ID format. Thread IDs should start with 'PRRT_'",
-                "code": "INVALID_PARAMS"
-            }),
-            file=sys.stderr,
-        )
+        write_output({
+            "error": "Invalid thread ID format. Thread IDs should start with 'PRRT_'",
+            "code": "INVALID_PARAMS"
+        }, "amia_reply_to_thread", args.output_file)
         sys.exit(1)  # Invalid parameters
 
     try:
@@ -193,7 +195,7 @@ def main() -> None:
             if not resolved:
                 result["warning"] = "Reply succeeded but resolution failed"
 
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_reply_to_thread", args.output_file)
 
     except RuntimeError as e:
         error_msg = str(e).lower()
@@ -202,15 +204,15 @@ def main() -> None:
         # Determine appropriate exit code based on error type
         if "not found" in error_msg or "not exist" in error_msg:
             error_output["code"] = "RESOURCE_NOT_FOUND"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_reply_to_thread", args.output_file)
             sys.exit(2)  # Resource not found
         elif "auth" in error_msg or "login" in error_msg or "credentials" in error_msg:
             error_output["code"] = "NOT_AUTHENTICATED"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_reply_to_thread", args.output_file)
             sys.exit(4)  # Not authenticated
         else:
             error_output["code"] = "API_ERROR"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_reply_to_thread", args.output_file)
             sys.exit(3)  # API error
 
 

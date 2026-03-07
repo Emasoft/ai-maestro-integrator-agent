@@ -13,9 +13,14 @@ calls specify encoding="utf-8".
 """
 
 import argparse
+import os
 import re
 import sys
 from pathlib import Path
+
+# Allow imports from the plugin root shared/ directory (depth=3: scripts -> skill -> skills -> root)
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output  # noqa: E402
 
 # Fix Windows console encoding for emoji output
 if sys.platform == "win32":
@@ -243,6 +248,7 @@ def main():
         default=None,
         help="Directory path to recursively find and check all .py files",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
@@ -279,11 +285,15 @@ def main():
         print('  Path(file).read_text(encoding="utf-8")')
         print('  Path(file).write_text(content, encoding="utf-8")')
         print()
+        result = {"status": "error", "issues_count": len(checker.issues), "issues": checker.issues}
+        write_output(result, "amia_check_encoding", args.output_file)
         return 1
 
     if args.verbose:
         print(f"All {len(files)} files pass encoding checks")
 
+    result = {"status": "ok", "files_checked": len(files), "issues_count": 0}
+    write_output(result, "amia_check_encoding", args.output_file)
     return 0
 
 

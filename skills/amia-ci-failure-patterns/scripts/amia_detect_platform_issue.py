@@ -12,11 +12,13 @@ Usage:
 """
 
 import argparse
-import json
 import os
 import re
 import sys
 from dataclasses import dataclass
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 from pathlib import Path
 from typing import Any, Optional
 
@@ -225,6 +227,7 @@ def main() -> int:
         "--extensions", nargs="*", help="File extensions to scan (e.g., .py .js)"
     )
     parser.add_argument("--json", action="store_true", help="Output as JSON")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     target = Path(args.path)
@@ -253,7 +256,7 @@ def main() -> int:
             ],
             "count": len(issues),
         }
-        print(json.dumps(output, indent=2))
+        write_output(output, "amia_detect_platform_issue", args.output_file)
     else:
         print(format_text_output(issues))
     return 0 if not issues else 2

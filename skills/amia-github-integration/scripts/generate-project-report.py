@@ -5,6 +5,7 @@ Usage:
     python scripts/generate-project-report.py --repo owner/repo --format markdown
     python scripts/generate-project-report.py --repo owner/repo --format json --output report.md
     python scripts/generate-project-report.py --repo owner/repo --days 14
+    python scripts/generate-project-report.py --repo owner/repo --max-items 50
 
 Exit Codes:
     0 - Success
@@ -22,6 +23,10 @@ import subprocess
 import sys
 from collections import Counter
 from datetime import datetime, timedelta, timezone
+import os
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> dict:
@@ -74,12 +79,12 @@ def fetch_issues(repo: str) -> list[dict]:
     if not result["success"]:
         error = result["error"] or "Unknown error"
         if error.startswith("AUTH:"):
-            print(json.dumps({"error": error}), file=sys.stderr)
+            write_output({"error": error}, "generate-project-report", None)
             sys.exit(4)
         if error.startswith("NOTFOUND:"):
-            print(json.dumps({"error": error}), file=sys.stderr)
+            write_output({"error": error}, "generate-project-report", None)
             sys.exit(2)
-        print(json.dumps({"error": error}), file=sys.stderr)
+        write_output({"error": error}, "generate-project-report", None)
         sys.exit(3)
     return result["data"]
 
@@ -96,12 +101,12 @@ def fetch_prs(repo: str) -> list[dict]:
     if not result["success"]:
         error = result["error"] or "Unknown error"
         if error.startswith("AUTH:"):
-            print(json.dumps({"error": error}), file=sys.stderr)
+            write_output({"error": error}, "generate-project-report", None)
             sys.exit(4)
         if error.startswith("NOTFOUND:"):
-            print(json.dumps({"error": error}), file=sys.stderr)
+            write_output({"error": error}, "generate-project-report", None)
             sys.exit(2)
-        print(json.dumps({"error": error}), file=sys.stderr)
+        write_output({"error": error}, "generate-project-report", None)
         sys.exit(3)
     return result["data"]
 
@@ -285,21 +290,44 @@ def main():
         default=7,
         help="Number of days for recent activity window (default: 7).",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
+    parser.add_argument(
+        "--max-items", type=int, default=100,
+        help="Maximum total issues+PRs before truncation (default: 100)"
+    )
 
     args = parser.parse_args()
 
     # Validate --repo format
     if "/" not in args.repo or len(args.repo.split("/")) != 2:
-        print(json.dumps({"error": "Invalid --repo format. Expected owner/repo."}), file=sys.stderr)
+        write_output({"error": "Invalid --repo format. Expected owner/repo."}, "generate-project-report", args.output_file)
         sys.exit(1)
 
     if args.days < 1:
-        print(json.dumps({"error": "--days must be a positive integer."}), file=sys.stderr)
+        write_output({"error": "--days must be a positive integer."}, "generate-project-report", args.output_file)
         sys.exit(1)
 
     # Gather data from GitHub
     issues = fetch_issues(args.repo)
     prs = fetch_prs(args.repo)
+
+    # Truncate if total issues+PRs exceeds --max-items (proportional split)
+    total_items = len(issues) + len(prs)
+    truncation_note = None
+    if total_items > args.max_items and total_items > 0:
+        # Proportionally allocate the max-items budget between issues and PRs
+        issue_ratio = len(issues) / total_items
+        max_issues = max(1, int(args.max_items * issue_ratio))
+        max_prs = args.max_items - max_issues
+        truncation_note = {
+            "truncated": True,
+            "total_issues": len(issues),
+            "total_prs": len(prs),
+            "shown_issues": min(len(issues), max_issues),
+            "shown_prs": min(len(prs), max_prs),
+        }
+        issues = issues[:max_issues]
+        prs = prs[:max_prs]
 
     # Compute stats
     stats = compute_stats(issues, prs, args.days)
@@ -312,6 +340,8 @@ def main():
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S"),
         "stats": stats,
     }
+    if truncation_note:
+        output["truncation"] = truncation_note
     if markdown_str is not None:
         output["markdown"] = markdown_str
 
@@ -322,11 +352,11 @@ def main():
             with open(args.output, "w", encoding="utf-8") as f:
                 f.write(content)
         except OSError as e:
-            print(json.dumps({"error": f"Failed to write output file: {e}"}), file=sys.stderr)
+            write_output({"error": f"Failed to write output file: {e}"}, "generate-project-report", args.output_file)
             sys.exit(5)
 
     # Always output JSON to stdout
-    print(json.dumps(output, indent=2))
+    write_output(output, "generate-project-report", args.output_file)
     sys.exit(0)
 
 

@@ -43,9 +43,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> tuple[bool, str]:
@@ -136,11 +140,12 @@ def main() -> None:
     parser.add_argument("--to", dest="to_version", required=True, help="Version to rollback to")
     parser.add_argument("--reason", required=True, help="Reason for the rollback")
     parser.add_argument("--execute", action="store_true", help="Actually execute the rollback (default: print plan only)")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     if "/" not in args.repo:
-        print(json.dumps({"error": True, "message": "Repository must be in owner/repo format"}))
+        write_output({"error": True, "message": "Repository must be in owner/repo format"}, "amia_rollback", args.output_file)
         sys.exit(1)
 
     result = rollback_release(
@@ -150,7 +155,7 @@ def main() -> None:
         reason=args.reason,
         execute=args.execute,
     )
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_rollback", args.output_file)
 
     if result.get("error"):
         code = result.get("code", "")

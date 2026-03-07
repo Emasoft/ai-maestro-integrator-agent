@@ -167,6 +167,14 @@ Need to work with GitHub Issues?
 | `amia_set_issue_milestone.py` | Assign milestone | `--repo`, `--issue`, `--milestone` | `--create-if-missing` | JSON with milestone info |
 | `amia_post_issue_comment.py` | Post comment | `--repo`, `--issue`, `--body` | `--marker` | JSON with comment ID, URL |
 
+## Output Discipline
+
+All scripts support the `--output-file <path>` flag:
+- **With flag**: Full JSON written to file; concise summary printed to stderr
+- **Without flag**: Full JSON printed to stdout (backward compatible)
+
+When invoking from agents or automated workflows, always pass `--output-file` to minimize token consumption.
+
 ## Examples
 
 ### Get Issue Context

@@ -29,9 +29,13 @@ Exit Codes:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def check_gh_auth() -> bool:
@@ -172,15 +176,13 @@ def main() -> None:
         action="store_true",
         help="Remove assignees instead of adding",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     # Check authentication first
     if not check_gh_auth():
-        print(
-            json.dumps({"error": "Not authenticated. Run 'gh auth login' first."}),
-            file=sys.stderr,
-        )
+        write_output({"error": "Not authenticated. Run 'gh auth login' first."}, "amia_set_issue_assignee", args.output_file)
         sys.exit(4)
 
     try:
@@ -190,7 +192,7 @@ def main() -> None:
             repo=args.repo,
             remove=args.remove,
         )
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_set_issue_assignee", args.output_file)
 
         if not result["success"]:
             sys.exit(3)
@@ -202,7 +204,7 @@ def main() -> None:
             "issue": args.issue,
             "success": False,
         }
-        print(json.dumps(error_output), file=sys.stderr)
+        write_output(error_output, "amia_set_issue_assignee", args.output_file)
 
         # Determine exit code based on error type
         if error_str.startswith("NOT_FOUND"):

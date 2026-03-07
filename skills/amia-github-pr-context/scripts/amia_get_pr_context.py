@@ -3,7 +3,7 @@
 amia_get_pr_context.py - Get full PR context including metadata, files, and status.
 
 Usage:
-    python3 amia_get_pr_context.py --pr NUMBER [--repo OWNER/REPO] [--verbose]
+    python3 amia_get_pr_context.py --pr NUMBER [--repo OWNER/REPO] [--verbose] [--max-files N]
 
 Exit codes (standardized):
     0 - Success, JSON output to stdout
@@ -17,9 +17,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Optional
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str], retry: int = 2) -> tuple[int, str, str]:
@@ -134,30 +138,47 @@ def main() -> int:
     parser.add_argument(
         "--verbose", action="store_true", help="Enable verbose output"
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
+    parser.add_argument(
+        "--max-files", type=int, default=30,
+        help="Maximum number of changed files to include (default: 30)"
+    )
 
     args = parser.parse_args()
 
     if args.pr <= 0:
-        print(json.dumps({"error": "PR number must be positive", "code": "INVALID_PARAMS"}))
+        write_output({"error": "PR number must be positive", "code": "INVALID_PARAMS"}, "amia_get_pr_context", args.output_file)
         return 1  # Invalid parameters
 
     try:
         pr_data = get_pr_context(args.pr, args.repo, args.verbose)
         files = get_pr_files(args.pr, args.repo)
+
+        # Truncate file list if it exceeds --max-files to prevent oversized output
+        total_file_count = len(files)
+        if total_file_count > args.max_files:
+            files = files[: args.max_files]
+
         output = format_context(pr_data, files)
-        print(json.dumps(output, indent=2))
+
+        if total_file_count > args.max_files:
+            output["truncated"] = True
+            output["total_files"] = total_file_count
+            output["shown_files"] = args.max_files
+
+        write_output(output, "amia_get_pr_context", args.output_file)
         return 0  # Success
     except ValueError as e:
         # PR not found
-        print(json.dumps({"error": str(e), "code": "RESOURCE_NOT_FOUND"}))
+        write_output({"error": str(e), "code": "RESOURCE_NOT_FOUND"}, "amia_get_pr_context", args.output_file)
         return 2  # Resource not found
     except ConnectionError as e:
         # Authentication error
-        print(json.dumps({"error": str(e), "code": "NOT_AUTHENTICATED"}))
+        write_output({"error": str(e), "code": "NOT_AUTHENTICATED"}, "amia_get_pr_context", args.output_file)
         return 4  # Not authenticated
     except RuntimeError as e:
         # API error
-        print(json.dumps({"error": str(e), "code": "API_ERROR"}))
+        write_output({"error": str(e), "code": "API_ERROR"}, "amia_get_pr_context", args.output_file)
         return 3  # API error
 
 

@@ -27,10 +27,15 @@ Example:
     python3 amia_kanban_check_completion.py Emasoft my-repo 1 --verbose
 """
 
+import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> dict[str, Any]:
@@ -259,33 +264,27 @@ def print_result(result: dict[str, Any], verbose: bool = False) -> None:
 
 def main() -> None:
     """Main entry point."""
-    if len(sys.argv) < 4:
-        print(__doc__)
-        sys.exit(1)
-
-    owner = sys.argv[1]
-    repo = sys.argv[2]
-    try:
-        project_number = int(sys.argv[3])
-    except ValueError:
-        print("Error: PROJECT_NUMBER must be an integer", file=sys.stderr)
-        sys.exit(1)
-
-    verbose = "--verbose" in sys.argv
-    output_json = "--json" in sys.argv
+    parser = argparse.ArgumentParser(description="Check if all Kanban board items are complete.")
+    parser.add_argument("owner", help="Repository owner (organization or user)")
+    parser.add_argument("repo", help="Repository name")
+    parser.add_argument("project_number", type=int, help="GitHub Project V2 number")
+    parser.add_argument("--verbose", action="store_true", help="Show detailed status of all incomplete items")
+    parser.add_argument("--json", dest="output_json", action="store_true", help="Output result as JSON")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
+    args = parser.parse_args()
 
     # Get project items
-    project_id = get_project_id(owner, repo, project_number)
+    project_id = get_project_id(args.owner, args.repo, args.project_number)
     items = get_board_items(project_id)
 
     # Check completion
     result = check_completion(items)
 
     # Output
-    if output_json:
-        print(json.dumps(result, indent=2))
+    if args.output_json or args.output_file:
+        write_output(result, "amia_kanban_check_completion", args.output_file)
     else:
-        print_result(result, verbose)
+        print_result(result, args.verbose)
 
     # Exit with appropriate code
     sys.exit(result["exit_code"])

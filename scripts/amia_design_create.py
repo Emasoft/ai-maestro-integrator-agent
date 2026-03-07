@@ -23,12 +23,15 @@ Output Format (JSON):
 """
 
 import argparse
-import json
+import os
 import re
 import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from shared.thresholds import write_output
 
 
 class DesignDocumentCreator:
@@ -523,6 +526,10 @@ Examples:
         default="json",
         help="Output format (default: json)",
     )
+    parser.add_argument(
+        "--output-file",
+        help="Write full JSON output to this file instead of stdout",
+    )
 
     args = parser.parse_args()
 
@@ -547,7 +554,7 @@ Examples:
 
     # Output result
     if args.format == "json":
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_design_create", args.output_file)
     else:
         if result["success"]:
             print(f"Created: {result['file_path']}")

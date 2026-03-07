@@ -30,9 +30,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_graphql_with_variables(query: str, variables: dict[str, str]) -> dict[str, Any]:
@@ -165,12 +169,13 @@ def main() -> None:
     parser.add_argument("--owner", required=True, help="Repository owner")
     parser.add_argument("--repo", required=True, help="Repository name")
     parser.add_argument("--pr", required=True, type=int, help="Pull request number")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     try:
         comments = get_unaddressed_comments(args.owner, args.repo, args.pr)
-        print(json.dumps(comments, indent=2))
+        write_output({"unaddressed_comments": comments, "count": len(comments)}, "amia_get_unaddressed_comments", args.output_file)
 
     except RuntimeError as e:
         error_msg = str(e).lower()
@@ -179,15 +184,15 @@ def main() -> None:
         # Determine appropriate exit code based on error type
         if "not found" in error_msg or "not exist" in error_msg:
             error_output["code"] = "RESOURCE_NOT_FOUND"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_get_unaddressed_comments", args.output_file)
             sys.exit(2)  # Resource not found
         elif "auth" in error_msg or "login" in error_msg or "credentials" in error_msg:
             error_output["code"] = "NOT_AUTHENTICATED"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_get_unaddressed_comments", args.output_file)
             sys.exit(4)  # Not authenticated
         else:
             error_output["code"] = "API_ERROR"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_get_unaddressed_comments", args.output_file)
             sys.exit(3)  # API error
 
 

@@ -26,9 +26,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> tuple[int, str, str]:
@@ -124,6 +128,7 @@ def main() -> int:
                         help="Only show required checks")
     parser.add_argument("--summary-only", action="store_true",
                         help="Only show summary counts")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     # Fetch checks
@@ -131,7 +136,7 @@ def main() -> int:
     if "error" in result:
         error_type = result["error"]
         result["code"] = error_type.upper()
-        print(json.dumps(result), file=sys.stderr)
+        write_output(result, "amia_get_pr_checks", args.output_file)
         if error_type == "pr_not_found":
             return 2  # Resource not found
         if "auth" in result.get("message", "").lower():
@@ -169,7 +174,7 @@ def main() -> int:
     if not args.summary_only:
         output["checks"] = all_checks
 
-    print(json.dumps(output, indent=2))
+    write_output(output, "amia_get_pr_checks", args.output_file)
     return 0
 
 

@@ -20,9 +20,15 @@ This script DOES NOT delete anything automatically. It only prints commands
 that the repository maintainer can review and execute manually.
 """
 
+import argparse
+import os
 import re
 import subprocess
 import sys
+
+# Allow imports from the plugin root shared/ directory (depth=3: scripts -> skill -> skills -> root)
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output  # noqa: E402
 
 # ANSI colors
 RED = "\033[0;31m"
@@ -45,6 +51,10 @@ def run_git(*args: str) -> list[str]:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description="AMIA Version Branch Cleanup Tool")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
+    args = parser.parse_args()
+
     print(f"{BLUE}╔════════════════════════════════════════════════════════════════╗{NC}")
     print(f"{BLUE}║            AMIA - Version Branch Cleanup Tool                  ║{NC}")
     print(f"{BLUE}╔════════════════════════════════════════════════════════════════╗{NC}")
@@ -96,6 +106,8 @@ def main() -> int:
         print(f"{GREEN}✓ No collisions found!{NC}")
         print(f"{GREEN}  All version tags are unique.{NC}")
         print()
+        result = {"status": "ok", "total_tags": len(tags), "collisions": 0, "colliding_branches": []}
+        write_output(result, "amia_cleanup_version_branches", args.output_file)
         return 0
 
     print(f"{BLUE}═══════════════════════════════════════════════════════════════{NC}")
@@ -149,6 +161,8 @@ def main() -> int:
         print(f"{YELLOW}Action required: Execute cleanup commands above{NC}")
         print()
 
+    result = {"status": "error", "total_tags": len(tags), "collisions": len(colliding_branches), "colliding_branches": colliding_branches}
+    write_output(result, "amia_cleanup_version_branches", args.output_file)
     return 1
 
 

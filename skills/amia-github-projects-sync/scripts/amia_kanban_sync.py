@@ -10,11 +10,16 @@ Automatically updates issue/PR status based on:
 Integrates with AI Maestro for orchestrator notifications.
 """
 
+import os
 import sys
 import json
 from pathlib import Path
 from typing import Any, Optional, Literal
 from dataclasses import dataclass
+
+# Allow imports from the plugin root shared/ directory (depth=3: scripts -> skill -> skills -> root)
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output  # noqa: E402
 
 PLUGIN_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(PLUGIN_ROOT / "shared"))
@@ -314,13 +319,15 @@ if __name__ == "__main__":
         help="Handle CI event",
     )
     parser.add_argument("--output", type=Path, help="Output results to file")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     if args.ci_event:
         branch, status, _run_id = args.ci_event
         on_ci_status_change(args.owner, args.repo, branch, status)
-        print(f"Handled CI event: {status} on {branch}")
+        result = {"status": "ok", "action": "ci_event", "ci_status": status, "branch": branch}
+        write_output(result, "amia_kanban_sync", args.output_file)
 
     elif args.issue:
         status = get_issue_status(args.owner, args.repo, args.issue)
@@ -330,6 +337,8 @@ if __name__ == "__main__":
             print(f"  → Should update to: {new_status}")
             if input("Update? [y/N] ").lower() == "y":
                 update_issue_status(args.owner, args.repo, args.issue, new_status)
+        result = {"status": "ok", "action": "issue_check", "issue": args.issue, "current": status.current_status, "suggested": new_status}
+        write_output(result, "amia_kanban_sync", args.output_file)
 
     elif args.project:
         results = sync_all_issues(args.owner, args.repo, args.project)
@@ -339,3 +348,4 @@ if __name__ == "__main__":
             print(f"Errors: {len(errors_list)}")  # type: ignore[arg-type]
         if args.output:
             atomic_write_json(results, args.output)
+        write_output(results, "amia_kanban_sync", args.output_file)

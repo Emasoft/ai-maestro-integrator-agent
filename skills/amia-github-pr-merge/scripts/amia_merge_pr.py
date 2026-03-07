@@ -20,9 +20,13 @@ Usage:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_graphql_query(query: str, variables: dict[str, Any]) -> dict[str, Any]:
@@ -136,15 +140,16 @@ def main() -> int:
         action="store_true",
         help="Delete branch after merge",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     try:
         if "/" not in args.repo:
-            print(json.dumps({"success": False, "error": "Invalid repo format", "code": "INVALID_PARAMS"}, indent=2))
+            write_output({"success": False, "error": "Invalid repo format", "code": "INVALID_PARAMS"}, "amia_merge_pr", args.output_file)
             return 1  # Invalid parameters
         owner, repo = args.repo.split("/", 1)
         result = merge_pr(owner, repo, args.pr, args.strategy, args.delete_branch)
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_merge_pr", args.output_file)
 
         if result.get("success"):
             return 0  # Success
@@ -162,10 +167,10 @@ def main() -> int:
         return 3  # API error
 
     except ValueError as e:
-        print(json.dumps({"success": False, "error": str(e), "code": "INVALID_PARAMS"}, indent=2))
+        write_output({"success": False, "error": str(e), "code": "INVALID_PARAMS"}, "amia_merge_pr", args.output_file)
         return 1  # Invalid parameters
     except Exception as e:
-        print(json.dumps({"success": False, "error": str(e), "code": "API_ERROR"}, indent=2))
+        write_output({"success": False, "error": str(e), "code": "API_ERROR"}, "amia_merge_pr", args.output_file)
         return 3  # API error
 
 

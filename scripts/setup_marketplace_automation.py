@@ -116,7 +116,7 @@ def get_submodule_paths(marketplace_dir: Path) -> list[dict[str, str]]:
     submodules = []
     current_submodule: dict[str, str] = {}
 
-    with open(gitmodules_path) as f:
+    with open(gitmodules_path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if line.startswith("[submodule"):
@@ -155,7 +155,7 @@ def check_plugin_notification_workflow(plugin_path: Path) -> PluginWorkflowStatu
 
     if workflow_path.exists():
         # Check if it still has placeholder values
-        content = workflow_path.read_text()
+        content = workflow_path.read_text(encoding="utf-8")
         if "YOUR_GITHUB_USERNAME" in content or "YOUR_MARKETPLACE_REPO_NAME" in content:
             result["needs_configuration"] = True
 
@@ -330,11 +330,11 @@ flowchart TB
             if not dry_run:
                 marketplace_name = marketplace_dir.name
                 content = f"# {marketplace_name}\n\nClaude Code plugin marketplace.\n{architecture_section}"
-                readme_path.write_text(content)
+                readme_path.write_text(content, encoding="utf-8")
             return True
 
     # README exists - check for mermaid diagram
-    content = readme_path.read_text()
+    content = readme_path.read_text(encoding="utf-8")
 
     if "```mermaid" in content:
         if verbose:
@@ -346,7 +346,7 @@ flowchart TB
         print("  [UPDATE] README.md - will append architecture diagram")
 
     if not dry_run:
-        with open(readme_path, "a") as f:
+        with open(readme_path, "a", encoding="utf-8") as f:
             f.write(architecture_section)
 
     return True
@@ -481,7 +481,7 @@ def get_full_status(
     status["readme"]["exists"] = readme_path.exists()
     status["readme"]["path"] = str(readme_path)
     if readme_path.exists():
-        content = readme_path.read_text()
+        content = readme_path.read_text(encoding="utf-8")
         status["readme"]["has_diagram"] = "```mermaid" in content
 
     # Check plugins

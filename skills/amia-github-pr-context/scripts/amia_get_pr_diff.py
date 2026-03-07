@@ -3,7 +3,7 @@
 amia_get_pr_diff.py - Get PR diff with optional filtering.
 
 Usage:
-    python3 amia_get_pr_diff.py --pr NUMBER [--repo OWNER/REPO] [--stat] [--files FILE...]
+    python3 amia_get_pr_diff.py --pr NUMBER [--repo OWNER/REPO] [--stat] [--files FILE...] [--max-lines N]
 
 Exit codes (standardized):
     0 - Success, diff text or JSON stats to stdout
@@ -16,10 +16,13 @@ Exit codes (standardized):
 """
 
 import argparse
-import json
+import os
 import subprocess
 import sys
 from typing import Optional
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str], retry: int = 2) -> tuple[int, str, str]:
@@ -134,11 +137,16 @@ def main() -> int:
     parser.add_argument(
         "--files", nargs="+", help="Filter to specific files"
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
+    parser.add_argument(
+        "--max-lines", type=int, default=500,
+        help="Maximum number of diff lines before truncation (default: 500)"
+    )
 
     args = parser.parse_args()
 
     if args.pr <= 0:
-        print(json.dumps({"error": "PR number must be positive", "code": "INVALID_PARAMS"}))
+        write_output({"error": "PR number must be positive", "code": "INVALID_PARAMS"}, "amia_get_pr_diff", args.output_file)
         return 1  # Invalid parameters
 
     try:
@@ -147,25 +155,43 @@ def main() -> int:
         if args.files:
             diff_text = filter_diff_by_files(diff_text, args.files)
 
+        # Truncate diff if it exceeds --max-lines to prevent oversized output
+        diff_lines = diff_text.split("\n")
+        total_line_count = len(diff_lines)
+        truncated = False
+        if total_line_count > args.max_lines:
+            diff_text = "\n".join(diff_lines[: args.max_lines])
+            diff_text += f"\n[TRUNCATED — showing first {args.max_lines} of {total_line_count} lines. Use --max-lines to increase]"
+            truncated = True
+
         if args.stat:
             stats = calculate_stats(diff_text)
-            print(json.dumps(stats, indent=2))
+            if truncated:
+                stats["truncated"] = True
+                stats["total_lines"] = total_line_count
+                stats["shown_lines"] = args.max_lines
+            write_output(stats, "amia_get_pr_diff", args.output_file)
         else:
-            print(diff_text)
+            output_data: dict = {"diff": diff_text}
+            if truncated:
+                output_data["truncated"] = True
+                output_data["total_lines"] = total_line_count
+                output_data["shown_lines"] = args.max_lines
+            write_output(output_data, "amia_get_pr_diff", args.output_file)
 
         return 0  # Success
 
     except ValueError as e:
         # PR not found
-        print(json.dumps({"error": str(e), "code": "RESOURCE_NOT_FOUND"}))
+        write_output({"error": str(e), "code": "RESOURCE_NOT_FOUND"}, "amia_get_pr_diff", args.output_file)
         return 2  # Resource not found
     except ConnectionError as e:
         # Authentication error
-        print(json.dumps({"error": str(e), "code": "NOT_AUTHENTICATED"}))
+        write_output({"error": str(e), "code": "NOT_AUTHENTICATED"}, "amia_get_pr_diff", args.output_file)
         return 4  # Not authenticated
     except RuntimeError as e:
         # API error
-        print(json.dumps({"error": str(e), "code": "API_ERROR"}))
+        write_output({"error": str(e), "code": "API_ERROR"}, "amia_get_pr_diff", args.output_file)
         return 3  # API error
 
 

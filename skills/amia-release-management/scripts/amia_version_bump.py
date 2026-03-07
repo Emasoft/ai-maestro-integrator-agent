@@ -37,10 +37,14 @@ Exit codes (standardized):
 import argparse
 import glob
 import json
+import os
 import re
 import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 SEMVER_PATTERN = re.compile(r"(\d+)\.(\d+)\.(\d+)")
@@ -116,16 +120,17 @@ def main() -> None:
     parser.add_argument("--repo", required=True, help="Repository in owner/repo format (for metadata)")
     parser.add_argument("--type", required=True, choices=["patch", "minor", "major"], help="Bump type")
     parser.add_argument("--dry-run", action="store_true", help="Show what would change without writing")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     if "/" not in args.repo:
-        print(json.dumps({"error": True, "message": "Repository must be in owner/repo format"}))
+        write_output({"error": True, "message": "Repository must be in owner/repo format"}, "amia_version_bump", args.output_file)
         sys.exit(1)
 
     result = find_and_bump_files(bump_type=args.type, dry_run=args.dry_run)
     result["repo"] = args.repo
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_version_bump", args.output_file)
 
     if result.get("error"):
         code = result.get("code", "")

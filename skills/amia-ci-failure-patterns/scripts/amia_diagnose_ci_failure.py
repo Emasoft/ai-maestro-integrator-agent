@@ -12,10 +12,13 @@ Usage:
 """
 
 import argparse
-import json
+import os
 import re
 import sys
 from dataclasses import dataclass
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 @dataclass
@@ -215,6 +218,7 @@ def main() -> int:
     parser.add_argument("--log-file", help="Path to CI log file")
     parser.add_argument("--stdin", action="store_true", help="Read log from stdin")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     if args.stdin:
@@ -228,7 +232,8 @@ def main() -> int:
 
     results = analyze_log(log_content)
     if args.json:
-        print(json.dumps({"patterns": results, "count": len(results)}, indent=2))
+        result = {"patterns": results, "count": len(results)}
+        write_output(result, "amia_diagnose_ci_failure", args.output_file)
     else:
         print(format_text_output(results))
     return 0 if results else 2

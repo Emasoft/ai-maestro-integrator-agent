@@ -29,9 +29,13 @@ Exit Codes:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_graphql_with_variables(
@@ -194,35 +198,29 @@ def main() -> None:
         action="store_true",
         help="Unresolve all resolved threads on the PR",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     # Validate parameters
     if args.all:
         if not args.pr:
-            print(
-                json.dumps({"error": "--pr is required when using --all"}),
-                file=sys.stderr,
-            )
+            write_output({"error": "--pr is required when using --all"}, "amia_unresolve_thread", args.output_file)
             sys.exit(1)
     else:
         if not args.thread_id:
-            print(
-                json.dumps(
-                    {"error": "--thread-id is required (or use --pr with --all)"}
-                ),
-                file=sys.stderr,
+            write_output(
+                {"error": "--thread-id is required (or use --pr with --all)"},
+                "amia_unresolve_thread", args.output_file,
             )
             sys.exit(1)
         # Validate thread ID format
         if not args.thread_id.startswith("PRRT_"):
-            print(
-                json.dumps(
-                    {
-                        "error": "Invalid thread ID format. Thread IDs should start with 'PRRT_'"
-                    }
-                ),
-                file=sys.stderr,
+            write_output(
+                {
+                    "error": "Invalid thread ID format. Thread IDs should start with 'PRRT_'"
+                },
+                "amia_unresolve_thread", args.output_file,
             )
             sys.exit(1)
 
@@ -240,7 +238,7 @@ def main() -> None:
                     "failed": 0,
                     "message": f"No resolved threads on PR #{args.pr} to unresolve",
                 }
-                print(json.dumps(result, indent=2))
+                write_output(result, "amia_unresolve_thread", args.output_file)
                 sys.exit(0)
 
             unresolved_count = 0
@@ -283,13 +281,13 @@ def main() -> None:
                 "failed": failed_count,
                 "threads": results,
             }
-            print(json.dumps(final_result, indent=2))
+            write_output(final_result, "amia_unresolve_thread", args.output_file)
             sys.exit(0 if failed_count == 0 else 1)
 
         else:
             # Single thread unresolve
             result = unresolve_thread(args.thread_id)
-            print(json.dumps(result, indent=2))
+            write_output(result, "amia_unresolve_thread", args.output_file)
 
             # Exit with error if unresolve didn't succeed
             if not result["success"]:
@@ -303,7 +301,7 @@ def main() -> None:
             "pr": args.pr if args.pr else None,
             "success": False,
         }
-        print(json.dumps(error_output), file=sys.stderr)
+        write_output(error_output, "amia_unresolve_thread", args.output_file)
 
         # Determine exit code based on error type
         if error_str.startswith("AUTH_ERROR"):

@@ -31,11 +31,14 @@ Output Format (JSON):
 """
 
 import argparse
-import json
+import os
 import re
 import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, cast
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from shared.thresholds import write_output
 
 
 class DesignDocumentSearcher:
@@ -322,6 +325,10 @@ Examples:
         default="json",
         help="Output format (default: json)",
     )
+    parser.add_argument(
+        "--output-file",
+        help="Write full JSON output to this file instead of stdout",
+    )
 
     args = parser.parse_args()
 
@@ -332,7 +339,7 @@ Examples:
         design_dir = Path(__file__).parent.parent / "design"
 
     if not design_dir.exists():
-        print(json.dumps({"error": f"Design directory not found: {design_dir}", "results": [], "total": 0}))
+        write_output({"error": f"Design directory not found: {design_dir}", "results": [], "total": 0}, "amia_design_search", args.output_file)
         sys.exit(1)
 
     # Perform search
@@ -347,7 +354,7 @@ Examples:
 
     # Output results
     if args.format == "json":
-        print(json.dumps(results, indent=2))
+        write_output(results, "amia_design_search", args.output_file)
     else:
         # Table format
         if "error" in results:

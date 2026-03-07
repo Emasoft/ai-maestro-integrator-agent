@@ -3,7 +3,7 @@
 Get all review threads from a GitHub Pull Request.
 
 Usage:
-    python3 amia_get_review_threads.py --owner OWNER --repo REPO --pr NUMBER [--unresolved-only]
+    python3 amia_get_review_threads.py --owner OWNER --repo REPO --pr NUMBER [--unresolved-only] [--max-threads N]
 
 Output:
     JSON array of thread objects with id, isResolved, path, line, body (first comment).
@@ -24,9 +24,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_graphql_with_variables(query: str, variables: dict[str, str]) -> dict[str, Any]:
@@ -134,6 +138,11 @@ def main() -> None:
         action="store_true",
         help="Only return unresolved threads",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
+    parser.add_argument(
+        "--max-threads", type=int, default=50,
+        help="Maximum number of threads to include (default: 50)"
+    )
 
     args = parser.parse_args()
 
@@ -144,8 +153,18 @@ def main() -> None:
         if args.unresolved_only:
             threads = [t for t in threads if not t["isResolved"]]
 
+        # Truncate threads if exceeding --max-threads to prevent oversized output
+        total_thread_count = len(threads)
+        truncated = total_thread_count > args.max_threads
+        if truncated:
+            threads = threads[: args.max_threads]
+
         # Output as JSON
-        print(json.dumps(threads, indent=2))
+        output_data = {"threads": threads, "total": total_thread_count}
+        if truncated:
+            output_data["truncated"] = True
+            output_data["shown_threads"] = args.max_threads
+        write_output(output_data, "amia_get_review_threads", args.output_file)
 
     except RuntimeError as e:
         error_msg = str(e).lower()
@@ -154,15 +173,15 @@ def main() -> None:
         # Determine appropriate exit code based on error type
         if "not found" in error_msg or "not exist" in error_msg:
             error_output["code"] = "RESOURCE_NOT_FOUND"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_get_review_threads", args.output_file)
             sys.exit(2)  # Resource not found
         elif "auth" in error_msg or "login" in error_msg or "credentials" in error_msg:
             error_output["code"] = "NOT_AUTHENTICATED"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_get_review_threads", args.output_file)
             sys.exit(4)  # Not authenticated
         else:
             error_output["code"] = "API_ERROR"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_get_review_threads", args.output_file)
             sys.exit(3)  # API error
 
 

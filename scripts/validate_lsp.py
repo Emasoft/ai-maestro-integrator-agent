@@ -33,7 +33,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from cpv_validation_common import ValidationReport
+from cpv_validation_common import COLORS, VALID_PLUGIN_ENV_VARS, ValidationReport, save_report_and_print_summary
 
 # Known LSP server configuration fields
 KNOWN_LSP_FIELDS = {
@@ -74,7 +74,7 @@ KNOWN_LANGUAGE_SERVERS = {
 ENV_VAR_PATTERN = re.compile(r"\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-([^}]*))?\}")
 
 # Plugin-specific environment variables
-PLUGIN_ENV_VARS = {"CLAUDE_PLUGIN_ROOT", "CLAUDE_PROJECT_DIR"}
+PLUGIN_ENV_VARS = VALID_PLUGIN_ENV_VARS
 
 
 def is_absolute_path(path: str) -> bool:
@@ -325,7 +325,7 @@ def validate_lsp_config(
 
     # Parse JSON
     try:
-        config = json.loads(config_path.read_text())
+        config = json.loads(config_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as e:
         report.critical(f"Invalid JSON in {rel_path}: {e}")
         return report
@@ -404,16 +404,7 @@ def validate_plugin_lsp(
 
 def print_results(report: ValidationReport, verbose: bool = False) -> None:
     """Print validation results in human-readable format."""
-    colors = {
-        "CRITICAL": "\033[91m",
-        "MAJOR": "\033[93m",
-        "MINOR": "\033[94m",
-        "NIT": "\033[96m",
-        "WARNING": "\033[95m",
-        "INFO": "\033[90m",
-        "PASSED": "\033[92m",
-        "RESET": "\033[0m",
-    }
+    colors = COLORS
 
     counts = {"CRITICAL": 0, "MAJOR": 0, "MINOR": 0, "NIT": 0, "WARNING": 0, "INFO": 0, "PASSED": 0}
     for r in report.results:
@@ -463,10 +454,16 @@ def print_results(report: ValidationReport, verbose: bool = False) -> None:
 
 def main() -> int:
     """Main entry point."""
-    parser = argparse.ArgumentParser(description="Validate LSP configuration")
+    parser = argparse.ArgumentParser(
+        description="Validate LSP (Language Server Protocol) server configuration for Claude Code plugins.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     parser.add_argument("--verbose", "-v", action="store_true", help="Show all results")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
     parser.add_argument("--strict", action="store_true", help="Strict mode — NIT issues also block validation")
+    parser.add_argument(
+        "--report", type=str, default=None, help="Save detailed report to file, print only summary to stdout"
+    )
     parser.add_argument(
         "path",
         nargs="?",
@@ -529,7 +526,10 @@ def main() -> int:
         }
         print(json.dumps(output, indent=2))
     else:
-        print_results(report, args.verbose)
+        if args.report:
+            save_report_and_print_summary(report, Path(args.report), "LSP Validation", print_results, args.verbose, plugin_path=args.path)
+        else:
+            print_results(report, args.verbose)
 
     if args.strict:
         return report.exit_code_strict()

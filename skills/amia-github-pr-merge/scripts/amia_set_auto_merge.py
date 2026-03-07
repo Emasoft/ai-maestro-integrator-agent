@@ -16,9 +16,13 @@ Usage:
 """
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 def run_gql(query: str, variables: dict[str, Any]) -> dict[str, Any]:
     cmd = ["gh", "api", "graphql", "-f", f"query={query}"]
@@ -76,25 +80,26 @@ def main() -> int:
     g.add_argument("--enable", action="store_true")
     g.add_argument("--disable", action="store_true")
     p.add_argument("--merge-method", choices=["MERGE", "SQUASH", "REBASE"], default="SQUASH")
+    p.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = p.parse_args()
     try:
         if "/" not in args.repo:
-            print(json.dumps({"success": False, "error": "Invalid repo format", "code": "INVALID_PARAMS"}, indent=2))
+            write_output({"success": False, "error": "Invalid repo format", "code": "INVALID_PARAMS"}, "amia_set_auto_merge", args.output_file)
             return 1  # Invalid parameters
         owner, repo = args.repo.split("/", 1)
         pr_id, pr_info = get_pr_id(owner, repo, args.pr)
         if not pr_id:
-            print(json.dumps({"success": False, "error": "PR not found", "code": "RESOURCE_NOT_FOUND"}, indent=2))
+            write_output({"success": False, "error": "PR not found", "code": "RESOURCE_NOT_FOUND"}, "amia_set_auto_merge", args.output_file)
             return 2  # Resource not found
         if pr_info.get("merged"):
-            print(json.dumps({"success": False, "error": "PR already merged", "code": "ALREADY_MERGED"}, indent=2))
+            write_output({"success": False, "error": "PR already merged", "code": "ALREADY_MERGED"}, "amia_set_auto_merge", args.output_file)
             return 5  # Idempotency skip - already merged
         if pr_info.get("state") != "OPEN":
-            print(json.dumps({"success": False, "error": "PR not open", "code": "NOT_MERGEABLE"}, indent=2))
+            write_output({"success": False, "error": "PR not open", "code": "NOT_MERGEABLE"}, "amia_set_auto_merge", args.output_file)
             return 6  # Not mergeable
         if args.enable:
             if not pr_info.get("viewerCanEnableAutoMerge"):
-                print(json.dumps({"success": False, "error": "Cannot enable (check settings)", "code": "NOT_MERGEABLE"}, indent=2))
+                write_output({"success": False, "error": "Cannot enable (check settings)", "code": "NOT_MERGEABLE"}, "amia_set_auto_merge", args.output_file)
                 return 6  # Not mergeable
             result = enable_auto_merge(pr_id, args.merge_method)
         else:
@@ -102,17 +107,17 @@ def main() -> int:
                 result = {"success": True, "message": "Auto-merge was not enabled"} if not pr_info.get("autoMergeRequest") else {"success": False, "error": "Cannot disable"}
             else:
                 result = disable_auto_merge(pr_id)
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_set_auto_merge", args.output_file)
         return 0 if result.get("success") else 3  # API error if failed
     except ValueError as e:
-        print(json.dumps({"success": False, "error": str(e), "code": "INVALID_PARAMS"}, indent=2))
+        write_output({"success": False, "error": str(e), "code": "INVALID_PARAMS"}, "amia_set_auto_merge", args.output_file)
         return 1  # Invalid parameters
     except Exception as e:
         error_msg = str(e).lower()
         if "auth" in error_msg or "login" in error_msg:
-            print(json.dumps({"success": False, "error": str(e), "code": "NOT_AUTHENTICATED"}, indent=2))
+            write_output({"success": False, "error": str(e), "code": "NOT_AUTHENTICATED"}, "amia_set_auto_merge", args.output_file)
             return 4  # Not authenticated
-        print(json.dumps({"success": False, "error": str(e), "code": "API_ERROR"}, indent=2))
+        write_output({"success": False, "error": str(e), "code": "API_ERROR"}, "amia_set_auto_merge", args.output_file)
         return 3  # API error
 
 if __name__ == "__main__":

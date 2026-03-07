@@ -25,6 +25,10 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from typing import Any
 
+# Allow imports from the plugin root shared/ directory (depth=3: scripts -> skill -> skills -> root)
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output  # noqa: E402
+
 
 # Configuration
 WEBHOOK_SECRET = os.environ.get("GITHUB_WEBHOOK_SECRET", "")
@@ -297,6 +301,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--test", type=Path, help="Test with JSON file instead of running server"
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
@@ -306,6 +311,7 @@ if __name__ == "__main__":
             payload = json.load(f)
         event_type = payload.pop("_event_type", "workflow_run")
         success, msg = handle_github_webhook(event_type, payload)
-        print(f"{'OK' if success else 'FAILED'}: {msg}")
+        result = {"status": "ok" if success else "error", "event_type": event_type, "message": msg}
+        write_output(result, "ci_webhook_handler", args.output_file)
     else:
         run_server(args.port, bind=args.bind)

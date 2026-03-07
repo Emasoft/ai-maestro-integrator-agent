@@ -13,10 +13,14 @@ Usage:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> dict[str, Any] | list[Any] | str:
@@ -204,9 +208,10 @@ def main() -> None:
     parser.add_argument("--repo", required=True, help="Repository in owner/repo format")
     parser.add_argument("--filter", choices=["needs_action"], help="Filter results")
     parser.add_argument("--pr", type=int, help="Check specific PR number only")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
     result = poll_prs(args.repo, args.filter, args.pr)
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_orchestrator_pr_poll", args.output_file)
     if "error" in result:
         sys.exit(1)
 

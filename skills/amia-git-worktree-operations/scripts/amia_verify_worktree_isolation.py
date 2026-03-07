@@ -12,10 +12,14 @@ Usage:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_git(args: list[str], cwd: str | None = None) -> tuple[int, str, str]:
@@ -167,6 +171,7 @@ def main() -> int:
         action="store_true",
         help="Also check other worktrees for contamination",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     worktree_path = str(Path(args.worktree_path).resolve())
@@ -177,7 +182,7 @@ def main() -> int:
             "status": "error",
             "error": f"Worktree path does not exist: {worktree_path}",
         }
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_verify_worktree_isolation", args.output_file)
         return 1
 
     # Find main repo
@@ -190,7 +195,7 @@ def main() -> int:
             "status": "error",
             "error": "Could not determine main repository",
         }
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_verify_worktree_isolation", args.output_file)
         return 1
 
     main_repo = str(Path(main_repo).resolve())
@@ -231,7 +236,7 @@ def main() -> int:
         "warnings": warnings,
     }
 
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_verify_worktree_isolation", args.output_file)
     return 1 if violations else 0
 
 

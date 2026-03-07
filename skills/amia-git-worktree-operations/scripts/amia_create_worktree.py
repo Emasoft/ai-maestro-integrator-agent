@@ -18,6 +18,9 @@ import sys
 import tempfile
 from pathlib import Path
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
+
 
 def run_git(args: list[str], cwd: str | None = None) -> tuple[int, str, str]:
     """Run a git command and return exit code, stdout, stderr."""
@@ -85,13 +88,14 @@ def main() -> int:
         type=str,
         help="Custom branch name (default: pr-<number>)",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     # Determine repository path
     repo = args.repo or find_repo_root()
     if not repo:
         result = {"status": "error", "error": "Not in a git repository"}
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_create_worktree", args.output_file)
         return 1
 
     repo = str(Path(repo).resolve())
@@ -109,28 +113,28 @@ def main() -> int:
             "branch": branch_name,
             "message": "Worktree already exists",
         }
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_create_worktree", args.output_file)
         return 0
 
     # Fetch PR branch
     success, msg = fetch_pr_branch(repo, args.pr)
     if not success:
         result = {"status": "error", "error": msg}
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_create_worktree", args.output_file)
         return 1
 
     # Create worktree
     success, msg = create_worktree(repo, worktree_path, branch_name)
     if not success:
         result = {"status": "error", "error": msg}
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_create_worktree", args.output_file)
         return 1
 
     # Verify worktree
     success, msg = verify_worktree(worktree_path)
     if not success:
         result = {"status": "error", "error": msg}
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_create_worktree", args.output_file)
         return 1
 
     result = {
@@ -140,7 +144,7 @@ def main() -> int:
         "main_repo": repo,
         "pr_number": args.pr,
     }
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_create_worktree", args.output_file)
     return 0
 
 

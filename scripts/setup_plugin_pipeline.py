@@ -568,10 +568,6 @@ jobs:
             echo "✘ Validation failed (exit code: $exit_code)"
             exit $exit_code
           fi
-
-      - name: Lint Python files
-        run: |
-          ruff check . --exclude .venv --select=E,F,W --ignore=E501 || true
 """
 
 GITIGNORE_ADDITIONS = """
@@ -1090,9 +1086,7 @@ def print_status(status: PipelineStatus) -> None:
 
     print()
     print(
-        f"Summary: {RED}{status.critical_count} critical{NC}, "
-        f"{YELLOW}{status.major_count} major{NC}, "
-        f"{BLUE}{status.minor_count} minor{NC}"
+        f"Summary: {RED}{status.critical_count} critical{NC}, {YELLOW}{status.major_count} major{NC}, {BLUE}{status.minor_count} minor{NC}"
     )
 
     if status.is_valid:

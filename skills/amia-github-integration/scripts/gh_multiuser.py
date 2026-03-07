@@ -48,6 +48,10 @@ from enum import Enum, auto
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar
 
+# Allow imports from the plugin root shared/ directory (depth=3: scripts -> skill -> skills -> root)
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output  # noqa: E402
+
 # Type variable for retry decorator
 T = TypeVar("T")
 
@@ -1488,6 +1492,7 @@ Examples:
     )
 
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbose output")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     subparsers = parser.add_subparsers(dest="command", help="Command to run")
 
@@ -1573,7 +1578,13 @@ Examples:
     }
 
     if args.command in commands:
-        return commands[args.command](config, args)
+        exit_code = commands[args.command](config, args)
+        write_output(
+            {"status": "ok" if exit_code == 0 else "error", "command": args.command, "exit_code": exit_code},
+            "gh_multiuser",
+            args.output_file,
+        )
+        return exit_code
 
     parser.print_help()
     return 0

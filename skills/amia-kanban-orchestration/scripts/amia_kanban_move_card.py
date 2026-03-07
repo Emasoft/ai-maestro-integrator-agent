@@ -24,10 +24,16 @@ Example:
     python3 amia_kanban_move_card.py Emasoft my-repo 1 42 Blocked --reason "Missing credentials"
 """
 
+import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+# Allow imports from the plugin root shared/ directory (depth=3: scripts -> skill -> skills -> root)
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output  # noqa: E402
 
 
 # Valid status transitions
@@ -248,22 +254,28 @@ To: {to_status}{reason_text}
 
 def main() -> None:
     """Main entry point."""
-    if len(sys.argv) < 6:
-        print(__doc__)
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description="Move a Kanban card to a different status column with validation."
+    )
+    parser.add_argument("owner", help="Repository owner (organization or user)")
+    parser.add_argument("repo", help="Repository name")
+    parser.add_argument("project_number", type=int, help="GitHub Project V2 number")
+    parser.add_argument("issue_number", type=int, help="Issue number to move")
+    parser.add_argument("new_status", help="Target status column name")
+    parser.add_argument("--reason", help="Reason for the status change (added as comment)")
+    parser.add_argument("--force", action="store_true", help="Skip transition validation")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
-    owner = sys.argv[1]
-    repo = sys.argv[2]
-    try:
-        project_number = int(sys.argv[3])
-        issue_number = int(sys.argv[4])
-    except ValueError:
-        print(
-            "Error: PROJECT_NUMBER and ISSUE_NUMBER must be integers", file=sys.stderr
-        )
-        sys.exit(1)
+    args = parser.parse_args()
 
-    new_status = sys.argv[5]
+    owner = args.owner
+    repo = args.repo
+    project_number = args.project_number
+    issue_number = args.issue_number
+    new_status = args.new_status
+    reason = args.reason
+    force = args.force
+
     if new_status not in VALID_TRANSITIONS:
         print(f"Error: Invalid status '{new_status}'", file=sys.stderr)
         print(
@@ -271,14 +283,6 @@ def main() -> None:
             file=sys.stderr,
         )
         sys.exit(1)
-
-    # Parse options
-    reason = None
-    force = "--force" in sys.argv
-    if "--reason" in sys.argv:
-        idx = sys.argv.index("--reason")
-        if idx + 1 < len(sys.argv):
-            reason = sys.argv[idx + 1]
 
     # Get project info
     project = get_project_info(owner, repo, project_number)
@@ -328,7 +332,16 @@ def main() -> None:
         # Add comment
         add_comment(f"{owner}/{repo}", issue_number, current_status, new_status, reason)
         print("Status change comment added to issue")
+        result = {
+            "status": "ok",
+            "issue": issue_number,
+            "from_status": current_status,
+            "to_status": new_status,
+        }
+        write_output(result, "amia_kanban_move_card", args.output_file)
     else:
+        result = {"status": "error", "issue": issue_number, "message": "Failed to update status"}
+        write_output(result, "amia_kanban_move_card", args.output_file)
         print("Error: Failed to update status", file=sys.stderr)
         sys.exit(1)
 

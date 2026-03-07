@@ -35,10 +35,14 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> tuple[bool, str]:
@@ -106,11 +110,12 @@ def main() -> None:
     parser.add_argument("--notes", required=True, help="Path to release notes markdown file")
     parser.add_argument("--prerelease", action="store_true", help="Mark as pre-release")
     parser.add_argument("--draft", action="store_true", help="Create as draft release")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     if "/" not in args.repo:
-        print(json.dumps({"error": True, "message": "Repository must be in owner/repo format"}))
+        write_output({"error": True, "message": "Repository must be in owner/repo format"}, "amia_create_release", args.output_file)
         sys.exit(1)
 
     result = create_release(
@@ -120,7 +125,7 @@ def main() -> None:
         prerelease=args.prerelease,
         draft=args.draft,
     )
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_create_release", args.output_file)
 
     if result.get("error"):
         code = result.get("code", "")

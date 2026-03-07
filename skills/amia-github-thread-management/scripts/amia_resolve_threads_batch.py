@@ -27,9 +27,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_graphql_with_variables(query: str, variables: dict[str, str]) -> dict[str, Any]:
@@ -157,6 +161,7 @@ def main() -> None:
         required=True,
         help="Comma-separated list of thread IDs (PRRT_xxx,PRRT_yyy)",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
@@ -166,18 +171,15 @@ def main() -> None:
     # Validate format
     invalid_ids = [tid for tid in thread_ids if not tid.startswith("PRRT_")]
     if invalid_ids:
-        print(
-            json.dumps({
-                "error": f"Invalid thread ID format: {invalid_ids}. IDs should start with 'PRRT_'",
-                "code": "INVALID_PARAMS"
-            }),
-            file=sys.stderr,
-        )
+        write_output({
+            "error": f"Invalid thread ID format: {invalid_ids}. IDs should start with 'PRRT_'",
+            "code": "INVALID_PARAMS"
+        }, "amia_resolve_threads_batch", args.output_file)
         sys.exit(1)  # Invalid parameters
 
     try:
         result = resolve_threads_batch(thread_ids)
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_resolve_threads_batch", args.output_file)
 
         # Exit 0 even with partial failures - check JSON for details
         # This allows batch operations to report partial success
@@ -189,11 +191,11 @@ def main() -> None:
         # Determine appropriate exit code based on error type
         if "auth" in error_msg or "login" in error_msg or "credentials" in error_msg:
             error_output["code"] = "NOT_AUTHENTICATED"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_resolve_threads_batch", args.output_file)
             sys.exit(4)  # Not authenticated
         else:
             error_output["code"] = "API_ERROR"
-            print(json.dumps(error_output), file=sys.stderr)
+            write_output(error_output, "amia_resolve_threads_batch", args.output_file)
             sys.exit(3)  # API error
 
 

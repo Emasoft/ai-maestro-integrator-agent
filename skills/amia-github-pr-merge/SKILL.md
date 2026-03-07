@@ -299,6 +299,14 @@ All scripts use standardized exit codes for consistent error handling:
 | amia_merge_pr.py | PR already merged | Conflicts, closed, not approved |
 | amia_set_auto_merge.py | PR already merged | Cannot enable auto-merge |
 
+## Output Discipline
+
+All scripts support the `--output-file <path>` flag:
+- **With flag**: Full JSON written to file; concise summary printed to stderr
+- **Without flag**: Full JSON printed to stdout (backward compatible)
+
+When invoking from agents or automated workflows, always pass `--output-file` to minimize token consumption.
+
 ## Examples
 
 ### Example 1: Complete PR Merge Workflow

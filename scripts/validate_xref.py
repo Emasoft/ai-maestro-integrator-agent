@@ -35,10 +35,11 @@ from typing import Any
 import yaml
 from cpv_validation_common import (
     COLORS,
-    SKIP_DIRS,
     ValidationReport,
     print_report_summary,
     print_results_by_level,
+    save_report_and_print_summary,
+    should_skip_directory,
 )
 
 # =============================================================================
@@ -165,7 +166,7 @@ def should_skip_dir(path: Path) -> bool:
     Returns:
         True if directory should be skipped
     """
-    return path.name in SKIP_DIRS or path.name.startswith(".")
+    return should_skip_directory(path.name) or path.name.startswith(".")
 
 
 def parse_yaml_frontmatter(content: str) -> dict[str, Any] | None:
@@ -278,8 +279,8 @@ def validate_subagent_type_matching(
         matches = SUBAGENT_TYPE_PATTERN.findall(content)
 
         for ref_agent in matches:
-            expected_file = plugin_root / "agents" / f"{ref_agent}.md"
-            if not expected_file.exists():
+            # Check against both the known agent set and filesystem for completeness
+            if ref_agent not in available_agents:
                 report.major(
                     f"subagent_type '{ref_agent}' has no matching agents/{ref_agent}.md",
                     rel_path,
@@ -312,7 +313,7 @@ def validate_version_sync(
     plugin_json = plugin_root / ".claude-plugin" / "plugin.json"
     if plugin_json.exists():
         try:
-            manifest = json.loads(plugin_json.read_text())
+            manifest = json.loads(plugin_json.read_text(encoding="utf-8"))
             if "version" in manifest:
                 versions_found["plugin.json"] = manifest["version"]
         except (json.JSONDecodeError, Exception):
@@ -334,7 +335,7 @@ def validate_version_sync(
     marketplace_json = plugin_root.parent / "marketplace.json"
     if marketplace_json.exists():
         try:
-            marketplace = json.loads(marketplace_json.read_text())
+            marketplace = json.loads(marketplace_json.read_text(encoding="utf-8"))
             plugins = marketplace.get("plugins", [])
             plugin_name = plugin_root.name
             for plugin_entry in plugins:
@@ -349,7 +350,7 @@ def validate_version_sync(
     pyproject = plugin_root / "pyproject.toml"
     if pyproject.exists():
         try:
-            content = pyproject.read_text()
+            content = pyproject.read_text(encoding="utf-8")
             match = re.search(r'version\s*=\s*["\'](\d+\.\d+\.\d+)["\']', content)
             if match:
                 versions_found["pyproject.toml"] = match.group(1)
@@ -518,7 +519,7 @@ def validate_hook_script_refs(
     plugin_json = plugin_root / ".claude-plugin" / "plugin.json"
     if plugin_json.exists():
         try:
-            manifest = json.loads(plugin_json.read_text())
+            manifest = json.loads(plugin_json.read_text(encoding="utf-8"))
             if "hooks" in manifest:
                 hooks_val = manifest["hooks"]
                 if isinstance(hooks_val, str):
@@ -535,7 +536,7 @@ def validate_hook_script_refs(
 
     for hooks_file in hooks_files:
         try:
-            hooks_content = hooks_file.read_text()
+            hooks_content = hooks_file.read_text(encoding="utf-8")
             hooks_config = json.loads(hooks_content)
         except (json.JSONDecodeError, Exception) as e:
             report.minor(f"Could not parse hooks file: {e}", str(hooks_file.relative_to(plugin_root)))
@@ -685,6 +686,8 @@ def main() -> int:
         description="Validate cross-references between Claude Code plugin components",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
+Checks: agent Task() refs, command-agent refs, version sync, hook script paths.
+
 Examples:
     uv run python scripts/validate_xref.py /path/to/plugin
     uv run python scripts/validate_xref.py /path/to/plugin --verbose
@@ -714,6 +717,17 @@ Exit codes:
         action="store_true",
         help="Output results as JSON",
     )
+    parser.add_argument(
+        "--report",
+        type=str,
+        default=None,
+        help="Save detailed report to file, print only summary to stdout",
+    )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Strict mode: NIT issues also cause non-zero exit",
+    )
 
     args = parser.parse_args()
 
@@ -737,6 +751,16 @@ Exit codes:
     # Output results
     if args.json:
         print(report.to_json())
+    elif args.report:
+
+        def _print_full(report, verbose=False):
+            print_report_summary(report, "Cross-Reference Validation Report")
+            print_results_by_level(report, verbose=verbose)
+
+        save_report_and_print_summary(
+            report, Path(args.report), "Cross-Reference Validation", _print_full, args.verbose,
+            plugin_path=args.plugin_path,
+        )
     else:
         print_report_summary(report, "Cross-Reference Validation Report")
         print_results_by_level(report, verbose=args.verbose)
@@ -753,7 +777,7 @@ Exit codes:
             if report.hook_script_refs:
                 print(f"  Hook scripts referenced: {len(report.hook_script_refs)}")
 
-    return report.exit_code
+    return report.exit_code_strict() if args.strict else report.exit_code
 
 
 if __name__ == "__main__":

@@ -15,29 +15,16 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+
 from cpv_validation_common import get_plugin_root
-
-
-def calculate_file_checksum(file_path: Path) -> str:
-    """
-    Calculate SHA-256 checksum of a file.
-
-    Args:
-        file_path: Path to the file
-
-    Returns:
-        Hex-encoded SHA-256 checksum
-    """
-    sha256_hash = hashlib.sha256()
-    with open(file_path, "rb") as f:
-        for chunk in iter(lambda: f.read(8192), b""):
-            sha256_hash.update(chunk)
-    return sha256_hash.hexdigest()
+from shared.thresholds import write_output
 
 
 def calculate_directory_checksum(dir_path: Path, exclude_patterns: list[str] | None = None) -> str:
@@ -310,6 +297,8 @@ Examples:
 
     parser.add_argument("--check-only", action="store_true", help="Check if update is needed without making changes")
 
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
+
     args = parser.parse_args()
 
     # Determine plugin root
@@ -318,7 +307,7 @@ Examples:
 
     if not plugin_root.exists():
         if args.json:
-            print(json.dumps({"error": f"Plugin directory not found: {plugin_root}"}))
+            write_output({"error": f"Plugin directory not found: {plugin_root}"}, "update_marketplace_metadata", args.output_file)
         else:
             print(f"Error: Plugin directory not found: {plugin_root}", file=sys.stderr)
         return 1
@@ -327,7 +316,7 @@ Examples:
     plugin_json_path = plugin_root / ".claude-plugin" / "plugin.json"
     if not plugin_json_path.exists():
         if args.json:
-            print(json.dumps({"error": f"plugin.json not found at {plugin_json_path}"}))
+            write_output({"error": f"plugin.json not found at {plugin_json_path}"}, "update_marketplace_metadata", args.output_file)
         else:
             print(f"Error: plugin.json not found at {plugin_json_path}", file=sys.stderr)
         return 1
@@ -339,14 +328,14 @@ Examples:
         existing_data, error = load_marketplace_json(marketplace_path)
         if error:
             if args.json:
-                print(json.dumps({"needs_update": True, "reason": error}))
+                write_output({"needs_update": True, "reason": error}, "update_marketplace_metadata", args.output_file)
             else:
                 print(f"Update needed: {error}")
             return 0
 
         if existing_data is None:
             if args.json:
-                print(json.dumps({"needs_update": True, "reason": "marketplace.json does not exist"}))
+                write_output({"needs_update": True, "reason": "marketplace.json does not exist"}, "update_marketplace_metadata", args.output_file)
             else:
                 print("Update needed: marketplace.json does not exist")
             return 0
@@ -357,13 +346,13 @@ Examples:
             if plugin.get("name") == new_entry["name"]:
                 if plugin.get("checksum") == new_entry["checksum"]:
                     if args.json:
-                        print(json.dumps({"needs_update": False, "reason": "checksum unchanged"}))
+                        write_output({"needs_update": False, "reason": "checksum unchanged"}, "update_marketplace_metadata", args.output_file)
                     else:
                         print("No update needed: checksum unchanged")
                     return 0
 
         if args.json:
-            print(json.dumps({"needs_update": True, "reason": "checksum changed"}))
+            write_output({"needs_update": True, "reason": "checksum changed"}, "update_marketplace_metadata", args.output_file)
         else:
             print("Update needed: checksum changed")
         return 0
@@ -378,7 +367,7 @@ Examples:
             "updated": was_updated,
             "marketplace_path": str(marketplace_path),
         }
-        print(json.dumps(output, indent=2))
+        write_output(output, "update_marketplace_metadata", args.output_file)
     else:
         status = "[OK]" if success else "[ERROR]"
         print(f"{status} {message}")

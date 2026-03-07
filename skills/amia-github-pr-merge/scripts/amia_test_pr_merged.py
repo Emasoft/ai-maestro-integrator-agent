@@ -24,9 +24,13 @@ Usage:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_graphql_query(query: str, variables: dict[str, Any]) -> dict[str, Any]:
@@ -114,12 +118,13 @@ def main() -> int:
     parser.add_argument(
         "--repo", type=str, required=True, help="Repository in owner/repo format"
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     try:
         owner, repo = parse_repo(args.repo)
         result = check_pr_merged(owner, repo, args.pr)
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_test_pr_merged", args.output_file)
 
         if result.get("error"):
             # Check for specific error types
@@ -136,11 +141,11 @@ def main() -> int:
     except ValueError as e:
         # Invalid parameters (bad repo format)
         error_result = {"error": True, "message": str(e), "code": "INVALID_PARAMS"}
-        print(json.dumps(error_result, indent=2))
+        write_output(error_result, "amia_test_pr_merged", args.output_file)
         return 1  # Invalid parameters
     except Exception as e:
         error_result = {"error": True, "message": str(e), "code": "API_ERROR"}
-        print(json.dumps(error_result, indent=2))
+        write_output(error_result, "amia_test_pr_merged", args.output_file)
         return 3  # API error
 
 

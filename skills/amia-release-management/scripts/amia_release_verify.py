@@ -37,9 +37,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> tuple[bool, str]:
@@ -138,15 +142,16 @@ def main() -> None:
     parser.add_argument("--repo", required=True, help="Repository in owner/repo format")
     parser.add_argument("--version", required=True, help="Target release version (e.g. 1.2.3)")
     parser.add_argument("--strict", action="store_true", help="Exit with code 5 if any gate fails")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     if "/" not in args.repo:
-        print(json.dumps({"error": True, "message": "Repository must be in owner/repo format"}))
+        write_output({"error": True, "message": "Repository must be in owner/repo format"}, "amia_release_verify", args.output_file)
         sys.exit(1)
 
     result = verify_release(repo=args.repo, version=args.version)
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_release_verify", args.output_file)
 
     if result.get("all_passed"):
         sys.exit(0)

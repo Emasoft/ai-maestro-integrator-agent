@@ -221,6 +221,14 @@ This skill produces the following outputs depending on the operation performed:
 | `Could not resolve to a Project` | Wrong project number or the project is in a different organization | Verify the project number with `gh project list --owner <org>` and ensure you are targeting the correct owner |
 | `xargs: gh: terminated by signal 13` | Pipe broken during batch operation, often due to API errors mid-stream | Re-run the batch operation with smaller batch sizes or add error handling with `xargs -I {} sh -c 'gh issue edit {} --add-label "label" || true'` |
 
+## Output Discipline
+
+All scripts support the `--output-file <path>` flag:
+- **With flag**: Full JSON written to file; concise summary printed to stderr
+- **Without flag**: Full JSON printed to stdout (backward compatible)
+
+When invoking from agents or automated workflows, always pass `--output-file` to minimize token consumption.
+
 ## Examples
 
 **Example 1: Route to the correct skill for a PR task**

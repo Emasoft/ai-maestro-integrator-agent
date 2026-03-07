@@ -12,10 +12,14 @@ Usage:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_git(args: list[str], cwd: str | None = None) -> tuple[int, str, str]:
@@ -106,6 +110,7 @@ def main() -> int:
         action="store_true",
         help="Skip checking for unpushed commits",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     worktree_path = str(Path(args.worktree_path).resolve())
@@ -117,7 +122,7 @@ def main() -> int:
             "worktree_path": worktree_path,
             "message": "Worktree does not exist",
         }
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_cleanup_worktree", args.output_file)
         return 0
 
     # Find main repo
@@ -127,7 +132,7 @@ def main() -> int:
             "status": "error",
             "error": "Could not determine main repository",
         }
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_cleanup_worktree", args.output_file)
         return 1
 
     # Check for uncommitted changes
@@ -140,7 +145,7 @@ def main() -> int:
             "changed_files": changed_files,
             "message": "Worktree has uncommitted changes. Use --force to override.",
         }
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_cleanup_worktree", args.output_file)
         return 1
 
     # Check for unpushed commits
@@ -154,14 +159,14 @@ def main() -> int:
                 "unpushed_count": count,
                 "message": "Worktree has unpushed commits. Use --force to override.",
             }
-            print(json.dumps(result, indent=2))
+            write_output(result, "amia_cleanup_worktree", args.output_file)
             return 1
 
     # Remove worktree
     success, msg = remove_worktree(main_repo, worktree_path, args.force)
     if not success:
         result = {"status": "error", "error": msg}
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_cleanup_worktree", args.output_file)
         return 1
 
     # Prune stale entries
@@ -173,7 +178,7 @@ def main() -> int:
         "main_repo": main_repo,
         "forced": args.force,
     }
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_cleanup_worktree", args.output_file)
     return 0
 
 

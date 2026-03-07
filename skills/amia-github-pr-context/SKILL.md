@@ -160,6 +160,14 @@ All scripts use standardized exit codes for consistent error handling:
 | 5 | Idempotency skip | N/A for these scripts |
 | 6 | Not mergeable | N/A for these scripts |
 
+## Output Discipline
+
+All scripts support the `--output-file <path>` flag:
+- **With flag**: Full JSON written to file; concise summary printed to stderr
+- **Without flag**: Full JSON printed to stdout (backward compatible)
+
+When invoking from agents or automated workflows, always pass `--output-file` to minimize token consumption.
+
 ## Examples
 
 ### Get Full PR Context

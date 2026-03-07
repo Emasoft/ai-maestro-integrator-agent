@@ -29,9 +29,13 @@ Exit codes:
 import argparse
 import csv
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> subprocess.CompletedProcess:
@@ -166,33 +170,25 @@ def main() -> None:
         default=False,
         help="Preview issues without creating them",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
     # Validate repo format
     if "/" not in args.repo or len(args.repo.split("/")) != 2:
-        print(
-            json.dumps({"error": "Invalid repo format. Expected owner/repo"}, indent=2),
-            file=sys.stdout,
-        )
+        write_output({"error": "Invalid repo format. Expected owner/repo"}, "bulk-create-issues", args.output_file)
         sys.exit(1)
 
     # Check input file exists
     input_path = Path(args.input_file)
     if not input_path.is_file():
-        print(
-            json.dumps({"error": f"Input file not found: {args.input_file}"}, indent=2),
-            file=sys.stdout,
-        )
+        write_output({"error": f"Input file not found: {args.input_file}"}, "bulk-create-issues", args.output_file)
         sys.exit(2)
 
     # Detect format from extension
     ext = input_path.suffix.lower()
     if ext not in (".csv", ".json"):
-        print(
-            json.dumps({"error": f"Unsupported file format: {ext}. Use .csv or .json"}, indent=2),
-            file=sys.stdout,
-        )
+        write_output({"error": f"Unsupported file format: {ext}. Use .csv or .json"}, "bulk-create-issues", args.output_file)
         sys.exit(1)
 
     # Parse input file
@@ -202,19 +198,13 @@ def main() -> None:
         else:
             issues = parse_json_file(input_path)
     except (ValueError, json.JSONDecodeError, csv.Error) as e:
-        print(
-            json.dumps({"error": f"Failed to parse input file: {e}"}, indent=2),
-            file=sys.stdout,
-        )
+        write_output({"error": f"Failed to parse input file: {e}"}, "bulk-create-issues", args.output_file)
         sys.exit(6)
 
     # Check authentication (skip for dry-run)
     if not args.dry_run:
         if not check_auth():
-            print(
-                json.dumps({"error": "Not authenticated. Run 'gh auth login' first."}, indent=2),
-                file=sys.stdout,
-            )
+            write_output({"error": "Not authenticated. Run 'gh auth login' first."}, "bulk-create-issues", args.output_file)
             sys.exit(4)
 
     # Process issues
@@ -261,7 +251,7 @@ def main() -> None:
         "results": results,
     }
 
-    print(json.dumps(output, indent=2))
+    write_output(output, "bulk-create-issues", args.output_file)
 
     # Determine exit code
     if failed_count == 0:

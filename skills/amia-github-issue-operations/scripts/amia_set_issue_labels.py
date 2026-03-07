@@ -35,9 +35,13 @@ Exit codes (standardized):
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 # Default configurations for common labels
@@ -185,6 +189,7 @@ def main() -> None:
     parser.add_argument("--remove", help="Comma-separated labels to remove")
     parser.add_argument("--set", help="Comma-separated labels to set (replaces all)")
     parser.add_argument("--auto-create", action="store_true", help="Auto-create missing labels")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
@@ -197,7 +202,7 @@ def main() -> None:
         auto_create=args.auto_create
     )
 
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_set_issue_labels", args.output_file)
 
     # Exit with appropriate error code based on error type
     if result.get("error"):

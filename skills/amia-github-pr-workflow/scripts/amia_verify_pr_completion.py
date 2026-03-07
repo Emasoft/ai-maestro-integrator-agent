@@ -12,10 +12,14 @@ Usage:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_gh_command(args: list[str]) -> dict[str, Any] | list[Any] | str:
@@ -256,13 +260,14 @@ def main() -> None:
         choices=["pre-review", "post-review", "ci", "merge"],
         help="Check specific stage only",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
     # Validate repo format before any split("/") calls downstream
     if "/" not in args.repo or args.repo.count("/") != 1:
-        print(json.dumps({"error": f"Invalid repo format: {args.repo!r}, expected 'owner/name'"}))
+        write_output({"error": f"Invalid repo format: {args.repo!r}, expected 'owner/name'"}, "amia_verify_pr_completion", args.output_file)
         sys.exit(1)
     result = verify_completion(args.repo, args.pr, args.stage)
-    print(json.dumps(result, indent=2))
+    write_output(result, "amia_verify_pr_completion", args.output_file)
     sys.exit(0 if result["complete"] else 1)
 
 

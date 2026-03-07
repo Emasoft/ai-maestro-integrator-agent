@@ -13,10 +13,14 @@ Usage:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.thresholds import write_output
 
 
 def run_git(args: list[str], cwd: str | None = None) -> tuple[int, str, str]:
@@ -137,13 +141,14 @@ def main() -> int:
         action="store_true",
         help="Include status info for each worktree",
     )
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
     args = parser.parse_args()
 
     # Determine repository path
     repo = args.repo_path or find_repo_root()
     if not repo:
         result: dict[str, Any] = {"status": "error", "error": "Not in a git repository"}
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_list_worktrees", args.output_file)
         return 1
 
     repo = str(Path(repo).resolve())
@@ -158,7 +163,7 @@ def main() -> int:
             "worktree_count": len(worktrees),
             "worktrees": worktrees,
         }
-        print(json.dumps(result, indent=2))
+        write_output(result, "amia_list_worktrees", args.output_file)
 
     return 0
 

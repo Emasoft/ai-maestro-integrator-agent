@@ -14,7 +14,7 @@ from typing import Any
 
 # Import thresholds from shared module (canonical source of truth)
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
-from shared.thresholds import TechnicalTimeouts, GitHubThresholds
+from shared.thresholds import TechnicalTimeouts, GitHubThresholds, write_output
 
 TIMEOUTS = TechnicalTimeouts()
 GH_THRESHOLDS = GitHubThresholds()
@@ -314,6 +314,7 @@ def main() -> None:
         help="Individual task title (can be used multiple times)",
     )
     parser.add_argument("--json-tasks", help="JSON string of tasks array")
+    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
 
@@ -354,7 +355,7 @@ def main() -> None:
     results = syncer.sync_tasks(tasks)
 
     # Output results
-    print(json.dumps(results, indent=2))
+    write_output(results, "sync_tasks", args.output_file)
 
     if not results["success"]:
         sys.exit(1)

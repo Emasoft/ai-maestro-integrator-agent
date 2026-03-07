@@ -152,7 +152,6 @@ def _install_hooks(src_dir: Path, dest_dir: Path, *, use_symlinks: bool) -> None
     print("  git push --dry-run origin HEAD")
     print()
     _info("To bypass hooks temporarily:")
-    print("  git commit --no-verify -m 'message'")
     print("  git push --no-verify")
     print()
     if use_symlinks:
@@ -179,7 +178,7 @@ def _make_executable(path: Path) -> None:
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Install git hooks for plugin validation.",
-        epilog="Default behavior: Copy hooks from git-hooks/ to .git/hooks/.",
+        epilog="Default behavior: Copy hooks from git-hooks/ to .git/hooks/.\nExample: uv run python scripts/setup_git_hooks.py --symlink",
     )
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
