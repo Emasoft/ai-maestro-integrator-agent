@@ -15,387 +15,98 @@ user-invocable: false
 
 ## Overview
 
-This skill is the **entry point** for all GitHub integration tasks in agent orchestration workflows. It routes you to specialized skills based on your task type. Use this skill to determine which specialized GitHub skill to invoke.
+Entry point for all GitHub integration tasks. Routes to specialized skills based on task type (PRs, Projects V2, Kanban, worktrees, API ops, multi-user). Also handles batch operations spanning multiple areas.
 
 ## Prerequisites
 
-Before using any GitHub integration skill, ensure:
-
-1. GitHub CLI version 2.14 or higher is installed (`gh --version`)
-2. GitHub CLI is authenticated (`gh auth status`)
-3. You have write permissions to the target repository
-4. Basic familiarity with Git commands
-
-**First-time setup:**
-
-```bash
-# Install GitHub CLI
-brew install gh   # macOS
-# or see https://cli.github.com/manual/installation for other platforms
-
-# Authenticate
-gh auth login
-
-# Verify authentication
-gh auth status
-```
-
-**For detailed setup instructions**, see [references/prerequisites-and-setup.md](references/prerequisites-and-setup.md).
-
-- **Contents:** Initial Setup Requirements, Installing GitHub CLI, Verifying GitHub CLI Version, GitHub CLI Authentication, Step 1: Execute Authentication, Step 2: Choose Authentication Method, Step 3: Grant Permissions, Step 4: Initial Verification, Verify Authentication, Re-authentication, Troubleshooting Authentication, Problem: "Command not found: gh", Problem: "Not logged into any GitHub hosts", Problem: "HTTP 401: Bad credentials", Problem: "Resource not accessible by integration", Security Best Practices, Next Steps
-
-## Decision Tree: Which Skill to Use?
-
-Use this decision tree to route to the appropriate specialized skill:
-
-### I need to work with Pull Requests
-
-**→ Use `amia-github-pr-workflow`**
-
-This skill covers:
-
-- Creating pull requests linked to issues
-- PR status monitoring and CI/CD integration
-- Merge strategies (squash, merge commit, rebase)
-- Auto-merge configuration
-- PR workflow automation
-
-### I need to sync with GitHub Projects V2
-
-**→ Use `amia-github-projects-sync`**
-
-This skill covers:
-
-- Bidirectional synchronization between agent tasks and GitHub Projects V2
-- Creating and configuring project boards
-- Status column management (Backlog, Todo, In Progress, AI Review, Human Review, Merge/Release, Done, Blocked)
-- Custom field configuration (Priority, Due Date, Effort)
-- Automation rules (auto-add, auto-archive, status transitions)
-- Conflict resolution and sync health monitoring
-
-### I need to orchestrate Kanban board operations
-
-**→ Use `amia-kanban-orchestration`**
-
-This skill covers:
-
-- Managing the 9-label classification system (feature, bug, refactor, test, docs, performance, security, dependencies, workflow)
-- Issue lifecycle management across Kanban columns
-- Label-based filtering and reporting
-- Kanban-specific automation patterns
-
-### I need to use Git worktrees for parallel work
-
-**→ Use `amia-git-worktree-operations`**
-
-This skill covers:
-
-- Creating and managing Git worktrees for parallel feature development
-- Worktree-based PR workflows
-- Cleanup and maintenance of worktrees
-
-### I need to perform GitHub API operations
-
-**→ See [references/api-operations.md](references/api-operations.md)**
-  <!-- TOC: api-operations.md -->
-- 1 [Executing GitHub Issue Operations](#11-executing-github-issue-operations)
-- 1 Creating issues with labels, milestones, and assignees
-- 2 Updating issue metadata (title, body, labels)
-- 3 Managing issue lifecycle (close, reopen, transfer)
-- 2 [Executing GitHub Pull Request Operations](#12-executing-github-pull-request-operations)
-- 1 Creating PRs from branches
-- 2 Managing PR reviewers and assignees
-- 3 Submitting PR reviews (approve, request changes, comment)
-- 4 Merging PRs with different strategies
-- 3 [Executing GitHub Projects V2 Operations](#13-executing-github-projects-v2-operations)
-- 1 Adding items to project boards
-- 2 Moving items between columns
-- 3 Updating custom field values via GraphQL
-- 4 Batch updating project items
-- 4 [Managing Conversation Threads on Issues and PRs](#14-managing-conversation-threads-on-issues-and-prs)
-- 5 [Handling GitHub API Rate Limits](#15-handling-github-api-rate-limits)
-- 6 [Running Quality Gates Before API Operations](#16-running-quality-gates-before-api-operations)
-- 7 [Coordinating API Operations via AI Maestro](#17-coordinating-api-operations-via-ai-maestro)
-- 8 [Step-by-Step API Operation Workflow](#18-step-by-step-api-operation-workflow)
-- 9 [Using GitHub CLI and GraphQL Tools](#19-using-github-cli-and-graphql-tools)
-  <!-- /TOC -->
-
-This reference covers:
-
-- Direct GitHub API calls (REST and GraphQL)
-- Authentication methods (token, app, OAuth)
-- Rate limiting and pagination
-- Webhook configuration
-- Advanced query patterns
-
-### I need to manage multiple GitHub identities
-
-**→ See [references/multi-user-workflow.md](references/multi-user-workflow.md)**
-
-- **Contents:** Use-Case TOC, Part 1: Setup and Configuration, Part 2: Operations and Troubleshooting, Overview, Why Multiple Identities?, Identity Components, Quick Start, 1. Generate SSH Key for Secondary Account, 2. Add Key to GitHub, 3. Configure SSH Host Alias, 4. Authenticate Secondary Account with gh CLI, 5. Configure Repository for Secondary Identity, Key Files and Locations, Common Commands Quick Reference, See Also
-
-This reference covers:
-
-- SSH key setup for multiple accounts
-- SSH host aliases configuration
-- GitHub CLI multi-account authentication
-- Identity switching and repository configuration
-- Using the `gh_multiuser.py` script for automated identity management
-
-## Batch Operations (Unique to This Skill)
-
-When you need to perform operations that span multiple GitHub areas (e.g., bulk label changes across issues AND PRs, or cross-project synchronization):
-
-### Batch Label Operations
-
-**Reference:** [references/batch-operations.md](references/batch-operations.md)
-
-- **Contents:** Use-Case TOC, Filtering by Label, Filter by Single Label, Filter by Multiple Labels (AND), Filter by Multiple Labels (OR), Filter by Status, Filter by Assignee, Filter by Date, Advanced Filtering, Complex Filter Examples, Saving Filter Results, Filtering in Projects V2, Batch Issue Updates, Update Labels on Multiple Issues, Update Assignees on Multiple Issues, Update Status in Projects V2, Bulk Label Operations, Add Label to All Matching Issues, Remove Label from All Issues, Replace Label Across All Issues, Bulk Closing Issues, Close All Issues with Specific Label, Close Stale Issues, Safe Batch Operations, Preview Changes Before Applying, Create Audit Trail, Implement Rollback Capability, Best Practices
-
-Use when:
-
-- Updating labels on multiple issues simultaneously
-- Bulk closing stale issues
-- Filtering by multiple criteria (label + status + assignee + date)
-- Previewing changes before executing (dry-run mode)
-- Creating audit trails for batch operations
-
-**Quick example:**
-
-```bash
-# Bulk add label to all open issues with "feature" label
-gh issue list --label "feature" --state open --json number --jq '.[].number' | \
-  xargs -I {} gh issue edit {} --add-label "priority:high"
-```
-
-### Automation Scripts
-
-**Reference:** [references/automation-scripts.md](references/automation-scripts.md)
-
-Use when:
-
-- Syncing GitHub Projects V2 with agent tasks (`sync-projects-v2.py`)
-- Bulk assigning labels at scale (`bulk-label-assignment.py`)
-- Monitoring PR status and CI/CD failures (`monitor-pull-requests.py`)
-- Importing issues from CSV/JSON (`bulk-create-issues.py`)
-- Generating project status reports (`generate-project-report.py`)
+- GitHub CLI 2.14+ installed (`gh --version`)
+- GitHub CLI authenticated (`gh auth status`)
+- Write permissions on target repository
+- For setup details, see `references/prerequisites-and-setup.md`
 
 ## Instructions
 
-1. Verify that GitHub CLI version 2.14 or higher is installed by running `gh --version` in your terminal.
-2. Confirm authentication status with `gh auth status`. If not authenticated, run `gh auth login` and follow the prompts.
-3. Identify your task type by consulting the **Decision Tree** section above (Pull Requests, Projects V2, Kanban, Worktrees, API Operations, or Multi-User).
-4. Navigate to the specialized skill indicated by the decision tree (e.g., `amia-github-pr-workflow` for PR tasks).
-5. If your task spans multiple areas (e.g., bulk label changes across issues and PRs), use the **Batch Operations** section in this skill directly.
-6. For batch operations, always run a dry-run first by previewing the affected items with `gh issue list` or `gh pr list` before executing changes.
-7. After completing your GitHub operation, verify the result by checking the repository state (e.g., `gh issue view <number>`, `gh pr status`).
-8. If errors occur, consult the **Error Handling** section below or the detailed [references/troubleshooting.md](references/troubleshooting.md).
-   <!-- TOC: troubleshooting.md -->
-   - Quick Navigation
-   - Use-Case TOC
-   - If you get authentication errors
-   <!-- /TOC -->
+1. Verify GitHub CLI: `gh --version` (must be 2.14+).
+2. Confirm auth: `gh auth status`. If not authenticated, run `gh auth login`.
+3. Identify task type using the routing table below:
+   - **Pull Requests** --> use skill `amia-github-pr-workflow`
+   - **Projects V2 sync** --> use skill `amia-github-projects-sync`
+   - **Kanban board ops** --> use skill `amia-kanban-orchestration`
+   - **Git worktrees** --> use skill `amia-git-worktree-operations`
+   - **Direct API ops** --> see `references/api-operations.md`
+   - **Multi-user identities** --> see `references/multi-user-workflow.md`
+4. For cross-area batch operations (bulk labels, bulk close), use `references/batch-operations.md`.
+5. Always preview before batch changes: `gh issue list --label X --state open`.
+6. Execute the operation, then verify: `gh issue view <N>` or `gh pr status`.
+7. On errors, consult the error table in `references/detailed-guide.md` or `references/troubleshooting.md`.
 
 ### Checklist
 
-Copy this checklist and track your progress:
-
-- [ ] Verify GitHub CLI version 2.14+ is installed: `gh --version`
-- [ ] Confirm authentication: `gh auth status`
-- [ ] Identify task type from the Decision Tree (PR, Projects V2, Kanban, Worktrees, API, Multi-User)
-- [ ] Navigate to the specialized skill or use Batch Operations if task spans multiple areas
-- [ ] For batch operations: run dry-run preview first (`gh issue list` or `gh pr list`)
-- [ ] Execute the GitHub operation using the appropriate skill or batch command
-- [ ] Verify the result by checking repository state (`gh issue view`, `gh pr status`)
-- [ ] If errors occurred, consult Error Handling section or [references/troubleshooting.md](references/troubleshooting.md)
-  <!-- TOC: troubleshooting.md -->
-  - Quick Navigation
-  - Use-Case TOC
-  <!-- /TOC -->
+- [ ] GitHub CLI 2.14+ installed
+- [ ] `gh auth status` confirms authentication
+- [ ] Task type identified (PR / Projects V2 / Kanban / Worktree / API / Multi-User / Batch)
+- [ ] Routed to correct specialized skill or reference
+- [ ] Batch ops: dry-run preview completed before execution
+- [ ] Operation executed and result verified
 
 ## Output
 
-This skill produces the following outputs depending on the operation performed:
+| Operation | Output |
+|-----------|--------|
+| Routing | Name of specialized skill to invoke |
+| Batch ops | Summary of affected items and changes applied |
+| Automation scripts | JSON/Markdown reports via `--output-file` |
+| Verification | `gh` CLI confirmation of current state |
 
-- **Routing decision**: The name of the specialized skill to invoke (e.g., `amia-github-pr-workflow`, `amia-github-projects-sync`).
-- **Batch operation results**: A summary of affected items (issue numbers, PR numbers) and the changes applied (labels added/removed, statuses changed).
-- **Automation script output**: JSON or plain-text reports from the Python automation scripts (e.g., `generate-project-report.py` produces a Markdown status report).
-- **Verification output**: Confirmation messages from `gh` CLI commands showing the current state of issues, PRs, or project boards after modifications.
-- **Dry-run previews**: Lists of items that would be affected by a batch operation, displayed before execution for review.
+> **Output discipline:** All scripts support `--output-file <path>`. Use it in automated workflows to minimize token consumption.
 
-## Error Handling
+## Reference Documents
 
-| Error | Cause | Resolution |
-|-------|-------|------------|
-| `gh: command not found` | GitHub CLI is not installed or not in PATH | Install with `brew install gh` (macOS) or see [references/prerequisites-and-setup.md](references/prerequisites-and-setup.md). **Contents:** Initial Setup Requirements, Installing GitHub CLI, Verifying GitHub CLI Version, GitHub CLI Authentication, Step 1: Execute Authentication, Step 2: Choose Authentication Method, Step 3: Grant Permissions, Step 4: Initial Verification, Verify Authentication, Re-authentication, Troubleshooting Authentication, Problem: "Command not found: gh", Problem: "Not logged into any GitHub hosts", Problem: "HTTP 401: Bad credentials", Problem: "Resource not accessible by integration", Security Best Practices, Next Steps |
-| `HTTP 401 - Bad credentials` | Authentication token expired or revoked | Re-authenticate with `gh auth login` and verify with `gh auth status` |
-| `HTTP 403 - Resource not accessible` | Insufficient permissions on the target repository | Request write access from the repository owner, or check that your token has the required scopes (`repo`, `project`) |
-| `HTTP 422 - Validation Failed` | Invalid field values (e.g., non-existent label name, malformed project field) | Verify the label exists with `gh label list` or check project field names with `gh project field-list` |
-| `API rate limit exceeded` | Too many API calls in a short period | Wait for the rate limit reset (check `gh api rate-limit`), or use GraphQL to batch multiple queries into one request |
-| `Could not resolve to a Project` | Wrong project number or the project is in a different organization | Verify the project number with `gh project list --owner <org>` and ensure you are targeting the correct owner |
-| `xargs: gh: terminated by signal 13` | Pipe broken during batch operation, often due to API errors mid-stream | Re-run the batch operation with smaller batch sizes or add error handling with `xargs -I {} sh -c 'gh issue edit {} --add-label "label" \|\| true'` |
+**Setup and Auth:**
 
-## Output Discipline
+- `references/prerequisites-and-setup.md` -- GitHub CLI installation and authentication
+- `references/multi-user-workflow.md` -- Managing multiple GitHub identities
+- `references/single-account-workflow.md` -- Single account setup
 
-All scripts support the `--output-file <path>` flag:
+**Operations:**
 
-- **With flag**: Full JSON written to file; concise summary printed to stderr
-- **Without flag**: Full JSON printed to stdout (backward compatible)
+- `references/api-operations.md` -- REST/GraphQL API operations, rate limits, quality gates
+- `references/batch-operations.md` -- Bulk filtering, label ops, batch updates
+- `references/automation-scripts.md` -- Python scripts for sync, bulk labels, monitoring, reports
+- `references/projects-v2-operations.md` -- Projects V2 specific operations
+- `references/pull-request-management.md` -- PR management details
+- `references/issue-management.md` -- Issue lifecycle management
 
-When invoking from agents or automated workflows, always pass `--output-file` to minimize token consumption.
+**Guides and Troubleshooting:**
+
+- `references/detailed-guide.md` -- Decision tree, error handling, extended examples
+- `references/troubleshooting.md` -- Common issues and solutions
+- `references/core-concepts.md` -- Core concepts overview
+- `references/implementation-guide.md` -- Full implementation guide
+
+**Templates:**
+
+- `references/template-bug-report.md` -- Bug report template
+- `references/template-pull-request.md` -- PR template
+- `references/template-docs-issue.md` -- Documentation issue template
 
 ## Examples
 
-**Example 1: Route to the correct skill for a PR task**
-
-You receive a request: "Create a PR for the feature branch and link it to issue #42."
-This is a Pull Request task. According to the decision tree, invoke `amia-github-pr-workflow`:
+### Example: Bulk add label to open bug issues
 
 ```bash
-# Switch to amia-github-pr-workflow skill, then run:
-gh pr create --base main --head feature-branch --title "Implement feature X" \
-  --body "Closes #42" --assignee "@me"
-```
+# Preview affected issues
+gh issue list --label "bug" --state open --json number,title \
+  --jq '.[] | "\(.number): \(.title)"'
 
-**Example 2: Bulk add a label to all open bug issues**
+# Apply label
+gh issue list --label "bug" --state open --json number \
+  --jq '.[].number' | xargs -I {} gh issue edit {} --add-label "priority:critical"
 
-You need to add the `priority:critical` label to all issues labeled `bug` that are currently open:
-
-```bash
-# Step 1: Preview affected issues (dry-run)
-gh issue list --label "bug" --state open --json number,title --jq '.[] | "\(.number): \(.title)"'
-
-# Step 2: Apply the label change
-gh issue list --label "bug" --state open --json number --jq '.[].number' | \
-  xargs -I {} gh issue edit {} --add-label "priority:critical"
-
-# Step 3: Verify a sample issue
+# Verify
 gh issue view 15 --json labels --jq '.labels[].name'
 ```
 
-**Example 3: Check which skill to use for a Projects V2 sync request**
-
-You receive a request: "Sync the agent task board with the GitHub Project for repository X."
-This is a GitHub Projects V2 synchronization task. According to the decision tree, invoke `amia-github-projects-sync`:
-
-```bash
-# Verify the project exists first
-gh project list --owner Emasoft --format json
-
-# Then follow the amia-github-projects-sync skill instructions for bidirectional sync
-uv run python scripts/sync-projects-v2.py --repo Emasoft/repo-x --project 3 --direction bidirectional
-```
-
-## Troubleshooting
-
-If you encounter issues with any GitHub integration task, see [references/troubleshooting.md](references/troubleshooting.md) for:
-
-- **Contents:** Quick Navigation, Use-Case TOC, If you get authentication errors, If Projects V2 sync fails, If pull requests don't link to issues, If labels are rejected, If GitHub CLI commands fail, If API rate limits are hit, General Troubleshooting Steps, Getting Help
-- Authentication failures and re-authentication
-- Projects V2 synchronization issues
-- Pull request linking problems
-- Label system issues
-- GitHub CLI installation and PATH issues
-- API rate limiting
-- Webhook delivery failures
-
-## Resources
-
-**Core References:**
-
-- [references/prerequisites-and-setup.md](references/prerequisites-and-setup.md) - GitHub CLI installation and authentication
-  <!-- TOC: prerequisites-and-setup.md -->
-  - Initial Setup Requirements
-  - Installing GitHub CLI
-  - Verifying GitHub CLI Version
-  <!-- /TOC -->
-- [references/multi-user-workflow.md](references/multi-user-workflow.md) - Managing multiple GitHub identities
-  <!-- TOC: multi-user-workflow.md -->
-  - Use-Case TOC
-  - Part 1: Setup and Configuration
-  - Part 2: Operations and Troubleshooting
-  <!-- /TOC -->
-- [references/api-operations.md](references/api-operations.md) - Direct API operations
-  <!-- TOC: api-operations.md -->
-  - 1.1 [Executing GitHub Issue Operations](#11-executing-github-issue-operations)
-    - 1.1.1 Creating issues with labels, milestones, and assignees
-    - 1.1.2 Updating issue metadata (title, body, labels)
-    - 1.1.3 Managing issue lifecycle (close, reopen, transfer)
-  - 1.2 [Executing GitHub Pull Request Operations](#12-executing-github-pull-request-operations)
-    - 1.2.1 Creating PRs from branches
-    - 1.2.2 Managing PR reviewers and assignees
-    - 1.2.3 Submitting PR reviews (approve, request changes, comment)
-    - 1.2.4 Merging PRs with different strategies
-  - 1.3 [Executing GitHub Projects V2 Operations](#13-executing-github-projects-v2-operations)
-    - 1.3.1 Adding items to project boards
-    - 1.3.2 Moving items between columns
-    - 1.3.3 Updating custom field values via GraphQL
-    - 1.3.4 Batch updating project items
-  - 1.4 [Managing Conversation Threads on Issues and PRs](#14-managing-conversation-threads-on-issues-and-prs)
-    - 1.4.1 Posting comments and replies
-    - 1.4.2 Marking threads as resolved
-    - 1.4.3 Locking and unlocking conversations
-  - 1.5 [Handling GitHub API Rate Limits](#15-handling-github-api-rate-limits)
-    - 1.5.1 Checking rate limit status before operations
-    - 1.5.2 Implementing exponential backoff on rate limit errors
-    - 1.5.3 Queuing non-urgent operations during limit pressure
-    - 1.5.4 Handling GraphQL-specific point-based rate limits
-  - 1.6 [Running Quality Gates Before API Operations](#16-running-quality-gates-before-api-operations)
-    - 1.6.1 Gate 1: Verifying authentication status
-    - 1.6.2 Gate 2: Verifying repository and project permissions
-    - 1.6.3 Gate 3: Verifying resource existence (issue, PR, label, milestone)
-    - 1.6.4 Gate 4: Validating state before state-changing operations
-    - 1.6.5 Gate 5: Pre-flight rate limit check
-  - 1.7 [Coordinating API Operations via AI Maestro](#17-coordinating-api-operations-via-ai-maestro)
-    - 1.7.1 Receiving API operation requests
-    - 1.7.2 Sending operation results back to requesting agent
-    - 1.7.3 Message format for API requests and responses
-  - 1.8 [Step-by-Step API Operation Workflow](#18-step-by-step-api-operation-workflow)
-    - 1.8.1 Receiving and parsing operation request
-    - 1.8.2 Running all quality gates in sequence
-    - 1.8.3 Preparing and executing API call with retry logic
-    - 1.8.4 Processing and validating API response
-    - 1.8.5 Logging operation to audit file
-    - 1.8.6 Reporting result to orchestrator or callback agent
-  - 1.9 [Using GitHub CLI and GraphQL Tools](#19-using-github-cli-and-graphql-tools)
-    - 1.9.1 Common gh CLI commands for issues and PRs
-    - 1.9.2 Using gh api for raw REST API calls
-    - 1.9.3 Executing GraphQL mutations for Projects V2
-    - 1.9.4 Parsing JSON responses with jq
-  <!-- /TOC -->
-- [references/batch-operations.md](references/batch-operations.md) - Bulk operations and filtering
-  <!-- TOC: batch-operations.md -->
-  - Use-Case TOC
-  - Filtering by Label
-  - Filter by Single Label
-  <!-- /TOC -->
-- [references/automation-scripts.md](references/automation-scripts.md) - Python automation scripts
-  <!-- TOC: automation-scripts.md -->
-  - Use-Case TOC
-  - Sync Projects V2 Script
-  - When to Use
-  <!-- /TOC -->
-- [references/troubleshooting.md](references/troubleshooting.md) - Common issues and solutions
-  <!-- TOC: troubleshooting.md -->
-  - Quick Navigation
-  - Use-Case TOC
-  - If you get authentication errors
-  <!-- /TOC -->
-
-**Specialized Skills:**
-
-- `amia-github-pr-workflow` - Pull request operations
-- `amia-github-projects-sync` - Projects V2 bidirectional synchronization
-- `amia-kanban-orchestration` - Kanban board and 9-label system management
-- `amia-git-worktree-operations` - Git worktree management
-
 ---
 
-**Skill Version:** 2.0.0
-**Last Updated:** 2026-02-05
-**Maintainer:** Skill Development Team
-**Changelog:**
-
-- 2.0.0: Refactored as thin dispatcher to specialized skills, removed duplicated content
-- 1.2.0: Added cross-platform `gh_multiuser.py` script with configuration-driven identity management
-- 1.1.0: Added Multi-User Workflow reference for owner/developer identity separation
+**Skill Version:** 2.0.0 | **Last Updated:** 2026-02-05
