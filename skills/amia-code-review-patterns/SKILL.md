@@ -38,6 +38,8 @@ Two-stage PR review methodology. Stage 1 (Quick Scan): surface-level assessment,
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Receive PR review request
 - [ ] Gate 0 compliance check
 - [ ] Stage 1: Quick Scan (structure, diff, issues, confidence, Go/No-Go)
@@ -96,19 +98,15 @@ Two-stage PR review methodology. Stage 1 (Quick Scan): surface-level assessment,
 
 - `references/detailed-guide.md` -- Scoring, dimension weights, AI Maestro templates, reference tables
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
-### Example: Reviewing a PR
+See `references/detailed-guide.md` for usage examples.
+## Resources
 
-```bash
-# 1. Quick Scan
-python scripts/quick_scan_template.py --pr 123 --output-file scan.md
-
-# 2. Deep Dive (if Quick Scan confidence >= 70%)
-python scripts/deep_dive_calculator.py --pr 123 --output-file dive.md
-
-# 3. Final Report
-python scripts/review_report_generator.py --pr 123 --output-file review.md
-```
-
-For more examples see `references/examples.md`.
+See `references/` directory for all reference documents.

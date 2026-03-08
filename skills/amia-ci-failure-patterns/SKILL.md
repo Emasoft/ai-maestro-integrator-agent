@@ -38,6 +38,8 @@ Systematically diagnose and fix CI/CD failures by recognizing common failure pat
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Collect CI failure log
 - [ ] Run diagnostic script on the log
 - [ ] Identify failure pattern (script output or decision tree)
@@ -100,6 +102,12 @@ Systematically diagnose and fix CI/CD failures by recognizing common failure pat
 - `references/op-run-diagnostic-script.md` — Run diagnostic script
 - `references/op-verify-fix-locally.md` — Verify fix locally
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
 ### Example 1: Cross-Platform Path Failure
@@ -110,3 +118,11 @@ python scripts/amia_diagnose_ci_failure.py --log-file ci.log
 # Output: cross-platform temp path issue
 # Fix: Use tempfile.gettempdir() instead of hardcoded /tmp
 ```
+## Resources
+
+- `references/bot-categories.md`
+- `references/ci-concurrency-groups.md`
+- `references/ci-gate-job-pattern.md`
+- `references/ci-job-summaries.md`
+- `references/ci-linting-workflow.md`
+- ...and 22 more in `references/`

@@ -36,6 +36,8 @@ Monitor, interpret, and wait for GitHub PR check statuses. Use when verifying CI
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Verify gh CLI authenticated: `gh auth status`
 - [ ] Get PR check status with `amia_get_pr_checks.py`
 - [ ] Review `all_passing` field in JSON output
@@ -73,6 +75,27 @@ Monitor, interpret, and wait for GitHub PR check statuses. Use when verifying CI
 - `references/op-wait-for-checks.md` — amia_wait_for_checks.py operation details
 - `references/op-get-check-details.md` — amia_get_check_details.py operation details
 - `references/op-interpret-check-conclusions.md` — Conclusion value interpretation
+
+
+
+## Error Handling
+
+If a script fails, check the exit code and stderr output. Common issues:
+
+- **Exit 1**: Invalid parameters or missing arguments
+- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
+
+See `references/detailed-guide.md` for detailed error scenarios.
+
+## Resources
+
+- `references/ci-status-interpretation.md`
+- `references/detailed-guide.md`
+- `references/op-get-check-details.md`
+- `references/op-get-pr-check-status.md`
+- `references/op-interpret-check-conclusions.md`
+- `references/op-wait-for-checks.md`
+- `references/polling-strategies.md`
 
 ## Examples
 

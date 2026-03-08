@@ -38,6 +38,8 @@ Retrieves comprehensive GitHub Pull Request context (metadata, changed files, di
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] GitHub CLI authenticated
 - [ ] Python 3.8+ available
 - [ ] Read access to target repo confirmed
@@ -73,6 +75,27 @@ Retrieves comprehensive GitHub Pull Request context (metadata, changed files, di
 **Extended Guide:**
 
 - `references/detailed-guide.md` — Decision trees, exit codes, error handling, integration workflow, detailed examples
+
+
+
+## Error Handling
+
+If a script fails, check the exit code and stderr output. Common issues:
+
+- **Exit 1**: Invalid parameters or missing arguments
+- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
+
+See `references/detailed-guide.md` for detailed error scenarios.
+
+## Resources
+
+- `references/detailed-guide.md`
+- `references/diff-analysis.md`
+- `references/op-analyze-pr-complexity.md`
+- `references/op-get-pr-context.md`
+- `references/op-get-pr-diff.md`
+- `references/op-get-pr-files.md`
+- `references/pr-metadata.md`
 
 ## Examples
 

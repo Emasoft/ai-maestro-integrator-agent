@@ -38,6 +38,8 @@ Coordination workflow for PR reviews. The coordinator delegates review tasks to 
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Poll for PRs using `amia_orchestrator_pr_poll.py`
 - [ ] Identify if PR author is human or AI/bot
 - [ ] Classify work needed (review/changes/verification/wait)
@@ -100,6 +102,12 @@ Coordination workflow for PR reviews. The coordinator delegates review tasks to 
 
 - `references/detailed-guide.md` -- Decision tree, script usage, error handling, and examples
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
 ### Example 1: Standard PR Review Coordination
@@ -111,3 +119,6 @@ python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
 # Verify completion before reporting
 python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 ```
+## Resources
+
+See `references/` directory for all reference documents.

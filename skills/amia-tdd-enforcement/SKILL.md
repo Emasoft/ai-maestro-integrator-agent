@@ -35,6 +35,8 @@ Enforces Test-Driven Development discipline through the RED-GREEN-REFACTOR cycle
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] A failing test exists for this behavior
 - [ ] The test has been run and actually fails
 - [ ] The failure message is clear and measurable
@@ -99,23 +101,15 @@ Enforces Test-Driven Development discipline through the RED-GREEN-REFACTOR cycle
 - `references/test-engineering.md` — Test engineering procedures from AMIA Test Engineer
 - `references/detailed-guide.md` — Extended guidance, learning paths, RULE 14 compliance
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
-### Example 1: TDD Cycle for New Feature
+See `references/detailed-guide.md` for usage examples.
+## Resources
 
-```bash
-# RED - Write failing test
-git add tests/test_user_auth.py
-git commit -m "RED: test for user authentication"
-# Run tests - should FAIL
-
-# GREEN - Implement minimum code
-git add src/auth.py
-git commit -m "GREEN: implement user authentication"
-# Run tests - should PASS
-
-# REFACTOR - Improve code quality
-git add src/auth.py
-git commit -m "REFACTOR: extract password validation"
-# Run tests - should still PASS
-```
+See `references/` directory for all reference documents.

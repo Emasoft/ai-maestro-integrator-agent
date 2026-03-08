@@ -36,6 +36,8 @@ Manage GitHub PR review threads: list, reply, resolve, and batch-resolve. Replyi
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] List unresolved threads with `amia_get_review_threads.py --unresolved-only`
 - [ ] Determine action per thread (reply / resolve / both)
 - [ ] For implemented changes: resolve (optionally with reply via `--and-resolve`)
@@ -78,6 +80,23 @@ Manage GitHub PR review threads: list, reply, resolve, and batch-resolve. Replyi
 | `amia_resolve_threads_batch.py` | Batch resolve (1 API call) | `--thread-ids` (comma-separated) |
 | `amia_reply_to_thread.py` | Reply to thread | `--thread-id`, `--body`, `--and-resolve` |
 | `amia_get_unaddressed_comments.py` | Find unreplied comments | `--owner`, `--repo`, `--pr` |
+
+
+
+## Error Handling
+
+If a script fails, check the exit code and stderr output. Common issues:
+
+- **Exit 1**: Invalid parameters or missing arguments
+- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
+
+See `references/detailed-guide.md` for detailed error scenarios.
+
+## Resources
+
+- `references/detailed-guide.md`
+- `references/thread-conversation-tracking.md`
+- `references/thread-resolution-protocol.md`
 
 ## Examples
 

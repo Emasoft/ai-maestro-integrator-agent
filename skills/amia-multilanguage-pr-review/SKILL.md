@@ -40,6 +40,8 @@ Reviews PRs in polyglot repositories by detecting affected languages, routing to
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Detect all languages using amia_detect_pr_languages.py
 - [ ] Read review patterns for each detected language
 - [ ] Run appropriate linters per language
@@ -95,6 +97,12 @@ Reviews PRs in polyglot repositories by detecting affected languages, routing to
 - `references/op-compile-multilang-review.md` — compile review operation
 - `references/detailed-guide.md` — decision trees, workflows, error handling, pitfalls
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
 ### Example 1: Detect and Lint a Multilanguage PR
@@ -108,3 +116,6 @@ python scripts/amia_get_language_linters.py --languages python,typescript
 ruff check src/python/
 eslint src/typescript/
 ```
+## Resources
+
+See `references/` directory for all reference documents.

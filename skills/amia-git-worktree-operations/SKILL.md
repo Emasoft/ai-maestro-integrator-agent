@@ -38,6 +38,8 @@ Manage git worktrees for parallel PR processing. Worktrees let you work on multi
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Verify git version 2.15+ and no concurrent git ops
 - [ ] Fetch PR branch from remote
 - [ ] Create worktree at designated path
@@ -99,6 +101,12 @@ Manage git worktrees for parallel PR processing. Worktrees let you work on multi
 - `references/merge-safeguards.md` — Merge validation
 - `references/worktree-naming-conventions.md` — Naming standards
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
 ### Example 1: Process Three PRs in Parallel
@@ -112,3 +120,11 @@ python scripts/amia_create_worktree.py --pr 103 --base-path /tmp/worktrees
 # Assign each to a subagent, work in isolation, then cleanup
 python scripts/amia_cleanup_worktree.py --worktree-path /tmp/worktrees/pr-101
 ```
+## Resources
+
+- `references/creating-worktrees-part1-standard-flow.md`
+- `references/creating-worktrees-part2-purpose-patterns.md`
+- `references/creating-worktrees-part3-port-allocation.md`
+- `references/creating-worktrees-part4-environment-setup.md`
+- `references/creating-worktrees-part5-commands-checklist.md`
+- ...and 102 more in `references/`

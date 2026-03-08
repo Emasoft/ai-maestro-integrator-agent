@@ -37,6 +37,8 @@ Persist and retrieve session context so integration work continues seamlessly ac
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Detect state-based triggers (PR review, integration, release)
 - [ ] Load relevant memory (PR comments, handoff docs, release history)
 - [ ] Verify memory freshness against GitHub state
@@ -90,6 +92,12 @@ Persist and retrieve session context so integration work continues seamlessly ac
 
 - `references/detailed-guide.md` — Error handling, examples, troubleshooting, quick reference commands
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
 ### Example: Resume PR Review
@@ -102,3 +110,11 @@ gh pr view 42 --comments --json comments \
 # If not found: start fresh review
 # Verify PR unchanged since last review (check commit SHAs)
 ```
+## Resources
+
+- `references/detailed-guide.md`
+- `references/handoff-documents.md`
+- `references/memory-architecture.md`
+- `references/memory-file-templates.md`
+- `references/memory-retrieval.md`
+- ...and 13 more in `references/`

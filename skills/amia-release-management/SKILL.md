@@ -39,6 +39,8 @@ Coordinates software releases across patch, minor, and major version changes. Ha
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Receive release request with target type
 - [ ] Determine version number (semver rules)
 - [ ] Verify release readiness (tests, bugs, docs)
@@ -102,6 +104,12 @@ Coordinates software releases across patch, minor, and major version changes. Ha
 
 - `references/detailed-guide.md` — Decision trees, scripts, error handling, examples
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
 ### Patch Release
@@ -112,3 +120,6 @@ python scripts/amia_changelog_generate.py --repo owner/repo --from v1.2.3 --to H
 python scripts/amia_version_bump.py --repo owner/repo --type patch
 python scripts/amia_create_release.py --repo owner/repo --version 1.2.4 --notes release_notes.md
 ```
+## Resources
+
+See `references/` directory for all reference documents.

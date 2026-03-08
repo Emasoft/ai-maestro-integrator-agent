@@ -42,6 +42,8 @@ Entry point for all GitHub integration tasks. Routes to specialized skills based
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] GitHub CLI 2.14+ installed
 - [ ] `gh auth status` confirms authentication
 - [ ] Task type identified (PR / Projects V2 / Kanban / Worktree / API / Multi-User / Batch)
@@ -90,6 +92,12 @@ Entry point for all GitHub integration tasks. Routes to specialized skills based
 - `references/template-pull-request.md` -- PR template
 - `references/template-docs-issue.md` -- Documentation issue template
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
 ### Example: Bulk add label to open bug issues
@@ -110,3 +118,11 @@ gh issue view 15 --json labels --jq '.labels[].name'
 ---
 
 **Skill Version:** 2.0.0 | **Last Updated:** 2026-02-05
+## Resources
+
+- `references/account-strategy-decision-guide.md`
+- `references/api-operations.md`
+- `references/automation-scripts.md`
+- `references/batch-operations.md`
+- `references/core-concepts.md`
+- ...and 35 more in `references/`

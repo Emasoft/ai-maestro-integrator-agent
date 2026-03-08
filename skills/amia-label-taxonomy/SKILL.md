@@ -34,6 +34,8 @@ Label taxonomy for the Integrator Agent (AMIA) role. Defines the review and stat
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Identify current PR state and existing labels
 - [ ] Check priority labels (critical/high/normal/low)
 - [ ] Check type labels to determine review depth
@@ -82,6 +84,25 @@ Label taxonomy for the Integrator Agent (AMIA) role. Defines the review and stat
 ### Labels AMIA Never Sets
 
 `assign:*`, `type:*`, `effort:*`, `component:*`
+
+
+
+## Error Handling
+
+If a script fails, check the exit code and stderr output. Common issues:
+
+- **Exit 1**: Invalid parameters or missing arguments
+- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
+
+See `references/detailed-guide.md` for detailed error scenarios.
+
+## Resources
+
+- `references/detailed-guide.md`
+- `references/op-approve-and-merge.md`
+- `references/op-mark-blocked-pr.md`
+- `references/op-request-changes.md`
+- `references/op-start-pr-review.md`
 
 ## Examples
 

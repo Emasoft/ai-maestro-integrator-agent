@@ -37,6 +37,8 @@ GitHub Projects V2 Kanban is the single source of truth for AMOA orchestration. 
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] `gh auth status` passes
 - [ ] Projects V2 access verified
 - [ ] Board state queried successfully
@@ -86,6 +88,29 @@ GitHub Projects V2 Kanban is the single source of truth for AMOA orchestration. 
 - `references/board-queries.md` -- GraphQL queries for board state
 - `references/troubleshooting.md` -- Common issues and solutions
 - `references/detailed-guide.md` -- Full board columns, error handling, command integration details
+
+
+
+## Error Handling
+
+If a script fails, check the exit code and stderr output. Common issues:
+
+- **Exit 1**: Invalid parameters or missing arguments
+- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
+
+See `references/detailed-guide.md` for detailed error scenarios.
+
+## Resources
+
+- `references/agent-assignment-via-board.md`
+- `references/ai-agent-vs-human-workflow-part1-fundamentals.md`
+- `references/ai-agent-vs-human-workflow-part2-workflows.md`
+- `references/ai-agent-vs-human-workflow.md`
+- `references/blocking-workflow.md`
+- `references/board-column-semantics.md`
+- `references/board-queries-part1-basic.md`
+- `references/board-queries-part2-filtered.md`
+- ...and 22 more in `references/`
 
 ## Examples
 

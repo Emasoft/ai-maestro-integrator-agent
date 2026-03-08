@@ -46,6 +46,8 @@ Complete GitHub Issue management for orchestrator agents. Enables programmatic i
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] gh CLI installed and authenticated
 - [ ] Write access to target repository verified
 - [ ] Correct script selected for operation
@@ -88,6 +90,29 @@ Complete GitHub Issue management for orchestrator agents. Enables programmatic i
 - `references/milestone-tracking-part1-creating.md` — Creating milestones
 - `references/milestone-tracking-part2-assigning.md` — Assigning issues to milestones
 - `references/milestone-tracking-part3-progress-closing.md` — Progress tracking and closing
+
+
+
+## Error Handling
+
+If a script fails, check the exit code and stderr output. Common issues:
+
+- **Exit 1**: Invalid parameters or missing arguments
+- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
+
+See `references/detailed-guide.md` for detailed error scenarios.
+
+## Resources
+
+- `references/detailed-guide.md`
+- `references/issue-templates-part1-bug-reports.md`
+- `references/issue-templates-part2-feature-requests.md`
+- `references/issue-templates-part3-tasks.md`
+- `references/issue-templates-part4-programmatic.md`
+- `references/issue-templates.md`
+- `references/label-management.md`
+- `references/milestone-tracking-part1-creating.md`
+- ...and 8 more in `references/`
 
 ## Examples
 

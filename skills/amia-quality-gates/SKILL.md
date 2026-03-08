@@ -38,6 +38,8 @@ Mandatory checkpoints in the four-gate integration pipeline (Pre-Review, Review,
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Identify current gate by checking PR labels
 - [ ] Execute gate-specific checks for current gate
 - [ ] Evaluate results against gate criteria
@@ -100,20 +102,15 @@ Mandatory checkpoints in the four-gate integration pipeline (Pre-Review, Review,
 
 **Related:** amia-label-taxonomy, amia-code-review-patterns, amia-github-pr-workflow, amia-tdd-enforcement, amia-ci-failure-patterns
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
-### Example: Pre-Review Gate Failure
+See `references/detailed-guide.md` for usage examples.
+## Resources
 
-```
-Gate: Pre-Review Gate
-Status: FAILED
-Checks:
-  - Tests: FAILED (3 failing in auth module)
-  - Linting: PASSED
-  - Build: PASSED
-Labels Applied: gate:pre-review-failed, gate:flaky-test
-Escalation: Commented on PR, notified @author
-Next Steps: Author must fix tests, re-run gate
-```
-
-More examples in `references/gate-examples.md`.
+See `references/` directory for all reference documents.

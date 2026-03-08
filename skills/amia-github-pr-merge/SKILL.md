@@ -37,6 +37,8 @@ Merge pull requests, check merge status, verify readiness, and configure auto-me
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Check if PR is already merged (exit 5 = already merged)
 - [ ] Verify merge readiness (exit 0 = ready)
 - [ ] Resolve blocking conditions (CI, conflicts, reviews, threads)
@@ -78,6 +80,29 @@ Exit codes: 0=success, 1=invalid params, 2=not found, 3=API error, 4=auth, 5=alr
 **Detailed Guide:**
 
 - `references/detailed-guide.md` -- Decision trees, workflows, error handling, safety warnings
+
+
+
+## Error Handling
+
+If a script fails, check the exit code and stderr output. Common issues:
+
+- **Exit 1**: Invalid parameters or missing arguments
+- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
+
+See `references/detailed-guide.md` for detailed error scenarios.
+
+## Resources
+
+- `references/auto-merge.md`
+- `references/detailed-guide.md`
+- `references/merge-state-verification.md`
+- `references/merge-strategies.md`
+- `references/op-check-merge-readiness.md`
+- `references/op-check-pr-merged.md`
+- `references/op-configure-auto-merge.md`
+- `references/op-execute-pr-merge.md`
+- ...and 2 more in `references/`
 
 ## Examples
 

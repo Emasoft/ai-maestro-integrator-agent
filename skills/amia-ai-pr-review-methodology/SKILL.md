@@ -45,6 +45,8 @@ Evidence-based PR review using 4 phases and 5 analysis dimensions. Catches false
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Read complete files affected by the PR, not just the diff
 - [ ] Search for existing solutions and duplicates
 - [ ] Understand root cause (not just symptoms)
@@ -98,14 +100,15 @@ Template: `references/review-output-template.md`
 
 - `references/detailed-guide.md` -- Troubleshooting, error handling, examples
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
-### Example 1: False-positive bug fix review
+See `references/detailed-guide.md` for usage examples.
+## Resources
 
-```
-Phase 1: Read full config file -> discover path already exists 3 entries above
-Dim 2 (Redundancy): Confirm duplication
-Dim 5 (False Positive): Reversibility test -> removing new entry does NOT
-  reintroduce error -> fix is false positive
-Result: REQUEST CHANGES with evidence of existing entry + reversibility test
-```
+See `references/` directory for all reference documents.

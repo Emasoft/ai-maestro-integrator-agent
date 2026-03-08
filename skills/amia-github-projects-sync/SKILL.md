@@ -36,6 +36,8 @@ Manages team tasks through GitHub Projects V2 via GraphQL API. This is the offic
 
 ### Checklist
 
+Copy this checklist and track your progress:
+
 - [ ] Identify task type (create/update/query/sync)
 - [ ] Verify GitHub CLI auth with `project` scope
 - [ ] Locate project using GraphQL queries
@@ -98,6 +100,12 @@ Manages team tasks through GitHub Projects V2 via GraphQL API. This is the offic
 - `references/examples-and-inline-troubleshooting.md` — worked examples and common failure fixes
 - `references/detailed-guide.md` — expanded guide with lifecycle policy, thresholds, AI Maestro integration
 
+
+
+## Error Handling
+
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+
 ## Examples
 
 ### Example 1: Find Your Project
@@ -113,3 +121,6 @@ gh api graphql -f query='
   }
 '
 ```
+## Resources
+
+See `references/` directory for all reference documents.
