@@ -100,8 +100,6 @@ Copy this checklist and track your progress:
 - `references/examples-and-inline-troubleshooting.md` — worked examples and common failure fixes
 - `references/detailed-guide.md` — expanded guide with lifecycle policy, thresholds, AI Maestro integration
 
-
-
 ## Error Handling
 
 Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
@@ -121,6 +119,7 @@ gh api graphql -f query='
   }
 '
 ```
+
 ## Resources
 
 See `references/` directory for all reference documents.

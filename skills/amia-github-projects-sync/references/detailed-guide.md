@@ -108,6 +108,7 @@ When GitHub API calls or sync operations fail, consult `references/error-handlin
 - When working with custom fields
 
 Sub-files:
+
 - `references/graphql-queries-part1-read-operations.md` — All read queries
 - `references/graphql-queries-part2-mutations.md` — All mutations
 

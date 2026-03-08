@@ -44,7 +44,6 @@ This document provides templates for creating different types of GitHub issues: 
 
 ---
 
-
 ## Quick Reference
 
 ### When to Use Each Template

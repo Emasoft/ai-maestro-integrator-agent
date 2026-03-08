@@ -102,8 +102,6 @@ Copy this checklist and track your progress:
 - `references/op-run-diagnostic-script.md` — Run diagnostic script
 - `references/op-verify-fix-locally.md` — Verify fix locally
 
-
-
 ## Error Handling
 
 Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
@@ -118,6 +116,7 @@ python scripts/amia_diagnose_ci_failure.py --log-file ci.log
 # Output: cross-platform temp path issue
 # Fix: Use tempfile.gettempdir() instead of hardcoded /tmp
 ```
+
 ## Resources
 
 - `references/bot-categories.md`

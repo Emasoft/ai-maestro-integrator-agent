@@ -47,7 +47,6 @@ This reference covers comprehensive strategies for testing applications across m
 
 ---
 
-
 ## Quick Reference
 
 ### When to Read Each Part

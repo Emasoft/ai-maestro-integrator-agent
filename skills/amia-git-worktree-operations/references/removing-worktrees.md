@@ -18,7 +18,6 @@ This document provides a complete table of contents for all worktree removal doc
 
 ---
 
-
 ## Quick Navigation
 
 | If you need to... | Go to |

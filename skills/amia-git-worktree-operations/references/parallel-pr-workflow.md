@@ -71,7 +71,6 @@ This document provides the complete guide for managing multiple PRs simultaneous
 
 ---
 
-
 ## Quick Reference
 
 ### Creating a Worktree for a PR

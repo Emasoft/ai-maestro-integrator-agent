@@ -26,6 +26,7 @@ Use this decision tree to route to the appropriate specialized skill.
 **Use skill: `amia-github-pr-workflow`**
 
 Covers:
+
 - Creating pull requests linked to issues
 - PR status monitoring and CI/CD integration
 - Merge strategies (squash, merge commit, rebase)
@@ -37,6 +38,7 @@ Covers:
 **Use skill: `amia-github-projects-sync`**
 
 Covers:
+
 - Bidirectional synchronization between agent tasks and GitHub Projects V2
 - Creating and configuring project boards
 - Status column management (Backlog, Todo, In Progress, AI Review, Human Review, Merge/Release, Done, Blocked)
@@ -49,6 +51,7 @@ Covers:
 **Use skill: `amia-kanban-orchestration`**
 
 Covers:
+
 - Managing the 9-label classification system (feature, bug, refactor, test, docs, performance, security, dependencies, workflow)
 - Issue lifecycle management across Kanban columns
 - Label-based filtering and reporting
@@ -59,6 +62,7 @@ Covers:
 **Use skill: `amia-git-worktree-operations`**
 
 Covers:
+
 - Creating and managing Git worktrees for parallel feature development
 - Worktree-based PR workflows
 - Cleanup and maintenance of worktrees
@@ -68,6 +72,7 @@ Covers:
 **See reference: `references/api-operations.md`**
 
 Covers:
+
 - Direct GitHub API calls (REST and GraphQL)
 - Authentication methods (token, app, OAuth)
 - Rate limiting and pagination
@@ -81,6 +86,7 @@ Covers:
 **See reference: `references/multi-user-workflow.md`**
 
 Covers:
+
 - SSH key setup for multiple accounts
 - SSH host aliases configuration
 - GitHub CLI multi-account authentication
@@ -96,6 +102,7 @@ When you need to perform operations that span multiple GitHub areas (e.g., bulk 
 **Reference:** `references/batch-operations.md`
 
 Use when:
+
 - Updating labels on multiple issues simultaneously
 - Bulk closing stale issues
 - Filtering by multiple criteria (label + status + assignee + date)
@@ -115,6 +122,7 @@ gh issue list --label "feature" --state open --json number --jq '.[].number' | \
 **Reference:** `references/automation-scripts.md`
 
 Available scripts:
+
 - `sync-projects-v2.py` -- Sync GitHub Projects V2 with agent tasks
 - `bulk-label-assignment.py` -- Bulk assign labels at scale
 - `monitor-pull-requests.py` -- Monitor PR status and CI/CD failures

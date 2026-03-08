@@ -14,7 +14,6 @@ Back to index: [issue-templates.md](issue-templates.md)
 
 ---
 
-
 ## 2.4 Populating Templates Programmatically
 
 ### 2.4.1 Variable Substitution

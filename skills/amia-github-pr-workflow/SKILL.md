@@ -102,8 +102,6 @@ Copy this checklist and track your progress:
 
 - `references/detailed-guide.md` -- Decision tree, script usage, error handling, and examples
 
-
-
 ## Error Handling
 
 Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
@@ -119,6 +117,7 @@ python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
 # Verify completion before reporting
 python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 ```
+
 ## Resources
 
 See `references/` directory for all reference documents.

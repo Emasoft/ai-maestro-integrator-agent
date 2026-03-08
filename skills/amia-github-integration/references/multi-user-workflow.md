@@ -22,7 +22,6 @@
 
 This document provides a comprehensive guide to managing multiple GitHub identities on a single machine, enabling formal PR workflows where different users submit and review code.
 
-
 ## Use-Case TOC
 
 ### Part 1: Setup and Configuration

@@ -50,7 +50,6 @@ This is the index file for JavaScript/TypeScript code review patterns. Content i
 
 ---
 
-
 ## Quick Reference: When to Read Each Part
 
 | If you need to review... | Read this part |

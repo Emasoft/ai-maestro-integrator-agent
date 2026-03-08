@@ -14,7 +14,6 @@ Back to index: [issue-templates.md](issue-templates.md)
 
 ---
 
-
 ## 2.1 Bug Report Template
 
 ### 2.1.1 Required Sections

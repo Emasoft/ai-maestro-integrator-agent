@@ -1,3 +1,5 @@
+# GraphQL Queries Reference
+
 ## Contents
 
 1. [When listing projects](#list-projects)
@@ -14,7 +16,6 @@
 ## Overview
 
 This document provides the index to GraphQL queries for GitHub Projects V2 API operations. For detailed queries, see the linked reference files.
-
 
 ## List Projects
 

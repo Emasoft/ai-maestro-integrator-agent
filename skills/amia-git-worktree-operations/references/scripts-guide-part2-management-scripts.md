@@ -31,7 +31,6 @@
 
 ---
 
-
 ## Script Reference: Management Scripts
 
 This section covers scripts for worktree lifecycle management:

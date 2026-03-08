@@ -81,8 +81,6 @@ Copy this checklist and track your progress:
 | `amia_reply_to_thread.py` | Reply to thread | `--thread-id`, `--body`, `--and-resolve` |
 | `amia_get_unaddressed_comments.py` | Find unreplied comments | `--owner`, `--repo`, `--pr` |
 
-
-
 ## Error Handling
 
 If a script fails, check the exit code and stderr output. Common issues:

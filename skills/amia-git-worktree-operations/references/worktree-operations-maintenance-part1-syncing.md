@@ -17,7 +17,6 @@
 
 ---
 
-
 ## Why Sync Regularly
 
 **Benefits of Regular Syncing**:

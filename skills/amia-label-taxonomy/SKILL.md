@@ -85,8 +85,6 @@ Copy this checklist and track your progress:
 
 `assign:*`, `type:*`, `effort:*`, `component:*`
 
-
-
 ## Error Handling
 
 If a script fails, check the exit code and stderr output. Common issues:

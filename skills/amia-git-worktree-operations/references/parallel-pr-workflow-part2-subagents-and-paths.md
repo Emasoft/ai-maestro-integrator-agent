@@ -20,7 +20,6 @@ This document covers:
 - Working directory management for subagents
 - Path validation rules and common violations
 
-
 ## 2.3 Working Directory Management for Subagents
 
 ### Assigning Worktrees to Subagents

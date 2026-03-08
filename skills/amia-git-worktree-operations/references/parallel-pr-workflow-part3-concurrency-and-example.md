@@ -22,7 +22,6 @@ This document covers:
 - Handling concurrent git operation limitations
 - Complete example workflow for processing 3 PRs in parallel
 
-
 ## 2.5 Handling Concurrent Git Operation Limitations
 
 ### The Concurrency Problem

@@ -18,7 +18,6 @@ This section covers GraphQL queries and mutations for working with GitHub issues
 
 ---
 
-
 ## Get Issue Node ID
 
 ```bash

@@ -19,7 +19,6 @@
 
 This document explains how to track conversations within GitHub PR review threads, including getting thread history and finding unaddressed comments.
 
-
 ## 2.1 Getting Thread History via GraphQL
 
 ### 2.1.1 Query Structure for Review Threads

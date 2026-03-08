@@ -76,8 +76,6 @@ Copy this checklist and track your progress:
 
 - `references/detailed-guide.md` — Decision trees, exit codes, error handling, integration workflow, detailed examples
 
-
-
 ## Error Handling
 
 If a script fails, check the exit code and stderr output. Common issues:

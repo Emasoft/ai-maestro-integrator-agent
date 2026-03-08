@@ -16,7 +16,6 @@ This document defines the standard protocols for handing off tasks, documents, a
 
 ---
 
-
 ## Document Delivery Protocol
 
 All documents (.md files) shared between agents MUST follow this protocol:

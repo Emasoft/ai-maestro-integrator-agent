@@ -66,7 +66,6 @@ This reference covers shell script code review patterns, including Bash best pra
 
 ---
 
-
 ## Quick Reference
 
 | Topic | When to Read |

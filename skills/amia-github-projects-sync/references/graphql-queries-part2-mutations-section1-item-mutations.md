@@ -18,7 +18,6 @@ This section covers mutations for creating, updating, and managing project items
 
 ---
 
-
 ## Add Issue to Project
 
 ```bash

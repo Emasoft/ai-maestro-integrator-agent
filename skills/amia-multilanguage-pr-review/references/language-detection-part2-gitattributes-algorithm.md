@@ -17,7 +17,6 @@
 
 This reference covers using .gitattributes linguist hints and understanding GitHub's language detection algorithm.
 
-
 ## 1.3 Using .gitattributes Linguist Hints
 
 GitHub uses the Linguist library to detect repository languages. You can override its detection using `.gitattributes`.

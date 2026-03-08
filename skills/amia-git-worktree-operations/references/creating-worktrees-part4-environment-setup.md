@@ -16,7 +16,6 @@
 
 After creating a worktree, it needs to be configured before you can work in it. This document covers all 7 steps of environment setup.
 
-
 ## STEP 1: Navigate to Worktree
 
 **Action**: Change directory to the newly created worktree.

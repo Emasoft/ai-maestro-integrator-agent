@@ -40,7 +40,6 @@
 - When you need to set up automation → [Setting Up Automation Rules](#setting-up-automation-rules)
 - When you need to sync agent tasks with GitHub → [Bidirectional Sync Workflow](#bidirectional-sync-workflow)
 
-
 ## Creating Projects V2 Board
 
 GitHub Projects V2 provides a table-based project management interface.

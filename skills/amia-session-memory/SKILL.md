@@ -92,8 +92,6 @@ Copy this checklist and track your progress:
 
 - `references/detailed-guide.md` — Error handling, examples, troubleshooting, quick reference commands
 
-
-
 ## Error Handling
 
 Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
@@ -110,6 +108,7 @@ gh pr view 42 --comments --json comments \
 # If not found: start fresh review
 # Verify PR unchanged since last review (check commit SHAs)
 ```
+
 ## Resources
 
 - `references/detailed-guide.md`

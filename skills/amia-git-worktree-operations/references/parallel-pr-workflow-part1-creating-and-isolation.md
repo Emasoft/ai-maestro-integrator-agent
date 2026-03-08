@@ -20,7 +20,6 @@ This document covers the foundational aspects of parallel PR workflow:
 - Creating worktrees for multiple simultaneous PRs
 - Isolation requirements and enforcement rules
 
-
 ## 2.1 Creating Worktrees for Multiple Simultaneous PRs
 
 ### Standard Worktree Creation Process

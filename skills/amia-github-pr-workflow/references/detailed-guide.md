@@ -92,12 +92,14 @@ Detailed content for each workflow section is in its own reference file:
 ### 1. Orchestrator Responsibilities
 
 See `orchestrator-responsibilities.md` for:
+
 - What the orchestrator MUST do (monitor, delegate, track, report)
 - What the orchestrator MUST NOT do (write code, block, merge unilaterally)
 
 ### 2. Delegation Rules
 
 See `delegation-rules.md` for:
+
 - When to spawn subagents (complexity thresholds, time triggers, resource checks)
 - How to structure subagent prompts (required elements, context passing, output format)
 - Maximum concurrent agents and task isolation requirements
@@ -106,6 +108,7 @@ See `delegation-rules.md` for:
 ### 3. Verification Workflow
 
 See `verification-workflow.md` for:
+
 - Pre-review and post-review verification checklists
 - CI check verification
 - Thread resolution verification
@@ -115,6 +118,7 @@ See `verification-workflow.md` for:
 ### 4. Worktree Coordination
 
 See `worktree-coordination.md` for:
+
 - When to use worktrees
 - Worktree assignment to subagents
 - Isolation enforcement rules
@@ -123,6 +127,7 @@ See `worktree-coordination.md` for:
 ### 5. Human vs AI PR Assignment
 
 See `human-vs-ai-assignment.md` for:
+
 - Identifying PR author type (human, AI agent, bot categories)
 - Communication style differences
 - Escalation rules for human PRs
@@ -131,12 +136,14 @@ See `human-vs-ai-assignment.md` for:
 ### 6. Completion Criteria
 
 See `completion-criteria.md` for:
+
 - All 8 criteria that must be true before merge
 - Failure handling by type
 
 ### 7. Polling Schedule
 
 See `polling-schedule.md` for:
+
 - Base polling frequency
 - What to check on each poll
 - Adaptive polling rules
@@ -145,6 +152,7 @@ See `polling-schedule.md` for:
 ### 8. Merge Failure Recovery
 
 See `merge-failure-recovery.md` for:
+
 - Types of merge failures
 - Merge conflict resolution steps
 - CI failure during merge handling

@@ -101,8 +101,6 @@ Copy this checklist and track your progress:
 - `references/test-engineering.md` — Test engineering procedures from AMIA Test Engineer
 - `references/detailed-guide.md` — Extended guidance, learning paths, RULE 14 compliance
 
-
-
 ## Error Handling
 
 Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
@@ -110,6 +108,7 @@ Script failures return non-zero exit codes. Check stderr for details. See `refer
 ## Examples
 
 See `references/detailed-guide.md` for usage examples.
+
 ## Resources
 
 See `references/` directory for all reference documents.

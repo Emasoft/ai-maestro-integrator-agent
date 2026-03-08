@@ -19,7 +19,6 @@ This section covers pull request operations, utility queries, pagination, and er
 
 ---
 
-
 ## Pull Request Operations
 
 ### Get PR Node ID

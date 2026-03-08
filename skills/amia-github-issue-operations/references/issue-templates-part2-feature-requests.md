@@ -14,7 +14,6 @@ Back to index: [issue-templates.md](issue-templates.md)
 
 ---
 
-
 ## 2.2 Feature Request Template
 
 ### 2.2.1 Problem Statement

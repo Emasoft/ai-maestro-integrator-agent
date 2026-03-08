@@ -89,8 +89,6 @@ Copy this checklist and track your progress:
 - `references/troubleshooting.md` -- Common issues and solutions
 - `references/detailed-guide.md` -- Full board columns, error handling, command integration details
 
-
-
 ## Error Handling
 
 If a script fails, check the exit code and stderr output. Common issues:

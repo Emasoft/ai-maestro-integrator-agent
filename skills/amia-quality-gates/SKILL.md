@@ -102,8 +102,6 @@ Copy this checklist and track your progress:
 
 **Related:** amia-label-taxonomy, amia-code-review-patterns, amia-github-pr-workflow, amia-tdd-enforcement, amia-ci-failure-patterns
 
-
-
 ## Error Handling
 
 Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
@@ -111,6 +109,7 @@ Script failures return non-zero exit codes. Check stderr for details. See `refer
 ## Examples
 
 See `references/detailed-guide.md` for usage examples.
+
 ## Resources
 
 See `references/` directory for all reference documents.

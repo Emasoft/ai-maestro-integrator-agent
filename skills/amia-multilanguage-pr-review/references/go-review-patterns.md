@@ -14,7 +14,6 @@ This document serves as an index to Go code review patterns and best practices. 
 
 ---
 
-
 ## 5.1 Go Code Style and Idioms
 
 **When to read**: When reviewing Go code for style compliance, naming conventions, or idiomatic patterns.

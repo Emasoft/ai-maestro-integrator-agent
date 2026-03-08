@@ -178,6 +178,7 @@ python scripts/amia_detect_pr_languages.py --repo myorg/myrepo --pr 789
 ### Python Reviews
 
 See `python-review-patterns.md` for:
+
 - Python code style and formatting checklist
 - Type hints verification and mypy compliance
 - Docstring standards (Google, NumPy, Sphinx)
@@ -188,6 +189,7 @@ See `python-review-patterns.md` for:
 ### JavaScript/TypeScript Reviews
 
 See `javascript-review-patterns.md` for:
+
 - Code style checklist
 - Type safety patterns in TypeScript
 - Module system considerations (ESM vs CommonJS)
@@ -197,6 +199,7 @@ See `javascript-review-patterns.md` for:
 ### Rust Reviews
 
 See `rust-review-patterns.md` for:
+
 - Code style and idioms checklist
 - Memory safety patterns and ownership
 - Error handling with Result and Option
@@ -206,6 +209,7 @@ See `rust-review-patterns.md` for:
 ### Go Reviews
 
 See `go-review-patterns.md` for:
+
 - Code style and idioms checklist
 - Error handling patterns
 - Package organization and naming
@@ -215,6 +219,7 @@ See `go-review-patterns.md` for:
 ### Shell Script Reviews
 
 See `shell-review-patterns.md` for:
+
 - Bash/Shell script review checklist
 - POSIX compatibility requirements
 - ShellCheck lints and fixes
@@ -223,6 +228,7 @@ See `shell-review-patterns.md` for:
 ### Cross-Platform Testing
 
 See `cross-platform-testing.md` for:
+
 - Testing on multiple operating systems
 - CI matrix configuration for GitHub Actions
 - Platform-specific test skips and annotations

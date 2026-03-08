@@ -24,7 +24,6 @@
 
 This document contains all AI Maestro messaging templates for Emasoft Integrator Agent (AMIA) communication patterns. For the exact messaging commands and syntax, always refer to the `agent-messaging` skill.
 
-
 ## 1.0 Standard AI Maestro Messaging Approach
 
 All AI Maestro messages are sent using the `agent-messaging` skill. When sending a message, specify these fields:

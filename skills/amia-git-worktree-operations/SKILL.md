@@ -101,8 +101,6 @@ Copy this checklist and track your progress:
 - `references/merge-safeguards.md` — Merge validation
 - `references/worktree-naming-conventions.md` — Naming standards
 
-
-
 ## Error Handling
 
 Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
@@ -120,6 +118,7 @@ python scripts/amia_create_worktree.py --pr 103 --base-path /tmp/worktrees
 # Assign each to a subagent, work in isolation, then cleanup
 python scripts/amia_cleanup_worktree.py --worktree-path /tmp/worktrees/pr-101
 ```
+
 ## Resources
 
 - `references/creating-worktrees-part1-standard-flow.md`

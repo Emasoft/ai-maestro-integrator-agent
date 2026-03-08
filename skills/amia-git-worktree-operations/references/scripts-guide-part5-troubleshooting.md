@@ -30,7 +30,6 @@
 
 ---
 
-
 ## Troubleshooting
 
 This section covers common problems and their solutions.

@@ -76,8 +76,6 @@ Copy this checklist and track your progress:
 - `references/op-get-check-details.md` — amia_get_check_details.py operation details
 - `references/op-interpret-check-conclusions.md` — Conclusion value interpretation
 
-
-
 ## Error Handling
 
 If a script fails, check the exit code and stderr output. Common issues:

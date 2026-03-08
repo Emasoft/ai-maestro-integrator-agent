@@ -127,16 +127,21 @@ python scripts/amia_release_verify.py --repo owner/repo --version 1.2.3 --mode v
 ## Reference Documentation Details
 
 ### Release Management Responsibilities
+
 `references/release-responsibilities.md` - Contents: Overview, Core Roles, Release Manager, Technical Lead, Quality Assurance Lead, DevOps Engineer, Product Owner, Responsibility Matrix (RACI), Escalation Path, Communication Responsibilities, Decision Authority, Handoff Procedures, Accountability Measures, Continuous Improvement.
 
 ### Pre-Release Verification
+
 `references/pre-release-verification.md` - Contents: Overview, Verification Principles, Core Principles, Verification Levels, Verification Checklist by Category (Code Quality, Testing, Data, Infrastructure, Monitoring, Documentation, Compliance, Business, Communication, Contingency), Final Go/No-Go Decision, Go Decision Criteria, No-Go Criteria, Verification Automation, Continuous Improvement.
 
 ### Post-Release Verification
+
 `references/post-release-verification.md` - Contents: Overview, Verification Timeline (Immediate 0-4h, Short-term 4-24h, Medium-term 24-72h, Long-term 1-2 weeks), Deployment Completion Verification, Smoke Test Execution, Error Monitoring, Performance Baseline, User Experience Validation, Security Validation, Trend Analysis, Feature Adoption, Support and Feedback, Business Value Validation, Stability Assessment, Release Retrospective, Verification Success Criteria.
 
 ### Rollback Procedures
+
 `references/rollback-procedures.md` - Contents: Overview, Rollback Fundamentals, When to Rollback vs Fix Forward, Rollback Decision Criteria, Rollback Planning (Pre-Release), Rollback Readiness Assessment, Rollback Execution Steps, Communication During Rollback, Post-Rollback Activities, Root Cause Analysis, Prevention Measures, Re-Release Planning, Best Practices, Anti-Patterns.
 
 ### CI/CD Integration
+
 `references/cicd-integration.md` - Contents: Overview, CI/CD Fundamentals, Pipeline Architecture, Standard Pipeline Stages, CI Pipeline Configuration (Build, Test, Analysis, Artifact Publishing), CD Pipeline Configuration (Deployment Stages, Database Migration, Release Gates), Rollback Automation, Deployment Strategies, Multi-Environment Pipeline, Monitoring and Observability, Best Practices.

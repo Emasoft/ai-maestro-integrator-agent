@@ -77,7 +77,6 @@ This document provides comprehensive guidance for working with GitHub milestones
 
 ---
 
-
 ## Quick Reference
 
 | Operation | Command |

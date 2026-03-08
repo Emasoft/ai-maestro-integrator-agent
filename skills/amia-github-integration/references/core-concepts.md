@@ -30,7 +30,6 @@
 - When you need to understand synchronization → [Bidirectional Synchronization](#bidirectional-synchronization)
 - When choosing which label to use → [Label Selection Guide](#label-selection-guide)
 
-
 ## What is GitHub Projects V2
 
 GitHub Projects V2 is a table-based project management system built directly into GitHub repositories. Unlike the legacy Projects system, Projects V2 provides:

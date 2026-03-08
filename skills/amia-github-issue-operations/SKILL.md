@@ -91,8 +91,6 @@ Copy this checklist and track your progress:
 - `references/milestone-tracking-part2-assigning.md` — Assigning issues to milestones
 - `references/milestone-tracking-part3-progress-closing.md` — Progress tracking and closing
 
-
-
 ## Error Handling
 
 If a script fails, check the exit code and stderr output. Common issues:

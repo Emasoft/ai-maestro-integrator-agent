@@ -97,8 +97,6 @@ Copy this checklist and track your progress:
 - `references/op-compile-multilang-review.md` — compile review operation
 - `references/detailed-guide.md` — decision trees, workflows, error handling, pitfalls
 
-
-
 ## Error Handling
 
 Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
@@ -116,6 +114,7 @@ python scripts/amia_get_language_linters.py --languages python,typescript
 ruff check src/python/
 eslint src/typescript/
 ```
+
 ## Resources
 
 See `references/` directory for all reference documents.

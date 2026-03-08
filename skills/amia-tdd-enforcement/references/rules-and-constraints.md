@@ -36,7 +36,6 @@
 - If you're in REFACTOR phase and unsure what's allowed → [Refactor Phase Rules](#refactor-phase-rules)
 - When you need to know what actions are forbidden → [Forbidden Actions](#forbidden-actions)
 
-
 ## The Iron Law (Absolute)
 
 These rules are **non-negotiable** and apply at all times:

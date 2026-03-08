@@ -29,7 +29,6 @@
 
 ---
 
-
 ## Script Reference: Core Scripts
 
 This section covers the two most frequently used scripts:

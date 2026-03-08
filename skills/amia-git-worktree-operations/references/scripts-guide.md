@@ -24,7 +24,6 @@ This guide has been split into focused parts for easier navigation:
 
 ---
 
-
 ## Overview
 
 ### What Are Worktree Automation Scripts?

@@ -59,7 +59,6 @@ For **read-only queries** (listing, discovering, filtering), see [graphql-querie
 
 ---
 
-
 ## Quick Reference
 
 ### All Mutations at a Glance

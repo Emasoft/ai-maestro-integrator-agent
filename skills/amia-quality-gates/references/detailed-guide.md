@@ -129,11 +129,13 @@ These scripts manage design documents for quality gate integration:
 **Script**: `scripts/amia_check_encoding.py` -- Checks Python files for missing UTF-8 encoding parameters.
 
 When to run:
+
 - Before pushing code changes
 - As part of pre-push hooks
 - When reviewing PRs that modify Python files
 
 What the checker verifies (5 checks):
+
 1. UTF-8 encoding declaration present
 2. File is valid UTF-8
 3. No BOM markers
@@ -149,6 +151,7 @@ See `encoding-compliance-checker.md` for full details on running and fixing viol
 **Script**: `../../scripts/amia_unicode_compliance.py` -- Full Unicode compliance checker (BOM, line endings, encoding, non-ASCII identifiers).
 
 What the hook checks (4 checks):
+
 1. BOM markers
 2. Line ending consistency
 3. Encoding declarations

@@ -14,7 +14,6 @@ Back to index: [issue-templates.md](issue-templates.md)
 
 ---
 
-
 ## 2.3 Task Template
 
 ### 2.3.1 Task Description Format

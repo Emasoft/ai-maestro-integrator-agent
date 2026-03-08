@@ -20,7 +20,6 @@
 
 This document explains how to configure and manage GitHub's auto-merge feature, which automatically merges a pull request when all requirements are satisfied.
 
-
 ## 3.1 Setting Up Auto-Merge via GraphQL API
 
 ### 3.1.1 EnablePullRequestAutoMerge Mutation

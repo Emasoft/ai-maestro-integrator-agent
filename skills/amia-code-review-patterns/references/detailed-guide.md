@@ -102,6 +102,7 @@ Code review examines code across 8 dimensions simultaneously:
 - `scripts/review_report_generator.py` - Create final review document
 
 All scripts support `--output-file <path>`:
+
 - **With flag**: Full output written to file; concise summary printed to stderr
 - **Without flag**: Full output printed to stdout (backward compatible)
 

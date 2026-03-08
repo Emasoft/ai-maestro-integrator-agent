@@ -24,7 +24,6 @@
 
 This document explains why GraphQL must be used as the authoritative source for PR merge state, and how to properly verify merge status before and after merge operations.
 
-
 ## 1.1 Why `gh pr view --json state` Can Be Stale
 
 ### 1.1.1 REST API Caching Behavior

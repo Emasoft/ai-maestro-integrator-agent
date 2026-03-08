@@ -29,7 +29,6 @@
 - If authentication fails or is expired → [Re-authentication](#re-authentication)
 - When setting up a new machine or environment → [Initial Setup Requirements](#initial-setup-requirements)
 
-
 ## Initial Setup Requirements
 
 Before using this skill, you must have:

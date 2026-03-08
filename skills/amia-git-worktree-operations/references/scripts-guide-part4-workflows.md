@@ -22,7 +22,6 @@
 
 ---
 
-
 ## Common Workflows
 
 This section provides step-by-step procedures for typical worktree operations.

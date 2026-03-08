@@ -23,7 +23,6 @@ Ensure code is properly documented with clear, accurate, and maintainable docume
 
 ---
 
-
 ## Document Structure
 
 This document is split into the following parts:

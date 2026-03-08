@@ -13,7 +13,6 @@
 
 Different types of worktrees have specific creation patterns optimized for their use case. This document covers the four main worktree types.
 
-
 ## Review Worktrees
 
 **Purpose**: Review Pull Requests in isolation without affecting your main development environment.

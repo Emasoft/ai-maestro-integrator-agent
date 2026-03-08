@@ -27,7 +27,6 @@
 
 For teams ready to go beyond basic implementation, these advanced topics extend the GitHub integration capabilities. These features are optional and should only be implemented after mastering the basic workflow.
 
-
 ## Multi-Repository Projects
 
 **Purpose:** Manage work across multiple related repositories in a single project board.

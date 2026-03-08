@@ -81,8 +81,6 @@ Exit codes: 0=success, 1=invalid params, 2=not found, 3=API error, 4=auth, 5=alr
 
 - `references/detailed-guide.md` -- Decision trees, workflows, error handling, safety warnings
 
-
-
 ## Error Handling
 
 If a script fails, check the exit code and stderr output. Common issues:

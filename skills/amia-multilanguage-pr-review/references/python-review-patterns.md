@@ -51,7 +51,6 @@ This reference covers Python-specific code review patterns, organized into detai
 
 ---
 
-
 ## Quick Reference: When to Read Each Part
 
 | If reviewing... | Read |

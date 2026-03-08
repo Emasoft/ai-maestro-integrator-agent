@@ -23,7 +23,6 @@
 
 This document explains the three merge strategies available for GitHub pull requests, when to use each one, and how they interact with branch protection rules.
 
-
 ## 2.1 Merge Commit Strategy
 
 ### 2.1.1 When to Use Merge Commits

@@ -92,8 +92,6 @@ Copy this checklist and track your progress:
 - `references/template-pull-request.md` -- PR template
 - `references/template-docs-issue.md` -- Documentation issue template
 
-
-
 ## Error Handling
 
 Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
@@ -118,6 +116,7 @@ gh issue view 15 --json labels --jq '.labels[].name'
 ---
 
 **Skill Version:** 2.0.0 | **Last Updated:** 2026-02-05
+
 ## Resources
 
 - `references/account-strategy-decision-guide.md`

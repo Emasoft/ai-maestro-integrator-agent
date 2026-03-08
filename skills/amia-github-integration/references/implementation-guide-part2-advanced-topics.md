@@ -30,7 +30,6 @@
 - When you need to measure success → [Success Metrics](#success-metrics)
 - For basic workflow setup → See [implementation-guide-part1-basic-workflow.md](implementation-guide-part1-basic-workflow.md)
 
-
 ## Team Onboarding
 
 ### Onboarding New Team Members
