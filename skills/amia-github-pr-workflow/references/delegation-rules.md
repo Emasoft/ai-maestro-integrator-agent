@@ -36,6 +36,7 @@ The orchestrator should delegate work rather than perform it directly. This sect
 | Long-running wait | "Monitor CI until complete" | CI monitor subagent |
 
 **Complexity NOT requiring delegation**:
+
 - Running a script that completes in seconds
 - Reading a status from GitHub API
 - Updating a checklist
@@ -46,6 +47,7 @@ The orchestrator should delegate work rather than perform it directly. This sect
 **Rule**: Any operation expected to take more than 30 seconds must be delegated.
 
 **Time estimates for common tasks**:
+
 | Task | Typical Duration | Delegate? |
 |------|-----------------|-----------|
 | API status check | 1-5 seconds | No |
@@ -66,6 +68,7 @@ The orchestrator should delegate work rather than perform it directly. This sect
 3. **Resource contention**: Will this agent need exclusive access to resources?
 
 **If resource conflict exists**:
+
 - Queue the task for later
 - Wait for conflicting agent to complete
 - Consider worktree isolation (see worktree-coordination.md)
@@ -111,6 +114,7 @@ Every subagent prompt MUST contain:
 ```
 
 **Example complete prompt**:
+
 ```
 You are a code review subagent. Your single task is:
 Review PR #123 for code quality, logic errors, and adherence to project standards.
@@ -139,6 +143,7 @@ Constraints:
 ### 2.2.2 Context passing rules
 
 **What context to pass**:
+
 - Repository identification (owner/repo)
 - PR or issue number
 - Branch name
@@ -146,6 +151,7 @@ Constraints:
 - Summary of related decisions already made
 
 **What context NOT to pass**:
+
 - Full conversation history (too large)
 - Unrelated PR information
 - Internal orchestrator state
@@ -156,21 +162,25 @@ Constraints:
 ### 2.2.3 Output format requirements
 
 **All subagents MUST return**:
+
 ```
 [DONE|FAILED] task_name - brief_result (max 2 lines)
 ```
 
 **Why this format**:
+
 - Minimal token consumption in orchestrator context
 - Easy to parse programmatically
 - Clear success/failure signal
 - Details available in file if needed
 
 **If subagent needs to return details**:
+
 1. Write details to `docs_dev/[descriptive-name].md`
 2. Return: `[DONE] task - see docs_dev/[filename].md`
 
 **Bad example**:
+
 ```
 I have completed the code review. Here are my findings:
 
@@ -180,6 +190,7 @@ I have completed the code review. Here are my findings:
 ```
 
 **Good example**:
+
 ```
 [DONE] review-pr-123 - 3 critical, 5 minor issues found. See docs_dev/pr-123-review.md
 ```
@@ -191,6 +202,7 @@ I have completed the code review. Here are my findings:
 **Hard limit**: 20 concurrent subagents maximum.
 
 **Soft limits by task type**:
+
 | Task Type | Recommended Max | Reason |
 |-----------|-----------------|--------|
 | Implementation | 5 | High resource use |
@@ -200,6 +212,7 @@ I have completed the code review. Here are my findings:
 
 **Batch processing**:
 If more than 20 tasks are needed:
+
 1. Prioritize tasks
 2. Run first batch (20)
 3. Wait for batch to complete
@@ -218,6 +231,7 @@ If more than 20 tasks are needed:
 **Requirement**: No two subagents should modify the same file simultaneously.
 
 **Enforcement**:
+
 1. Before delegating, identify all files the task may modify
 2. Check if any running subagent is working on those files
 3. If conflict: queue the task or use worktree
@@ -227,6 +241,7 @@ If more than 20 tasks are needed:
 **Requirement**: Subagents working on different PRs should use separate branches.
 
 **Enforcement**:
+
 1. Specify the branch in the prompt
 2. Instruct subagent not to switch branches
 3. Use worktrees for parallel PR work
@@ -236,6 +251,7 @@ If more than 20 tasks are needed:
 **Critical rule**: Only ONE subagent may perform git operations at a time.
 
 **Git operations include**:
+
 - commit
 - push
 - pull
@@ -247,6 +263,7 @@ If more than 20 tasks are needed:
 **Why**: Concurrent git operations cause authentication issues and potential corruption.
 
 **Enforcement**:
+
 1. Designate one subagent as "git-enabled" per PR
 2. Other subagents prepare changes but do not commit
 3. Git-enabled subagent commits all changes
@@ -266,6 +283,7 @@ Task A completes → Use result in Task B → Use result in Task C
 ```
 
 **Implementation**:
+
 1. Spawn Task A
 2. Wait for completion
 3. Parse result
@@ -281,6 +299,7 @@ Tasks A, B, C run in parallel → Collect all results → Synthesize
 ```
 
 **Implementation**:
+
 1. Spawn Tasks A, B, C simultaneously
 2. Collect results as each completes
 3. When all complete, synthesize findings
@@ -294,6 +313,7 @@ One task → Fan out to N workers → Fan in to synthesize
 ```
 
 **Example**: Review 5 files
+
 1. Spawn 5 review subagents (one per file)
 2. Collect all reviews
 3. Synthesize into single report

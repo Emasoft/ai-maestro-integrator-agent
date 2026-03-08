@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Calculate Confidence Score
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -153,6 +152,7 @@ Even if the overall score meets 80%, certain dimension failures should block app
 ### Step 1: Validate Input Scores
 
 Ensure all 8 dimension scores are:
+
 - Present and complete
 - Within valid range (0-100)
 - Based on actual evaluation (not default values)

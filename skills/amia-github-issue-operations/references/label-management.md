@@ -32,16 +32,19 @@
 The `gh` command-line interface provides the `gh label create` command to create repository labels.
 
 **Basic syntax:**
+
 ```bash
 gh label create <label-name> --repo <owner/repo>
 ```
 
 **Example: Create a simple label**
+
 ```bash
 gh label create "bug" --repo owner/repo
 ```
 
 **Example: Create label with all options**
+
 ```bash
 gh label create "bug" \
   --repo owner/repo \
@@ -50,6 +53,7 @@ gh label create "bug" \
 ```
 
 **Checking if label exists before creating:**
+
 ```bash
 # List existing labels and check
 gh label list --repo owner/repo --json name --jq '.[].name' | grep -q "^bug$"
@@ -63,11 +67,13 @@ fi
 Label colors are specified as 6-character hex codes WITHOUT the leading `#`.
 
 **Color parameter:**
+
 ```bash
 gh label create "priority:high" --color "d93f0b" --repo owner/repo
 ```
 
 **Common color codes:**
+
 | Color | Hex Code | Use Case |
 |-------|----------|----------|
 | Red | `d73a4a` | Bugs, critical issues |
@@ -83,6 +89,7 @@ gh label create "priority:high" --color "d93f0b" --repo owner/repo
 Descriptions help team members understand when to apply each label.
 
 **Adding description:**
+
 ```bash
 gh label create "backlog" \
   --repo owner/repo \
@@ -91,11 +98,13 @@ gh label create "backlog" \
 ```
 
 **Description best practices:**
+
 - Keep descriptions under 100 characters
 - Explain WHEN to use the label, not what it means literally
 - Use action-oriented language
 
 **Examples of good descriptions:**
+
 | Label | Description |
 |-------|-------------|
 | `bug` | Something isn't working as expected |
@@ -111,18 +120,21 @@ gh label create "backlog" \
 All labels should use lowercase kebab-case (words separated by hyphens).
 
 **Correct:**
+
 - `bug-fix`
 - `ai-review`
 - `high-priority`
 - `breaking-change`
 
 **Incorrect:**
+
 - `Bug Fix` (spaces and capitals)
 - `bug_fix` (underscores)
 - `BugFix` (PascalCase)
 - `URGENT` (all caps)
 
 **Why kebab-case:**
+
 1. Consistent with GitHub's default labels
 2. Easy to type in CLI commands
 3. Readable in URLs
@@ -133,6 +145,7 @@ All labels should use lowercase kebab-case (words separated by hyphens).
 Use prefixes to group related labels together. Labels sort alphabetically, so prefixes create visual groupings.
 
 **Common prefix patterns:**
+
 | Prefix | Purpose | Examples |
 |--------|---------|----------|
 | `type:` | Issue type | `type:bug`, `type:feature`, `type:task` |
@@ -144,6 +157,7 @@ Use prefixes to group related labels together. Labels sort alphabetically, so pr
 **Alternative: No prefix for common labels**
 
 Some teams prefer no prefix for frequently used labels:
+
 - `bug` instead of `type:bug`
 
 **Note:** Priority and status labels MUST always use the `priority:` and `status:` prefixes respectively. Choose one convention and apply it consistently across all repositories.
@@ -176,24 +190,28 @@ gh label create "priority:low" --color "0e8a16" --description "Low: Minor issue,
 ### 1.3.3 When to Use Each Priority
 
 **priority:critical:**
+
 - Production service is completely down
 - Data corruption or loss occurring
 - Security vulnerability actively exploited
 - Compliance violation detected
 
 **priority:high:**
+
 - Core feature not working for all users
 - Performance degradation affecting many users
 - Blocking issue for upcoming release
 - Regression from recent deployment
 
 **priority:normal:**
+
 - Feature works but with significant friction
 - Issue affects subset of users
 - Workaround available but inconvenient
 - Important but not blocking release
 
 **priority:low:**
+
 - Minor UI inconsistencies
 - Edge case bugs
 - Documentation improvements
@@ -222,6 +240,7 @@ gh label create "test" --color "bfd4f2" --description "Test coverage or test inf
 ```
 
 **When to use:**
+
 | Label | Use When |
 |-------|----------|
 | `bug` | Existing functionality is broken |
@@ -248,6 +267,7 @@ gh label create "status:done" --color "006b75" --description "Completed" --repo 
 ```
 
 **Status flow:**
+
 ```
 backlog → todo → in-progress → ai-review → human-review → merge-release → done
                       ↓
@@ -292,6 +312,7 @@ fi
 ```
 
 **Python implementation:**
+
 ```python
 import subprocess
 import json
@@ -351,6 +372,7 @@ def get_label_config(label_name: str) -> dict:
 ```
 
 **Auto-create function:**
+
 ```python
 def ensure_label_exists(repo: str, label: str, auto_create: bool = True) -> bool:
     """Ensure a label exists, optionally creating it."""

@@ -20,6 +20,7 @@
 **Purpose**: Understand context before starting formal review
 
 **Actions:**
+
 - Understand the context and purpose of changes
 - Identify the type of change (feature, bug fix, refactor, etc.)
 - Check if sufficient information is provided
@@ -32,6 +33,7 @@
 **Purpose**: Rapid triage to identify obvious blockers
 
 **Actions:**
+
 - Execute quick scan process
 - Assign initial confidence score
 - Decide whether to proceed to Stage Two
@@ -46,6 +48,7 @@
 **Purpose**: Comprehensive multi-dimensional analysis
 
 **Actions:**
+
 - Analyze across all 8 dimensions
 - Score each dimension
 - Calculate final confidence
@@ -61,6 +64,7 @@
 **Purpose**: Clear communication and issue tracking
 
 **Actions:**
+
 - Communicate findings clearly
 - List specific required changes
 - Assign action items to author

@@ -46,11 +46,13 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### Backlog → Todo
 
 **Preconditions**:
+
 - Issue has clear acceptance criteria
 - Sprint/iteration assigned
 - Estimated (optional but recommended)
 
 **Actions**:
+
 - Assign to agent/developer
 - Add to sprint iteration
 - Notify assignee
@@ -58,11 +60,13 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### Todo → In Progress
 
 **Preconditions**:
+
 - Agent assigned
 - Sprint iteration set
 - No blocking dependencies
 
 **Actions**:
+
 - Create feature branch
 - Add "in-progress" label
 - Record start timestamp
@@ -71,11 +75,13 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### In Progress → AI Review
 
 **Preconditions**:
+
 - Feature branch has commits
 - PR created against target branch
 - All local tests pass
 
 **Actions**:
+
 - Link PR to issue
 - Add "ai-review" label
 - Remove "in-progress" label
@@ -84,10 +90,12 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### AI Review → Human Review
 
 **Preconditions**:
+
 - Integrator has reviewed and approved
 - Task is flagged as BIG (requires human review)
 
 **Actions**:
+
 - Remove "ai-review" label
 - Add "human-review" label
 - Notify user/human reviewer
@@ -95,10 +103,12 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### AI Review → Merge/Release
 
 **Preconditions**:
+
 - Integrator has reviewed and approved
 - Task is small (no human review needed)
 
 **Actions**:
+
 - Remove "ai-review" label
 - Add "merge-release" label
 - PR ready for merge
@@ -106,9 +116,11 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### Human Review → Merge/Release
 
 **Preconditions**:
+
 - Human reviewer has approved
 
 **Actions**:
+
 - Remove "human-review" label
 - Add "merge-release" label
 - PR ready for merge
@@ -116,6 +128,7 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### Merge/Release → Done
 
 **Preconditions**:
+
 - PR approved by required reviewers (see [100% Approval Rule](./iteration-cycle-rules.md#100-approval-rule))
 - CI/CD pipeline passes
 - No merge conflicts
@@ -124,6 +137,7 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 - Plan file properly linked to issue (see [Plan File Linking](./plan-file-linking.md#linking-plans-to-issues))
 
 **Actions**:
+
 - Close linked issue
 - Add "completed" label
 - Archive project item (optional)
@@ -132,10 +146,12 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### AI Review → In Progress (Changes Requested)
 
 **Preconditions**:
+
 - Integrator review requests changes
 - Reviewer comments addressed
 
 **Actions**:
+
 - Remove "ai-review" label
 - Add "in-progress" label
 - Notify assignee of required changes
@@ -143,10 +159,12 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### Any → Blocked
 
 **Preconditions**:
+
 - Blocker identified and documented
 - Blocker cannot be resolved by assignee
 
 **Actions**:
+
 - Add "blocked" label
 - Record blocker reason in comment
 - Link to blocking issue if applicable
@@ -155,10 +173,12 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### Blocked → Todo/In Progress
 
 **Preconditions**:
+
 - Blocker resolved
 - Ready to resume work
 
 **Actions**:
+
 - Remove "blocked" label
 - Add appropriate status label
 - Comment with resolution
@@ -166,10 +186,12 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 #### Any → Cancelled
 
 **Preconditions**:
+
 - User approval required
 - Reason documented
 
 **Actions**:
+
 - Close issue as "not planned"
 - Add "cancelled" label
 - Archive project item

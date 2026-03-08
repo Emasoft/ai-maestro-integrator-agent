@@ -25,6 +25,7 @@ This skill teaches how to **persist and retrieve session context** so that integ
 ## Prerequisites
 
 Before using this skill, ensure:
+
 1. You understand your AMIA role (quality gates, reviews, merging, releases)
 2. `gh` CLI is configured and authenticated
 3. `$CLAUDE_PROJECT_DIR` is set and writable
@@ -70,6 +71,7 @@ Before using this skill, ensure:
 Copy this checklist and track your progress:
 
 **Session Start Checklist:**
+
 - [ ] Detect state-based triggers (PR review, integration task, release)
 - [ ] Look for GitHub URLs, PR numbers, or issue references in user prompt
 - [ ] If PR-related: Load PR comment state
@@ -80,6 +82,7 @@ Copy this checklist and track your progress:
 - [ ] Proceed with task using loaded memory to inform decisions
 
 **Session End Checklist:**
+
 - [ ] Identify state to persist (PR review, integration issues, quality gates, releases)
 - [ ] Update PR comments with state markers
 - [ ] Write handoff documents if work is incomplete
@@ -99,6 +102,7 @@ Memory outputs take these forms:
 | **CI/CD State** | Issue comment or handoff | Markdown with workflow run links |
 
 **Example PR State Comment:**
+
 ```markdown
 <!-- AMIA-SESSION-STATE {"pr": 123, "status": "review_in_progress", "timestamp": "2025-02-04T15:42:00Z"} -->
 
@@ -137,6 +141,7 @@ Memory outputs take these forms:
 **User says**: "Continue reviewing PR #42"
 
 **Actions**:
+
 1. Load PR comment state: `gh pr view 42 --comments --json comments | jq -r '.comments[] | select(.body | contains("AMIA-SESSION-STATE"))'`
 2. Check if state found:
    - If yes: Load review state, patterns observed, next steps
@@ -149,6 +154,7 @@ Memory outputs take these forms:
 **Scenario**: Session ending mid-integration
 
 **Actions**:
+
 1. Identify incomplete work (e.g., CI failure diagnosis in progress)
 2. Create handoff document at `$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md`
 3. Include:
@@ -164,6 +170,7 @@ Memory outputs take these forms:
 **Scenario**: Release approved and deployed
 
 **Actions**:
+
 1. Load release history: `cat $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/release-history.md`
 2. Append new entry with:
    - Version number
@@ -176,6 +183,7 @@ Memory outputs take these forms:
 ## Memory Architecture
 
 See [references/memory-architecture.md](references/memory-architecture.md) for:
+
 - Storage locations (PR comments, issue comments, handoff documents)
 - Memory file structure
 - Data persistence patterns
@@ -183,6 +191,7 @@ See [references/memory-architecture.md](references/memory-architecture.md) for:
 ## What to Remember
 
 See [references/memory-types.md](references/memory-types.md) for:
+
 - PR review states
 - Code patterns observed
 - Integration issues encountered
@@ -192,6 +201,7 @@ See [references/memory-types.md](references/memory-types.md) for:
 ## Memory Retrieval
 
 See [references/memory-retrieval.md](references/memory-retrieval.md) for:
+
 - State-based triggers
 - Retrieval decision tree
 - Memory retrieval commands
@@ -199,6 +209,7 @@ See [references/memory-retrieval.md](references/memory-retrieval.md) for:
 ## Memory Updates
 
 See [references/memory-updates.md](references/memory-updates.md) for:
+
 - State-based update triggers
 - Update decision tree
 - Memory update commands
@@ -206,6 +217,7 @@ See [references/memory-updates.md](references/memory-updates.md) for:
 ## Handoff Documents
 
 See [references/handoff-documents.md](references/handoff-documents.md) for:
+
 - When to create handoff documents
 - Handoff document format
 - Handoff checklist
@@ -229,11 +241,13 @@ See [references/handoff-documents.md](references/handoff-documents.md) for:
 **Symptom**: Starting fresh when continuation expected
 
 **Diagnosis**:
+
 1. Check if handoff directory exists: `ls -la $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/`
 2. Check PR comments for state block: `gh pr view <PR> --comments`
 3. Verify file permissions
 
 **Resolution**:
+
 - If directory missing: Previous session did not save state - start fresh
 - If files exist but empty: Previous session was interrupted - reconstruct from PR comments
 - If PR has state: Load from PR comment directly
@@ -243,11 +257,13 @@ See [references/handoff-documents.md](references/handoff-documents.md) for:
 **Symptom**: Memory contains outdated information
 
 **Diagnosis**:
+
 1. Check timestamps in memory files
 2. Compare PR comment state with actual PR status
 3. Verify release-history.md against actual releases
 
 **Resolution**:
+
 - If PR was merged: Archive state, clear from active reviews
 - If release happened: Update release-history.md from git tags/releases
 - If CI config changed: Refresh pipeline status from workflow runs
@@ -257,10 +273,12 @@ See [references/handoff-documents.md](references/handoff-documents.md) for:
 **Symptom**: PR comment state differs from handoff document
 
 **Diagnosis**:
+
 1. Compare timestamps - most recent wins
 2. Check if PR was updated between sessions
 
 **Resolution**:
+
 - PR comments are source of truth for PR-specific state
 - Handoff documents are source of truth for cross-PR state
 - When in conflict, re-evaluate current state rather than trusting either

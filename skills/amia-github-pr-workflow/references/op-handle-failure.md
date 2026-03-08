@@ -1,6 +1,5 @@
 # Operation: Handle PR Workflow Failures
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -21,9 +20,13 @@
 - [Critical Rule](#critical-rule)
 
 ---
+
+```yaml
 procedure: proc-request-pr-review
 workflow-instruction: Step 20 - PR Review Request
 operation-id: op-handle-failure
+```
+
 ---
 
 ## Purpose
@@ -68,6 +71,7 @@ Handle failures in PR workflow by identifying the issue, determining recovery ap
    | Repeated failure | Blocked | Escalate with details |
 
 3. **If fixable**: Delegate repair work
+
    ```
    ## Fix Task for PR #<number>
 
@@ -83,6 +87,7 @@ Handle failures in PR workflow by identifying the issue, determining recovery ap
    ```
 
 4. **If blocked**: Escalate to user
+
    ```
    ## PR #<number> Blocked - User Decision Required
 

@@ -1,6 +1,7 @@
 # Prerequisites and Setup
 
 ## Use-Case TOC
+
 - When you need to authenticate GitHub CLI → [GitHub CLI Authentication](#github-cli-authentication)
 - When you need to verify authentication status → [Verify Authentication](#verify-authentication)
 - If authentication fails or is expired → [Re-authentication](#re-authentication)
@@ -43,11 +44,13 @@ Before using this skill, you must have:
 If you don't have GitHub CLI installed:
 
 **macOS:**
+
 ```bash
 brew install gh
 ```
 
 **Linux:**
+
 ```bash
 # Debian/Ubuntu
 sudo apt install gh
@@ -57,6 +60,7 @@ sudo dnf install gh
 ```
 
 **Windows:**
+
 ```bash
 # Using winget
 winget install --id GitHub.cli
@@ -68,11 +72,13 @@ choco install gh
 ### Verifying GitHub CLI Version
 
 Ensure you have version 2.14 or higher:
+
 ```bash
 gh --version
 ```
 
 Expected output:
+
 ```
 gh version 2.14.0 (2023-01-01)
 ```
@@ -92,6 +98,7 @@ gh auth login
 ### Step 2: Choose Authentication Method
 
 The system will prompt you to choose between:
+
 - **HTTPS with Web-based Login** (Recommended) - Opens browser, logs you in via web interface
 - **SSH Key Authentication** - Uses your SSH keys for authentication
 - **Personal Access Token** - Uses a manually created token
@@ -101,6 +108,7 @@ For most users, HTTPS with web-based login is simplest.
 ### Step 3: Grant Permissions
 
 When the browser opens (for web-based login), authorize GitHub CLI to access:
+
 - Repository administration and pull requests
 - Issues and projects
 - User profile information
@@ -116,6 +124,7 @@ gh auth status
 ```
 
 **Expected Success Output:**
+
 ```
 github.com
   ✓ Logged in to github.com as username (oauth_token)
@@ -134,6 +143,7 @@ gh auth status
 ```
 
 This command confirms:
+
 - Whether you are logged in
 - Which GitHub account you are using
 - Which protocol (HTTPS/SSH) is configured for Git operations
@@ -160,6 +170,7 @@ Follow the same steps as initial authentication.
 **Cause:** GitHub CLI is not installed or not in your PATH.
 
 **Solution:** Install GitHub CLI following the installation steps above, or add it to your PATH:
+
 ```bash
 export PATH="$PATH:/path/to/gh"
 ```
@@ -192,6 +203,7 @@ export PATH="$PATH:/path/to/gh"
 ## Next Steps
 
 Once authentication is complete:
+
 1. Verify you have write access to your target repository: `gh repo view owner/repo`
 2. Proceed to creating the 9-label system in your repository
 3. Set up GitHub Projects V2 board

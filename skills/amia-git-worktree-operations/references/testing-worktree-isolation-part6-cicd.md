@@ -15,6 +15,7 @@
 **Pattern Using Worktrees**:
 
 **GitHub Actions Example**:
+
 ```yaml
 # .github/workflows/matrix-test.yml
 name: Matrix Testing
@@ -71,6 +72,7 @@ jobs:
 **Pattern**: Run multiple test suites simultaneously using separate worktrees.
 
 **Local Parallel Execution**:
+
 ```bash
 #!/bin/bash
 # scripts/run_parallel_tests.sh
@@ -99,6 +101,7 @@ wait
 ```
 
 **GitHub Actions Parallel Example**:
+
 ```yaml
 # .github/workflows/parallel-tests.yml
 name: Parallel Tests
@@ -152,6 +155,7 @@ jobs:
 **Pattern for Collecting Artifacts from Worktrees**:
 
 **Local Collection**:
+
 ```python
 # scripts/collect_test_artifacts.py
 import os
@@ -183,6 +187,7 @@ def collect_artifacts(worktree_id, output_dir='test-artifacts'):
 ```
 
 **GitHub Actions Collection**:
+
 ```yaml
 # In workflow file
 - name: Run tests
@@ -211,6 +216,7 @@ def collect_artifacts(worktree_id, output_dir='test-artifacts'):
 ---
 
 **Related Documents**:
+
 - [Testing Worktree Isolation Overview](testing-worktree-isolation.md)
 - [Cleanup After Tests](testing-worktree-isolation-part5-cleanup.md)
 - [Troubleshooting](testing-worktree-isolation-part7-troubleshooting.md)

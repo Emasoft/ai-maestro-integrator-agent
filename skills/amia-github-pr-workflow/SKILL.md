@@ -95,7 +95,9 @@ PR Review Request Received
 ## Table of Contents with Reference Maps
 
 ### 1. Orchestrator Responsibilities
+
 **Reference**: [orchestrator-responsibilities.md](references/orchestrator-responsibilities.md)
+
 - 1.1 What the orchestrator MUST do
   - 1.1.1 Monitor PR status periodically
   - 1.1.2 Delegate review work to subagents
@@ -107,7 +109,9 @@ PR Review Request Received
   - 1.2.3 Make unilateral merge decisions
 
 ### 2. Delegation Rules
+
 **Reference**: [delegation-rules.md](references/delegation-rules.md)
+
 - 2.1 When to spawn subagents
   - 2.1.1 Task complexity thresholds
   - 2.1.2 Time-based triggers
@@ -121,7 +125,9 @@ PR Review Request Received
 - 2.5 Result aggregation patterns
 
 ### 3. Verification Workflow
+
 **Reference**: [verification-workflow.md](references/verification-workflow.md)
+
 - 3.1 Pre-review verification checklist
 - 3.2 Post-review verification checklist
 - 3.3 CI check verification
@@ -133,7 +139,9 @@ PR Review Request Received
   - 3.6.3 Escalation triggers
 
 ### 4. Worktree Coordination
+
 **Reference**: [worktree-coordination.md](references/worktree-coordination.md)
+
 - 4.1 When to use worktrees
 - 4.2 Worktree assignment to subagents
 - 4.3 Isolation enforcement rules
@@ -141,7 +149,9 @@ PR Review Request Received
 - 4.5 Conflict handling procedures
 
 ### 5. Human vs AI PR Assignment
+
 **Reference**: [human-vs-ai-assignment.md](references/human-vs-ai-assignment.md)
+
 - 5.1 Identifying PR author type
   - 5.1.1 Human contributors
   - 5.1.2 AI agent PRs
@@ -151,7 +161,9 @@ PR Review Request Received
 - 5.4 Direct action rules for AI PRs
 
 ### 6. Completion Criteria
+
 **Reference**: [completion-criteria.md](references/completion-criteria.md)
+
 - 6.1 ALL criteria that must be true
   - 6.1.1 Review comments addressed
   - 6.1.2 PR comments acknowledged
@@ -164,14 +176,18 @@ PR Review Request Received
 - 6.2 Failure handling by type
 
 ### 7. Polling Schedule
+
 **Reference**: [polling-schedule.md](references/polling-schedule.md)
+
 - 7.1 Base polling frequency
 - 7.2 What to check on each poll
 - 7.3 Adaptive polling rules
 - 7.4 Notification triggers
 
 ### 8. Merge Failure Recovery
+
 **Reference**: [merge-failure-recovery.md](references/merge-failure-recovery.md)
+
 - 8.1 Types of merge failures
 - 8.2 Merge conflict resolution steps
 - 8.3 CI failure during merge handling
@@ -185,6 +201,7 @@ PR Review Request Received
 ## Scripts Reference
 
 ### amia_orchestrator_pr_poll.py
+
 **Location**: `scripts/amia_orchestrator_pr_poll.py`
 **Purpose**: Get all open PRs, check status, identify actions needed
 **When to use**: On each polling interval to survey PR landscape
@@ -209,6 +226,7 @@ python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
 ```
 
 ### amia_verify_pr_completion.py
+
 **Location**: `scripts/amia_verify_pr_completion.py`
 **Purpose**: Verify all completion criteria for a specific PR
 **When to use**: Before reporting PR ready, before merge
@@ -242,21 +260,27 @@ python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 ## Critical Rules Summary
 
 ### Rule 1: Never Block
+
 This workflow must NEVER execute blocking operations. All long-running tasks must be:
+
 - Delegated to subagents
 - Run as background tasks
 - Monitored via polling
 
 ### Rule 2: Never Write Code
+
 The coordinator role is to coordinate, not to implement. Code writing is ALWAYS delegated to implementation subagents.
 
 ### Rule 3: Never Merge Without User
+
 The coordinator may verify merge readiness but NEVER executes merge without explicit user approval.
 
 ### Rule 4: Always Verify Before Reporting
+
 Before reporting any status (ready, complete, blocked), always run the verification script to confirm.
 
 ### Rule 5: Human PRs Require Escalation
+
 PRs from human contributors require different handling. Always escalate to user for guidance on communication and decisions.
 
 ---
@@ -264,6 +288,7 @@ PRs from human contributors require different handling. Always escalate to user 
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 
@@ -295,22 +320,27 @@ python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 ## Error Handling
 
 ### Issue: Subagent not returning results
+
 **Cause**: Subagent may have crashed or become unresponsive
 **Solution**: Check subagent logs, re-delegate with simpler scope
 
 ### Issue: PR status appears stale
+
 **Cause**: GitHub API rate limiting or cache
 **Solution**: Wait briefly, then re-poll. If persistent, check API rate limits.
 
 ### Issue: Completion verification fails intermittently
+
 **Cause**: Race condition with GitHub webhook processing
 **Solution**: Implement quiet period check before final verification
 
 ### Issue: Multiple subagents conflicting
+
 **Cause**: Insufficient task isolation
 **Solution**: Use worktrees for parallel work, enforce file-level isolation
 
 ### Issue: User not receiving status updates
+
 **Cause**: Notification not triggered
 **Solution**: Check notification triggers in polling schedule, ensure report step executes
 

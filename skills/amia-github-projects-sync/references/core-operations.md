@@ -105,6 +105,7 @@ gh api graphql -f query='
 Before updating status, you need the project ID, item ID, field ID, and option IDs.
 
 **Get Project ID:**
+
 ```bash
 gh api graphql -f query='
   query($owner: String!, $repo: String!, $number: Int!) {
@@ -118,6 +119,7 @@ gh api graphql -f query='
 ```
 
 **Get Status Field and Option IDs:**
+
 ```bash
 gh api graphql -f query='
   query($projectId: ID!) {

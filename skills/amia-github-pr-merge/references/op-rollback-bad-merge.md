@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Rollback Bad Merge
 
-
 ## Contents
 
 - [Purpose](#purpose)

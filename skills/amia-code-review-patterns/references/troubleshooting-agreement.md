@@ -1,6 +1,7 @@
 # Troubleshooting: Handling Reviewer Disagreements
 
 ## Table of Contents
+
 - If you need to understand the problem → Problem Description
 - When analyzing why disagreements occur → Root Causes
 - If you're looking for solutions → Solutions and Workarounds
@@ -14,30 +15,35 @@ Reviewers disagree about whether code should be approved, how issues should be a
 ## Root Causes
 
 ### 1. Ambiguous or Missing Standards
+
 - No documented coding standards for the situation
 - Gray areas not covered by existing guidelines
 - Different interpretations of existing standards
 - Outdated standards that don't reflect current practices
 
 ### 2. Different Priorities and Perspectives
+
 - Conflicting values (e.g., performance vs readability)
 - Different risk tolerances
 - Varying emphasis on pragmatism vs idealism
 - Divergent opinions on technical approaches
 
 ### 3. Knowledge or Experience Gaps
+
 - Reviewers have different context about system or requirements
 - Unequal familiarity with domain or technology
 - Different understanding of past decisions
 - Varying expertise levels
 
 ### 4. Communication Issues
+
 - Unclear or ambiguous review comments
 - Tone perceived as combative or dismissive
 - Assumptions about shared understanding
 - Argument in PR comments rather than direct discussion
 
 ### 5. Personal or Cultural Factors
+
 - Ego or need to be right
 - Fear of being overruled
 - Cultural differences in communication styles
@@ -48,6 +54,7 @@ Reviewers disagree about whether code should be approved, how issues should be a
 ### Immediate Actions
 
 #### 1. Identify the Nature of Disagreement
+
 ```markdown
 ACTION: Clarify what exactly is being disputed
 
@@ -67,6 +74,7 @@ DIFFERENT TYPES NEED DIFFERENT RESOLUTION APPROACHES:
 ```
 
 #### 2. Move Discussion Out of PR Comments
+
 ```markdown
 ACTION: Switch to synchronous communication
 
@@ -90,6 +98,7 @@ BENEFITS:
 ```
 
 #### 3. Seek to Understand Before Being Understood
+
 ```markdown
 ACTION: Genuinely understand other reviewer's perspective
 
@@ -110,6 +119,7 @@ PHRASES:
 ```
 
 #### 4. Check for Documented Standards
+
 ```markdown
 ACTION: Verify if there's an existing team decision
 
@@ -132,6 +142,7 @@ IF NO STANDARD:
 ```
 
 #### 5. Escalate Constructively
+
 ```markdown
 ACTION: Involve appropriate decision-maker
 
@@ -160,6 +171,7 @@ WHO DECIDES:
 ### Long-Term Solutions
 
 #### 1. Establish Clear Decision-Making Process
+
 ```markdown
 ACTION: Document who decides what and how
 
@@ -186,6 +198,7 @@ RESULT:
 ```
 
 #### 2. Create Comprehensive Standards Documentation
+
 ```markdown
 ACTION: Document team conventions and patterns
 
@@ -213,6 +226,7 @@ RESULT:
 ```
 
 #### 3. Regular Calibration Sessions
+
 ```markdown
 ACTION: Align team on review standards and priorities
 
@@ -237,6 +251,7 @@ BENEFITS:
 ```
 
 #### 4. Foster Collaborative Culture
+
 ```markdown
 ACTION: Build psychological safety and teamwork
 
@@ -262,12 +277,14 @@ LEADERSHIP ROLE:
 ### For All Reviewers
 
 #### Before Reviewing
+
 1. **Check Your State**: Don't review when tired, stressed, or emotional
 2. **Read Context**: Understand PR intent and background before commenting
 3. **Know Standards**: Familiarize yourself with team conventions
 4. **Set Aside Ego**: Remember goal is better code, not winning argument
 
 #### While Reviewing
+
 1. **Be Specific**: Vague objections create unnecessary friction
 2. **Explain Reasoning**: Don't just say what, explain why
 3. **Distinguish Categories**: Mark opinions as such, standards as standards
@@ -275,6 +292,7 @@ LEADERSHIP ROLE:
 5. **Acknowledge Tradeoffs**: Show you understand the complexity
 
 #### When Disagreeing with Other Reviewer
+
 1. **Private First**: DM them before escalating in PR
 2. **Seek Understanding**: Ask why they see it differently
 3. **Common Ground**: Find what you agree on
@@ -284,6 +302,7 @@ LEADERSHIP ROLE:
 ### For PR Authors
 
 #### Preventing Disagreements
+
 1. **Clear Description**: Explain rationale for approach taken
 2. **Pre-empt Concerns**: Address likely questions upfront
 3. **Invite Discussion**: For controversial changes, discuss before implementing
@@ -291,6 +310,7 @@ LEADERSHIP ROLE:
 5. **Right Reviewers**: Select reviewers with relevant expertise
 
 #### When Disagreement Arises
+
 1. **Stay Neutral**: Don't take sides or get defensive
 2. **Provide Context**: Share information reviewers might not have
 3. **Facilitate Resolution**: Help reviewers connect if needed
@@ -300,6 +320,7 @@ LEADERSHIP ROLE:
 ### For Tech Leads
 
 #### Preventing Disagreements
+
 1. **Clear Standards**: Ensure team has documented conventions
 2. **Regular Calibration**: Facilitate alignment discussions
 3. **Defined Authority**: Clear who makes what decisions
@@ -307,6 +328,7 @@ LEADERSHIP ROLE:
 5. **Team Values**: Articulate and reinforce collaborative culture
 
 #### When Disagreement Occurs
+
 1. **Early Detection**: Watch for signs of conflict in PRs
 2. **Quick Intervention**: Don't let disagreements fester
 3. **Fair Facilitation**: Help both sides feel heard
@@ -316,6 +338,7 @@ LEADERSHIP ROLE:
 ## Specific Disagreement Scenarios
 
 ### Disagreement About Code Quality
+
 ```markdown
 SCENARIO: One reviewer says code is good enough, another wants refactoring
 
@@ -338,6 +361,7 @@ GENERAL PRINCIPLE:
 ```
 
 ### Disagreement About Security or Performance
+
 ```markdown
 SCENARIO: One reviewer sees security/performance risk, another doesn't
 
@@ -356,6 +380,7 @@ GENERAL PRINCIPLE:
 ```
 
 ### Disagreement About Testing
+
 ```markdown
 SCENARIO: Reviewers disagree on test coverage adequacy
 
@@ -377,6 +402,7 @@ GENERAL PRINCIPLE:
 ```
 
 ### Disagreement About Design Approach
+
 ```markdown
 SCENARIO: Reviewers prefer different technical approaches
 
@@ -397,6 +423,7 @@ GENERAL PRINCIPLE:
 ## Communication Patterns
 
 ### Constructive Disagreement
+
 ```markdown
 GOOD:
 "I'm concerned about the performance implications of this approach. In my experience, X pattern can lead to Y problem when scaled. Have you considered Z alternative? Here's why I think it might be better: [specific reasoning]."
@@ -410,6 +437,7 @@ WHY IT WORKS:
 ```
 
 ### Unconstructive Disagreement
+
 ```markdown
 AVOID:
 "This is wrong. You should use X instead."
@@ -422,6 +450,7 @@ WHY IT FAILS:
 ```
 
 ### Acknowledging Other Reviewer
+
 ```markdown
 GOOD:
 "@reviewer_name raised a good point about X. I initially missed that concern. However, I think Y approach might address it while also handling Z. What do you both think?"

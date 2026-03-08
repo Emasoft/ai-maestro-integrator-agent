@@ -30,6 +30,7 @@
 - [Best Practices](#best-practices)
 
 ## Use-Case TOC
+
 - When you need to create a pull request → [Creating Pull Requests](#creating-pull-requests)
 - When you need to link PR to an issue → [Linking PRs to Issues](#linking-prs-to-issues)
 - When you need to monitor PR status → [Monitoring PR Status](#monitoring-pr-status)
@@ -84,6 +85,7 @@ gh pr create \
 ### Examples
 
 **Example 1: Feature PR with Issue Linking**
+
 ```bash
 gh pr create \
   --title "Add OAuth authentication for Google login" \
@@ -109,6 +111,7 @@ gh pr create \
 ```
 
 **Example 2: Bug Fix PR**
+
 ```bash
 gh pr create \
   --title "Fix null pointer exception in user profile" \
@@ -131,6 +134,7 @@ Added null check and default avatar fallback.
 ```
 
 **Example 3: Draft PR for Work in Progress**
+
 ```bash
 gh pr create \
   --title "[WIP] Add OAuth authentication" \
@@ -158,12 +162,14 @@ GitHub automatically closes issues when PRs containing specific keywords are mer
 ### Linking Keywords
 
 Use these keywords in the PR body:
+
 - `Closes #123` - Closes issue when PR merges
 - `Fixes #123` - Closes issue when PR merges
 - `Resolves #123` - Closes issue when PR merges
 - `Related to #123` - Links but doesn't close
 
 **Important:**
+
 - Keywords are case-insensitive
 - Must use exact keyword (not "Close", "Fix", "Resolve")
 - Can link multiple issues in one PR
@@ -212,6 +218,7 @@ gh pr status
 ```
 
 **Example Output:**
+
 ```
 Current branch
   #42  Add OAuth authentication [feature/issue-42-oauth]
@@ -238,6 +245,7 @@ gh pr view <pr_number> --json commits,reviewDecisions,statusCheckRollup
 ```
 
 **Useful Fields:**
+
 - `commits`: List of commits in the PR
 - `reviewDecisions`: Review approvals/rejections
 - `statusCheckRollup`: CI/CD check results
@@ -253,6 +261,7 @@ gh pr checks <pr_number> --watch
 ```
 
 **Example Output:**
+
 ```
 All checks were successful
 ✓ build                1m2s  https://github.com/...
@@ -277,6 +286,7 @@ gh run view <run_id> --log
 ### Common Failure Patterns
 
 **Pattern 1: Test Failures**
+
 ```bash
 # View failed tests
 gh run view <run_id> --log | grep FAILED
@@ -286,6 +296,7 @@ npm test  # or pytest, cargo test, etc.
 ```
 
 **Pattern 2: Lint Failures**
+
 ```bash
 # Run linter locally
 npm run lint  # or flake8, cargo clippy, etc.
@@ -295,6 +306,7 @@ npm run lint:fix
 ```
 
 **Pattern 3: Build Failures**
+
 ```bash
 # View build logs
 gh run view <run_id> --log | grep ERROR
@@ -333,31 +345,37 @@ When all checks pass and reviews are approved, merge the PR.
 ### Merge Strategies
 
 **1. Squash Merge (Recommended)**
+
 ```bash
 gh pr merge <pr_number> --squash --delete-branch
 ```
 
 **Benefits:**
+
 - Creates single commit in history
 - Cleaner history
 - Easier to revert if needed
 
 **2. Merge Commit**
+
 ```bash
 gh pr merge <pr_number> --merge --delete-branch
 ```
 
 **Benefits:**
+
 - Preserves all commits
 - Full history retained
 - Useful for large features
 
 **3. Rebase Merge**
+
 ```bash
 gh pr merge <pr_number> --rebase --delete-branch
 ```
 
 **Benefits:**
+
 - Linear history
 - No merge commits
 - Cleanest history
@@ -371,6 +389,7 @@ gh pr merge <pr_number> --auto --squash --delete-branch
 ```
 
 PR will merge automatically when:
+
 - All required checks pass
 - All required reviews are approved
 - No merge conflicts exist
@@ -416,6 +435,7 @@ gh pr create \
 ```
 
 **Usage:**
+
 ```bash
 git checkout -b feature/issue-42-oauth
 # ... make changes ...
@@ -452,6 +472,7 @@ fi
 ```
 
 **Usage:**
+
 ```bash
 ./auto-merge-pr.sh 42
 ```

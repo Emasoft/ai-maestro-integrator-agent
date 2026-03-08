@@ -54,11 +54,13 @@ The Quick Scan objective is to rapidly identify critical blockers or obvious iss
 ### 1.3.1 File Structure Assessment
 
 **What to examine:**
+
 - Modified files list
 - File types (source code, tests, config, docs)
 - Directory structure changes
 
 **What to look for:**
+
 - Suspicious additions (credentials, large binaries)
 - Unexpected file types
 - Changes to sensitive directories (security, auth, config)
@@ -68,11 +70,13 @@ The Quick Scan objective is to rapidly identify critical blockers or obvious iss
 ### 1.3.2 Diff Magnitude Review
 
 **What to measure:**
+
 - Lines added/removed/modified per file
 - Total change size
 - Concentration of changes
 
 **Warning thresholds:**
+
 - Single file: >500 lines changed
 - Total PR: >2000 lines changed
 - High churn: Many lines both added and deleted
@@ -82,6 +86,7 @@ The Quick Scan objective is to rapidly identify critical blockers or obvious iss
 ### 1.3.3 Obvious Issue Scan
 
 **What to detect:**
+
 - Syntax errors and typos
 - Commented-out code blocks
 - Leftover debug statements (console.log, print, debugger)
@@ -93,6 +98,7 @@ The Quick Scan objective is to rapidly identify critical blockers or obvious iss
 ### 1.3.4 Immediate Red Flags Detection
 
 **Critical red flags (immediate STOP):**
+
 - Disabled security checks or linting rules
 - Removal of existing tests without replacement
 - Hard-coded credentials or sensitive data
@@ -101,6 +107,7 @@ The Quick Scan objective is to rapidly identify critical blockers or obvious iss
 - Bypass of code review requirements
 
 **If any red flag detected:**
+
 1. Document the specific issue
 2. Stop the review
 3. Request clarification from author
@@ -109,6 +116,7 @@ The Quick Scan objective is to rapidly identify critical blockers or obvious iss
 ### 1.3.5 Quick Confidence Assessment
 
 **Score calculation:**
+
 - Start at 50%
 - Add 10% if file structure is clean
 - Add 10% if diff magnitude is reasonable
@@ -116,6 +124,7 @@ The Quick Scan objective is to rapidly identify critical blockers or obvious iss
 - Add 20% if no red flags detected
 
 **Decision thresholds:**
+
 - Score >= 70%: Proceed to Stage Two
 - Score < 70%: Request clarification, do not proceed
 
@@ -151,19 +160,22 @@ NOTES:
 
 ## 1.5 Go/No-Go Decision Criteria
 
-### PROCEED to Stage Two when:
+### PROCEED to Stage Two when
+
 - Confidence score is 70% or higher
 - No critical red flags detected
 - File structure and changes are logical
 - Author has provided sufficient context
 
-### REQUEST CLARIFICATION when:
+### REQUEST CLARIFICATION when
+
 - Confidence score is below 70%
 - Red flags are detected but may have valid explanations
 - Context or purpose is unclear
 - Changes seem unrelated to stated purpose
 
-### REJECT IMMEDIATELY when:
+### REJECT IMMEDIATELY when
+
 - Hard-coded credentials or secrets detected
 - Obvious malicious code patterns
 - Merge conflicts present

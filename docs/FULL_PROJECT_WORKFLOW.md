@@ -100,54 +100,69 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
 ### Phase 1: Project Creation and Team Setup
 
 #### Step 1: Manager Creates Project
+
 **Actor**: AMAMA (Manager)
 **Action**:
+
 - Create a new project in a new GitHub repository (or in an existing repository)
 - Send the requirements to the Chief of Staff (AMCOS)
 
 **Communication**:
+
 - GitHub: Create repository, create initial issue with requirements
 - AI Maestro: Message to AMCOS with project details and requirements
 
 #### Step 2: Chief of Staff Evaluates Project
+
 **Actor**: AMCOS (Chief of Staff)
 **Action**:
+
 - Evaluate the project requirements
 - Analyze complexity, technologies involved, timeline
 - Suggest an optimal team of agents to the Manager
 
 **Communication**:
+
 - AI Maestro: Send team proposal to AMAMA with justification
 
 #### Step 3: Team Discussion and Approval
+
 **Actor**: AMAMA (Manager) + AMCOS (Chief of Staff)
 **Action**:
+
 - Manager discusses the team proposal with Chief of Staff
 - Negotiate team composition if needed
 - Manager ultimately approves a team proposal
 
 **Communication**:
+
 - AI Maestro: Back-and-forth messages until agreement
 
 #### Step 4: Team Creation
+
 **Actor**: AMCOS (Chief of Staff)
 **Action**:
+
 - Create the agents needed for the project team
 - OR move agents from other projects to the new project team
 - Configure each agent with appropriate skills and plugins for their role
 - Assign agents to the project team
 
 **Communication**:
+
 - AI Maestro: Coordination messages during agent creation
 - AI Maestro: Onboarding messages to each new agent
 
 #### Step 5: Team Ready Notification
+
 **Actor**: AMCOS (Chief of Staff)
 **Action**:
+
 - Notify the Manager that the team is set up and ready to follow instructions
 - Provide team roster with agent names and roles
 
 **Communication**:
+
 - AI Maestro: Team ready notification to AMAMA
 
 ---
@@ -155,20 +170,25 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
 ### Phase 2: Design and Planning
 
 #### Step 6: Requirements to Architect
+
 **Actor**: AMAMA (Manager)
 **Action**:
+
 - Send the requirements to the Architect agent (AMAA)
 - Expand the requirements with more details
 - Include the list of team member names in the requirements
 - Assign to the Architect the task of developing the design document
 
 **Communication**:
+
 - GitHub: Create issue with requirements, assign label for AMAA
 - AI Maestro: Message to AMAA with full requirements and team roster
 
 #### Step 7: Design Document Creation
+
 **Actor**: AMAA (Architect)
 **Action**:
+
 - Receive the task (on the kanban) to convert requirements into a full design document
 - Create design document with:
   - System architecture
@@ -178,27 +198,34 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
   - Data models
 
 **Communication**:
+
 - GitHub: Update issue with progress
 - AI Maestro: Progress updates to AMAMA
 
 #### Step 8: Design Submission
+
 **Actor**: AMAA (Architect)
 **Action**:
+
 - Send the completed design document back to the Manager
 
 **Communication**:
+
 - GitHub: Attach design document to issue, mark ready for review
 - AI Maestro: Notification to AMAMA that design is ready
 
 #### Step 9: Design Approval
+
 **Actor**: AMAMA (Manager) + USER
 **Action**:
+
 - Manager examines the design document
 - Manager asks for approval from the User
 - If User approves: design is sent to the Orchestrator
 - If User rejects: design goes back to Architect with feedback
 
 **Communication**:
+
 - GitHub: Issue comments with design and approval status
 - AI Maestro: Message to AMOA with approved design
 
@@ -207,15 +234,19 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
 ### Phase 3: Task Planning and Assignment
 
 #### Step 10: Design Decomposition
+
 **Actor**: AMOA (Orchestrator)
 **Action**:
+
 - Split the design into actionable small steps
 - Split each step into actionable tasks
 - Tailor tasks for the current team members and their capabilities
 
 #### Step 11: Task Requirements Documents
+
 **Actor**: AMOA (Orchestrator)
 **Action**:
+
 - Produce the task-requirements-document for each agent
 - Include in each document:
   - Task description
@@ -225,16 +256,20 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
   - Expected deliverables
 
 #### Step 12: Task Plan Creation
+
 **Actor**: AMOA (Orchestrator)
 **Action**:
+
 - Create a plan where task-requirements-documents are ordered and parallelized
 - Ensure tasks can be assigned to the right agent at the right time
 - Define task dependencies
 - Identify tasks that can run in parallel
 
 #### Step 13: Kanban Population
+
 **Actor**: AMOA (Orchestrator)
 **Action**:
+
 - Add tasks to the GitHub Project kanban `todo` column
 - For each task:
   - Set the "Assigned Agent" custom field
@@ -243,22 +278,28 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
   - Ensure task executes only when required previous tasks are completed
 
 **Communication**:
+
 - GitHub: Create issues, add to project, set fields
 - AI Maestro: Notification to each agent about their first assigned task
 
 #### Step 14: Agent Clarification
+
 **Actor**: AMOA (Orchestrator) + IMPLEMENTER AGENTS
 **Action**:
+
 - Send to each agent a notification using the `agent-messaging` skill that their first task has been assigned
 - Ask each agent if they need clarifications
 - The Orchestrator is the team lead with full project understanding (along with Architect)
 
 **Communication**:
+
 - AI Maestro: Task assignment messages with clarification request
 
 #### Step 15: Feedback and Design Updates (if needed)
+
 **Actor**: IMPLEMENTER AGENTS → AMOA → AMAA
 **Action**:
+
 - If agents reply presenting problems or improvement suggestions:
   - Orchestrator evaluates the feedback
   - If feasible: Orchestrator sends design-change-request to Architect
@@ -266,13 +307,16 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
   - Architect sends updated design to Orchestrator
 
 **Communication**:
+
 - AI Maestro: Feedback from agents to AMOA
 - AI Maestro: Design change request from AMOA to AMAA
 - AI Maestro: Updated design from AMAA to AMOA
 
 #### Step 16: Task Updates from Design Changes
+
 **Actor**: AMOA (Orchestrator)
 **Action**:
+
 - Evaluate the new version of the design document
 - If approved:
   - Update all task-requirements-documents affected by changes
@@ -281,6 +325,7 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
   - Explain the changes and motivations
 
 **Communication**:
+
 - GitHub: Update issue attachments
 - AI Maestro: Change notifications to affected agents
 
@@ -289,31 +334,40 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
 ### Phase 4: Implementation
 
 #### Step 17: Task Execution
+
 **Actor**: IMPLEMENTER AGENTS
 **Action**:
+
 - Start working on assigned tasks
 - Report status of being "in development" to Orchestrator
 
 **Communication**:
+
 - AI Maestro: Status update to AMOA
 
 #### Step 18: Kanban Status Update
+
 **Actor**: AMOA (Orchestrator)
 **Action**:
+
 - Move tasks on project kanban from `todo` column to `in-progress` column
 
 **Communication**:
+
 - GitHub: Update project item status
 
 #### Step 19: Task Completion
+
 **Actor**: IMPLEMENTER AGENTS → AMOA
 **Action**:
+
 - When an implementer agent finishes a task, notify the Orchestrator
 - Orchestrator discusses and asks questions to ensure truly completed
 - If OK: Orchestrator gives approval to do the pull-request
 - Implementer creates PR
 
 **Communication**:
+
 - AI Maestro: Completion notification from agent to AMOA
 - AI Maestro: Approval to PR from AMOA to agent
 - GitHub: PR created
@@ -323,18 +377,23 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
 ### Phase 5: Integration and Review
 
 #### Step 20: PR Review Request
+
 **Actor**: AMOA (Orchestrator)
 **Action**:
+
 - Send message using the `agent-messaging` skill to Integrator agent (AMIA) to evaluate all PRs of completed tasks
 - Request merge if they pass all checks
 
 **Communication**:
+
 - AI Maestro: PR review request to AMIA
 - GitHub: PR ready for review
 
 #### Step 21: PR Evaluation
+
 **Actor**: AMIA (Integrator)
 **Action**:
+
 - Examine the PR of each task
 - Verify compliance with design requirements
 - Run tests and linting
@@ -342,12 +401,15 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
 - If not OK: refuse PR, report issues to Orchestrator
 
 **Communication**:
+
 - GitHub: PR review comments, approval/rejection
 - AI Maestro: Report to AMOA with pass/fail details
 
 #### Step 22: Handling Failed PRs
+
 **Actor**: AMOA (Orchestrator) → IMPLEMENTER AGENTS
 **Action**:
+
 - Evaluate Integrator report about each task PR
 - Communicate to agents the issues and shortcomings
 - Instruct agents to fix or improve the code
@@ -357,6 +419,7 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
 - If OK: implementer agent resumes work on task
 
 **Communication**:
+
 - AI Maestro: Feedback and instructions to agents
 - GitHub: Update task status
 
@@ -365,8 +428,10 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
 ### Phase 6: Completion and Continuation
 
 #### Step 23: Successful PR Handling
+
 **Actor**: AMOA (Orchestrator)
 **Action**:
+
 - When Integrator reports successful PR merge, move task to `ai-review` column
   - If AI review passes for small tasks: move to `merge-release`, then `done`
   - If AI review passes for big tasks: move to `human-review` first, then `merge-release`, then `done`
@@ -375,12 +440,15 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
   - Keep implementer agents always working, never idle
 
 **Communication**:
+
 - GitHub: Update project item status through kanban columns
 - AI Maestro: Completion report to AMAMA
 - AI Maestro: New task assignment to agent
 
 #### Step 24: Iteration
+
 **Action**:
+
 - This cycle iterates until all tasks are complete
 - Each successful merge triggers:
   - Report to Manager
@@ -451,6 +519,7 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
 The following skills were added to AMIA and AMOA plugins, integrating techniques from the DOCS_AND_SCRIPTS reference collection:
 
 ### AMIA (Integrator) New Skills
+
 - **amia-ci-cd-pipeline**: CI/CD pipeline management, GitHub Actions workflows
 - **amia-pr-review-workflow**: PR review automation, code quality checks
 - **amia-release-management**: Version management, changelog generation, release automation
@@ -459,6 +528,7 @@ The following skills were added to AMIA and AMOA plugins, integrating techniques
 - **amia-kanban-management**: Kanban column management and task routing
 
 ### AMOA (Orchestrator) New Skills
+
 - **amoa-agent-replacement**: Agent failure detection and replacement protocols
 - **amoa-remote-agent-coordinator**: Remote agent coordination and multi-host management
 - **amoa-messaging-templates**: Standardized AI Maestro message templates

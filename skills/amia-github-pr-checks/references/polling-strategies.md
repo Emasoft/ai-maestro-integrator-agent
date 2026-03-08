@@ -8,15 +8,15 @@ This document provides guidance on efficiently polling for GitHub PR check compl
   - 1.1 Scenarios requiring polling
   - 1.2 Avoiding unnecessary polling
   - 1.3 Webhook alternatives
-- 2. Exponential Backoff Implementation
+- 1. Exponential Backoff Implementation
   - 2.1 Why exponential backoff matters
   - 2.2 Recommended backoff parameters
   - 2.3 Jitter for distributed systems
-- 3. Timeout Handling
+- 1. Timeout Handling
   - 3.1 Setting appropriate timeouts
   - 3.2 Graceful timeout behavior
   - 3.3 Partial completion scenarios
-- 4. Partial Success Scenarios
+- 1. Partial Success Scenarios
   - 4.1 Handling mixed results
   - 4.2 Re-running failed checks
   - 4.3 Determining merge readiness with failures
@@ -36,6 +36,7 @@ Polling is necessary when:
 5. **Batch operations**: Process multiple PRs as checks complete
 
 **Example scenario**: An orchestrator agent needs to merge a PR after all checks pass:
+
 ```
 1. Create PR
 2. Wait for checks to start (may take seconds)
@@ -57,6 +58,7 @@ Before implementing polling, consider:
 | Rate limits a concern? | Use webhooks + poll fallback | Poll |
 
 **Anti-patterns to avoid**:
+
 - Polling every second (wastes API quota)
 - Polling indefinitely (should timeout)
 - Polling already-completed checks
@@ -67,12 +69,14 @@ Before implementing polling, consider:
 When polling is not ideal, use GitHub webhooks:
 
 **Relevant webhook events**:
+
 - `check_run` - Individual check status changes
 - `check_suite` - Suite completion
 - `status` - Legacy status API changes
 - `pull_request` - PR state changes
 
 **Webhook payload for check_run**:
+
 ```json
 {
   "action": "completed",
@@ -87,6 +91,7 @@ When polling is not ideal, use GitHub webhooks:
 ```
 
 **Hybrid approach**: Use webhooks for notification, poll as fallback:
+
 ```python
 # Webhook handler marks check as complete
 # Background worker polls for any missed updates
@@ -100,12 +105,14 @@ When polling is not ideal, use GitHub webhooks:
 ### 2.1 Why Exponential Backoff Matters
 
 **Problems with fixed-interval polling**:
+
 - Wastes API quota during long builds
 - Unnecessary load on GitHub servers
 - May hit rate limits (5000 requests/hour for authenticated)
 - Inefficient resource usage
 
 **Benefits of exponential backoff**:
+
 - Efficient API usage
 - Respects server resources
 - Automatically adapts to check duration
@@ -123,11 +130,13 @@ When polling is not ideal, use GitHub webhooks:
 | Maximum attempts | 60 | ~30 min total with backoff |
 
 **Implementation formula**:
+
 ```
 interval = min(initial * (multiplier ^ attempt), max_interval)
 ```
 
 **Example progression** (initial=10, multiplier=1.5, max=120):
+
 ```
 Attempt 1:  10 seconds
 Attempt 2:  15 seconds
@@ -140,6 +149,7 @@ Attempt 8+: 120 seconds (capped)
 ```
 
 **Python implementation**:
+
 ```python
 import time
 
@@ -174,6 +184,7 @@ def poll_with_backoff(check_fn, initial=10, multiplier=1.5, max_interval=120, ma
 When multiple agents poll simultaneously, add jitter to prevent thundering herd:
 
 **Jitter formula**:
+
 ```
 actual_interval = interval * (0.5 + random() * 0.5)
 ```
@@ -181,12 +192,14 @@ actual_interval = interval * (0.5 + random() * 0.5)
 This provides 50-100% of the calculated interval.
 
 **Why jitter helps**:
+
 - Spreads requests over time
 - Reduces simultaneous API calls
 - Prevents correlated failures
 - Improves overall system stability
 
 **Full implementation with jitter**:
+
 ```python
 import random
 import time
@@ -232,6 +245,7 @@ def poll_with_jitter(check_fn, initial=10, multiplier=1.5, max_interval=120, max
 | Large project (extensive CI) | 60-90 minutes |
 
 **Calculating timeout from history**:
+
 ```bash
 # Get recent workflow run durations
 gh run list --limit 50 --json durationMs \
@@ -248,6 +262,7 @@ When timeout occurs, the script should:
 4. **Not fail silently**: Always produce output
 
 **Timeout response structure**:
+
 ```json
 {
   "timed_out": true,
@@ -274,18 +289,22 @@ When timeout occurs, the script should:
 Handle cases where some checks complete while others are stuck:
 
 **Scenario 1: Most checks pass, one stuck**
+
 - Action: Report timeout, show stuck check
 - Decision: May allow manual merge override
 
 **Scenario 2: Some checks fail, others pending**
+
 - Action: Could exit early (already know PR won't pass)
 - Optimization: `--fail-fast` flag to stop on first failure
 
 **Scenario 3: Checks never start**
+
 - Cause: Runner unavailable, workflow syntax error
 - Action: Alert, check GitHub Actions status
 
 **Early exit implementation**:
+
 ```python
 def wait_for_checks(pr_number, timeout, fail_fast=False):
     """Wait for checks, optionally exiting early on failure."""
@@ -316,6 +335,7 @@ def wait_for_checks(pr_number, timeout, fail_fast=False):
 When checks have mixed results (some pass, some fail, some skipped):
 
 **Classification**:
+
 ```python
 def classify_checks(checks):
     """Classify checks into categories for decision making."""
@@ -342,16 +362,19 @@ def classify_checks(checks):
 ### 4.2 Re-running Failed Checks
 
 **When to re-run**:
+
 - Flaky test (intermittent failure)
 - Infrastructure issue (runner problem)
 - Timeout (resource contention)
 
 **When NOT to re-run**:
+
 - Genuine code failure
 - Security vulnerability found
 - Deliberate test coverage gap
 
 **Re-run implementation**:
+
 ```bash
 # Re-run a specific check run
 gh api repos/OWNER/REPO/check-runs/CHECK_RUN_ID/rerequest -X POST
@@ -364,6 +387,7 @@ gh run rerun RUN_ID
 ```
 
 **Automated re-run strategy**:
+
 ```python
 def handle_failed_check(check, max_retries=1):
     """Re-run failed check if eligible."""

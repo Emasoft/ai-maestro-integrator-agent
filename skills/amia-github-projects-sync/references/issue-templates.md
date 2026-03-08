@@ -58,6 +58,7 @@ This index document links to detailed template specifications in separate files.
 **File**: [issue-templates-part1-feature-request.md](issue-templates-part1-feature-request.md)
 
 **Contents**:
+
 - 1.1 Feature request YAML template structure
 - 1.2 User story format and validation
 - 1.3 Acceptance criteria checklist format
@@ -70,6 +71,7 @@ This index document links to detailed template specifications in separate files.
 **File**: [issue-templates-part2-bug-report.md](issue-templates-part2-bug-report.md)
 
 **Contents**:
+
 - 2.1 Bug report YAML template structure
 - 2.2 Steps to reproduce format
 - 2.3 Expected vs actual behavior sections
@@ -82,6 +84,7 @@ This index document links to detailed template specifications in separate files.
 **File**: [issue-templates-part3-epic.md](issue-templates-part3-epic.md)
 
 **Contents**:
+
 - 3.1 Epic YAML template structure
 - 3.2 Goals and objectives section
 - 3.3 Sub-issues breakdown format
@@ -93,6 +96,7 @@ This index document links to detailed template specifications in separate files.
 **File**: [issue-templates-part4-refactor.md](issue-templates-part4-refactor.md)
 
 **Contents**:
+
 - 4.1 Refactoring request YAML template structure
 - 4.2 Current state vs proposed change format
 - 4.3 Motivation section
@@ -104,6 +108,7 @@ This index document links to detailed template specifications in separate files.
 **File**: [issue-templates-part5-docs-pr-cli.md](issue-templates-part5-docs-pr-cli.md)
 
 **Contents**:
+
 - 5.1 Documentation request YAML template
 - 5.2 Pull request template (Markdown format)
 - 5.3 CODEOWNERS file format and examples

@@ -101,11 +101,13 @@ You can use BOTH methods simultaneously:
 - **Label** = Logical agent assignment
 
 This provides:
+
 - Native GitHub features (assignees)
 - Additional filtering (labels)
 - Redundancy for clarity
 
 Example hybrid query:
+
 ```bash
 # Find issues for implementer-1 (either method works)
 gh issue list --assignee implementer-1

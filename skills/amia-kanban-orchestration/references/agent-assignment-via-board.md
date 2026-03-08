@@ -20,11 +20,13 @@
 The system supports TWO assignment methods:
 
 ### Method A: Multi-Account (GitHub Assignees)
+
 - Each AI agent has a GitHub account
 - GitHub issue assignee = responsible agent
 - See: [multi-user-workflow.md](../../amia-github-integration/references/multi-user-workflow.md)
 
 ### Method B: Single-Account (Labels)
+
 - One GitHub account (repository owner)
 - `assign:*` labels = responsible agent
 - See: [single-account-workflow.md](../../amia-github-integration/references/single-account-workflow.md)
@@ -338,6 +340,7 @@ gh issue edit 42 --add-assignee agent-1 --add-assignee agent-2
 ### AI Maestro Notification on Assignment
 
 When assigning an issue, notify the agent via AI Maestro. Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `implementer-1`
 - **Subject**: `New Assignment: Issue #42`
 - **Priority**: `high`
@@ -362,6 +365,7 @@ When assigning an issue, notify the agent via AI Maestro. Send a message using t
 ### Reassignment Notification
 
 **Notify old assignee:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `agent-1` (the old assignee)
 - **Subject**: `Issue #42 Reassigned`
 - **Priority**: `normal`
@@ -369,6 +373,7 @@ When assigning an issue, notify the agent via AI Maestro. Send a message using t
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Notify new assignee:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `agent-2` (the new assignee)
 - **Subject**: `New Assignment: Issue #42 (Reassigned)`
 - **Priority**: `high`

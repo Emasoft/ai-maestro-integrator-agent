@@ -21,12 +21,14 @@
 **What They Are**: Worktrees dedicated to running unit tests only.
 
 **Characteristics**:
+
 - Fast to set up (minimal dependencies)
 - No external services needed
 - Quick teardown
 - Can run many in parallel
 
 **Example Use Case**:
+
 ```bash
 # Create unit test worktree for feature branch
 python scripts/worktree_create.py \
@@ -40,12 +42,14 @@ python scripts/worktree_create.py \
 **What They Are**: Worktrees with full service stack for integration testing.
 
 **Characteristics**:
+
 - Require database instance
 - Need allocated network ports
 - May need external service mocks
 - Longer setup time
 
 **Example Use Case**:
+
 ```bash
 # Create integration test worktree with ports
 python scripts/worktree_create.py \
@@ -60,12 +64,14 @@ python scripts/worktree_create.py \
 **What They Are**: Worktrees configured for performance benchmarking.
 
 **Characteristics**:
+
 - Isolated from other processes
 - Consistent resource allocation
 - Monitoring and profiling enabled
 - Long-running tests
 
 **Example Use Case**:
+
 ```bash
 # Create performance test worktree
 python scripts/worktree_create.py \
@@ -79,12 +85,14 @@ python scripts/worktree_create.py \
 **What They Are**: Worktrees used to validate pull requests before merging.
 
 **Characteristics**:
+
 - Run full test suite
 - Check for merge conflicts
 - Validate against target branch
 - Temporary (deleted after validation)
 
 **Example Use Case**:
+
 ```bash
 # Create pre-merge validation worktree
 python scripts/worktree_create.py \
@@ -100,6 +108,7 @@ python scripts/worktree_create.py \
 ### Basic Test Worktree Creation
 
 **Command Pattern**:
+
 ```bash
 python scripts/worktree_create.py \
     --purpose <test-type> \
@@ -109,6 +118,7 @@ python scripts/worktree_create.py \
 ```
 
 **Parameters Explained**:
+
 - `--purpose` - Type of test worktree (test-unit, test-integration, test-performance, test-premerge)
 - `--identifier` - Unique name for this test worktree (use ticket number, feature name, or test type)
 - `--branch` - Which git branch to checkout
@@ -117,6 +127,7 @@ python scripts/worktree_create.py \
 ### Examples for Different Test Types
 
 **Unit Tests** (no ports needed):
+
 ```bash
 python scripts/worktree_create.py \
     --purpose test-unit \
@@ -125,6 +136,7 @@ python scripts/worktree_create.py \
 ```
 
 **Integration Tests** (with ports):
+
 ```bash
 python scripts/worktree_create.py \
     --purpose test-integration \
@@ -134,6 +146,7 @@ python scripts/worktree_create.py \
 ```
 
 **Performance Tests**:
+
 ```bash
 python scripts/worktree_create.py \
     --purpose test-performance \
@@ -142,6 +155,7 @@ python scripts/worktree_create.py \
 ```
 
 **Pre-Merge Validation**:
+
 ```bash
 python scripts/worktree_create.py \
     --purpose test-premerge \
@@ -161,6 +175,7 @@ python scripts/worktree_create.py \
 6. **Registry Update** - Updates `worktrees_registry.json` with worktree info
 
 **Example Metadata File** (`worktrees/test-integration-api-endpoints/.worktree-metadata.json`):
+
 ```json
 {
     "purpose": "test-integration",
@@ -180,6 +195,7 @@ python scripts/worktree_create.py \
 ---
 
 **Related Documents**:
+
 - [Testing Worktree Isolation Overview](testing-worktree-isolation.md)
 - [Environment Setup](testing-worktree-isolation-part2-environment-setup.md)
 - [Running Tests](testing-worktree-isolation-part3-running-tests.md)

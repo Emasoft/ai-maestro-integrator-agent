@@ -55,12 +55,14 @@
 **Naming convention**: `worktree-pr-{number}` or `worktree-{task-name}`
 
 **Creation command**:
+
 ```bash
 # From main repository
 git worktree add ../worktree-pr-123 pr-123-branch
 ```
 
 **Directory structure**:
+
 ```
 /path/to/
 ├── main-repo/           # Main worktree
@@ -72,12 +74,14 @@ git worktree add ../worktree-pr-123 pr-123-branch
 ### Assignment in subagent prompts
 
 **Always include in prompt**:
+
 ```
 Working directory: /path/to/worktree-pr-123
 IMPORTANT: All file operations must use this path, not the main repository path.
 ```
 
 **Example delegation with worktree**:
+
 ```
 You are an implementation subagent. Your single task is:
 Fix the bug described in PR #123 review comment.
@@ -119,12 +123,14 @@ Maintain a worktree registry in `docs_dev/worktrees.md`:
 **Never switch branches within a worktree assigned to a subagent.**
 
 Wrong:
+
 ```bash
 cd /path/to/worktree-pr-123
 git checkout different-branch  # VIOLATION
 ```
 
 Correct:
+
 ```bash
 # Create new worktree for different branch
 git worktree add ../worktree-different different-branch
@@ -137,6 +143,7 @@ git worktree add ../worktree-different different-branch
 Why: Concurrent modifications cause conflicts and corruption.
 
 Enforcement:
+
 1. Track assignments in worktrees.md
 2. Check assignment before delegating
 3. Queue if worktree busy
@@ -146,6 +153,7 @@ Enforcement:
 **Subagent must not access files outside its assigned worktree.**
 
 Include in every prompt:
+
 ```
 CONSTRAINT: You may ONLY access files within /path/to/worktree-pr-123
 Accessing files in other directories is forbidden.
@@ -156,12 +164,14 @@ Accessing files in other directories is forbidden.
 **All git commands must run from within the worktree.**
 
 Wrong:
+
 ```bash
 cd /path/to/main-repo
 git -C ../worktree-pr-123 commit -m "message"
 ```
 
 Correct:
+
 ```bash
 cd /path/to/worktree-pr-123
 git commit -m "message"
@@ -172,6 +182,7 @@ git commit -m "message"
 **Never delete a worktree while a subagent is using it.**
 
 Deletion is only safe when:
+
 1. Assigned subagent has completed
 2. All changes committed and pushed
 3. No uncommitted files
@@ -192,6 +203,7 @@ Deletion is only safe when:
 ### Cleanup procedure
 
 1. **Verify no uncommitted changes**:
+
    ```bash
    cd /path/to/worktree-pr-123
    git status --porcelain
@@ -200,6 +212,7 @@ Deletion is only safe when:
    If output is non-empty, changes exist. Do not delete.
 
 2. **Verify no unpushed commits**:
+
    ```bash
    git log origin/branch-name..HEAD
    ```
@@ -207,6 +220,7 @@ Deletion is only safe when:
    If output is non-empty, commits need pushing. Push first.
 
 3. **Remove the worktree**:
+
    ```bash
    cd /path/to/main-repo
    git worktree remove ../worktree-pr-123
@@ -218,6 +232,7 @@ Deletion is only safe when:
 ### Automated cleanup script
 
 Create and run periodically:
+
 ```bash
 #!/bin/bash
 # cleanup-worktrees.sh
@@ -235,6 +250,7 @@ done
 ### Cleanup before orchestrator session ends
 
 Before ending a session, the orchestrator should:
+
 1. List all worktrees created during session
 2. Verify all subagents completed
 3. Clean up unused worktrees
@@ -249,12 +265,14 @@ Before ending a session, the orchestrator should:
 **Symptom**: Worktree branch has diverged from remote.
 
 **Detection**:
+
 ```bash
 git fetch origin
 git status  # Shows "Your branch has diverged"
 ```
 
 **Resolution**:
+
 1. If local changes are correct: Push with appropriate strategy
 2. If remote changes are correct: Reset or rebase
 3. If both have valid changes: Merge and resolve conflicts
@@ -268,11 +286,13 @@ git status  # Shows "Your branch has diverged"
 **Detection**: GitHub PR shows merge conflicts.
 
 **Resolution**:
+
 1. Identify which worktree has the authoritative changes
 2. In that worktree, merge the base branch and resolve
 3. Push resolved changes
 
 **Example conflict resolution delegation**:
+
 ```
 You are a conflict resolution subagent. Your single task is:
 Resolve merge conflicts in PR #123.
@@ -297,11 +317,13 @@ Return: [DONE/FAILED] conflict-resolution - brief result
 **Symptom**: Git commands fail with errors about corrupt objects or broken refs.
 
 **Detection**:
+
 ```bash
 git fsck --full
 ```
 
 **Resolution**:
+
 1. Do NOT try to fix. Data may be lost.
 2. Create new worktree from remote
 3. Delete corrupted worktree
@@ -314,6 +336,7 @@ git fsck --full
 **Detection**: `.git/index.lock` or similar lock files exist.
 
 **Resolution**:
+
 1. Verify no git process is running
 2. Remove lock file: `rm .git/index.lock`
 3. Retry operation

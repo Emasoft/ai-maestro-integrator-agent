@@ -10,24 +10,24 @@ workflow-instruction: support
 ## Contents
 
 - 1. What git-cliff is and when to use it
-- 2. How to install git-cliff
+- 1. How to install git-cliff
   - 2.1. Installing on developer machines
   - 2.2. Installing in CI/CD environments
-- 3. How to configure git-cliff with cliff.toml
+- 1. How to configure git-cliff with cliff.toml
   - 3.1. Minimal cliff.toml configuration
   - 3.2. Commit group categories (Features, Bug Fixes, Refactoring, etc.)
   - 3.3. Commit parsers and regular expression patterns
   - 3.4. Template customization for changelog output format
   - 3.5. Filtering out unwanted commits
-- 4. How to run git-cliff to generate a changelog
+- 1. How to run git-cliff to generate a changelog
   - 4.1. Generating a full changelog
   - 4.2. Generating changelog for a specific version range
   - 4.3. Generating changelog for an unreleased version
   - 4.4. Prepending to an existing CHANGELOG.md
-- 5. How to integrate git-cliff into CI/CD workflows
+- 1. How to integrate git-cliff into CI/CD workflows
   - 5.1. GitHub Actions integration
   - 5.2. Using git-cliff output as release notes
-- 6. Troubleshooting git-cliff issues
+- 1. Troubleshooting git-cliff issues
 
 ## Purpose
 

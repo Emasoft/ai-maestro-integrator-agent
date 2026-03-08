@@ -109,6 +109,7 @@ body:
 ### Current State vs Proposed Change
 
 **Current State** describes the problem:
+
 ```markdown
 Authentication logic is scattered across multiple controllers:
 - src/controllers/login.js (50 lines of auth logic)
@@ -123,6 +124,7 @@ Issues:
 ```
 
 **Proposed Change** describes the solution:
+
 ```markdown
 Extract all auth logic into AuthService:
 - src/services/AuthService.js (new, ~100 lines)
@@ -157,6 +159,7 @@ Maintenance:
 ### Files Affected
 
 List all files with the type of change:
+
 ```markdown
 New files:
 - src/services/AuthService.js

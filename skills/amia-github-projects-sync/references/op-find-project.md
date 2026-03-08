@@ -1,6 +1,5 @@
 # Operation: Find GitHub Project
 
-
 ## Contents
 
 - [Metadata](#metadata)
@@ -113,6 +112,7 @@ gh project view PROJECT_NUMBER --owner OWNER
 ## Project ID Format
 
 GitHub Projects V2 uses GraphQL node IDs:
+
 - Format: `PVT_kwDO...` (base64 encoded)
 - Required for all GraphQL mutations
 - Different from project number (integer)

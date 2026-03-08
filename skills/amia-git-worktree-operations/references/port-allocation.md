@@ -31,6 +31,7 @@ This document provides an overview of the port allocation system for worktrees. 
 ## Complete Table of Contents
 
 ### Part 1: Core Concepts
+
 - [port-allocation-part1-core-concepts.md](./port-allocation-part1-core-concepts.md)
 
 1. When you need to understand why ports matter → Why Port Allocation is Needed
@@ -38,23 +39,26 @@ This document provides an overview of the port allocation system for worktrees. 
 3. When you need to know how ports are assigned → Port Allocation Algorithm
 
 ### Part 2: Configuration & Status
+
 - [port-allocation-part2-config-status.md](./port-allocation-part2-config-status.md)
 
-4. If you need to generate worktree configurations → Configuration Templates
-5. When you need to check port status → Port Status Commands
+1. If you need to generate worktree configurations → Configuration Templates
+2. When you need to check port status → Port Status Commands
 
 ### Part 3: Conflict Resolution & Docker
+
 - [port-allocation-part3-conflict-docker.md](./port-allocation-part3-conflict-docker.md)
 
-6. If you encounter port conflicts → Conflict Resolution
-7. When you need to use Docker with worktrees → Integration with Docker
+1. If you encounter port conflicts → Conflict Resolution
+2. When you need to use Docker with worktrees → Integration with Docker
 
 ### Part 4: Cleanup & Troubleshooting
+
 - [port-allocation-part4-cleanup-troubleshooting.md](./port-allocation-part4-cleanup-troubleshooting.md)
 
-8. If you need to release or reset ports → Port Cleanup
-9. When you encounter port allocation problems → Troubleshooting
-10. Quick command reference → Quick Reference
+1. If you need to release or reset ports → Port Cleanup
+2. When you encounter port allocation problems → Troubleshooting
+3. Quick command reference → Quick Reference
 
 ---
 

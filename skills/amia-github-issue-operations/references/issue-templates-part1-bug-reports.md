@@ -56,6 +56,7 @@ If applicable, add screenshots to help explain your problem.
 ```
 
 **Minimal required sections:**
+
 1. Bug Description - What is broken
 2. Steps to Reproduce - How to trigger the bug
 3. Expected vs Actual Behavior - What should happen vs what does happen
@@ -67,6 +68,7 @@ If applicable, add screenshots to help explain your problem.
 Environment details help developers reproduce issues:
 
 **For web applications:**
+
 ```markdown
 ## Environment
 
@@ -78,6 +80,7 @@ Environment details help developers reproduce issues:
 ```
 
 **For CLI tools:**
+
 ```markdown
 ## Environment
 
@@ -89,6 +92,7 @@ Environment details help developers reproduce issues:
 ```
 
 **For mobile applications:**
+
 ```markdown
 ## Environment
 
@@ -105,6 +109,7 @@ Environment details help developers reproduce issues:
 Clear reproduction steps are critical for bug resolution.
 
 **Format rules:**
+
 1. Use numbered steps
 2. Start each step with an action verb
 3. Be specific about locations and elements
@@ -112,6 +117,7 @@ Clear reproduction steps are critical for bug resolution.
 5. Specify timing if relevant
 
 **Good example:**
+
 ```markdown
 ## Steps to Reproduce
 
@@ -126,6 +132,7 @@ Clear reproduction steps are critical for bug resolution.
 ```
 
 **Bad example:**
+
 ```markdown
 ## Steps to Reproduce
 
@@ -135,6 +142,7 @@ Clear reproduction steps are critical for bug resolution.
 ```
 
 **Including state prerequisites:**
+
 ```markdown
 ## Prerequisites
 

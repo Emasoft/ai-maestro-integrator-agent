@@ -8,15 +8,15 @@ This document provides detailed guidance on interpreting GitHub Pull Request che
   - 1.1 Complete list of conclusion values
   - 1.2 When each conclusion occurs
   - 1.3 How to respond to each conclusion
-- 2. Required vs Optional Checks
+- 1. Required vs Optional Checks
   - 2.1 How branch protection defines required checks
   - 2.2 Identifying required checks programmatically
   - 2.3 Handling optional check failures
-- 3. Check Run vs Check Suite
+- 1. Check Run vs Check Suite
   - 3.1 Difference between check runs and check suites
   - 3.2 When to query which API endpoint
   - 3.3 Aggregating results from multiple providers
-- 4. Common CI Providers
+- 1. Common CI Providers
   - 4.1 GitHub Actions check naming conventions
   - 4.2 CircleCI integration patterns
   - 4.3 Jenkins GitHub plugin behavior
@@ -46,12 +46,14 @@ GitHub Checks API returns these possible `conclusion` values:
 ### 1.2 When Each Conclusion Occurs
 
 **success**
+
 - All tests passed
 - Build completed without errors
 - Linting found no issues
 - Security scan found no vulnerabilities
 
 **failure**
+
 - One or more tests failed
 - Build compilation error
 - Linting violations found
@@ -59,36 +61,43 @@ GitHub Checks API returns these possible `conclusion` values:
 - Code coverage below threshold
 
 **neutral**
+
 - Informational check (code coverage report)
 - Optional advisory check
 - Check configured to never fail
 
 **cancelled**
+
 - User manually cancelled the workflow
 - Another workflow cancelled this one
 - Concurrency group replaced this run
 
 **skipped**
+
 - Job condition evaluated to false
 - Path filter excluded the job
 - Dependent job failed (needs: condition)
 
 **timed_out**
+
 - Job exceeded `timeout-minutes` setting
 - Step exceeded individual timeout
 - Default 6-hour workflow limit reached
 
 **action_required**
+
 - Dependabot PR requires approval
 - Manual approval step pending
 - External review required
 
 **stale**
+
 - New commit pushed after check started
 - Force push invalidated the check
 - Check no longer relevant to current code
 
 **startup_failure**
+
 - Self-hosted runner unavailable
 - Docker image pull failed
 - Resource allocation failed
@@ -116,6 +125,7 @@ GitHub Checks API returns these possible `conclusion` values:
 Required checks are configured in repository settings under **Settings > Branches > Branch protection rules**.
 
 Configuration options:
+
 - **Require status checks to pass before merging**: Enables check requirements
 - **Require branches to be up to date**: Forces rebase before merge
 - **Status checks that are required**: List of check names
@@ -183,18 +193,21 @@ Decision matrix for optional check failures:
 ### 3.1 Difference Between Check Runs and Check Suites
 
 **Check Suite**:
+
 - Container for multiple check runs
 - Created per CI app per commit
 - Has aggregate status
 - One per GitHub App per commit SHA
 
 **Check Run**:
+
 - Individual job or test result
 - Belongs to exactly one check suite
 - Has detailed output and annotations
 - Multiple per check suite
 
 Hierarchy:
+
 ```
 Commit SHA
 └── Check Suite (GitHub Actions)
@@ -209,6 +222,7 @@ Commit SHA
 ### 3.2 When to Query Which API Endpoint
 
 **Use Check Runs API when you need**:
+
 - Individual job details
 - Specific check output/annotations
 - Re-run a specific job
@@ -223,6 +237,7 @@ gh api repos/OWNER/REPO/check-runs/CHECK_RUN_ID
 ```
 
 **Use Check Suites API when you need**:
+
 - Aggregate status for an app
 - Re-run all checks from an app
 - List all apps running checks
@@ -236,6 +251,7 @@ gh api repos/OWNER/REPO/check-suites/SUITE_ID/rerequest -X POST
 ```
 
 **Use PR Checks via gh CLI for simplicity**:
+
 ```bash
 # Combines check runs and commit statuses
 gh pr checks PR_NUMBER --json name,status,conclusion
@@ -246,11 +262,13 @@ gh pr checks PR_NUMBER --json name,status,conclusion
 When aggregating results from multiple CI providers:
 
 1. **Collect all check runs**:
+
    ```bash
    gh api repos/OWNER/REPO/commits/SHA/check-runs --jq '.check_runs[]'
    ```
 
 2. **Collect legacy status checks** (older integrations):
+
    ```bash
    gh api repos/OWNER/REPO/commits/SHA/statuses --jq '.[]'
    ```
@@ -261,6 +279,7 @@ When aggregating results from multiple CI providers:
    - Prefer check runs over legacy statuses
 
 4. **Calculate aggregate status**:
+
    ```python
    def aggregate_status(checks):
        if any(c['conclusion'] == 'failure' for c in checks):
@@ -287,15 +306,18 @@ GitHub Actions creates check runs with this naming pattern:
 ```
 
 Examples:
+
 - `CI / build`
 - `CI / test (ubuntu-latest)`
 - `Release / publish`
 
 Matrix jobs include matrix values:
+
 - `CI / test (ubuntu-latest, 3.9)`
 - `CI / test (windows-latest, 3.11)`
 
 **Matching in branch protection**:
+
 - Use exact name: `CI / build`
 - Wildcards not supported in GitHub UI
 - API allows pattern matching
@@ -309,11 +331,13 @@ ci/circleci: {job_name}
 ```
 
 Examples:
+
 - `ci/circleci: build`
 - `ci/circleci: test`
 - `ci/circleci: deploy`
 
 **Key differences from GitHub Actions**:
+
 - Prefix `ci/circleci:` always present
 - No workflow name in check name
 - Approval jobs show as `action_required`
@@ -327,6 +351,7 @@ continuous-integration/jenkins/{job_type}
 ```
 
 Examples:
+
 - `continuous-integration/jenkins/branch`
 - `continuous-integration/jenkins/pr-merge`
 
@@ -346,6 +371,7 @@ Common third-party check patterns:
 | AWS CodeBuild | `CodeBuild:{project}` |
 
 **Identifying check provider**:
+
 ```bash
 # Check the app that created the check run
 gh api repos/OWNER/REPO/commits/SHA/check-runs \

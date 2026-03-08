@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Document Gate Failure
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -140,6 +139,7 @@ Create clear, actionable documentation of gate failures in PR comments so author
 ### Step 2: Format Issue Details
 
 For each issue, include:
+
 - **Location**: `file_path:line_number`
 - **Issue**: Clear description of the problem
 - **Impact**: Why this matters
@@ -208,15 +208,19 @@ gh pr review <NUMBER> --comment --body '```suggestion
 
 ### Test Failures
 ```
+
 test_auth.py::test_login_invalid_password FAILED
 test_auth.py::test_token_expiry FAILED
 test_auth.py::test_refresh_token FAILED
+
 ```
 
 ### Linting Errors
 ```
+
 src/auth.py:42:1: E302 expected 2 blank lines
 src/auth.py:67:80: E501 line too long
+
 ```
 
 ### Required Actions
@@ -255,6 +259,7 @@ src/auth.py:67:80: E501 line too long
    query = "SELECT * FROM users WHERE id = ?"
    cursor.execute(query, (user_id,))
    ```
+
 ```
 
 ### Pre-Merge Gate Failure
@@ -281,9 +286,10 @@ src/auth.py:67:80: E501 line too long
    git push
    ```
 
-2. **Investigate CI failure**:
+1. **Investigate CI failure**:
    - Check CI logs (check your CI/CD pipeline dashboard for build logs)
    - Fix any issues and push
+
 ```
 
 ## Example

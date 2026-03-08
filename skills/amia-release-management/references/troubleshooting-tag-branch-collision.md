@@ -1,6 +1,7 @@
 # Troubleshooting: Tag-Branch Name Collision
 
 ## Contents
+
 - What is a tag-branch name collision
 - How collisions cause HTTP 300 errors
 - How to detect collisions using amia_cleanup_version_branches.py
@@ -22,6 +23,7 @@ This is a problem because git references (branches and tags) share a namespace. 
 When GitHub's API receives a request for a tarball download using a version reference (e.g., `v1.2.0`), it needs to resolve the reference to a specific commit. If both a branch and tag with that name exist, the API returns HTTP 300 (Multiple Choices) instead of the expected HTTP 200 with the tarball.
 
 This breaks:
+
 - Auto-updater scripts that download release tarballs
 - CI/CD pipelines that fetch specific versions
 - Package managers that resolve versions via GitHub releases
@@ -39,6 +41,7 @@ uv run scripts/amia_cleanup_version_branches.py
 ```
 
 The script will:
+
 1. List all version tags matching `vX.Y.Z` pattern
 2. List all local and remote branches matching `vX.Y.Z` pattern
 3. Identify collisions (where both a tag and branch have the same name)
@@ -65,7 +68,7 @@ git branch -D v1.2.0
 git push origin --delete v1.2.0
 ```
 
-5. Verify the tag still exists: `git tag | grep v1.2.0`
+1. Verify the tag still exists: `git tag | grep v1.2.0`
 
 ---
 

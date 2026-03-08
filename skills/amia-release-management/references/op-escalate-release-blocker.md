@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Escalate Release Blocker
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -164,6 +163,7 @@ fi
 ### Step 5: Notify via AI Maestro
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `[RELEASE BLOCKED] v<VERSION>`
 - **Priority**: `urgent`

@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Run Multilanguage Linters
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -101,11 +100,13 @@ Execute the appropriate linters for each programming language detected in a PR. 
 ## Procedure
 
 1. **Checkout PR branch locally**
+
    ```bash
    gh pr checkout <PR_NUMBER>
    ```
 
 2. **For each detected language, run its linters**
+
    ```bash
    # Python
    ruff check src/ tests/

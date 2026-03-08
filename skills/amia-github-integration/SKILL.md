@@ -20,12 +20,14 @@ This skill is the **entry point** for all GitHub integration tasks in agent orch
 ## Prerequisites
 
 Before using any GitHub integration skill, ensure:
+
 1. GitHub CLI version 2.14 or higher is installed (`gh --version`)
 2. GitHub CLI is authenticated (`gh auth status`)
 3. You have write permissions to the target repository
 4. Basic familiarity with Git commands
 
 **First-time setup:**
+
 ```bash
 # Install GitHub CLI
 brew install gh   # macOS
@@ -39,7 +41,8 @@ gh auth status
 ```
 
 **For detailed setup instructions**, see [references/prerequisites-and-setup.md](references/prerequisites-and-setup.md).
-  - **Contents:** Initial Setup Requirements, Installing GitHub CLI, Verifying GitHub CLI Version, GitHub CLI Authentication, Step 1: Execute Authentication, Step 2: Choose Authentication Method, Step 3: Grant Permissions, Step 4: Initial Verification, Verify Authentication, Re-authentication, Troubleshooting Authentication, Problem: "Command not found: gh", Problem: "Not logged into any GitHub hosts", Problem: "HTTP 401: Bad credentials", Problem: "Resource not accessible by integration", Security Best Practices, Next Steps
+
+- **Contents:** Initial Setup Requirements, Installing GitHub CLI, Verifying GitHub CLI Version, GitHub CLI Authentication, Step 1: Execute Authentication, Step 2: Choose Authentication Method, Step 3: Grant Permissions, Step 4: Initial Verification, Verify Authentication, Re-authentication, Troubleshooting Authentication, Problem: "Command not found: gh", Problem: "Not logged into any GitHub hosts", Problem: "HTTP 401: Bad credentials", Problem: "Resource not accessible by integration", Security Best Practices, Next Steps
 
 ## Decision Tree: Which Skill to Use?
 
@@ -50,6 +53,7 @@ Use this decision tree to route to the appropriate specialized skill:
 **→ Use `amia-github-pr-workflow`**
 
 This skill covers:
+
 - Creating pull requests linked to issues
 - PR status monitoring and CI/CD integration
 - Merge strategies (squash, merge commit, rebase)
@@ -61,6 +65,7 @@ This skill covers:
 **→ Use `amia-github-projects-sync`**
 
 This skill covers:
+
 - Bidirectional synchronization between agent tasks and GitHub Projects V2
 - Creating and configuring project boards
 - Status column management (Backlog, Todo, In Progress, AI Review, Human Review, Merge/Release, Done, Blocked)
@@ -73,6 +78,7 @@ This skill covers:
 **→ Use `amia-kanban-orchestration`**
 
 This skill covers:
+
 - Managing the 9-label classification system (feature, bug, refactor, test, docs, performance, security, dependencies, workflow)
 - Issue lifecycle management across Kanban columns
 - Label-based filtering and reporting
@@ -83,6 +89,7 @@ This skill covers:
 **→ Use `amia-git-worktree-operations`**
 
 This skill covers:
+
 - Creating and managing Git worktrees for parallel feature development
 - Worktree-based PR workflows
 - Cleanup and maintenance of worktrees
@@ -91,29 +98,30 @@ This skill covers:
 
 **→ See [references/api-operations.md](references/api-operations.md)**
   <!-- TOC: api-operations.md -->
-  - 1 [Executing GitHub Issue Operations](#11-executing-github-issue-operations)
-  - 1 Creating issues with labels, milestones, and assignees
-  - 2 Updating issue metadata (title, body, labels)
-  - 3 Managing issue lifecycle (close, reopen, transfer)
-  - 2 [Executing GitHub Pull Request Operations](#12-executing-github-pull-request-operations)
-  - 1 Creating PRs from branches
-  - 2 Managing PR reviewers and assignees
-  - 3 Submitting PR reviews (approve, request changes, comment)
-  - 4 Merging PRs with different strategies
-  - 3 [Executing GitHub Projects V2 Operations](#13-executing-github-projects-v2-operations)
-  - 1 Adding items to project boards
-  - 2 Moving items between columns
-  - 3 Updating custom field values via GraphQL
-  - 4 Batch updating project items
-  - 4 [Managing Conversation Threads on Issues and PRs](#14-managing-conversation-threads-on-issues-and-prs)
-  - 5 [Handling GitHub API Rate Limits](#15-handling-github-api-rate-limits)
-  - 6 [Running Quality Gates Before API Operations](#16-running-quality-gates-before-api-operations)
-  - 7 [Coordinating API Operations via AI Maestro](#17-coordinating-api-operations-via-ai-maestro)
-  - 8 [Step-by-Step API Operation Workflow](#18-step-by-step-api-operation-workflow)
-  - 9 [Using GitHub CLI and GraphQL Tools](#19-using-github-cli-and-graphql-tools)
+- 1 [Executing GitHub Issue Operations](#11-executing-github-issue-operations)
+- 1 Creating issues with labels, milestones, and assignees
+- 2 Updating issue metadata (title, body, labels)
+- 3 Managing issue lifecycle (close, reopen, transfer)
+- 2 [Executing GitHub Pull Request Operations](#12-executing-github-pull-request-operations)
+- 1 Creating PRs from branches
+- 2 Managing PR reviewers and assignees
+- 3 Submitting PR reviews (approve, request changes, comment)
+- 4 Merging PRs with different strategies
+- 3 [Executing GitHub Projects V2 Operations](#13-executing-github-projects-v2-operations)
+- 1 Adding items to project boards
+- 2 Moving items between columns
+- 3 Updating custom field values via GraphQL
+- 4 Batch updating project items
+- 4 [Managing Conversation Threads on Issues and PRs](#14-managing-conversation-threads-on-issues-and-prs)
+- 5 [Handling GitHub API Rate Limits](#15-handling-github-api-rate-limits)
+- 6 [Running Quality Gates Before API Operations](#16-running-quality-gates-before-api-operations)
+- 7 [Coordinating API Operations via AI Maestro](#17-coordinating-api-operations-via-ai-maestro)
+- 8 [Step-by-Step API Operation Workflow](#18-step-by-step-api-operation-workflow)
+- 9 [Using GitHub CLI and GraphQL Tools](#19-using-github-cli-and-graphql-tools)
   <!-- /TOC -->
 
 This reference covers:
+
 - Direct GitHub API calls (REST and GraphQL)
 - Authentication methods (token, app, OAuth)
 - Rate limiting and pagination
@@ -123,9 +131,11 @@ This reference covers:
 ### I need to manage multiple GitHub identities
 
 **→ See [references/multi-user-workflow.md](references/multi-user-workflow.md)**
-  - **Contents:** Use-Case TOC, Part 1: Setup and Configuration, Part 2: Operations and Troubleshooting, Overview, Why Multiple Identities?, Identity Components, Quick Start, 1. Generate SSH Key for Secondary Account, 2. Add Key to GitHub, 3. Configure SSH Host Alias, 4. Authenticate Secondary Account with gh CLI, 5. Configure Repository for Secondary Identity, Key Files and Locations, Common Commands Quick Reference, See Also
+
+- **Contents:** Use-Case TOC, Part 1: Setup and Configuration, Part 2: Operations and Troubleshooting, Overview, Why Multiple Identities?, Identity Components, Quick Start, 1. Generate SSH Key for Secondary Account, 2. Add Key to GitHub, 3. Configure SSH Host Alias, 4. Authenticate Secondary Account with gh CLI, 5. Configure Repository for Secondary Identity, Key Files and Locations, Common Commands Quick Reference, See Also
 
 This reference covers:
+
 - SSH key setup for multiple accounts
 - SSH host aliases configuration
 - GitHub CLI multi-account authentication
@@ -139,9 +149,11 @@ When you need to perform operations that span multiple GitHub areas (e.g., bulk 
 ### Batch Label Operations
 
 **Reference:** [references/batch-operations.md](references/batch-operations.md)
-  - **Contents:** Use-Case TOC, Filtering by Label, Filter by Single Label, Filter by Multiple Labels (AND), Filter by Multiple Labels (OR), Filter by Status, Filter by Assignee, Filter by Date, Advanced Filtering, Complex Filter Examples, Saving Filter Results, Filtering in Projects V2, Batch Issue Updates, Update Labels on Multiple Issues, Update Assignees on Multiple Issues, Update Status in Projects V2, Bulk Label Operations, Add Label to All Matching Issues, Remove Label from All Issues, Replace Label Across All Issues, Bulk Closing Issues, Close All Issues with Specific Label, Close Stale Issues, Safe Batch Operations, Preview Changes Before Applying, Create Audit Trail, Implement Rollback Capability, Best Practices
+
+- **Contents:** Use-Case TOC, Filtering by Label, Filter by Single Label, Filter by Multiple Labels (AND), Filter by Multiple Labels (OR), Filter by Status, Filter by Assignee, Filter by Date, Advanced Filtering, Complex Filter Examples, Saving Filter Results, Filtering in Projects V2, Batch Issue Updates, Update Labels on Multiple Issues, Update Assignees on Multiple Issues, Update Status in Projects V2, Bulk Label Operations, Add Label to All Matching Issues, Remove Label from All Issues, Replace Label Across All Issues, Bulk Closing Issues, Close All Issues with Specific Label, Close Stale Issues, Safe Batch Operations, Preview Changes Before Applying, Create Audit Trail, Implement Rollback Capability, Best Practices
 
 Use when:
+
 - Updating labels on multiple issues simultaneously
 - Bulk closing stale issues
 - Filtering by multiple criteria (label + status + assignee + date)
@@ -149,6 +161,7 @@ Use when:
 - Creating audit trails for batch operations
 
 **Quick example:**
+
 ```bash
 # Bulk add label to all open issues with "feature" label
 gh issue list --label "feature" --state open --json number --jq '.[].number' | \
@@ -160,6 +173,7 @@ gh issue list --label "feature" --state open --json number --jq '.[].number' | \
 **Reference:** [references/automation-scripts.md](references/automation-scripts.md)
 
 Use when:
+
 - Syncing GitHub Projects V2 with agent tasks (`sync-projects-v2.py`)
 - Bulk assigning labels at scale (`bulk-label-assignment.py`)
 - Monitoring PR status and CI/CD failures (`monitor-pull-requests.py`)
@@ -219,11 +233,12 @@ This skill produces the following outputs depending on the operation performed:
 | `HTTP 422 - Validation Failed` | Invalid field values (e.g., non-existent label name, malformed project field) | Verify the label exists with `gh label list` or check project field names with `gh project field-list` |
 | `API rate limit exceeded` | Too many API calls in a short period | Wait for the rate limit reset (check `gh api rate-limit`), or use GraphQL to batch multiple queries into one request |
 | `Could not resolve to a Project` | Wrong project number or the project is in a different organization | Verify the project number with `gh project list --owner <org>` and ensure you are targeting the correct owner |
-| `xargs: gh: terminated by signal 13` | Pipe broken during batch operation, often due to API errors mid-stream | Re-run the batch operation with smaller batch sizes or add error handling with `xargs -I {} sh -c 'gh issue edit {} --add-label "label" || true'` |
+| `xargs: gh: terminated by signal 13` | Pipe broken during batch operation, often due to API errors mid-stream | Re-run the batch operation with smaller batch sizes or add error handling with `xargs -I {} sh -c 'gh issue edit {} --add-label "label" \|\| true'` |
 
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 
@@ -235,6 +250,7 @@ When invoking from agents or automated workflows, always pass `--output-file` to
 
 You receive a request: "Create a PR for the feature branch and link it to issue #42."
 This is a Pull Request task. According to the decision tree, invoke `amia-github-pr-workflow`:
+
 ```bash
 # Switch to amia-github-pr-workflow skill, then run:
 gh pr create --base main --head feature-branch --title "Implement feature X" \
@@ -244,6 +260,7 @@ gh pr create --base main --head feature-branch --title "Implement feature X" \
 **Example 2: Bulk add a label to all open bug issues**
 
 You need to add the `priority:critical` label to all issues labeled `bug` that are currently open:
+
 ```bash
 # Step 1: Preview affected issues (dry-run)
 gh issue list --label "bug" --state open --json number,title --jq '.[] | "\(.number): \(.title)"'
@@ -260,6 +277,7 @@ gh issue view 15 --json labels --jq '.labels[].name'
 
 You receive a request: "Sync the agent task board with the GitHub Project for repository X."
 This is a GitHub Projects V2 synchronization task. According to the decision tree, invoke `amia-github-projects-sync`:
+
 ```bash
 # Verify the project exists first
 gh project list --owner Emasoft --format json
@@ -271,7 +289,8 @@ uv run python scripts/sync-projects-v2.py --repo Emasoft/repo-x --project 3 --di
 ## Troubleshooting
 
 If you encounter issues with any GitHub integration task, see [references/troubleshooting.md](references/troubleshooting.md) for:
-  - **Contents:** Quick Navigation, Use-Case TOC, If you get authentication errors, If Projects V2 sync fails, If pull requests don't link to issues, If labels are rejected, If GitHub CLI commands fail, If API rate limits are hit, General Troubleshooting Steps, Getting Help
+
+- **Contents:** Quick Navigation, Use-Case TOC, If you get authentication errors, If Projects V2 sync fails, If pull requests don't link to issues, If labels are rejected, If GitHub CLI commands fail, If API rate limits are hit, General Troubleshooting Steps, Getting Help
 - Authentication failures and re-authentication
 - Projects V2 synchronization issues
 - Pull request linking problems
@@ -283,6 +302,7 @@ If you encounter issues with any GitHub integration task, see [references/troubl
 ## Resources
 
 **Core References:**
+
 - [references/prerequisites-and-setup.md](references/prerequisites-and-setup.md) - GitHub CLI installation and authentication
   <!-- TOC: prerequisites-and-setup.md -->
   - Initial Setup Requirements
@@ -363,6 +383,7 @@ If you encounter issues with any GitHub integration task, see [references/troubl
   <!-- /TOC -->
 
 **Specialized Skills:**
+
 - `amia-github-pr-workflow` - Pull request operations
 - `amia-github-projects-sync` - Projects V2 bidirectional synchronization
 - `amia-kanban-orchestration` - Kanban board and 9-label system management
@@ -374,6 +395,7 @@ If you encounter issues with any GitHub integration task, see [references/troubl
 **Last Updated:** 2026-02-05
 **Maintainer:** Skill Development Team
 **Changelog:**
+
 - 2.0.0: Refactored as thin dispatcher to specialized skills, removed duplicated content
 - 1.2.0: Added cross-platform `gh_multiuser.py` script with configuration-driven identity management
 - 1.1.0: Added Multi-User Workflow reference for owner/developer identity separation

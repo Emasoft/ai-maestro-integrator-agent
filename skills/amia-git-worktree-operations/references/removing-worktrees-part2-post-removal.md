@@ -1,6 +1,7 @@
 # Removing Worktrees - Part 2: Post-Removal and Automation
 
 ## Table of Contents
+
 1. [After removing a worktree → Post-Removal Steps](#post-removal-steps)
    - 1.1 [Update Registry](#step-1-update-registry)
    - 1.2 [Release Allocated Ports](#step-2-release-allocated-ports)
@@ -16,6 +17,7 @@
    - 3.5 [Failure: Worktree Has Uncommitted Changes](#failure-worktree-has-uncommitted-changes)
 
 **Related Parts:**
+
 - [Part 1: Preparation and Basic Commands](removing-worktrees-part1-basics.md)
 - [Part 3: Advanced Operations](removing-worktrees-part3-advanced.md)
 - [Index: All Removal Topics](removing-worktrees-index.md)
@@ -30,6 +32,7 @@
 Remove or mark the worktree entry as deleted in `design/worktree-registry.json`.
 
 **Method A - Remove entry (recommended):**
+
 ```bash
 # Use jq to remove entry
 jq 'del(.worktrees[] | select(.worktree_id == "review-GH-42"))' \
@@ -38,6 +41,7 @@ jq 'del(.worktrees[] | select(.worktree_id == "review-GH-42"))' \
 ```
 
 **Method B - Mark as deleted:**
+
 ```bash
 # Update status field
 jq '(.worktrees[] | select(.worktree_id == "review-GH-42") | .status) = "deleted"' \
@@ -46,6 +50,7 @@ jq '(.worktrees[] | select(.worktree_id == "review-GH-42") | .status) = "deleted
 ```
 
 **Manual method (if jq unavailable):**
+
 ```bash
 # Edit registry file
 nano design/worktree-registry.json
@@ -60,6 +65,7 @@ nano design/worktree-registry.json
 ```
 
 **Verification:**
+
 ```bash
 # Check entry is gone
 cat design/worktree-registry.json | grep "review-GH-42"
@@ -72,6 +78,7 @@ cat design/worktree-registry.json | grep "review-GH-42"
 Network ports (e.g., 3000, 8000) that were reserved for this worktree's development servers.
 
 **Why release them:**
+
 - Other worktrees can reuse these ports
 - Prevents port exhaustion
 - Maintains port allocation accuracy
@@ -79,6 +86,7 @@ Network ports (e.g., 3000, 8000) that were reserved for this worktree's developm
 **How to release:**
 
 **Option A - Update port tracker:**
+
 ```bash
 # If using design/port-allocations.json
 jq 'del(.allocations["review-GH-42"])' \
@@ -87,12 +95,14 @@ jq 'del(.allocations["review-GH-42"])' \
 ```
 
 **Option B - Manual registry update:**
+
 ```bash
 # Edit registry and remove ports array from worktree entry
 # This happens automatically if you removed the entry in Step 1
 ```
 
 **Verify ports are free:**
+
 ```bash
 # Check port 3000 is not in use
 lsof -i :3000
@@ -107,6 +117,7 @@ lsof -i :8000
 
 **What remaining files?**
 Files outside the worktree directory that might be related:
+
 - Build artifacts
 - Log files
 - Temporary caches
@@ -114,6 +125,7 @@ Files outside the worktree directory that might be related:
 - Config files with worktree paths
 
 **Common locations:**
+
 ```bash
 # Build output directories
 rm -rf /tmp/build-review-GH-42
@@ -129,6 +141,7 @@ rm -rf /tmp/review-GH-42-*
 ```
 
 **Check for symlinks:**
+
 ```bash
 # Find broken symlinks pointing to removed worktree
 find . -type l ! -exec test -e {} \; -print
@@ -143,6 +156,7 @@ find . -type l ! -exec test -e {} \; -delete
 The record of which AI agent was working in this worktree.
 
 **Why update:**
+
 - Agent may be waiting for tasks in removed worktree
 - Frees agent for new assignments
 - Prevents confusion in agent tracking
@@ -152,6 +166,7 @@ The record of which AI agent was working in this worktree.
 **Option A - AI Maestro messaging:**
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `code-reviewer-1`
 - **Subject**: `Worktree review-GH-42 removed`
 - **Priority**: `normal`
@@ -159,6 +174,7 @@ Send a message using the `agent-messaging` skill with:
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Option B - Update agent registry:**
+
 ```bash
 # If using design/agent-assignments.json
 jq '(.agents[] | select(.agent_id == "code-reviewer-1") | .assigned_worktree) = null' \
@@ -169,11 +185,13 @@ jq '(.agents[] | select(.agent_id == "code-reviewer-1") | .assigned_worktree) = 
 ### Step 5: Document Removal
 
 **Why document:**
+
 - Audit trail for worktree lifecycle
 - Helps debug registry issues
 - Tracks resource usage over time
 
 **What to record:**
+
 ```bash
 # Append to removal log
 echo "$(date -Iseconds) | review-GH-42 | GH-42 merged | removed by orchestrator" \
@@ -181,6 +199,7 @@ echo "$(date -Iseconds) | review-GH-42 | GH-42 merged | removed by orchestrator"
 ```
 
 **Log format:**
+
 ```
 TIMESTAMP | WORKTREE_ID | REASON | REMOVED_BY
 2025-12-31T10:30:00+00:00 | review-GH-42 | PR merged | orchestrator
@@ -198,6 +217,7 @@ An automated script that performs all removal and post-removal steps in one comm
 `scripts/cleanup-worktree.sh`
 
 **Usage:**
+
 ```bash
 # Basic usage
 ./scripts/cleanup-worktree.sh review-GH-42
@@ -210,6 +230,7 @@ An automated script that performs all removal and post-removal steps in one comm
 ```
 
 **Script contents:**
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -318,11 +339,13 @@ echo "  Agent freed: $AGENT"
 ```
 
 **Making script executable:**
+
 ```bash
 chmod +x scripts/cleanup-worktree.sh
 ```
 
 **Integration with task agents:**
+
 ```bash
 # From orchestrator - delegate cleanup to task agent
 Task: "Run cleanup script for review-GH-42"
@@ -335,6 +358,7 @@ Task: "Run cleanup script for review-GH-42"
 ### Failure: Locked Worktree
 
 **Symptom:**
+
 ```
 fatal: 'review-GH-42' is locked
 ```
@@ -343,6 +367,7 @@ fatal: 'review-GH-42' is locked
 Worktree is marked as locked (usually due to concurrent operations or crash).
 
 **Solution:**
+
 ```bash
 # Check lock status
 git worktree list
@@ -360,6 +385,7 @@ git worktree remove ../review-GH-42
 ```
 
 **Why worktrees get locked:**
+
 - Git operation crashed mid-execution
 - Multiple git commands ran simultaneously
 - Manual lock for safety
@@ -367,6 +393,7 @@ git worktree remove ../review-GH-42
 ### Failure: Missing Worktree Path
 
 **Symptom:**
+
 ```
 fatal: '../review-GH-42' does not exist
 ```
@@ -375,6 +402,7 @@ fatal: '../review-GH-42' does not exist
 Directory was deleted manually without using `git worktree remove`.
 
 **Solution:**
+
 ```bash
 # Check if git still tracks it
 git worktree list
@@ -394,11 +422,13 @@ git worktree list
 Registry shows worktree exists, but `git worktree list` doesn't show it.
 
 **Cause:**
+
 - Worktree removed without updating registry
 - Registry manually edited incorrectly
 - Script failure during removal
 
 **Solution:**
+
 ```bash
 # Step 1: Get truth from git
 git worktree list > /tmp/actual-worktrees.txt
@@ -421,11 +451,13 @@ Always use cleanup script or manual process that updates registry.
 ### Failure: Permission Denied
 
 **Symptom:**
+
 ```
 error: unable to delete file: Permission denied
 ```
 
 **Cause:**
+
 - Files owned by different user
 - Running processes have files open
 - File system permissions issue
@@ -433,6 +465,7 @@ error: unable to delete file: Permission denied
 **Solution:**
 
 **Step 1: Check for running processes:**
+
 ```bash
 lsof +D /path/to/review-GH-42
 # Kill any processes found
@@ -440,6 +473,7 @@ kill <PID>
 ```
 
 **Step 2: Check file ownership:**
+
 ```bash
 ls -la /path/to/review-GH-42
 # If owned by different user, use sudo or fix ownership
@@ -447,6 +481,7 @@ sudo chown -R $(whoami) /path/to/review-GH-42
 ```
 
 **Step 3: Retry removal:**
+
 ```bash
 git worktree remove review-GH-42
 ```
@@ -454,6 +489,7 @@ git worktree remove review-GH-42
 ### Failure: Worktree Has Uncommitted Changes
 
 **Symptom:**
+
 ```
 fatal: 'review-GH-42' contains modified or untracked files, use --force to delete it
 ```
@@ -464,6 +500,7 @@ Uncommitted changes exist and standard removal prevents data loss.
 **Solutions (choose one):**
 
 **Option 1: Commit changes**
+
 ```bash
 cd review-GH-42
 git add .
@@ -474,6 +511,7 @@ git worktree remove review-GH-42
 ```
 
 **Option 2: Stash changes**
+
 ```bash
 cd review-GH-42
 git stash push -m "Changes from review-GH-42"
@@ -482,6 +520,7 @@ git worktree remove review-GH-42
 ```
 
 **Option 3: Force remove (discard changes)**
+
 ```bash
 git worktree remove --force review-GH-42
 ```

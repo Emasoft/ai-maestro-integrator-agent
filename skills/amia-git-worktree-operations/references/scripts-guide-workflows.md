@@ -18,17 +18,21 @@
 **Steps:**
 
 1. **Create review worktree with ports**
+
    ```bash
    python scripts/worktree_create.py --purpose review --identifier GH-42 --branch feature/auth --ports
    ```
 
 2. **Verify port allocation**
+
    ```bash
    python scripts/port_status.py --worktree review-GH-42
    ```
+
    Note the allocated ports (e.g., web:8001, api:9001)
 
 3. **Navigate to worktree and start services**
+
    ```bash
    cd worktrees/review-GH-42
    npm install
@@ -36,11 +40,13 @@
    ```
 
 4. **Test the feature in browser**
+
    ```
    Open: http://localhost:8001
    ```
 
 5. **After review is complete, mark as done and remove**
+
    ```bash
    # Manually mark as completed in registry, or use helper script
    # Then remove:
@@ -48,6 +54,7 @@
    ```
 
 **Why this workflow:**
+
 - Isolated from your main development work
 - Dedicated ports prevent conflicts
 - Easy cleanup after review
@@ -61,22 +68,27 @@
 **Steps:**
 
 1. **Create feature worktree with automatic port allocation**
+
    ```bash
    python scripts/worktree_create.py --purpose feature --identifier user-auth --branch feature/user-authentication --ports
    ```
 
 2. **Check allocated ports**
+
    ```bash
    python scripts/port_status.py --worktree feature-user-auth
    ```
+
    Example output: web:8001, api:9001, db:5433
 
 3. **Navigate to worktree**
+
    ```bash
    cd worktrees/feature-user-auth
    ```
 
 4. **Start all services with allocated ports**
+
    ```bash
    # Terminal 1: Frontend
    npm run dev -- --port 8001
@@ -89,11 +101,12 @@
    ```
 
 5. **Develop and test feature**
-   - Frontend: http://localhost:8001
-   - API: http://localhost:9001
+   - Frontend: <http://localhost:8001>
+   - API: <http://localhost:9001>
    - DB: localhost:5433
 
 6. **When feature is complete**
+
    ```bash
    # Commit changes
    git add .
@@ -105,6 +118,7 @@
    ```
 
 **Why this workflow:**
+
 - All services have unique ports, no conflicts with other work
 - Can run main development and feature development simultaneously
 - Clean separation of concerns
@@ -118,32 +132,39 @@
 **Steps:**
 
 1. **List all worktrees to see what's active**
+
    ```bash
    python scripts/worktree_list.py --status all
    ```
 
 2. **Preview what will be removed**
+
    ```bash
    python scripts/worktree_remove.py --all-completed --dry-run
    ```
 
 3. **Review the list and confirm removal**
+
    ```bash
    python scripts/worktree_remove.py --all-completed
    ```
+
    Type 'y' when prompted
 
 4. **Validate registry is consistent after cleanup**
+
    ```bash
    python scripts/registry_validate.py
    ```
 
 5. **Verify port availability increased**
+
    ```bash
    python scripts/port_status.py --all
    ```
 
 **Why this workflow:**
+
 - Maintains clean workspace
 - Releases ports for new worktrees
 - Ensures registry stays consistent
@@ -157,11 +178,13 @@
 **Steps:**
 
 1. **Create hotfix worktree from production tag**
+
    ```bash
    python scripts/worktree_create.py --purpose hotfix --identifier CVE-2024-001 --branch v2.1.3 --ports
    ```
 
 2. **Navigate and apply fix**
+
    ```bash
    cd worktrees/hotfix-CVE-2024-001
    # Make necessary changes
@@ -170,6 +193,7 @@
    ```
 
 3. **Test the fix**
+
    ```bash
    npm run test
    npm run dev -- --port 8001  # Use allocated port
@@ -177,17 +201,20 @@
    ```
 
 4. **Push hotfix branch**
+
    ```bash
    git push origin hotfix/CVE-2024-001
    # Create PR for review
    ```
 
 5. **After merge, cleanup**
+
    ```bash
    python scripts/worktree_remove.py hotfix-CVE-2024-001 --force
    ```
 
 **Why this workflow:**
+
 - Isolates hotfix from ongoing development
 - Starts from exact production version
 - Fast cleanup after merge
@@ -201,11 +228,13 @@
 **Steps:**
 
 1. **Create experiment worktree**
+
    ```bash
    python scripts/worktree_create.py --purpose experiment --identifier async-rewrite --branch experiment/async-refactor
    ```
 
 2. **Make experimental changes freely**
+
    ```bash
    cd worktrees/experiment-async-rewrite
    # Rewrite components
@@ -213,6 +242,7 @@
    ```
 
 3. **If experiment succeeds, extract useful changes**
+
    ```bash
    # Cherry-pick good commits to feature branch
    git checkout -b feature/async-improvements
@@ -220,11 +250,13 @@
    ```
 
 4. **If experiment fails, remove without ceremony**
+
    ```bash
    python scripts/worktree_remove.py experiment-async-rewrite --force
    ```
 
 **Why this workflow:**
+
 - Freedom to experiment without polluting main history
 - Easy to abandon failed experiments
 - Can extract successful parts
@@ -238,6 +270,7 @@
 **Steps:**
 
 1. **Run validation to detect issues**
+
    ```bash
    python scripts/registry_validate.py --verbose
    ```
@@ -248,26 +281,31 @@
    - Port conflicts
 
 3. **Create backup before fixing**
+
    ```bash
    cp .claude/worktree-registry.json .claude/worktree-registry.json.manual-backup
    ```
 
 4. **Apply automatic fixes**
+
    ```bash
    python scripts/registry_validate.py --fix --verbose
    ```
 
 5. **Verify fixes were successful**
+
    ```bash
    python scripts/worktree_list.py --validate
    ```
 
 6. **Check port allocations are correct**
+
    ```bash
    python scripts/port_status.py --all
    ```
 
 **Why this workflow:**
+
 - Catches inconsistencies from manual operations
 - Prevents registry corruption
 - Maintains reliable automation

@@ -7,7 +7,6 @@ description: "Collect CI failure logs from GitHub Actions workflow run"
 
 # Operation: Collect CI Failure Logs
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -146,4 +145,5 @@ gh auth refresh --scopes actions:read
 ## Next Operation
 
 After collecting logs, proceed to:
+
 - [op-run-diagnostic-script.md](op-run-diagnostic-script.md) - Analyze logs with diagnostic script

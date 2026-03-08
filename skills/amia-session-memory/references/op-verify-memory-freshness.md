@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Verify Memory Freshness
 
-
 ## Contents
 
 - [Purpose](#purpose)

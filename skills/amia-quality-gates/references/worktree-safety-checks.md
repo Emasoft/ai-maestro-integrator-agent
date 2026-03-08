@@ -11,25 +11,25 @@ description: "Safety checks for git hooks running in worktree environments to pr
   - 1.1. What git worktrees are and how they share repository state
   - 1.2. How worktrees differ from clones (shared objects, shared config)
   - 1.3. Why hooks must be aware of worktree environments
-- 2. Fixing leaked environment variables that misdirect git operations
+- 1. Fixing leaked environment variables that misdirect git operations
   - 2.1. The GIT_DIR environment variable problem
   - 2.2. The GIT_WORK_TREE environment variable problem
   - 2.3. How IDE editors and parent shells leak these variables into hooks
   - 2.4. The fix: unsetting dangerous variables at hook start
-- 3. Detecting and fixing corrupted core.worktree configuration
+- 1. Detecting and fixing corrupted core.worktree configuration
   - 3.1. What core.worktree is and how it gets set accidentally
   - 3.2. How corrupted core.worktree causes phantom file additions
   - 3.3. Detecting the problem: checking for unexpected core.worktree values
   - 3.4. Fixing the problem: unsetting core.worktree
-- 4. Detecting whether a hook is running in a worktree or the main repository
+- 1. Detecting whether a hook is running in a worktree or the main repository
   - 4.1. How to distinguish a worktree from a main repository
   - 4.2. Reading the worktree gitdir file to find the main repository
   - 4.3. Adjusting hook behavior based on worktree detection
-- 5. Graceful degradation when dependencies are not available in a worktree
+- 1. Graceful degradation when dependencies are not available in a worktree
   - 5.1. Why worktrees might lack build artifacts or installed dependencies
   - 5.2. Warning instead of blocking when tools are missing
   - 5.3. Skipping checks that require a full project setup
-- 6. Complete safety preamble script for all git hooks
+- 1. Complete safety preamble script for all git hooks
   - 6.1. Ready-to-use code block to paste at the top of any hook
   - 6.2. Explanation of each safety check in the preamble
 

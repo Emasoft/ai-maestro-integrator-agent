@@ -41,6 +41,7 @@ python scripts/amia_set_auto_merge.py --pr 123 --repo owner/repo --enable --merg
 ## Documentation
 
 See [SKILL.md](SKILL.md) for complete documentation including:
+
 - Decision tree for merge operations
 - Exit code reference
 - Troubleshooting guide

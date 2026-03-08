@@ -7,6 +7,7 @@
 3. [When you need to know how ports are assigned → Port Allocation Algorithm](#port-allocation-algorithm)
 
 **Related Documents:**
+
 - [Part 2: Configuration & Status](./port-allocation-part2-config-status.md) - Configuration templates, port status commands
 - [Part 3: Conflict Resolution & Docker](./port-allocation-part3-conflict-docker.md) - Conflict handling, Docker integration
 - [Part 4: Cleanup & Troubleshooting](./port-allocation-part4-cleanup-troubleshooting.md) - Port cleanup, troubleshooting, quick reference
@@ -20,6 +21,7 @@
 When you run multiple worktrees of the same project simultaneously, each worktree may need to start its own services (web servers, databases, test runners, debug servers). If all worktrees try to use the same port numbers, you get **port conflicts**.
 
 **Example of a port conflict:**
+
 ```bash
 # Worktree 1 starts web server on port 8080
 cd ~/projects/myapp/main
@@ -35,6 +37,7 @@ npm start  # ERROR: Port 8080 already in use ✗
 **Port allocation** is a system that automatically assigns unique port numbers to each worktree, preventing conflicts.
 
 **How it works:**
+
 1. Each worktree gets its own set of unique ports
 2. Ports are tracked in a central registry
 3. Configuration files use allocated ports instead of hardcoded values
@@ -90,11 +93,13 @@ Worktree: feature-login
 The **port registry** is a file that tracks which ports are currently allocated to which worktrees.
 
 **Registry location:**
+
 ```
 .git/worktree-registry/ports.json
 ```
 
 **Registry format:**
+
 ```json
 {
   "allocated_ports": {
@@ -155,6 +160,7 @@ def find_available_port(service_type, registry):
 ```
 
 **Example:**
+
 ```python
 # Web ports: 8080-8099
 # Already used: 8080 (main), 8081 (feature-login)
@@ -197,6 +203,7 @@ def allocate_ports(worktree_name, registry):
 ```
 
 **Example output:**
+
 ```python
 allocate_ports("feature-payment", registry)
 # Returns:
@@ -217,5 +224,6 @@ The allocation function returns the port numbers that can be written to configur
 ## Next Steps
 
 Continue to [Part 2: Configuration & Status](./port-allocation-part2-config-status.md) for:
+
 - Configuration templates
 - Port status commands

@@ -34,6 +34,7 @@ Comprehensive naming standard for all worktree types.
 Used for code review and PR verification.
 
 **Examples**:
+
 ```
 ../review-GH-42
 ../review-GH-123
@@ -51,6 +52,7 @@ Used for code review and PR verification.
 Used for developing new features.
 
 **Examples**:
+
 ```
 ../feature-user-auth
 ../feature-api-v2
@@ -68,6 +70,7 @@ Used for developing new features.
 Used for fixing bugs.
 
 **Examples**:
+
 ```
 ../bugfix-GH-55-memory-leak
 ../bugfix-GH-88-crash-on-login
@@ -85,6 +88,7 @@ Used for fixing bugs.
 Used for running tests and experiments.
 
 **Examples**:
+
 ```
 ../test-integration-api
 ../test-perf-database
@@ -104,6 +108,7 @@ Used for running tests and experiments.
 Used for proof-of-concepts and experiments.
 
 **Examples**:
+
 ```
 ../exp-new-parser
 ../exp-gpu-rendering
@@ -122,6 +127,7 @@ Used for proof-of-concepts and experiments.
 - **Worktree Path**: `../review-GH-42` (with `../` prefix) - actual filesystem location
 
 **Example**:
+
 ```json
 {
   "id": "review-GH-42",
@@ -157,6 +163,7 @@ All worktree names must follow these rules:
 ## Examples by Scenario
 
 ### Scenario 1: Reviewing a PR
+
 ```
 Issue: GH-42
 PR: #42 - Fix memory leak in parser
@@ -165,6 +172,7 @@ Branch: fix/memory-leak
 ```
 
 ### Scenario 2: Developing a new feature
+
 ```
 Feature: User authentication system
 Worktree: ../feature-user-auth
@@ -172,6 +180,7 @@ Branch: feature/user-auth
 ```
 
 ### Scenario 3: Fixing a critical bug
+
 ```
 Issue: GH-88 - App crashes on login
 Worktree: ../bugfix-GH-88-crash-on-login
@@ -179,6 +188,7 @@ Branch: bugfix/crash-on-login
 ```
 
 ### Scenario 4: Running integration tests
+
 ```
 Test suite: API integration tests
 Worktree: ../test-integration-api
@@ -186,6 +196,7 @@ Branch: main (or develop)
 ```
 
 ### Scenario 5: Experimenting with new approach
+
 ```
 Experiment: New parsing algorithm
 Worktree: ../exp-new-parser

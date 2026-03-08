@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Handle TDD Violation
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -86,6 +85,7 @@ When production code exists without tests:
    - Ensure tests would have failed before code existed
 
 2. **Amend commit history** (if not yet pushed)
+
    ```bash
    # Create the test that "should have" been written first
    git add tests/test_feature.py

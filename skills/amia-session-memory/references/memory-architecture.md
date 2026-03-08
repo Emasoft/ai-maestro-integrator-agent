@@ -34,6 +34,7 @@ AMIA session memory is stored in **three persistent locations**:
 - Multiple files for different memory types
 
 **Files**:
+
 - `current.md` - Active work state
 - `patterns-learned.md` - Accumulated review patterns
 - `release-history.md` - Release log with decisions
@@ -68,6 +69,7 @@ All memory files follow this structure:
 ### Write-Through
 
 Memory is **written immediately** after state changes:
+
 - PR review completed → Write PR comment
 - Pattern observed → Append to patterns-learned.md
 - Release approved → Update release-history.md
@@ -75,6 +77,7 @@ Memory is **written immediately** after state changes:
 ### Read-On-Demand
 
 Memory is **read only when needed**:
+
 - User says "continue PR review" → Load PR comments
 - User asks "what patterns have we seen" → Read patterns-learned.md
 - User says "last release info" → Read release-history.md
@@ -92,6 +95,7 @@ Memory is **read only when needed**:
 | Patterns learned | Indefinite |
 
 Clean up old handoffs with:
+
 ```bash
 find $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/ -name "*.md" -mtime +30 -delete
 ```

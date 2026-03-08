@@ -81,11 +81,13 @@ def detect_stale_entries(registry):
 ### Cleanup Process
 
 **Automatic cleanup runs:**
+
 - On every worktree create/remove operation (cleanup others)
 - On demand via `eia cleanup-worktrees` command
 - Daily via cron/scheduled task (optional)
 
 **Cleanup steps:**
+
 1. Detect stale entries using algorithm above
 2. For each stale entry:
    - Log reason for staleness
@@ -94,6 +96,7 @@ def detect_stale_entries(registry):
 3. After 7 days in `pending-removal`, force remove
 
 **Example output:**
+
 ```
 Stale worktree cleanup:
   - review-GH-42: Directory missing → Removed from registry
@@ -120,11 +123,14 @@ This bypasses the 7-day pending-removal period and removes immediately.
 **Symptom:** JSON parse errors when reading registry
 
 **Solution:**
+
 1. Restore from backup: `design/worktrees/registry.json.backup`
 2. If no backup, rebuild registry:
+
    ```bash
    eia rebuild-registry --scan-worktrees
    ```
+
    This scans filesystem and rebuilds registry from actual worktrees
 
 ### Port Already in Use (but not in registry)
@@ -132,9 +138,11 @@ This bypasses the 7-day pending-removal period and removes immediately.
 **Symptom:** Port allocation fails but registry shows port as available
 
 **Solution:**
+
 1. Check actual port usage: `lsof -i :8080`
 2. If port used by non-worktree process, update port ranges to exclude it
 3. If port used by unregistered worktree, register it:
+
    ```bash
    eia register-existing ../path/to/worktree
    ```
@@ -144,6 +152,7 @@ This bypasses the 7-day pending-removal period and removes immediately.
 **Symptom:** Registry validation fails with "duplicate ID" error
 
 **Solution:**
+
 1. Open `design/worktrees/registry.json` in editor
 2. Find duplicate `id` values
 3. Rename one of them to make unique (follow naming convention)
@@ -154,6 +163,7 @@ This bypasses the 7-day pending-removal period and removes immediately.
 **Symptom:** Git worktree shows in `git worktree list` but not in AMIA registry
 
 **Solution:**
+
 ```bash
 eia register-existing ../path/to/worktree --purpose review --issue GH-42
 ```

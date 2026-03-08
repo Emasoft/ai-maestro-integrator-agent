@@ -89,6 +89,7 @@ Copy this checklist and track your progress:
 | `review:blocked` | Cannot review | When conflicts or missing info |
 
 **AMIA Review Workflow:**
+
 ```
 PR created → review:needed → review:in-progress → review:approved OR review:changes-requested
                                                            ↓
@@ -111,6 +112,7 @@ The full workflow uses these 8 status columns:
 | 8 | `blocked` | Blocked | `status:blocked` | Blocked at any stage |
 
 **Task Routing Rules:**
+
 - **Small tasks**: In Progress -> AI Review -> Merge/Release -> Done
 - **Big tasks**: In Progress -> AI Review -> Human Review -> Merge/Release -> Done
 - **Human Review** is requested via AMAMA (Assistant Manager asks user to test/review)
@@ -133,12 +135,14 @@ The full workflow uses these 8 status columns:
 ### Assignment Labels (`assign:*`)
 
 AMIA checks assignment to know who created the PR:
+
 - `assign:implementer-1`, `assign:implementer-2` - Implementation agents
 - `assign:orchestrator` - AMOA-created PRs
 
 ### Priority Labels (`priority:*`)
 
 AMIA uses priority to order review queue:
+
 - `priority:critical` - Review immediately
 - `priority:high` - Review soon
 - `priority:normal` - Standard queue
@@ -147,6 +151,7 @@ AMIA uses priority to order review queue:
 ### Type Labels (`type:*`)
 
 AMIA adjusts review depth based on type:
+
 - `type:security` - Deep security review
 - `type:refactor` - Focus on behavior preservation
 - `type:docs` - Light review

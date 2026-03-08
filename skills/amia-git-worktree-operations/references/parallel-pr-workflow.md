@@ -7,6 +7,7 @@ This document provides the complete guide for managing multiple PRs simultaneous
 ## Table of Contents
 
 ### Part 1: Creating Worktrees and Isolation
+
 **File:** [parallel-pr-workflow-part1-creating-and-isolation.md](parallel-pr-workflow-part1-creating-and-isolation.md)
 
 - **2.1 Creating Worktrees for Multiple Simultaneous PRs**
@@ -22,6 +23,7 @@ This document provides the complete guide for managing multiple PRs simultaneous
   - 2.2.4 Automated isolation checking with verification script
 
 ### Part 2: Subagent Management and Path Validation
+
 **File:** [parallel-pr-workflow-part2-subagents-and-paths.md](parallel-pr-workflow-part2-subagents-and-paths.md)
 
 - **2.3 Working Directory Management for Subagents**
@@ -37,6 +39,7 @@ This document provides the complete guide for managing multiple PRs simultaneous
   - 2.4.4 Path validation function (Python implementation)
 
 ### Part 3: Concurrent Operations and Example Workflow
+
 **File:** [parallel-pr-workflow-part3-concurrency-and-example.md](parallel-pr-workflow-part3-concurrency-and-example.md)
 
 - **2.5 Handling Concurrent Git Operation Limitations**
@@ -54,6 +57,7 @@ This document provides the complete guide for managing multiple PRs simultaneous
   - 2.6.5 Cleanup phase (worktree removal)
 
 ### Part 4: Error Recovery
+
 **File:** [parallel-pr-workflow-part4-error-recovery.md](parallel-pr-workflow-part4-error-recovery.md)
 
 - **2.7 Error Recovery When Isolation is Violated**

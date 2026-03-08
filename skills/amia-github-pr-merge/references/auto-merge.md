@@ -81,6 +81,7 @@ gh api graphql -f query='
 ```
 
 **Available merge methods:**
+
 - `MERGE` - Create a merge commit
 - `SQUASH` - Squash all commits into one
 - `REBASE` - Rebase commits onto base branch
@@ -108,10 +109,12 @@ mutation {
 ### 3.1.2 Required Permissions
 
 **User permissions required:**
+
 - Write access to the repository
 - Ability to merge PRs (not blocked by branch protection)
 
 **Repository requirements:**
+
 - Auto-merge must be enabled in repository settings
 - Branch protection rules must be configured (auto-merge only works with protected branches)
 
@@ -129,6 +132,7 @@ query {
 ```
 
 **Possible reasons for `viewerCanEnableAutoMerge: false`:**
+
 1. Repository doesn't allow auto-merge
 2. Branch is not protected
 3. User doesn't have write access
@@ -306,6 +310,7 @@ gh api graphql -f query='
 ```
 
 **After disabling:**
+
 - `autoMergeRequest` will be `null`
 - PR remains open
 - Manual merge is required
@@ -325,6 +330,7 @@ GitHub automatically cancels auto-merge in these situations:
 5. **Required reviewers change their review**: If a required reviewer dismisses their approval or requests changes
 
 **Auto-merge is NOT canceled by:**
+
 - Failing status checks (just waits for re-run)
 - Comments or discussions
 - Label changes
@@ -369,6 +375,7 @@ When branch protection requires reviews, auto-merge waits for approvals.
 ```
 
 **Auto-merge behavior:**
+
 1. Waits for required number of approvals
 2. Waits for CODEOWNERS approval if required
 3. Re-waits if reviews are dismissed
@@ -434,6 +441,7 @@ gh api graphql -f query='
 **Best practice for CI/CD:**
 
 When automating auto-merge:
+
 1. Enable auto-merge after PR is created
 2. If commits are pushed (e.g., by automation), re-enable auto-merge
 3. Monitor for auto-merge cancellation

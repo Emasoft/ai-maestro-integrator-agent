@@ -1,6 +1,5 @@
 # Operation: Get Board State
 
-
 ## Contents
 
 - [Metadata](#metadata)

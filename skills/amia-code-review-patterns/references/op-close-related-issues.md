@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Close Related Issues
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -71,6 +70,7 @@ gh pr view <NUMBER> --json body,closingIssuesReferences
 ### Step 2: Parse Linked Issues
 
 Look for patterns in PR body:
+
 - `closes #123`
 - `fixes #123`
 - `resolves #123`
@@ -79,6 +79,7 @@ Look for patterns in PR body:
 - `resolve #123`
 
 Also check GitHub's automatic linking:
+
 ```bash
 gh pr view <NUMBER> --json closingIssuesReferences --jq '.closingIssuesReferences[].number'
 ```
@@ -86,6 +87,7 @@ gh pr view <NUMBER> --json closingIssuesReferences --jq '.closingIssuesReference
 ### Step 3: Verify Each Issue
 
 For each linked issue:
+
 ```bash
 gh issue view <ISSUE_NUMBER> --json state,title
 ```
@@ -93,6 +95,7 @@ gh issue view <ISSUE_NUMBER> --json state,title
 ### Step 4: Close Open Issues
 
 For issues that are still open:
+
 ```bash
 gh issue close <ISSUE_NUMBER> --comment "Closed by PR #<PR_NUMBER>"
 ```
@@ -104,10 +107,12 @@ Record which issues were closed for the report.
 ## Automatic Closure Behavior
 
 GitHub automatically closes issues when:
+
 1. PR body contains "closes #X", "fixes #X", or "resolves #X"
 2. PR is merged to the default branch
 
 **However**, you should verify closure because:
+
 - Automatic closure may fail if syntax is incorrect
 - PR may merge to non-default branch
 - Issue may be in a different repository
@@ -160,6 +165,7 @@ done
 ## Verification Checklist
 
 After closing issues, verify:
+
 - [ ] All linked issues are now closed
 - [ ] Closure comments reference the PR
 - [ ] No issues were incorrectly closed

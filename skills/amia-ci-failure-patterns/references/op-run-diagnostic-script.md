@@ -7,7 +7,6 @@ description: "Run amia_diagnose_ci_failure.py to identify CI failure patterns"
 
 # Operation: Run Diagnostic Script
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -177,6 +176,7 @@ python3 /path/to/skill/scripts/amia_diagnose_ci_failure.py --log-file ci.log
 ### No patterns detected
 
 If exit code is 1 (no patterns), proceed to:
+
 - [op-identify-failure-pattern.md](op-identify-failure-pattern.md) - Manual decision tree analysis
 
 ### Invalid log file
@@ -191,5 +191,6 @@ grep "##\[group\]" ci.log || echo "May not be a valid GitHub Actions log"
 ## Next Operation
 
 Based on diagnosis results:
+
 - If pattern identified: [op-apply-pattern-fix.md](op-apply-pattern-fix.md)
 - If no pattern identified: [op-identify-failure-pattern.md](op-identify-failure-pattern.md)

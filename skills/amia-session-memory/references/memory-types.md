@@ -3,6 +3,7 @@
 ## PR Review States
 
 **What to Remember**:
+
 - Review status (not started, in progress, changes requested, approved)
 - Feedback already given (avoid repeating comments)
 - Code patterns observed (good and bad)
@@ -12,6 +13,7 @@
 **Storage**: GitHub PR comment with `<!-- AMIA-SESSION-STATE -->` marker
 
 **Example**:
+
 ```json
 {
   "pr": 123,
@@ -26,6 +28,7 @@
 ## Code Patterns Observed
 
 **What to Remember**:
+
 - Recurring code quality issues (e.g., missing error handling)
 - Good patterns worth reusing (e.g., clean interface design)
 - Anti-patterns to flag in future reviews
@@ -37,6 +40,7 @@
 ## Integration Issues Encountered
 
 **What to Remember**:
+
 - Merge conflicts resolved and resolution approach
 - CI failures diagnosed (cause, fix, prevention)
 - Dependency conflicts and solutions
@@ -47,6 +51,7 @@
 ## Release History and Rollbacks
 
 **What to Remember**:
+
 - Version numbers and release dates
 - Deployment targets (staging, production)
 - Approval rationale (why release was greenlit)
@@ -60,6 +65,7 @@
 ## CI/CD Pipeline States
 
 **What to Remember**:
+
 - Workflow success/failure patterns
 - Flaky tests identified
 - Pipeline configuration changes
@@ -68,6 +74,7 @@
 **Storage**: Issue comments linked to workflow runs, or handoff documents
 
 **Example**:
+
 ```markdown
 ## CI State - 2025-02-04
 

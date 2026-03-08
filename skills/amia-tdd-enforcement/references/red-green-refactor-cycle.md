@@ -1,6 +1,7 @@
 # RED-GREEN-REFACTOR Cycle
 
 ## Table of Contents
+
 - [Use-Case TOC](#use-case-toc)
 - [Phase 1: RED (Write Failing Test)](#phase-1-red-write-failing-test)
 - [Phase 2: GREEN (Write Minimum Implementation)](#phase-2-green-write-minimum-implementation)
@@ -11,6 +12,7 @@
 ---
 
 ## Use-Case TOC
+
 - When starting a new feature → [Phase 1: RED](#phase-1-red-write-failing-test)
 - If you have a failing test and need to implement → [Phase 2: GREEN](#phase-2-green-write-minimum-implementation)
 - When all tests pass and code needs improvement → [Phase 3: REFACTOR](#phase-3-refactor-improve-code-quality)
@@ -24,6 +26,7 @@
 **Objective:** Create a test that documents the intended behavior and fails.
 
 **Steps:**
+
 1. Write a new test that specifies one aspect of the desired behavior
 2. The test must be atomic: it tests one thing only
 3. Run the test to confirm it fails
@@ -31,6 +34,7 @@
 5. Commit this test (status: `pending`)
 
 **Constraints:**
+
 - No production code can be written in this phase
 - The test must actually fail, not pass
 - The test must be runnable and produce a measurable failure
@@ -38,6 +42,7 @@
 **Status:** `RED` - test exists and fails, awaiting implementation
 
 **Git Commit Message Format:**
+
 ```
 RED: test for [feature name]
 
@@ -49,6 +54,7 @@ RED: test for [feature name]
 **Example RED Phase:**
 
 Test file: `tests/test_user_service.py`
+
 ```python
 def test_user_can_login_with_valid_credentials():
     """User can authenticate with correct username and password"""
@@ -65,12 +71,14 @@ def test_user_can_login_with_valid_credentials():
 ```
 
 Run test:
+
 ```bash
 pytest tests/test_user_service.py::test_user_can_login_with_valid_credentials
 # FAIL: NameError: name 'UserService' is not defined
 ```
 
 Commit:
+
 ```bash
 git add tests/test_user_service.py
 git commit -m "RED: test for user login with valid credentials
@@ -87,6 +95,7 @@ git commit -m "RED: test for user login with valid credentials
 **Objective:** Write the minimum code necessary to make the test pass.
 
 **Steps:**
+
 1. Write production code that makes the failing test pass
 2. The code must be the absolute minimum to satisfy the test
 3. The code does not need to be elegant or complete
@@ -95,6 +104,7 @@ git commit -m "RED: test for user login with valid credentials
 6. Commit the implementation (status: `green`)
 
 **Constraints:**
+
 - Only write code that makes the specific test pass
 - Do not write code for future features or edge cases
 - No speculative code
@@ -104,6 +114,7 @@ git commit -m "RED: test for user login with valid credentials
 **Status:** `GREEN` - test passes, code is implemented
 
 **Git Commit Message Format:**
+
 ```
 GREEN: implement [feature name]
 
@@ -115,6 +126,7 @@ GREEN: implement [feature name]
 **Example GREEN Phase:**
 
 Production file: `src/user_service.py`
+
 ```python
 class UserService:
     def __init__(self):
@@ -133,12 +145,14 @@ class UserService:
 ```
 
 Run test:
+
 ```bash
 pytest tests/test_user_service.py::test_user_can_login_with_valid_credentials
 # PASS
 ```
 
 Commit:
+
 ```bash
 git add src/user_service.py
 git commit -m "GREEN: implement user login with valid credentials
@@ -155,6 +169,7 @@ git commit -m "GREEN: implement user login with valid credentials
 **Objective:** Improve code quality, readability, and design without changing behavior.
 
 **Steps:**
+
 1. The test still passes from Phase 2
 2. Improve code quality: remove duplication, improve naming, simplify logic
 3. Improve design: extract methods, apply patterns, reduce complexity
@@ -163,6 +178,7 @@ git commit -m "GREEN: implement user login with valid credentials
 6. Commit the refactored code (status: `refactor`)
 
 **Constraints:**
+
 - No new functionality can be added
 - No test changes (except to improve clarity without changing assertion)
 - Each refactoring change must pass all tests
@@ -171,6 +187,7 @@ git commit -m "GREEN: implement user login with valid credentials
 **Status:** `REFACTOR` - code improved while maintaining all test assertions
 
 **Git Commit Message Format:**
+
 ```
 REFACTOR: improve [aspect] in [feature name]
 
@@ -182,6 +199,7 @@ REFACTOR: improve [aspect] in [feature name]
 **Example REFACTOR Phase:**
 
 Production file: `src/user_service.py` (refactored)
+
 ```python
 class LoginResult:
     def __init__(self, authenticated, user=None):
@@ -223,12 +241,14 @@ class UserService:
 ```
 
 Run tests:
+
 ```bash
 pytest tests/
 # All tests: PASS
 ```
 
 Commit:
+
 ```bash
 git add src/user_service.py
 git commit -m "REFACTOR: improve code structure in user login
@@ -298,6 +318,7 @@ After completing one RED-GREEN-REFACTOR cycle:
 6. Return to Phase 1 to implement the next feature
 
 **Verification Checklist:**
+
 - [ ] All tests pass
 - [ ] Code meets quality standards
 - [ ] No untested production code exists

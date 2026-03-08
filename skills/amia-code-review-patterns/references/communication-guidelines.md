@@ -49,18 +49,23 @@ Effective code review communication balances thoroughness with empathy. This gui
 ## Core Principles
 
 ### 1. **Be Kind**
+
 Remember: There's a person behind the code who invested time and effort.
 
 ### 2. **Be Specific**
+
 Vague feedback wastes time. Always point to exact locations and provide examples.
 
 ### 3. **Be Constructive**
+
 Focus on improvement, not criticism. Suggest solutions, not just problems.
 
 ### 4. **Be Timely**
+
 Respond within 24-48 hours. Blocked authors harm team velocity.
 
 ### 5. **Be Humble**
+
 Your suggestions might not always be the best solution. Stay open to discussion.
 
 ---
@@ -72,6 +77,7 @@ Your suggestions might not always be the best solution. Stay open to discussion.
 Use these patterns to adjust tone appropriately:
 
 **For hard requirements (P0/P1):**
+
 ```
 ❌ "This is wrong"
 ✅ "This needs to change because [reason]"
@@ -84,6 +90,7 @@ Use these patterns to adjust tone appropriately:
 ```
 
 **For suggestions (P2/P3):**
+
 ```
 ✅ "Consider using X instead of Y for [benefit]"
 ✅ "What do you think about [alternative approach]?"
@@ -92,6 +99,7 @@ Use these patterns to adjust tone appropriately:
 ```
 
 **For questions:**
+
 ```
 ✅ "Why did you choose X over Y?"
 ✅ "Can you explain the reasoning behind [decision]?"
@@ -102,6 +110,7 @@ Use these patterns to adjust tone appropriately:
 ### Framing Techniques
 
 **Use "we" instead of "you":**
+
 ```
 ❌ "You should use a HashMap here"
 ✅ "We typically use HashMap for this pattern"
@@ -111,6 +120,7 @@ Use these patterns to adjust tone appropriately:
 ```
 
 **Use questions to guide:**
+
 ```
 ❌ "This is inefficient"
 ✅ "This loop runs O(n²). Could we optimize with a HashSet?"
@@ -120,6 +130,7 @@ Use these patterns to adjust tone appropriately:
 ```
 
 **Acknowledge uncertainty:**
+
 ```
 ✅ "I might be missing something, but this looks like it could cause [issue]"
 ✅ "If I understand correctly, this would [behavior]. Is that intentional?"
@@ -134,6 +145,7 @@ Use these patterns to adjust tone appropriately:
 **P**roblem - **I**mpact - **E**xample - **R**ecommendation
 
 **Example:**
+
 ```markdown
 **Problem:** This query isn't using an index on user_email.
 
@@ -149,6 +161,7 @@ With index: CREATE INDEX idx_user_email ON users(user_email)
 ### Short Comment Template
 
 For quick issues:
+
 ```
 [File:Line] [Issue] → [Fix]
 
@@ -159,6 +172,7 @@ user.py:45 Variable `x` is unclear → Rename to `user_id`
 ### Long Comment Template
 
 For complex issues:
+
 ```markdown
 ## [Title - What's Wrong]
 
@@ -174,6 +188,7 @@ For complex issues:
 ```
 
 **Suggested fix:**
+
 ```python
 [improved code]
 ```
@@ -181,6 +196,7 @@ For complex issues:
 **Rationale:** [Why this fix is better]
 
 **Priority:** [P0/P1/P2/P3]
+
 ```
 
 ---
@@ -205,12 +221,14 @@ query = f"SELECT * FROM users WHERE name = '{username}'"
 ```
 
 **Fix:**
+
 ```python
 query = "SELECT * FROM users WHERE name = ?"
 cursor.execute(query, (username,))
 ```
 
 **Priority:** P0 - Block merge until fixed
+
 ```
 
 ### Performance Issues
@@ -239,6 +257,7 @@ for user in users:
 ```
 
 **Priority:** P1 - Should fix before merge
+
 ```
 
 ### Logic Errors
@@ -265,6 +284,7 @@ fee = service_cost / total
 ```
 
 **Priority:** P1
+
 ```
 
 ### Style/Readability Issues
@@ -282,6 +302,7 @@ def p(d, k, v):
 ```
 
 **Suggestion:**
+
 ```python
 def get_with_default(data: dict, key: str, default: Any) -> Any:
     """Get value from dict with fallback to default."""
@@ -291,6 +312,7 @@ def get_with_default(data: dict, key: str, default: Any) -> Any:
 **Rationale:** Clear function names improve code self-documentation. Future maintainers (including your future self!) will understand this faster.
 
 **This is a minor suggestion - feel free to defer if you prefer the current approach.**
+
 ```
 
 ### Architecture/Design Issues
@@ -333,6 +355,7 @@ class UserRepository:
 **Priority:** P2 (can be deferred to refactoring PR if timeline is tight)
 
 **Open to discussion - what do you think?**
+
 ```
 
 ---
@@ -406,12 +429,14 @@ weigh in on the [specific aspect]."
 ### When to Escalate
 
 Escalate to senior reviewer or team lead when:
+
 - Security concerns beyond your expertise
 - Fundamental architectural disagreement
 - Approach contradicts team standards but author insists
 - Issue impacts multiple teams
 
 **Escalation template:**
+
 ```markdown
 @tech-lead I'd like your input on this PR.
 
@@ -429,6 +454,7 @@ Thanks!
 ### Receiving Feedback
 
 **Assume good intent:**
+
 ```markdown
 ❌ "This comment is wrong. I did handle that case."
 ✅ "Good catch! I handled this in line 67. Should I make it more obvious?"
@@ -438,6 +464,7 @@ Thanks!
 ```
 
 **Ask clarifying questions:**
+
 ```markdown
 "Could you elaborate on the security concern here? I'm not seeing the
 vulnerability."
@@ -447,6 +474,7 @@ understand before adding the check."
 ```
 
 **Acknowledge and act:**
+
 ```markdown
 "Great point! Fixed in [commit hash]."
 
@@ -458,6 +486,7 @@ understand before adding the check."
 ### Resolving Comments
 
 **Always respond before resolving:**
+
 ```markdown
 ✅ "Fixed in commit abc123" → [Resolve]
 ✅ "Added error handling as suggested" → [Resolve]
@@ -545,6 +574,7 @@ Let me know if you have questions on any of these!
 ### Remote/Distributed Teams
 
 **Account for timezone differences:**
+
 ```markdown
 "I'm EOD now but will review first thing tomorrow (my morning ~8am UTC)."
 
@@ -553,6 +583,7 @@ async or sync up tomorrow."
 ```
 
 **Be explicit with text:**
+
 ```markdown
 ❌ "lol this is wild" → Could be misinterpreted as mocking
 ✅ "Interesting approach! I hadn't considered this. Could you walk me
@@ -562,6 +593,7 @@ async or sync up tomorrow."
 ### Junior Developers
 
 **Be educational:**
+
 ```markdown
 "This works, but there's a more idiomatic Python approach: [example].
 
@@ -571,6 +603,7 @@ Great first PR though - the logic is sound!"
 ```
 
 **Encourage questions:**
+
 ```markdown
 "This is a common mistake! The key difference between X and Y is [explanation].
 
@@ -580,6 +613,7 @@ Feel free to ask if you'd like me to explain further."
 ### Senior Developers
 
 **Be respectful of expertise:**
+
 ```markdown
 "I see you used approach X. I typically use Y for [reason], but I might
 be missing context. Could you explain the advantage of X here?"

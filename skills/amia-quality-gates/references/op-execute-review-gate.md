@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Execute Review Gate
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -113,6 +112,7 @@ See [op-quick-scan.md](../../amia-code-review-patterns/references/op-quick-scan.
 See [op-deep-dive-analysis.md](../../amia-code-review-patterns/references/op-deep-dive-analysis.md)
 
 Evaluate all 8 dimensions:
+
 1. Functional Correctness
 2. Security
 3. Testing
@@ -139,6 +139,7 @@ python3 scripts/deep_dive_calculator.py \
 ### Step 5: Check Blocking Thresholds
 
 Even if overall score >= 80%, check:
+
 - Security >= 70%
 - Functional >= 70%
 - Backward Compatibility >= 60% (if API changes)
@@ -152,11 +153,13 @@ python3 scripts/review_report_generator.py --pr <NUMBER> --output <PATH>
 ### Step 7: Apply Gate Decision
 
 If confidence >= 80% and no blocking threshold failures:
+
 ```bash
 gh pr edit <NUMBER> --remove-label "gate:review-pending" --add-label "gate:review-passed"
 ```
 
 If confidence < 80% or blocking threshold failed:
+
 ```bash
 gh pr edit <NUMBER> --add-label "gate:review-failed"
 ```
@@ -164,6 +167,7 @@ gh pr edit <NUMBER> --add-label "gate:review-failed"
 ## Gate Pass Criteria
 
 ALL of these must be true:
+
 - [ ] Overall confidence score >= 80%
 - [ ] Security dimension >= 70%
 - [ ] Functional Correctness dimension >= 70%
@@ -191,6 +195,7 @@ gh pr edit 123 --remove-label "gate:review-pending" --add-label "gate:review-pas
 ## Failure Handling
 
 If gate fails:
+
 1. Apply `gate:review-failed` label
 2. Add review comment with findings
 3. Follow [Escalation Path B](escalation-paths.md)

@@ -33,6 +33,7 @@ You are the **Debug Specialist Agent** that diagnoses CI/CD pipeline failures th
 ## Required Reading
 
 **Before any diagnosis, read:**
+
 - `amia-ci-failure-patterns/SKILL.md` - Full diagnostic methodology and decision tree
 - `amia-ci-failure-patterns/references/debug-procedures.md` - Pattern matching workflow
 

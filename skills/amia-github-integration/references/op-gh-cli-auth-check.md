@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: GitHub CLI Authentication Check
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -53,6 +52,7 @@ gh auth status
 ```
 
 Expected successful output:
+
 ```
 github.com
   Logged in to github.com as USERNAME
@@ -69,6 +69,7 @@ gh auth status --show-token 2>&1 | grep "Token scopes"
 ```
 
 Required scopes for most operations:
+
 - `repo` - Full repository access
 - `read:org` - Read organization data
 - `workflow` - Workflow permissions (for CI/CD)
@@ -123,9 +124,11 @@ gh repo view owner/repo --json name,viewerPermission --jq '{name, permission: .v
 **Symptom**: `You are not logged in to any GitHub hosts`
 
 **Solution**:
+
 ```bash
 gh auth login
 ```
+
 Follow the interactive prompts to authenticate.
 
 ### Token expired
@@ -133,6 +136,7 @@ Follow the interactive prompts to authenticate.
 **Symptom**: `token has expired`
 
 **Solution**:
+
 ```bash
 gh auth refresh
 ```
@@ -142,6 +146,7 @@ gh auth refresh
 **Symptom**: `Your token does not have the required scopes`
 
 **Solution**:
+
 ```bash
 gh auth refresh -s repo,read:org,workflow
 ```
@@ -151,6 +156,7 @@ gh auth refresh -s repo,read:org,workflow
 **Symptom**: Authenticated as different user than expected
 
 **Solution**:
+
 ```bash
 # Check current user
 gh api user --jq '.login'

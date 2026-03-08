@@ -16,11 +16,13 @@
 Show current identity status across all systems.
 
 **Syntax:**
+
 ```bash
 python3 gh_multiuser.py status
 ```
 
 **Output:**
+
 ```
 Current Identity Status
 =======================
@@ -50,11 +52,13 @@ SSH Agent:
 Interactively add a new identity to the configuration.
 
 **Syntax:**
+
 ```bash
 python3 gh_multiuser.py add
 ```
 
 **Interactive prompts:**
+
 ```
 Add New Identity
 ================
@@ -76,11 +80,13 @@ Run 'python3 gh_multiuser.py setup work' to generate SSH key.
 Detect configuration issues across all identities.
 
 **Syntax:**
+
 ```bash
 python3 gh_multiuser.py diagnose
 ```
 
 **What it checks:**
+
 1. SSH keys exist for each identity
 2. SSH config has proper host aliases
 3. SSH agent is running and has keys loaded
@@ -88,6 +94,7 @@ python3 gh_multiuser.py diagnose
 5. Configuration file is valid
 
 **Output:**
+
 ```
 === Running Diagnostics ===
 
@@ -108,22 +115,26 @@ Run 'python3 gh_multiuser.py fix' to auto-fix some issues
 Automatically fix common issues detected by diagnose.
 
 **Syntax:**
+
 ```bash
 python3 gh_multiuser.py fix
 ```
 
 **What it can fix:**
+
 - Missing SSH keys (generates new ones)
 - Missing SSH config entries (adds them)
 - SSH agent not running (starts it)
 - Missing configuration file (copies template)
 
 **What it cannot fix (requires manual action):**
+
 - gh CLI authentication (needs browser login)
 - Adding SSH keys to GitHub (needs web interface)
 - Repository permissions (needs GitHub settings)
 
 **Output:**
+
 ```
 === Auto-Fixing Issues ===
 

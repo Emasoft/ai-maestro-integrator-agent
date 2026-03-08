@@ -1,6 +1,7 @@
 # Implementation Procedure Part 2: Implementation and Refactoring
 
 ## Table of Contents
+
 - [Use-Case TOC](#use-case-toc)
 - [Step 3: Make the Test Pass](#step-3-make-the-test-pass)
   - [Minimum Implementation Rules](#minimum-implementation-rules)
@@ -16,6 +17,7 @@
 ---
 
 ## Use-Case TOC
+
 - When you have a failing test and need to implement → [Step 3: Make the Test Pass](#step-3-make-the-test-pass)
 - If tests pass and code needs improvement → [Step 4: Refactor](#step-4-refactor)
 
@@ -28,12 +30,14 @@ Write production code to make the test pass.
 ### Minimum Implementation Rules
 
 **Do:**
+
 - Write ONLY the code needed to make the test pass
 - Use the simplest solution that works
 - Hardcode values if it makes the test pass
 - Create minimal classes and methods
 
 **Don't:**
+
 - Add extra features not tested
 - Write code for future requirements
 - Refactor in this phase
@@ -118,6 +122,7 @@ mvn test
 ```
 
 **Expected Result:**
+
 ```
 All tests: PASS
 ```
@@ -144,12 +149,14 @@ Improve the code quality while maintaining behavior.
 ### Refactoring Targets
 
 **Code Quality:**
+
 - Remove duplication
 - Improve variable and method names
 - Simplify complex logic
 - Extract magic numbers to constants
 
 **Design Quality:**
+
 - Extract methods for clarity
 - Apply design patterns
 - Separate concerns

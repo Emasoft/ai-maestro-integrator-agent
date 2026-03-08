@@ -10,6 +10,7 @@ This document specifies the format and location of team registries, agent contac
 ## Overview
 
 Every project team maintains a **Team Registry** file that contains:
+
 - Team identification
 - Agent roster with contact details
 - Role assignments

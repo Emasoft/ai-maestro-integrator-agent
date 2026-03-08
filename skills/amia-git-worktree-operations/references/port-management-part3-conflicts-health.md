@@ -14,6 +14,7 @@
    - 2.5 [Automated Health Monitoring](#automated-health-monitoring)
 
 **Related Parts:**
+
 - [Part 1: Overview and Registry Structure](port-management-part1-overview-registry.md)
 - [Part 2: Allocation Functions and CLI](port-management-part2-allocation-cli.md)
 - [Part 4: Docker Integration](port-management-part4-docker.md)
@@ -28,6 +29,7 @@ Conflict detection prevents multiple services from using the same port.
 ### What is a Port Conflict?
 
 A **port conflict** occurs when:
+
 1. Two allocations in the registry claim the same port number
 2. A service tries to use a port already allocated to another worktree
 3. A service tries to use a port already in use by a non-worktree process
@@ -41,6 +43,7 @@ A **port conflict** occurs when:
 **Cause:** Registry corruption or manual editing errors.
 
 **Detection:**
+
 ```python
 def detect_registry_conflicts(registry: Dict) -> List[int]:
     """Find duplicate port allocations in registry."""
@@ -50,6 +53,7 @@ def detect_registry_conflicts(registry: Dict) -> List[int]:
 ```
 
 **Example:**
+
 ```json
 {
   "allocations": [
@@ -62,6 +66,7 @@ def detect_registry_conflicts(registry: Dict) -> List[int]:
 This is a conflict: port 8080 is allocated twice.
 
 **Resolution:**
+
 1. Identify which allocation is incorrect (usually the older one)
 2. Release one of the conflicting allocations
 3. Allocate a new port to the affected worktree
@@ -73,6 +78,7 @@ This is a conflict: port 8080 is allocated twice.
 **Cause:** A process outside the worktree system is using the port.
 
 **Detection:**
+
 ```python
 import socket
 
@@ -91,6 +97,7 @@ def detect_system_conflict(port: int) -> bool:
 If port 8080 is free in the registry but `detect_system_conflict(8080)` returns `True`, there's a system conflict.
 
 **Resolution:**
+
 1. Identify the process using the port: `lsof -i :8080` (macOS/Linux) or `netstat -ano | findstr :8080` (Windows)
 2. Stop the conflicting process if safe to do so
 3. Or allocate a different port to the worktree
@@ -102,6 +109,7 @@ If port 8080 is free in the registry but `detect_system_conflict(8080)` returns 
 **Cause:** Service crashed or was stopped without releasing the port.
 
 **Detection:**
+
 ```python
 def detect_allocation_mismatch(registry: Dict) -> List[Dict]:
     """Find allocations where no process is using the port."""
@@ -113,6 +121,7 @@ def detect_allocation_mismatch(registry: Dict) -> List[Dict]:
 ```
 
 **Resolution:**
+
 1. Update the allocation's `health_status` to `not_running`
 2. Either restart the service or release the port
 
@@ -121,11 +130,13 @@ def detect_allocation_mismatch(registry: Dict) -> List[Dict]:
 **Script:** `scripts/port_status.py --check-conflicts`
 
 **Usage:**
+
 ```bash
 python scripts/port_status.py --check-conflicts
 ```
 
 **Output:**
+
 ```
 Port Conflict Detection
 =======================
@@ -155,6 +166,7 @@ Summary:
 ```
 
 **When to Run:**
+
 - Before allocating ports
 - After system restarts
 - When services fail to start
@@ -169,6 +181,7 @@ Health checking verifies that allocated ports are actually free and services are
 ### What is a Health Check?
 
 A **health check** is a test to verify that:
+
 1. A port is free on the operating system
 2. A service using an allocated port is running
 3. A service is responding to requests on its port
@@ -182,6 +195,7 @@ A **health check** is a test to verify that:
 **Method:** Attempt to bind a socket to the port.
 
 **Implementation:**
+
 ```python
 import socket
 
@@ -198,6 +212,7 @@ def check_port_free(port: int) -> bool:
 ```
 
 **When to Use:**
+
 - Before allocating a port
 - During conflict detection
 - After service shutdown
@@ -209,6 +224,7 @@ def check_port_free(port: int) -> bool:
 **Method:** Check for active network connections on the port.
 
 **Implementation (macOS/Linux):**
+
 ```python
 import subprocess
 
@@ -227,6 +243,7 @@ def check_port_listening(port: int) -> bool:
 ```
 
 **Implementation (Windows):**
+
 ```python
 import subprocess
 
@@ -245,6 +262,7 @@ def check_port_listening(port: int) -> bool:
 ```
 
 **When to Use:**
+
 - After starting a service
 - During status checks
 - Before stopping a service
@@ -256,6 +274,7 @@ def check_port_listening(port: int) -> bool:
 **Method:** Send an HTTP request or service-specific ping.
 
 **Implementation (HTTP services):**
+
 ```python
 import urllib.request
 
@@ -270,6 +289,7 @@ def check_service_responding(port: int, path: str = '/') -> bool:
 ```
 
 **Implementation (Database services):**
+
 ```python
 import psycopg2
 
@@ -290,6 +310,7 @@ def check_postgres_responding(port: int) -> bool:
 ```
 
 **When to Use:**
+
 - After starting a service (verify it's working)
 - During integration tests
 - For monitoring and alerting
@@ -310,6 +331,7 @@ The registry tracks health status for each allocation:
 **Script:** `scripts/port_status.py --health-check`
 
 **Usage:**
+
 ```bash
 # Check health of all allocated ports
 python scripts/port_status.py --health-check
@@ -319,6 +341,7 @@ python scripts/port_status.py --health-check --worktree review-GH-42
 ```
 
 **Output:**
+
 ```
 Health Check Results
 ====================
@@ -351,6 +374,7 @@ Summary:
 ```
 
 **When to Run:**
+
 - After starting services
 - Before running tests
 - During troubleshooting
@@ -361,6 +385,7 @@ Summary:
 You can set up automated health monitoring with a cron job or systemd timer.
 
 **Example cron job (run every 15 minutes):**
+
 ```bash
 # Edit crontab
 crontab -e
@@ -372,6 +397,7 @@ crontab -e
 **Example systemd timer:**
 
 Create `/etc/systemd/system/amia-health-check.service`:
+
 ```ini
 [Unit]
 Description=AMIA Port Health Check
@@ -383,6 +409,7 @@ ExecStart=/usr/bin/python3 scripts/port_status.py --health-check
 ```
 
 Create `/etc/systemd/system/amia-health-check.timer`:
+
 ```ini
 [Unit]
 Description=Run AMIA Port Health Check every 15 minutes
@@ -396,6 +423,7 @@ WantedBy=timers.target
 ```
 
 Enable the timer:
+
 ```bash
 sudo systemctl enable amia-health-check.timer
 sudo systemctl start amia-health-check.timer

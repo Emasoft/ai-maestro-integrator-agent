@@ -28,6 +28,7 @@
 ### When Force Removal is Needed
 
 Use `--force` only when:
+
 1. Normal removal fails despite worktree being clean
 2. Worktree is corrupted beyond repair
 3. Emergency disk space recovery needed
@@ -51,23 +52,27 @@ git worktree remove --force /tmp/worktrees/pr-123
 ### Safe Force Removal Procedure
 
 **Step 1: Document current state**
+
 ```bash
 cd /tmp/worktrees/pr-123 2>/dev/null && git status
 git worktree list
 ```
 
 **Step 2: Create backup if possible**
+
 ```bash
 cp -r /tmp/worktrees/pr-123 /tmp/backup-pr-123
 ```
 
 **Step 3: Force remove**
+
 ```bash
 cd /tmp  # Navigate away
 git worktree remove --force /tmp/worktrees/pr-123
 ```
 
 **Step 4: Prune and verify**
+
 ```bash
 git worktree prune
 git worktree list
@@ -76,6 +81,7 @@ git worktree list
 ### Double-Force Removal
 
 For extremely stubborn worktrees:
+
 ```bash
 # Remove worktree directory manually
 rm -rf /tmp/worktrees/pr-123
@@ -105,11 +111,13 @@ Pruning removes worktree metadata entries from `.git/worktrees/` when the actual
 ### Dry Run Pruning
 
 See what would be pruned without making changes:
+
 ```bash
 git worktree prune --dry-run
 ```
 
 **Example output:**
+
 ```
 Removing worktrees/pr-123: gitdir file points to non-existent location
 Removing worktrees/pr-456: gitdir file points to non-existent location
@@ -124,6 +132,7 @@ git worktree prune
 ### Verbose Pruning
 
 See details during pruning:
+
 ```bash
 git worktree prune --verbose
 ```
@@ -131,6 +140,7 @@ git worktree prune --verbose
 ### Automated Prune Schedule
 
 Consider adding to git hooks or cron:
+
 ```bash
 # In main repo's post-checkout hook
 git worktree prune 2>/dev/null || true
@@ -155,11 +165,13 @@ ls /path/to/main-repo/.git/worktrees/
 ### Understanding Worktree Disk Usage
 
 Each worktree uses:
+
 - **Working files:** Full copy of tracked files
 - **Index:** Staging area (~small)
 - **Metadata:** In `.git/worktrees/` (~very small)
 
 **Not duplicated:**
+
 - Git objects (shared with main repo)
 - Pack files (shared)
 - Refs (shared)
@@ -177,16 +189,19 @@ du -sh /tmp/worktrees/*
 ### Space Recovery After Removal
 
 After removing worktrees, the following is recovered:
+
 - Worktree directory size (full working files)
 - Metadata in `.git/worktrees/<name>/`
 
 **Not immediately recovered:**
+
 - Unreachable objects (need `git gc`)
 - Loose objects from worktree commits
 
 ### Running Garbage Collection
 
 After removing multiple worktrees:
+
 ```bash
 cd /path/to/main-repo
 git gc --prune=now
@@ -195,6 +210,7 @@ git gc --prune=now
 ### Aggressive Cleanup
 
 For maximum space recovery:
+
 ```bash
 cd /path/to/main-repo
 

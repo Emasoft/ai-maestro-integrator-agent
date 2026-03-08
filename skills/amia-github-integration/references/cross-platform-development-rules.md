@@ -10,34 +10,34 @@ description: "Cross-platform development rules for quality gate enforcement cove
 - 1. When to Apply These Rules
   - 1.1 Projects that require cross-platform support
   - 1.2 How the integrator agent enforces these rules during review
-- 2. UTF-8 Encoding Rules
+- 1. UTF-8 Encoding Rules
   - 2.1 Why encoding must be specified explicitly
   - 2.2 Python pitfall: JSON file operations without encoding
   - 2.3 Python pitfall: Path.read_text() without encoding
   - 2.4 Python pitfall: subprocess output decoding
   - 2.5 Node.js and other languages
-- 3. Path Handling Rules
+- 1. Path Handling Rules
   - 3.1 Why hardcoded path separators break cross-platform code
   - 3.2 Correct path construction in Python
   - 3.3 Correct path construction in JavaScript and TypeScript
   - 3.4 Correct path construction in Go and Rust
-- 4. Line Ending Rules
+- 1. Line Ending Rules
   - 4.1 CRLF versus LF and why it matters
   - 4.2 Configuring .gitattributes for consistent line endings
   - 4.3 Normalizing line endings in application code
-- 5. Shell Command Rules
+- 1. Shell Command Rules
   - 5.1 Why shell commands should be avoided in cross-platform code
   - 5.2 Python alternatives to common shell commands
   - 5.3 Platform detection patterns
-- 6. Common Windows-Specific Issues
+- 1. Common Windows-Specific Issues
   - 6.1 File locking and context managers
   - 6.2 Maximum path length (260 characters)
   - 6.3 Case-insensitive filesystem behavior
   - 6.4 Reserved filenames on Windows
-- 7. Platform-Specific Test Patterns
+- 1. Platform-Specific Test Patterns
   - 7.1 Skipping tests by platform
   - 7.2 Parameterizing tests for platform differences
-- 8. AMIA Review Checklist for Cross-Platform Code
+- 1. AMIA Review Checklist for Cross-Platform Code
   - 8.1 What to check in every pull request
   - 8.2 Red flags that indicate platform-specific bugs
 
@@ -48,6 +48,7 @@ description: "Cross-platform development rules for quality gate enforcement cove
 ### 1.1 Projects that require cross-platform support
 
 These rules apply to any project that runs on more than one operating system. This includes:
+
 - CLI tools distributed to Windows, macOS, and Linux users
 - Libraries published to package registries (PyPI, npm, crates.io) where consumers run any OS
 - Desktop applications targeting multiple platforms
@@ -70,6 +71,7 @@ The rule: ALWAYS specify `encoding="utf-8"` for ALL text file operations, withou
 ### 2.2 Python pitfall: JSON file operations without encoding
 
 Wrong:
+
 ```python
 # This uses cp1252 on Windows, corrupting non-ASCII characters
 with open("config.json") as f:
@@ -80,6 +82,7 @@ with open("output.json", "w") as f:
 ```
 
 Correct:
+
 ```python
 # Explicit UTF-8 encoding works identically on all platforms
 with open("config.json", encoding="utf-8") as f:
@@ -94,6 +97,7 @@ Note the `ensure_ascii=False` in `json.dump()`. Without it, Python escapes all n
 ### 2.3 Python pitfall: Path.read_text() without encoding
 
 Wrong:
+
 ```python
 from pathlib import Path
 
@@ -102,6 +106,7 @@ content = Path("README.md").read_text()
 ```
 
 Correct:
+
 ```python
 from pathlib import Path
 
@@ -113,6 +118,7 @@ Path("output.txt").write_text(content, encoding="utf-8")
 ### 2.4 Python pitfall: subprocess output decoding
 
 Wrong:
+
 ```python
 import subprocess
 
@@ -122,6 +128,7 @@ print(result.stdout)
 ```
 
 Correct:
+
 ```python
 import subprocess
 
@@ -160,6 +167,7 @@ Windows uses backslash (`\`) as the path separator. macOS and Linux use forward 
 ### 3.2 Correct path construction in Python
 
 Wrong:
+
 ```python
 # Hardcoded forward slash -- fails on Windows in some contexts
 config_path = home_dir + "/.config/myapp/settings.json"
@@ -172,6 +180,7 @@ full_path = base + os.sep + "subdir" + os.sep + "file.txt"
 ```
 
 Correct:
+
 ```python
 from pathlib import Path
 
@@ -186,11 +195,13 @@ config_path = os.path.join(os.path.expanduser("~"), ".config", "myapp", "setting
 ### 3.3 Correct path construction in JavaScript and TypeScript
 
 Wrong:
+
 ```javascript
 const configPath = homeDir + "/.config/myapp/settings.json";
 ```
 
 Correct:
+
 ```javascript
 const path = require("path");
 const os = require("os");
@@ -201,6 +212,7 @@ const configPath = path.join(os.homedir(), ".config", "myapp", "settings.json");
 ### 3.4 Correct path construction in Go and Rust
 
 Go:
+
 ```go
 import "path/filepath"
 
@@ -208,6 +220,7 @@ configPath := filepath.Join(homeDir, ".config", "myapp", "settings.json")
 ```
 
 Rust:
+
 ```rust
 use std::path::PathBuf;
 
@@ -262,12 +275,14 @@ Create a `.gitattributes` file in the repository root:
 When reading text from external sources (user input, network, files from other systems), normalize line endings:
 
 Python:
+
 ```python
 # Normalize any line ending style to LF
 normalized = "\n".join(content.splitlines())
 ```
 
 JavaScript:
+
 ```javascript
 // Normalize any line ending style to LF
 const normalized = content.replace(/\r\n/g, "\n");
@@ -342,6 +357,7 @@ data = json.load(f)
 Windows has a default maximum path length of 260 characters (`MAX_PATH`). Deeply nested directories or long filenames can exceed this limit.
 
 Mitigations:
+
 - Keep directory nesting shallow
 - Use short but descriptive names
 - On Windows 10+, the limit can be raised via a registry setting or by using the `\\?\` path prefix, but do not rely on this for distributed software
@@ -360,6 +376,7 @@ Rule: Never create two files that differ only in case within the same directory.
 Windows reserves certain filenames regardless of extension: `CON`, `PRN`, `AUX`, `NUL`, `COM1`-`COM9`, `LPT1`-`LPT9`.
 
 These cannot be used as file or directory names:
+
 ```
 CON.txt       <-- invalid on Windows
 aux.json      <-- invalid on Windows
@@ -373,6 +390,7 @@ NUL           <-- invalid on Windows
 ### 7.1 Skipping tests by platform
 
 Python (pytest):
+
 ```python
 import sys
 import pytest

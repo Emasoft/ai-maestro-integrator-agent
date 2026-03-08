@@ -37,10 +37,13 @@ The orchestrator **NEVER** does direct work on PRs. It orchestrates, delegates, 
 ## Scripts
 
 - `scripts/amia_orchestrator_pr_poll.py` - Survey all open PRs and prioritize actions
+
   ```bash
   python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
   ```
+
 - `scripts/amia_verify_pr_completion.py` - Verify all completion criteria for a PR
+
   ```bash
   python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
   ```
@@ -48,6 +51,7 @@ The orchestrator **NEVER** does direct work on PRs. It orchestrates, delegates, 
 ## References
 
 See `references/` for detailed documentation:
+
 - [orchestrator-responsibilities.md](references/orchestrator-responsibilities.md) - What orchestrator MUST and MUST NOT do
 - [delegation-rules.md](references/delegation-rules.md) - When/how to spawn subagents
 - [verification-workflow.md](references/verification-workflow.md) - Pre/post review checklists, 4-verification-loop

@@ -7,7 +7,6 @@ description: "Verify CI fix locally before pushing to remote"
 
 # Operation: Verify Fix Locally
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -263,4 +262,5 @@ docker run --rm -v $(pwd):/app -w /app python:3.11-slim pytest
 ## Next Operation
 
 After successful local verification:
+
 - [op-push-and-monitor.md](op-push-and-monitor.md) - Push changes and monitor CI

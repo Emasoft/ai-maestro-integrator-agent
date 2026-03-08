@@ -57,6 +57,7 @@ All scripts return structured JSON output:
 ## Prerequisites
 
 Before using this skill, ensure:
+
 1. `gh` CLI is installed and authenticated (`gh auth status`)
 2. You have write access to the target repository
 3. `jq` is available for JSON processing
@@ -93,9 +94,11 @@ Need to work with GitHub Issues?
 ## Reference Documents
 
 ### Label Management
+
 **File:** [references/label-management.md](references/label-management.md)
 
 **Contents:**
+
 - 1.1 Creating labels via GitHub API
   - 1.1.1 Using gh CLI to create labels
   - 1.1.2 Specifying label colors
@@ -116,9 +119,11 @@ Need to work with GitHub Issues?
   - 1.5.2 Default colors and descriptions
 
 ### Issue Templates
+
 **File:** [references/issue-templates.md](references/issue-templates.md)
 
 **Contents:**
+
 - 2.1 Bug report template
   - 2.1.1 Required sections
   - 2.1.2 Environment information
@@ -137,9 +142,11 @@ Need to work with GitHub Issues?
   - 2.4.3 Template selection logic
 
 ### Milestone Tracking
+
 **File:** [references/milestone-tracking.md](references/milestone-tracking.md)
 
 **Contents:**
+
 - 3.1 Creating milestones
   - 3.1.1 Milestone title conventions
   - 3.1.2 Setting due dates
@@ -170,6 +177,7 @@ Need to work with GitHub Issues?
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 
@@ -279,6 +287,7 @@ All scripts return JSON with an `error` field on failure:
 ```
 
 Common error codes:
+
 - `AUTH_REQUIRED`: gh CLI not authenticated
 - `REPO_NOT_FOUND`: Repository doesn't exist or no access
 - `ISSUE_NOT_FOUND`: Issue number doesn't exist
@@ -307,6 +316,7 @@ All scripts use standardized exit codes for consistent error handling:
 ### Issue: "gh: command not found"
 
 **Solution:** Install gh CLI:
+
 ```bash
 # macOS
 brew install gh
@@ -319,6 +329,7 @@ sudo dnf install gh  # Fedora
 ### Issue: "not logged into any GitHub hosts"
 
 **Solution:** Authenticate with gh:
+
 ```bash
 gh auth login
 ```
@@ -357,12 +368,14 @@ See the main Integrator Agent documentation for workflow integration details.
 - [references/issue-templates.md](references/issue-templates.md) - Bug report, feature request, task templates
   <!-- TOC: issue-templates.md -->
   - ### Part 1: Bug Report Templates
+
   - 1 Bug report template
   - 1 Required sections (description, steps, expected/actual behavior)
   <!-- /TOC -->
 - [references/milestone-tracking.md](references/milestone-tracking.md) - Milestone creation and assignment
   <!-- TOC: milestone-tracking.md -->
   - ### Part 1: Creating Milestones
+
   - 1 Creating milestones
   - 1 Milestone title conventions
   <!-- /TOC -->

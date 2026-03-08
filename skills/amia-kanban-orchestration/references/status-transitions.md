@@ -34,11 +34,13 @@ Blocked          │    ✗    │  ✓   │      ✓      │     ✗     │ 
 ```
 
 **Legend:**
+
 - ✓ = Valid transition
 - ✗ = Invalid transition
 - `-` = Same status (no transition)
 
 **Task Routing Rules:**
+
 - **Small tasks**: In Progress → AI Review → Merge/Release → Done (skip Human Review)
 - **Big tasks**: In Progress → AI Review → Human Review → Merge/Release → Done
 - The Integrator agent (AMIA) reviews ALL tasks in AI Review
@@ -119,6 +121,7 @@ Actions that MUST happen AFTER a transition:
 ### When to Transition
 
 Move from Backlog to Todo when:
+
 - Item is prioritized for current or next sprint
 - All prerequisites are satisfied
 - Capacity exists to work on it
@@ -164,6 +167,7 @@ Assigned to: @agent-1
 ### When to Transition
 
 Move from Todo to In Progress when:
+
 - Agent starts working on the issue
 - Feature branch is created (or about to be)
 
@@ -177,6 +181,7 @@ Move from Todo to In Progress when:
 ### Postconditions
 
 After moving to In Progress:
+
 1. Create feature branch: `git checkout -b feature/issue-42-auth-core`
 2. Record start timestamp in comment
 3. Notify orchestrator (optional)
@@ -196,6 +201,7 @@ Started: 2024-01-15 14:30 UTC
 ### When to Transition
 
 Move from In Progress to AI Review when:
+
 - Implementation is complete (from author's perspective)
 - PR is created and linked to issue
 - All local tests pass
@@ -251,6 +257,7 @@ Integrator will review and route to Human Review (big tasks) or Merge/Release (s
 ### When to Transition
 
 Move from AI Review to Human Review when:
+
 - Integrator agent (AMIA) has reviewed and approved the code changes
 - The task is flagged as BIG (requires human review)
 
@@ -270,6 +277,7 @@ Only the **Integrator agent (AMIA)** can move cards from AI Review to Human Revi
 ### Postconditions
 
 After moving to Human Review:
+
 1. AMAMA (Assistant Manager) notifies the user that a big task needs human review
 2. PR link and summary are included in the notification
 3. Review request is recorded on the PR
@@ -289,6 +297,7 @@ Integrator review: Approved.
 ### When to Transition
 
 Move from AI Review to Merge/Release when:
+
 - Integrator agent (AMIA) has reviewed and approved the code changes
 - The task is SMALL (does not require human review)
 
@@ -308,6 +317,7 @@ Only the **Integrator agent (AMIA)** can move cards from AI Review to Merge/Rele
 ### Postconditions
 
 After moving to Merge/Release:
+
 1. PR is marked as ready to merge
 2. CI pipeline must pass before merge can proceed
 
@@ -326,6 +336,7 @@ PR #123 is ready for merge.
 ### When to Transition
 
 Move from Human Review to Merge/Release when:
+
 - Human user has reviewed and approved the big task
 - User gives explicit approval on the PR or issue
 
@@ -342,6 +353,7 @@ Only the **Human/User** can move cards from Human Review to Merge/Release. The O
 ### Postconditions
 
 After moving to Merge/Release:
+
 1. Human approval is recorded on the PR
 2. PR is marked as ready to merge
 3. CI pipeline must pass before merge can proceed
@@ -361,12 +373,14 @@ PR #123 is ready for merge.
 ### When to Transition
 
 Move from Merge/Release to Done when:
+
 - PR is merged (not just approved)
 - This transition should be AUTOMATIC via GitHub
 
 ### Automatic Trigger
 
 When PR body contains "Closes #N" and PR is merged:
+
 1. GitHub closes issue #N automatically
 2. Board should reflect Done status
 
@@ -388,6 +402,7 @@ gh issue close 42
 ### Verification
 
 Before marking Done, verify:
+
 - [ ] PR is actually merged (not just closed)
 - [ ] CI checks passed
 - [ ] No follow-up issues created
@@ -399,6 +414,7 @@ Before marking Done, verify:
 ### When to Transition
 
 Move to Blocked when:
+
 - External dependency is preventing progress
 - Agent cannot proceed without intervention
 - Resource or access is unavailable
@@ -452,6 +468,7 @@ gh issue comment 42 --body "## Blocked
 ### When to Transition
 
 Move from Blocked back to previous status when:
+
 - Blocker is resolved
 - Agent can continue work
 - Resolution is verified
@@ -513,6 +530,7 @@ If an agent requests an invalid transition:
 3. **Suggest correct path**
 
 Example response:
+
 ```
 Cannot move directly from Todo to AI Review.
 The correct path is:

@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Detect State Triggers
 
-
 ## Contents
 
 - [Purpose](#purpose)

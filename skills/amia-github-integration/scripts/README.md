@@ -31,6 +31,7 @@ The `gh_multiuser.py` script provides bulletproof cross-platform management of m
 ### Quick Start
 
 1. **Copy configuration template:**
+
    ```bash
    cp identities.example.json identities.json
    ```
@@ -38,6 +39,7 @@ The `gh_multiuser.py` script provides bulletproof cross-platform management of m
 2. **Edit `identities.json`** with your GitHub account details
 
 3. **Set up SSH keys:**
+
    ```bash
    python3 gh_multiuser.py setup primary
    python3 gh_multiuser.py setup secondary
@@ -48,6 +50,7 @@ The `gh_multiuser.py` script provides bulletproof cross-platform management of m
    - GitHub > Settings > SSH and GPG keys > New SSH key
 
 5. **Test connections:**
+
    ```bash
    python3 gh_multiuser.py test
    ```
@@ -75,11 +78,13 @@ python3 gh_multiuser.py <command> [args...]
 ### Platform Notes
 
 **Linux/macOS:**
+
 ```bash
 python3 gh_multiuser.py <command>
 ```
 
 **Windows:**
+
 ```powershell
 python gh_multiuser.py <command>
 # or

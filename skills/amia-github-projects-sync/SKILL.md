@@ -18,6 +18,7 @@ user-invocable: false
 The GitHub Projects Sync skill enables the INTEGRATOR-AGENT to manage team tasks through GitHub Projects V2. This is the OFFICIAL task management interface for coordinating work across remote developer agents.
 
 **Critical Distinction**:
+
 - **GitHub Projects** = Team/Project tasks (features, bugs, PRs, issues)
 - **Claude Tasks** = Orchestrator personal tasks ONLY (reading docs, planning, reviewing)
 
@@ -56,6 +57,7 @@ Copy this checklist and track your progress:
 - [ ] Document the change in issue comments or task lists
 
 **When to invoke this skill:**
+
 - Assigning GitHub issues to remote agents
 - Tracking feature implementation progress
 - Synchronizing PR status with project boards
@@ -78,6 +80,7 @@ Copy this checklist and track your progress:
 ## Iron Rules Compliance
 
 This skill is **READ + STATUS UPDATE ONLY**:
+
 - Query project state via GraphQL API
 - Update card status (Todo -> In Progress -> Done)
 - Add comments and labels to issues
@@ -118,6 +121,7 @@ All detailed operations, templates, and scripts are organized in reference files
 Read this when performing day-to-day GitHub Projects operations.
 
 **Contents:**
+
 - 1.1 When starting with GitHub Projects operations
 - 1.2 When creating issues with project items
 - 1.3 When updating project item status
@@ -133,6 +137,7 @@ Read this when performing day-to-day GitHub Projects operations.
 Read this when you need complete GraphQL query/mutation syntax.
 
 **Contents:**
+
 - When listing projects
 - When getting project items
 - When updating item status
@@ -141,6 +146,7 @@ Read this when you need complete GraphQL query/mutation syntax.
 - Detailed Query References
 
 **Sub-Files:**
+
 - [graphql-queries-part1-read-operations.md](references/graphql-queries-part1-read-operations.md) - All read queries
   <!-- TOC: graphql-queries-part1-read-operations.md -->
   - When starting with GitHub Projects API
@@ -156,6 +162,7 @@ Read this when you need complete GraphQL query/mutation syntax.
 Read this when managing issue/item status transitions.
 
 **Contents:**
+
 - 3.1 When starting with status management
 - 3.2 When you need to understand status meanings and metadata
 - 3.3 When moving issues between statuses (transition rules)
@@ -175,6 +182,7 @@ Read this when managing issue/item status transitions.
 Read this when classifying or filtering issues by labels.
 
 **Contents:**
+
 - 4.1 When starting with the label system
 - 4.2 When you need to know available label categories
 - 4.3 When creating or managing labels via CLI
@@ -193,6 +201,7 @@ Read this when classifying or filtering issues by labels.
 Read this when creating issues or setting up repository templates.
 
 **Contents:**
+
 - 5.1 When starting with issue templates
 - 5.2 When setting up template file structure
 - 5.3 When configuring template options
@@ -212,6 +221,7 @@ Read this when creating issues or setting up repository templates.
 Read this when breaking down large features into smaller tasks.
 
 **Contents:**
+
 - 6.1 When breaking down large features into sub-issues
 - 6.2 When creating parent/child issue relationships
 - 6.3 When tracking progress across sub-issues
@@ -226,6 +236,7 @@ Read this when breaking down large features into smaller tasks.
 Read this when coordinating GitHub Projects with other AMOA skills.
 
 **Contents:**
+
 - 7.1 When integrating GitHub Projects with other AMOA skills
 - 7.2 When coordinating with Remote Agent Coordinator
 - 7.3 When working with Code Reviewer skill
@@ -240,6 +251,7 @@ Read this when coordinating GitHub Projects with other AMOA skills.
 Read this when configuring webhooks for CI/project sync.
 
 **Contents:**
+
 - 8.1 When understanding CI notification system
 - 8.2 When configuring GitHub webhooks
 - 8.3 When understanding event types and notifications
@@ -256,6 +268,7 @@ Read this when configuring webhooks for CI/project sync.
 Read this when encountering API errors or failures.
 
 **Contents:**
+
 - 9.1 When encountering GitHub API errors
 - 9.2 When hitting rate limits
 - 9.3 When project or item is not found
@@ -271,6 +284,7 @@ Read this when encountering API errors or failures.
 Read this before starting work and when unsure about procedures.
 
 **Contents:**
+
 - 10.1 When following GitHub Projects best practices
 - 10.2 When managing project board state (DO)
 - 10.3 When handling issues and PRs (DO)
@@ -285,6 +299,7 @@ Read this before starting work and when unsure about procedures.
 Read this when using the included Python automation scripts.
 
 **Contents:**
+
 - 11.1 When using skill automation scripts
 - 11.2 When bulk creating issues from task lists (sync_tasks.py)
 - 11.3 When receiving GitHub webhook events (ci_webhook_handler.py)
@@ -298,6 +313,7 @@ Read this when using the included Python automation scripts.
 Read this when synchronizing GitHub Projects state with external systems.
 
 **Contents:**
+
 - 1.1 Authenticating and verifying GitHub CLI access
 - 1.2 Configuring GitHub Projects V2 environment variables
 - 1.3 Fetching project board data via GraphQL API
@@ -317,6 +333,7 @@ Read this when synchronizing GitHub Projects state with external systems.
 Read this when mapping planning phases to GitHub status.
 
 **Contents:**
+
 - When mapping planning phases to GitHub statuses
 - When you need the phase-to-status mapping table
 - When status should automatically transition
@@ -327,6 +344,7 @@ Read this when mapping planning phases to GitHub status.
 See also: [references/iteration-cycle-rules.md](references/iteration-cycle-rules.md) for sprint/iteration management.
 
 **Contents (Iteration Cycle Rules):**
+
 - When understanding iteration cycle requirements
 - When determining if task is complete
 - When following the review iteration flow
@@ -376,11 +394,13 @@ See [references/status-management.md](references/status-management.md#issue-life
 ## AI Maestro Integration
 
 For all inter-agent messaging, refer to the official AI Maestro skill:
+
 ```
 ~/.claude/skills/agent-messaging/SKILL.md
 ```
 
 Use the `agent-messaging` skill to send notifications. For example, to notify the orchestrator, send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-master`
 - **Subject**: Your notification subject
 - **Content**: `{"type": "TYPE", "message": "MSG"}`
@@ -406,9 +426,9 @@ See [references/automation-scripts.md](references/automation-scripts.md#threshol
 
 When GitHub API calls or sync operations fail, consult [references/error-handling.md](references/error-handling.md) for retry logic, rate-limit handling, and authentication troubleshooting. All errors should be logged and, if unresolvable after retries, escalated via AI Maestro.
   <!-- TOC: error-handling.md -->
-  - When encountering GitHub API errors
-  - When hitting rate limits
-  - When project or item is not found
+- When encountering GitHub API errors
+- When hitting rate limits
+- When project or item is not found
   <!-- /TOC -->
 
 ---
@@ -416,6 +436,7 @@ When GitHub API calls or sync operations fail, consult [references/error-handlin
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 
@@ -426,6 +447,7 @@ When invoking from agents or automated workflows, always pass `--output-file` to
 For worked examples of finding projects, querying items, and updating issue status, see [references/examples-and-inline-troubleshooting.md](references/examples-and-inline-troubleshooting.md). That reference also covers inline troubleshooting for common failures such as missing projects, sync conflicts, and rate limiting.
 
 **Contents:**
+
 - E.1 Example 1: Find and Query a Project
 - E.2 Example 2: Update Issue Status
 - E.3 Inline Troubleshooting: Cannot find GitHub Project

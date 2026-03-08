@@ -23,6 +23,7 @@ This skill teaches you how to systematically diagnose and fix Continuous Integra
 ## Prerequisites
 
 Before using this skill, ensure:
+
 1. Access to CI/CD logs from the failed pipeline
 2. `python3` available in PATH for running diagnostic scripts
 3. Repository access to view workflow files
@@ -54,6 +55,7 @@ Copy this checklist and track your progress:
 - [ ] Monitor CI run and confirm the fix resolved the issue
 
 Use this skill when:
+
 - A CI workflow fails and you need to diagnose the cause
 - Tests pass locally but fail in CI
 - You see platform-specific errors (Windows vs Linux vs macOS)
@@ -88,6 +90,7 @@ CI failures fall into six main categories:
 | Claude PR Handling | Workflow for Claude Code Action PRs | [claude-pr-handling.md](references/claude-pr-handling.md) |
 
 **Category contents overview:**
+
 - **Cross-Platform**: 1 Temporary Path Differences, 2 Path Separator Differences, 3 Line Ending Differences, 4 Case Sensitivity Differences
 - **Exit Codes**: 1 Exit Code Persistence, 2 Common Exit Codes by Tool, 3 GitHub Actions Exit Code Handling
 - **Syntax**: 1 Here-String and Heredoc Terminator Issues, 2 Shell Quoting Differences, 3 Command Substitution Syntax
@@ -185,6 +188,7 @@ python scripts/amia_detect_platform_issue.py --path . --json
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 
@@ -216,6 +220,7 @@ python scripts/amia_diagnose_ci_failure.py --log-file ci.log
 ### The diagnostic script doesn't identify my failure
 
 Read the full error message and search for keywords in the reference documents. Common keywords:
+
 - "not found", "no such file" → Cross-Platform Patterns
 - "exit code", "returned 1" → Exit Code Patterns
 - "syntax error", "unexpected" → Syntax Patterns
@@ -225,6 +230,7 @@ Read the full error message and search for keywords in the reference documents. 
 ### My fix works locally but still fails in CI
 
 This usually indicates a cross-platform issue. Check:
+
 1. Are you testing on the same OS as CI?
 2. Are file paths hardcoded?
 3. Are environment variables the same?
@@ -232,6 +238,7 @@ This usually indicates a cross-platform issue. Check:
 ### CI passes sometimes but fails randomly
 
 Check for:
+
 1. Race conditions in tests
 2. External service dependencies
 3. Time-sensitive tests
@@ -351,6 +358,6 @@ Check for:
 
 ## See Also
 
-- GitHub Actions documentation: https://docs.github.com/en/actions
+- GitHub Actions documentation: <https://docs.github.com/en/actions>
 - CI/CD best practices: Use matrix builds to test all platforms
 - Error handling: Always use explicit exit codes

@@ -70,12 +70,14 @@ Timestamp: [ISO 8601]
 ```
 
 **Required sections:**
+
 - Brief summary line with category prefix (max 72 characters)
 - `## WHAT Changed` section
 - `## WHY Changed` section with rationale
 - Footer with committer attribution and timestamp
 
 **Optional sections** (include when applicable):
+
 - `### Symbols` - for code changes
 - `### Configurations` - for config/env changes
 - `### Supersedes` - for removals and renames
@@ -94,6 +96,7 @@ Use these exact prefixes in the `### Files` section:
 ```
 
 **Rules:**
+
 - Always use **full paths** from project root
 - For MODIFIED files, include line ranges when practical
 - For RENAMED files, use the arrow notation: `old-name → new-name`
@@ -112,6 +115,7 @@ For code changes, add a `### Symbols` section:
 ```
 
 **Rules:**
+
 - Use **fully qualified symbol names** (class.method, module.function)
 - Include type signatures for functions when available
 - Add brief explanation for MODIFIED symbols (what aspect changed)
@@ -130,6 +134,7 @@ For configuration or environment variable changes, add a `### Configurations` se
 ```
 
 **Rules:**
+
 - Use the format: `file.path.to.key`: `old_value` → `new_value`
 - For env vars, prefix with "env var"
 - Use backticks for config keys and values
@@ -157,63 +162,74 @@ For configuration or environment variable changes, add a `### Configurations` se
 ### 1.2.2 When to Use Each Category
 
 **[ARCH]** - Use when:
+
 - Introducing new architectural patterns
 - Restructuring module boundaries
 - Changing system-wide conventions
 - Modifying the overall project structure
 
 **[FEAT]** - Use when:
+
 - Adding new user-facing functionality
 - Implementing new API endpoints
 - Creating new modules or services
 - Adding new capabilities to existing features
 
 **[FIX]** - Use when:
+
 - Correcting bugs in existing code
 - Fixing broken tests
 - Resolving runtime errors
 - Patching security vulnerabilities
 
 **[REFACTOR]** - Use when:
+
 - Reorganizing code without changing behavior
 - Improving code readability or maintainability
 - Extracting functions or classes
 - Renaming internal symbols (use [RENAME] if user-visible)
 
 **[DOCS]** - Use when:
+
 - Updating README files
 - Modifying code comments
 - Changing API documentation
 - Updating developer guides
 
 **[SPEC]** - Use when:
+
 - Creating module specifications
 - Updating design documents
 - Modifying requirements
 - Changing specification templates
 
 **[ADR]** - Use when:
+
 - Recording architecture decisions
 - Updating existing ADRs
 - Documenting significant technical choices
 
 **[REMOVE]** - Use when:
+
 - Intentionally deleting files or features
 - Removing deprecated functionality
 - Cleaning up obsolete code
 
 **[RENAME]** - Use when:
+
 - Renaming files, classes, or functions
 - Changing API endpoint names
 - Modifying user-visible identifiers
 
 **[CONFIG]** - Use when:
+
 - Changing configuration files
 - Modifying environment variables
 - Updating build settings
 - Changing CI/CD configurations
 
 **[MEMORY]** - Use when:
+
 - Updating integrator memory files
 - Modifying progress tracking
 - Changing session state
@@ -227,21 +243,25 @@ For configuration or environment variable changes, add a `### Configurations` se
 The commit message MUST enable finding answers to these questions using `git log --all --grep`:
 
 **1. "Why was file X removed?"**
+
 - Search command: `git log --all --grep="REMOVED: path/to/X"`
 - Must find: Rationale and what superseded it
 - Requirements: Full path, supersedes information
 
 **2. "When was function Y renamed?"**
+
 - Search command: `git log --all --grep="RENAMED:.*Y"`
 - Must find: Old name, new name, and why
 - Requirements: Both old and new names in commit
 
 **3. "What decision led to removing constant Z?"**
+
 - Search command: `git log --all --grep="Z"`
 - Must find: Decision context and alternatives considered
 - Requirements: Full symbol name, decision context section
 
 **4. "What files were affected by ADR-042?"**
+
 - Search command: `git log --all --grep="ADR-042"`
 - Must find: All commits referencing that decision
 - Requirements: ADR number in Related section
@@ -281,6 +301,7 @@ Follow these practices to ensure commits are searchable:
 ### 1.4.1 When to Commit to Project Git
 
 Commit to **project git** (public repository) for:
+
 - Source code changes
 - Test changes
 - Public documentation (README, CONTRIBUTING, LICENSE)
@@ -291,6 +312,7 @@ Commit to **project git** (public repository) for:
 **Location:** Project root `.git/`
 
 **Command:**
+
 ```bash
 cd /project-root
 git add [staged files]
@@ -298,6 +320,7 @@ git commit -m "[message]"
 ```
 
 **Verification:**
+
 ```bash
 # Verify project git exists
 [ -d "/project-root/.git" ] || echo "ERROR: Project git not initialized"
@@ -306,6 +329,7 @@ git commit -m "[message]"
 ### 1.4.2 When to Commit to Design Git
 
 Commit to **design git** (private repository) for:
+
 - Architecture plans
 - Module specifications
 - Design decisions (ADRs)
@@ -317,6 +341,7 @@ Commit to **design git** (private repository) for:
 **Location:** `/project-root/.design/.git/` or configured path
 
 **Command:**
+
 ```bash
 cd /project-root/.design
 git add [staged files]
@@ -324,6 +349,7 @@ git commit -m "[message]"
 ```
 
 **Verification:**
+
 ```bash
 # Verify design git exists
 [ -d "/project-root/.design/.git" ] || echo "ERROR: Design git not initialized"
@@ -383,6 +409,7 @@ When removing or renaming files or symbols, ALWAYS include a `### Supersedes` se
 ```
 
 **Required fields:**
+
 - `Replaced by:` - What new element supersedes the removed one
 - `Migration:` - Instructions for updating references
 - `Breaking:` - Whether this change breaks existing functionality
@@ -392,21 +419,25 @@ When removing or renaming files or symbols, ALWAYS include a `### Supersedes` se
 Provide clear, actionable migration guidance:
 
 **For file removals:**
+
 ```
 Migration: All references should use module-spec-template.md
 ```
 
 **For symbol renames:**
+
 ```
 Migration: Update all imports: from `old_module` to `new_module`
 ```
 
 **For configuration changes:**
+
 ```
 Migration: Update config.yaml: replace `old_key` with `new_key` (value format unchanged)
 ```
 
 **For feature removals:**
+
 ```
 Migration: Use new API endpoint /v2/users instead of deprecated /users
 ```
@@ -416,21 +447,25 @@ Migration: Use new API endpoint /v2/users instead of deprecated /users
 Always explicitly state whether a change is breaking:
 
 **Non-breaking removal:**
+
 ```
 Breaking: No - no active workflows depend on this template
 ```
 
 **Breaking removal:**
+
 ```
 Breaking: Yes - existing imports will fail; requires code changes in all dependent modules
 ```
 
 **Non-breaking rename:**
+
 ```
 Breaking: No - old function name maintained as alias for backward compatibility
 ```
 
 **Breaking rename:**
+
 ```
 Breaking: Yes - old function name removed; all callers must update
 ```

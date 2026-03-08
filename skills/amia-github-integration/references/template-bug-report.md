@@ -10,11 +10,11 @@ description: "Universal bug report YAML form for GitHub Issues with structured f
 - 1. When to Use This Template
   - 1.1 Installing the bug report form in a repository
   - 1.2 How GitHub Issue YAML forms work
-- 2. YAML Form Syntax Overview
+- 1. YAML Form Syntax Overview
   - 2.1 Top-level fields (name, description, labels, assignees)
   - 2.2 Body field types (input, textarea, dropdown, checkboxes, markdown)
   - 2.3 Validation attributes (required, placeholder, render)
-- 3. Template Fields Explained
+- 1. Template Fields Explained
   - 3.1 Duplicate check checkbox
   - 3.2 Area dropdown for module classification
   - 3.3 Operating system dropdown
@@ -23,11 +23,11 @@ description: "Universal bug report YAML form for GitHub Issues with structured f
   - 3.6 Steps to reproduce textarea
   - 3.7 Expected behavior textarea
   - 3.8 Logs and screenshots textarea with code rendering
-- 4. Auto-Labeling Strategy
+- 1. Auto-Labeling Strategy
   - 4.1 Default labels for bug reports
   - 4.2 How labels integrate with triage workflows
-- 5. Complete YAML Template (Ready to Copy)
-- 6. Customization Notes
+- 1. Complete YAML Template (Ready to Copy)
+- 1. Customization Notes
   - 6.1 Adding project-specific fields
   - 6.2 Modifying the area dropdown for your project
   - 6.3 Adding severity or priority dropdowns
@@ -52,6 +52,7 @@ your-repo/
 GitHub Issue forms use YAML to define structured fields that replace free-form markdown issue bodies. Each field in the YAML `body` array becomes an input element in the browser form. When the user submits the form, GitHub renders the responses as formatted markdown in the issue body.
 
 Key concepts:
+
 - `type: input` creates a single-line text field
 - `type: textarea` creates a multi-line text area
 - `type: dropdown` creates a selection menu
@@ -59,6 +60,7 @@ Key concepts:
 - `type: markdown` inserts static text (instructions, not user input)
 
 Each field can have:
+
 - `id` -- unique identifier for the field (used in API access)
 - `attributes.label` -- the visible label above the field
 - `attributes.description` -- helper text below the label
@@ -299,6 +301,7 @@ labels: ["bug", "backlog"]
 ### 4.2 How labels integrate with triage workflows
 
 After a maintainer reviews the issue:
+
 1. Remove `backlog`
 2. Add priority label (e.g., `priority-high`, `priority-low`)
 3. Add area label if different from the dropdown selection

@@ -37,11 +37,13 @@ design/worktrees/registry.json
 ```
 
 **Path explanation:**
+
 - `design/` - Hidden directory containing AMOA orchestrator metadata
 - `worktrees/` - Subdirectory dedicated to worktree management
 - `registry.json` - JSON file containing all worktree records
 
 **Why this location:**
+
 - Lives in the main repository (not in worktrees themselves)
 - Survives worktree deletion
 - Accessible from any worktree via relative path
@@ -154,6 +156,7 @@ The `port_ranges` object defines allowed port allocations by category:
 ```
 
 **How it works:**
+
 - Each category defines a range: `[start_port, end_port]`
 - When creating a worktree, the system allocates the next available port in the appropriate range
 - Prevents port conflicts between worktrees
@@ -174,6 +177,7 @@ The `naming_convention` object defines path templates for each purpose:
 ```
 
 **Template variables:**
+
 - `{issue}` - GitHub issue number (e.g., `GH-42`)
 - `{name}` - Feature or branch name
 - `{desc}` - Short description (kebab-case)
@@ -181,6 +185,7 @@ The `naming_convention` object defines path templates for each purpose:
 - `{target}` - What is being tested
 
 **Example expansions:**
+
 - `../review-{issue}` + `GH-42` → `../review-GH-42`
 - `../feature-{name}` + `user-profiles` → `../feature-user-profiles`
 - `../bugfix-{issue}-{desc}` + `GH-88` + `login` → `../bugfix-GH-88-login`

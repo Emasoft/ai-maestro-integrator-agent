@@ -1,6 +1,5 @@
 # Operation: Set Issue Labels
 
-
 ## Contents
 
 - [Metadata](#metadata)

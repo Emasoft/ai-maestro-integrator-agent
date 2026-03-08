@@ -26,6 +26,7 @@
   - [Workflow Example](#workflow-example)
 
 ## Use-Case TOC
+
 - When running commands as a specific user → [Per-Command Identity Override](#per-command-identity-override)
 - When adding collaborators to a repository → [Collaborator Management](#collaborator-management)
 - When troubleshooting identity issues → [Troubleshooting](#troubleshooting)
@@ -34,6 +35,7 @@
 - When using identities with agent orchestration → [Integration with Agent Orchestration](#integration-with-agent-orchestration)
 
 **Related Documents:**
+
 - [Part 1: Setup and Configuration](multi-user-workflow-part1-setup.md) - SSH keys, host aliases, gh CLI setup, identity switching, and repository configuration
 
 ---
@@ -85,6 +87,7 @@ gh api repos/OWNER/REPO/collaborators/COLLABORATOR_USERNAME -X PUT -f permission
 ```
 
 **Permission Levels:**
+
 - `pull`: Read-only access
 - `push`: Read and write access
 - `admin`: Full administration
@@ -116,6 +119,7 @@ gh api repos/OWNER/REPO --jq '.full_name'
 ### Problem: SSH Shows Wrong User
 
 **Symptom:**
+
 ```
 $ ssh -T git@github-secondary
 Hi wrong-user! You've successfully authenticated...
@@ -124,6 +128,7 @@ Hi wrong-user! You've successfully authenticated...
 **Cause:** SSH agent is offering the wrong key.
 
 **Solution:**
+
 ```bash
 # Clear all keys from agent
 ssh-add -D
@@ -138,6 +143,7 @@ ssh -T git@github-secondary
 ### Problem: Push Permission Denied
 
 **Symptom:**
+
 ```
 ERROR: Permission to owner/repo.git denied to wrong-user.
 ```
@@ -145,6 +151,7 @@ ERROR: Permission to owner/repo.git denied to wrong-user.
 **Cause:** Remote URL uses wrong host alias or wrong key is being used.
 
 **Solution:**
+
 ```bash
 # Check remote URL
 git remote -v
@@ -167,6 +174,7 @@ ssh -T git@github-secondary
 **Cause:** Local git config has wrong identity.
 
 **Solution:**
+
 ```bash
 # Check current config
 git config user.name
@@ -185,6 +193,7 @@ git commit --amend --reset-author --no-edit
 **Symptom:** gh commands operate on wrong account.
 
 **Solution:**
+
 ```bash
 # Check current account
 gh auth status
@@ -200,6 +209,7 @@ gh auth switch --user correct-username
 **Cause:** SSH agent offers too many keys before the correct one.
 
 **Solution:** Ensure `IdentitiesOnly yes` is in your `~/.ssh/config`:
+
 ```
 Host github-secondary
   HostName github.com
@@ -213,6 +223,7 @@ Host github-secondary
 **Symptom:** Keys disappear from ssh-agent after restart.
 
 **Solution:** Add to `~/.ssh/config`:
+
 ```
 Host *
   AddKeysToAgent yes
@@ -220,6 +231,7 @@ Host *
 ```
 
 Then add the key with:
+
 ```bash
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519_secondary
 ```
@@ -269,12 +281,14 @@ ssh-add --apple-use-keychain ~/.ssh/id_ed25519_secondary
 When using multiple identities with agent orchestration:
 
 ### Owner/Orchestrator Identity
+
 - Reviews and approves PRs
 - Creates and assigns issues
 - Has admin/owner permissions
 - Uses primary SSH host alias and gh authentication
 
 ### Developer/Worker Identity
+
 - Submits code changes via PRs
 - Has push (collaborator) permissions
 - Uses secondary SSH host alias and gh authentication
@@ -290,6 +304,7 @@ When using multiple identities with agent orchestration:
 6. **Orchestrator**: Merges approved PR
 
 This separation ensures:
+
 - Clear attribution of work
 - Formal review process (different users required for PR approval)
 - Audit trail showing distinct responsibilities

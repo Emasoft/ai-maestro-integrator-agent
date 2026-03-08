@@ -22,6 +22,7 @@ This skill teaches you how to use git worktrees for parallel PR processing. Git 
 ## Prerequisites
 
 Before using this skill, ensure:
+
 1. Git version 2.15 or higher is installed (`git --version`)
 2. Python 3.9 or higher is available for running scripts
 3. Sufficient disk space for multiple worktree directories
@@ -77,6 +78,7 @@ Never run git operations (commit, push, fetch, rebase) in multiple worktrees sim
 
 **CONSTRAINT 3: VERIFY BEFORE CLEANUP**
 Before removing a worktree, ALWAYS verify:
+
 - All changes are committed
 - All commits are pushed to remote
 - No files were accidentally written outside the worktree
@@ -85,6 +87,7 @@ Before removing a worktree, ALWAYS verify:
 A branch can only be checked out in ONE worktree at a time. Attempting to checkout a branch that exists in another worktree will fail.
 
 **CONSTRAINT 5: WORKTREE PATH RULES**
+
 - Worktree paths must be outside the main repository
 - Use absolute paths when creating worktrees
 - Never nest worktrees inside each other
@@ -140,26 +143,31 @@ This skill includes Python scripts for common worktree operations:
 ### Script Usage Examples
 
 **Creating a worktree for PR #123:**
+
 ```bash
 python scripts/amia_create_worktree.py --pr 123 --base-path /tmp/worktrees
 ```
 
 **Listing all worktrees:**
+
 ```bash
 python scripts/amia_list_worktrees.py --repo-path /path/to/main/repo
 ```
 
 **Verifying isolation:**
+
 ```bash
 python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/pr-123
 ```
 
 **Committing and pushing:**
+
 ```bash
 python scripts/amia_worktree_commit_push.py --worktree-path /tmp/worktrees/pr-123 --message "Fix issue"
 ```
 
 **Cleaning up a worktree:**
+
 ```bash
 python scripts/amia_cleanup_worktree.py --worktree-path /tmp/worktrees/pr-123
 ```
@@ -169,6 +177,7 @@ python scripts/amia_cleanup_worktree.py --worktree-path /tmp/worktrees/pr-123
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 
@@ -230,12 +239,12 @@ python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/
 
 **Solution:** See [worktree-fundamentals.md](references/worktree-fundamentals.md) section 1.5 for branch constraint details.
   <!-- TOC: worktree-fundamentals.md -->
-  - 1.1 What is a git worktree and why it exists
-  - 1.2 Worktree vs clone vs checkout - choosing the right approach
-  - 1.3 The shared git directory model explained
-  - 1.4 When worktrees provide measurable benefits
-  - 1.5 Common misconceptions about worktrees
-  - 1.6 Prerequisites and git version requirements
+- 1.1 What is a git worktree and why it exists
+- 1.2 Worktree vs clone vs checkout - choosing the right approach
+- 1.3 The shared git directory model explained
+- 1.4 When worktrees provide measurable benefits
+- 1.5 Common misconceptions about worktrees
+- 1.6 Prerequisites and git version requirements
   <!-- /TOC -->
 
 ### Problem: "worktree is dirty, cannot remove"
@@ -244,13 +253,13 @@ python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/
 
 **Solution:** See [worktree-cleanup.md](references/worktree-cleanup.md) section 3.2 for handling uncommitted changes.
   <!-- TOC: worktree-cleanup.md -->
-  - 3.1 When to clean up worktrees (timing and triggers)
-  - 3.2 Verifying no uncommitted changes exist
-  - 3.3 Safe removal procedure step-by-step
-  - 3.4 Handling stuck worktrees and lock files
-  - 3.5 Force removal scenarios and their risks
-  - 3.6 Pruning stale worktree entries
-  - 3.7 Disk space recovery after cleanup
+- 3.1 When to clean up worktrees (timing and triggers)
+- 3.2 Verifying no uncommitted changes exist
+- 3.3 Safe removal procedure step-by-step
+- 3.4 Handling stuck worktrees and lock files
+- 3.5 Force removal scenarios and their risks
+- 3.6 Pruning stale worktree entries
+- 3.7 Disk space recovery after cleanup
   <!-- /TOC -->
 
 ### Problem: Files appearing in main repo after worktree work
@@ -259,13 +268,13 @@ python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/
 
 **Solution:** See [worktree-verification.md](references/worktree-verification.md) section 4.2 for detection and remediation.
   <!-- TOC: worktree-verification.md -->
-  - 4.1 Pre-cleanup verification checklist
-  - 4.2 Detecting files written outside worktree boundaries
-  - 4.3 Branch state verification procedures
-  - 4.4 Remote sync verification steps
-  - 4.5 Automated verification script usage
-  - 4.6 Manual verification when scripts fail
-  - 4.7 Reporting isolation violations
+- 4.1 Pre-cleanup verification checklist
+- 4.2 Detecting files written outside worktree boundaries
+- 4.3 Branch state verification procedures
+- 4.4 Remote sync verification steps
+- 4.5 Automated verification script usage
+- 4.6 Manual verification when scripts fail
+- 4.7 Reporting isolation violations
   <!-- /TOC -->
 
 ### Problem: "fatal: unable to create new worktree"
@@ -274,13 +283,13 @@ python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/
 
 **Solution:** See [worktree-cleanup.md](references/worktree-cleanup.md) section 3.4 for handling stuck worktrees.
   <!-- TOC: worktree-cleanup.md -->
-  - 3.1 When to clean up worktrees (timing and triggers)
-  - 3.2 Verifying no uncommitted changes exist
-  - 3.3 Safe removal procedure step-by-step
-  - 3.4 Handling stuck worktrees and lock files
-  - 3.5 Force removal scenarios and their risks
-  - 3.6 Pruning stale worktree entries
-  - 3.7 Disk space recovery after cleanup
+- 3.1 When to clean up worktrees (timing and triggers)
+- 3.2 Verifying no uncommitted changes exist
+- 3.3 Safe removal procedure step-by-step
+- 3.4 Handling stuck worktrees and lock files
+- 3.5 Force removal scenarios and their risks
+- 3.6 Pruning stale worktree entries
+- 3.7 Disk space recovery after cleanup
   <!-- /TOC -->
 
 ### Problem: Git operations hanging or failing
@@ -289,24 +298,24 @@ python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/
 
 **Solution:** See [parallel-pr-workflow.md](references/parallel-pr-workflow.md) section 2.5 for serialization strategies.
   <!-- TOC: parallel-pr-workflow.md -->
-  - Part 1: Creating Worktrees and Isolation
-    - 2.1 Creating Worktrees for Multiple Simultaneous PRs
-    - 2.2 Isolation Requirements and Enforcement Rules
-  - Part 2: Subagent Management and Path Validation
-    - 2.3 Working Directory Management for Subagents
-    - 2.4 Path Validation Rules and Common Violations
-  - Part 3: Concurrent Operations and Example Workflow
-    - 2.5 Handling Concurrent Git Operation Limitations
-      - 2.5.1 The concurrency problem (shared .git locks)
-      - 2.5.2 Problematic concurrent operations (commit, fetch, push conflicts)
-      - 2.5.3 Safe concurrent operations (status, diff, log, file mods)
-      - 2.5.4 Serialization strategies (orchestrator-controlled, queuing, locking)
-      - 2.5.5 Best practice: git operation sequencing
-    - 2.6 Example Workflow: Processing 3 PRs in Parallel
-  - Part 4: Error Recovery
-    - 2.7 Error Recovery When Isolation is Violated
-  - Quick Reference
-  - Related Documents
+- Part 1: Creating Worktrees and Isolation
+  - 2.1 Creating Worktrees for Multiple Simultaneous PRs
+  - 2.2 Isolation Requirements and Enforcement Rules
+- Part 2: Subagent Management and Path Validation
+  - 2.3 Working Directory Management for Subagents
+  - 2.4 Path Validation Rules and Common Violations
+- Part 3: Concurrent Operations and Example Workflow
+  - 2.5 Handling Concurrent Git Operation Limitations
+    - 2.5.1 The concurrency problem (shared .git locks)
+    - 2.5.2 Problematic concurrent operations (commit, fetch, push conflicts)
+    - 2.5.3 Safe concurrent operations (status, diff, log, file mods)
+    - 2.5.4 Serialization strategies (orchestrator-controlled, queuing, locking)
+    - 2.5.5 Best practice: git operation sequencing
+  - 2.6 Example Workflow: Processing 3 PRs in Parallel
+- Part 4: Error Recovery
+  - 2.7 Error Recovery When Isolation is Violated
+- Quick Reference
+- Related Documents
   <!-- /TOC -->
 
 ---
@@ -325,6 +334,7 @@ python scripts/amia_verify_worktree_isolation.py --worktree-path /tmp/worktrees/
 - [references/parallel-pr-workflow.md](references/parallel-pr-workflow.md) - Processing multiple PRs simultaneously
   <!-- TOC: parallel-pr-workflow.md -->
   ### Part 1: Creating Worktrees and Isolation
+
   **2.1 Creating Worktrees for Multiple Simultaneous PRs**
   **2.2 Isolation Requirements and Enforcement Rules**
   <!-- /TOC -->
@@ -366,6 +376,7 @@ The following git worktree operations are **IRREVERSIBLE** and can cause data lo
 ### BEFORE ANY DESTRUCTIVE OPERATION
 
 1. **Verify you have a backup branch**
+
    ```bash
    git branch -a | grep backup
    # If no backup, create one:
@@ -377,6 +388,7 @@ The following git worktree operations are **IRREVERSIBLE** and can cause data lo
    - Document the reason for force operation
 
 3. **Log the operation details**
+
    ```bash
    echo "$(date): Removing worktree $WORKTREE_PATH - Reason: [REASON]" >> worktree-ops.log
    ```

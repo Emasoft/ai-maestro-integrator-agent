@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Worktree Commit Push
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -217,6 +216,7 @@ Follow conventional commit format:
 Types: feat, fix, docs, style, refactor, test, chore
 
 Example:
+
 ```
 fix(auth): resolve null pointer in login flow
 

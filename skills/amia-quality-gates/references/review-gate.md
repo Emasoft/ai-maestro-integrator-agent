@@ -46,6 +46,7 @@ Refer to **amia-code-review-patterns** skill for complete review methodology. Su
 **Formula**: Weighted average across all 8 dimensions
 
 **Example**:
+
 ```
 Correctness: 90% × 0.15 = 13.5
 Security: 100% × 0.15 = 15.0
@@ -123,6 +124,7 @@ Please address these issues and request re-review."
 ## Re-Review Triggers
 
 Re-review required when:
+
 - Author addresses requested changes
 - New commits pushed after review
 - Blocking issues resolved
@@ -133,6 +135,7 @@ Re-review required when:
 **Purpose**: Rapid triage to identify obvious blockers
 
 **Actions**:
+
 1. Check PR size (< 400 lines preferred)
 2. Verify tests present and passing
 3. Scan for obvious security issues (SQL injection, XSS, etc.)
@@ -144,6 +147,7 @@ Re-review required when:
 **Purpose**: Thorough evaluation across all 8 dimensions
 
 **Actions**:
+
 1. Evaluate each dimension per **amia-code-review-patterns**
 2. Calculate dimension scores
 3. Compute overall confidence score
@@ -155,6 +159,7 @@ Re-review required when:
 ### Confidence Score Borderline (75-79%)
 
 If score is close to threshold:
+
 1. Review borderline dimensions
 2. Request targeted improvements (not full rework)
 3. Consider warning labels instead of blocking
@@ -163,6 +168,7 @@ If score is close to threshold:
 ### Reviewer Disagrees with Prior Review
 
 If second reviewer conflicts with first:
+
 1. Document disagreement
 2. Escalate to senior reviewer
 3. Discuss in PR comments
@@ -171,6 +177,7 @@ If second reviewer conflicts with first:
 ### Author Disputes Review Findings
 
 If author disagrees with review:
+
 1. Engage in constructive discussion in PR comments
 2. Author can provide additional context
 3. Reviewer can adjust score if justified

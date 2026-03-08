@@ -45,6 +45,7 @@ All design documents MUST have a globally unique identifier (GUUID) in this form
 ```
 
 **Components:**
+
 - `{TYPE}` - Document type prefix (3-6 uppercase letters)
 - `{YYYYMMDD}` - Creation date in ISO format
 - `{NNNN}` - Sequential number (0001-9999)
@@ -62,6 +63,7 @@ All design documents MUST have a globally unique identifier (GUUID) in this form
 | `DEC` | Decision Record | `design/requirements/` |
 
 **Examples:**
+
 ```
 REQ-20260129-0001
 SPEC-20260129-0042
@@ -127,6 +129,7 @@ author: orchestrator-agent
 ```
 
 **Transition Rules:**
+
 - DRAFT → REVIEW: Document is complete enough for review
 - REVIEW → APPROVED: Stakeholder approval received
 - REVIEW → DRAFT: Revisions needed
@@ -217,6 +220,7 @@ When creating a GitHub issue from a design document:
 ### 6.2 Syncing Status
 
 When document status changes:
+
 1. Update `status` field in frontmatter
 2. Update `updated` timestamp
 3. If linked to GitHub issue, update issue labels
@@ -225,6 +229,7 @@ When document status changes:
 ### 6.3 Linking Existing Issue
 
 To link a document to an existing issue:
+
 1. Add `github_issue: {number}` to frontmatter
 2. Post document UUID as issue comment
 3. Add `design-linked` label to issue
@@ -235,6 +240,7 @@ To link a document to an existing issue:
 
 **Detection:** Search returns existing document with same UUID
 **Resolution:**
+
 1. Generate new UUID with incremented sequence number
 2. Log warning about collision
 3. Retry save with new UUID
@@ -243,6 +249,7 @@ To link a document to an existing issue:
 
 **Detection:** YAML parsing fails
 **Resolution:**
+
 1. Do NOT save document
 2. Return validation error with line numbers
 3. Agent must fix frontmatter before retry
@@ -251,6 +258,7 @@ To link a document to an existing issue:
 
 **Detection:** Validation finds missing fields
 **Resolution:**
+
 1. Do NOT save document
 2. Return list of missing fields
 3. Agent must add fields before retry
@@ -259,6 +267,7 @@ To link a document to an existing issue:
 
 **Detection:** Requested status change violates lifecycle
 **Resolution:**
+
 1. Do NOT update status
 2. Return error explaining valid transitions
 3. Agent must use valid transition
@@ -267,6 +276,7 @@ To link a document to an existing issue:
 
 **Detection:** `gh` command not found or not authenticated
 **Resolution:**
+
 1. Skip GitHub operations
 2. Log warning
 3. Document remains valid without GitHub link
@@ -276,6 +286,7 @@ To link a document to an existing issue:
 
 **Detection:** Search returns no matches
 **Resolution:**
+
 1. Return empty result set (not error)
 2. Include search criteria in response
 3. Suggest alternative searches if possible
@@ -284,6 +295,7 @@ To link a document to an existing issue:
 
 **Detection:** `design/` folder or subfolders don't exist
 **Resolution:**
+
 1. Run `amia_design_create.py --init` to create structure
 2. Retry operation
 
@@ -302,6 +314,7 @@ Or with descriptive slug:
 ```
 
 **Examples:**
+
 ```
 REQ-20260129-0001.md
 REQ-20260129-0001-authentication-requirements.md

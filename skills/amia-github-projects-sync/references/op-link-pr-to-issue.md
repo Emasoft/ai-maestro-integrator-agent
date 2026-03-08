@@ -1,6 +1,5 @@
 # Operation: Link PR to Issue
 
-
 ## Contents
 
 - [Metadata](#metadata)
@@ -55,6 +54,7 @@ Add closing keywords in the PR body:
 | `Resolves` | `Resolves #42` |
 
 Multiple issues:
+
 ```markdown
 Closes #42, #43, #44
 ```
@@ -62,6 +62,7 @@ Closes #42, #43, #44
 ### Method 2: PR Title
 
 Include the issue reference in the PR title:
+
 ```
 feat: Implement authentication (Closes #42)
 ```
@@ -69,6 +70,7 @@ feat: Implement authentication (Closes #42)
 ### Method 3: Commit Messages
 
 Use closing keywords in commit messages:
+
 ```
 git commit -m "Add login endpoint (Fixes #42)"
 ```
@@ -129,6 +131,7 @@ gh pr view 50 --json closingIssuesReferences
 ## Cross-Repository Linking
 
 For issues in different repos:
+
 ```markdown
 Closes owner/other-repo#42
 ```
@@ -136,6 +139,7 @@ Closes owner/other-repo#42
 ## Behavior on Merge
 
 When the PR is merged:
+
 1. Linked issues are automatically closed
 2. On the Kanban board, issues move to Done
 3. Timeline shows the closing PR

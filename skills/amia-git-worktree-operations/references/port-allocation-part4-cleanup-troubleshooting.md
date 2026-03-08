@@ -13,6 +13,7 @@
 ### When to Clean Up Ports
 
 Ports should be released when:
+
 1. Worktree is deleted
 2. Project is archived
 3. Registry becomes corrupt
@@ -21,17 +22,20 @@ Ports should be released when:
 ### Automatic Cleanup on Worktree Removal
 
 **Integrated cleanup:**
+
 ```bash
 eia worktree remove feature-old
 ```
 
 **This automatically:**
+
 1. Stops all services using the ports
 2. Removes Docker containers
 3. Releases ports from registry
 4. Cleans up configuration files
 
 **Implementation:**
+
 ```python
 def remove_worktree_with_cleanup(worktree_name):
     """
@@ -79,6 +83,7 @@ eia port cleanup
 ```
 
 **Output:**
+
 ```
 Cleaning up port allocations...
 ═════════════════════════════════════════════════════════
@@ -136,12 +141,14 @@ rm -rf myapp
 ### Problem: Port Allocation Fails
 
 **Symptom:**
+
 ```bash
 $ eia worktree create feature-new
 ERROR: Failed to allocate ports
 ```
 
 **Diagnosis:**
+
 ```bash
 # Check port range capacity
 eia port status
@@ -151,6 +158,7 @@ eia port check-conflicts
 ```
 
 **Solution:**
+
 1. Expand port ranges if near capacity
 2. Clean up unused worktrees
 3. Release stale allocations
@@ -158,12 +166,14 @@ eia port check-conflicts
 ### Problem: Services Fail to Start
 
 **Symptom:**
+
 ```bash
 $ npm start
 ERROR: Port 8082 already in use
 ```
 
 **Diagnosis:**
+
 ```bash
 # What's using the port?
 lsof -i :8082
@@ -173,6 +183,7 @@ eia port show feature-payment
 ```
 
 **Solution:**
+
 ```bash
 # If another process is using it:
 kill <PID>
@@ -187,12 +198,14 @@ eia worktree regenerate-config feature-payment
 ### Problem: Docker Containers Conflict
 
 **Symptom:**
+
 ```bash
 $ docker-compose up
 ERROR: Bind for 0.0.0.0:8082 failed: port is already allocated
 ```
 
 **Diagnosis:**
+
 ```bash
 # Check running containers
 docker ps | grep 8082
@@ -202,6 +215,7 @@ eia port list
 ```
 
 **Solution:**
+
 ```bash
 # Stop conflicting container
 docker stop <container_id>
@@ -213,12 +227,14 @@ eia docker regenerate feature-payment
 ### Problem: Registry Corruption
 
 **Symptom:**
+
 ```bash
 $ eia port list
 ERROR: Invalid registry format
 ```
 
 **Diagnosis:**
+
 ```bash
 # Check registry file
 cat .git/worktree-registry/ports.json
@@ -228,6 +244,7 @@ python -m json.tool .git/worktree-registry/ports.json
 ```
 
 **Solution:**
+
 ```bash
 # Backup current registry
 cp .git/worktree-registry/ports.json .git/worktree-registry/ports.json.backup
@@ -242,12 +259,14 @@ cp .git/worktree-registry/ports.json.backup .git/worktree-registry/ports.json
 ### Problem: Ports Not Released After Worktree Deletion
 
 **Symptom:**
+
 ```bash
 $ eia port list
 # Shows ports for deleted worktree
 ```
 
 **Diagnosis:**
+
 ```bash
 # Check if worktree exists
 git worktree list | grep feature-old
@@ -256,6 +275,7 @@ git worktree list | grep feature-old
 ```
 
 **Solution:**
+
 ```bash
 # Release manually
 eia port release feature-old
@@ -267,18 +287,21 @@ eia port cleanup
 ### Problem: Cannot Expand Port Range
 
 **Symptom:**
+
 ```bash
 $ eia port config --web-range 8080-8199
 ERROR: Range conflicts with existing allocations
 ```
 
 **Diagnosis:**
+
 ```bash
 # Check current allocations
 eia port list --service web
 ```
 
 **Solution:**
+
 ```bash
 # Compact existing allocations first
 eia port compact
@@ -290,6 +313,7 @@ eia port config --web-range 8080-8199
 ### Problem: Port Check Shows Wrong Status
 
 **Symptom:**
+
 ```bash
 $ eia port check 8082
 Status: AVAILABLE
@@ -297,6 +321,7 @@ Status: AVAILABLE
 ```
 
 **Diagnosis:**
+
 ```bash
 # Check actual port status
 lsof -i :8082
@@ -304,6 +329,7 @@ netstat -an | grep 8082
 ```
 
 **Solution:**
+
 ```bash
 # Rebuild registry from actual port usage
 eia port scan-rebuild

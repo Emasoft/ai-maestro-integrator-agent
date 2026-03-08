@@ -11,6 +11,7 @@
    - 1.6 [Cleanup on Stop](#cleanup-on-stop)
 
 **Related Parts:**
+
 - [Part 1: Overview and Registry Structure](port-management-part1-overview-registry.md)
 - [Part 2: Allocation Functions and CLI](port-management-part2-allocation-cli.md)
 - [Part 3: Conflict Detection and Health Checking](port-management-part3-conflicts-health.md)
@@ -25,6 +26,7 @@ Docker Compose services can be configured to use dynamically allocated ports fro
 ### Why Docker Compose Integration?
 
 When running Docker containers in multiple worktrees:
+
 - Each worktree needs its own container instances
 - Containers must expose services on different ports
 - Port mappings must be configured dynamically
@@ -34,6 +36,7 @@ When running Docker containers in multiple worktrees:
 **Approach:** Use environment variables to pass allocated ports to Docker Compose.
 
 **Steps:**
+
 1. Allocate ports using the port management system
 2. Export ports as environment variables
 3. Reference environment variables in `docker-compose.yml`
@@ -42,6 +45,7 @@ When running Docker containers in multiple worktrees:
 ### Example: Single Service
 
 **Step 1: Allocate Port**
+
 ```bash
 # Allocate a web server port
 PORT_WEB=$(python scripts/port_allocate.py --service web --worktree review-GH-42 --quiet)
@@ -49,11 +53,13 @@ echo "Allocated web port: $PORT_WEB"
 ```
 
 **Step 2: Export as Environment Variable**
+
 ```bash
 export PORT_WEB
 ```
 
 **Step 3: Configure docker-compose.yml**
+
 ```yaml
 version: '3.8'
 
@@ -67,6 +73,7 @@ services:
 ```
 
 **Step 4: Start Docker Compose**
+
 ```bash
 docker-compose up -d
 ```
@@ -76,6 +83,7 @@ The nginx container will be accessible at `http://localhost:$PORT_WEB`.
 ### Example: Multiple Services
 
 **Step 1: Allocate Multiple Ports**
+
 ```bash
 # Allocate ports for different services
 PORT_WEB=$(python scripts/port_allocate.py --service web --worktree review-GH-42 --description "Nginx web server" --quiet)
@@ -88,6 +96,7 @@ echo "DB: $PORT_DB"
 ```
 
 **Step 2: Create .env File**
+
 ```bash
 cat > .env << EOF
 PORT_WEB=$PORT_WEB
@@ -97,6 +106,7 @@ EOF
 ```
 
 **Step 3: Configure docker-compose.yml**
+
 ```yaml
 version: '3.8'
 
@@ -129,11 +139,13 @@ services:
 ```
 
 **Step 4: Start Docker Compose**
+
 ```bash
 docker-compose --env-file .env up -d
 ```
 
 Services are now accessible at:
+
 - Web: `http://localhost:$PORT_WEB`
 - API: `http://localhost:$PORT_API`
 - DB: `localhost:$PORT_DB`
@@ -177,6 +189,7 @@ echo "  DB:  localhost:$PORT_DB"
 ```
 
 **Usage:**
+
 ```bash
 # Make script executable
 chmod +x scripts/docker_start.sh
@@ -215,6 +228,7 @@ echo "Services stopped and ports released"
 ```
 
 **Usage:**
+
 ```bash
 # Make script executable
 chmod +x scripts/docker_stop.sh

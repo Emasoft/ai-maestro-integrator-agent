@@ -7,7 +7,6 @@ description: "Use decision tree to manually identify CI failure pattern category
 
 # Operation: Identify Failure Pattern
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -217,4 +216,5 @@ Choose the category that matches the **root cause**, not the symptom:
 ## Next Operation
 
 After identifying the pattern:
+
 - [op-apply-pattern-fix.md](op-apply-pattern-fix.md) - Apply the recommended fix

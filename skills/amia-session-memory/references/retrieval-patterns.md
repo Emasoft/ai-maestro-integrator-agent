@@ -184,6 +184,7 @@ gh pr view 42 --json closingIssuesReferences -q '.closingIssuesReferences[] | .n
 **Correct pattern**: Load on-demand based on user trigger
 
 **Optimization tips**:
+
 - Use `grep` to search large files before loading fully
 - Cache loaded memory in session context (don't re-fetch)
 - Set timeouts on GitHub API calls (3s max)

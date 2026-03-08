@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Analyze PR Complexity
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -104,6 +103,7 @@ STATS=$(python3 amia_get_pr_diff.py --pr <NUMBER> --stat)
 ### Step 3: Identify Sensitive Files
 
 High-risk file patterns:
+
 - `**/auth/**` - Authentication code
 - `**/security/**` - Security code
 - `**/*config*` - Configuration files

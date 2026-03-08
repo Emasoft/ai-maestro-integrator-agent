@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Deserialize Session State
 
-
 ## Contents
 
 - [Purpose](#purpose)

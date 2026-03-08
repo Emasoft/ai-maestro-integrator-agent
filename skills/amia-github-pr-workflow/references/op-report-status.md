@@ -1,6 +1,5 @@
 # Operation: Report PR Status to User
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -22,9 +21,13 @@
 - [Critical Rule](#critical-rule)
 
 ---
+
+```yaml
 procedure: proc-request-pr-review
 workflow-instruction: Step 20 - PR Review Request
 operation-id: op-report-status
+```
+
 ---
 
 ## Purpose
@@ -54,7 +57,8 @@ Provide clear, actionable status update to user about PR readiness and await the
 
 2. **Format status report**:
 
-   ### For Ready PRs:
+   ### For Ready PRs
+
    ```
    ## PR #<number> Status: Ready to Merge
 
@@ -73,7 +77,8 @@ Provide clear, actionable status update to user about PR readiness and await the
    - Reply with questions for more details
    ```
 
-   ### For PRs Needing Work:
+   ### For PRs Needing Work
+
    ```
    ## PR #<number> Status: Needs Work
 
@@ -91,7 +96,8 @@ Provide clear, actionable status update to user about PR readiness and await the
    **Delegating fixes to subagent...**
    ```
 
-   ### For Blocked PRs:
+   ### For Blocked PRs
+
    ```
    ## PR #<number> Status: Blocked
 
@@ -139,6 +145,7 @@ Provide clear, actionable status update to user about PR readiness and await the
 ## Example Reports
 
 ### Ready to Merge
+
 ```
 ## PR #456 Status: Ready to Merge
 
@@ -163,6 +170,7 @@ Reply "merge" to proceed, or "hold" for more review.
 ```
 
 ### Needs Work
+
 ```
 ## PR #456 Status: Needs Work
 

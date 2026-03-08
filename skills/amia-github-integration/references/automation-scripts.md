@@ -41,6 +41,7 @@
 - [Best Practices](#best-practices)
 
 ## Use-Case TOC
+
 - When you need to sync GitHub Projects V2 with agent tasks → [Sync Projects V2 Script](#sync-projects-v2-script)
 - When you need to bulk assign labels → [Bulk Label Assignment Script](#bulk-label-assignment-script)
 - When you need to monitor PR status → [Pull Request Monitor Script](#pull-request-monitor-script)
@@ -117,6 +118,7 @@ python3 scripts/sync-projects-v2.py \
 ### Error Handling
 
 The script handles common errors:
+
 - **Authentication failure** → Prompts to run `gh auth login`
 - **Project not found** → Lists available projects
 - **Database connection error** → Verifies database path exists
@@ -171,6 +173,7 @@ python3 scripts/bulk-label-assignment.py \
 ### Filter Syntax
 
 Use GitHub's standard search syntax:
+
 - `is:issue` - Only issues (not PRs)
 - `is:pr` - Only pull requests
 - `is:open` - Only open items
@@ -183,6 +186,7 @@ Use GitHub's standard search syntax:
 ### Examples
 
 **Example 1: Add "feature" to all unlabeled issues**
+
 ```bash
 python3 scripts/bulk-label-assignment.py \
   --owner "myorg" \
@@ -192,6 +196,7 @@ python3 scripts/bulk-label-assignment.py \
 ```
 
 **Example 2: Replace "enhancement" with "feature"**
+
 ```bash
 python3 scripts/bulk-label-assignment.py \
   --owner "myorg" \
@@ -202,6 +207,7 @@ python3 scripts/bulk-label-assignment.py \
 ```
 
 **Example 3: Add "backlog" to recent bugs**
+
 ```bash
 python3 scripts/bulk-label-assignment.py \
   --owner "myorg" \
@@ -230,6 +236,7 @@ python3 scripts/bulk-label-assignment.py \
 ```
 
 After confirmation:
+
 ```
 [INFO] Applying changes...
 [INFO]   ✓ Updated issue #123
@@ -312,6 +319,7 @@ python3 scripts/monitor-pull-requests.py \
 ### Notification Options
 
 **Email Notifications:**
+
 ```bash
 python3 scripts/monitor-pull-requests.py \
   --owner "username" \
@@ -323,6 +331,7 @@ python3 scripts/monitor-pull-requests.py \
 ```
 
 **Slack Notifications:**
+
 ```bash
 python3 scripts/monitor-pull-requests.py \
   --owner "username" \
@@ -491,6 +500,7 @@ Generated: 2024-01-15 14:30:00
 ### Prerequisites
 
 All scripts require:
+
 - Python 3.8 or higher
 - GitHub CLI (`gh`) installed and authenticated
 - Required Python packages (see `requirements.txt`)
@@ -498,17 +508,20 @@ All scripts require:
 ### Installation Steps
 
 **1. Install Python dependencies:**
+
 ```bash
 pip install -r scripts/requirements.txt
 ```
 
 **2. Make scripts executable:**
+
 ```bash
 chmod +x scripts/*.py
 chmod +x scripts/*.sh
 ```
 
 **3. Configure environment variables:**
+
 ```bash
 # Create .env file
 cat > .env << EOF
@@ -520,6 +533,7 @@ EOF
 ```
 
 **4. Test installation:**
+
 ```bash
 python3 scripts/sync-projects-v2.py --help
 ```

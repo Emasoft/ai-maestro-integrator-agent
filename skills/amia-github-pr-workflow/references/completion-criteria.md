@@ -39,22 +39,26 @@
 **Definition**: Every comment left by reviewers during code review has been addressed.
 
 **What "addressed" means**:
+
 1. Code was changed according to the suggestion, OR
 2. A reply explains why the suggestion was not followed, OR
 3. The reviewer marked the thread as resolved, OR
 4. The reviewer explicitly said "no action needed"
 
 **Verification method**:
+
 ```bash
 gh api repos/{owner}/{repo}/pulls/{pr}/reviews --jq '.[].state'
 gh api repos/{owner}/{repo}/pulls/{pr}/comments
 ```
 
 **Check for**:
+
 - No `CHANGES_REQUESTED` review state without subsequent approval
 - All comment threads have responses or resolution
 
 **Failure indicators**:
+
 - Review comment without response
 - "Changes requested" review without new commits addressing it
 - Comment explicitly says "please fix" without subsequent fix
@@ -64,17 +68,20 @@ gh api repos/{owner}/{repo}/pulls/{pr}/comments
 **Definition**: Comments on the PR itself (not on code lines) have been acknowledged.
 
 **What "acknowledged" means**:
+
 - Question comments have answers
 - Feedback comments have responses (agreement or explanation)
 - Action item comments have been acted upon
 - Informational comments may not need response
 
 **Verification method**:
+
 ```bash
 gh api repos/{owner}/{repo}/issues/{pr}/comments
 ```
 
 **Determine if acknowledgment needed**:
+
 | Comment Type | Needs Acknowledgment |
 |--------------|---------------------|
 | Question | Yes - answer required |
@@ -88,12 +95,14 @@ gh api repos/{owner}/{repo}/issues/{pr}/comments
 **Definition**: No new activity on the PR after a brief quiet period.
 
 **Why a quiet period**:
+
 - GitHub webhooks can be delayed
 - UI updates are not instant
 - Comments might appear after we checked
 - Prevents race conditions
 
 **Implementation**:
+
 ```python
 def check_quiet_period(pr_number, owner, repo):
     """Check if PR has been quiet - no recent activity."""
@@ -122,6 +131,7 @@ def check_quiet_period(pr_number, owner, repo):
 ```
 
 **If quiet period fails**:
+
 - Wait for quiet period to pass
 - Re-check other criteria after waiting
 - If new activity detected, address it first
@@ -131,11 +141,13 @@ def check_quiet_period(pr_number, owner, repo):
 **Definition**: All required status checks defined in branch protection rules pass.
 
 **Verification method**:
+
 ```bash
 gh pr checks {pr_number} --required
 ```
 
 **Check states**:
+
 | State | Meaning | PR Ready? |
 |-------|---------|-----------|
 | pass | Check succeeded | Yes |
@@ -144,10 +156,12 @@ gh pr checks {pr_number} --required
 | skipped | Check skipped | Maybe (depends on rules) |
 
 **Required vs optional**:
+
 - **Required checks**: Must pass. Defined in branch protection.
 - **Optional checks**: Nice to have. Failures noted but don't block.
 
 **Handling pending checks**:
+
 1. Do not report ready while checks pending
 2. Set up polling to re-check
 3. Wait until CI completes or fails
@@ -158,11 +172,13 @@ gh pr checks {pr_number} --required
 **Definition**: All conversation threads on the PR are resolved.
 
 **Thread types**:
+
 1. **Review comment threads**: Started during code review
 2. **PR comment threads**: On the PR itself
 3. **Suggested change threads**: Created by "suggestion" feature
 
 **Verification method**:
+
 ```bash
 gh api graphql -f query='
   query($owner: String!, $repo: String!, $pr: Int!) {
@@ -185,6 +201,7 @@ gh api graphql -f query='
 ```
 
 **Resolution requirements**:
+
 - GitHub's "Resolve conversation" button clicked, OR
 - Thread has response AND reviewer approved, OR
 - Thread marked as outdated (code changed)
@@ -194,11 +211,13 @@ gh api graphql -f query='
 **Definition**: GitHub indicates the PR can be merged (merge button enabled).
 
 **Verification method**:
+
 ```bash
 gh pr view {pr_number} --json mergeable,mergeStateStatus
 ```
 
 **Merge states**:
+
 | State | Meaning | Action |
 |-------|---------|--------|
 | MERGEABLE | Can merge | Ready |
@@ -207,6 +226,7 @@ gh pr view {pr_number} --json mergeable,mergeStateStatus
 | BLOCKED | Rules prevent merge | Check what's blocking |
 
 **Common blockers**:
+
 - Required reviews not obtained
 - Required checks not passing
 - Branch protection rules not met
@@ -217,11 +237,13 @@ gh pr view {pr_number} --json mergeable,mergeStateStatus
 **Definition**: The PR is still open and has not been merged.
 
 **Verification method**:
+
 ```bash
 gh pr view {pr_number} --json state,merged
 ```
 
 **States**:
+
 | State | Merged | Meaning |
 |-------|--------|---------|
 | OPEN | false | PR is active |
@@ -229,6 +251,7 @@ gh pr view {pr_number} --json state,merged
 | CLOSED | true | PR was merged |
 
 **If already merged**:
+
 - Stop all work on this PR
 - Report to user: "PR #X was already merged"
 - Clean up: remove worktrees, close tracking issues
@@ -238,6 +261,7 @@ gh pr view {pr_number} --json state,merged
 **Definition**: All local commits have been pushed to the remote branch.
 
 **Verification method**:
+
 ```bash
 git fetch origin
 git log origin/{branch}..HEAD
@@ -247,11 +271,13 @@ git log origin/{branch}..HEAD
 **If output has commits**: Local commits not pushed (must push)
 
 **Why this matters**:
+
 - Reviews are based on pushed code
 - CI runs on pushed code
 - Unpushed commits are not visible to others
 
 **Before reporting ready**:
+
 1. Verify no unpushed commits
 2. If unpushed commits exist, push them
 3. Wait for CI to run on new commits
@@ -266,10 +292,12 @@ When a criterion fails, the response depends on the failure type.
 ### Failure type: Review comments not addressed
 
 **Symptoms**:
+
 - Review state is CHANGES_REQUESTED
 - Comments without responses
 
 **Resolution steps**:
+
 1. Identify unaddressed comments
 2. Delegate implementation work for code changes
 3. Delegate response writing for non-code feedback
@@ -278,10 +306,12 @@ When a criterion fails, the response depends on the failure type.
 ### Failure type: PR comments not acknowledged
 
 **Symptoms**:
+
 - Questions without answers
 - Suggestions without responses
 
 **Resolution steps**:
+
 1. Identify unanswered comments
 2. If question can be answered by AI, delegate response
 3. If question requires human input, escalate to user
@@ -289,10 +319,12 @@ When a criterion fails, the response depends on the failure type.
 ### Failure type: New comments detected
 
 **Symptoms**:
+
 - Quiet period check fails
 - New comment detected recently
 
 **Resolution steps**:
+
 1. Wait for quiet period to pass
 2. If new comment needs response, address it
 3. Restart verification loop
@@ -300,10 +332,12 @@ When a criterion fails, the response depends on the failure type.
 ### Failure type: CI checks failing
 
 **Symptoms**:
+
 - `gh pr checks` shows failures
 - Required check in failed state
 
 **Resolution steps**:
+
 1. Identify which check failed
 2. Get failure details from check output
 3. Delegate fix to implementation subagent
@@ -312,10 +346,12 @@ When a criterion fails, the response depends on the failure type.
 ### Failure type: Unresolved threads
 
 **Symptoms**:
+
 - GraphQL query shows `isResolved: false`
 - GitHub UI shows unresolved conversations
 
 **Resolution steps**:
+
 1. List all unresolved threads
 2. For each: determine if code change or response needed
 3. Delegate appropriate action
@@ -324,14 +360,17 @@ When a criterion fails, the response depends on the failure type.
 ### Failure type: Not merge eligible
 
 **Symptoms**:
+
 - mergeable state is CONFLICTING or BLOCKED
 
 **For CONFLICTING**:
+
 1. Delegate conflict resolution
 2. Push resolved changes
 3. Re-verify
 
 **For BLOCKED**:
+
 1. Identify blocker via `mergeStateStatus`
 2. Address blocker (get review, fix check, etc.)
 3. Re-verify
@@ -339,10 +378,12 @@ When a criterion fails, the response depends on the failure type.
 ### Failure type: Already merged
 
 **Symptoms**:
+
 - state is CLOSED
 - merged is true
 
 **Resolution**:
+
 1. Stop all work
 2. Report: "PR #X already merged"
 3. Clean up resources
@@ -351,9 +392,11 @@ When a criterion fails, the response depends on the failure type.
 ### Failure type: Commits not pushed
 
 **Symptoms**:
+
 - `git log origin/branch..HEAD` shows commits
 
 **Resolution steps**:
+
 1. Push commits: `git push origin {branch}`
 2. Wait for CI to start
 3. Re-verify all criteria

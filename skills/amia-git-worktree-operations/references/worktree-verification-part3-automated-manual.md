@@ -22,12 +22,14 @@
 This script performs comprehensive isolation verification.
 
 **Basic usage:**
+
 ```bash
 python scripts/amia_verify_worktree_isolation.py \
     --worktree-path /tmp/worktrees/pr-123
 ```
 
 **With main repo check:**
+
 ```bash
 python scripts/amia_verify_worktree_isolation.py \
     --worktree-path /tmp/worktrees/pr-123 \
@@ -35,6 +37,7 @@ python scripts/amia_verify_worktree_isolation.py \
 ```
 
 **Check all worktrees:**
+
 ```bash
 for wt in /tmp/worktrees/*/; do
     python scripts/amia_verify_worktree_isolation.py \
@@ -46,6 +49,7 @@ done
 ### Interpreting Script Output
 
 **Success output:**
+
 ```json
 {
   "status": "clean",
@@ -56,6 +60,7 @@ done
 ```
 
 **Failure output:**
+
 ```json
 {
   "status": "violation",
@@ -76,6 +81,7 @@ done
 ### Integrating Verification into Workflow
 
 **Before commit:**
+
 ```bash
 # Verify before committing
 python scripts/amia_verify_worktree_isolation.py -w /tmp/worktrees/pr-123
@@ -87,6 +93,7 @@ git -C /tmp/worktrees/pr-123 commit -m "Safe commit"
 ```
 
 **Before cleanup:**
+
 ```bash
 # Verify before removal
 python scripts/amia_verify_worktree_isolation.py -w /tmp/worktrees/pr-123
@@ -111,6 +118,7 @@ fi
 ### Manual Verification Procedure
 
 **Step 1: Visual inspection of main repo**
+
 ```bash
 cd /path/to/main-repo
 git status
@@ -118,6 +126,7 @@ git status
 ```
 
 **Step 2: Check file timestamps**
+
 ```bash
 # List recently modified files
 ls -lt /path/to/main-repo/src/ | head -20
@@ -125,6 +134,7 @@ ls -lt /path/to/main-repo/src/ | head -20
 ```
 
 **Step 3: Review git log**
+
 ```bash
 cd /path/to/main-repo
 git log --oneline -10
@@ -132,6 +142,7 @@ git log --oneline -10
 ```
 
 **Step 4: Compare directories**
+
 ```bash
 # Visual diff between worktree and main repo
 diff -rq /tmp/worktrees/pr-123 /path/to/main-repo \
@@ -139,6 +150,7 @@ diff -rq /tmp/worktrees/pr-123 /path/to/main-repo \
 ```
 
 **Step 5: Check for process locks**
+
 ```bash
 # Find processes with files open in main repo
 lsof +D /path/to/main-repo 2>/dev/null

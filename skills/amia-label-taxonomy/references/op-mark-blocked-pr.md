@@ -7,7 +7,6 @@ procedure: "support-skill"
 
 # Operation: Mark Blocked PR
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -88,11 +87,13 @@ Please address the blocker and comment when ready for re-review."
 ### Step 4: Notify Author (if agent)
 
 Get the PR author:
+
 ```bash
 AUTHOR=$(gh pr view $PR_NUMBER --json author --jq '.author.login')
 ```
 
 Then send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The PR author agent
 - **Subject**: `PR #<PR_NUMBER> blocked`
 - **Priority**: `high`
@@ -152,6 +153,7 @@ git push --force-with-lease
 ```
 
 Comment when resolved.
+
 ```
 
 ### CI Failing

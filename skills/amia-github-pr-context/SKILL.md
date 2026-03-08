@@ -130,6 +130,7 @@ Need PR information?
 3. **Repository access** - you must have read access to the repository
 
 Verify prerequisites:
+
 ```bash
 # Check gh is authenticated
 gh auth status
@@ -163,6 +164,7 @@ All scripts use standardized exit codes for consistent error handling:
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 
@@ -212,18 +214,19 @@ For detailed information about PR metadata fields and how to extract specific in
 **[references/pr-metadata.md](references/pr-metadata.md)**
 
 Contents:
+
 - 1. PR Metadata JSON Structure
   - 1.1 Core identification fields (number, title, state)
   - 1.2 Author and assignee information
   - 1.3 Branch and merge information
   - 1.4 Labels, milestones, and projects
   - 1.5 Review and approval status
-- 2. Extracting Specific Fields
+- 1. Extracting Specific Fields
   - 2.1 Getting PR title and description
   - 2.2 Finding the source and target branches
   - 2.3 Checking mergeable status and conflicts
   - 2.4 Listing reviewers and their decisions
-- 3. Common Metadata Queries
+- 1. Common Metadata Queries
   - 3.1 Is this PR ready to merge?
   - 3.2 Who needs to approve this PR?
   - 3.3 What labels are applied?
@@ -235,19 +238,20 @@ For detailed information about interpreting PR diffs and analyzing changes, see:
 **[references/diff-analysis.md](references/diff-analysis.md)**
 
 Contents:
+
 - 1. Understanding Diff Output
   - 1.1 Unified diff format explanation
   - 1.2 File headers and hunks
   - 1.3 Addition, deletion, and context lines
-- 2. File-Level Analysis
+- 1. File-Level Analysis
   - 2.1 Identifying file types by extension
   - 2.2 Detecting rename and copy operations
   - 2.3 Binary file changes
-- 3. Change Statistics
+- 1. Change Statistics
   - 3.1 Lines added vs deleted
   - 3.2 Files by change type (added, modified, deleted)
   - 3.3 Estimating review complexity
-- 4. Filtering and Focusing
+- 1. Filtering and Focusing
   - 4.1 Filtering by file path patterns
   - 4.2 Ignoring generated files
   - 4.3 Focusing on specific directories

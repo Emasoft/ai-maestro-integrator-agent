@@ -59,6 +59,7 @@ Standard protocols for handing off work between agents:
 - When coordinating multi-agent workflows → Coordination Patterns
 
 **Contents:**
+
 - Document Delivery Protocol
 - Task Delegation Protocol
 - Acknowledgment Protocol

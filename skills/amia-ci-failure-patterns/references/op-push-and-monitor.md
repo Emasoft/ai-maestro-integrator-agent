@@ -7,7 +7,6 @@ description: "Push CI fix and monitor workflow run to confirm resolution"
 
 # Operation: Push and Monitor
 
-
 ## Contents
 
 - [Purpose](#purpose)

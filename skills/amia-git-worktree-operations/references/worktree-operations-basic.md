@@ -1,6 +1,7 @@
 # Worktree Operations: Basic Operations
 
 ## Table of Contents
+
 1. [When you need to see all active worktrees → Listing Worktrees](#listing-worktrees)
 2. [If you need to work in a different worktree → Switching Between Worktrees](#switching-between-worktrees)
 3. [When you need to get latest changes → Updating Worktrees](#updating-worktrees)
@@ -14,16 +15,19 @@
 ### Basic Listing
 
 **Command**:
+
 ```bash
 git worktree list
 ```
 
 **What This Does**: Displays all worktrees in a human-readable format with three columns:
+
 1. **Worktree Path**: The absolute filesystem path to the worktree directory
 2. **Commit Hash**: The shortened SHA hash of the current commit (first 7 characters)
 3. **Branch Name**: The branch currently checked out in that worktree
 
 **Example Output**:
+
 ```
 /Users/username/myproject        a1b2c3d [main]
 /Users/username/review-GH-42     e4f5g6h [review/issue-42]
@@ -31,6 +35,7 @@ git worktree list
 ```
 
 **Interpreting the Output**:
+
 - First line shows the main repository worktree (where the `.git` directory lives)
 - Subsequent lines show additional worktrees
 - Branch names in square brackets indicate active branches
@@ -39,6 +44,7 @@ git worktree list
 ### Machine-Readable Listing
 
 **Command**:
+
 ```bash
 git worktree list --porcelain
 ```
@@ -46,6 +52,7 @@ git worktree list --porcelain
 **What This Does**: Outputs worktree information in a structured, machine-parseable format. Each worktree is represented by a block of key-value pairs separated by blank lines.
 
 **Example Output**:
+
 ```
 worktree /Users/username/myproject
 HEAD a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
@@ -62,6 +69,7 @@ locked working tree has a lock file
 ```
 
 **Field Definitions**:
+
 - `worktree`: Absolute path to the worktree directory
 - `HEAD`: Full 40-character SHA hash of the current commit
 - `branch`: Full reference path to the branch (starts with `refs/heads/`)
@@ -69,6 +77,7 @@ locked working tree has a lock file
 - `prunable`: Present only if the worktree is prunable (missing or corrupted)
 
 **When to Use Porcelain Format**:
+
 - Writing scripts that need to parse worktree information
 - Automating worktree management tasks
 - Integrating with other tools or continuous integration systems
@@ -87,11 +96,13 @@ Git worktrees are **separate directories** on your filesystem. Switching between
 ### Method 1: Using cd (Change Directory)
 
 **Command**:
+
 ```bash
 cd /path/to/worktree
 ```
 
 **Example**:
+
 ```bash
 # Currently in main worktree
 pwd
@@ -112,11 +123,13 @@ git branch --show-current
 ### Method 2: Using Absolute Paths
 
 **Command**:
+
 ```bash
 cd /absolute/path/to/worktree
 ```
 
 **Example**:
+
 ```bash
 # Switch using absolute path
 cd /Users/username/review-GH-42
@@ -127,6 +140,7 @@ cd /Users/username/review-GH-42
 ### Method 3: Creating Shell Aliases for Quick Switching
 
 **Setup** (add to your `~/.bashrc` or `~/.zshrc`):
+
 ```bash
 # Define aliases for common worktrees
 alias goto-main='cd /Users/username/myproject'
@@ -135,6 +149,7 @@ alias goto-hotfix='cd /Users/username/hotfix-login'
 ```
 
 **Usage**:
+
 ```bash
 # Switch to review worktree instantly
 goto-review
@@ -146,12 +161,14 @@ goto-main
 ### Method 4: Using CDPATH Environment Variable
 
 **Setup** (add to your `~/.bashrc` or `~/.zshrc`):
+
 ```bash
 # Add parent directory of worktrees to CDPATH
 export CDPATH=".:$HOME:$HOME/Code"
 ```
 
 **Usage**:
+
 ```bash
 # If worktrees are in /Users/username/Code/
 cd review-GH-42  # Works from anywhere!
@@ -183,12 +200,14 @@ cd review-GH-42  # Works from anywhere!
 **What Pulling Does**: Downloads commits from the remote repository and integrates them into your current branch.
 
 **Command**:
+
 ```bash
 cd /path/to/worktree
 git pull origin <branch-name>
 ```
 
 **Example**:
+
 ```bash
 # Navigate to the worktree
 cd ../review-GH-42
@@ -198,6 +217,7 @@ git pull origin review/issue-42
 ```
 
 **Output When Successful**:
+
 ```
 remote: Counting objects: 5, done.
 remote: Compressing objects: 100% (3/3), done.
@@ -218,12 +238,14 @@ Fast-forward
 **What Rebasing Does**: Moves your branch commits to start from the latest commit on the main branch, creating a linear history.
 
 **Why Rebase Instead of Merge**:
+
 - Creates cleaner, linear history
 - Avoids unnecessary merge commits
 - Makes it easier to review changes
 - Simplifies future git operations
 
 **Command**:
+
 ```bash
 cd /path/to/worktree
 git fetch origin
@@ -231,6 +253,7 @@ git rebase origin/main
 ```
 
 **Step-by-Step Example**:
+
 ```bash
 # Step 1: Navigate to worktree
 cd ../review-GH-42
@@ -243,6 +266,7 @@ git rebase origin/main
 ```
 
 **Output When Successful**:
+
 ```
 First, rewinding head to replay your work on top of it...
 Applying: Add user authentication
@@ -251,6 +275,7 @@ Applying: Update test suite
 ```
 
 **What This Output Means**:
+
 - Git temporarily removes your commits
 - It fast-forwards your branch to match `origin/main`
 - It replays your commits one by one on top of the new base
@@ -260,6 +285,7 @@ Applying: Update test suite
 **When Conflicts Occur**: If changes on `main` conflict with your changes, git pauses the rebase and asks you to resolve conflicts.
 
 **Conflict Output**:
+
 ```
 Auto-merging src/auth.ts
 CONFLICT (content): Merge conflict in src/auth.ts
@@ -274,11 +300,13 @@ Could not apply e4f5g6h... Add user authentication
 **Conflict Resolution Steps**:
 
 **Step 1: Check Which Files Have Conflicts**
+
 ```bash
 git status
 ```
 
 Output:
+
 ```
 rebase in progress; onto a1b2c3d
 You are currently rebasing branch 'review/issue-42' on 'a1b2c3d'.
@@ -294,6 +322,7 @@ Unmerged paths:
 **Step 2: Open Conflicted File and Resolve**
 
 Conflicts appear with markers:
+
 ```typescript
 <<<<<<< HEAD  // Changes from main branch
 function authenticate(user) {
@@ -307,6 +336,7 @@ function authenticate(user) {
 ```
 
 **Edit the file to keep desired changes**:
+
 ```typescript
 // Resolved version combining both approaches
 function authenticate(user) {
@@ -318,11 +348,13 @@ function authenticate(user) {
 ```
 
 **Step 3: Mark Conflict as Resolved**
+
 ```bash
 git add src/auth.ts
 ```
 
 **Step 4: Continue Rebase**
+
 ```bash
 git rebase --continue
 ```
@@ -334,6 +366,7 @@ Git will pause again if the next commit also has conflicts. Continue resolving u
 **Alternative: Aborting the Rebase**
 
 If you want to cancel the rebase and return to the state before you started:
+
 ```bash
 git rebase --abort
 ```
@@ -343,20 +376,24 @@ git rebase --abort
 After successfully rebasing, your local branch history has changed. You need to force push to update the remote.
 
 **Command**:
+
 ```bash
 git push --force-with-lease origin review/issue-42
 ```
 
 **Why `--force-with-lease` Instead of `--force`**:
+
 - `--force-with-lease`: Only pushes if no one else has pushed to the branch since your last fetch. Prevents accidentally overwriting others' work.
 - `--force`: Unconditionally overwrites remote branch. Dangerous if others are working on the same branch.
 
 **Example**:
+
 ```bash
 git push --force-with-lease origin review/issue-42
 ```
 
 **Output**:
+
 ```
 Enumerating objects: 12, done.
 Counting objects: 100% (12/12), done.

@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Determine Version
 
-
 ## Contents
 
 - [Purpose](#purpose)

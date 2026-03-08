@@ -32,17 +32,20 @@ For teams ready to go beyond basic implementation, these advanced topics extend 
 **Purpose:** Manage work across multiple related repositories in a single project board.
 
 **Use cases:**
+
 - Microservices architecture with separate repositories
 - Frontend/backend split repositories
 - Mono-repository with multiple subprojects
 
 **Implementation steps:**
+
 1. Create organization-level Projects V2 board
 2. Enable auto-add workflow for multiple repositories
 3. Add custom field "Repository" to track source
 4. Filter and group by repository in project views
 
 **Commands:**
+
 ```bash
 # Create organization project
 gh project create --title "Multi-Repo Project" --owner "@org-name"
@@ -53,6 +56,7 @@ gh project item-add <project_id> --url "https://github.com/org/repo2/issues/5"
 ```
 
 **Sync considerations:**
+
 - Maintain separate sync agents for each repository
 - Use repository prefix in task IDs to avoid collisions
 - Implement cross-repository dependency tracking
@@ -336,7 +340,7 @@ done
 
 ---
 
-# Success Metrics
+## Success Metrics
 
 Track these metrics to measure implementation success:
 

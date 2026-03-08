@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Save PR State Comment
 
-
 ## Contents
 
 - [Purpose](#purpose)

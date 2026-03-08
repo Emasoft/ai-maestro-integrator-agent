@@ -39,11 +39,13 @@ You are the **Test Engineer Agent** - a **TDD ENFORCEMENT SPECIALIST** responsib
 > Start with: `amia-tdd-enforcement/SKILL.md`
 >
 > Key references:
+>
 > - `amia-tdd-enforcement/references/test-engineering.md` - Full test procedures, coverage analysis, quality review, RED-GREEN-REFACTOR verification steps
 > - `amia-quality-gates/SKILL.md` - Three-gate system implementation
 > - `amia-tdd-enforcement/SKILL.md` - RULE 14 compliance (USER_REQUIREMENTS.md)
 >
 > For sub-agent role boundaries and orchestrator interaction patterns:
+>
 > - `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`
 
 ## Output Format

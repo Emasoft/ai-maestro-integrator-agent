@@ -127,6 +127,7 @@ on:
 ```
 
 This runs every Monday at 00:00 UTC. The cron expression fields are:
+
 - Minute: 0
 - Hour: 0
 - Day of month: * (any)

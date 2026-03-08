@@ -26,10 +26,13 @@ Labels are often used to control workflows, but missing labels cause silent fail
 **Common CI Failure**: Workflow tries to add a label that doesn't exist.
 
 **Error Message**:
+
 ```
 Resource not accessible by integration
 ```
+
 or
+
 ```
 Label "my-label" not found
 ```
@@ -37,6 +40,7 @@ Label "my-label" not found
 **Why This Happens**: GitHub API requires labels to exist before they can be applied.
 
 **Solution 1**: Create labels in repository setup
+
 ```yaml
 # .github/workflows/setup-labels.yml
 name: Setup Repository Labels
@@ -78,6 +82,7 @@ jobs:
 ```
 
 **Solution 2**: Check and create label before use
+
 ```yaml
 - name: Ensure label exists and apply
   uses: actions/github-script@v7
@@ -116,6 +121,7 @@ jobs:
 ### 5.1.2 Label API Format and Authentication
 
 **GitHub API Label Format**:
+
 ```json
 {
   "name": "bug",
@@ -127,11 +133,13 @@ jobs:
 **Important**: Color is a 6-character hex code WITHOUT the `#` prefix.
 
 **WRONG**:
+
 ```json
 { "color": "#d73a4a" }
 ```
 
 **CORRECT**:
+
 ```json
 { "color": "d73a4a" }
 ```
@@ -147,6 +155,7 @@ jobs:
 ```
 
 **Permissions Required**:
+
 ```yaml
 permissions:
   issues: write        # To add labels to issues
@@ -156,11 +165,13 @@ permissions:
 ### 5.1.3 Label Naming Conventions
 
 **Best Practices**:
+
 - Use lowercase with hyphens: `ai-review` not `AI Review`
 - Prefix with category: `type/bug`, `status/in-progress`, `priority/high`
 - Keep names short but descriptive
 
 **Label Categories**:
+
 ```
 type/bug
 type/enhancement
@@ -174,6 +185,7 @@ priority/low
 ```
 
 **Reserved Label Patterns** (used by GitHub features):
+
 - `dependencies` - Used by Dependabot
 - `security` - Used by security alerts
 - `good first issue` - Used by contributor suggestions
@@ -203,6 +215,7 @@ priority/low
 **Common CI Failure**: Code assumes x64 architecture on macOS.
 
 **Detection**:
+
 ```yaml
 - name: Check architecture
   run: |
@@ -212,6 +225,7 @@ priority/low
 ```
 
 **Conditional Logic**:
+
 ```yaml
 - name: Install x64-specific tool
   if: runner.arch == 'X64'
@@ -227,6 +241,7 @@ priority/low
 Each runner image has different pre-installed software.
 
 **Check Installed Software**:
+
 ```yaml
 - name: List installed software
   run: |
@@ -245,11 +260,13 @@ Each runner image has different pre-installed software.
 **Common CI Failure**: Assuming a tool is installed.
 
 **Error Message**:
+
 ```
 /bin/bash: python: command not found
 ```
 
 **Solution**: Use setup actions
+
 ```yaml
 - uses: actions/setup-python@v5
   with:
@@ -294,6 +311,7 @@ Each runner image has different pre-installed software.
 | `RUNNER_TEMP` | Runner temp | Yes |
 
 **Cross-Platform Home Directory**:
+
 ```yaml
 - name: Get home directory
   run: |
@@ -305,6 +323,7 @@ Each runner image has different pre-installed software.
 ```
 
 **Shell Differences**:
+
 ```yaml
 - name: Default shells differ
   shell: bash  # Explicitly set for cross-platform
@@ -326,17 +345,20 @@ Each runner image has different pre-installed software.
 ### 5.3.1 x64 vs ARM64 Runner Differences
 
 **macOS Architecture Change**:
+
 - `macos-latest` now points to ARM64 (Apple Silicon)
 - `macos-13` is the last x64 (Intel) macOS runner
 
 **Common CI Failure**: Binary incompatibility.
 
 **Error Message**:
+
 ```
 cannot execute binary file: Exec format error
 ```
 
 **Solution 1**: Use architecture-specific runners
+
 ```yaml
 strategy:
   matrix:
@@ -348,6 +370,7 @@ strategy:
 ```
 
 **Solution 2**: Use Rosetta 2 on ARM64 macOS
+
 ```yaml
 - name: Run x64 binary on ARM64
   if: runner.arch == 'ARM64' && runner.os == 'macOS'
@@ -357,6 +380,7 @@ strategy:
 ```
 
 **Solution 3**: Build for both architectures
+
 ```yaml
 - name: Build universal binary
   if: runner.os == 'macOS'
@@ -376,6 +400,7 @@ strategy:
 Self-hosted runners have different characteristics:
 
 **Differences from GitHub-Hosted**:
+
 - Persistent state between runs (cleanup required)
 - Custom tools pre-installed
 - Different resource limits
@@ -384,6 +409,7 @@ Self-hosted runners have different characteristics:
 **Common CI Failure**: Leftover files from previous run.
 
 **Solution**: Clean workspace
+
 ```yaml
 - name: Clean workspace
   run: |
@@ -392,6 +418,7 @@ Self-hosted runners have different characteristics:
 ```
 
 **Labeling Self-Hosted Runners**:
+
 ```yaml
 runs-on: [self-hosted, linux, x64, gpu]  # Multiple labels
 ```
@@ -410,11 +437,13 @@ runs-on: [self-hosted, linux, x64, gpu]  # Multiple labels
 **Common CI Failure**: Out of disk space.
 
 **Error Message**:
+
 ```
 No space left on device
 ```
 
 **Solution**: Free disk space
+
 ```yaml
 - name: Free disk space
   run: |
@@ -430,11 +459,13 @@ No space left on device
 **Common CI Failure**: Out of memory.
 
 **Error Message**:
+
 ```
 FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
 ```
 
 **Solution**: Increase Node.js memory
+
 ```yaml
 - name: Build with more memory
   env:

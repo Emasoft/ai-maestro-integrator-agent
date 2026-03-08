@@ -19,6 +19,7 @@
    - [If you need port allocation → Port Allocation for Services](#port-allocation-for-services)
 
 **Related Documents**:
+
 - [Part 2: Test Execution & Database Patterns](testing-worktree-isolation-part2-execution.md)
 - [Part 3: CI/CD & Troubleshooting](testing-worktree-isolation-part3-cicd.md)
 
@@ -29,6 +30,7 @@
 **Purpose**: This document teaches you how to perform testing in isolated git worktrees.
 
 **What is Testing in Isolated Worktrees**: Running tests in separate git worktrees so that each test environment is completely independent. Each worktree has its own:
+
 - File system directory with checked-out code
 - Virtual environment with dependencies
 - Database instance (or database name)
@@ -36,6 +38,7 @@
 - Environment variables and configuration
 
 **Why Test in Isolated Worktrees**:
+
 1. **Parallel Execution** - Run multiple test suites simultaneously without conflicts
 2. **Branch Safety** - Test feature branches without switching your main working directory
 3. **State Isolation** - Each test environment cannot interfere with others
@@ -44,6 +47,7 @@
 6. **Version Comparison** - Test the same code against different dependency versions
 
 **When to Use Isolated Test Worktrees**:
+
 - Running integration tests that need dedicated ports
 - Testing database migrations
 - Performance testing that requires stable environment
@@ -60,12 +64,14 @@
 **What They Are**: Worktrees dedicated to running unit tests only.
 
 **Characteristics**:
+
 - Fast to set up (minimal dependencies)
 - No external services needed
 - Quick teardown
 - Can run many in parallel
 
 **Example Use Case**:
+
 ```bash
 # Create unit test worktree for feature branch
 python scripts/worktree_create.py \
@@ -79,12 +85,14 @@ python scripts/worktree_create.py \
 **What They Are**: Worktrees with full service stack for integration testing.
 
 **Characteristics**:
+
 - Require database instance
 - Need allocated network ports
 - May need external service mocks
 - Longer setup time
 
 **Example Use Case**:
+
 ```bash
 # Create integration test worktree with ports
 python scripts/worktree_create.py \
@@ -99,12 +107,14 @@ python scripts/worktree_create.py \
 **What They Are**: Worktrees configured for performance benchmarking.
 
 **Characteristics**:
+
 - Isolated from other processes
 - Consistent resource allocation
 - Monitoring and profiling enabled
 - Long-running tests
 
 **Example Use Case**:
+
 ```bash
 # Create performance test worktree
 python scripts/worktree_create.py \
@@ -118,12 +128,14 @@ python scripts/worktree_create.py \
 **What They Are**: Worktrees used to validate pull requests before merging.
 
 **Characteristics**:
+
 - Run full test suite
 - Check for merge conflicts
 - Validate against target branch
 - Temporary (deleted after validation)
 
 **Example Use Case**:
+
 ```bash
 # Create pre-merge validation worktree
 python scripts/worktree_create.py \
@@ -139,6 +151,7 @@ python scripts/worktree_create.py \
 ### Basic Test Worktree Creation
 
 **Command Pattern**:
+
 ```bash
 python scripts/worktree_create.py \
     --purpose <test-type> \
@@ -148,6 +161,7 @@ python scripts/worktree_create.py \
 ```
 
 **Parameters Explained**:
+
 - `--purpose` - Type of test worktree (test-unit, test-integration, test-performance, test-premerge)
 - `--identifier` - Unique name for this test worktree (use ticket number, feature name, or test type)
 - `--branch` - Which git branch to checkout
@@ -156,6 +170,7 @@ python scripts/worktree_create.py \
 ### Examples for Different Test Types
 
 **Unit Tests** (no ports needed):
+
 ```bash
 python scripts/worktree_create.py \
     --purpose test-unit \
@@ -164,6 +179,7 @@ python scripts/worktree_create.py \
 ```
 
 **Integration Tests** (with ports):
+
 ```bash
 python scripts/worktree_create.py \
     --purpose test-integration \
@@ -173,6 +189,7 @@ python scripts/worktree_create.py \
 ```
 
 **Performance Tests**:
+
 ```bash
 python scripts/worktree_create.py \
     --purpose test-performance \
@@ -181,6 +198,7 @@ python scripts/worktree_create.py \
 ```
 
 **Pre-Merge Validation**:
+
 ```bash
 python scripts/worktree_create.py \
     --purpose test-premerge \
@@ -200,6 +218,7 @@ python scripts/worktree_create.py \
 6. **Registry Update** - Updates `worktrees_registry.json` with worktree info
 
 **Example Metadata File** (`worktrees/test-integration-api-endpoints/.worktree-metadata.json`):
+
 ```json
 {
     "purpose": "test-integration",
@@ -225,6 +244,7 @@ python scripts/worktree_create.py \
 **Why**: Each worktree needs its own dependencies to avoid conflicts.
 
 **How to Install**:
+
 ```bash
 # Navigate to test worktree
 cd worktrees/test-integration-api-endpoints
@@ -241,6 +261,7 @@ pip install -r requirements-test.txt
 ```
 
 **Automated Setup Script**:
+
 ```python
 # scripts/setup_test_env.py
 import os
@@ -273,6 +294,7 @@ def setup_test_environment(worktree_path):
 Each test worktree should use its own database to ensure isolation.
 
 **Naming Convention**:
+
 ```
 testdb_<purpose>_<identifier>
 
@@ -283,6 +305,7 @@ Examples:
 ```
 
 **Creating Test Database**:
+
 ```bash
 # PostgreSQL example
 createdb testdb_integration_api_endpoints
@@ -294,6 +317,7 @@ mysql -e "CREATE DATABASE testdb_integration_api_endpoints;"
 **Database Configuration in Test Worktree**:
 
 Create `.env.test` file in worktree:
+
 ```bash
 # .env.test
 DATABASE_URL=postgresql://localhost/testdb_integration_api_endpoints
@@ -306,6 +330,7 @@ TEST_MODE=true
 **Why Run Migrations in Test Worktrees**: Ensures database schema matches the code being tested.
 
 **How to Run**:
+
 ```bash
 # Navigate to test worktree
 cd worktrees/test-integration-api-endpoints
@@ -326,6 +351,7 @@ alembic upgrade head      # SQLAlchemy example
 **Test-Specific Environment Variables**:
 
 Create `.env.test` with test-appropriate values:
+
 ```bash
 # .env.test - Example for integration test worktree
 
@@ -352,6 +378,7 @@ CACHE_ENABLED=false
 ```
 
 **Loading Environment**:
+
 ```bash
 # In test worktree
 source .venv/bin/activate
@@ -363,11 +390,13 @@ export $(cat .env.test | xargs)
 **Why Allocate Ports**: Multiple test worktrees running simultaneously need different ports.
 
 **Port Allocation Strategy**:
+
 - Each worktree gets 3 consecutive ports
 - Ports start from configurable base (default: 8000)
 - Tracked in `worktrees_registry.json`
 
 **Example Port Assignment**:
+
 ```
 Worktree 1: 8001, 8002, 8003
 Worktree 2: 8004, 8005, 8006
@@ -375,6 +404,7 @@ Worktree 3: 8007, 8008, 8009
 ```
 
 **Using Allocated Ports**:
+
 ```python
 # Read ports from metadata
 import json

@@ -49,6 +49,7 @@ This document describes how to integrate release management practices with CI/CD
 **Purpose**: Automatically build, test, and validate code changes
 
 **Key Activities**:
+
 - Code compilation/building
 - Unit test execution
 - Integration test execution
@@ -62,6 +63,7 @@ This document describes how to integrate release management practices with CI/CD
 **Purpose**: Automatically deploy validated changes to target environments
 
 **Key Activities**:
+
 - Artifact deployment
 - Configuration management
 - Database migrations
@@ -73,6 +75,7 @@ This document describes how to integrate release management practices with CI/CD
 ### Release Management Integration
 
 **Release management adds**:
+
 - Release planning and coordination
 - Quality gates and approvals
 - Environment promotion strategy
@@ -149,12 +152,14 @@ This document describes how to integrate release management practices with CI/CD
 #### 1.1 Source Checkout
 
 **Actions**:
+
 - Clone repository
 - Checkout specific branch/tag
 - Fetch dependencies
 - Cache dependencies for speed
 
 **Example (GitHub Actions)**:
+
 ```yaml
 name: CI Pipeline
 
@@ -187,6 +192,7 @@ jobs:
 #### 1.2 Version Determination
 
 **Semantic Versioning Automation**:
+
 ```yaml
     - name: Determine version
       id: version
@@ -201,6 +207,7 @@ jobs:
 ```
 
 **Alternative: Semantic Release**:
+
 ```yaml
     - name: Semantic Release
       uses: cycjimmy/semantic-release-action@v3
@@ -217,6 +224,7 @@ jobs:
 #### 1.3 Build Artifacts
 
 **Application Build**:
+
 ```yaml
     - name: Build application
       run: npm run build
@@ -231,6 +239,7 @@ jobs:
 ```
 
 **Docker Image Build**:
+
 ```yaml
     - name: Build Docker image
       run: |
@@ -246,6 +255,7 @@ jobs:
 #### 2.1 Unit Tests
 
 **Execute Unit Tests**:
+
 ```yaml
     - name: Run unit tests
       run: npm run test:unit -- --coverage
@@ -258,6 +268,7 @@ jobs:
 ```
 
 **Quality Gate**:
+
 ```yaml
     - name: Check coverage threshold
       run: |
@@ -271,6 +282,7 @@ jobs:
 #### 2.2 Integration Tests
 
 **Database Integration Tests**:
+
 ```yaml
     - name: Start test database
       run: |
@@ -291,6 +303,7 @@ jobs:
 ```
 
 **API Integration Tests**:
+
 ```yaml
     - name: Run API tests
       run: |
@@ -300,6 +313,7 @@ jobs:
 #### 2.3 End-to-End Tests
 
 **E2E Test Execution**:
+
 ```yaml
     - name: Run E2E tests
       run: |
@@ -314,6 +328,7 @@ jobs:
 #### 3.1 Static Code Analysis
 
 **Code Quality**:
+
 ```yaml
     - name: Run linter
       run: npm run lint
@@ -339,6 +354,7 @@ jobs:
 #### 3.2 Security Scanning
 
 **Dependency Vulnerability Scanning**:
+
 ```yaml
     - name: Run npm audit
       run: npm audit --audit-level=high
@@ -353,6 +369,7 @@ jobs:
 ```
 
 **SAST (Static Application Security Testing)**:
+
 ```yaml
     - name: Run Semgrep SAST
       uses: returntocorp/semgrep-action@v1
@@ -361,6 +378,7 @@ jobs:
 ```
 
 **Container Scanning**:
+
 ```yaml
     - name: Scan Docker image
       uses: aquasecurity/trivy-action@master
@@ -372,6 +390,7 @@ jobs:
 ```
 
 **Secrets Scanning**:
+
 ```yaml
     - name: TruffleHog Secrets Scan
       uses: trufflesecurity/trufflehog@main
@@ -384,6 +403,7 @@ jobs:
 #### 3.3 Performance Testing
 
 **Load Testing**:
+
 ```yaml
     - name: Run k6 load tests
       run: |
@@ -395,6 +415,7 @@ jobs:
 #### 4.1 Docker Image Publishing
 
 **Push to Container Registry**:
+
 ```yaml
     - name: Login to Docker Hub
       uses: docker/login-action@v2
@@ -411,6 +432,7 @@ jobs:
 #### 4.2 Package Publishing
 
 **NPM Package**:
+
 ```yaml
     - name: Publish to NPM
       if: startsWith(github.ref, 'refs/tags/v')
@@ -422,6 +444,7 @@ jobs:
 #### 4.3 Release Artifacts
 
 **GitHub Release**:
+
 ```yaml
     - name: Create GitHub Release
       if: startsWith(github.ref, 'refs/tags/v')
@@ -440,6 +463,7 @@ jobs:
 #### 5.1 Development Environment
 
 **Automated Deployment**:
+
 ```yaml
   deploy-dev:
     needs: build
@@ -466,6 +490,7 @@ jobs:
 #### 5.2 Staging Environment
 
 **Deployment with Approval Gate**:
+
 ```yaml
   deploy-staging:
     needs: build
@@ -506,6 +531,7 @@ jobs:
 #### 5.3 Production Environment
 
 **Production Deployment with Multiple Gates**:
+
 ```yaml
   deploy-production:
     needs: [build, deploy-staging]
@@ -574,6 +600,7 @@ jobs:
 #### 6.1 Migration Execution
 
 **Safe Migration Strategy**:
+
 ```yaml
     - name: Run database migrations
       run: |
@@ -593,6 +620,7 @@ jobs:
 #### 6.2 Migration Rollback
 
 **Automatic Rollback on Failure**:
+
 ```yaml
     - name: Rollback migration on failure
       if: failure()
@@ -607,6 +635,7 @@ jobs:
 #### 7.1 Manual Approval Gates
 
 **GitHub Environments**:
+
 ```yaml
 environment:
   name: production
@@ -614,6 +643,7 @@ environment:
 ```
 
 **Configuration in GitHub**:
+
 - Settings → Environments → production
 - Required reviewers: [Release Manager, Tech Lead]
 - Deployment branches: Only protected branches
@@ -621,6 +651,7 @@ environment:
 #### 7.2 Automated Quality Gates
 
 **Quality Gate Checks**:
+
 ```yaml
     - name: Quality gate checks
       run: |
@@ -646,6 +677,7 @@ environment:
 #### 7.3 Deployment Windows
 
 **Restrict Deployment Times**:
+
 ```yaml
     - name: Check deployment window
       run: |
@@ -664,6 +696,7 @@ environment:
 #### 8.1 Automatic Rollback on Failure
 
 **Post-Deployment Health Checks**:
+
 ```yaml
     - name: Verify deployment health
       id: health_check
@@ -694,6 +727,7 @@ environment:
 #### 8.2 Rollback Workflow
 
 **Dedicated Rollback Job**:
+
 ```yaml
   rollback:
     runs-on: ubuntu-latest
@@ -719,6 +753,7 @@ environment:
 #### 9.1 Blue-Green Deployment
 
 **Implementing Blue-Green**:
+
 ```yaml
     - name: Deploy to green environment
       run: |
@@ -746,6 +781,7 @@ environment:
 #### 9.2 Canary Deployment
 
 **Gradual Traffic Shift**:
+
 ```yaml
     - name: Deploy canary (10% traffic)
       run: |
@@ -779,6 +815,7 @@ environment:
 ### 10. Multi-Environment Pipeline
 
 **Complete Pipeline with All Environments**:
+
 ```yaml
 name: Complete CD Pipeline
 
@@ -823,6 +860,7 @@ jobs:
 #### 11.1 Pipeline Metrics
 
 **Collect Pipeline Metrics**:
+
 - Build duration
 - Test pass rate
 - Deployment frequency
@@ -831,6 +869,7 @@ jobs:
 - Change failure rate
 
 **Example Metrics Collection**:
+
 ```yaml
     - name: Record pipeline metrics
       run: |
@@ -848,6 +887,7 @@ jobs:
 #### 11.2 Deployment Tracking
 
 **Track Deployments**:
+
 ```yaml
     - name: Register deployment
       run: |
@@ -868,6 +908,7 @@ jobs:
 #### 12.1 Slack Notifications
 
 **Comprehensive Slack Notifications**:
+
 ```yaml
     - name: Notify deployment start
       uses: slackapi/slack-github-action@v1
@@ -892,6 +933,7 @@ jobs:
 #### 12.2 Email Notifications
 
 **Send Email on Release**:
+
 ```yaml
     - name: Send release email
       uses: dawidd6/action-send-mail@v3
@@ -912,6 +954,7 @@ jobs:
 ## Best Practices
 
 ### CI/CD Pipeline Design
+
 1. **Keep pipelines fast** (< 15 minutes for feedback)
 2. **Fail fast** (run quick tests first)
 3. **Parallelize** independent stages
@@ -919,25 +962,28 @@ jobs:
 5. **Use artifacts** to pass data between stages
 
 ### Release Automation
-6. **Automate everything possible**
-7. **Manual gates only for production**
-8. **Automated rollback** on failure
-9. **Comprehensive health checks**
-10. **Monitor deployments** closely
+
+1. **Automate everything possible**
+2. **Manual gates only for production**
+3. **Automated rollback** on failure
+4. **Comprehensive health checks**
+5. **Monitor deployments** closely
 
 ### Quality and Security
-11. **Multiple quality gates**
-12. **Automated security scanning**
-13. **Performance regression testing**
-14. **Database migration safety**
-15. **Secrets management** (never in code)
+
+1. **Multiple quality gates**
+2. **Automated security scanning**
+3. **Performance regression testing**
+4. **Database migration safety**
+5. **Secrets management** (never in code)
 
 ### Documentation and Communication
-16. **Clear pipeline documentation**
-17. **Automated release notes**
-18. **Stakeholder notifications**
-19. **Deployment tracking**
-20. **Postmortem integration**
+
+1. **Clear pipeline documentation**
+2. **Automated release notes**
+3. **Stakeholder notifications**
+4. **Deployment tracking**
+5. **Postmortem integration**
 
 ## Conclusion
 

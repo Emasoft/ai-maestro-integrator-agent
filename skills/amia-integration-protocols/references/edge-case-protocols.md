@@ -55,6 +55,7 @@ When AI Maestro is unavailable:
 
 1. **Log the failure**:
    > **Note**: The log entry below records service unavailability for diagnostics. The `agent-messaging` skill handles all messaging; AMP handles routing automatically.
+
    ```bash
    echo "$(date -Iseconds) | AIMAESTRO_UNAVAILABLE | AMP_SERVICE | HTTP $STATUS_CODE" >> .claude/logs/maestro-failures.log
    ```
@@ -76,6 +77,7 @@ When AI Maestro is unavailable:
    ```
 
 3. **Display warning**:
+
    ```
    WARNING: AI Maestro is unavailable. Cannot notify Orchestrator/Assistant Manager.
    Queued: N messages
@@ -98,6 +100,7 @@ When AI Maestro is down, report via:
 | 3rd | Local handoff files | Detailed review reports |
 
 **PR Comment Fallback Template**:
+
 ```markdown
 ## Integrator Review (AI Maestro Offline)
 
@@ -129,6 +132,7 @@ When AI Maestro is down, report via:
 ### 2.2 Response Workflow
 
 1. **Cache last known state**:
+
    ```bash
    mkdir -p .claude/cache/github
    gh pr list --json number,title,state,mergeable > .claude/cache/github/prs.json
@@ -139,6 +143,7 @@ When AI Maestro is down, report via:
 2. **Queue all GitHub operations** (see 2.3, 2.4)
 
 3. **Notify user**:
+
    ```
    WARNING: GitHub is unavailable.
    - Cached state from: [timestamp]
@@ -209,6 +214,7 @@ AI agents collaborate asynchronously and may be hibernated for extended periods.
 **Step 1: First Reminder (when state = No ACK or No Progress)**
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The assigned reviewer agent
 - **Subject**: `Review Check: PR #<PR_NUMBER>`
 - **Priority**: `high`
@@ -216,6 +222,7 @@ Send a message using the `agent-messaging` skill with:
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Step 2: Urgent Reminder (when state = Unresponsive after Step 1)**
+
 - Send urgent priority message using the `agent-messaging` skill
 - Note: "Review may be reassigned if no response"
 - **Verify**: Confirm message delivery via the `agent-messaging` skill's sent messages feature.
@@ -227,6 +234,7 @@ Send a message using the `agent-messaging` skill with:
 When handing off a review to another reviewer:
 
 1. **Document current state**:
+
    ```json
    {
      "pr_number": 123,
@@ -255,6 +263,7 @@ When handing off a review to another reviewer:
 **Response Workflow**:
 
 1. **Identify failure type**:
+
    | Failure | Action |
    |---------|--------|
    | Build failure | Route to Orchestrator for code fix |
@@ -262,11 +271,13 @@ When handing off a review to another reviewer:
    | Timeout | Retry with increased timeout request |
 
 2. **Log failure details**:
+
    ```bash
    gh run view $RUN_ID --log-failed > .claude/logs/ci-failure-$RUN_ID.log
    ```
 
 3. **Create actionable report**:
+
    ```markdown
    ## CI Pipeline Failure
 
@@ -293,11 +304,13 @@ When handing off a review to another reviewer:
 **Response Workflow**:
 
 1. **Extract failing tests**:
+
    ```bash
    gh run view $RUN_ID --log | grep -E "FAILED|ERROR" > .claude/logs/test-failures-$RUN_ID.log
    ```
 
 2. **Categorize failures**:
+
    | Type | Action |
    |------|--------|
    | Unit test failure | Request code fix from Orchestrator |
@@ -315,6 +328,7 @@ When handing off a review to another reviewer:
 **Response Workflow**:
 
 1. **Identify violations**:
+
    ```bash
    # Python
    ruff check src/ --output-format=json > .claude/logs/lint-violations.json
@@ -328,6 +342,7 @@ When handing off a review to another reviewer:
    - If no: Create detailed violation report
 
 3. **Post comment with fix instructions**:
+
    ```markdown
    ## Linting Failures
 
@@ -339,7 +354,9 @@ When handing off a review to another reviewer:
    ```
 
    ### Manual fixes required
+
    - src/module.py:42 - Line too long (needs manual refactor)
+
    ```
 
 ### 4.4 Security Scan Failures
@@ -349,6 +366,7 @@ When handing off a review to another reviewer:
 **Response Workflow**:
 
 1. **Severity triage**:
+
    | Severity | Action |
    |----------|--------|
    | Critical | Block PR, immediate escalation |
@@ -357,6 +375,7 @@ When handing off a review to another reviewer:
    | Low | Advisory comment, allow merge |
 
 2. **Create security report**:
+
    ```markdown
    ## Security Scan Results
 
@@ -391,11 +410,13 @@ gh pr view $PR_NUMBER --json mergeable | jq '.mergeable'
 ### 5.2 Conflict Resolution Protocol
 
 1. **Identify conflicting files**:
+
    ```bash
    gh pr view $PR_NUMBER --json files | jq '.files[].path'
    ```
 
 2. **Assess conflict complexity**:
+
    | Complexity | Criteria | Action |
    |------------|----------|--------|
    | Simple | <3 files, same author | Auto-resolve if possible |
@@ -403,6 +424,7 @@ gh pr view $PR_NUMBER --json mergeable | jq '.mergeable'
    | Complex | >10 files, multiple authors | Escalate to Orchestrator |
 
 3. **For simple conflicts, suggest resolution**:
+
    ```markdown
    ## Merge Conflict Detected
 
@@ -420,6 +442,7 @@ gh pr view $PR_NUMBER --json mergeable | jq '.mergeable'
    git commit -m "Resolve merge conflicts"
    git push
    ```
+
    ```
 
 ### 5.3 Escalation to Orchestrator
@@ -448,6 +471,7 @@ For complex conflicts:
 **Response**:
 
 1. **Block the operation**:
+
    ```json
    {
      "decision": "block",
@@ -456,6 +480,7 @@ For complex conflicts:
    ```
 
 2. **Provide alternative**:
+
    ```
    BLOCKED: Cannot push directly to main.
 
@@ -474,6 +499,7 @@ For complex conflicts:
 **Response**:
 
 1. **Block merge**:
+
    ```
    BLOCKED: PR requires 1 approving review before merge.
 
@@ -493,6 +519,7 @@ For complex conflicts:
 **Response**:
 
 1. **Block merge**:
+
    ```
    BLOCKED: Required checks have not passed.
 
@@ -516,6 +543,7 @@ For complex conflicts:
 **Response**:
 
 1. **Block closure**:
+
    ```
    BLOCKED: Cannot close issue #456 - No linked PR.
 
@@ -528,6 +556,7 @@ For complex conflicts:
    ```
 
 2. **Suggest linking**:
+
    ```
    To link a PR to this issue:
    - In PR description: "Closes #456" or "Fixes #456"
@@ -541,6 +570,7 @@ For complex conflicts:
 **Response**:
 
 1. **Block closure**:
+
    ```
    BLOCKED: Cannot close issue #456 - Checklist incomplete.
 
@@ -561,6 +591,7 @@ For complex conflicts:
 **Response**:
 
 1. **Block closure**:
+
    ```
    BLOCKED: Cannot close issue #456 - No test evidence.
 
@@ -573,6 +604,7 @@ For complex conflicts:
    ```
 
 2. **Provide test template**:
+
    ```python
    # Required test for issue #456
    def test_feature_described_in_issue_456():

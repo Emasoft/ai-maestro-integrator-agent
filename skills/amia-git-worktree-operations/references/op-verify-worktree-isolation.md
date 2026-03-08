@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Verify Worktree Isolation
 
-
 ## Contents
 
 - [Purpose](#purpose)

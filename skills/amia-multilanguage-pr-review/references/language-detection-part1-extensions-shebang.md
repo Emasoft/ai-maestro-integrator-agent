@@ -25,6 +25,7 @@ This reference covers detecting programming languages from file extensions and s
 The most straightforward method for detecting a file's programming language is by examining its file extension. Below is a comprehensive mapping of common extensions to languages.
 
 ### Python Extensions
+
 | Extension | Description |
 |-----------|-------------|
 | `.py` | Python source file |
@@ -34,6 +35,7 @@ The most straightforward method for detecting a file's programming language is b
 | `.pyw` | Python Windows script |
 
 ### JavaScript/TypeScript Extensions
+
 | Extension | Description |
 |-----------|-------------|
 | `.js` | JavaScript source file |
@@ -47,16 +49,19 @@ The most straightforward method for detecting a file's programming language is b
 | `.d.ts` | TypeScript declaration file |
 
 ### Rust Extensions
+
 | Extension | Description |
 |-----------|-------------|
 | `.rs` | Rust source file |
 
 ### Go Extensions
+
 | Extension | Description |
 |-----------|-------------|
 | `.go` | Go source file |
 
 ### Shell Script Extensions
+
 | Extension | Description |
 |-----------|-------------|
 | `.sh` | Shell script (usually Bash) |
@@ -66,6 +71,7 @@ The most straightforward method for detecting a file's programming language is b
 | `.ksh` | Korn shell script |
 
 ### Configuration and Data Files (Often Embedded Code)
+
 | Extension | Description |
 |-----------|-------------|
 | `.json` | JSON data (may contain embedded code) |
@@ -188,6 +194,7 @@ def detect_language_from_shebang(filepath: str) -> str | None:
 ### Best Practice: Prefer `#!/usr/bin/env`
 
 Using `#!/usr/bin/env interpreter` is more portable than hardcoded paths because:
+
 1. The interpreter location varies across systems
 2. `env` searches the PATH for the interpreter
 3. Works with version managers (pyenv, nvm, rbenv)

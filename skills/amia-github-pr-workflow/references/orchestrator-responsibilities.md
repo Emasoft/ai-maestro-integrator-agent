@@ -23,17 +23,20 @@ The orchestrator is the coordination layer between the user, GitHub, and special
 **Definition**: Periodically check the state of all relevant PRs to identify what actions are needed.
 
 **Implementation**:
+
 1. Run the `amia_orchestrator_pr_poll.py` script every 10-15 minutes
 2. Parse the output to identify PRs needing attention
 3. Prioritize based on urgency and user preferences
 4. Queue actions for delegation
 
 **Example polling command**:
+
 ```bash
 python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
 ```
 
 **What to monitor**:
+
 - PR open/closed/merged state
 - Review request status
 - CI check results
@@ -42,6 +45,7 @@ python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
 - Thread resolution state
 
 **How to interpret results**:
+
 | Status | Meaning | Action |
 |--------|---------|--------|
 | `needs_review` | PR awaiting review | Delegate review to subagent |
@@ -61,6 +65,7 @@ python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
 4. **Verification delegation**: Spawn a verification subagent to run completion checks
 
 **Prompt structure for subagents**:
+
 ```
 You are a [role] subagent. Your single task is:
 [Clear, specific task description]
@@ -91,6 +96,7 @@ If details needed, write to docs_dev/[filename].md
 3. **Mental model**: For simple PRs, track in conversation context
 
 **Status file format**:
+
 ```markdown
 # PR #123 Status
 
@@ -117,6 +123,7 @@ If details needed, write to docs_dev/[filename].md
 **Definition**: Provide clear, actionable status updates to the user at key milestones.
 
 **When to report**:
+
 - PR becomes ready for review
 - All review comments have been addressed
 - CI checks complete (pass or fail)
@@ -125,6 +132,7 @@ If details needed, write to docs_dev/[filename].md
 - Subagent encounters an error
 
 **Report format**:
+
 ```
 ## PR #[number] Status Update
 
@@ -150,17 +158,20 @@ These are hard boundaries. Violating them defeats the purpose of orchestration.
 **The rule**: The orchestrator NEVER writes, modifies, or deletes code in the repository.
 
 **Why**:
+
 - The orchestrator's context is for coordination, not implementation
 - Writing code blocks the orchestrator from handling other tasks
 - Code changes require focused attention that a coordinator cannot provide
 
 **What to do instead**:
+
 1. Identify what code needs to change
 2. Formulate clear requirements
 3. Delegate to implementation subagent
 4. Verify result when subagent returns
 
 **Exception**: The orchestrator MAY edit orchestration-related files:
+
 - Status tracking files in `docs_dev/`
 - Checklist updates in issues
 - Script outputs and logs
@@ -170,11 +181,13 @@ These are hard boundaries. Violating them defeats the purpose of orchestration.
 **The rule**: The orchestrator NEVER waits synchronously for operations that take more than a few seconds.
 
 **Why**:
+
 - Blocking prevents the orchestrator from handling urgent user requests
 - Blocking consumes context tokens on waiting
 - Blocking creates a bottleneck in the workflow
 
 **Long operations (NEVER block on these)**:
+
 - CI pipeline runs (minutes to hours)
 - Code review by subagent (minutes)
 - Implementation work (minutes to hours)
@@ -182,12 +195,14 @@ These are hard boundaries. Violating them defeats the purpose of orchestration.
 - Network transfers
 
 **What to do instead**:
+
 1. Delegate the operation to a subagent
 2. Set up polling to check completion
 3. Continue with other orchestration tasks
 4. Process result when ready
 
 **Example - WRONG**:
+
 ```
 # Orchestrator waits for CI
 while not ci_complete:
@@ -196,6 +211,7 @@ while not ci_complete:
 ```
 
 **Example - CORRECT**:
+
 ```
 # Orchestrator delegates and moves on
 delegate_ci_monitoring_to_subagent()
@@ -208,17 +224,20 @@ continue_with_other_tasks()
 **The rule**: The orchestrator NEVER merges a PR without explicit user approval.
 
 **Why**:
+
 - Merging is an irreversible action
 - The user is accountable for repository state
 - There may be context the orchestrator lacks
 
 **The correct workflow**:
+
 1. Verify all completion criteria are met
 2. Report to user: "PR #X is ready to merge"
 3. Wait for user's explicit instruction: "merge it" or similar
 4. ONLY THEN delegate the merge operation
 
 **What "ready to merge" means**:
+
 - All review comments addressed
 - All PR comments acknowledged
 - No new comments in 45 seconds

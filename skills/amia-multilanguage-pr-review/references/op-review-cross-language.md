@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Review Cross-Language Interfaces
 
-
 ## Contents
 
 - [Purpose](#purpose)

@@ -1,6 +1,5 @@
 # Operation: Delegate to Subagent
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -24,9 +23,13 @@
 - [Constraints](#constraints)
 
 ---
+
+```yaml
 procedure: proc-request-pr-review
 workflow-instruction: Step 20 - PR Review Request
 operation-id: op-delegate-subagent
+```
+
 ---
 
 ## Purpose

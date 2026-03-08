@@ -130,6 +130,7 @@ gh api graphql -f query='
 ```
 
 Output:
+
 ```json
 [
   {"status": "Backlog", "count": 12},
@@ -202,6 +203,7 @@ GitHub's stale bot and similar automation that closes issues after periods of in
 #### Feature Requests / Enhancements
 
 Closed ONLY when:
+
 - Implemented, tested, and merged to main
 - User/owner explicitly declines the feature (with documented reason)
 - Superseded by another issue (link to replacement)
@@ -209,6 +211,7 @@ Closed ONLY when:
 #### Bug Reports
 
 Closed ONLY when:
+
 1. **Bug Fixed**: Code change merged that fixes the bug, with verification test
 2. **Cannot Reproduce** (after 3 documented attempts):
    - Attempt 1: Initial reproduction try with documented steps
@@ -218,6 +221,7 @@ Closed ONLY when:
    - Close with label `cannot-reproduce` and explanation
 
 **Bug Closure Checklist**:
+
 ```markdown
 ## Reproduction Attempts
 
@@ -232,6 +236,7 @@ Closing as cannot-reproduce. Will reopen if new reproduction steps provided.
 #### Tasks / Chores
 
 Closed ONLY when:
+
 - Task completed and verified
 - Task no longer relevant (with explanation)
 

@@ -14,12 +14,14 @@
 ## 1.1 Why Centralized Truth Matters
 
 AI orchestration involves multiple autonomous agents working concurrently on different parts of a project. Each agent has:
+
 - Limited context window (cannot remember everything)
 - No persistent memory between sessions
 - No direct communication with other agents (except messaging)
 - No visibility into what other agents are doing
 
 Without a centralized source of truth:
+
 - Agents might work on the same task
 - Completed work might be reassigned
 - Blocked items might be ignored
@@ -34,6 +36,7 @@ Without a centralized source of truth:
 ### Problem 1: Orchestrator Memory
 
 If the orchestrator tracks work in its context window:
+
 - Memory is lost on session restart
 - Context compaction loses state
 - No visibility for humans
@@ -42,6 +45,7 @@ If the orchestrator tracks work in its context window:
 ### Problem 2: Local Files
 
 If state is tracked in local files (Claude Tasks, markdown, JSON):
+
 - Files can become stale
 - Multiple agents cannot safely update
 - Merge conflicts corrupt state
@@ -50,6 +54,7 @@ If state is tracked in local files (Claude Tasks, markdown, JSON):
 ### Problem 3: Agent Self-Reporting
 
 If agents report their own status:
+
 - Reports can be wrong or outdated
 - Agent crashes lose state
 - No verification mechanism
@@ -58,6 +63,7 @@ If agents report their own status:
 ### Problem 4: Multiple Systems
 
 If state is split across systems:
+
 - Synchronization overhead
 - Conflicting information
 - No single "truth"
@@ -163,12 +169,14 @@ Only the "Done" column means done.
 ### Violation: Tracking State Elsewhere
 
 **What happens:**
+
 - Orchestrator believes work is in state X
 - Board shows state Y
 - Decisions are made based on wrong state
 - Work is duplicated, lost, or corrupted
 
 **Example:**
+
 ```
 Orchestrator thinks: "Module A is done" (from memory)
 Board shows: Module A is "In Progress"
@@ -178,12 +186,14 @@ Result: Module A never gets finished because orchestrator moved on
 ### Violation: Not Adding Work to Board
 
 **What happens:**
+
 - Work exists but is invisible
 - Other agents don't know about it
 - Stop hook doesn't track it
 - Work is lost on session restart
 
 **Example:**
+
 ```
 Orchestrator assigns work verbally: "Agent, implement auth module"
 Board: No auth module issue exists
@@ -193,12 +203,14 @@ Result: Work vanishes when agent session ends
 ### Violation: Disagreeing with Board
 
 **What happens:**
+
 - Orchestrator "knows better" than board
 - Makes decisions based on assumptions
 - Board becomes stale and useless
 - Total loss of orchestration coherence
 
 **Example:**
+
 ```
 Board shows: 5 items "In Progress"
 Orchestrator believes: "Those are all done, agents just forgot to update"
@@ -228,6 +240,7 @@ Result: Orchestrator exits with incomplete work
 ```
 
 **Problems:**
+
 - Memory is volatile
 - Agents can't see state
 - No persistence
@@ -255,6 +268,7 @@ Result: Orchestrator exits with incomplete work
 ```
 
 **Benefits:**
+
 - All parties see same state
 - State survives crashes
 - Full audit trail

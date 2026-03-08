@@ -241,6 +241,7 @@ branch protection.
 ### 1.5.1 Why Jobs Get Skipped
 
 Jobs may be skipped when:
+
 - Path filters exclude the job's trigger (documentation-only changes skip test jobs)
 - An `if` condition evaluates to false
 - A preceding job in the dependency chain was skipped

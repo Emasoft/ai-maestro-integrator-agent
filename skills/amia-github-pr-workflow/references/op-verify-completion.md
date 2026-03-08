@@ -1,6 +1,5 @@
 # Operation: Verify PR Completion Criteria
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -15,9 +14,13 @@
 - [Critical Rule](#critical-rule)
 
 ---
+
+```yaml
 procedure: proc-request-pr-review
 workflow-instruction: Step 20 - PR Review Request
 operation-id: op-verify-completion
+```
+
 ---
 
 ## Purpose
@@ -40,11 +43,13 @@ Verify all completion criteria for a PR before reporting it as ready to merge.
 ## Steps
 
 1. **Run verification script**:
+
    ```bash
    python scripts/amia_verify_pr_completion.py --repo owner/repo --pr <PR_NUMBER>
    ```
 
 2. **Parse output** - all criteria must pass:
+
    ```json
    {
      "pr_number": 123,

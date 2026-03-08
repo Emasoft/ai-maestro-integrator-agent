@@ -175,6 +175,7 @@ jobs:
 ### 2.4.1 Behavior When `cancel-in-progress` Is True
 
 When a new run joins a concurrency group and `cancel-in-progress` is true:
+
 1. Any currently running workflow run in that group is immediately cancelled
 2. Any pending (queued but not started) runs in that group are also cancelled
 3. The new run starts immediately (subject to runner availability)
@@ -184,6 +185,7 @@ Cancelled runs show status `cancelled` in the GitHub Actions UI.
 ### 2.4.2 Behavior When `cancel-in-progress` Is False
 
 When `cancel-in-progress` is false (the default):
+
 1. The currently running workflow run continues to completion
 2. The new run is queued and waits
 3. Once the current run finishes, the next queued run starts
@@ -302,9 +304,11 @@ A developer is working on a feature branch with an open pull request. They push
 ### 2.7.2 Minute Savings Calculation
 
 Without concurrency groups:
+
 - 5 runs, each using 8 minutes = 40 CI minutes consumed
 
 With concurrency groups and cancel-in-progress:
+
 - Runs 1-4 cancelled after approximately 2 minutes each = 8 minutes consumed
 - Run 5 completes fully = 8 minutes consumed
 - Total: approximately 16 CI minutes consumed

@@ -1,9 +1,13 @@
 # Operation: Monitor Subagent Progress
 
 ---
+
+```yaml
 procedure: proc-request-pr-review
 workflow-instruction: Step 20 - PR Review Request
 operation-id: op-monitor-progress
+```
+
 ---
 
 ## Purpose
@@ -64,6 +68,7 @@ Track progress of delegated subagents without blocking. Use polling to check sta
 ## Stale Detection
 
 A task is considered stale if:
+
 - No progress after 3 consecutive polls
 - No messages received in expected timeframe
 - Output file not updated
@@ -81,6 +86,7 @@ A task is considered stale if:
 Check for completion messages by checking your inbox using the `agent-messaging` skill. Filter for messages where the subject contains "PR #123".
 
 Also check the output file:
+
 ```bash
 cat docs_dev/pr-reviews/pr-123-review.md 2>/dev/null || echo "Not yet available"
 ```

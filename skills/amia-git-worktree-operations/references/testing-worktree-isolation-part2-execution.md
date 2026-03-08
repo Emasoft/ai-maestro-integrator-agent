@@ -17,6 +17,7 @@
    - [If cleaning databases → Cleaning Test Databases](#cleaning-test-databases)
 
 **Related Documents**:
+
 - [Part 1: Fundamentals](testing-worktree-isolation-part1-fundamentals.md)
 - [Part 3: CI/CD & Troubleshooting](testing-worktree-isolation-part3-cicd.md)
 
@@ -29,6 +30,7 @@
 **What Are Unit Tests**: Tests that verify individual functions or classes in isolation.
 
 **Running Unit Tests in Worktree**:
+
 ```bash
 # Navigate to test worktree
 cd worktrees/test-unit-user-model
@@ -47,6 +49,7 @@ pytest tests/unit/ --cov=src --cov-report=html
 ```
 
 **Benefits of Isolated Unit Test Worktrees**:
+
 - Test different branches simultaneously
 - No dependency conflicts
 - Reproducible results
@@ -57,6 +60,7 @@ pytest tests/unit/ --cov=src --cov-report=html
 **What Are Integration Tests**: Tests that verify multiple components working together.
 
 **Running Integration Tests in Worktree**:
+
 ```bash
 # Navigate to integration test worktree
 cd worktrees/test-integration-api-endpoints
@@ -80,6 +84,7 @@ pkill -f "celery"
 ```
 
 **Integration Test Example** with allocated ports:
+
 ```python
 # tests/integration/test_api.py
 import os
@@ -107,6 +112,7 @@ def test_create_user(api_url):
 **What Are Performance Tests**: Tests that measure speed, throughput, or resource usage.
 
 **Running Performance Tests in Worktree**:
+
 ```bash
 # Navigate to performance test worktree
 cd worktrees/test-performance-queries
@@ -125,6 +131,7 @@ locust -f tests/performance/load_test.py --host=http://localhost:8001
 ```
 
 **Performance Test Example**:
+
 ```python
 # tests/performance/test_query_speed.py
 import time
@@ -146,6 +153,7 @@ def test_user_query_performance():
 ```
 
 **Why Use Isolated Performance Worktrees**:
+
 - No interference from other processes
 - Consistent baseline
 - Reproducible measurements
@@ -160,6 +168,7 @@ def test_user_query_performance():
 **Pattern**: Each test worktree uses its own database instance or database name.
 
 **Implementation**:
+
 ```bash
 # Create database for worktree
 createdb testdb_integration_api_endpoints
@@ -169,6 +178,7 @@ echo "DATABASE_URL=postgresql://localhost/testdb_integration_api_endpoints" > .e
 ```
 
 **Benefits**:
+
 - Complete data isolation
 - Parallel test execution
 - No test interference
@@ -181,6 +191,7 @@ echo "DATABASE_URL=postgresql://localhost/testdb_integration_api_endpoints" > .e
 **Pattern for Testing Migrations**:
 
 1. **Create migration test worktree**:
+
 ```bash
 python scripts/worktree_create.py \
     --purpose test-migration \
@@ -188,7 +199,8 @@ python scripts/worktree_create.py \
     --branch feature/user-roles
 ```
 
-2. **Set up base database**:
+1. **Set up base database**:
+
 ```bash
 cd worktrees/test-migration-add-user-roles
 source .venv/bin/activate
@@ -201,7 +213,8 @@ export DATABASE_URL=postgresql://localhost/testdb_migration_user_roles
 python manage.py migrate 0042_previous_migration
 ```
 
-3. **Test forward migration**:
+1. **Test forward migration**:
+
 ```bash
 # Apply your new migration
 python manage.py migrate 0043_add_user_roles
@@ -213,7 +226,8 @@ psql testdb_migration_user_roles -c "\d users"
 pytest tests/migrations/test_0043_add_user_roles.py
 ```
 
-4. **Test backward migration** (rollback):
+1. **Test backward migration** (rollback):
+
 ```bash
 # Rollback migration
 python manage.py migrate 0042_previous_migration
@@ -227,6 +241,7 @@ pytest tests/migrations/test_0043_rollback.py
 **What Is Rollback Testing**: Verifying migrations can be safely reversed.
 
 **Pattern**:
+
 ```python
 # tests/migrations/test_migration_rollback.py
 import pytest
@@ -263,6 +278,7 @@ def test_migration_0043_rollback():
 **Implementation**:
 
 1. **Separate database names**:
+
 ```python
 # conftest.py - Generate database name from worktree
 import os
@@ -278,7 +294,8 @@ def test_database():
     return metadata['database']
 ```
 
-2. **Clean database before each test run**:
+1. **Clean database before each test run**:
+
 ```python
 # conftest.py
 @pytest.fixture(scope='session', autouse=True)
@@ -308,16 +325,19 @@ def setup_test_database(test_database):
 ### Removing Test Worktrees
 
 **When to Remove**:
+
 - After tests complete
 - When branch is merged
 - When worktree is no longer needed
 
 **Manual Removal**:
+
 ```bash
 python scripts/worktree_remove.py --identifier api-endpoints
 ```
 
 **Automated Removal** (in CI or cleanup script):
+
 ```python
 # scripts/cleanup_test_worktrees.py
 import json
@@ -351,11 +371,13 @@ def cleanup_old_test_worktrees(max_age_hours=24):
 **How Ports Are Released**:
 
 When you run `worktree_remove.py`, it automatically:
+
 1. Reads allocated ports from worktree metadata
 2. Removes port allocation from registry
 3. Makes ports available for reuse
 
 **Manual Port Release** (if needed):
+
 ```python
 # scripts/release_ports.py
 import json
@@ -388,6 +410,7 @@ def release_ports(worktree_id):
 **Pattern**: Remove test databases when worktree is removed.
 
 **Automated Cleanup**:
+
 ```python
 # In worktree_remove.py
 def cleanup_test_database(metadata):
@@ -405,6 +428,7 @@ def cleanup_test_database(metadata):
 ```
 
 **Manual Database Cleanup**:
+
 ```bash
 # List all test databases
 psql -l | grep testdb_

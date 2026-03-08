@@ -25,6 +25,7 @@ This document provides a comprehensive guide to managing multiple GitHub identit
 ## Use-Case TOC
 
 ### Part 1: Setup and Configuration
+
 **File**: [multi-user-workflow-part1-setup.md](multi-user-workflow-part1-setup.md)
 
 - When you need multiple GitHub identities on the same machine → [Why Multiple Identities](multi-user-workflow-part1-setup.md#why-multiple-identities)
@@ -49,6 +50,7 @@ This document provides a comprehensive guide to managing multiple GitHub identit
   - Helper Function for Repository Configuration
 
 ### Part 2: Operations and Troubleshooting
+
 **File**: [multi-user-workflow-part2-operations.md](multi-user-workflow-part2-operations.md)
 
 - When running commands as a specific user → [Per-Command Identity Override](multi-user-workflow-part2-operations.md#per-command-identity-override)
@@ -89,6 +91,7 @@ Multiple GitHub identities are needed when:
 ### Identity Components
 
 Each GitHub identity consists of:
+
 - **GitHub Account**: Username and associated email
 - **SSH Key**: Dedicated key pair for authentication
 - **Git Identity**: `user.name` and `user.email` for commits
@@ -107,6 +110,7 @@ ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_secondary -C "secondary@example.com" 
 ### 2. Add Key to GitHub
 
 Copy the public key and add to your secondary GitHub account under Settings → SSH and GPG keys:
+
 ```bash
 cat ~/.ssh/id_ed25519_secondary.pub
 ```
@@ -114,6 +118,7 @@ cat ~/.ssh/id_ed25519_secondary.pub
 ### 3. Configure SSH Host Alias
 
 Add to `~/.ssh/config`:
+
 ```
 Host github-secondary
   HostName github.com

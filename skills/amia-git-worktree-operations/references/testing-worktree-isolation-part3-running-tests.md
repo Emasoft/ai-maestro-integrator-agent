@@ -13,6 +13,7 @@
 **What Are Unit Tests**: Tests that verify individual functions or classes in isolation.
 
 **Running Unit Tests in Worktree**:
+
 ```bash
 # Navigate to test worktree
 cd worktrees/test-unit-user-model
@@ -31,6 +32,7 @@ pytest tests/unit/ --cov=src --cov-report=html
 ```
 
 **Benefits of Isolated Unit Test Worktrees**:
+
 - Test different branches simultaneously
 - No dependency conflicts
 - Reproducible results
@@ -43,6 +45,7 @@ pytest tests/unit/ --cov=src --cov-report=html
 **What Are Integration Tests**: Tests that verify multiple components working together.
 
 **Running Integration Tests in Worktree**:
+
 ```bash
 # Navigate to integration test worktree
 cd worktrees/test-integration-api-endpoints
@@ -66,6 +69,7 @@ pkill -f "celery"
 ```
 
 **Integration Test Example** with allocated ports:
+
 ```python
 # tests/integration/test_api.py
 import os
@@ -95,6 +99,7 @@ def test_create_user(api_url):
 **What Are Performance Tests**: Tests that measure speed, throughput, or resource usage.
 
 **Running Performance Tests in Worktree**:
+
 ```bash
 # Navigate to performance test worktree
 cd worktrees/test-performance-queries
@@ -113,6 +118,7 @@ locust -f tests/performance/load_test.py --host=http://localhost:8001
 ```
 
 **Performance Test Example**:
+
 ```python
 # tests/performance/test_query_speed.py
 import time
@@ -134,6 +140,7 @@ def test_user_query_performance():
 ```
 
 **Why Use Isolated Performance Worktrees**:
+
 - No interference from other processes
 - Consistent baseline
 - Reproducible measurements
@@ -142,6 +149,7 @@ def test_user_query_performance():
 ---
 
 **Related Documents**:
+
 - [Testing Worktree Isolation Overview](testing-worktree-isolation.md)
 - [Types and Creation](testing-worktree-isolation-part1-types-and-creation.md)
 - [Environment Setup](testing-worktree-isolation-part2-environment-setup.md)

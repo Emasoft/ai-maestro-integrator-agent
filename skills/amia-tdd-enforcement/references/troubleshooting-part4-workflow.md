@@ -1,6 +1,7 @@
 # TDD Troubleshooting - Part 4: Workflow Issues
 
 ## Table of Contents
+
 - [Unsure What to Test Next](#unsure-what-to-test-next)
   - [Symptoms](#symptoms)
   - [Solution](#solution)
@@ -15,6 +16,7 @@
 ## Unsure What to Test Next
 
 ### Symptoms
+
 - Completed current cycle
 - Not sure what behavior to implement next
 - Many possible options
@@ -39,6 +41,7 @@
 **Step 2: Choose the next most important behavior**
 
 Priority order:
+
 1. **Happy path** (if not done): Most common use case
 2. **Critical failures**: Security, data loss prevention
 3. **Common edge cases**: Empty inputs, nulls
@@ -54,6 +57,7 @@ Priority order:
 - "What would I manually test?"
 
 ### Prevention
+
 - Maintain a backlog of behaviors
 - Prioritize before starting TDD
 - Focus on value, not coverage
@@ -64,6 +68,7 @@ Priority order:
 ## Tests Are Too Slow
 
 ### Symptoms
+
 - Test suite takes minutes to run
 - Slows down RED-GREEN-REFACTOR cycle
 - Hesitant to run tests frequently
@@ -80,6 +85,7 @@ pytest tests/ --durations=10
 **Step 2: Identify slow tests**
 
 Common causes:
+
 - Database operations
 - Network calls
 - File I/O
@@ -128,6 +134,7 @@ pytest tests/
 ```
 
 ### Prevention
+
 - Keep unit tests fast (<100ms each)
 - Use in-memory databases for tests
 - Use test doubles (in-memory implementations) for external services

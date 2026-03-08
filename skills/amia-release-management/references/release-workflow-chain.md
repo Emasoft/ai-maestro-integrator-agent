@@ -10,29 +10,29 @@ workflow-instruction: support
 ## Contents
 
 - 1. Why release automation uses two separate workflows instead of one
-- 2. How the prepare-release workflow works
+- 1. How the prepare-release workflow works
   - 2.1. Version detection from project metadata
   - 2.2. Version comparison against the latest git tag
   - 2.3. Changelog validation gate
   - 2.4. Tag creation to trigger the downstream workflow
-- 3. How the release workflow works
+- 1. How the release workflow works
   - 3.1. Triggering on tag push events
   - 3.2. Building artifacts
   - 3.3. Creating the GitHub release with changelog
-- 4. How to pass data between workflows using artifacts
+- 1. How to pass data between workflows using artifacts
   - 4.1. Uploading an artifact in the prepare-release workflow
   - 4.2. Downloading an artifact in the release workflow
   - 4.3. Artifact retention and cleanup
-- 5. Why PAT_TOKEN is essential for cross-workflow triggering
-- 6. How to detect the version from different project types
+- 1. Why PAT_TOKEN is essential for cross-workflow triggering
+- 1. How to detect the version from different project types
   - 6.1. Python projects (pyproject.toml)
   - 6.2. Node.js projects (package.json)
   - 6.3. Rust projects (Cargo.toml)
   - 6.4. Go projects (version variable)
   - 6.5. Generic VERSION file
-- 7. Emergency manual release procedure
-- 8. Complete two-workflow flow diagram
-- 9. Troubleshooting the release workflow chain
+- 1. Emergency manual release procedure
+- 1. Complete two-workflow flow diagram
+- 1. Troubleshooting the release workflow chain
 
 ## Purpose
 

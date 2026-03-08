@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Execute Rollback
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -192,6 +191,7 @@ echo "Rollback issue created"
 ### Step 8: Notify stakeholders
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `[ROLLBACK COMPLETE] v<ROLLBACK_FROM> -> v<ROLLBACK_TO>`
 - **Priority**: `urgent`
@@ -251,6 +251,7 @@ echo "Latest stable release: $LATEST_STABLE"
 **NEVER execute rollback without explicit user approval.**
 
 Before rollback, present:
+
 1. Versions involved
 2. Reason for rollback
 3. Impact assessment

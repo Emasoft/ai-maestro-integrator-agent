@@ -16,6 +16,7 @@ A **configuration template** is a file with placeholder variables that get repla
 ### Template File Example
 
 **File: `.env.worktree.template`**
+
 ```bash
 # Web Server Configuration
 WEB_PORT=${ALLOCATED_WEB_PORT}
@@ -76,6 +77,7 @@ def generate_worktree_config(worktree_name, template_path, output_path):
 ### Generated Configuration Example
 
 **File: `feature-payment/.env.worktree`**
+
 ```bash
 # Web Server Configuration
 WEB_PORT=8082
@@ -102,6 +104,7 @@ API_BASE_URL=http://localhost:3002
 ### Using Configuration in Code
 
 **JavaScript/Node.js:**
+
 ```javascript
 // Load environment variables
 require('dotenv').config({ path: '.env.worktree' });
@@ -116,6 +119,7 @@ app.listen(webPort, () => {
 ```
 
 **Python:**
+
 ```python
 import os
 from dotenv import load_dotenv
@@ -137,11 +141,13 @@ app.run(host='localhost', port=web_port)
 ### List All Allocated Ports
 
 **Command:**
+
 ```bash
 eia port list
 ```
 
 **Output:**
+
 ```
 Worktree Port Allocations
 ═════════════════════════════════════════════════════════
@@ -174,11 +180,13 @@ Debug: 3/10 ports used (30%)
 ### Check Port Availability
 
 **Command:**
+
 ```bash
 eia port check <port_number>
 ```
 
 **Example:**
+
 ```bash
 $ eia port check 8083
 
@@ -190,6 +198,7 @@ Next in use: 8082 (feature-payment)
 ```
 
 **Example (port in use):**
+
 ```bash
 $ eia port check 8081
 
@@ -204,11 +213,13 @@ Started:     2024-01-15 14:30:22
 ### Check Ports for Specific Worktree
 
 **Command:**
+
 ```bash
 eia port show <worktree_name>
 ```
 
 **Example:**
+
 ```bash
 $ eia port show feature-login
 
@@ -226,11 +237,13 @@ To start all services:
 ### Release Ports Manually
 
 **Command:**
+
 ```bash
 eia port release <worktree_name>
 ```
 
 **Example:**
+
 ```bash
 $ eia port release feature-login
 

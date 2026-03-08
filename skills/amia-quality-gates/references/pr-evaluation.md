@@ -52,11 +52,13 @@ PR evaluation follows a **sequential gate system**. Each gate must pass before p
 **Step 1:** Load `USER_REQUIREMENTS.md` from project root or handoff document
 
 **Step 2:** Compare PR scope against user requirements
+
 - What did the user ask for?
 - What does this PR deliver?
 - Are they the same thing?
 
 **Step 3:** Check for deviations
+
 - Technology substitutions (user said Node.js, PR uses Python)
 - Feature omissions (user requested feature X, PR doesn't include it)
 - Scope creep (PR adds features user didn't request)
@@ -75,6 +77,7 @@ PR evaluation follows a **sequential gate system**. Each gate must pass before p
 **Verdict:** `REJECT - Requirement Deviation`
 
 **Required evidence:**
+
 - Quote from USER_REQUIREMENTS.md showing what was requested
 - Description of what PR actually delivers
 - Specific deviations identified
@@ -90,27 +93,35 @@ PR evaluation follows a **sequential gate system**. Each gate must pass before p
 #### Gate 0.5 Procedure
 
 **Step 1:** Verify RED Commit Exists
+
 ```bash
 git log --oneline origin/main..HEAD | grep "^[a-f0-9]* RED:"
 ```
+
 Expected: At least one commit with "RED:" prefix showing failing test
 
 **Step 2:** Verify GREEN Commit Exists
+
 ```bash
 git log --oneline origin/main..HEAD | grep "^[a-f0-9]* GREEN:"
 ```
+
 Expected: At least one commit with "GREEN:" prefix showing passing implementation
 
 **Step 3:** Verify Correct Sequence
+
 ```bash
 git log --oneline origin/main..HEAD
 ```
+
 Expected: RED commit appears BEFORE corresponding GREEN commit
 
 **Step 4:** Verify Tests Pass
+
 ```bash
 uv run pytest tests/ -v
 ```
+
 Expected: All tests pass (exit code 0)
 
 #### Automatic Rejection Triggers (Gate 0.5)
@@ -125,6 +136,7 @@ Expected: All tests pass (exit code 0)
 **Verdict:** `REJECT - TDD Workflow Violation`
 
 **Required evidence:**
+
 - Git log showing commit sequence
 - Identification of which TDD step is missing or out of order
 
@@ -254,6 +266,7 @@ cargo build --release | tee build-report.log
 - **Complete** - Includes full error messages and stack traces
 
 **Example of VALID evidence:**
+
 ```
 Test: test_user_login (tests/auth/test_login.py:42)
 Expected: HTTP 200 with auth token
@@ -263,6 +276,7 @@ Stack trace: [full trace]
 ```
 
 **Example of INVALID evidence:**
+
 ```
 The login test failed.
 ```
@@ -313,6 +327,7 @@ All of the following must be true:
 ✅ No regressions detected
 
 **Example verdict:**
+
 ```
 VERDICT: APPROVE
 
@@ -341,6 +356,7 @@ Use this verdict when:
 ⚠️ Missing documentation
 
 **Example verdict:**
+
 ```
 VERDICT: REQUEST CHANGES
 
@@ -371,6 +387,7 @@ Use this verdict when:
 ❌ Fundamental design flaws
 
 **Example verdict:**
+
 ```
 VERDICT: REJECT
 
@@ -569,6 +586,7 @@ PR evaluation follows a **sequential gate system** with automatic rejection at e
 **Evidence-based evaluation** requires specific, reproducible, objective documentation of all findings.
 
 **Verdict decisions** are based on clear criteria:
+
 - **APPROVE:** All gates pass
 - **REQUEST CHANGES:** Minor issues, fixable
 - **REJECT:** Critical failures, fundamental problems

@@ -15,6 +15,7 @@ This document provides practical examples of quality gate enforcement across all
 **Scenario**: New PR opened with passing checks.
 
 **Actions**:
+
 ```bash
 # Check PR tests
 gh pr checks $PR_NUMBER
@@ -31,6 +32,7 @@ gh pr comment $PR_NUMBER --body "✅ Pre-review gate passed. Ready for code revi
 **Scenario**: Code review yields 65% confidence score.
 
 **Actions**:
+
 ```bash
 # Apply failed label
 gh pr edit $PR_NUMBER --add-label "gate:review-failed"
@@ -53,6 +55,7 @@ Please address these issues and request re-review."
 **Scenario**: PR has merge conflicts with main.
 
 **Actions**:
+
 ```bash
 # Apply failed label
 gh pr edit $PR_NUMBER --add-label "gate:pre-merge-failed"
@@ -75,6 +78,7 @@ Re-run gate checks after resolving conflicts."
 **Scenario**: Main CI fails after merge.
 
 **Actions**:
+
 ```bash
 # Apply failed label
 gh pr edit $PR_NUMBER --add-label "gate:post-merge-failed"
@@ -97,6 +101,7 @@ gh issue comment $ISSUE_NUMBER --body "Post-merge failure detected. Evaluating r
 **Scenario**: Urgent hotfix needs pre-merge gate override.
 
 **Actions**:
+
 ```bash
 # Document override
 gh pr comment $PR_NUMBER --body "**GATE OVERRIDE**

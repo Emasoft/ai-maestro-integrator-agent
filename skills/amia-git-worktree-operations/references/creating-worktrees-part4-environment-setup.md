@@ -25,6 +25,7 @@ cd ../review-GH-42
 ```
 
 **Verification**: Confirm you're in the correct directory:
+
 ```bash
 pwd
 # Should output something like: /Users/username/projects/review-GH-42
@@ -40,6 +41,7 @@ git branch --show-current
 **Purpose**: Install all libraries and packages required by the project.
 
 **For Node.js projects**:
+
 ```bash
 # Using npm
 npm install
@@ -52,6 +54,7 @@ yarn install
 ```
 
 **For Python projects**:
+
 ```bash
 # Using pip with requirements file
 pip install -r requirements.txt
@@ -66,11 +69,13 @@ poetry install
 ```
 
 **For Ruby projects**:
+
 ```bash
 bundle install
 ```
 
 **For Go projects**:
+
 ```bash
 go mod download
 ```
@@ -78,11 +83,13 @@ go mod download
 **What "install dependencies" means**: Most projects rely on external libraries (dependencies). This step downloads and installs all required libraries so the code can run.
 
 **Complexity factors** (affects download duration):
+
 - Small projects: Few dependencies, quick downloads
 - Medium projects: Moderate dependencies
 - Large projects: Many dependencies, longer downloads
 
 **Common issues**:
+
 - If install fails, check Node/Python/Ruby version matches project requirements
 - Clear package manager cache if seeing corruption errors
 - Check network connection if downloads fail
@@ -105,22 +112,26 @@ cp .env.example .env
 **Required customizations**:
 
 1. **Ports** (use allocated ports from registry):
+
 ```bash
 PORT=3002
 API_PORT=3003
 ```
 
-2. **Database URL** (use worktree-specific database):
+1. **Database URL** (use worktree-specific database):
+
 ```bash
 DATABASE_URL=postgresql://localhost:5433/myapp_review_gh_42
 ```
 
-3. **Application name** (for logging/monitoring):
+1. **Application name** (for logging/monitoring):
+
 ```bash
 APP_NAME=myapp-review-gh-42
 ```
 
-4. **API keys and secrets** (copy from main repo or use test keys):
+1. **API keys and secrets** (copy from main repo or use test keys):
+
 ```bash
 # For review/test worktrees, use test API keys
 STRIPE_API_KEY=sk_test_xxxxx
@@ -130,6 +141,7 @@ STRIPE_API_KEY=sk_test_xxxxx
 ```
 
 **What NOT to customize**:
+
 - Production API keys (use test keys)
 - Production database URLs (use local/test databases)
 - Any credentials that could affect production systems
@@ -141,12 +153,14 @@ STRIPE_API_KEY=sk_test_xxxxx
 **Purpose**: Create and configure a separate database for the worktree.
 
 **Why separate databases**: Each worktree should have its own database to prevent:
+
 - Data conflicts between worktrees
 - Accidental data corruption
 - Migration conflicts
 - Test data pollution
 
 **For PostgreSQL**:
+
 ```bash
 # Create new database
 createdb -p 5433 myapp_review_gh_42
@@ -158,6 +172,7 @@ npm run db:migrate
 ```
 
 **For MySQL**:
+
 ```bash
 # Create new database
 mysql -P 3307 -e "CREATE DATABASE myapp_review_gh_42;"
@@ -167,6 +182,7 @@ npm run db:migrate
 ```
 
 **For SQLite** (no setup needed, file-based):
+
 ```bash
 # Just run migrations
 npm run db:migrate
@@ -174,6 +190,7 @@ npm run db:migrate
 ```
 
 **Seed test data** (optional):
+
 ```bash
 npm run db:seed
 # or: python manage.py loaddata fixtures/test_data.json
@@ -187,6 +204,7 @@ npm run db:seed
 **Purpose**: Compile/bundle frontend assets if required by the project.
 
 **For projects with asset compilation**:
+
 ```bash
 # Build frontend assets
 npm run build
@@ -220,12 +238,14 @@ npm test -- --coverage
 ```
 
 **Expected result**: All tests should pass. If tests fail:
+
 - Check environment variables are correct
 - Verify database is set up properly
 - Confirm dependencies installed successfully
 - Check ports are not already in use
 
 **If tests fail**:
+
 1. Read error messages carefully
 2. Check test logs for specific failures
 3. Verify environment matches main repo
@@ -252,6 +272,7 @@ npm run dev:backend
 ```
 
 **Verification**:
+
 ```bash
 # Check frontend is running
 curl http://localhost:3002
@@ -261,6 +282,7 @@ curl http://localhost:3003/api/health
 ```
 
 **What success looks like**:
+
 - No error messages in terminal
 - Application accessible in browser
 - API responds to requests

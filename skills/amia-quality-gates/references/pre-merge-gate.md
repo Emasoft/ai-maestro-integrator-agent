@@ -36,6 +36,7 @@ The Pre-Merge Gate performs final checks immediately before merging to ensure th
 **Failure Action**: Block merge, comment with failing job details
 
 **Re-run CI if needed**:
+
 ```bash
 gh pr checks $PR_NUMBER --watch
 # If failed, re-run
@@ -50,6 +51,7 @@ gh workflow run ci.yml --ref $PR_BRANCH
 **Failure Action**: Request rebase from author
 
 **Resolution**:
+
 ```bash
 gh pr comment $PR_NUMBER --body "❌ Pre-merge gate blocked: Merge conflicts detected
 
@@ -70,6 +72,7 @@ git push --force-with-lease
 **Failure Action**: Request re-review if stale
 
 **Approval Validity Rules**:
+
 - Approval is **stale** if significant changes pushed after approval
 - "Significant" = more than 10 lines changed or architectural changes
 - Stale approvals require re-review
@@ -153,6 +156,7 @@ Please address the issues above. Gate will re-evaluate when:
 ## Re-Evaluation Triggers
 
 Pre-Merge Gate re-evaluates when:
+
 - CI jobs complete
 - New commits pushed
 - Conflicts resolved
@@ -166,6 +170,7 @@ Pre-Merge Gate re-evaluates when:
 **Symptom**: CI shows "pending" indefinitely
 
 **Resolution**:
+
 1. Check GitHub Actions for queued/stalled jobs
 2. Cancel and re-run if stuck
 3. Check for infrastructure issues
@@ -176,6 +181,7 @@ Pre-Merge Gate re-evaluates when:
 **Symptom**: PR was approved but now shows no approval
 
 **Resolution**:
+
 1. Check if new commits invalidated approval (GitHub policy)
 2. Check if reviewer was removed from repository
 3. Request fresh approval from reviewer
@@ -186,6 +192,7 @@ Pre-Merge Gate re-evaluates when:
 **Symptom**: Conflicts appear/disappear
 
 **Resolution**:
+
 1. Author should pull latest main and rebase
 2. Push clean resolved branch
 3. Wait for conflict status to stabilize
@@ -196,6 +203,7 @@ Pre-Merge Gate re-evaluates when:
 **Symptom**: Main branch advances rapidly, PR constantly outdated
 
 **Resolution**:
+
 1. If < 5 commits behind: Accept minor staleness
 2. If > 5 commits behind: Request rebase
 3. Consider using merge queue if project supports it

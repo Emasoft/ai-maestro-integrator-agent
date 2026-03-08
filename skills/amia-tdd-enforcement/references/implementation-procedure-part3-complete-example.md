@@ -1,6 +1,7 @@
 # Implementation Procedure Part 3: Complete Example
 
 ## Use-Case TOC
+
 - When you need a complete RED-GREEN-REFACTOR walkthrough → [Complete Procedure Example](#complete-procedure-example)
 
 ---
@@ -12,6 +13,7 @@
 ### RED Phase
 
 **1. Write test:**
+
 ```python
 def test_user_can_login_with_valid_credentials():
     user_service = UserService()
@@ -21,11 +23,13 @@ def test_user_can_login_with_valid_credentials():
 ```
 
 **2. Run test:**
+
 ```
 FAIL: NameError: name 'UserService' is not defined
 ```
 
 **3. Commit:**
+
 ```bash
 git commit -m "RED: test for user login with valid credentials"
 ```
@@ -33,6 +37,7 @@ git commit -m "RED: test for user login with valid credentials"
 ### GREEN Phase
 
 **4. Write minimum code:**
+
 ```python
 class UserService:
     def __init__(self):
@@ -47,11 +52,13 @@ class UserService:
 ```
 
 **5. Run tests:**
+
 ```
 All tests: PASS
 ```
 
 **6. Commit:**
+
 ```bash
 git commit -m "GREEN: implement user login with valid credentials"
 ```
@@ -59,6 +66,7 @@ git commit -m "GREEN: implement user login with valid credentials"
 ### REFACTOR Phase
 
 **7. Improve code:**
+
 ```python
 class LoginResult:
     def __init__(self, authenticated):
@@ -77,11 +85,13 @@ class UserService:
 ```
 
 **8. Run tests:**
+
 ```
 All tests: PASS
 ```
 
 **9. Commit:**
+
 ```bash
 git commit -m "REFACTOR: extract LoginResult class"
 ```

@@ -154,6 +154,7 @@ explain your reasoning, and clarify next steps.]
 ### Summary
 
 Write one paragraph that answers three questions:
+
 1. What does the PR do?
 2. What approach does it take?
 3. Is the approach sound?
@@ -203,6 +204,7 @@ Use the checklist. Check each item based on the PR's actual state.
 **APPROVE does not mean the PR is perfect.** It means the PR is correct, safe, and ready to merge. Suggestions can be addressed in follow-up PRs.
 
 **REQUEST CHANGES should always include specific actions.** Do not just say "needs work." List exactly what the author needs to do:
+
 - "Provide benchmark results with 5+ runs"
 - "Add a regression test for the empty file case"
 - "Remove the redundant path at line 42"

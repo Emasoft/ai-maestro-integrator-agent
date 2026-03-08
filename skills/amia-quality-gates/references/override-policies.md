@@ -11,6 +11,7 @@ Gate overrides should be rare. This document describes when and how overrides ca
 ## Overrides Are Exceptions
 
 Every override must be:
+
 1. Justified with clear reasoning
 2. Documented in the PR
 3. Approved by authorized personnel

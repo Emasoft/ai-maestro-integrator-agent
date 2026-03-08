@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Process Gate Override
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -114,6 +113,7 @@ Handle authorized gate override requests that allow PRs to proceed despite not m
 ### Step 1: Verify Override Request
 
 Confirm:
+
 - Request is from authorized source
 - Justification is provided
 - Override is for an overridable condition

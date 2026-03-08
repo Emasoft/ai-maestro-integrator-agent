@@ -45,6 +45,7 @@ For each dimension:
 5. Move to the next dimension.
 
 After completing all 5 dimensions, you will have a comprehensive list of:
+
 - Items that passed (strengths to mention in the review)
 - Items that failed (blocking issues to raise)
 - Items needing evidence (questions to ask the author)

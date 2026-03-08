@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Load PR Memory
 
-
 ## Contents
 
 - [Purpose](#purpose)

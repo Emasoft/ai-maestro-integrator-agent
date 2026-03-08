@@ -45,6 +45,7 @@
 ```
 
 **Using venv explicitly**:
+
 ```yaml
 - name: Create and activate venv
   run: |
@@ -55,6 +56,7 @@
 ```
 
 **Using uv (faster)**:
+
 ```yaml
 - name: Install with uv
   run: |
@@ -68,10 +70,13 @@
 **Common CI Failure**: Package fails to build from source.
 
 **Error Message**:
+
 ```
 error: Microsoft Visual C++ 14.0 or greater is required
 ```
+
 or
+
 ```
 error: command 'gcc' failed with exit code 1
 ```
@@ -79,6 +84,7 @@ error: command 'gcc' failed with exit code 1
 **Root Cause**: Package requires compilation but build tools missing.
 
 **Solution for Linux**:
+
 ```yaml
 - name: Install build dependencies
   run: |
@@ -87,6 +93,7 @@ error: command 'gcc' failed with exit code 1
 ```
 
 **Solution for Windows**:
+
 ```yaml
 - name: Install Visual Studio Build Tools
   run: |
@@ -94,6 +101,7 @@ error: command 'gcc' failed with exit code 1
 ```
 
 **Better Solution**: Use pre-built wheels
+
 ```yaml
 - name: Install with pre-built wheels
   run: |
@@ -103,11 +111,13 @@ error: command 'gcc' failed with exit code 1
 **Common CI Failure**: Hash mismatch.
 
 **Error Message**:
+
 ```
 HASH MISMATCH: Expected sha256:xxx got sha256:yyy
 ```
 
 **Solution**: Clear pip cache
+
 ```yaml
 - name: Clear pip cache and retry
   run: |
@@ -120,6 +130,7 @@ HASH MISMATCH: Expected sha256:xxx got sha256:yyy
 **Common CI Failure**: No tests collected.
 
 **Error Message**:
+
 ```
 collected 0 items
 ```
@@ -127,6 +138,7 @@ collected 0 items
 **Root Causes and Fixes**:
 
 1. **Test discovery not finding files**:
+
 ```toml
 # pyproject.toml
 [tool.pytest.ini_options]
@@ -135,12 +147,14 @@ python_files = ["test_*.py", "*_test.py"]
 python_functions = ["test_*"]
 ```
 
-2. **Missing `__init__.py` in test directories**:
+1. **Missing `__init__.py` in test directories**:
+
 ```bash
 touch tests/__init__.py
 ```
 
-3. **PYTHONPATH not set**:
+1. **PYTHONPATH not set**:
+
 ```yaml
 - name: Run tests
   run: pytest
@@ -151,6 +165,7 @@ touch tests/__init__.py
 **Common CI Failure**: Tests timeout.
 
 **Solution**: Set explicit timeout
+
 ```yaml
 - name: Run tests with timeout
   run: pytest --timeout=300  # 5 minutes per test
@@ -160,6 +175,7 @@ touch tests/__init__.py
 **Common CI Failure**: Fixture not found.
 
 **Solution**: Ensure conftest.py is in correct location
+
 ```
 tests/
 ├── conftest.py      # Fixtures available to all tests
@@ -181,6 +197,7 @@ tests/
 **Root Cause**: Cache key doesn't include all relevant files.
 
 **Better: Use setup-node caching**:
+
 ```yaml
 - uses: actions/setup-node@v4
   with:
@@ -205,6 +222,7 @@ tests/
 **Common CI Failure**: Wrong package manager used.
 
 **pnpm Setup**:
+
 ```yaml
 - uses: pnpm/action-setup@v4
   with:
@@ -223,6 +241,7 @@ tests/
 **Common CI Failure**: "require is not defined in ES module scope".
 
 **Error Message**:
+
 ```
 ReferenceError: require is not defined in ES module scope
 ```
@@ -230,6 +249,7 @@ ReferenceError: require is not defined in ES module scope
 **Root Cause**: Mixing ESM and CommonJS.
 
 **Detection**:
+
 ```json
 // package.json
 {
@@ -240,18 +260,21 @@ ReferenceError: require is not defined in ES module scope
 **Solutions**:
 
 1. **Use `.cjs` extension for CommonJS**:
+
 ```javascript
 // config.cjs (CommonJS in ESM project)
 module.exports = { ... };
 ```
 
-2. **Use `.mjs` extension for ESM**:
+1. **Use `.mjs` extension for ESM**:
+
 ```javascript
 // config.mjs (ESM in CommonJS project)
 export default { ... };
 ```
 
-3. **Configure Jest for ESM**:
+1. **Configure Jest for ESM**:
+
 ```json
 // package.json
 {
@@ -261,7 +284,8 @@ export default { ... };
 }
 ```
 
-4. **Use tsx for TypeScript**:
+1. **Use tsx for TypeScript**:
+
 ```yaml
 - name: Run TypeScript with ESM
   run: npx tsx ./src/index.ts
@@ -278,11 +302,13 @@ export default { ... };
 **Common CI Failure**: Out of disk space during compilation.
 
 **Error Message**:
+
 ```
 error: failed to write to `/target/...`: No space left on device
 ```
 
 **Solution**: Use sccache and clean targets
+
 ```yaml
 - name: Install sccache
   uses: mozilla-actions/sccache-action@v0.0.4
@@ -297,11 +323,13 @@ error: failed to write to `/target/...`: No space left on device
 **Common CI Failure**: Linking error.
 
 **Error Message**:
+
 ```
 error: linking with `cc` failed: exit code: 1
 ```
 
 **Solution for Linux**:
+
 ```yaml
 - name: Install linker dependencies
   run: |
@@ -310,6 +338,7 @@ error: linking with `cc` failed: exit code: 1
 ```
 
 **Solution for Windows** (use MSVC):
+
 ```yaml
 - name: Setup MSVC
   uses: ilammy/msvc-dev-cmd@v1
@@ -320,6 +349,7 @@ error: linking with `cc` failed: exit code: 1
 **Common CI Failure**: Cache bloat from multiple targets.
 
 **Solution**: Limit cached directories
+
 ```yaml
 - uses: actions/cache@v4
   with:
@@ -335,6 +365,7 @@ error: linking with `cc` failed: exit code: 1
 **Common CI Failure**: Stale artifacts cause build issues.
 
 **Solution**: Clean selectively
+
 ```yaml
 - name: Clean old artifacts
   run: |
@@ -348,11 +379,13 @@ error: linking with `cc` failed: exit code: 1
 **Common CI Failure**: Target not installed.
 
 **Error Message**:
+
 ```
 error: target `x86_64-unknown-linux-musl` not found in channel
 ```
 
 **Solution**:
+
 ```yaml
 - name: Add cross-compilation target
   run: rustup target add x86_64-unknown-linux-musl
@@ -362,6 +395,7 @@ error: target `x86_64-unknown-linux-musl` not found in channel
 ```
 
 **Cross-compilation with cross tool**:
+
 ```yaml
 - name: Install cross
   run: cargo install cross
@@ -379,6 +413,7 @@ error: target `x86_64-unknown-linux-musl` not found in channel
 **Common CI Failure**: "go: module not found".
 
 **Error Message**:
+
 ```
 go: github.com/user/repo@v1.0.0: reading github.com/user/repo/go.mod at revision v1.0.0: unknown revision v1.0.0
 ```
@@ -386,19 +421,22 @@ go: github.com/user/repo@v1.0.0: reading github.com/user/repo/go.mod at revision
 **Root Causes and Fixes**:
 
 1. **Private repository access**:
+
 ```yaml
 - name: Configure Git for private repos
   run: git config --global url."https://${{ secrets.GH_TOKEN }}@github.com/".insteadOf "https://github.com/"
 ```
 
-2. **Module not tagged**:
+1. **Module not tagged**:
+
 ```bash
 # Ensure tag exists
 git tag v1.0.0
 git push origin v1.0.0
 ```
 
-3. **go.sum out of sync**:
+1. **go.sum out of sync**:
+
 ```yaml
 - name: Verify go.sum
   run: |
@@ -411,6 +449,7 @@ git push origin v1.0.0
 **Common CI Failure**: "module requires Go 1.21".
 
 **Solution**: Match Go version to go.mod
+
 ```yaml
 - name: Read Go version from go.mod
   id: go-version
@@ -424,6 +463,7 @@ git push origin v1.0.0
 ```
 
 **Or specify explicitly**:
+
 ```yaml
 - uses: actions/setup-go@v5
   with:
@@ -436,18 +476,21 @@ git push origin v1.0.0
 **Common CI Failure**: CGO disabled but required.
 
 **Error Message**:
+
 ```
 # runtime/cgo
 cgo: C compiler "gcc" not found: exec: "gcc": executable file not found in $PATH
 ```
 
 **Solution 1**: Disable CGO if not needed
+
 ```yaml
 - name: Build without CGO
   run: CGO_ENABLED=0 go build ./...
 ```
 
 **Solution 2**: Install C compiler
+
 ```yaml
 - name: Install GCC
   run: sudo apt-get install -y gcc
@@ -480,12 +523,14 @@ cgo: C compiler "gcc" not found: exec: "gcc": executable file not found in $PATH
 Before committing CI workflows:
 
 **Python**:
+
 - [ ] Python version specified
 - [ ] Virtual environment used
 - [ ] Build dependencies installed
 - [ ] pytest configured correctly
 
 **JavaScript**:
+
 - [ ] Correct package manager used
 - [ ] Lock file committed
 - [ ] ESM/CJS properly configured
@@ -494,6 +539,7 @@ Before committing CI workflows:
 **Rust**: sccache configured, targets installed, build dependencies available
 
 **Go**:
+
 - [ ] Go version matches go.mod
 - [ ] go.sum committed
 - [ ] CGO_ENABLED set appropriately

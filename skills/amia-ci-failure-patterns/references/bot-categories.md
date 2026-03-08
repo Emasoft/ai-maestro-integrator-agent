@@ -39,17 +39,20 @@ When monitoring Pull Requests in automated CI/CD pipelines, different types of P
 **Definition**: Claude Code Action is a GitHub Action that provides AI-powered code review and implementation capabilities. It runs as `github-actions[bot]` and responds to `@claude` mentions.
 
 **Identification**:
+
 - Comments from `github-actions[bot]` containing "Claude Code"
 - Inline review comments from `github-actions[bot]`
 - Responses to `@claude` mentions
 
 **Response Strategy**:
+
 - Verify all suggestions before implementing
 - Synthesize feedback before responding
 - Use `@claude` mentions to trigger review and fixes
 - Do not auto-merge without human approval
 
 **Typical Actions**:
+
 ```bash
 # Request Claude Code Action review
 gh pr comment {number} --body "@claude Please review this PR focusing on:
@@ -71,11 +74,13 @@ Received type: number"
 **Definition**: Any author not identified as Claude Code Action. Requires appropriate review and cannot be fully automated.
 
 **Examples**:
+
 - Individual developers
 - External contributors
 - Other bots (not Claude Code Action)
 
 **Response Strategy**:
+
 - Process with priority (P1)
 - Always address questions and concerns
 - Let humans resolve their own threads
@@ -202,6 +207,7 @@ jobs:
 ### Issue: Claude Code Action not responding
 
 **Solution**: Verify the following:
+
 1. The workflow `.github/workflows/claude-mention.yml` exists and is correct
 2. Check workflow runs in the Actions tab for errors
 3. Ensure `ANTHROPIC_API_KEY` secret is set in repository settings
@@ -210,6 +216,7 @@ jobs:
 ### Issue: Claude provides incomplete review
 
 **Solution**: Provide more specific guidance in the @claude mention:
+
 ```bash
 gh pr comment {number} --body "@claude Please review this PR with specific focus on:
 - Files changed: src/handler.ts, src/utils.ts
@@ -220,5 +227,6 @@ gh pr comment {number} --body "@claude Please review this PR with specific focus
 ### Issue: Misclassified reviewer
 
 **Solution**: The classify_reviewer function checks for `github-actions[bot]` with "Claude" in the comment body. If Claude Code Action is not being detected, verify:
+
 1. The comment author is `github-actions[bot]`
 2. The comment body contains "Claude" or "Claude Code"

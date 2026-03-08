@@ -32,6 +32,7 @@ gh issue list --label "assign:implementer-1" --label "status:blocked"
 ## Kanban Board
 
 Your kanban board will show:
+
 - All items assigned to you (GitHub assignee)
 - Agent differentiation via `assign:*` labels
 - Use board filters on labels to see per-agent view

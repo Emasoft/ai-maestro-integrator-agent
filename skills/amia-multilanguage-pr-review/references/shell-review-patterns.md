@@ -9,6 +9,7 @@ This reference covers shell script code review patterns, including Bash best pra
 ## Table of Contents
 
 ### Part 1: Bash/Shell Script Review Checklist
+
 **File**: [shell-review-patterns-part1-bash-checklist.md](shell-review-patterns-part1-bash-checklist.md)
 
 - 6.1 Bash/Shell script review checklist
@@ -21,6 +22,7 @@ This reference covers shell script code review patterns, including Bash best pra
   - 6.1.7 Style checklist for Bash scripts
 
 ### Part 2: POSIX Compatibility Requirements
+
 **File**: [shell-review-patterns-part2-posix-compat.md](shell-review-patterns-part2-posix-compat.md)
 
 - 6.2 POSIX compatibility requirements
@@ -31,6 +33,7 @@ This reference covers shell script code review patterns, including Bash best pra
   - 6.2.5 POSIX compatibility checklist
 
 ### Part 3: ShellCheck Lints and Fixes
+
 **File**: [shell-review-patterns-part3-shellcheck.md](shell-review-patterns-part3-shellcheck.md)
 
 - 6.3 ShellCheck lints and fixes
@@ -48,6 +51,7 @@ This reference covers shell script code review patterns, including Bash best pra
   - 6.3.5 ShellCheck review checklist
 
 ### Part 4: Cross-Platform Considerations
+
 **File**: [shell-review-patterns-part4-crossplatform.md](shell-review-patterns-part4-crossplatform.md)
 
 - 6.4 Cross-platform considerations for macOS and Linux

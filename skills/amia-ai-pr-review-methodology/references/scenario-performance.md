@@ -22,6 +22,7 @@ Use this protocol when the PR claims to improve performance. Performance improve
 - The PR reduces I/O operations, network calls, or database queries
 
 Performance claims are particularly susceptible to false positives because:
+
 - Benchmarks can be misleading if not run correctly
 - Improvements on one workload may cause regressions on another
 - Added complexity may not be justified by the improvement
@@ -172,6 +173,7 @@ Every performance optimization adds complexity. The improvement must be signific
 **S-PERF.2 (Benchmarks):**
 
 Author provides:
+
 ```
 Before: API response time for /dashboard endpoint
   Mean: 320ms, Std dev: 45ms (10 runs)
@@ -195,6 +197,7 @@ PASS.
 CONCERN -- This is a critical check for caching. The `lru_cache` decorator caches results forever (until the cache is full). If a user profile is updated, the cached version will be stale.
 
 Questions for the author:
+
 1. "What happens when a user updates their profile? The cached version will be returned instead of the updated one. How is cache invalidation handled?"
 2. "Is `get_user_profile` called from any code path where real-time data is required (for example, a profile edit page that should show the latest saved data)?"
 3. "Is the `lru_cache` appropriate here, or should a time-based cache (TTL cache) be used instead?"
@@ -208,6 +211,7 @@ The improvement is 73% on a user-facing endpoint. The added complexity is modera
 "The benchmark results show a significant improvement (73% reduction in response time). However, using `lru_cache` on a database query creates a stale data risk. The cache has no invalidation mechanism, so if a user updates their profile, the old data will be served from cache until it is evicted by cache pressure.
 
 Please address:
+
 1. How will cache be invalidated when a user profile is updated?
 2. Consider using a TTL-based cache (for example, `cachetools.TTLCache` with a 60-second expiry) instead of `lru_cache`, so stale data is automatically refreshed.
 3. Add a test that verifies cache invalidation: update a profile, then call `get_user_profile` and confirm the updated data is returned."

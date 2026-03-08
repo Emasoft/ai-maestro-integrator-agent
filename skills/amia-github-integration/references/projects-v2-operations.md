@@ -1,6 +1,7 @@
 # GitHub Projects V2 Operations
 
 ## Use-Case TOC
+
 - When you need to create a new project board → [Creating Projects V2 Board](#creating-projects-v2-board)
 - When you need to add issues to a project → [Adding Issues to Projects](#adding-issues-to-projects)
 - When you need to update issue status → [Updating Issue Status](#updating-issue-status)
@@ -52,10 +53,12 @@ gh project create \
 ```
 
 **Parameters:**
+
 - `--title`: Name of the project (required)
 - `--owner`: Owner of the project (username or organization)
 
 **Example:**
+
 ```bash
 gh project create \
   --title "Backend Development Q1 2024" \
@@ -73,6 +76,7 @@ gh project list --owner "@org-name"
 ```
 
 **Example Output:**
+
 ```
 NUMBER  TITLE                          STATE  ITEMS
 1       Backend Development Q1 2024    OPEN   42
@@ -99,6 +103,7 @@ gh project item-add <project_number> \
 ```
 
 **Alternative using issue ID:**
+
 ```bash
 # Get issue ID first
 ISSUE_ID=$(gh issue view 123 --json id --jq '.id')
@@ -144,6 +149,7 @@ Update issue status within Projects V2 board.
 ### Understanding Status Fields
 
 Projects V2 uses custom fields for status. The canonical 8-column system uses these status values:
+
 - **Backlog** - Not yet scheduled for work
 - **Todo** - Ready to start, prioritized
 - **In Progress** - Active work by assigned agent
@@ -162,6 +168,7 @@ gh project field-list <project_number> --owner "@username"
 ```
 
 **Example Output:**
+
 ```
 ID                      NAME        TYPE
 PVTF_lADOAA...         Status      SINGLE_SELECT
@@ -181,6 +188,7 @@ gh project item-edit <project_number> \
 ```
 
 **Alternative using field name:**
+
 ```bash
 gh api graphql -f query='
 mutation {
@@ -251,6 +259,7 @@ Projects V2 supports custom fields beyond the default fields.
 ### Create Custom Field
 
 Custom fields must be created through the GitHub web interface:
+
 1. Go to your project
 2. Click "+ New field" in the table header
 3. Choose field type (Text, Number, Date, Single select, Iteration)
@@ -259,17 +268,21 @@ Custom fields must be created through the GitHub web interface:
 ### Common Custom Fields
 
 **Priority Field (Single Select):**
+
 - High
 - Medium
 - Low
 
 **Due Date Field (Date):**
+
 - NOT USED per RULE 13 (no deadlines allowed)
 
 **Effort Field (Number):**
+
 - Complexity points (NOT time estimates per RULE 13)
 
 **Team Field (Single Select):**
+
 - Backend
 - Frontend
 - DevOps
@@ -304,14 +317,17 @@ Projects V2 supports built-in automation for status transitions.
 ### Built-in Automation Options
 
 **Auto-add to project:**
+
 - Automatically add new issues to the project
 - Configuration: Project settings → Workflows → Auto-add
 
 **Auto-archive:**
+
 - Automatically archive closed issues
 - Configuration: Project settings → Workflows → Auto-archive
 
 **Status auto-update:**
+
 - Update status when issue/PR state changes
 - Configuration: Project settings → Workflows → Item closed
 
@@ -326,6 +342,7 @@ Projects V2 supports built-in automation for status transitions.
    - Labels: Only add issues with specific labels
 
 **Example Configuration:**
+
 ```
 Auto-add to project: ON
 Repositories: backend-api, frontend-app
@@ -392,16 +409,19 @@ Keep agent tasks and GitHub Projects V2 synchronized in both directions.
 When agent creates or updates tasks, sync to GitHub:
 
 **Phase 1: Detect Agent Changes**
+
 - Monitor agent task creation
 - Monitor agent task status updates
 - Monitor agent task assignments
 
 **Phase 2: Translate to GitHub Operations**
+
 - New task → Create GitHub issue
 - Status update → Update Projects V2 status
 - Assignment → Update issue assignee
 
 **Phase 3: Execute Sync**
+
 ```bash
 python3 scripts/sync-agent-to-github.py \
   --agent-db "agent-tasks.db" \
@@ -415,15 +435,18 @@ python3 scripts/sync-agent-to-github.py \
 When GitHub issues are updated, sync to agent:
 
 **Phase 1: Detect GitHub Changes**
+
 - Use webhooks for real-time updates
 - Or poll GitHub API for changes
 
 **Phase 2: Translate to Agent Operations**
+
 - Issue created → Create agent task
 - Status changed → Update agent task status
 - Issue closed → Mark agent task complete
 
 **Phase 3: Execute Sync**
+
 ```bash
 python3 scripts/sync-github-to-agent.py \
   --github-owner "username" \
@@ -435,6 +458,7 @@ python3 scripts/sync-github-to-agent.py \
 ### Monitoring Sync Health
 
 **Check Last Sync Time:**
+
 ```bash
 # View last sync timestamp
 cat .last-sync-timestamp
@@ -444,6 +468,7 @@ tail -f sync-projects-v2.log
 ```
 
 **Verify Sync Integrity:**
+
 ```bash
 # Count issues in GitHub
 GITHUB_COUNT=$(gh issue list --limit 1000 --json number | jq 'length')
@@ -464,18 +489,22 @@ fi
 When both systems update simultaneously:
 
 **Rule 1: GitHub Wins**
+
 - GitHub is the source of truth
 - Agent reconciles to match GitHub
 
 **Rule 2: Audit Trail**
+
 - Log all conflicts
 - Report to monitoring system
 
 **Rule 3: Manual Override**
+
 - Agent can force-update with explicit flag
 - Requires confirmation
 
 **Example Conflict Resolution:**
+
 ```bash
 # Detect conflict
 if [ "$AGENT_STATUS" != "$GITHUB_STATUS" ]; then

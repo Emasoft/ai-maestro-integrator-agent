@@ -7,10 +7,10 @@ Detailed patterns for handling failures during multi-agent orchestration with Gi
 ## Table of Contents
 
 - 1. Subtask Reports Failure After Others In Progress
-- 2. Integration Reports Failures
-- 3. Agent Becomes Unresponsive
-- 4. Conflict Resolution Planning
-- 5. Failure Communication Patterns
+- 1. Integration Reports Failures
+- 1. Agent Becomes Unresponsive
+- 1. Conflict Resolution Planning
+- 1. Failure Communication Patterns
 
 ---
 
@@ -186,6 +186,7 @@ COMPLETION CRITERIA:
 ### Work Preservation
 
 All work is preserved in git:
+
 - Original branch remains intact
 - New agent can review commits
 - Can cherry-pick completed work
@@ -253,6 +254,7 @@ Integration executor detects merge conflicts during integration.
 ### Post-Resolution Verification
 
 Before approving re-integration:
+
 - All tests passing
 - Both feature sets preserved (or omissions explained)
 - Documentation updated for final implementation
@@ -301,6 +303,7 @@ Before approving re-integration:
 ### Escalation Criteria
 
 Escalate to human when:
+
 - Multiple integration failures
 - Blocker persists >48 hours
 - Architectural decision needed

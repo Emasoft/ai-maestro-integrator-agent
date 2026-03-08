@@ -7,6 +7,7 @@ This document provides command reference for worktree creation and a comprehensi
 ## Table of Contents
 
 ### Commands Reference
+
 1. [Basic Worktree Creation](#basic-worktree-creation)
 2. [Advanced Creation Options](#advanced-creation-options)
 3. [Listing and Inspecting Worktrees](#listing-and-inspecting-worktrees)
@@ -14,11 +15,12 @@ This document provides command reference for worktree creation and a comprehensi
 5. [Environment Setup Commands](#environment-setup-commands)
 
 ### Post-Creation Checklist
-6. [Immediate Post-Creation (Required)](#immediate-post-creation-required)
-7. [Environment Setup (Required)](#environment-setup-required)
-8. [Verification (Recommended)](#verification-recommended)
-9. [Documentation (Recommended)](#documentation-recommended)
-10. [Optional but Useful](#optional-but-useful)
+
+1. [Immediate Post-Creation (Required)](#immediate-post-creation-required)
+2. [Environment Setup (Required)](#environment-setup-required)
+3. [Verification (Recommended)](#verification-recommended)
+4. [Documentation (Recommended)](#documentation-recommended)
+5. [Optional but Useful](#optional-but-useful)
 
 ---
 
@@ -147,21 +149,25 @@ Use this checklist after creating any worktree to ensure proper setup.
 ## Immediate Post-Creation (Required)
 
 - [ ] **Worktree directory exists and is accessible**
+
   ```bash
   ls -la ../worktree-name
   ```
 
 - [ ] **Git worktree is registered with git**
+
   ```bash
   git worktree list | grep "worktree-name"
   ```
 
 - [ ] **Correct branch is checked out**
+
   ```bash
   cd ../worktree-name && git branch --show-current
   ```
 
 - [ ] **Registry entry created in `.worktree-registry.json`**
+
   ```bash
   jq -r '.worktrees[] | select(.name == "worktree-name")' .worktree-registry.json
   ```
@@ -180,6 +186,7 @@ Use this checklist after creating any worktree to ensure proper setup.
 ## Environment Setup (Required)
 
 - [ ] **Dependencies installed successfully**
+
   ```bash
   # Check node_modules exists (Node.js)
   ls -la node_modules
@@ -192,6 +199,7 @@ Use this checklist after creating any worktree to ensure proper setup.
   ```
 
 - [ ] **Environment file created and configured**
+
   ```bash
   # Check .env exists
   ls -la .env
@@ -201,6 +209,7 @@ Use this checklist after creating any worktree to ensure proper setup.
   ```
 
 - [ ] **Database created and migrated (if applicable)**
+
   ```bash
   # Verify database exists
   psql -l | grep "myapp_worktree"
@@ -210,6 +219,7 @@ Use this checklist after creating any worktree to ensure proper setup.
   ```
 
 - [ ] **Build/compilation successful (if applicable)**
+
   ```bash
   # Check build artifacts exist
   ls -la dist/  # or build/, public/, etc.
@@ -220,18 +230,21 @@ Use this checklist after creating any worktree to ensure proper setup.
 ## Verification (Recommended)
 
 - [ ] **Tests pass in worktree**
+
   ```bash
   npm test
   # All tests should pass with no errors
   ```
 
 - [ ] **Application starts without errors**
+
   ```bash
   npm run dev
   # Should start successfully on allocated port
   ```
 
 - [ ] **Port allocation correct (no conflicts)**
+
   ```bash
   # Check nothing else using the port
   lsof -i :3002
@@ -239,6 +252,7 @@ Use this checklist after creating any worktree to ensure proper setup.
   ```
 
 - [ ] **Can access application in browser**
+
   ```
   Open: http://localhost:3002
   Should load successfully
@@ -249,6 +263,7 @@ Use this checklist after creating any worktree to ensure proper setup.
 ## Documentation (Recommended)
 
 - [ ] **Registry notes field filled**
+
   ```json
   {
     "notes": "Reviewing authentication refactor PR #42"
@@ -256,6 +271,7 @@ Use this checklist after creating any worktree to ensure proper setup.
   ```
 
 - [ ] **GitHub issue/PR linked (if applicable)**
+
   ```json
   {
     "github_issue": 42
@@ -263,6 +279,7 @@ Use this checklist after creating any worktree to ensure proper setup.
   ```
 
 - [ ] **Purpose clearly documented**
+
   ```json
   {
     "purpose": "review"  // or: "feature", "bugfix", "test"
@@ -274,17 +291,20 @@ Use this checklist after creating any worktree to ensure proper setup.
 ## Optional but Useful
 
 - [ ] **Git remote tracking set up**
+
   ```bash
   cd ../worktree-name
   git branch -vv  # Should show remote tracking
   ```
 
 - [ ] **Pre-commit hooks installed (if project uses them)**
+
   ```bash
   ls -la .git/hooks/
   ```
 
 - [ ] **IDE/Editor configuration synced**
+
   ```bash
   # Copy IDE settings from main repo
   cp ../main-repo/.vscode/settings.json .vscode/

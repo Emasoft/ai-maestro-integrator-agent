@@ -1,6 +1,7 @@
 # AI Agent vs Human Workflow - Part 1: Fundamentals and Communication
 
 <a name="part-1-toc"></a>
+
 ## Table of Contents
 
 - 9.1 [Key differences in AI vs human workflow](#91-key-differences)
@@ -56,6 +57,7 @@ Human Developer Timeline (big task):
 ---
 
 <a name="91a-review-routing"></a>
+
 ## 9.1a Review Routing: AI Review vs Human Review
 
 The 8-column kanban system splits the old single "Review" column into three distinct columns with specific routing rules.
@@ -223,6 +225,7 @@ gh issue edit 42 --remove-assignee implementer-1
 ### Assignment via Board
 
 Humans typically:
+
 1. View project board in browser
 2. Drag unassigned Todo item
 3. Assign themselves
@@ -288,6 +291,7 @@ Final: Merged, moves to Done
 To AI agents: Send a message using the `agent-messaging` skill with the recipient agent name, subject, content, and priority.
 
 To humans:
+
 ```bash
 # GitHub comment (tagged)
 gh issue comment 42 --body "@human-dev Please review the blockers section"
@@ -300,6 +304,7 @@ gh issue comment 42 --body "@human-dev Please review the blockers section"
 ## Next: Part 2
 
 Continue to [ai-agent-vs-human-workflow-part2-workflows.md](ai-agent-vs-human-workflow-part2-workflows.md) for:
+
 - Review workflow differences
 - Handoff protocols
 - Mixed team coordination

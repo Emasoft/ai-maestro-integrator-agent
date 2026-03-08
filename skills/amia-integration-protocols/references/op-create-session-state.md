@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Create Session State
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -55,6 +54,7 @@ Create a structured session state snapshot that captures the current work contex
 ### Step 1: Identify state components
 
 Determine what needs to be captured:
+
 - Session metadata (ID, timestamps)
 - Current phase/stage of work
 - Completed tasks list
@@ -110,6 +110,7 @@ TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 ### Step 5: Validate state structure
 
 Ensure required fields are present:
+
 - `session_id`
 - `started_at`
 - `current_phase`
@@ -185,6 +186,7 @@ Ensure required fields are present:
 ## Phase Names
 
 Use consistent phase names:
+
 - `initialization` - Setting up work
 - `fetch` - Retrieving data
 - `analyze` - Processing/analysis

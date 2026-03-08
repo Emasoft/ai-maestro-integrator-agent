@@ -35,11 +35,13 @@ The `gh_multiuser.py` script provides cross-platform management of multiple GitH
 ### Running the Script
 
 **Linux/macOS:**
+
 ```bash
 python3 gh_multiuser.py <command> [args...]
 ```
 
 **Windows:**
+
 ```powershell
 python gh_multiuser.py <command> [args...]
 # or
@@ -90,6 +92,7 @@ Edit `identities.json` with your account details:
 ```
 
 **Finding Your Noreply Email:**
+
 1. GitHub > Settings > Emails
 2. Enable "Keep my email addresses private"
 3. Copy the noreply email shown (format: `ID+USERNAME@users.noreply.github.com`)
@@ -104,6 +107,7 @@ python3 gh_multiuser.py setup secondary
 ### Step 4: Add Keys to GitHub
 
 For each identity:
+
 1. Copy the public key displayed by the setup command
 2. Log into GitHub as that user
 3. Go to Settings > SSH and GPG keys > New SSH key
@@ -116,6 +120,7 @@ python3 gh_multiuser.py test
 ```
 
 Expected output:
+
 ```
 Testing identity: primary
   SSH: git@github.com
@@ -129,11 +134,13 @@ Testing identity: secondary
 ### Step 6: Authenticate gh CLI
 
 For each account:
+
 1. Log into GitHub in your browser as that user
 2. Run `gh auth login`
 3. Complete the browser authentication
 
 Verify:
+
 ```bash
 gh auth status
 ```
@@ -143,6 +150,7 @@ gh auth status
 ## Next Steps
 
 After completing the installation, see:
+
 - [Part 2: Core Commands](script-multi-user-identity-part2-core-commands.md) - For setup, test, switch, repo commands
 - [Part 3: Advanced Commands](script-multi-user-identity-part3-advanced-commands.md) - For status, add, diagnose, fix commands
 - [Part 4: Troubleshooting](script-multi-user-identity-part4-troubleshooting.md) - For common issues and integration examples

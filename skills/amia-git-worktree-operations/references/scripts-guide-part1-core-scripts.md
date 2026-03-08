@@ -1,6 +1,7 @@
 # Worktree Automation Scripts Guide - Part 1: Core Scripts
 
 **Related Documents:**
+
 - [Main Index](scripts-guide.md)
 - [Part 2: Management Scripts](scripts-guide-part2-management-scripts.md)
 - [Part 3: Port Scripts](scripts-guide-part3-port-scripts.md)
@@ -31,6 +32,7 @@
 ## Script Reference: Core Scripts
 
 This section covers the two most frequently used scripts:
+
 - **worktree_create.py** - Create new worktrees with registration and port allocation
 - **worktree_list.py** - List and filter existing worktrees
 
@@ -86,6 +88,7 @@ python scripts/worktree_create.py --purpose review --identifier GH-42 --branch f
 ```
 
 **What this does:**
+
 1. Creates directory: `worktrees/review-GH-42/`
 2. Checks out branch: `feature/auth`
 3. Creates registry entry with purpose `review`, identifier `GH-42`
@@ -102,6 +105,7 @@ python scripts/worktree_create.py --purpose feature --identifier auth-system --b
 ```
 
 **What this does:**
+
 1. Creates directory: `worktrees/feature-auth-system/`
 2. Checks out branch: `feature/authentication`
 3. Allocates ports automatically:
@@ -121,6 +125,7 @@ python scripts/worktree_create.py --purpose hotfix --identifier CVE-2024-001 --b
 ```
 
 **What this does:**
+
 1. Creates directory: `worktrees/hotfix-CVE-2024-001/`
 2. Checks out tag: `v2.1.3` (detached HEAD state)
 3. Registers as hotfix purpose
@@ -137,6 +142,7 @@ python scripts/worktree_create.py --purpose experiment --identifier async-rewrit
 ```
 
 **What this does:**
+
 1. Creates directory: `worktrees/experiment-async-rewrite/`
 2. Creates new branch: `experiment/async-refactor` (if doesn't exist)
 3. Marks as experimental in registry
@@ -203,6 +209,7 @@ python scripts/worktree_list.py
 ```
 
 **Output:**
+
 ```
 ┌─────────────────────────┬─────────────────────────────┬─────────┬────────────┬───────────┐
 │ Name                    │ Path                        │ Branch  │ Purpose    │ Completed │
@@ -224,6 +231,7 @@ python scripts/worktree_list.py --purpose review
 ```
 
 **Output:**
+
 ```
 ┌─────────────────────────┬─────────────────────────────┬─────────┬─────────┬───────────┐
 │ Name                    │ Path                        │ Branch  │ Purpose │ Completed │
@@ -244,6 +252,7 @@ python scripts/worktree_list.py --ports
 ```
 
 **Output:**
+
 ```
 ┌─────────────────────────┬─────────┬──────────────────┬───────────┐
 │ Name                    │ Purpose │ Allocated Ports  │ Completed │
@@ -265,6 +274,7 @@ python scripts/worktree_list.py --status active --json
 ```
 
 **Output:**
+
 ```json
 [
   {
@@ -294,6 +304,7 @@ python scripts/worktree_list.py --validate
 ```
 
 **Output:**
+
 ```
 ✓ review-GH-42: Directory exists
 ✓ feature-auth-system: Directory exists

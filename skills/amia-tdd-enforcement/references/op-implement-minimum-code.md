@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Implement Minimum Code (GREEN Phase)
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -62,6 +61,7 @@ Write the minimum amount of production code necessary to make the failing test p
 **Write ONLY the code necessary to make the test pass.**
 
 Do not:
+
 - Add features not tested
 - Optimize prematurely
 - Refactor during GREEN (that's next phase)

@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Batch Label Add
 
-
 ## Contents
 
 - [Purpose](#purpose)

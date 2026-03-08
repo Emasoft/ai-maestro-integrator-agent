@@ -11,6 +11,7 @@ For **read-only queries** (listing, discovering, filtering), see [graphql-querie
 ## Table of Contents
 
 ### Section 1: Item Mutations
+
 **File**: [graphql-queries-part2-mutations-section1-item-mutations.md](./graphql-queries-part2-mutations-section1-item-mutations.md)
 
 | Section | When to Use |
@@ -26,6 +27,7 @@ For **read-only queries** (listing, discovering, filtering), see [graphql-querie
 ---
 
 ### Section 2: Issue Operations
+
 **File**: [graphql-queries-part2-mutations-section2-issue-operations.md](./graphql-queries-part2-mutations-section2-issue-operations.md)
 
 | Section | When to Use |
@@ -41,6 +43,7 @@ For **read-only queries** (listing, discovering, filtering), see [graphql-querie
 ---
 
 ### Section 3: PR Operations & Utilities
+
 **File**: [graphql-queries-part2-mutations-section3-pr-utilities.md](./graphql-queries-part2-mutations-section3-pr-utilities.md)
 
 | Section | When to Use |

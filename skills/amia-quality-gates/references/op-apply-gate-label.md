@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Apply Gate Label
 
-
 ## Contents
 
 - [Purpose](#purpose)

@@ -1,6 +1,7 @@
 # Common TDD Patterns and Anti-Patterns
 
 ## Table of Contents
+
 - [Use-Case TOC](#use-case-toc)
 - [Testing Behavior, Not Implementation](#testing-behavior-not-implementation)
   - [The Rule](#the-rule)
@@ -35,6 +36,7 @@
 ---
 
 ## Use-Case TOC
+
 - When you need to understand what to test → [Testing Behavior Not Implementation](#testing-behavior-not-implementation)
 - If your test has multiple assertions → [One Assertion Per Test](#one-assertion-per-test)
 - When structuring test code → [Arrange-Act-Assert Pattern](#arrange-act-assert-pattern)
@@ -52,6 +54,7 @@ Tests should verify **what** the code does, not **how** it does it.
 ### Anti-Pattern: Testing Implementation
 
 **Wrong (testing internal structure):**
+
 ```python
 def test_user_service_uses_dict():
     """User service should use a dictionary"""
@@ -60,6 +63,7 @@ def test_user_service_uses_dict():
 ```
 
 **Why it's wrong:**
+
 - Couples test to implementation detail
 - Breaks when refactoring from dict to database
 - Doesn't verify actual behavior
@@ -68,6 +72,7 @@ def test_user_service_uses_dict():
 ### Correct Pattern: Testing Behavior
 
 **Right (testing observable behavior):**
+
 ```python
 def test_user_can_register_and_login():
     """User registration enables subsequent login"""
@@ -78,6 +83,7 @@ def test_user_can_register_and_login():
 ```
 
 **Why it's right:**
+
 - Tests user-facing behavior
 - Survives refactoring (dict → database)
 - Verifies actual value
@@ -86,6 +92,7 @@ def test_user_can_register_and_login():
 ### More Examples
 
 **Wrong (implementation):**
+
 ```python
 def test_login_calls_hash_function():
     """Login should call password hashing"""
@@ -96,6 +103,7 @@ def test_login_calls_hash_function():
 ```
 
 **Right (behavior):**
+
 ```python
 def test_login_rejects_wrong_password():
     """Login fails when password doesn't match"""
@@ -116,6 +124,7 @@ Each test should verify ONE behavior. Multiple assertions are allowed if they al
 ### Anti-Pattern: Multiple Behaviors in One Test
 
 **Wrong (testing multiple behaviors):**
+
 ```python
 def test_user_creation():
     user = User("alice", "alice@example.com")
@@ -127,6 +136,7 @@ def test_user_creation():
 ```
 
 **Why it's wrong:**
+
 - If first assertion fails, you don't see other failures
 - Hard to identify which behavior broke
 - Difficult to maintain
@@ -135,6 +145,7 @@ def test_user_creation():
 ### Correct Pattern: One Test Per Behavior
 
 **Right (one test per behavior):**
+
 ```python
 def test_user_has_correct_name():
     """User is created with the specified name"""
@@ -163,6 +174,7 @@ def test_new_user_has_member_role():
 ```
 
 **Why it's right:**
+
 - Each test documents one specific behavior
 - Failures are immediately clear
 - Easy to maintain
@@ -223,6 +235,7 @@ def test_user_can_change_password():
 ### Anti-Pattern: Mixed Phases
 
 **Wrong (mixed arrange/act/assert):**
+
 ```python
 def test_user_operations():
     service = UserService()  # Arrange
@@ -235,6 +248,7 @@ def test_user_operations():
 ```
 
 **Why it's wrong:**
+
 - Tests multiple behaviors
 - Hard to understand what's being tested
 - Difficult to debug when it fails
@@ -250,6 +264,7 @@ Each edge case gets its own RED-GREEN-REFACTOR cycle.
 ### Pattern
 
 **1. Happy path first:**
+
 ```python
 def test_user_can_login_with_valid_credentials():
     """User can login with correct email and password"""
@@ -260,6 +275,7 @@ def test_user_can_login_with_valid_credentials():
 ```
 
 **2. Then edge cases (one at a time):**
+
 ```python
 def test_login_rejects_wrong_password():
     """Login fails when password is incorrect"""
@@ -291,6 +307,7 @@ def test_login_rejects_empty_password():
 ### Anti-Pattern: All Edge Cases at Once
 
 **Wrong:**
+
 ```python
 def test_login_validation():
     """Test all login validation cases"""
@@ -315,6 +332,7 @@ Tests should be independent. One test's outcome should not affect another.
 ### Anti-Pattern: Shared State
 
 **Wrong (tests share state):**
+
 ```python
 # Global shared service
 service = UserService()
@@ -330,6 +348,7 @@ def test_user_can_login():
 ```
 
 **Why it's wrong:**
+
 - Tests can't run in isolation
 - Order matters (fragile)
 - One test failure affects others
@@ -338,6 +357,7 @@ def test_user_can_login():
 ### Correct Pattern: Independent Tests
 
 **Right (each test is independent):**
+
 ```python
 def test_user_can_register():
     """User registration creates a new account"""
@@ -354,6 +374,7 @@ def test_user_can_login():
 ```
 
 **Why it's right:**
+
 - Each test stands alone
 - Can run in any order
 - Can run in parallel
@@ -362,6 +383,7 @@ def test_user_can_login():
 ### Using Setup Methods
 
 **Python (unittest):**
+
 ```python
 class TestUserService(unittest.TestCase):
     def setUp(self):
@@ -379,6 +401,7 @@ class TestUserService(unittest.TestCase):
 ```
 
 **JavaScript (Jest):**
+
 ```javascript
 describe('UserService', () => {
     let service;

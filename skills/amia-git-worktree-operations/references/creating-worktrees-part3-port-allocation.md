@@ -15,6 +15,7 @@ This document covers when and how to allocate ports for worktrees that run servi
 ## When to Allocate Ports
 
 **Allocate ports when**:
+
 - Worktree will run web servers (frontend dev servers)
 - Worktree will run API servers (backend services)
 - Worktree will run databases (PostgreSQL, MySQL, MongoDB, etc.)
@@ -22,6 +23,7 @@ This document covers when and how to allocate ports for worktrees that run servi
 - Multiple services need to run simultaneously in one worktree
 
 **Do NOT allocate ports when**:
+
 - Worktree is for code review only (reading code, no execution)
 - Worktree is for documentation changes
 - Worktree is for quick bug fixes that don't require running services
@@ -34,6 +36,7 @@ This document covers when and how to allocate ports for worktrees that run servi
 ### STEP 1: Determine port requirements
 
 Identify how many ports the worktree needs:
+
 - Web frontend: 1 port
 - API backend: 1 port
 - Database: 1 port per database service
@@ -42,6 +45,7 @@ Identify how many ports the worktree needs:
 - Additional services: 1 port each
 
 **Example**: A full-stack app might need:
+
 - Port 1: Frontend dev server (React, Vue, etc.)
 - Port 2: Backend API (Express, Django, etc.)
 - Port 3: PostgreSQL database
@@ -50,6 +54,7 @@ Identify how many ports the worktree needs:
 ### STEP 2: Check available ports
 
 Query the registry to find available ports:
+
 ```bash
 # List all allocated ports
 jq -r '.worktrees[].ports[]' .worktree-registry.json | sort -n
@@ -65,6 +70,7 @@ echo "Next available port: $next_port"
 ### STEP 3: Reserve ports in registry
 
 Add ports to the registry entry when creating the worktree:
+
 ```json
 {
   "name": "feature-user-profiles",
@@ -73,6 +79,7 @@ Add ports to the registry entry when creating the worktree:
 ```
 
 **What each port means in this example**:
+
 - 3002: Frontend dev server
 - 3003: Backend API server
 - 5433: PostgreSQL database
@@ -83,6 +90,7 @@ Add ports to the registry entry when creating the worktree:
 Update configuration files in the worktree:
 
 **.env file**:
+
 ```bash
 # Frontend
 PORT=3002
@@ -101,6 +109,7 @@ REDIS_PORT=6380
 ```
 
 **package.json scripts** (for Node.js projects):
+
 ```json
 {
   "scripts": {
@@ -111,6 +120,7 @@ REDIS_PORT=6380
 ```
 
 **Docker Compose** (if using Docker):
+
 ```yaml
 services:
   frontend:
@@ -135,6 +145,7 @@ services:
 ## Port Ranges and Conventions
 
 **Standard port ranges**:
+
 - 3000-3099: Web frontend servers
 - 3100-3199: Backend API servers
 - 5400-5499: PostgreSQL databases
@@ -145,6 +156,7 @@ services:
 **Why use ranges**: Organizing ports by service type makes troubleshooting easier and prevents conflicts.
 
 **Example allocation**:
+
 ```
 Main repo:
   Frontend: 3000

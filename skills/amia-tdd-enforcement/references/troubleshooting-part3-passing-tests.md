@@ -1,6 +1,7 @@
 # TDD Troubleshooting - Part 3: Passing Tests
 
 ## Table of Contents
+
 - [Test Passes But Code Incomplete](#test-passes-but-code-incomplete)
   - [Symptoms](#symptoms)
   - [Root Cause](#root-cause)
@@ -17,11 +18,13 @@
 ## Test Passes But Code Incomplete
 
 ### Symptoms
+
 - Test passes
 - Code works
 - But feels like it's not doing enough
 
 ### Root Cause
+
 The test only covers one aspect of the behavior. This is **correct**.
 
 ### Solution
@@ -57,6 +60,7 @@ def test_user_cannot_register_with_invalid_email():
 Feature completion might take 10-20 RED-GREEN-REFACTOR cycles. That's normal.
 
 ### Prevention
+
 - Embrace incremental development
 - One test = one behavior
 - Build features piece by piece
@@ -67,6 +71,7 @@ Feature completion might take 10-20 RED-GREEN-REFACTOR cycles. That's normal.
 ## Test Passes on First Run
 
 ### Symptoms
+
 - Wrote a new test
 - Ran it for the first time
 - Test passes immediately (no failure)
@@ -74,6 +79,7 @@ Feature completion might take 10-20 RED-GREEN-REFACTOR cycles. That's normal.
 ### Root Cause
 
 **Either:**
+
 - Code already implements this behavior (good)
 - Test is broken and doesn't actually test anything (bad)
 
@@ -139,6 +145,7 @@ def test_user_can_login():
 ```
 
 ### Prevention
+
 - Always run test before implementing
 - Confirm test fails
 - If test passes, investigate immediately

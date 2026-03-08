@@ -121,6 +121,7 @@ START: Need to merge a PR
 ### amia_test_pr_merged.py
 
 Use BEFORE attempting any merge operation to avoid:
+
 - Duplicate merge attempts
 - Confusing error messages
 - Wasted API calls
@@ -302,6 +303,7 @@ All scripts use standardized exit codes for consistent error handling:
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 
@@ -355,6 +357,7 @@ This is temporary - GitHub is computing the merge state. Wait 5-10 seconds and r
 ### Protected branch preventing merge
 
 Check:
+
 1. Required status checks passing
 2. Required number of approvals met
 3. Allowed merge methods in branch protection
@@ -379,6 +382,7 @@ The following PR merge operations are **IRREVERSIBLE** or have significant impac
 ### BEFORE ANY DESTRUCTIVE OPERATION
 
 1. **Verify you have a backup branch**
+
    ```bash
    # Create backup before any risky operation
    git branch backup-pre-merge-$(date +%Y%m%d) HEAD
@@ -390,6 +394,7 @@ The following PR merge operations are **IRREVERSIBLE** or have significant impac
    - Merging with unresolved threads (using `--ignore-threads`)
 
 3. **Log the operation details**
+
    ```bash
    echo "$(date): Merging PR #${PR_NUMBER} - Strategy: ${STRATEGY} - Flags: ${FLAGS}" >> merge-ops.log
    ```

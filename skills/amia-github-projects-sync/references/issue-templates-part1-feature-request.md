@@ -154,6 +154,7 @@ body:
 ### User Story Section
 
 The user story follows the standard format:
+
 - **As a** [user type] - identifies who benefits
 - **I want** [goal/desire] - describes the action
 - **So that** [benefit/value] - explains the value
@@ -163,12 +164,14 @@ This section is marked as required to ensure every feature has clear user value.
 ### Acceptance Criteria Section
 
 Use checkbox format for acceptance criteria:
+
 ```markdown
 - [ ] Criterion 1
 - [ ] Criterion 2
 ```
 
 Each criterion should be:
+
 - Specific and measurable
 - Independently testable
 - Written from user perspective when possible
@@ -176,6 +179,7 @@ Each criterion should be:
 ### Technical Notes Section
 
 Optional section for implementation guidance:
+
 - Existing code to leverage
 - External references or documentation
 - Configuration patterns to follow
@@ -184,6 +188,7 @@ Optional section for implementation guidance:
 ### Priority and Effort Dropdowns
 
 **Priority levels**:
+
 | Level | Label | Description |
 |-------|-------|-------------|
 | Low | `priority:low` | Nice to have, no deadline |
@@ -192,6 +197,7 @@ Optional section for implementation guidance:
 | Critical | `priority:critical` | Must complete immediately |
 
 **Effort estimates**:
+
 | Size | Label | Time Range |
 |------|-------|------------|
 | XS | `effort:xs` | Less than 1 hour |
@@ -203,6 +209,7 @@ Optional section for implementation guidance:
 ### Dependencies and Scope
 
 **Dependencies format**:
+
 ```markdown
 Depends on: #12, #15
 Blocks: #20

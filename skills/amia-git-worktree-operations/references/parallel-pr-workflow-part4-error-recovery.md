@@ -1,6 +1,7 @@
 # Parallel PR Workflow - Part 4: Error Recovery
 
 This document covers:
+
 - Error recovery when isolation is violated
 - Summary of parallel PR workflow requirements
 
@@ -20,6 +21,7 @@ This document covers:
 ### Detecting Violations
 
 Run the isolation verification script:
+
 ```bash
 python scripts/amia_verify_worktree_isolation.py \
     --worktree-path /tmp/worktrees/pr-123 \
@@ -32,6 +34,7 @@ python scripts/amia_verify_worktree_isolation.py \
 If files were accidentally written to the main repo:
 
 **Step 1: Identify contaminated files**
+
 ```bash
 cd /path/to/main-repo
 git status
@@ -39,12 +42,14 @@ git status
 ```
 
 **Step 2: Determine if changes should be kept**
+
 ```bash
 git diff <file>
 # Review the changes
 ```
 
 **Step 3a: Discard contaminating changes**
+
 ```bash
 git checkout -- <file>
 # Or for all changes:
@@ -52,6 +57,7 @@ git checkout -- .
 ```
 
 **Step 3b: Move changes to correct worktree**
+
 ```bash
 # Save the diff
 git diff <file> > /tmp/changes.patch
@@ -69,6 +75,7 @@ git apply /tmp/changes.patch
 If Agent A accidentally modified Agent B's worktree:
 
 **Step 1: Identify which worktree was contaminated**
+
 ```bash
 # Check each worktree
 for wt in /tmp/worktrees/pr-*/; do
@@ -78,10 +85,12 @@ done
 ```
 
 **Step 2: Determine ownership of changes**
+
 - Which agent should have made this change?
 - Is the change correct but misplaced?
 
 **Step 3: Reset contaminated worktree**
+
 ```bash
 cd /tmp/worktrees/pr-456  # Contaminated worktree
 git status

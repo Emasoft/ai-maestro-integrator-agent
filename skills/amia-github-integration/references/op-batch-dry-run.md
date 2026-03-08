@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Batch Dry Run
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -77,12 +76,14 @@ $FILTER_CMD --json number | jq 'length'
 ### Step 4: Preview specific changes
 
 For label operations:
+
 ```bash
 # Show current labels vs proposed labels
 $FILTER_CMD --json number,title,labels --jq '.[] | {number, title, current_labels: [.labels[].name], will_add: ["new-label"]}'
 ```
 
 For state changes:
+
 ```bash
 # Show which issues would be closed
 $FILTER_CMD --json number,title,state --jq '.[] | "Would close #\(.number): \(.title)"'

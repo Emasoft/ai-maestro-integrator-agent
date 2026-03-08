@@ -5,6 +5,7 @@ This document covers the differences between AI agent and human developer workfl
 ## Contents
 
 ### Part 1: Fundamentals and Communication
+
 See [ai-agent-vs-human-workflow-part1-fundamentals.md](ai-agent-vs-human-workflow-part1-fundamentals.md)
 
 - 9.1 Key differences in AI vs human workflow
@@ -27,6 +28,7 @@ See [ai-agent-vs-human-workflow-part1-fundamentals.md](ai-agent-vs-human-workflo
   - 9.4.3 Orchestrator communication methods
 
 ### Part 2: Workflows and Coordination
+
 See [ai-agent-vs-human-workflow-part2-workflows.md](ai-agent-vs-human-workflow-part2-workflows.md)
 
 - 9.5 Review workflow differences
@@ -54,6 +56,7 @@ See [ai-agent-vs-human-workflow-part2-workflows.md](ai-agent-vs-human-workflow-p
 ### When to Read Part 1
 
 Read Part 1 when you need to:
+
 - Understand fundamental differences between AI and human workflows
 - Assign tasks to AI agents or human developers
 - Set up communication channels for a mixed team
@@ -62,6 +65,7 @@ Read Part 1 when you need to:
 ### When to Read Part 2
 
 Read Part 2 when you need to:
+
 - Set up code review workflows with AI and humans
 - Handle work handoffs between agents or humans
 - Coordinate a mixed team of AI agents and humans

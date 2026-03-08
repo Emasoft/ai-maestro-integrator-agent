@@ -70,6 +70,7 @@ gh api graphql -f query='
 **Cause**: Project ID incorrect or insufficient permissions.
 
 **Solution**:
+
 1. Verify project ID format: `PVT_kwDO...` for Projects V2
 2. Check token has `project` scope
 3. Use `gh project list --owner OWNER` to find correct ID
@@ -80,6 +81,7 @@ gh api graphql -f query='
 **Cause**: Issue not added to project or field values not set.
 
 **Solution**:
+
 1. Verify issue is added to project: `gh project item-list PROJECT_ID`
 2. Check required fields (Status, Priority) have values
 3. Add issue manually: `gh project item-add PROJECT_ID --url ISSUE_URL`
@@ -90,6 +92,7 @@ gh api graphql -f query='
 **Cause**: Field IDs changed or column names don't match.
 
 **Solution**:
+
 1. Get current field IDs: `gh project field-list PROJECT_ID`
 2. Update local configuration with correct field IDs
 3. Ensure status values match exactly (case-sensitive)
@@ -100,6 +103,7 @@ gh api graphql -f query='
 **Cause**: Too many API calls in short period.
 
 **Solution**:
+
 1. Check rate limit status: `gh api rate_limit`
 2. Implement caching for frequently accessed data
 3. Batch operations where possible
@@ -110,6 +114,7 @@ gh api graphql -f query='
 **Cause**: Manual changes on one side not reflected on other.
 
 **Solution**:
+
 1. Run sync script to reconcile differences
 2. Claude Tasks are for personal/local tasks, GitHub for shared tasks
 3. Prioritize GitHub as source of truth for team visibility

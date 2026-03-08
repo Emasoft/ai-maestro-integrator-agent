@@ -1,6 +1,7 @@
 # Unicode Enforcement Hook
 
 ## Contents
+
 - When the Unicode enforcement hook runs
 - What the hook checks (4 checks)
 - How to fix each type of Unicode violation
@@ -41,6 +42,7 @@ A BOM is an invisible marker at the start of a file. Some Windows editors add it
 **Fix options**:
 
 Option 1 -- Using Python:
+
 ```python
 path = "path/to/file.py"
 with open(path, "rb") as f:
@@ -53,6 +55,7 @@ with open(path, "wb") as f:
 ```
 
 Option 2 -- Using sed (macOS/Linux):
+
 ```bash
 sed -i '1s/^\xEF\xBB\xBF//' path/to/file.py
 ```
@@ -66,6 +69,7 @@ Option 3 -- Configure your editor to save without BOM. In VS Code: set `"files.e
 **Fix options**:
 
 Option 1 -- Using git (recommended):
+
 ```bash
 # Configure git to auto-convert
 git config core.autocrlf input
@@ -75,11 +79,13 @@ git checkout -- path/to/file.py
 ```
 
 Option 2 -- Using dos2unix:
+
 ```bash
 dos2unix path/to/file.py
 ```
 
 Option 3 -- Using Python:
+
 ```python
 path = "path/to/file.py"
 content = open(path, "rb").read()
@@ -108,6 +114,7 @@ naive_approach = True
 **Detection**: File cannot be decoded as UTF-8.
 
 **Fix**: Convert the file to UTF-8:
+
 ```bash
 # Using iconv
 iconv -f WINDOWS-1252 -t UTF-8 file.py > file_utf8.py
@@ -148,5 +155,6 @@ all_issues.extend(check_unicode_compliance(repo_root))
 ```
 
 The `check_unicode_compliance()` function returns a list of `(severity, message)` tuples:
+
 - `("MAJOR", "...")` -- BOM detected (blocks push)
 - `("MINOR", "...")` -- CRLF line endings (warning only)

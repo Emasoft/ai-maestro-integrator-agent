@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Execute PR Merge
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -125,16 +124,19 @@ python scripts/amia_test_pr_merged.py --pr 123 --repo myorg/myrepo
 ## Strategy Selection Guide
 
 **Use `squash` when:**
+
 - PR has many WIP/fixup commits
 - You want a clean, linear history
 - Individual commits are not valuable
 
 **Use `merge` when:**
+
 - You need to preserve full commit history
 - Tracking individual changes is important
 - Branch protection requires merge commits
 
 **Use `rebase` when:**
+
 - You want linear history without merge commits
 - Individual commits are meaningful
 - Project prefers rebased history
@@ -142,6 +144,7 @@ python scripts/amia_test_pr_merged.py --pr 123 --repo myorg/myrepo
 ## Safety Warnings
 
 **IRREVERSIBLE**: Merge commits cannot be undone without force push. Always:
+
 1. Verify readiness before merging
 2. Create backup branch if uncertain
 3. Have rollback plan ready

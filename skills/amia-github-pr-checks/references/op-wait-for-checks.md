@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Wait for Checks
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -83,6 +82,7 @@ python3 amia_wait_for_checks.py --pr <NUMBER> --timeout 600
 ### Step 2: Monitor Progress
 
 The script will poll at regular intervals and output progress:
+
 ```
 Waiting for checks on PR #123...
   Poll 1: 2 pending, 3 passing, 0 failing
@@ -146,6 +146,7 @@ python3 amia_wait_for_checks.py --pr 123 --timeout 1800
 ## Polling Strategy
 
 The script uses intelligent polling:
+
 1. Initial interval: 30 seconds
 2. After 5 minutes: 60 second intervals
 3. After 15 minutes: 120 second intervals

@@ -1,6 +1,7 @@
 # Quick Start Workflows
 
 ## Contents
+
 - [Workflow 1: Create Feature Worktree](#workflow-1-create-feature-worktree) - When you need to start a new feature
 - [Workflow 2: Parallel Bug Fix](#workflow-2-parallel-bug-fix) - If you need to fix a bug while working on another task
 - [Workflow 3: Review and Cleanup](#workflow-3-review-and-cleanup) - When you need to validate and clean up worktrees
@@ -33,6 +34,7 @@ git branch
 ```
 
 **Expected Output:**
+
 ```
 Created worktree 'feature-user-auth' at ../feature-user-auth
 Branch: feature/user-auth
@@ -63,6 +65,7 @@ cd ../main-repo
 ```
 
 **Key Points:**
+
 - Your current work remains untouched in the original worktree
 - The bugfix branch is completely isolated
 - Port 8102 is allocated for any services needed during testing
@@ -86,6 +89,7 @@ python scripts/worktree_list.py
 ```
 
 **Validation Output Example:**
+
 ```
 Registry Validation Report
 ==========================
@@ -118,6 +122,7 @@ python scripts/worktree_remove.py --name test-b
 ```
 
 **Port Allocation:**
+
 - Port 8110: test-a worktree services
 - Port 8111: test-b worktree services
 - Prevents port conflicts between parallel tests
@@ -146,6 +151,7 @@ python scripts/worktree_remove.py --name review-pr-123
 ```
 
 **Benefits:**
+
 - Review code without affecting your current work
 - Run the PR code in isolation
 - Easy cleanup after review complete
@@ -179,6 +185,7 @@ python scripts/worktree_remove.py --name hotfix-critical
 ```
 
 **Critical Steps:**
+
 1. Always branch from production for hotfixes
 2. Use merge safeguards before pushing
 3. Clean up immediately after merge to free resources

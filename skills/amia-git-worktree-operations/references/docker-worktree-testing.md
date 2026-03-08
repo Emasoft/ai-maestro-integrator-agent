@@ -5,9 +5,11 @@ This documentation covers Docker container testing with Git worktrees, split int
 ## Document Parts
 
 ### [Part 1: Setup & Configuration](docker-worktree-testing-part1-setup.md)
+
 **~400 lines** - Use when setting up Docker worktree environments
 
 **Table of Contents:**
+
 1. When you need to understand Docker with worktrees - Overview
    - If you're wondering why combine Docker and worktrees - Why Combine?
    - When you need to know when to use this - Use Cases
@@ -27,9 +29,11 @@ This documentation covers Docker container testing with Git worktrees, split int
 ---
 
 ### [Part 2: Best Practices & Troubleshooting](docker-worktree-testing-part2-best-practices.md)
+
 **~430 lines** - Use for optimization and problem-solving
 
 **Table of Contents:**
+
 1. If you need implementation guidelines - Best Practices
    - When naming containers - Container Naming Conventions
    - If setting resource limits - Resource Limits Per Worktree

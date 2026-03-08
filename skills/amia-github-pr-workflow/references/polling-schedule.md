@@ -27,12 +27,14 @@
 
 **Option 1: Manual polling**
 The orchestrator explicitly runs the poll script:
+
 ```bash
 python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
 ```
 
 **Option 2: Background task**
 Delegate polling to a monitoring subagent:
+
 ```
 You are a PR monitoring subagent. Your task is:
 Poll PR status regularly and report significant changes.
@@ -49,6 +51,7 @@ Use GitHub webhooks or CLI notifications when available.
 ### Polling considerations
 
 **Why poll frequency matters**:
+
 - API rate limits (respect GitHub limits)
 - Context consumption
 - Orchestrator availability for other tasks
@@ -222,6 +225,7 @@ The orchestrator should notify the user when significant events occur.
 ### Notification suppression
 
 **Do not notify for**:
+
 - Routine polling with no changes
 - Expected CI runs
 - Automated bot updates (unless failure)

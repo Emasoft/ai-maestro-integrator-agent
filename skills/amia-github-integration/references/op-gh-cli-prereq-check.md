@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: GitHub CLI Prerequisites Check
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -67,6 +66,7 @@ gh --version
 ```
 
 Expected output format:
+
 ```
 gh version 2.45.0 (2025-01-15)
 https://github.com/cli/cli/releases/tag/v2.45.0
@@ -212,6 +212,7 @@ sudo apt update && sudo apt upgrade gh
 **Symptom**: gh installed but not found
 
 **Solution**:
+
 ```bash
 # Find installation
 find /usr -name "gh" 2>/dev/null

@@ -22,6 +22,7 @@ The webhook handler receives GitHub events (CI status, PR changes, issue updates
 ### 1. Start the Webhook Server
 
 **Local Development (using ngrok):**
+
 ```bash
 # Start webhook handler
 cd ~/.claude/skills/integrator-agent/skills/amia-github-projects-sync/scripts
@@ -34,6 +35,7 @@ ngrok http 9000
 ```
 
 **Production (on server):**
+
 ```bash
 # Run as systemd service
 sudo systemctl start github-webhook-handler
@@ -198,6 +200,7 @@ PRIORITY_MAP = {
 ### Webhook Delivery Failures
 
 **Check GitHub webhook delivery log:**
+
 1. Go to Settings → Webhooks → Your webhook
 2. Click "Recent Deliveries"
 3. Click on failed delivery
@@ -206,6 +209,7 @@ PRIORITY_MAP = {
 **Common issues:**
 
 - **Connection refused**: Handler not running or wrong port
+
   ```bash
   # Verify handler is running
   ps aux | grep ci_webhook_handler
@@ -213,6 +217,7 @@ PRIORITY_MAP = {
   ```
 
 - **Invalid signature**: Secret mismatch
+
   ```bash
   # Verify secret matches GitHub configuration
   echo $GITHUB_WEBHOOK_SECRET
@@ -225,6 +230,7 @@ PRIORITY_MAP = {
 ### Missing Notifications
 
 **Check handler logs:**
+
 ```bash
 # View handler output
 tail -f /var/log/github-webhook-handler.log
@@ -236,6 +242,7 @@ pm2 logs github-webhook
 **Check AI Maestro connectivity:** Check your inbox using the `agent-messaging` skill. If messages can be retrieved, connectivity is confirmed.
 
 **Verify event routing:**
+
 ```bash
 # Check webhook event was logged
 ls -lt ~/design/webhook_logs/ | head -5
@@ -247,6 +254,7 @@ cat ~/design/webhook_logs/latest.json | jq '.payload_summary'
 ### Handler Crashes
 
 **Enable debug logging:**
+
 ```python
 # In ci_webhook_handler.py
 import logging
@@ -254,11 +262,13 @@ logging.basicConfig(level=logging.DEBUG)
 ```
 
 **Run in foreground with debug:**
+
 ```bash
 python ci_webhook_handler.py --port 9000 2>&1 | tee webhook_debug.log
 ```
 
 **Check for missing dependencies:**
+
 ```bash
 # Verify all imports work
 python -c "from aimaestro_notify import handle_github_webhook"
@@ -272,6 +282,7 @@ python -c "from cross_platform import atomic_write_json"
 3. **Restrict webhook to specific events** (don't select "Send me everything")
 4. **Use firewall rules** to restrict webhook handler port access
 5. **Rotate secrets periodically**:
+
    ```bash
    # Generate new secret
    NEW_SECRET=$(python -c "import secrets; print(secrets.token_hex(32))")
@@ -290,12 +301,14 @@ python -c "from cross_platform import atomic_write_json"
 To handle webhooks from multiple repositories:
 
 **Option 1: One handler, multiple webhooks**
+
 ```bash
 # Configure webhook for each repo pointing to same handler
 # Handler automatically routes based on repository.full_name in payload
 ```
 
 **Option 2: Path-based routing**
+
 ```python
 # Modify handler to support path-based routing
 # Example: /webhook/repo1, /webhook/repo2

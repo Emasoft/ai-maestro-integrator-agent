@@ -195,6 +195,7 @@ to `contents: write`.
 ### 9.3.3 When to Use Job-Level Overrides
 
 Use job-level permissions when:
+
 - Different jobs need different permission sets (test job vs deploy job)
 - You want to apply the empty permissions pattern at workflow level
 - A specific job needs write access that other jobs do not need
@@ -425,6 +426,7 @@ jobs:
 If a third-party action is compromised (supply chain attack), the attacker gains
 the permissions of the workflow that uses it. With broad default permissions, the
 attacker can:
+
 - Push malicious code to the repository
 - Close or reopen issues to cause confusion
 - Publish malicious packages

@@ -22,22 +22,26 @@
 **Solutions**:
 
 1. **Check database exists**:
+
 ```bash
 psql -l | grep testdb_integration_api_endpoints
 ```
 
-2. **Verify environment variable**:
+1. **Verify environment variable**:
+
 ```bash
 echo $DATABASE_URL
 # Should show: postgresql://localhost/testdb_integration_api_endpoints
 ```
 
-3. **Create database if missing**:
+1. **Create database if missing**:
+
 ```bash
 createdb testdb_integration_api_endpoints
 ```
 
-4. **Check database permissions**:
+1. **Check database permissions**:
+
 ```bash
 psql testdb_integration_api_endpoints -c "SELECT current_user;"
 ```
@@ -49,21 +53,25 @@ psql testdb_integration_api_endpoints -c "SELECT current_user;"
 **Solutions**:
 
 1. **Check port allocation**:
+
 ```bash
 cat .worktree-metadata.json | grep -A3 ports
 ```
 
-2. **Find process using port**:
+1. **Find process using port**:
+
 ```bash
 lsof -i :8001
 ```
 
-3. **Kill conflicting process**:
+1. **Kill conflicting process**:
+
 ```bash
 kill -9 <PID>
 ```
 
-4. **Request new ports**:
+1. **Request new ports**:
+
 ```bash
 # Remove and recreate worktree with fresh ports
 python scripts/worktree_remove.py --identifier api-endpoints
@@ -77,12 +85,14 @@ python scripts/worktree_create.py --purpose test-integration --identifier api-en
 **Solutions**:
 
 1. **Verify venv is activated**:
+
 ```bash
 which python
 # Should point to worktree/.venv/bin/python
 ```
 
-2. **Recreate virtual environment**:
+1. **Recreate virtual environment**:
+
 ```bash
 rm -rf .venv
 python3 -m venv .venv
@@ -90,7 +100,8 @@ source .venv/bin/activate
 pip install -r requirements.txt -r requirements-test.txt
 ```
 
-3. **Check Python version**:
+1. **Check Python version**:
+
 ```bash
 python --version
 ```
@@ -102,18 +113,21 @@ python --version
 **Solutions**:
 
 1. **Check migration status**:
+
 ```bash
 python manage.py showmigrations
 ```
 
-2. **Reset test database**:
+1. **Reset test database**:
+
 ```bash
 dropdb testdb_migration_test
 createdb testdb_migration_test
 python manage.py migrate
 ```
 
-3. **Verify migration files**:
+1. **Verify migration files**:
+
 ```bash
 ls -la migrations/
 git status migrations/
@@ -126,16 +140,19 @@ git status migrations/
 **Solutions**:
 
 1. **List all test worktrees**:
+
 ```bash
 python scripts/worktree_list.py | grep test-
 ```
 
-2. **Remove specific worktree**:
+1. **Remove specific worktree**:
+
 ```bash
 python scripts/worktree_remove.py --identifier old-test
 ```
 
-3. **Cleanup old worktrees** (older than 24 hours):
+1. **Cleanup old worktrees** (older than 24 hours):
+
 ```bash
 python scripts/cleanup_test_worktrees.py --max-age 24
 ```
@@ -147,11 +164,13 @@ python scripts/cleanup_test_worktrees.py --max-age 24
 **Solutions**:
 
 1. **Run tests in random order**:
+
 ```bash
 pytest tests/ --random-order
 ```
 
-2. **Use separate database per test**:
+1. **Use separate database per test**:
+
 ```python
 @pytest.fixture(scope='function')
 def db(test_database):
@@ -161,7 +180,8 @@ def db(test_database):
         cursor.execute("TRUNCATE TABLE users CASCADE;")
 ```
 
-3. **Create separate worktree per test suite**:
+1. **Create separate worktree per test suite**:
+
 ```bash
 # Instead of one worktree for all tests
 python scripts/worktree_create.py --purpose test-unit --identifier all-tests --branch main
@@ -185,6 +205,7 @@ python scripts/worktree_create.py --purpose test-unit --identifier api-tests --b
 6. **CI/CD** - Use worktrees for matrix and parallel testing
 
 **When to Use Test Worktrees**:
+
 - Yes: Integration tests needing services
 - Yes: Performance testing
 - Yes: Pre-merge validation
@@ -193,6 +214,7 @@ python scripts/worktree_create.py --purpose test-unit --identifier api-tests --b
 - No: Quick unit tests (overhead not worth it)
 
 **Essential Commands**:
+
 ```bash
 # Create test worktree
 python scripts/worktree_create.py --purpose test-integration --identifier my-test --branch main --ports
@@ -210,6 +232,7 @@ python scripts/worktree_remove.py --identifier my-test
 ---
 
 **Related Documents**:
+
 - [Testing Worktree Isolation Overview](testing-worktree-isolation.md)
 - [Types and Creation](testing-worktree-isolation-part1-types-and-creation.md)
 - [CI/CD Integration](testing-worktree-isolation-part6-cicd.md)

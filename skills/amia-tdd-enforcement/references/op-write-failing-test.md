@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Write Failing Test (RED Phase)
 
-
 ## Contents
 
 - [Purpose](#purpose)

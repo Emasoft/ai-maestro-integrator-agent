@@ -11,15 +11,15 @@ description: "Why pre-push hooks are preferred over pre-commit hooks for develop
   - 1.1. The core philosophy: commits are local, pushes are social
   - 1.2. Comparison table: pre-commit versus pre-push trade-offs
   - 1.3. Impact on developer flow state and productivity
-- 2. When pre-commit hooks ARE the right choice
+- 1. When pre-commit hooks ARE the right choice
   - 2.1. Critical security checks that must run on every commit
   - 2.2. File encoding enforcement to prevent cross-platform corruption
   - 2.3. Credential and secret scanning before any local history is created
-- 3. Recommended hybrid strategy: minimal pre-commit plus comprehensive pre-push
+- 1. Recommended hybrid strategy: minimal pre-commit plus comprehensive pre-push
   - 3.1. What belongs in pre-commit (fast, critical, non-negotiable)
   - 3.2. What belongs in pre-push (thorough, batch-processed, quality-focused)
   - 3.3. How pre-push integrates with CI as defense-in-depth
-- 4. Common objections and counterarguments
+- 1. Common objections and counterarguments
   - 4.1. Addressing the "but broken commits pollute history" concern
   - 4.2. Addressing the "developers will forget to push" concern
   - 4.3. Addressing the "CI catches everything anyway" concern

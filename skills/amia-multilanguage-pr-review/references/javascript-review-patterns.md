@@ -7,6 +7,7 @@ This is the index file for JavaScript/TypeScript code review patterns. Content i
 ## Table of Contents
 
 ### Part 1: Style, Types, and Modules
+
 **File:** [javascript-review-patterns-part1-style-types-modules.md](javascript-review-patterns-part1-style-types-modules.md)
 
 - **3.1 JavaScript/TypeScript Code Style Checklist**
@@ -30,6 +31,7 @@ This is the index file for JavaScript/TypeScript code review patterns. Content i
 ---
 
 ### Part 2: Testing and Linting
+
 **File:** [javascript-review-patterns-part2-testing-linting.md](javascript-review-patterns-part2-testing-linting.md)
 
 - **3.4 Test Framework Patterns with Jest and Vitest**
@@ -63,26 +65,31 @@ This is the index file for JavaScript/TypeScript code review patterns. Content i
 ## Summary Checklists
 
 ### Code Style Quick Check
+
 - [ ] 2-space indentation
 - [ ] Consistent semicolons and quotes
 - [ ] camelCase variables, PascalCase classes
 - [ ] Modern features (const/let, arrow functions, optional chaining)
 
 ### TypeScript Quick Check
+
 - [ ] No `any` without justification
 - [ ] Strict mode enabled
 - [ ] Proper null checking
 
 ### Module System Quick Check
+
 - [ ] Package.json has `"type"` field
 - [ ] Consistent import syntax
 
 ### Testing Quick Check
+
 - [ ] Descriptive test names
 - [ ] Independent tests
 - [ ] Error cases covered
 
 ### Linting Quick Check
+
 - [ ] ESLint passes
 - [ ] Prettier applied
 - [ ] TypeScript compiles

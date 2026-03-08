@@ -30,7 +30,7 @@ This reference covers how to detect programming languages in files for code revi
 
 **See:** [language-detection-part1-extensions-shebang.md](language-detection-part1-extensions-shebang.md)
 
-### Contents:
+### Contents
 
 - **1.1 Detecting Language from File Extensions**
   - Python extensions (.py, .pyi, .pyx, .pxd, .pyw)
@@ -53,7 +53,7 @@ This reference covers how to detect programming languages in files for code revi
 
 **See:** [language-detection-part2-gitattributes-algorithm.md](language-detection-part2-gitattributes-algorithm.md)
 
-### Contents:
+### Contents
 
 - **1.3 Using .gitattributes Linguist Hints**
   - What is .gitattributes?
@@ -73,7 +73,7 @@ This reference covers how to detect programming languages in files for code revi
 
 **See:** [language-detection-part3-mixed-language.md](language-detection-part3-mixed-language.md)
 
-### Contents:
+### Contents
 
 - **1.5 Handling Mixed-Language Files**
   - Common mixed-language scenarios table (HTML, Vue SFC, Svelte, Jupyter, Markdown, PHP, JSP, ERB, Jinja2)
@@ -87,14 +87,14 @@ This reference covers how to detect programming languages in files for code revi
 
 ## Usage Summary
 
-### When to use each detection method:
+### When to use each detection method
 
 1. **Start with file extension** - covers 90% of cases
 2. **Check shebang** - for extensionless scripts
 3. **Consult .gitattributes** - for repo-specific overrides
 4. **Apply content analysis** - for mixed-language or ambiguous files
 
-### Implementation order in code:
+### Implementation order in code
 
 ```python
 def detect_language(filepath: str, repo_root: str = None) -> str:

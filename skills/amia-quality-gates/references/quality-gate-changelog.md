@@ -95,12 +95,14 @@ If `ENTRY_COUNT` is 0, treat it the same as a missing section and block the gate
 Headers must follow Keep a Changelog format: `## [X.Y.Z] - YYYY-MM-DD`
 
 Valid examples:
+
 ```
 ## [1.2.0] - 2026-02-07
 ## [0.5.1] - 2026-01-15
 ```
 
 Invalid examples:
+
 ```
 ## 1.2.0                    (missing brackets and date)
 ## [1.2.0]                  (missing date)
@@ -220,6 +222,7 @@ For automated CI enforcement, see the `amia-release-management` skill's `referen
 Changelog verification is a sub-step of the pre-merge gate, evaluated alongside CI check verification (see [quality-gate-ci-checks.md](quality-gate-ci-checks.md)) and the other pre-merge checks in [pre-merge-gate.md](pre-merge-gate.md).
 
 **Position in the pre-merge gate sequence**:
+
 1. Verify CI status (see [quality-gate-ci-checks.md](quality-gate-ci-checks.md))
 2. Verify changelog (this document)
 3. Verify no merge conflicts (see [pre-merge-gate.md](pre-merge-gate.md), section 2)

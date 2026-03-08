@@ -1,6 +1,5 @@
 # Operation: Post Issue Comment
 
-
 ## Contents
 
 - [Metadata](#metadata)
@@ -65,11 +64,13 @@ Post a comment to a GitHub Issue with support for idempotent comments using mark
 ## Marker-Based Idempotency
 
 When `--marker` is provided:
+
 1. Script checks existing comments for the marker
 2. If marker found, no duplicate is created
 3. If not found, comment is posted with marker embedded
 
 Marker format in comment:
+
 ```markdown
 <!-- marker: status-update-2024-01-15 -->
 ## Status Update
@@ -113,6 +114,7 @@ Work in progress."
 ## Output
 
 Comment created:
+
 ```json
 {
   "comment_id": 12345,
@@ -122,6 +124,7 @@ Comment created:
 ```
 
 Marker already exists (no duplicate):
+
 ```json
 {
   "comment_id": null,

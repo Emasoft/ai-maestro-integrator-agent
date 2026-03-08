@@ -7,7 +7,6 @@ procedure: "support-skill"
 
 # Operation: Request Changes
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -83,11 +82,13 @@ Please address all issues above and:
 ### Step 3: Notify Author (via AI Maestro if agent)
 
 Get the PR author:
+
 ```bash
 AUTHOR=$(gh pr view $PR_NUMBER --json author --jq '.author.login')
 ```
 
 If author is an agent, send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The PR author agent
 - **Subject**: `Changes requested on PR #<PR_NUMBER>`
 - **Priority**: `high`

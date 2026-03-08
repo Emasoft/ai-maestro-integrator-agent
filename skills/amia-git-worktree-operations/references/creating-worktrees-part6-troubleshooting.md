@@ -24,6 +24,7 @@ This document covers error handling and troubleshooting for worktree creation is
 **Meaning**: A directory with that name already exists.
 
 **Solution**:
+
 ```bash
 # Check if directory exists
 ls -la ../worktree-name
@@ -46,6 +47,7 @@ mv ../worktree-name ../worktree-name.old
 **Why this happens**: Git's safety mechanism to prevent conflicts.
 
 **Solution**:
+
 ```bash
 # Option 1: Use a different branch
 git worktree add ../worktree-name -b new-branch-name origin/feature/branch
@@ -65,6 +67,7 @@ git worktree add ../worktree-name --detach origin/feature/branch
 **Meaning**: Another process is using the port you're trying to allocate.
 
 **Diagnosis**:
+
 ```bash
 # Find what's using the port
 lsof -i :3002
@@ -74,6 +77,7 @@ netstat -tulpn | grep 3002
 ```
 
 **Solution**:
+
 ```bash
 # Option 1: Stop the conflicting process
 kill <PID>  # Use PID from lsof output
@@ -94,6 +98,7 @@ jq '.worktrees[] | select(.name == "worktree-name") | .ports = [3004, 3005]' \
 **Common causes and solutions**:
 
 **Wrong Node.js version**:
+
 ```bash
 # Check required version
 cat .nvmrc  # or check package.json "engines" field
@@ -104,6 +109,7 @@ nvm use 18
 ```
 
 **Wrong Python version**:
+
 ```bash
 # Check required version
 cat .python-version  # or check pyproject.toml
@@ -114,6 +120,7 @@ source .venv/bin/activate
 ```
 
 **Lockfile conflicts**:
+
 ```bash
 # Delete lockfile and reinstall
 rm package-lock.json  # or pnpm-lock.yaml, yarn.lock
@@ -121,6 +128,7 @@ npm install
 ```
 
 **Network issues**:
+
 ```bash
 # Clear npm cache
 npm cache clean --force
@@ -134,6 +142,7 @@ npm install
 ## Error: "Database migration failed"
 
 **Diagnosis**:
+
 ```bash
 # Check database exists
 psql -l | grep myapp
@@ -143,6 +152,7 @@ psql -h localhost -p 5433 -d myapp_worktree_name
 ```
 
 **Solution**:
+
 ```bash
 # Drop and recreate database
 dropdb -p 5433 myapp_worktree_name
@@ -159,25 +169,29 @@ npm run db:migrate
 **Common causes**:
 
 1. **Wrong environment variables**:
+
 ```bash
 # Compare .env files
 diff .env ../main-repo/.env
 ```
 
-2. **Database state issues**:
+1. **Database state issues**:
+
 ```bash
 # Reset database
 npm run db:reset
 ```
 
-3. **Stale build artifacts**:
+1. **Stale build artifacts**:
+
 ```bash
 # Clean and rebuild
 rm -rf dist/ build/ .next/
 npm run build
 ```
 
-4. **Different dependency versions**:
+1. **Different dependency versions**:
+
 ```bash
 # Compare lockfiles
 diff package-lock.json ../main-repo/package-lock.json
@@ -195,6 +209,7 @@ npm ci  # ci = clean install from lockfile
 **Symptoms**: Worktree exists but not in `.worktree-registry.json`.
 
 **Solution**:
+
 ```bash
 # Manually add entry
 jq '.worktrees += [{
@@ -217,6 +232,7 @@ mv .worktree-registry.tmp.json .worktree-registry.json
 **Common on macOS/Linux**:
 
 **Solution**:
+
 ```bash
 # Fix directory permissions
 chmod -R u+rwX ../worktree-name
@@ -232,10 +248,12 @@ chmod -R u+rwX ../worktree-name/.git
 **Meaning**: Not on any branch, just viewing a specific commit.
 
 **Is this a problem?**:
+
 - No, if you created worktree with `--detach` intentionally
 - Yes, if you expected to be on a branch
 
 **Solution** (if unexpected):
+
 ```bash
 cd ../worktree-name
 
@@ -253,29 +271,34 @@ git checkout existing-branch-name
 **Best practices to avoid errors**:
 
 1. **Always check registry first**:
+
 ```bash
 jq '.' .worktree-registry.json
 ```
 
-2. **Use consistent naming**:
+1. **Use consistent naming**:
+
 ```bash
 # Good: review-GH-42, feature-auth, bugfix-GH-55-crash
 # Bad: temp, test, asdf, my-worktree
 ```
 
-3. **Allocate ports before creating worktree**:
+1. **Allocate ports before creating worktree**:
+
 ```bash
 # Check ports first
 jq -r '.worktrees[].ports[]' .worktree-registry.json | sort -n
 ```
 
-4. **Verify branch exists before creating**:
+1. **Verify branch exists before creating**:
+
 ```bash
 git fetch origin
 git branch -r | grep feature/new-auth
 ```
 
-5. **Test immediately after creation**:
+1. **Test immediately after creation**:
+
 ```bash
 cd ../worktree-name
 npm install

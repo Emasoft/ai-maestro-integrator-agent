@@ -11,6 +11,7 @@ This index provides links to all GraphQL query documentation for GitHub Projects
 ### Read Operations
 
 See [graphql-queries-part1-read-operations.md](./graphql-queries-part1-read-operations.md):
+
 - Listing organization/user projects
 - Getting project items with fields
 - Querying custom field values
@@ -19,6 +20,7 @@ See [graphql-queries-part1-read-operations.md](./graphql-queries-part1-read-oper
 ### Mutation Operations
 
 See [graphql-queries-part2-mutations.md](./graphql-queries-part2-mutations.md):
+
 - Updating project item field values
 - Creating and deleting project items
 - Moving items between columns

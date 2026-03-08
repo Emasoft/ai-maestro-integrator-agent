@@ -47,6 +47,7 @@ python scripts/registry_validate.py
 ```
 
 **Output:**
+
 ```
 Worktree Registry Validation Report
 ====================================
@@ -88,6 +89,7 @@ python scripts/registry_validate.py --fix
 ```
 
 **Output:**
+
 ```
 Worktree Registry Validation Report
 ====================================
@@ -132,6 +134,7 @@ python scripts/registry_validate.py --verbose
 ```
 
 **Output:**
+
 ```
 [VERBOSE] Loading registry from: .claude/worktree-registry.json
 [VERBOSE] Registry file size: 2,345 bytes
@@ -174,6 +177,7 @@ python scripts/registry_validate.py --fix --verbose
 ```
 
 **Output:**
+
 ```
 [VERBOSE] Creating backup...
 [VERBOSE]   Source: .claude/worktree-registry.json

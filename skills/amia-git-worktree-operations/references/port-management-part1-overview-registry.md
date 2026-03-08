@@ -13,6 +13,7 @@
    - 2.4 [Initializing a New Registry](#initializing-a-new-registry)
 
 **Related Parts:**
+
 - [Part 2: Allocation Functions and CLI](port-management-part2-allocation-cli.md)
 - [Part 3: Conflict Detection and Health Checking](port-management-part3-conflicts-health.md)
 - [Part 4: Docker Integration](port-management-part4-docker.md)
@@ -27,6 +28,7 @@ Port management in Integrator Agent ensures that services running in different w
 ### What is a Port?
 
 A **port** is a numbered endpoint on a computer where network services listen for connections. Ports range from 1 to 65535. Each service running on your computer must use a unique port number. For example:
+
 - Web servers typically use port 80 (HTTP) or 443 (HTTPS)
 - PostgreSQL database typically uses port 5432
 - Redis typically uses port 6379
@@ -34,11 +36,13 @@ A **port** is a numbered endpoint on a computer where network services listen fo
 ### Why Port Management is Needed
 
 When working with multiple worktrees, each worktree may run the same services (web server, database, API). Without port management:
+
 - All worktrees would try to use the same default ports
 - Services would fail to start with "port already in use" errors
 - You would need to manually track which port each worktree is using
 
 The AMIA port management system solves this by:
+
 - Automatically allocating unique ports to each worktree
 - Tracking all port assignments in a central registry
 - Detecting and preventing conflicts before they occur
@@ -68,11 +72,13 @@ The port registry is stored at `design/worktrees/ports.json` relative to your re
 ### Registry File Location
 
 The registry file is located at:
+
 ```
 <repository-root>/design/worktrees/ports.json
 ```
 
 **Example paths:**
+
 - `/home/user/myproject/design/worktrees/ports.json`
 - `/Users/developer/repos/api-service/design/worktrees/ports.json`
 
@@ -150,11 +156,13 @@ The registry file is located at:
 The `ranges` section defines port ranges for each service type.
 
 **Fields:**
+
 - `start` (integer): First port number in the range (inclusive)
 - `end` (integer): Last port number in the range (inclusive)
 - `description` (string): Human-readable explanation of what this range is used for
 
 **Example:**
+
 ```json
 "web": {
   "start": 8080,
@@ -170,6 +178,7 @@ This means ports 8080 through 8099 (20 ports total) are reserved for web service
 The `allocations` section is an array of all currently allocated ports.
 
 **Fields:**
+
 - `port` (integer): The allocated port number
 - `worktree` (string): Name of the worktree using this port
 - `service` (string): Service type (must match a key in `ranges`)
@@ -180,6 +189,7 @@ The `allocations` section is an array of all currently allocated ports.
 - `health_status` (string): Health check status - one of: `unknown`, `healthy`, `unhealthy`, `not_running`
 
 **Example:**
+
 ```json
 {
   "port": 8080,
@@ -198,6 +208,7 @@ The `allocations` section is an array of all currently allocated ports.
 The `metadata` section contains registry-level information.
 
 **Fields:**
+
 - `version` (string): Registry format version
 - `last_updated` (ISO 8601 timestamp): Last time the registry was modified
 - `total_allocations` (integer): Count of active port allocations

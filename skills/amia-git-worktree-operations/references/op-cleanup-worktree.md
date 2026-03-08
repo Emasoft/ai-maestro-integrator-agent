@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Cleanup Worktree
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -197,6 +196,7 @@ Before removing, verify:
 ## Force Removal
 
 **Use only when:**
+
 - Worktree is corrupted
 - Changes are intentionally being discarded
 - User has explicitly approved

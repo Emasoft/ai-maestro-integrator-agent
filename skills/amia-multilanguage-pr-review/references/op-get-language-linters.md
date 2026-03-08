@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Get Language Linters
 
-
 ## Contents
 
 - [Purpose](#purpose)

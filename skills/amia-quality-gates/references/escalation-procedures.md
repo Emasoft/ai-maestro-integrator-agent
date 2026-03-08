@@ -43,6 +43,7 @@ When quality gates fail and issues are not resolved through normal channels, sys
 **Responsible**: AMIA Integrator Agent
 
 **Template**:
+
 ```
 ❌ Pre-review gate failed:
 
@@ -69,6 +70,7 @@ cc @author
 **Trigger**: No commits or response after Level 1
 
 **Template**:
+
 ```
 ⏰ Pre-review gate failure follow-up
 
@@ -92,6 +94,7 @@ Please provide status update or address failures.
 **Trigger**: Author unresponsive after 2 follow-ups
 
 **Notification**:
+
 ```
 @eoa - Pre-review gate escalation
 
@@ -115,6 +118,7 @@ PR #${PR_NUMBER} blocked for 72+ hours due to failing automated checks.
 **Trigger**: No resolution after AMOA engagement
 
 **Outcome Options**:
+
 - Maintainer contacts author directly
 - PR marked as stale and closed
 - Maintainer assigns another developer to complete work
@@ -132,6 +136,7 @@ PR #${PR_NUMBER} blocked for 72+ hours due to failing automated checks.
 **Responsible**: AMIA Integrator Agent (reviewer role)
 
 **Template**:
+
 ```
 ❌ Review gate failed
 
@@ -160,6 +165,7 @@ cc @author
 **Trigger**: Changes not addressed or re-review shows same issues
 
 **Template**:
+
 ```
 ⏰ Review gate failure follow-up
 
@@ -184,6 +190,7 @@ Please address feedback or discuss if clarification needed.
 **Trigger**: No meaningful progress on review feedback
 
 **Notification**:
+
 ```
 @eoa - Review gate escalation
 
@@ -197,6 +204,7 @@ PR #${PR_NUMBER} blocked for 1+ week due to unresolved review issues.
 ```
 
 **Outcome Options**:
+
 - AMOA mediates between reviewer and author
 - AMOA provides guidance on resolving issues
 - PR marked for closure if abandoned
@@ -210,6 +218,7 @@ PR #${PR_NUMBER} blocked for 1+ week due to unresolved review issues.
 **Trigger**: No path forward after AMOA engagement
 
 **Closure Template**:
+
 ```
 Closing due to unresolved review issues.
 
@@ -237,6 +246,7 @@ Author is welcome to reopen or submit fresh PR if issues are addressed.
 **Responsible**: AMIA Integrator Agent
 
 **Template**:
+
 ```
 ❌ Pre-merge gate failed - merge blocked
 
@@ -264,6 +274,7 @@ cc @author
 **Trigger**: No action after initial block
 
 **Template**:
+
 ```
 ⏰ Pre-merge gate failure - action required
 
@@ -286,6 +297,7 @@ Please [specific action - rebase, fix CI, etc.].
 **Trigger**: Persistent CI failure unrelated to PR code
 
 **Notification**:
+
 ```
 @eoa - Pre-merge gate CI infrastructure issue
 
@@ -313,6 +325,7 @@ PR #${PR_NUMBER} blocked by CI failures that appear infrastructure-related.
 **Responsible**: AMIA Integrator Agent
 
 **Template**:
+
 ```
 🚨 **POST-MERGE GATE FAILED** 🚨
 
@@ -345,6 +358,7 @@ Main branch health check failed after merging PR #${PR_NUMBER}.
 | Deployment failed | ROLLBACK + evaluate revert |
 
 **Decision Documentation**:
+
 ```
 **Decision**: [REVERT / HOTFIX / ROLLBACK]
 
@@ -361,6 +375,7 @@ Main branch health check failed after merging PR #${PR_NUMBER}.
 **Responsible**: Designated person from Level 2
 
 **Revert Execution**:
+
 ```bash
 # Create revert PR
 gh pr create --title "Revert: [Original PR]" --body "[Reason]"
@@ -371,6 +386,7 @@ gh pr merge --admin --squash
 ```
 
 **Hotfix Execution**:
+
 ```bash
 # Create hotfix PR
 gh pr create --title "Hotfix: [Issue]" --body "[Fix details]"
@@ -386,6 +402,7 @@ gh pr create --title "Hotfix: [Issue]" --body "[Fix details]"
 **Responsible**: AMOA
 
 **Review Template**:
+
 ```
 ## Post-Merge Failure Post-Mortem
 

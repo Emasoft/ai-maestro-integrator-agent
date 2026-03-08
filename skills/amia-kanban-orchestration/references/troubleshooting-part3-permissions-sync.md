@@ -18,16 +18,19 @@
 **Symptom:** Operation fails with permissions error.
 
 **Diagnosis:**
+
 ```bash
 gh auth status --show-token | grep -i scope
 ```
 
 **Required Scopes:**
+
 - `repo` - Full repository access
 - `project` - Project access
 - `read:org` - Organization read (for org projects)
 
 **Solution:**
+
 ```bash
 gh auth refresh --scopes repo,project,read:org
 ```
@@ -37,6 +40,7 @@ gh auth refresh --scopes repo,project,read:org
 **Symptom:** Cannot modify project settings.
 
 **Diagnosis:**
+
 - Check project role in GitHub UI
 - Owner > Admin > Write > Read
 
@@ -48,11 +52,13 @@ Request admin access from project owner.
 **Symptom:** Cannot access issues in repository.
 
 **Diagnosis:**
+
 ```bash
 gh repo view OWNER/REPO --json defaultBranch
 ```
 
 **Solution:**
+
 - Request repository access
 - Or check if private repo
 
@@ -67,6 +73,7 @@ gh repo view OWNER/REPO --json defaultBranch
 **Cause:** Issue moved to Done but PR not merged, or manual error.
 
 **Diagnosis:**
+
 ```bash
 # Check issue state
 gh issue view 42 --json state,stateReason
@@ -76,6 +83,7 @@ gh pr list --search "closes:#42" --json state,merged
 ```
 
 **Solution:**
+
 ```bash
 # If PR not merged, move back to AI Review
 # [GraphQL mutation to set Status = "AI Review"]
@@ -89,6 +97,7 @@ gh issue close 42
 **Cause:** PR merged but board not updated (automation failed).
 
 **Diagnosis:**
+
 ```bash
 # Check PR status
 gh pr view 123 --json merged,mergedAt
@@ -98,6 +107,7 @@ gh issue view 42 --json state
 ```
 
 **Solution:**
+
 ```bash
 # Close issue
 gh issue close 42 --reason completed
@@ -111,6 +121,7 @@ gh issue close 42 --reason completed
 **Cause:** Mass sync failure or manual errors.
 
 **Solution: Reconciliation Script**
+
 ```bash
 # Get all items and their actual state
 gh api graphql -f query='...' | jq '...' > board_state.json

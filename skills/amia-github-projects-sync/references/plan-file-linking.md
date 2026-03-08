@@ -206,10 +206,12 @@ When issue is closed and merged:
 
 1. Update plan status to `completed`
 2. Move to archive:
+
    ```bash
    git mv plans/GH-42-user-auth.md plans/archive/GH-42-user-auth.md
    git commit -m "Archive completed plan GH-42"
    ```
+
 3. Update issue comment: "Plan archived: [link to archived plan]"
 
 ## Integration with Workflow
@@ -272,8 +274,10 @@ Epic plans are special because they coordinate multiple sub-issues.
 ## Dependency Graph
 
 ```
+
 GH-104 (Gateway) ─┬─→ GH-105 (Invoices)
                   └─→ GH-106 (Refunds)
+
 ```
 
 ## Overall Progress

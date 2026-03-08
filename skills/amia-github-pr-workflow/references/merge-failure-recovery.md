@@ -58,6 +58,7 @@ git show :3:<filename>  # Theirs (source branch)
 ### Step 3: Resolve Conflicts
 
 **Option A: Manual Resolution**
+
 ```bash
 # Open file and resolve conflict markers
 # <<<<<<< HEAD
@@ -71,6 +72,7 @@ git add <filename>
 ```
 
 **Option B: Accept One Side**
+
 ```bash
 # Accept ours (target branch version)
 git checkout --ours <filename>
@@ -82,6 +84,7 @@ git add <filename>
 ```
 
 **Option C: Use Merge Tool**
+
 ```bash
 git mergetool <filename>
 ```
@@ -102,6 +105,7 @@ git push origin main
 ### Step 5: Notify Author
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `PR_AUTHOR_AGENT`
 - **Subject**: `Merge Conflict Resolved: PR #123`
 - **Priority**: `normal`
@@ -136,6 +140,7 @@ gh run view <run-id> --log-failed
 ### Step 3: Quick Fix vs Revert Decision
 
 **Quick Fix (< 15 minutes, minor issue)**
+
 ```bash
 # Create hotfix branch
 git checkout main
@@ -151,6 +156,7 @@ gh pr create --title "Hotfix: Fix CI failure from PR #123" --base main
 ```
 
 **Revert (> 15 minutes or critical)**
+
 ```bash
 # Find the merge commit
 git log --oneline -10
@@ -163,6 +169,7 @@ git push origin main
 ### Step 4: Notify Stakeholders
 
 **Notify author of failure:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `PR_AUTHOR_AGENT`
 - **Subject**: `[CI FAILURE] PR #123 merge caused test failures`
 - **Priority**: `urgent`
@@ -170,6 +177,7 @@ git push origin main
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Notify orchestrator:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `[CI FAILURE] Main branch temporarily broken`
 - **Priority**: `urgent`
@@ -181,6 +189,7 @@ git push origin main
 ### Scenario: Merge Process Interrupted
 
 This can happen due to:
+
 - Network failure during push
 - Process killed mid-merge
 - System crash
@@ -201,6 +210,7 @@ git log --oneline main -5
 ### Step 2: Recovery Options
 
 **Option A: Merge Was Not Pushed**
+
 ```bash
 # Abort the incomplete merge
 git merge --abort
@@ -210,6 +220,7 @@ git reset --hard HEAD~1
 ```
 
 **Option B: Partial Push Occurred**
+
 ```bash
 # Check what reached remote
 git log origin/main --oneline -10
@@ -224,6 +235,7 @@ git push origin main
 ```
 
 **Option C: Unknown State**
+
 ```bash
 # Create backup of current state
 git branch backup-recovery-$(date +%Y%m%d)
@@ -256,11 +268,13 @@ git fsck
 ### Notify PR Author
 
 Always notify the PR author when:
+
 - Merge conflicts occur
 - CI fails after merge
 - Merge is reverted
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `PR_AUTHOR_AGENT`
 - **Subject**: `[MERGE ISSUE] PR #123 - Action Required`
 - **Priority**: `high`
@@ -270,6 +284,7 @@ Send a message using the `agent-messaging` skill with:
 ### Notify Code Reviewer
 
 Notify reviewer if their approved PR caused issues. Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `REVIEWER_AGENT`
 - **Subject**: `[FYI] PR #123 post-merge issue`
 - **Priority**: `normal`
@@ -279,6 +294,7 @@ Notify reviewer if their approved PR caused issues. Send a message using the `ag
 ### Notify Orchestrator
 
 Always notify orchestrator of significant merge issues. Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `[MERGE STATUS] PR #123`
 - **Priority**: `high`
@@ -290,6 +306,7 @@ Always notify orchestrator of significant merge issues. Send a message using the
 ### When to Rollback
 
 Rollback immediately if:
+
 - Build completely broken
 - Security vulnerability introduced
 - Data corruption possible
@@ -325,6 +342,7 @@ GOOD_COMMIT="<sha-of-good-commit>"
 ### Step 3: Execute Rollback
 
 **Option A: Revert (Preferred - Preserves History)**
+
 ```bash
 # Revert the bad merge
 git checkout main
@@ -337,6 +355,7 @@ gh run watch
 ```
 
 **Option B: Reset (Last Resort - Destructive)**
+
 ```bash
 # REQUIRES EXPLICIT APPROVAL - This rewrites history
 # Only use if revert is not possible
@@ -363,6 +382,7 @@ curl https://api.example.com/health
 ### Step 5: Post-Mortem
 
 Document what happened:
+
 - What caused the corruption
 - How it was detected
 - Recovery steps taken
@@ -373,6 +393,7 @@ Document what happened:
 ### Pre-Merge Checks
 
 1. **Always verify CI passes before merge**
+
    ```bash
    python scripts/amia_test_pr_merge_ready.py --pr 123 --repo owner/repo
    ```
@@ -383,6 +404,7 @@ Document what happened:
    - Require linear history (optional)
 
 3. **Run local tests before merge**
+
    ```bash
    git checkout pr-branch
    git merge main --no-commit
@@ -399,6 +421,7 @@ Document what happened:
 ### Post-Merge Monitoring
 
 1. **Watch CI immediately after merge**
+
    ```bash
    gh run watch
    ```

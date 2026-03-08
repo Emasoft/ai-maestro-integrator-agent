@@ -92,6 +92,7 @@ Copy this checklist and track your progress:
 The skill is built on a structured two-stage approach:
 
 **Stage One: Quick Scan (Small Scope)**
+
 - Initial surface-level assessment
 - Identification of obvious issues
 - Scope: File structure + diff magnitude review
@@ -99,6 +100,7 @@ The skill is built on a structured two-stage approach:
 - Go/No-Go decision point
 
 **Stage Two: Deep Dive (Full Scope)**
+
 - Comprehensive multi-dimensional analysis
 - Root cause investigation
 - Scope: All 8 dimensions across all changed components
@@ -135,6 +137,7 @@ Code review examines code across 8 dimensions simultaneously:
 ## Reference Documents
 
 ### Gate 0: Requirement Compliance ([references/requirement-compliance.md](references/requirement-compliance.md))
+
 - 5.1 Gate 0: Requirement Compliance Overview
 - 5.2 Gate 0 Checklist Template
 - 5.3 Review Checklist Additions
@@ -145,6 +148,7 @@ Code review examines code across 8 dimensions simultaneously:
 - 5.5 Correct Review Approach
 
 ### Stage One: Quick Scan ([references/stage-one-quick-scan.md](references/stage-one-quick-scan.md))
+
 - 1.1 Objective and Purpose
 - 1.2 Scope Targets by PR Size
   - 1.2.1 Small PRs (1-10 files)
@@ -160,6 +164,7 @@ Code review examines code across 8 dimensions simultaneously:
 - 1.5 Go/No-Go Decision Criteria
 
 ### Stage Two: Deep Dive ([references/stage-two-deep-dive.md](references/stage-two-deep-dive.md))
+
 - 2.1 Objective and Purpose
 - 2.2 Scope Coverage by PR Size
 - 2.3 Eight Dimension Analysis Overview
@@ -176,6 +181,7 @@ Code review examines code across 8 dimensions simultaneously:
 - 2.6 Deep Dive Output Format Template
 
 ### Workflow and Decision Tree ([references/workflow-and-decision-tree.md](references/workflow-and-decision-tree.md))
+
 - 3.1 Four-Phase Workflow Overview
   - 3.1.1 Phase 1: Initial Assessment
   - 3.1.2 Phase 2: Quick Scan (Stage One)
@@ -186,6 +192,7 @@ Code review examines code across 8 dimensions simultaneously:
 - 3.4 Handling Edge Cases
 
 ### Implementation Checklist ([references/implementation-checklist.md](references/implementation-checklist.md))
+
 - 4.1 Complete Implementation Checklist
   - 4.1.1 Setup Phase Checklist
   - 4.1.2 Stage One: Quick Scan Checklist
@@ -198,6 +205,7 @@ Code review examines code across 8 dimensions simultaneously:
   - 4.2.3 Dimension Weight Summary
 
 ### Pre-PR Quality Gate ([references/pre-pr-quality-gate.md](references/pre-pr-quality-gate.md))
+
 - 6.1 Overview - Purpose of the Pre-PR quality gate
 - 6.2 The 4 Validation Steps
   - 6.2.1 Step 1: All Tests Pass Locally
@@ -209,34 +217,35 @@ Code review examines code across 8 dimensions simultaneously:
 
 ### Commit Conventions ([references/commit-conventions.md](references/commit-conventions.md))
   <!-- TOC: commit-conventions.md -->
-  - Contents
-  - 1.1 Writing Descriptive Commit Messages with WHAT and WHY Sections
-    - 1.1.1 Commit Message Structure and Required Sections
-    - 1.1.2 Documenting File Changes (ADDED, MODIFIED, REMOVED, RENAMED)
-    - 1.1.3 Documenting Symbol Changes (Functions, Classes, Variables)
-    - 1.1.4 Documenting Configuration Changes
-  - 1.2 Choosing the Correct Commit Category Prefix
-    - 1.2.1 Category Prefix Reference Table
-    - 1.2.2 When to Use Each Category
-  - 1.3 Making Commits Searchable for Future Decision Archaeology
-    - 1.3.1 Search Scenarios and Requirements
-    - 1.3.2 Indexing Best Practices
-  - 1.4 Managing Dual-Git Repositories (Project vs Design)
-    - 1.4.1 When to Commit to Project Git
-    - 1.4.2 When to Commit to Design Git
-    - 1.4.3 Setting Up Dual-Git Configuration
-  - 1.5 Documenting Removals and Renames with Supersedes Information
-    - 1.5.1 Supersedes Section Format
-    - 1.5.2 Migration Instructions
-    - 1.5.3 Breaking Change Indicators
-  - IRON RULES for Commit Conventions
-  - Example Commit Messages
-    - Example 1: Removing Obsolete Template
-    - Example 2: Adding New Agent
-    - Example 3: Renaming Symbol
+- Contents
+- 1.1 Writing Descriptive Commit Messages with WHAT and WHY Sections
+  - 1.1.1 Commit Message Structure and Required Sections
+  - 1.1.2 Documenting File Changes (ADDED, MODIFIED, REMOVED, RENAMED)
+  - 1.1.3 Documenting Symbol Changes (Functions, Classes, Variables)
+  - 1.1.4 Documenting Configuration Changes
+- 1.2 Choosing the Correct Commit Category Prefix
+  - 1.2.1 Category Prefix Reference Table
+  - 1.2.2 When to Use Each Category
+- 1.3 Making Commits Searchable for Future Decision Archaeology
+  - 1.3.1 Search Scenarios and Requirements
+  - 1.3.2 Indexing Best Practices
+- 1.4 Managing Dual-Git Repositories (Project vs Design)
+  - 1.4.1 When to Commit to Project Git
+  - 1.4.2 When to Commit to Design Git
+  - 1.4.3 Setting Up Dual-Git Configuration
+- 1.5 Documenting Removals and Renames with Supersedes Information
+  - 1.5.1 Supersedes Section Format
+  - 1.5.2 Migration Instructions
+  - 1.5.3 Breaking Change Indicators
+- IRON RULES for Commit Conventions
+- Example Commit Messages
+  - Example 1: Removing Obsolete Template
+  - Example 2: Adding New Agent
+  - Example 3: Renaming Symbol
   <!-- /TOC -->
 
 ### Review Workflow ([references/review-workflow.md](references/review-workflow.md))
+
 - **Contents:**
   - When starting a code review task
     - Receiving and parsing review requests
@@ -280,6 +289,7 @@ Code review examines code across 8 dimensions simultaneously:
 ## Troubleshooting References
 
 ### Slow Reviews ([references/troubleshooting-performance.md](references/troubleshooting-performance.md))
+
 - **Contents:**
   - If you need to understand the problem → Problem Description
   - When analyzing why reviews are slow → Root Causes
@@ -290,6 +300,7 @@ Code review examines code across 8 dimensions simultaneously:
   - For overarching guidance → Key Principles
 
 ### Reviewer Calibration ([references/troubleshooting-calibration.md](references/troubleshooting-calibration.md))
+
 - **Contents:**
   - If you need to understand the problem → Problem Description
   - When analyzing why calibration issues occur → Root Causes
@@ -299,6 +310,7 @@ Code review examines code across 8 dimensions simultaneously:
   - When resolving specific disagreements → Handling Calibration Conflicts
 
 ### Coverage Gaps ([references/troubleshooting-coverage.md](references/troubleshooting-coverage.md))
+
 - **Contents:**
   - If you need to understand the problem → Problem Description
   - When analyzing why coverage is incomplete → Root Causes
@@ -307,6 +319,7 @@ Code review examines code across 8 dimensions simultaneously:
   - If you need to identify gaps → Identifying Coverage Gaps
 
 ### Reviewer Disagreements ([references/troubleshooting-agreement.md](references/troubleshooting-agreement.md))
+
 - **Contents:**
   - If you need to understand the problem → Problem Description
   - When analyzing why disagreements occur → Root Causes
@@ -353,6 +366,7 @@ Code review examines code across 8 dimensions simultaneously:
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full output written to file; concise summary printed to stderr
 - **Without flag**: Full output printed to stdout (backward compatible)
 
@@ -361,6 +375,7 @@ When invoking from agents or automated workflows, always pass `--output-file` to
 ## Examples
 
 For detailed examples with code, see [references/examples.md](references/examples.md):
+
 - 1.1 When reviewing a PR from AMOA - Example: Review and Merge PR
 - 1.2 When verifying issue closure - Example: Issue Closure Requirements Check
 - 1.3 When using scripts for quick scan - Example: Script-Based Quick Scan
@@ -382,6 +397,7 @@ When receiving a PR review request from AMOA or another agent, check your inbox 
 ### Template 2: Reporting Review Completion to AMOA
 
 After completing a code review, notify the requesting agent. Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Code Review Complete: PR #123`
 - **Priority**: `normal`
@@ -391,6 +407,7 @@ After completing a code review, notify the requesting agent. Send a message usin
 ### Template 3: Requesting Clarification from Author
 
 When review requires author input, send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The PR author agent name
 - **Subject**: `Review Question: PR #123`
 - **Priority**: `normal`
@@ -400,6 +417,7 @@ When review requires author input, send a message using the `agent-messaging` sk
 ### Template 4: Escalating Quality Gate Failure
 
 When a critical quality gate fails, send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `[QUALITY GATE FAILED] PR #123`
 - **Priority**: `urgent`
@@ -491,8 +509,9 @@ When a critical quality gate fails, send a message using the `agent-messaging` s
 - [references/documentation-analysis.md](references/documentation-analysis.md) - Dimension 8 details
   <!-- TOC: documentation-analysis.md -->
   - ### When to Use This Document
+
   - When reviewing code documentation → See [Verification Checklists](#verification-checklists-summary)
-  - --
+  ---
   <!-- /TOC -->
 
 **Version**: 1.0 | **Updated**: 2025-01-01 | **Difficulty**: Intermediate

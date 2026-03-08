@@ -35,6 +35,7 @@
 ### Automated verification
 
 Run the verification script:
+
 ```bash
 python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123 --stage pre-review
 ```
@@ -68,6 +69,7 @@ python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123 --stage p
 ### Comment addressing criteria
 
 A review comment is considered "addressed" when:
+
 1. Code was changed per the comment's suggestion, OR
 2. A reply explains why the suggestion was not followed, OR
 3. The comment thread is resolved
@@ -102,10 +104,12 @@ gh pr checks <pr_number> --required
 ### Required vs optional checks
 
 **Required checks** (must pass):
+
 - Defined in repository branch protection rules
 - Listed with `--required` flag
 
 **Optional checks** (nice to have):
+
 - All other checks
 - Failures should be noted but don't block
 
@@ -176,6 +180,7 @@ All of these MUST be true:
 **Why**: GitHub webhooks and UI updates can have delays. A comment might appear after we checked.
 
 **Implementation**:
+
 1. Record timestamp of last comment/activity
 2. Wait briefly for any pending updates
 3. Re-check for new activity
@@ -240,16 +245,19 @@ The protocol consists of 4 verification passes with specific timing.
 ### 3.6.2 Exit conditions
 
 **Successful exit** (report ready to merge):
+
 - All 4 passes complete
 - All criteria pass on all 4 passes
 - No new activity during quiet period
 
 **Failure exit** (do not report ready):
+
 - Any criterion fails
 - New activity detected during quiet period
 - Maximum loop iterations exceeded (5 iterations)
 
 **Escalation exit** (report to user):
+
 - Maximum iterations exceeded
 - Unresolvable blocker detected
 - CI appears stuck

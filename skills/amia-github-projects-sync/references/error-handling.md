@@ -25,6 +25,7 @@ gh api rate_limit | jq '.resources.graphql'
 ```
 
 Output:
+
 ```json
 {
   "limit": 5000,

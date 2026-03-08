@@ -7,11 +7,11 @@ Templates for all task assignments, integration instructions, and communication 
 ## Table of Contents
 
 - 1. Task Assignment Template
-- 2. GitHub Issue Template for Subtasks
-- 3. Integration Assignment Template
-- 4. Conflict Resolution Assignment Template
-- 5. Merge Authorization Template
-- 6. Progress Check-In Template
+- 1. GitHub Issue Template for Subtasks
+- 1. Integration Assignment Template
+- 1. Conflict Resolution Assignment Template
+- 1. Merge Authorization Template
+- 1. Progress Check-In Template
 
 ---
 
@@ -46,6 +46,7 @@ When complete, send AI Maestro message with:
 
 REPORT FORMAT:
 ```
+
 [DONE/FAILED] GH-[number] task_name
 Status: [completed/failed/blocked]
 Tests: [all passing/X failures]
@@ -53,6 +54,7 @@ CI/CD: [passing/failing]
 Coverage: [maintained/decreased]
 Blockers: [none/description]
 Details: [link to GitHub issue comment]
+
 ```
 
 POST DETAILED LOGS TO:
@@ -200,18 +202,22 @@ MERGE INSTRUCTIONS:
 
 COMMIT MESSAGE:
 ```
+
 [Feature Name]
 
 Completed subtasks:
+
 - GH-[number]: [description]
 - GH-[number]: [description]
 
 Changes:
+
 - [change 1]
 - [change 2]
 
 Tests: All passing (local + CI/CD)
 Coverage: [maintained/increased]
+
 ```
 
 SEND CONFIRMATION AFTER MERGE COMPLETE
@@ -258,6 +264,7 @@ Blockers: [none/description]
 ### AI Maestro Message Format
 
 All templates should be sent via AI Maestro using the `agent-messaging` skill with:
+
 - **Recipient**: The target agent session name
 - **Subject**: The subject line from the template
 - **Priority**: `high` (or as specified in the template)
@@ -267,6 +274,7 @@ All templates should be sent via AI Maestro using the `agent-messaging` skill wi
 ### Template Customization
 
 All templates can be customized for specific project needs:
+
 - Add project-specific verification steps
 - Add custom reporting requirements
 - Add domain-specific completion criteria
@@ -275,6 +283,7 @@ All templates can be customized for specific project needs:
 ### Integration with GitHub Issues
 
 Templates are designed to work with GitHub Issues:
+
 - Reference GitHub issue numbers with `GH-[number]` format
 - Post detailed logs to GitHub issue comments
 - Link completion reports back to issues

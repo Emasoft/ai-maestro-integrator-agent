@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Create Handoff Payload
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -54,6 +53,7 @@ Create a properly structured JSON payload for handing off work between agents in
 ### Step 1: Identify handoff type
 
 Determine the handoff type based on the workflow:
+
 - `task_delegation` - Assigning work to a worker agent
 - `context_transfer` - Passing context to continuation session
 - `review_request` - Requesting review from another agent
@@ -62,6 +62,7 @@ Determine the handoff type based on the workflow:
 ### Step 2: Gather context data
 
 Collect all information the receiving agent needs:
+
 - Task description
 - Relevant identifiers (PR number, issue number, etc.)
 - Current progress state
@@ -99,6 +100,7 @@ Collect all information the receiving agent needs:
 ### Step 4: Validate required fields
 
 Ensure all required fields are present:
+
 - `handoff_type` - Type of handoff
 - `from_agent` - Source agent identifier
 - `to_agent` - Target agent identifier
@@ -107,6 +109,7 @@ Ensure all required fields are present:
 ### Step 5: Add timestamps
 
 All datetime fields must use ISO 8601 format:
+
 ```
 2025-02-05T10:30:00Z
 ```

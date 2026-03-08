@@ -34,6 +34,7 @@ python skills/amia-git-worktree-operations/scripts/merge_safeguard.py \
 ```
 
 **Interpretation:**
+
 - `needs_rebase` - Rebase before merging
 - No conflicting files - Rebase should be clean
 
@@ -132,6 +133,7 @@ python skills/amia-git-worktree-operations/scripts/merge_safeguard.py --conflict
 ```
 
 **Use this to:**
+
 - Identify high-risk files before merging
 - Coordinate with other developers
 - Split large PRs to reduce conflicts

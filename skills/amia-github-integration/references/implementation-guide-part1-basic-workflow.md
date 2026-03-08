@@ -20,6 +20,7 @@
 - [Next Steps After Implementation](#next-steps-after-implementation)
 
 ## Use-Case TOC
+
 - When you need to implement GitHub integration from scratch → [Complete Implementation Checklist](#complete-implementation-checklist)
 - When you need to integrate with agent orchestrator → [Agent Orchestrator Integration](#agent-orchestrator-integration)
 - When you need next steps after setup → [Next Steps After Implementation](#next-steps-after-implementation)
@@ -266,6 +267,7 @@ This skill is designed to integrate with agent orchestrators to automate GitHub 
 ### Integration Patterns
 
 **Pattern 1: Automatic Issue Creation**
+
 ```python
 # Agent creates task
 task = orchestrator.create_task(
@@ -288,6 +290,7 @@ orchestrator.save_task(task)
 ```
 
 **Pattern 2: Status Synchronization**
+
 ```python
 # GitHub webhook receives issue update
 @webhook.route('/github/issues', methods=['POST'])
@@ -305,6 +308,7 @@ def handle_issue_update():
 ```
 
 **Pattern 3: Automated PR Creation**
+
 ```python
 # Agent completes task
 orchestrator.on_task_complete(task_id, callback=lambda task: {
@@ -327,6 +331,7 @@ orchestrator.on_task_complete(task_id, callback=lambda task: {
 ### Agent Configuration
 
 **Enable GitHub integration in agent config:**
+
 ```yaml
 # agent-config.yml
 github:
@@ -347,6 +352,7 @@ github:
 ### Monitoring Agent-GitHub Health
 
 **Track sync metrics:**
+
 ```python
 # Monitor sync health
 sync_metrics = {

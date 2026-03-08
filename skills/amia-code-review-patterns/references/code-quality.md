@@ -1,6 +1,7 @@
 # Code Quality Review
 
 ## Table of Contents
+
 - When checking if code is readable → Verification Checklist: Readability
 - If you need to verify naming conventions → Verification Checklist: Naming Conventions
 - When assessing code complexity → Verification Checklist: Code Complexity
@@ -11,11 +12,13 @@
 - If you suspect quality problems → Common Issues to Look For
 
 ## Purpose
+
 Assess code readability, maintainability, style consistency, and adherence to coding standards to ensure long-term codebase health.
 
 ## Verification Checklist
 
 ### Readability
+
 - [ ] Code is easy to understand
 - [ ] Variable names are descriptive and meaningful
 - [ ] Function names clearly indicate purpose
@@ -26,6 +29,7 @@ Assess code readability, maintainability, style consistency, and adherence to co
 - [ ] Indentation is consistent
 
 ### Naming Conventions
+
 - [ ] Consistent case style (camelCase, snake_case, PascalCase)
 - [ ] Names reveal intent
 - [ ] Boolean names are affirmative (is_valid, has_permission)
@@ -36,6 +40,7 @@ Assess code readability, maintainability, style consistency, and adherence to co
 - [ ] No single-letter names (except loop counters)
 
 ### Code Complexity
+
 - [ ] Functions are focused and concise (<50 lines)
 - [ ] Cyclomatic complexity is manageable (<10)
 - [ ] Nesting depth is reasonable (<4 levels)
@@ -45,6 +50,7 @@ Assess code readability, maintainability, style consistency, and adherence to co
 - [ ] Cognitive complexity is low
 
 ### Comments and Documentation
+
 - [ ] Code is self-documenting where possible
 - [ ] Comments explain "why", not "what"
 - [ ] Complex algorithms are explained
@@ -55,6 +61,7 @@ Assess code readability, maintainability, style consistency, and adherence to co
 - [ ] No misleading comments
 
 ### Code Organization
+
 - [ ] Imports are organized and sorted
 - [ ] Related code is grouped together
 - [ ] Functions are ordered logically
@@ -64,6 +71,7 @@ Assess code readability, maintainability, style consistency, and adherence to co
 - [ ] Constants are defined at module level
 
 ### Error Handling
+
 - [ ] Errors are handled explicitly
 - [ ] Error messages are clear and actionable
 - [ ] Exceptions are appropriate types
@@ -73,6 +81,7 @@ Assess code readability, maintainability, style consistency, and adherence to co
 - [ ] Errors are logged appropriately
 
 ### Code Smells
+
 - [ ] No duplicated code
 - [ ] No magic numbers or strings
 - [ ] No deeply nested conditionals
@@ -87,6 +96,7 @@ Assess code readability, maintainability, style consistency, and adherence to co
 ### Poor Naming
 
 **Unclear variable names**
+
 ```python
 # WRONG: Unclear abbreviations
 def calc(a, b, c):
@@ -102,6 +112,7 @@ def calculate_net_price(unit_price, quantity, discount):
 ```
 
 **Non-descriptive function names**
+
 ```python
 # WRONG: Doesn't describe what it does
 def process(data):
@@ -113,6 +124,7 @@ def double_values(numbers):
 ```
 
 **Misleading names**
+
 ```python
 # WRONG: Name doesn't match behavior
 def get_user(user_id):
@@ -132,6 +144,7 @@ def get_and_update_user_access_time(user_id):
 ### Excessive Complexity
 
 **Too many parameters**
+
 ```python
 # WRONG: Too many parameters
 def create_user(name, email, age, address, city, state, zip, phone, role, department, manager):
@@ -152,6 +165,7 @@ def create_user(user_data: UserData):
 ```
 
 **Deep nesting**
+
 ```python
 # WRONG: Deep nesting
 def process_order(order):
@@ -177,6 +191,7 @@ def process_order(order):
 ```
 
 **Long functions**
+
 ```python
 # WRONG: Function does too much
 def handle_request(request):
@@ -202,6 +217,7 @@ def handle_request(request):
 ### Poor Comments
 
 **Obvious comments**
+
 ```python
 # WRONG: States the obvious
 # Increment counter
@@ -219,6 +235,7 @@ for user in users:
 ```
 
 **Misleading comments**
+
 ```python
 # WRONG: Comment doesn't match code
 # Calculate average
@@ -230,6 +247,7 @@ total = sum(values)
 ```
 
 **Commented-out code**
+
 ```python
 # WRONG: Dead code left in
 def process(data):
@@ -247,6 +265,7 @@ def process(data):
 ### Magic Numbers
 
 **Unexplained constants**
+
 ```python
 # WRONG: Magic numbers
 if status == 3:
@@ -270,6 +289,7 @@ sleep(SECONDS_PER_DAY)
 ### Code Duplication
 
 **Repeated logic**
+
 ```python
 # WRONG: Duplicated code
 def process_admin_user(user):
@@ -306,6 +326,7 @@ def process_regular_user(user):
 ### Poor Error Handling
 
 **Silent failures**
+
 ```python
 # WRONG: Swallows all exceptions
 try:
@@ -323,6 +344,7 @@ except PaymentError as e:
 ```
 
 **Vague error messages**
+
 ```python
 # WRONG: Unhelpful message
 raise ValueError("Invalid input")
@@ -334,6 +356,7 @@ raise ValueError(f"Email '{email}' is invalid: must contain @ symbol")
 ## Scoring Criteria
 
 ### Critical (Must Fix)
+
 - Misleading names
 - Silently swallowed exceptions
 - Security-sensitive magic values
@@ -343,6 +366,7 @@ raise ValueError(f"Email '{email}' is invalid: must contain @ symbol")
 - Completely missing error handling
 
 ### High Priority (Should Fix)
+
 - Unclear variable/function names
 - Magic numbers in business logic
 - Code duplication
@@ -353,6 +377,7 @@ raise ValueError(f"Email '{email}' is invalid: must contain @ symbol")
 - Bare except clauses
 
 ### Medium Priority (Consider Fixing)
+
 - Minor naming improvements
 - Moderate complexity (cyclomatic > 10)
 - Long parameter lists (5-7 parameters)
@@ -362,6 +387,7 @@ raise ValueError(f"Email '{email}' is invalid: must contain @ symbol")
 - Commented-out code
 
 ### Low Priority (Nice to Have)
+
 - Additional self-documentation
 - Improved code organization
 - More descriptive names
@@ -403,6 +429,7 @@ raise ValueError(f"Email '{email}' is invalid: must contain @ symbol")
 ## Code Quality Metrics
 
 ### Complexity Metrics
+
 - **Cyclomatic Complexity**: Number of independent paths (<10 preferred)
 - **Cognitive Complexity**: Effort to understand code (<15 preferred)
 - **Nesting Depth**: Maximum indentation levels (<4 preferred)
@@ -411,6 +438,7 @@ raise ValueError(f"Email '{email}' is invalid: must contain @ symbol")
 - **File Length**: Lines of code per file (<500 preferred)
 
 ### Maintainability Metrics
+
 - **Code Duplication**: Percentage of duplicated code (<3% target)
 - **Comment Density**: Comments per code lines (10-20% range)
 - **Test Coverage**: Percentage of code tested (>80% target)

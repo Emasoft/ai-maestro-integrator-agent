@@ -38,15 +38,16 @@ You are the **Code Reviewer Agent** - a **READ-ONLY EVALUATOR** that reviews cod
 📖 **[amia-code-review-patterns/SKILL.md](../skills/amia-code-review-patterns/SKILL.md)**
 
 This skill contains:
+
 - 1. Two-Stage Gate System (Gate 1: Spec Compliance, Gate 2: Quality)
-- 2. Gate 1: Specification Compliance Evaluation
-- 3. Gate 2: Code Quality Evaluation
-- 4. Review Workflow (9-step procedure)
-- 5. RULE 14: User Requirements Compliance Review
-- 6. Report Templates (Review Report, Fix Instructions)
-- 7. Communication Guidelines (DO/DON'T for fix instructions)
-- 8. Error Handling (missing specs, tool failures)
-- 9. Tools Usage Patterns
+- 1. Gate 1: Specification Compliance Evaluation
+- 1. Gate 2: Code Quality Evaluation
+- 1. Review Workflow (9-step procedure)
+- 1. RULE 14: User Requirements Compliance Review
+- 1. Report Templates (Review Report, Fix Instructions)
+- 1. Communication Guidelines (DO/DON'T for fix instructions)
+- 1. Error Handling (missing specs, tool failures)
+- 1. Tools Usage Patterns
 
 ## Procedural Details (See Skill)
 
@@ -58,58 +59,63 @@ This skill contains:
 
 > **For report templates**, see [amia-code-review-patterns/references/report-templates.md](../skills/amia-code-review-patterns/references/report-templates.md)
 >   <!-- TOC: report-templates.md -->
->   ### Progress Tracking Reports
->   - [Progress Report Template](report-templates-part1-progress.md)
->     - Executive Summary format
->     - Metrics Overview section
->     - Task Status tables (Completed, In Progress, Pending, Blocked)
->     - Milestones tracking table
->     - Recommendations and Next Actions
+> ### Progress Tracking Reports
 >
->   ### Code Quality Reports
->   - [Quality Report Template](report-templates-part2-quality.md)
->     - Quality Score breakdown (100-point scale)
->     - Test Coverage analysis with module-level detail
->     - Code Quality metrics (linting, type coverage)
->     - Documentation completeness tracking
->     - Security scan results
->     - Performance benchmarks
->     - Technical debt tracking
+> - [Progress Report Template](report-templates-part1-progress.md)
+>   - Executive Summary format
+>   - Metrics Overview section
+>   - Task Status tables (Completed, In Progress, Pending, Blocked)
+>   - Milestones tracking table
+>   - Recommendations and Next Actions
 >
->   ### Test Execution Reports
->   - [Test Report Template](report-templates-part3-test.md)
->     - Executive Summary with pass/fail/skip counts
->     - Test Results table with duration
->     - Failed Tests detailed analysis
->     - Error descriptions and recommendations
->     - Skipped Tests rationale
->     - Slow Tests identification (with snail emoji for CI-skipped tests)
->     - Coverage Impact metrics
+> ### Code Quality Reports
 >
->   ### Task Completion Reports
->   - [Completion Report Template](report-templates-part4-completion.md)
->     - Task Objective documentation
->     - Completion Checklist (Implementation, Testing, Documentation, Code Quality, Integration)
->     - Verification Evidence (Test Results, Code Review, Performance Metrics)
->     - Known Limitations
->     - Future Enhancements
->     - Sign-Off status and rationale
+> - [Quality Report Template](report-templates-part2-quality.md)
+>   - Quality Score breakdown (100-point scale)
+>   - Test Coverage analysis with module-level detail
+>   - Code Quality metrics (linting, type coverage)
+>   - Documentation completeness tracking
+>   - Security scan results
+>   - Performance benchmarks
+>   - Technical debt tracking
 >
->   ### Summary and Integration Reports
->   - [Summary Report Template](report-templates-part5-summary.md)
->     - Project Health indicator
->     - Key Metrics Dashboard
->     - Recent Achievements
->     - Current Focus Areas
->     - Upcoming Milestones
->     - Risk Factors analysis
+> ### Test Execution Reports
 >
->   - [Integration Report Template](report-templates-part6-integration.md)
->     - Integration Status indicator
->     - Component Interaction Map
->     - API Contract Verification
->     - Integration Test Results
->     - Issues Detected with resolution recommendations
+> - [Test Report Template](report-templates-part3-test.md)
+>   - Executive Summary with pass/fail/skip counts
+>   - Test Results table with duration
+>   - Failed Tests detailed analysis
+>   - Error descriptions and recommendations
+>   - Skipped Tests rationale
+>   - Slow Tests identification (with snail emoji for CI-skipped tests)
+>   - Coverage Impact metrics
+>
+> ### Task Completion Reports
+>
+> - [Completion Report Template](report-templates-part4-completion.md)
+>   - Task Objective documentation
+>   - Completion Checklist (Implementation, Testing, Documentation, Code Quality, Integration)
+>   - Verification Evidence (Test Results, Code Review, Performance Metrics)
+>   - Known Limitations
+>   - Future Enhancements
+>   - Sign-Off status and rationale
+>
+> ### Summary and Integration Reports
+>
+> - [Summary Report Template](report-templates-part5-summary.md)
+>   - Project Health indicator
+>   - Key Metrics Dashboard
+>   - Recent Achievements
+>   - Current Focus Areas
+>   - Upcoming Milestones
+>   - Risk Factors analysis
+>
+> - [Integration Report Template](report-templates-part6-integration.md)
+>   - Integration Status indicator
+>   - Component Interaction Map
+>   - API Contract Verification
+>   - Integration Test Results
+>   - Issues Detected with resolution recommendations
 >   <!-- /TOC -->
 
 > **For communication guidelines**, see [amia-code-review-patterns/references/communication-guidelines.md](../skills/amia-code-review-patterns/references/communication-guidelines.md)

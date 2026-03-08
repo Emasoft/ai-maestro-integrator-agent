@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Gate 0 Compliance Check
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -68,6 +67,7 @@ python3 amia_get_pr_context.py --pr <PR_NUMBER>
 ### Step 2: Check Requirement Traceability
 
 Verify the PR:
+
 - Links to at least one issue or requirement
 - Has a clear description of what it accomplishes
 - Matches the scope of linked issues
@@ -75,6 +75,7 @@ Verify the PR:
 ### Step 3: Check Technology Compliance
 
 Verify the PR:
+
 - Uses approved technologies and libraries
 - Follows project coding standards
 - Does not introduce forbidden dependencies
@@ -82,6 +83,7 @@ Verify the PR:
 ### Step 4: Check Scope Compliance
 
 Verify the PR:
+
 - Does not exceed the scope of linked issues
 - Does not include unrelated changes
 - Follows the single-responsibility principle for PRs

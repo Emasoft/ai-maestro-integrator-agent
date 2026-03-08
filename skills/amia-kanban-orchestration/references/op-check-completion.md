@@ -1,6 +1,5 @@
 # Operation: Check Board Completion
 
-
 ## Contents
 
 - [Metadata](#metadata)

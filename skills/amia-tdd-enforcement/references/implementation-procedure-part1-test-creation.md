@@ -22,12 +22,14 @@
 Before writing any code or test:
 
 **Questions to Answer:**
+
 1. What is the single behavior to implement?
 2. What are the input conditions?
 3. What is the expected output or behavior?
 4. What constraints or edge cases exist for this specific feature?
 
 **Process:**
+
 1. Read the requirement carefully
 2. Identify ONE behavior to implement
 3. Break down complex requirements into smaller behaviors
@@ -39,12 +41,14 @@ Before writing any code or test:
 Requirement: "Users should be able to log in with email and password"
 
 Analysis:
+
 - **Behavior:** User authentication with credentials
 - **Input:** Email (string), Password (string)
 - **Output:** LoginResult (authenticated: bool, user: User)
 - **Constraints:** Email must exist, password must match
 
 **Decomposition:**
+
 1. User can login with valid credentials (valid email + matching password)
 2. User cannot login with invalid email (email doesn't exist)
 3. User cannot login with wrong password (email exists, password mismatch)
@@ -78,6 +82,7 @@ Test names must clearly describe what is being tested:
 **Format:** `test_[subject]_[action]_[condition]`
 
 **Examples:**
+
 - `test_user_can_login_with_valid_credentials`
 - `test_user_cannot_login_with_invalid_email`
 - `test_user_cannot_login_with_wrong_password`
@@ -153,14 +158,19 @@ mvn test -Dtest=UserServiceTest#testUserCanLoginWithValidCredentials
 ```
 
 **Expected Result:**
+
 ```
 FAIL: NameError: name 'UserService' is not defined
 ```
+
 or
+
 ```
 FAIL: Cannot find module 'UserService'
 ```
+
 or
+
 ```
 FAIL: UserService cannot be resolved to a type
 ```
@@ -187,12 +197,14 @@ Write production code to make the test pass.
 ### Minimum Implementation Rules
 
 **Do:**
+
 - Write ONLY the code needed to make the test pass
 - Use the simplest solution that works
 - Hardcode values if it makes the test pass
 - Create minimal classes and methods
 
 **Don't:**
+
 - Add extra features not tested
 - Write code for future requirements
 - Refactor in this phase
@@ -277,6 +289,7 @@ mvn test
 ```
 
 **Expected Result:**
+
 ```
 All tests: PASS
 ```
@@ -299,4 +312,5 @@ git commit -m "GREEN: implement user login with valid credentials
 ## Next Steps
 
 After completing the GREEN phase, proceed to:
+
 - [Part 2: Implementation & Refactoring](implementation-procedure-part2-implementation-refactor.md) - Step 4 (Refactor) and Complete Procedure Example

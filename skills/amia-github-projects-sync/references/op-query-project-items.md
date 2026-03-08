@@ -1,6 +1,5 @@
 # Operation: Query Project Items
 
-
 ## Contents
 
 - [Metadata](#metadata)

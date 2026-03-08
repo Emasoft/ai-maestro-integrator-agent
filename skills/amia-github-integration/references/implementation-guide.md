@@ -66,6 +66,7 @@ Use this checklist to systematically implement GitHub integration. Work through 
 ### Phase 2: Label System Setup
 
 Create the 9-label system:
+
 - `feature` (green) - New feature or functionality
 - `bug` (red) - Defect requiring correction
 - `refactor` (yellow) - Code quality improvements
@@ -79,6 +80,7 @@ Create the 9-label system:
 ### Phase 3: GitHub Projects V2 Setup
 
 Configure project with:
+
 - Status field: Backlog, Todo, In Progress, AI Review, Human Review, Merge/Release, Done, Blocked
 - Priority field: High, Medium, Low
 - Automation rules for auto-add and auto-archive
@@ -137,6 +139,7 @@ This section covers integrating GitHub with agent orchestrators for automated op
 #### Agent Configuration
 
 Enable GitHub integration via `agent-config.yml`:
+
 - Set owner, repo, project_id
 - Configure sync interval
 - Enable auto_create_issues and auto_create_prs
@@ -145,6 +148,7 @@ Enable GitHub integration via `agent-config.yml`:
 #### Monitoring Agent-GitHub Health
 
 Track sync metrics:
+
 - last_sync_time
 - issues_synced
 - errors
@@ -218,21 +222,25 @@ Advanced features for teams ready to go beyond basic implementation.
 ### Success Metrics
 
 #### Adoption Metrics
+
 - % of team using issue workflow
 - % of PRs properly linked to issues
 - % of issues with correct labels
 
 #### Quality Metrics
+
 - Average time to close issues
 - Average time in review
 - % of issues closed on first PR
 
 #### Efficiency Metrics
+
 - Issues closed per week/sprint
 - PRs merged per week/sprint
 - Sync success rate
 
 #### Team Satisfaction
+
 - Workflow satisfaction score
 - Process improvement suggestions
 - Reduction in manual coordination overhead

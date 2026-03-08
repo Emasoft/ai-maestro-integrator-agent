@@ -1,6 +1,5 @@
 # Operation: Create Module Issue
 
-
 ## Contents
 
 - [Metadata](#metadata)

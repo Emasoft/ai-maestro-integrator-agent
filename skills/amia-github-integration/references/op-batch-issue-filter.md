@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Batch Issue Filter
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -50,6 +49,7 @@ Filter GitHub issues using multiple criteria (labels, state, assignee, date) to 
 ### Step 1: Define filter criteria
 
 Determine which combination of filters to apply:
+
 - Labels (one or multiple)
 - State (open/closed/all)
 - Assignee

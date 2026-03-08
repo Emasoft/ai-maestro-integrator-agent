@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Interpret Check Conclusions
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -140,6 +139,7 @@ Understand what each check conclusion value means and determine the appropriate 
 ```
 
 Common skip reasons:
+
 - Condition not met (e.g., only runs on specific branches)
 - Previous job failed
 - Manual skip configured
@@ -159,6 +159,7 @@ Common skip reasons:
 ```
 
 May need re-run if:
+
 - Cancelled due to new push (auto-cancelled)
 - Manually cancelled by mistake
 - Infrastructure issue caused cancellation
@@ -178,6 +179,7 @@ May need re-run if:
 ```
 
 Investigation steps:
+
 1. Check which step timed out
 2. Look for slow tests or operations
 3. Consider parallelization
@@ -198,6 +200,7 @@ Investigation steps:
 ```
 
 Examples:
+
 - Security scan found issues requiring review
 - Approval workflow requires sign-off
 - License compliance requires acknowledgment
@@ -217,6 +220,7 @@ Examples:
 ```
 
 Common neutral checks:
+
 - Code coverage reports
 - Documentation generators
 - Metrics collectors
@@ -236,6 +240,7 @@ Common neutral checks:
 ```
 
 Causes:
+
 - Check run is from an old commit
 - Base branch updated, PR needs rebase
 - GitHub marked as stale due to age

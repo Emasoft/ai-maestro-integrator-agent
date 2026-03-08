@@ -161,6 +161,7 @@ else:
 **Meaning**: The PR can be merged right now. All requirements are satisfied.
 
 **What this guarantees:**
+
 - No merge conflicts exist
 - All required status checks have passed
 - All required reviews are approved
@@ -173,11 +174,13 @@ else:
 **Meaning**: The PR has merge conflicts that must be resolved before merging.
 
 **Causes:**
+
 - Files modified in both the PR branch and base branch
 - File deletions in one branch, modifications in another
 - Rename conflicts
 
 **Action**:
+
 1. Update PR branch with base branch changes
 2. Resolve conflicts locally
 3. Push resolved changes
@@ -188,6 +191,7 @@ else:
 **Meaning**: GitHub is calculating the merge state. This is temporary.
 
 **When this occurs:**
+
 - Immediately after PR creation
 - After pushing new commits
 - After base branch changes
@@ -212,6 +216,7 @@ def wait_for_merge_state(max_retries=5):
 **Meaning**: Branch protection rules prevent the merge.
 
 **Common causes:**
+
 - Required status checks not passing
 - Required number of approvals not met
 - CODEOWNERS review not approved
@@ -257,10 +262,12 @@ query {
 **Meaning**: The PR branch is behind the base branch and must be updated before merge.
 
 **When this occurs:**
+
 - Branch protection requires "up to date before merge"
 - Base branch has received new commits
 
 **Action**:
+
 1. Update PR branch: `gh pr update-branch 123`
 2. Or merge base into PR branch locally
 3. Wait for status checks to complete
@@ -270,11 +277,13 @@ query {
 **Meaning**: GitHub cannot create a clean merge commit.
 
 **Causes:**
+
 - Complex merge conflicts
 - Submodule issues
 - Git history problems
 
 **Action**: Manual intervention required:
+
 1. Checkout PR branch locally
 2. Merge base branch manually
 3. Resolve all issues
@@ -287,6 +296,7 @@ query {
 **Note**: This is different from BLOCKED - UNSTABLE specifically indicates status check failures, while BLOCKED can be any branch protection rule.
 
 **Action**:
+
 1. Query status checks to identify failures
 2. Fix failing checks
 3. Push updates or re-run workflows
@@ -300,33 +310,39 @@ query {
 Always verify these conditions before attempting a merge:
 
 1. **PR is not already merged**
+
    ```python
    assert data["merged"] == False
    assert data["state"] == "OPEN"
    ```
 
 2. **No merge conflicts**
+
    ```python
    assert data["mergeable"] != "CONFLICTING"
    ```
 
 3. **Merge state is determined**
+
    ```python
    assert data["mergeStateStatus"] != "UNKNOWN"
    ```
 
 4. **PR is mergeable**
+
    ```python
    assert data["mergeStateStatus"] == "MERGEABLE"
    ```
 
 5. **CI status is acceptable** (if not ignoring CI)
+
    ```python
    ci_state = data["commits"]["nodes"][0]["commit"]["statusCheckRollup"]["state"]
    assert ci_state == "SUCCESS"
    ```
 
 6. **Review decision is acceptable** (if reviews required)
+
    ```python
    # APPROVED, CHANGES_REQUESTED, REVIEW_REQUIRED, or null
    assert data["reviewDecision"] in ["APPROVED", None]
@@ -353,6 +369,7 @@ python scripts/amia_test_pr_merge_ready.py --pr 123 --repo owner/repo
 ```
 
 **Exit codes:**
+
 - `0`: Ready to merge
 - `1`: CI failing
 - `2`: Conflicts exist

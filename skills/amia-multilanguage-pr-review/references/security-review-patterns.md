@@ -10,15 +10,15 @@ Security-focused code review patterns for identifying vulnerabilities and securi
   - 1.1 If reviewing user input handling
   - 1.2 If reviewing file path operations
   - 1.3 If reviewing SQL queries
-- 2. Authentication and Authorization
+- 1. Authentication and Authorization
   - 2.1 If reviewing authentication flows
   - 2.2 If reviewing authorization checks
   - 2.3 If reviewing session management
-- 3. Secrets Management
+- 1. Secrets Management
   - 3.1 If secrets are hardcoded
   - 3.2 If environment variables are mishandled
   - 3.3 If secrets are logged
-- 4. Language-Specific Security
+- 1. Language-Specific Security
   - 4.1 If reviewing Python code for security
   - 4.2 If reviewing JavaScript/TypeScript for security
   - 4.3 If reviewing shell scripts for security
@@ -32,12 +32,14 @@ Security-focused code review patterns for identifying vulnerabilities and securi
 ### 1.1 If reviewing user input handling
 
 **Check for**:
+
 - Input length limits
 - Character allowlists/blocklists
 - Type validation
 - Encoding handling
 
 **Red flags**:
+
 ```python
 # WRONG - no validation
 user_input = request.get("name")
@@ -50,6 +52,7 @@ db.execute("INSERT INTO users (name) VALUES (?)", [user_input])
 ### 1.2 If reviewing file path operations
 
 **Check for path traversal**:
+
 ```python
 # WRONG - allows ../../../etc/passwd
 file_path = os.path.join(BASE_DIR, user_input)
@@ -63,6 +66,7 @@ if not safe_path.startswith(os.path.realpath(BASE_DIR)):
 ### 1.3 If reviewing SQL queries
 
 **Check for SQL injection**:
+
 - Use parameterized queries ALWAYS
 - Never string-concatenate user input
 - Validate and sanitize even with ORMs
@@ -74,6 +78,7 @@ if not safe_path.startswith(os.path.realpath(BASE_DIR)):
 ### 2.1 If reviewing authentication flows
 
 **Check for**:
+
 - Password hashing (bcrypt, argon2)
 - Timing-safe comparisons
 - Rate limiting
@@ -82,6 +87,7 @@ if not safe_path.startswith(os.path.realpath(BASE_DIR)):
 ### 2.2 If reviewing authorization checks
 
 **Check for**:
+
 - IDOR (Insecure Direct Object References)
 - Missing authorization on endpoints
 - Role/permission bypass opportunities
@@ -89,6 +95,7 @@ if not safe_path.startswith(os.path.realpath(BASE_DIR)):
 ### 2.3 If reviewing session management
 
 **Check for**:
+
 - Secure session IDs (random, sufficient entropy)
 - HTTPOnly and Secure cookie flags
 - Session expiration
@@ -101,6 +108,7 @@ if not safe_path.startswith(os.path.realpath(BASE_DIR)):
 ### 3.1 If secrets are hardcoded
 
 **Red flags**:
+
 ```python
 # WRONG
 API_KEY = "sk-1234567890abcdef"
@@ -108,6 +116,7 @@ DATABASE_URL = "postgres://user:password@host/db"
 ```
 
 **Correct approach**:
+
 ```python
 # CORRECT - environment variables
 API_KEY = os.environ.get("API_KEY")
@@ -117,6 +126,7 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 ### 3.2 If environment variables are mishandled
 
 **Check for**:
+
 - Secrets printed to stdout/logs
 - Secrets in error messages
 - Secrets in stack traces
@@ -124,6 +134,7 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 ### 3.3 If secrets are logged
 
 **Check logging code for**:
+
 ```python
 # WRONG
 logger.info(f"Connecting with API key: {api_key}")
@@ -139,6 +150,7 @@ logger.info("Connecting to API (key configured)")
 ### 4.1 If reviewing Python code for security
 
 **Check for**:
+
 - `eval()`, `exec()` with user input
 - `pickle` with untrusted data
 - `subprocess.shell=True` with user input
@@ -147,6 +159,7 @@ logger.info("Connecting to API (key configured)")
 ### 4.2 If reviewing JavaScript/TypeScript for security
 
 **Check for**:
+
 - `eval()`, `Function()` with user input
 - `innerHTML` with unsanitized content
 - Missing CSRF tokens
@@ -155,6 +168,7 @@ logger.info("Connecting to API (key configured)")
 ### 4.3 If reviewing shell scripts for security
 
 **Check for**:
+
 - Unquoted variables: `$var` vs `"$var"`
 - Command injection: `eval "$user_input"`
 - Unsafe temp file creation
@@ -164,6 +178,7 @@ logger.info("Connecting to API (key configured)")
 ### 4.4 If reviewing Go code for security
 
 **Check for**:
+
 - SQL injection in raw queries
 - Path traversal in file operations
 - Missing TLS verification
@@ -172,6 +187,7 @@ logger.info("Connecting to API (key configured)")
 ### 4.5 If reviewing Rust code for security
 
 **Check for**:
+
 - Unsafe blocks without justification
 - Unchecked `.unwrap()` on user input
 - Memory safety issues in FFI code

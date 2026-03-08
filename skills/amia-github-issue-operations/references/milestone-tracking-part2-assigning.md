@@ -14,12 +14,14 @@
 ### 3.2.1 Single Issue Assignment
 
 **Using gh CLI:**
+
 ```bash
 # Assign issue #123 to milestone "v2.1.0"
 gh issue edit 123 --repo owner/repo --milestone "v2.1.0"
 ```
 
 **Using GitHub API:**
+
 ```bash
 # Get milestone number first
 milestone_number=$(gh api repos/{owner}/{repo}/milestones \
@@ -32,6 +34,7 @@ gh api repos/{owner}/{repo}/issues/123 \
 ```
 
 **Python implementation:**
+
 ```python
 import subprocess
 import json
@@ -66,6 +69,7 @@ def assign_issue_to_milestone(repo: str, issue_number: int, milestone_title: str
 ### 3.2.2 Bulk Assignment
 
 **Assign multiple issues to a milestone:**
+
 ```bash
 # Assign issues 1, 2, 3, 4, 5 to milestone
 for issue in 1 2 3 4 5; do
@@ -74,6 +78,7 @@ done
 ```
 
 **Assign all issues with a specific label:**
+
 ```bash
 # Get all issues with label "ready-for-release"
 issues=$(gh issue list --repo owner/repo \
@@ -89,6 +94,7 @@ done
 ```
 
 **Python bulk assignment:**
+
 ```python
 def bulk_assign_to_milestone(
     repo: str,
@@ -110,12 +116,14 @@ def bulk_assign_to_milestone(
 ### 3.2.3 Moving Between Milestones
 
 **Move issue from one milestone to another:**
+
 ```bash
 # Simply assign to new milestone (replaces old one)
 gh issue edit 123 --repo owner/repo --milestone "v2.2.0"
 ```
 
 **Remove from milestone (unassign):**
+
 ```bash
 # Using API to set milestone to null
 gh api repos/{owner}/{repo}/issues/123 \
@@ -124,6 +132,7 @@ gh api repos/{owner}/{repo}/issues/123 \
 ```
 
 **Bulk move - all issues from one milestone to another:**
+
 ```bash
 # Get all open issues from old milestone
 issues=$(gh issue list --repo owner/repo \

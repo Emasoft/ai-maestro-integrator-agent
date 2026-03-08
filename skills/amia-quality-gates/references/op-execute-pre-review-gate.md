@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Execute Pre-Review Gate
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -92,6 +91,7 @@ python3 amia_get_pr_checks.py --pr <NUMBER>
 ```
 
 Verify:
+
 - All required checks completed
 - No required checks failing
 
@@ -128,6 +128,7 @@ BODY=$(gh pr view <NUMBER> --json body --jq '.body')
 ### Step 6: Evaluate Warnings
 
 Check for warning conditions:
+
 ```bash
 # Coverage check (if available)
 gh pr checks <NUMBER> --json name,conclusion | jq '.[] | select(.name | test("coverage"))'
@@ -139,11 +140,13 @@ gh pr view <NUMBER> --json additions,deletions --jq '.additions + .deletions'
 ### Step 7: Apply Gate Decision
 
 If all required checks pass:
+
 ```bash
 gh pr edit <NUMBER> --remove-label "gate:pre-review-pending" --add-label "gate:pre-review-passed"
 ```
 
 If any required check fails:
+
 ```bash
 gh pr edit <NUMBER> --add-label "gate:pre-review-failed"
 ```
@@ -151,6 +154,7 @@ gh pr edit <NUMBER> --add-label "gate:pre-review-failed"
 ## Gate Pass Criteria
 
 ALL of these must be true:
+
 - [ ] All tests pass (no test failures)
 - [ ] Linting passes (no lint errors)
 - [ ] Build succeeds (code compiles)
@@ -180,6 +184,7 @@ gh pr edit 123 --remove-label "gate:pre-review-pending" --add-label "gate:pre-re
 ## Failure Handling
 
 If gate fails:
+
 1. Apply `gate:pre-review-failed` label
 2. Comment with failure details
 3. Follow [Escalation Path A](escalation-paths.md)

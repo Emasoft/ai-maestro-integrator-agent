@@ -34,6 +34,7 @@
 **Procedure**:
 
 1. **Read all configuration files** that affect the component being integrated:
+
    ```bash
    # Example commands with exit code capture
    cat config.yaml && echo $? > /tmp/config-read-exit.txt
@@ -58,6 +59,7 @@
    - Configuration file checksums
 
 **Verification checklist for Step 1**:
+
 - [ ] Exit codes captured for all config validation commands
 - [ ] All required environment variables present with exit code 0
 - [ ] System capabilities documented with proof artifacts
@@ -100,6 +102,7 @@
    - Document cache backend connectivity
 
 **Verification checklist for Step 2**:
+
 - [ ] All connectivity tests return exit code 0 or documented failure codes
 - [ ] Actual HTTP status codes recorded for all endpoint tests
 - [ ] Network responses captured to evidence files
@@ -116,6 +119,7 @@
    - Capture validator exit codes
    - Document syntax errors with line numbers
    - Example:
+
      ```bash
      yamllint config.yaml
      echo $? > /tmp/yaml-syntax-exit.txt
@@ -140,6 +144,7 @@
    - Document resource constraint violations
 
 **Verification checklist for Step 3**:
+
 - [ ] All config files pass syntax validation with exit code 0
 - [ ] File permissions verified for security compliance
 - [ ] Network connectivity tests completed with exit codes
@@ -160,6 +165,7 @@
    - Capture exit code for each test individually
    - Record test duration for performance analysis
    - Example:
+
      ```bash
      pytest tests/integration/test_payment_service.py -v
      echo $? > /tmp/pytest-exit.txt
@@ -183,6 +189,7 @@
    - Document error path coverage with exit codes
 
 **Verification checklist for functional tests**:
+
 - [ ] Every test has captured exit code
 - [ ] No assertions made without exit code evidence
 - [ ] Test duration recorded for all tests
@@ -294,6 +301,7 @@ Model: Claude Opus 4.5
 **Procedure**:
 
 1. **Read USER_REQUIREMENTS.md** from project root:
+
    ```bash
    cat USER_REQUIREMENTS.md
    ```
@@ -474,18 +482,22 @@ Details: requirement-issues/REQ-IMM-001-violation-20250205.md
 **Problem**: Bash command completes but exit code not recorded in evidence.
 
 **Symptoms**:
+
 - Test appears to run but no exit code in report
 - Evidence file missing exit code line
 - Cannot determine pass/fail status
 
 **Solution**:
+
 1. Always use `echo $?` **immediately** after command execution
 2. Write exit code to dedicated evidence file:
+
    ```bash
    command_to_test
    EXIT_CODE=$?
    echo $EXIT_CODE > /tmp/exit-code-{test-name}.txt
    ```
+
 3. Never run multiple commands between test and exit code capture
 4. If exit code cannot be captured, mark test as FAILED
 
@@ -494,16 +506,20 @@ Details: requirement-issues/REQ-IMM-001-violation-20250205.md
 **Problem**: Integration test hangs waiting for service response, never completes.
 
 **Symptoms**:
+
 - Test process runs beyond expected duration
 - No output from service
 - Integration verification blocked
 
 **Solution**:
+
 1. Use `timeout` command with kill signal:
+
    ```bash
    timeout -s KILL 30s curl http://service/health
    echo $? > /tmp/health-check-exit.txt
    ```
+
 2. Exit code 124 = timeout reached (command was running)
 3. Exit code 137 = timeout reached and killed (SIGKILL sent)
 4. Document timeout value in evidence report
@@ -514,17 +530,22 @@ Details: requirement-issues/REQ-IMM-001-violation-20250205.md
 **Problem**: Cannot execute verification script or access required resources.
 
 **Symptoms**:
+
 - Exit code 126 (command cannot execute)
 - Exit code 1 with "Permission denied" error message
 - Cannot read configuration files
 
 **Solution**:
+
 1. Check file permissions with Read tool:
+
    ```bash
    ls -la verification-script.sh
    ```
+
 2. Document required privileges in evidence report
 3. If permissions cannot be fixed, FAIL verification with evidence:
+
    ```markdown
    ### Permission Failure
    - File: verification-script.sh
@@ -533,6 +554,7 @@ Details: requirement-issues/REQ-IMM-001-violation-20250205.md
    - Exit code: 126
    - Status: FAILED
    ```
+
 4. Escalate to orchestrator for permission resolution
 
 #### Issue 4: Incomplete Evidence
@@ -540,18 +562,22 @@ Details: requirement-issues/REQ-IMM-001-violation-20250205.md
 **Problem**: Partial verification results without complete exit codes or proof artifacts.
 
 **Symptoms**:
+
 - Some tests have exit codes, others don't
 - Missing stdout/stderr captures
 - Incomplete evidence report
 
 **Solution**:
+
 1. Re-run verification with explicit exit code capture for ALL steps
 2. Use consistent evidence file naming:
+
    ```bash
    test-name-{timestamp}-stdout.txt
    test-name-{timestamp}-stderr.txt
    test-name-{timestamp}-exit.txt
    ```
+
 3. If complete evidence cannot be achieved, mark ENTIRE verification as FAILED
 4. Do not proceed with partial evidence - abort verification
 
@@ -560,12 +586,15 @@ Details: requirement-issues/REQ-IMM-001-violation-20250205.md
 **Problem**: Cannot reach external services or APIs during integration testing.
 
 **Symptoms**:
+
 - Exit codes indicating connection refused
 - DNS resolution failures
 - Timeout errors
 
 **Solution**:
+
 1. Verify network accessibility with diagnostic commands:
+
    ```bash
    ping -c 3 service.example.com
    echo $? > /tmp/ping-exit.txt
@@ -573,6 +602,7 @@ Details: requirement-issues/REQ-IMM-001-violation-20250205.md
    curl -I http://service.example.com/health
    echo $? > /tmp/curl-health-exit.txt
    ```
+
 2. Document network state in evidence report
 3. Check firewall rules and DNS configuration
 4. If network is required but unavailable, FAIL verification with evidence
@@ -608,7 +638,9 @@ Status: FAILED
 - Duration: {seconds}s
 - Error Output:
   ```
+
   {stderr content}
+
   ```
 - Evidence Files:
   - stdout: /tmp/{test_name}-stdout.txt
@@ -658,12 +690,14 @@ The orchestrator will read the detailed report file to understand failures and d
 **Procedure**:
 
 1. **Check container image presence**:
+
    ```bash
    docker images | grep {image_name}
    echo $? > /tmp/docker-image-check-exit.txt
    ```
 
 2. **Execute image inspection commands**:
+
    ```bash
    docker inspect {image_name}:{tag} > /tmp/docker-inspect-output.json
    echo $? > /tmp/docker-inspect-exit.txt
@@ -676,10 +710,12 @@ The orchestrator will read the detailed report file to understand failures and d
    - Document layer verification with exit codes
 
 4. **Test container spawn capability**:
+
    ```bash
    docker run --rm {image_name}:{tag} /bin/sh -c "echo test"
    echo $? > /tmp/docker-run-exit.txt
    ```
+
    - Exit code 0 = container can spawn successfully
    - Non-zero = container configuration error
 
@@ -690,6 +726,7 @@ The orchestrator will read the detailed report file to understand failures and d
    - Document health check timing and behavior
 
 **Verification checklist**:
+
 - [ ] Container image exists locally with exit code 0
 - [ ] Image inspection completes with exit code 0
 - [ ] All layer SHAs verified and documented
@@ -707,6 +744,7 @@ The orchestrator will read the detailed report file to understand failures and d
    - Verify shared object versions match requirements
    - Test binary execution with no missing dependencies
    - Example:
+
      ```bash
      ldd /path/to/binary
      echo $? > /tmp/ldd-exit.txt
@@ -717,6 +755,7 @@ The orchestrator will read the detailed report file to understand failures and d
    - Check installed packages match requirements.txt/package.json
    - Validate environment variable expectations
    - Example:
+
      ```bash
      python --version
      echo $? > /tmp/python-version-exit.txt
@@ -735,6 +774,7 @@ The orchestrator will read the detailed report file to understand failures and d
    - Document process context with exit codes
 
 **Verification checklist**:
+
 - [ ] All binary dependencies resolved with exit code 0
 - [ ] Runtime versions match requirements
 - [ ] File system layout verified and documented
@@ -778,6 +818,7 @@ The orchestrator will read the detailed report file to understand failures and d
    - Check /metrics endpoint exposes metrics
    - Document endpoint tests with exit codes
    - Example:
+
      ```bash
      curl -f http://localhost:8080/health
      echo $? > /tmp/health-endpoint-exit.txt
@@ -790,6 +831,7 @@ The orchestrator will read the detailed report file to understand failures and d
    - Document degradation tests with exit codes
 
 **Verification checklist**:
+
 - [ ] Security policies verified with exit codes
 - [ ] Secret management tested and documented
 - [ ] Access controls validated with exit codes

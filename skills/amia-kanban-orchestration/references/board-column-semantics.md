@@ -40,6 +40,7 @@ The AMOA orchestration workflow uses exactly 8 columns. Each column has a precis
 ### Meaning
 
 Items in Backlog are:
+
 - Identified and defined
 - Not yet scheduled for work
 - Waiting for prioritization or capacity
@@ -67,6 +68,7 @@ Items in Backlog are:
 ### Orchestrator Actions
 
 When reviewing Backlog:
+
 1. Prioritize items
 2. Move high-priority items to Todo
 3. Add missing details to items
@@ -79,6 +81,7 @@ When reviewing Backlog:
 ### Meaning
 
 Items in Todo are:
+
 - Scheduled for the current or next sprint/iteration
 - Ready to be assigned and started
 - Have all prerequisites met
@@ -107,6 +110,7 @@ Items in Todo are:
 ### Orchestrator Actions
 
 When working with Todo:
+
 1. Assign items to agents
 2. Ensure items are ready to start
 3. Monitor for items stuck too long
@@ -118,6 +122,7 @@ When working with Todo:
 ### Meaning
 
 Items in In Progress are:
+
 - Currently being worked on
 - Have an assigned agent actively coding
 - Have a feature branch created
@@ -145,6 +150,7 @@ Items in In Progress are:
 ### Agent Responsibilities
 
 When item is In Progress:
+
 1. Work on the feature branch
 2. Update issue with progress comments
 3. Move to AI Review when PR is created
@@ -157,6 +163,7 @@ When item is In Progress:
 ### Meaning
 
 Items in AI Review are:
+
 - Have a Pull Request created
 - Integrator agent reviews ALL tasks (both small and big)
 - Code is ready for review (from author's perspective)
@@ -196,6 +203,7 @@ Items in AI Review are:
 ### Meaning
 
 Items in Human Review are:
+
 - Have passed AI Review by the Integrator
 - Require user/human review due to task size or importance
 - Only BIG tasks go through Human Review
@@ -232,6 +240,7 @@ Items in Human Review are:
 ### Meaning
 
 Items in Merge/Release are:
+
 - Ready to be merged to the target branch
 - All reviews (AI and optionally Human) have been completed
 - Awaiting final merge action
@@ -267,6 +276,7 @@ Items in Merge/Release are:
 ### Meaning
 
 Items in Done are:
+
 - Code merged to main branch
 - Issue closed
 - Work is complete and verified
@@ -287,6 +297,7 @@ Items in Done are:
 ### Terminal Status
 
 Done is a terminal status. Items in Done:
+
 - Do not move to other columns
 - Are considered complete
 - Can be archived
@@ -294,6 +305,7 @@ Done is a terminal status. Items in Done:
 ### Verification
 
 Orchestrator should verify Done items:
+
 - PR is actually merged
 - CI passed
 - No follow-up issues created
@@ -305,6 +317,7 @@ Orchestrator should verify Done items:
 ### Meaning
 
 Items in Blocked are:
+
 - Cannot proceed due to external factor
 - Waiting for resolution of blocker
 - Need orchestrator or human attention
@@ -324,6 +337,7 @@ Items in Blocked are:
 ### Required Documentation
 
 When moving to Blocked, MUST provide:
+
 - Description of the blocker
 - Link to blocking issue (if applicable)
 - What is needed to unblock
@@ -380,6 +394,7 @@ GitHub Project Board: "Project Alpha - Sprint 3"
 ```
 
 **Reading the Board:**
+
 - Numbers in parentheses = item count
 - `@agent-X` = assigned agent
 - Issue number and title shown

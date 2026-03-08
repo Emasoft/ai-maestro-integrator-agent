@@ -1,6 +1,5 @@
 # Operation: Update Project Item Status
 
-
 ## Contents
 
 - [Metadata](#metadata)

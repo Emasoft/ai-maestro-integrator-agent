@@ -34,6 +34,7 @@ python skills/amia-git-worktree-operations/scripts/merge_safeguard.py \
 ```
 
 **Resolution:**
+
 ```bash
 cd worktrees/feature-auth
 

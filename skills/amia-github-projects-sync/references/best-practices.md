@@ -93,6 +93,7 @@ Before closing bugs, document attempts:
 ### Keep Issues OPEN Until Genuinely Resolved
 
 An issue is resolved ONLY when:
+
 - Feature: Implemented, tested, and merged
 - Bug: Fixed and verified OR cannot reproduce after 3 attempts
 - Chore: Completed and verified
@@ -122,6 +123,7 @@ python scripts/amia_kanban_sync.py --owner OWNER --repo REPO --project NUMBER
 ### Respond to Blocked Items Promptly
 
 When items are blocked:
+
 1. Document blocker in comment
 2. Add `status:blocked` label
 3. Link to blocking issue if applicable
@@ -148,12 +150,14 @@ gh api graphql -f query='
 ### DON'T Update Status Without Verification
 
 **Wrong:**
+
 ```bash
 # Blindly updating status
 gh issue edit ISSUE --add-label "status:done"
 ```
 
 **Right:**
+
 ```bash
 # Verify PR merged first
 STATE=$(gh pr view PR_NUMBER --json state --jq '.state')
@@ -204,6 +208,7 @@ Always verify before closing:
 ### DON'T Use Stale Bots or Auto-Close
 
 **PROHIBITED:**
+
 - Stale bots that close inactive issues
 - Auto-close after X days of inactivity
 - Bulk closing of old issues
@@ -213,6 +218,7 @@ Always verify before closing:
 Inactivity means the issue needs attention, not closure.
 
 Use labels instead:
+
 - `needs-attention`
 - `awaiting-response`
 - `low-priority`
@@ -251,6 +257,7 @@ Every bug closure must have 3 documented attempts.
 ### Always Comment on Transitions
 
 Every status change should have a comment explaining:
+
 - What changed
 - Why it changed
 - What's next
@@ -258,6 +265,7 @@ Every status change should have a comment explaining:
 ### Update Related Documentation
 
 When closing issues:
+
 - Update README if behavior changed
 - Update API docs if endpoints changed
 - Update CHANGELOG
@@ -265,6 +273,7 @@ When closing issues:
 ### Maintain Traceability
 
 Every commit, PR, and issue should be linked:
+
 - Commits reference issues: `fix: login validation (#42)`
 - PRs reference issues: `Closes #42`
 - Issues reference related issues

@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Quick Scan (Stage 1)
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -73,6 +72,7 @@ Perform a surface-level assessment of the PR to identify obvious issues and dete
 ### Step 1: Assess File Structure
 
 Categorize the PR by size:
+
 - **Small**: 1-10 files changed
 - **Medium**: 11-30 files changed
 - **Large**: 30+ files changed
@@ -88,6 +88,7 @@ python3 amia_get_pr_diff.py --pr <PR_NUMBER> --stat
 ```
 
 Assess:
+
 - Total lines added/deleted
 - Ratio of additions to deletions
 - Files with disproportionate changes
@@ -95,6 +96,7 @@ Assess:
 ### Step 3: Obvious Issue Scan
 
 Scan for immediately visible problems:
+
 - [ ] Syntax errors visible in diff
 - [ ] Debugging code left in (console.log, print statements)
 - [ ] Commented-out code blocks
@@ -105,6 +107,7 @@ Scan for immediately visible problems:
 ### Step 4: Immediate Red Flags Detection
 
 Check for critical issues:
+
 - [ ] Large binary files added
 - [ ] Configuration files with secrets
 - [ ] Test files deleted without replacement
@@ -114,6 +117,7 @@ Check for critical issues:
 ### Step 5: Calculate Initial Confidence
 
 Score based on:
+
 - File structure clarity: 0-20 points
 - Diff reasonableness: 0-20 points
 - Absence of obvious issues: 0-30 points

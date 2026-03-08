@@ -76,6 +76,7 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 **Format**: `MAJOR.MINOR.PATCH`
 
 **Example**: `2.4.7`
+
 - **MAJOR**: 2
 - **MINOR**: 4
 - **PATCH**: 7
@@ -83,9 +84,11 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 ### When to Increment Each Number
 
 #### MAJOR Version
+
 **Increment when**: Making incompatible API changes or breaking changes
 
 **Examples**:
+
 - Removing or renaming public API methods
 - Changing function signatures (parameters, return types)
 - Removing configuration options
@@ -98,9 +101,11 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 **Example Transition**: 1.9.5 → 2.0.0
 
 #### MINOR Version
+
 **Increment when**: Adding functionality in a backward-compatible manner
 
 **Examples**:
+
 - Adding new API methods or functions
 - Adding new features to existing commands
 - Adding optional parameters to existing functions
@@ -113,9 +118,11 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 **Example Transition**: 2.3.5 → 2.4.0
 
 #### PATCH Version
+
 **Increment when**: Making backward-compatible bug fixes
 
 **Examples**:
+
 - Fixing incorrect behavior or bugs
 - Correcting documentation errors
 - Fixing security vulnerabilities (non-breaking)
@@ -133,6 +140,7 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 **Structure**: `MAJOR.MINOR.PATCH-PRERELEASE`
 
 **Examples**:
+
 - `1.0.0-alpha.1`
 - `1.0.0-beta.2`
 - `1.0.0-rc.1`
@@ -141,11 +149,13 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 ### Pre-Release Identifiers
 
 #### alpha
+
 **Purpose**: Early development stage, unstable, features incomplete
 
 **Example**: `1.0.0-alpha.1`
 
 **Characteristics**:
+
 - Features under active development
 - API may change frequently
 - Known bugs expected
@@ -155,11 +165,13 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 **Progression**: alpha.1 → alpha.2 → alpha.3
 
 #### beta
+
 **Purpose**: Feature-complete but may contain bugs
 
 **Example**: `1.0.0-beta.1`
 
 **Characteristics**:
+
 - All planned features implemented
 - API stabilizing
 - Suitable for testing by early adopters
@@ -169,11 +181,13 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 **Progression**: beta.1 → beta.2 → beta.3
 
 #### rc (Release Candidate)
+
 **Purpose**: Potentially final version, pending validation
 
 **Example**: `1.0.0-rc.1`
 
 **Characteristics**:
+
 - Feature-complete and tested
 - API locked unless critical issues found
 - Ready for production testing
@@ -183,11 +197,13 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 **Progression**: rc.1 → rc.2 → 1.0.0 (release)
 
 #### dev
+
 **Purpose**: Development snapshot or nightly build
 
 **Example**: `1.0.0-dev.20240204`
 
 **Characteristics**:
+
 - Continuous integration builds
 - May be unstable
 - For automated testing
@@ -200,6 +216,7 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 **Structure**: `MAJOR.MINOR.PATCH+BUILD_METADATA`
 
 **Examples**:
+
 - `1.0.0+20240204`
 - `1.0.0+sha.5114f85`
 - `1.0.0-beta.1+exp.sha.5114f85`
@@ -207,6 +224,7 @@ Semantic Versioning (SemVer) is a versioning scheme that conveys meaning about t
 ### When to Use Build Metadata
 
 Build metadata should be used for:
+
 - Build timestamps
 - Commit hashes
 - Build numbers from CI/CD
@@ -215,6 +233,7 @@ Build metadata should be used for:
 Build metadata does NOT affect version precedence.
 
 **Example Comparison**:
+
 - `1.0.0+build.1` equals `1.0.0+build.2` in precedence
 - Both are the same version, just different builds
 
@@ -251,18 +270,21 @@ Versions are compared from left to right:
 **Convention**: During initial development, use `0.y.z` versions
 
 **Characteristics**:
+
 - Major version 0 indicates "under development"
 - Breaking changes can occur in any 0.y.z release
 - No stability guarantees
 - Suitable for projects not yet ready for production
 
 **When to Use**:
+
 - New projects before first stable release
 - Experimental features
 - Proof-of-concept implementations
 - Prototypes
 
 **Progression Example**:
+
 ```
 0.1.0 → 0.2.0 → 0.3.0 → 0.9.0 → 1.0.0
 ```
@@ -270,6 +292,7 @@ Versions are compared from left to right:
 ### Transitioning to 1.0.0
 
 **Release 1.0.0 when**:
+
 - The software is being used in production
 - API is stable and documented
 - You're ready to commit to backward compatibility
@@ -280,40 +303,48 @@ Versions are compared from left to right:
 ### Specifying Dependencies
 
 #### Exact Version
+
 **Format**: `1.2.3`
 **Matches**: Only version 1.2.3
 **Use When**: Strict version control required
 
 #### Tilde Range
+
 **Format**: `~1.2.3`
 **Matches**: >=1.2.3 <1.3.0 (same MAJOR and MINOR, any PATCH)
 **Use When**: Allowing patch updates only
 
 #### Caret Range
+
 **Format**: `^1.2.3`
 **Matches**: >=1.2.3 <2.0.0 (same MAJOR, any compatible MINOR/PATCH)
 **Use When**: Allowing backward-compatible updates
 
 #### Wildcard
+
 **Format**: `1.2.*` or `1.x`
 **Matches**: Any version in specified range
 **Use When**: Maximum flexibility within range
 
 #### Comparison Operators
+
 **Formats**: `>1.2.3`, `>=1.2.3`, `<2.0.0`, `<=1.9.0`
 **Use When**: Specific constraints needed
 
 ### Dependency Range Best Practices
 
 **For Libraries**:
+
 - Use caret (`^`) for maximum compatibility
 - Example: `^1.2.0` allows 1.2.0 up to (but not including) 2.0.0
 
 **For Applications**:
+
 - Use exact versions or tilde (`~`) for predictability
 - Example: `~1.2.3` allows patches but not minor updates
 
 **For Development Dependencies**:
+
 - More flexible ranges acceptable
 - Example: `^1.0.0` for testing frameworks
 
@@ -322,12 +353,14 @@ Versions are compared from left to right:
 ### Libraries and Frameworks
 
 **Requirements**:
+
 - Strict adherence to SemVer
 - Clear changelog documenting all changes
 - Deprecation warnings before breaking changes
 - Multiple versions maintained if possible
 
 **Considerations**:
+
 - Breaking changes are expensive for users
 - Provide migration guides for major versions
 - Consider feature flags for gradual transitions
@@ -335,11 +368,13 @@ Versions are compared from left to right:
 ### Applications and Services
 
 **Requirements**:
+
 - SemVer for API versioning
 - Flexible versioning for internal changes
 - Clear communication of changes to users
 
 **Considerations**:
+
 - Internal refactoring doesn't require version bumps
 - UI changes may not follow strict SemVer
 - Consider CalVer (Calendar Versioning) for user-facing apps
@@ -347,12 +382,14 @@ Versions are compared from left to right:
 ### APIs (REST, GraphQL, etc.)
 
 **Requirements**:
+
 - Version in URL or header: `/api/v1/`, `/api/v2/`
 - Major version for breaking changes
 - Maintain multiple versions simultaneously
 - Clear deprecation timeline
 
 **Considerations**:
+
 - Multiple major versions in production
 - Gradual migration periods for clients
 - Sunset policies for old versions
@@ -360,11 +397,13 @@ Versions are compared from left to right:
 ### Database Schemas
 
 **Versioning Strategy**:
+
 - Migration scripts with version numbers
 - Forward-compatible migrations when possible
 - Rollback scripts for each migration
 
 **Example**:
+
 ```
 001_initial_schema.sql
 002_add_user_email.sql
@@ -471,11 +510,13 @@ main (or master)
 **Tag Format**: `vMAJOR.MINOR.PATCH`
 
 **Examples**:
+
 - `v1.0.0`
 - `v1.1.0-rc.1`
 - `v2.0.0-beta.1`
 
 **Best Practices**:
+
 - Tag every release
 - Sign tags for security
 - Include changelog in tag message
@@ -485,6 +526,7 @@ main (or master)
 ### Version Bumping Tools
 
 **For JavaScript/Node.js**:
+
 ```bash
 npm version patch  # 1.0.0 -> 1.0.1
 npm version minor  # 1.0.1 -> 1.1.0
@@ -492,6 +534,7 @@ npm version major  # 1.1.0 -> 2.0.0
 ```
 
 **For Python**:
+
 ```bash
 bumpversion patch  # Using bumpversion tool
 bumpversion minor
@@ -501,6 +544,7 @@ bumpversion major
 ### CI/CD Integration
 
 **Automated Version Detection**:
+
 1. Analyze commit messages since last release
 2. Determine version bump based on conventional commits
 3. Update version files
@@ -508,6 +552,7 @@ bumpversion major
 5. Build and publish
 
 **Example GitHub Actions**:
+
 ```yaml
 - name: Determine version bump
   id: version
@@ -541,6 +586,7 @@ bumpversion major
 ### Examples
 
 **Patch Release**:
+
 ```
 fix: prevent SQL injection in search queries
 
@@ -548,6 +594,7 @@ Security vulnerability fixed by parameterizing all SQL queries.
 ```
 
 **Minor Release**:
+
 ```
 feat: add bulk delete operation
 
@@ -555,6 +602,7 @@ Users can now delete multiple items at once through the UI.
 ```
 
 **Major Release**:
+
 ```
 feat!: migrate to TypeScript and redesign API
 
@@ -601,17 +649,20 @@ Thank contributors to this release
 ### User Communication Strategy
 
 **For MAJOR versions**:
+
 - Blog post announcement
 - Migration guide
 - Webinar or video walkthrough
 - Advance notice (30-90 days)
 
 **For MINOR versions**:
+
 - Release notes
 - Email to users
 - Social media announcement
 
 **For PATCH versions**:
+
 - Changelog update
 - Notification in app (if applicable)
 - Security advisory (if security fix)
@@ -619,33 +670,40 @@ Thank contributors to this release
 ## Common Mistakes and How to Avoid Them
 
 ### Mistake 1: Incrementing Wrong Number
+
 **Wrong**: Bumping PATCH for a new feature
 **Right**: Bump MINOR for new features, even small ones
 
 ### Mistake 2: Breaking Changes in MINOR/PATCH
+
 **Wrong**: Removing a parameter in version 1.2.0
 **Right**: Deprecate in 1.2.0, remove in 2.0.0
 
 ### Mistake 3: Not Documenting Changes
+
 **Wrong**: "Bug fixes and improvements"
 **Right**: Specific list of what changed and why
 
 ### Mistake 4: Skipping Versions
+
 **Wrong**: 1.2.0 → 1.4.0 (skipping 1.3.0)
 **Right**: Sequential versioning: 1.2.0 → 1.3.0 → 1.4.0
 
 ### Mistake 5: Incorrect Pre-Release Naming
+
 **Wrong**: `1.0.0-beta` (no numeric identifier)
 **Right**: `1.0.0-beta.1` (with numeric identifier for iteration)
 
 ## SemVer Tools and Resources
 
 ### Version Checking Tools
+
 - `semver.org` - Official specification
 - `semver` npm package - Version parsing and comparison
 - `python-semantic-version` - Python implementation
 
 ### Validation
+
 - `semantic-release` - Automated versioning and publishing
 - `standard-version` - Automated CHANGELOG generation
 - `commitizen` - Conventional commit message tool

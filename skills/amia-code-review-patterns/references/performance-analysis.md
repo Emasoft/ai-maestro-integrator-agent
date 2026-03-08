@@ -1,6 +1,7 @@
 # Performance Analysis Review
 
 ## Table of Contents
+
 - When reviewing algorithm efficiency → Verification Checklist: Algorithm Efficiency
 - If you need to evaluate data structure choices → Verification Checklist: Data Structure Selection
 - When assessing database performance → Verification Checklist: Database Performance
@@ -12,11 +13,13 @@
 - When identifying performance issues → Common Issues to Look For
 
 ## Purpose
+
 Evaluate code efficiency, identify performance bottlenecks, and ensure resource usage is optimized for scalability and responsiveness.
 
 ## Verification Checklist
 
 ### Algorithm Efficiency
+
 - [ ] Time complexity is appropriate for use case
 - [ ] Space complexity is reasonable
 - [ ] Algorithm choice is justified
@@ -27,6 +30,7 @@ Evaluate code efficiency, identify performance bottlenecks, and ensure resource 
 - [ ] Data structure choice supports performance
 
 ### Data Structure Selection
+
 - [ ] Appropriate data structures for operations
 - [ ] Hash tables for O(1) lookups when needed
 - [ ] Lists vs sets vs dicts chosen correctly
@@ -37,6 +41,7 @@ Evaluate code efficiency, identify performance bottlenecks, and ensure resource 
 - [ ] Lazy evaluation where appropriate
 
 ### Database Performance
+
 - [ ] Queries are optimized
 - [ ] Indexes are properly used
 - [ ] N+1 query problem avoided
@@ -47,6 +52,7 @@ Evaluate code efficiency, identify performance bottlenecks, and ensure resource 
 - [ ] Transactions used appropriately
 
 ### I/O Operations
+
 - [ ] File operations are buffered
 - [ ] Network calls are minimized
 - [ ] Async I/O used where appropriate
@@ -57,6 +63,7 @@ Evaluate code efficiency, identify performance bottlenecks, and ensure resource 
 - [ ] Retries with backoff
 
 ### Memory Management
+
 - [ ] No memory leaks
 - [ ] Objects released when no longer needed
 - [ ] Large objects not kept in memory unnecessarily
@@ -67,6 +74,7 @@ Evaluate code efficiency, identify performance bottlenecks, and ensure resource 
 - [ ] Context managers for resource management
 
 ### Concurrency
+
 - [ ] Thread safety verified
 - [ ] Lock contention minimized
 - [ ] No race conditions
@@ -77,6 +85,7 @@ Evaluate code efficiency, identify performance bottlenecks, and ensure resource 
 - [ ] Work distributed efficiently
 
 ### Caching
+
 - [ ] Appropriate caching strategy
 - [ ] Cache invalidation handled
 - [ ] Cache size limits set
@@ -87,6 +96,7 @@ Evaluate code efficiency, identify performance bottlenecks, and ensure resource 
 - [ ] Memory usage controlled
 
 ### Resource Usage
+
 - [ ] CPU usage is reasonable
 - [ ] Memory footprint is acceptable
 - [ ] Network bandwidth efficient
@@ -101,6 +111,7 @@ Evaluate code efficiency, identify performance bottlenecks, and ensure resource 
 ### Inefficient Algorithms
 
 **Poor time complexity**
+
 ```python
 # WRONG: O(n²) for membership check
 def has_duplicates(items):
@@ -116,6 +127,7 @@ def has_duplicates(items):
 ```
 
 **Unnecessary iterations**
+
 ```python
 # WRONG: Multiple passes
 filtered = [x for x in items if x > 0]
@@ -127,6 +139,7 @@ result = [(x * 2) ** 2 for x in items if x > 0]
 ```
 
 **Inefficient search**
+
 ```python
 # WRONG: Linear search in list
 VALID_CODES = ['A', 'B', 'C', 'D', 'E']  # List
@@ -142,6 +155,7 @@ if code in VALID_CODES:  # O(1)
 ### Poor Data Structure Choice
 
 **List when dict needed**
+
 ```python
 # WRONG: Linear search in list
 users = [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
@@ -153,6 +167,7 @@ user = users[target_id]  # O(1)
 ```
 
 **Inappropriate collection type**
+
 ```python
 # WRONG: List for unique items with membership checks
 seen = []
@@ -169,6 +184,7 @@ for item in items:
 ### Database Performance Issues
 
 **N+1 query problem**
+
 ```python
 # WRONG: N+1 queries
 posts = Post.query.all()  # 1 query
@@ -183,6 +199,7 @@ for post in posts:
 ```
 
 **Missing indexes**
+
 ```sql
 -- WRONG: No index on frequently queried column
 SELECT * FROM users WHERE email = 'user@example.com';
@@ -193,6 +210,7 @@ SELECT * FROM users WHERE email = 'user@example.com';
 ```
 
 **Fetching unnecessary data**
+
 ```python
 # WRONG: Fetch all columns
 users = db.query("SELECT * FROM users WHERE active = true")
@@ -204,6 +222,7 @@ users = db.query("SELECT id, name, email FROM users WHERE active = true")
 ### Memory Issues
 
 **Loading entire file**
+
 ```python
 # WRONG: Load entire file into memory
 with open('large_file.txt', 'r') as f:
@@ -218,6 +237,7 @@ with open('large_file.txt', 'r') as f:
 ```
 
 **Unnecessary data copies**
+
 ```python
 # WRONG: Creates multiple copies
 def process_data(data):
@@ -232,6 +252,7 @@ def process_data(data):
 ```
 
 **Memory leaks**
+
 ```python
 # WRONG: Circular reference prevents GC
 class Node:
@@ -265,6 +286,7 @@ class Node:
 ### I/O Bottlenecks
 
 **Synchronous I/O in loops**
+
 ```python
 # WRONG: Synchronous network calls in loop
 results = []
@@ -283,6 +305,7 @@ async def fetch_all(urls):
 ```
 
 **No buffering**
+
 ```python
 # WRONG: Writing line by line
 with open('output.txt', 'w') as f:
@@ -297,6 +320,7 @@ with open('output.txt', 'w', buffering=8192) as f:
 ### Caching Opportunities Missed
 
 **Repeated expensive calculations**
+
 ```python
 # WRONG: Recalculate every time
 def get_stats(data):
@@ -326,6 +350,7 @@ for i in range(1000):
 ### Concurrency Issues
 
 **Sequential when parallel possible**
+
 ```python
 # WRONG: Process sequentially
 def process_all(items):
@@ -346,6 +371,7 @@ def process_all(items):
 ## Scoring Criteria
 
 ### Critical (Must Fix)
+
 - O(n²) or worse when O(n) or O(n log n) available
 - Memory leaks
 - N+1 query problems
@@ -355,6 +381,7 @@ def process_all(items):
 - Resource leaks (unclosed connections, files)
 
 ### High Priority (Should Fix)
+
 - Suboptimal algorithm complexity
 - Poor data structure choice
 - Inefficient database queries
@@ -365,6 +392,7 @@ def process_all(items):
 - Large data copies
 
 ### Medium Priority (Consider Fixing)
+
 - Minor algorithm improvements available
 - Potential caching opportunities
 - Memory usage optimizations
@@ -374,6 +402,7 @@ def process_all(items):
 - Resource pool sizing
 
 ### Low Priority (Nice to Have)
+
 - Micro-optimizations
 - Premature optimization concerns
 - Speculative performance improvements
@@ -414,6 +443,7 @@ def process_all(items):
 ## Performance Testing
 
 ### Profiling Areas
+
 - **CPU Profiling**: Identify hot spots in code
 - **Memory Profiling**: Track allocation and leaks
 - **I/O Profiling**: Measure file and network operations
@@ -421,6 +451,7 @@ def process_all(items):
 - **Concurrency Profiling**: Find contention points
 
 ### Benchmarking
+
 - Measure execution time for critical paths
 - Test with realistic data volumes
 - Profile under expected load

@@ -207,11 +207,13 @@ jobs:
 ### 3.4.2 Walkthrough of Path Filter Logic
 
 When a developer pushes a commit that changes only `README.md`:
+
 1. GitHub compares the changed files against the `paths:` list
 2. `README.md` does not match any pattern (`src/**`, `tests/**`, etc.)
 3. The workflow is skipped entirely -- no runner is allocated, no minutes are used
 
 When a developer pushes a commit that changes `src/utils.py` and `docs/guide.md`:
+
 1. GitHub compares changed files against the `paths:` list
 2. `src/utils.py` matches `src/**`
 3. The workflow triggers because at least one changed file matches

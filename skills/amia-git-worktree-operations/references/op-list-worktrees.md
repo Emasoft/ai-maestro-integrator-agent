@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: List Worktrees
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -55,6 +54,7 @@ git worktree list
 ```
 
 Output format:
+
 ```
 /path/to/main       abc1234 [main]
 /tmp/worktrees/pr-123 def5678 [pr-123]
@@ -68,6 +68,7 @@ git worktree list --porcelain
 ```
 
 Output format:
+
 ```
 worktree /path/to/main
 HEAD abc1234567890

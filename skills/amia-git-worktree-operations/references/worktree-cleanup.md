@@ -23,6 +23,7 @@ This document covers the complete worktree cleanup process. Content is split int
 **File:** [worktree-cleanup-part1-timing-verification.md](worktree-cleanup-part1-timing-verification.md)
 
 **Contents:**
+
 - 3.1 When to Clean Up Worktrees (Timing and Triggers)
   - 3.1.1 Cleanup triggers (PR merged, closed, abandoned, branch deleted)
   - 3.1.2 Timing considerations (immediate, soon, delay)
@@ -42,6 +43,7 @@ This document covers the complete worktree cleanup process. Content is split int
 **File:** [worktree-cleanup-part2-removal-procedures.md](worktree-cleanup-part2-removal-procedures.md)
 
 **Contents:**
+
 - 3.3 Safe Removal Procedure Step-by-Step
   - 3.3.1 Step 1: Navigate away from worktree
   - 3.3.2 Step 2: Verify worktree status
@@ -67,6 +69,7 @@ This document covers the complete worktree cleanup process. Content is split int
 **File:** [worktree-cleanup-part3-force-recovery.md](worktree-cleanup-part3-force-recovery.md)
 
 **Contents:**
+
 - 3.5 Force Removal Scenarios and Their Risks
   - 3.5.1 When force removal is needed
   - 3.5.2 Force removal command
@@ -93,21 +96,25 @@ This document covers the complete worktree cleanup process. Content is split int
 ## Quick Reference
 
 ### Safe Removal Command
+
 ```bash
 git worktree remove /tmp/worktrees/pr-123
 ```
 
 ### Force Removal Command
+
 ```bash
 git worktree remove --force /tmp/worktrees/pr-123
 ```
 
 ### Prune Stale Entries
+
 ```bash
 git worktree prune
 ```
 
 ### Full Cleanup Sequence
+
 ```bash
 cd /path/to/main-repo
 git worktree remove /tmp/worktrees/pr-123

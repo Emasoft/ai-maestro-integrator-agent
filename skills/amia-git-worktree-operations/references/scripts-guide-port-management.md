@@ -64,6 +64,7 @@ python scripts/port_allocate.py --service web --worktree review-GH-42
 ```
 
 **Output:**
+
 ```
 Allocating port for service 'web' to worktree 'review-GH-42'
 
@@ -95,6 +96,7 @@ python scripts/port_allocate.py --release 8002
 ```
 
 **Output:**
+
 ```
 Releasing port 8002
 
@@ -120,6 +122,7 @@ python scripts/port_allocate.py --check 8005
 ```
 
 **Output:**
+
 ```
 Checking port 8005 availability
 
@@ -141,6 +144,7 @@ python scripts/port_allocate.py --available web
 ```
 
 **Output:**
+
 ```
 Available ports for service 'web' (range: 8000-8099)
 
@@ -177,6 +181,7 @@ python scripts/port_allocate.py --service db --worktree feature-fullstack
 ```
 
 **Output (cumulative):**
+
 ```
 After all three commands:
 
@@ -265,6 +270,7 @@ python scripts/port_status.py --all
 ```
 
 **Output:**
+
 ```
 Port Allocation Status
 ======================
@@ -299,6 +305,7 @@ python scripts/port_status.py --worktree feature-auth-system
 ```
 
 **Output:**
+
 ```
 Port Status for Worktree: feature-auth-system
 ==============================================
@@ -336,6 +343,7 @@ python scripts/port_status.py --all --health-check
 ```
 
 **Output:**
+
 ```
 Port Allocation Status with Health Check
 =========================================
@@ -372,6 +380,7 @@ python scripts/port_status.py --service web
 ```
 
 **Output:**
+
 ```
 Port Status for Service: web
 =============================
@@ -407,6 +416,7 @@ python scripts/port_status.py --all --health-check --json
 ```
 
 **Output:**
+
 ```json
 {
   "timestamp": "2024-01-17T14:30:00Z",
@@ -468,11 +478,13 @@ python scripts/port_status.py --all --health-check --json
 ### Health Check Behavior
 
 **What the health check does:**
+
 1. Attempts TCP connection to each allocated port
 2. Waits up to 2 seconds for connection
 3. Reports status: running, stopped, or error
 
 **Status meanings:**
+
 - **RUNNING** - Service is accepting connections on this port
 - **STOPPED** - Port is allocated but nothing is listening
 - **ERROR** - Network error or port is blocked

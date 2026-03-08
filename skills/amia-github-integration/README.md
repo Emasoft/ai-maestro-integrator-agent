@@ -5,7 +5,9 @@ Complete bidirectional synchronization between Agent tasks and GitHub Projects V
 ## Skill Structure
 
 ### SKILL.md
+
 The main skill document that serves as a comprehensive map to all learning materials. It covers:
+
 - Quick start overview and prerequisites
 - Core concepts (Projects V2, 9-label system, bidirectional sync)
 - Main workflows (issue lifecycle, synchronization, pull requests, batch operations)
@@ -20,6 +22,7 @@ The main skill document that serves as a comprehensive map to all learning mater
 ### references/ Directory
 
 Contains focused, standalone reference documents that cover specific topics in depth. Each reference document:
+
 - Addresses a single specific topic
 - Can be read independently
 - Includes detailed examples and code samples
@@ -113,21 +116,27 @@ This skill provides comprehensive instruction on:
 ## Key Concepts
 
 ### GitHub Projects V2
+
 Modern table-based project management directly integrated with GitHub. Provides customizable fields, automation rules, and bidirectional synchronization with issues and pull requests.
 
 ### 9-Label System
+
 Standardized classification using exactly nine mutually-exclusive or clearly-separated labels:
+
 - feature, bug, refactor, test, docs, performance, security, dependencies, workflow
 
 ### Bidirectional Synchronization
+
 Automatic synchronization in both directions: agent system → GitHub and GitHub → agent system. Ensures perfect alignment without manual duplication.
 
 ### Orchestrator Context
+
 Integration with agent orchestrators allows automated issue creation, pull request generation, and progress tracking at scale.
 
 ## Prerequisites
 
 Before using this skill, you need:
+
 - **GitHub Account** - With access to target repositories
 - **GitHub CLI** - Version 2.14 or higher
 - **Authentication** - One-time `gh auth login`
@@ -159,6 +168,7 @@ If you encounter issues while following this skill:
 ## Related Skills
 
 This skill integrates with:
+
 - **Agent Orchestration** - For automated issue creation and tracking
 - **Python Scripting** - For advanced automation
 - **Bash Scripting** - For command-line operations
@@ -167,6 +177,7 @@ This skill integrates with:
 ## Contributing
 
 To contribute improvements or fixes to this skill:
+
 1. Review the skill structure and conventions
 2. Follow the established patterns in SKILL.md and reference documents
 3. Test any scripts with sample data before submitting

@@ -10,22 +10,22 @@ workflow-instruction: support
 ## Contents
 
 - 1. When to update README badges as part of a release
-- 2. How to define marker-delimited sections in README
+- 1. How to define marker-delimited sections in README
   - 2.1. HTML comment marker syntax
   - 2.2. Choosing marker names
-- 3. How to construct Shields.io badge URLs
+- 1. How to construct Shields.io badge URLs
   - 3.1. Static badge URL format
   - 3.2. URL encoding for special characters
   - 3.3. Stable vs pre-release badge colors
-- 4. How to update content within marker-delimited sections using sed
+- 1. How to update content within marker-delimited sections using sed
   - 4.1. Single-line replacement with sed
   - 4.2. Multi-line replacement with perl
   - 4.3. Platform differences (macOS sed vs GNU sed)
-- 5. How to implement dual-channel badge updates (stable and beta)
+- 1. How to implement dual-channel badge updates (stable and beta)
   - 5.1. Detecting pre-release versions
   - 5.2. Updating only the correct channel
-- 6. How to auto-stage modified files after badge updates
-- 7. Troubleshooting badge update failures
+- 1. How to auto-stage modified files after badge updates
+- 1. Troubleshooting badge update failures
 
 ## Purpose
 

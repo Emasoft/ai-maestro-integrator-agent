@@ -70,6 +70,7 @@ mypy src/
 ### Step 4: Review Code
 
 Perform code review in this isolated environment:
+
 - Read changed files
 - Verify functionality
 - Check edge cases
@@ -122,6 +123,7 @@ git worktree remove ../review-GH-42
 ```
 
 Examples:
+
 - `../review-GH-42`
 - `../review-GH-123`
 - `../review-hotfix-auth`

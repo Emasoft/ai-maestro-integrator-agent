@@ -31,6 +31,7 @@
 - [Best Practices](#best-practices)
 
 ## Use-Case TOC
+
 - When you need to create a new issue → [Creating Issues](#creating-issues)
 - When you need to assign labels → [Assigning Labels](#assigning-labels)
 - When you need to update issue status → [Issue Lifecycle](#issue-lifecycle)
@@ -82,6 +83,7 @@ gh issue create \
 ### Examples
 
 **Example 1: Feature Issue**
+
 ```bash
 gh issue create \
   --title "Add OAuth authentication for Google login" \
@@ -99,6 +101,7 @@ gh issue create \
 ```
 
 **Example 2: Bug Issue**
+
 ```bash
 gh issue create \
   --title "Fix null pointer exception in user profile page" \
@@ -119,6 +122,7 @@ gh issue create \
 ```
 
 **Example 3: Documentation Issue**
+
 ```bash
 gh issue create \
   --title "Write deployment guide for Docker setup" \
@@ -165,6 +169,7 @@ gh label create "feature" \
 ```
 
 **Recommended Colors for 9-Label System:**
+
 - `feature`: `0e8a16` (green)
 - `bug`: `d73a4a` (red)
 - `refactor`: `fbca04` (yellow)
@@ -206,12 +211,14 @@ Created → Backlog → Todo → In Progress → AI Review → Done → Closed
 ### Phase 1: Issue Creation
 
 When an issue is first created:
+
 - Assign appropriate label from 9-label system
 - Link to GitHub Projects V2 board
 - Set initial status (e.g., "Backlog" or "Todo")
 - Assign owner if known
 
 **Commands:**
+
 ```bash
 # Create issue (shown in previous sections)
 gh issue create --title "..." --body "..." --label "feature" --project "1"
@@ -223,11 +230,13 @@ gh project item-list 1 --owner "@username" --format json
 ### Phase 2: Issue Transition (Backlog → In Progress)
 
 When work begins on an issue:
+
 - Update status in Projects V2 to "In Progress"
 - Assign if not already assigned
 - Set due date if applicable
 
 **Commands:**
+
 ```bash
 # Update issue status in Projects V2
 gh project item-edit <project_id> \
@@ -242,11 +251,13 @@ gh issue edit <issue_number> --assignee "@username"
 ### Phase 3: Work Completion (In Progress → AI Review)
 
 When work is complete and a pull request is created:
+
 - Link pull request to issue (see [Linking Issues to PRs](#linking-issues-to-prs))
 - Update status to "AI Review"
 - Request code review
 
 **Commands:**
+
 ```bash
 # Create PR and link to issue
 gh pr create \
@@ -260,11 +271,13 @@ gh pr create \
 ### Phase 4: Issue Closure (AI Review → Done)
 
 When pull request is merged:
+
 - GitHub automatically closes issue (if linked with "Closes #123")
 - Status updates to "Done" in Projects V2
 - Add closing comment summarizing resolution
 
 **Commands:**
+
 ```bash
 # Merge PR (automatically closes linked issue)
 gh pr merge <pr_number> --squash --delete-branch
@@ -280,6 +293,7 @@ GitHub automatically closes issues when pull requests containing specific keywor
 ### Linking Keywords
 
 Use these keywords in the pull request body:
+
 - `Closes #123`
 - `Fixes #123`
 - `Resolves #123`
@@ -289,6 +303,7 @@ Use these keywords in the pull request body:
 ### Multiple Issue Linking
 
 Link multiple issues in one PR:
+
 ```
 Closes #123
 Fixes #124
@@ -321,17 +336,20 @@ gh pr create \
 ### Automatic Closure
 
 Issues close automatically when:
+
 - Linked pull request is merged (using "Closes #123" syntax)
 - Commit message contains "Closes #123" and is pushed to default branch
 
 ### Manual Closure
 
 Close issues manually when:
+
 - Issue is duplicate
 - Issue is no longer relevant
 - Issue is fixed without a pull request
 
 **Commands:**
+
 ```bash
 # Close with reason
 gh issue close <issue_number> --comment "Duplicate of #456"
@@ -346,6 +364,7 @@ gh issue close <issue_number> --reason "completed"
 ### Reopening Issues
 
 If an issue needs to be reopened:
+
 ```bash
 gh issue reopen <issue_number> --comment "Regression detected, reopening"
 ```
@@ -383,6 +402,7 @@ done
 ```
 
 Run the script:
+
 ```bash
 chmod +x create-issues.sh
 ./create-issues.sh

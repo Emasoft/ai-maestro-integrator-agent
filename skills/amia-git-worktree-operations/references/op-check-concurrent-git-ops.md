@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Check Concurrent Git Operations
 
-
 ## Contents
 
 - [Purpose](#purpose)

@@ -32,12 +32,14 @@ PowerShell here-strings have strict rules:
 **Common CI Failure**: Indented closing delimiter.
 
 **Error Message**:
+
 ```
 Unrecognized token in source text.
 At line:5 char:1
 ```
 
 **WRONG** (indented closing delimiter):
+
 ```powershell
 $content = @"
     This is content
@@ -46,6 +48,7 @@ $content = @"
 ```
 
 **CORRECT** (closing at column 0):
+
 ```powershell
 $content = @"
     This is content
@@ -54,6 +57,7 @@ $content = @"
 ```
 
 **WRONG** (text after opening):
+
 ```powershell
 $content = @" some text
 more text
@@ -61,6 +65,7 @@ more text
 ```
 
 **CORRECT**:
+
 ```powershell
 $content = @"
 some text
@@ -71,6 +76,7 @@ more text
 **GitHub Actions YAML Gotcha**: YAML indentation conflicts with here-string requirements.
 
 **WRONG**:
+
 ```yaml
 - name: Create file
   shell: pwsh
@@ -82,6 +88,7 @@ more text
 ```
 
 **CORRECT** (use YAML literal block with proper structure):
+
 ```yaml
 - name: Create file
   shell: pwsh
@@ -104,11 +111,13 @@ Bash heredocs have similar requirements:
 **Common CI Failure**: Trailing whitespace after delimiter.
 
 **Error Message**:
+
 ```
 ./script.sh: line 10: warning: here-document at line 3 delimited by end-of-file (wanted 'EOF')
 ```
 
 **WRONG** (space after EOF):
+
 ```bash
 cat <<EOF
 Line 1
@@ -117,6 +126,7 @@ EOF   # WRONG: trailing space
 ```
 
 **CORRECT**:
+
 ```bash
 cat <<EOF
 Line 1
@@ -125,6 +135,7 @@ EOF
 ```
 
 **WRONG** (indented closing delimiter without `-`):
+
 ```bash
 cat <<EOF
     Line 1
@@ -133,15 +144,18 @@ cat <<EOF
 ```
 
 **CORRECT with indentation** (use `<<-` and tabs):
+
 ```bash
 cat <<-EOF
-	Line 1
-	Line 2
-	EOF
+ Line 1
+ Line 2
+ EOF
 ```
+
 Note: The indentation above must be TAB characters, not spaces.
 
 **GitHub Actions YAML Pattern**:
+
 ```yaml
 - name: Create heredoc
   run: |
@@ -152,6 +166,7 @@ Note: The indentation above must be TAB characters, not spaces.
 ```
 
 **Single vs Double Quote Delimiter**:
+
 ```bash
 # Variables expanded (unquoted or double-quoted)
 cat <<EOF
@@ -170,6 +185,7 @@ EOF
 YAML has multiple multiline syntaxes, each with different rules.
 
 **Literal Block Scalar (`|`)**: Preserves newlines
+
 ```yaml
 script: |
   Line 1
@@ -179,6 +195,7 @@ script: |
 ```
 
 **Folded Block Scalar (`>`)**: Folds newlines to spaces
+
 ```yaml
 script: >
   This is a
@@ -188,6 +205,7 @@ script: >
 ```
 
 **Block Chomping Indicators**:
+
 ```yaml
 # Keep trailing newline (default)
 script: |
@@ -207,11 +225,13 @@ script: |+
 **Common CI Failure**: Inconsistent indentation in YAML blocks.
 
 **Error Message**:
+
 ```
 yaml: line 5: did not find expected key
 ```
 
 **WRONG** (inconsistent indentation):
+
 ```yaml
 - name: Run script
   run: |
@@ -220,6 +240,7 @@ yaml: line 5: did not find expected key
 ```
 
 **CORRECT**:
+
 ```yaml
 - name: Run script
   run: |
@@ -236,19 +257,22 @@ Different shells have different quoting rules, causing CI failures when scripts 
 ### 3.2.1 Bash Quoting Rules
 
 **Single Quotes (`'`)**: Literal strings, no expansion
+
 ```bash
 echo 'Hello $USER'  # Output: Hello $USER
 echo 'It'\''s fine' # Escape single quote by ending, adding \', starting again
 ```
 
 **Double Quotes (`"`)**: Variable expansion, escape sequences
+
 ```bash
 echo "Hello $USER"  # Output: Hello username
-echo "Tab\there"    # Output: Tab	here (tab character)
+echo "Tab\there"    # Output: Tab here (tab character)
 echo "Quote: \""    # Output: Quote: "
 ```
 
 **No Quotes**: Word splitting and glob expansion
+
 ```bash
 files="file1.txt file2.txt"
 cat $files   # Expands to: cat file1.txt file2.txt
@@ -258,8 +282,9 @@ echo $pattern  # Expands to actual filenames
 ```
 
 **$'...' (ANSI-C Quoting)**: Escape sequences in single quotes
+
 ```bash
-echo $'Tab\there'  # Output: Tab	here
+echo $'Tab\there'  # Output: Tab here
 echo $'Line1\nLine2'  # Output with actual newline
 ```
 
@@ -268,6 +293,7 @@ echo $'Line1\nLine2'  # Output with actual newline
 POSIX sh is more limited than Bash:
 
 **NOT available in POSIX sh**:
+
 - `$'...'` ANSI-C quoting
 - `[[` double bracket conditionals
 - Arrays
@@ -276,6 +302,7 @@ POSIX sh is more limited than Bash:
 **Common CI Failure**: Using Bash syntax with `shell: sh`
 
 **WRONG** (Bash syntax in sh):
+
 ```yaml
 - name: Run script
   shell: sh
@@ -285,6 +312,7 @@ POSIX sh is more limited than Bash:
 ```
 
 **CORRECT** (POSIX-compatible):
+
 ```yaml
 - name: Run script
   shell: sh
@@ -298,6 +326,7 @@ POSIX sh is more limited than Bash:
 Zsh (default on macOS) has subtle differences:
 
 **Word Splitting**: Zsh does NOT split unquoted variables by default
+
 ```bash
 # In Bash
 files="file1 file2"
@@ -309,6 +338,7 @@ cat $files  # Passes ONE argument: "file1 file2"
 ```
 
 **Fix**: Use explicit word splitting
+
 ```zsh
 # Zsh: Force word splitting
 cat ${=files}
@@ -318,6 +348,7 @@ setopt SH_WORD_SPLIT
 ```
 
 **Glob Expansion**: Zsh errors on no match by default
+
 ```bash
 # In Bash (no match = literal pattern)
 echo *.xyz  # Output: *.xyz (if no .xyz files)
@@ -331,18 +362,21 @@ echo *.xyz  # Error: no matches found: *.xyz
 PowerShell quoting is different from POSIX shells:
 
 **Single Quotes (`'`)**: Literal string, no expansion
+
 ```powershell
 Write-Host 'Hello $env:USER'  # Output: Hello $env:USER
 Write-Host 'It''s fine'       # Double single-quote to escape
 ```
 
 **Double Quotes (`"`)**: Variable expansion
+
 ```powershell
 Write-Host "Hello $env:USER"  # Output: Hello username
 Write-Host "Quote: `""        # Backtick escapes in double quotes
 ```
 
 **Escape Character**: Backtick (\`) not backslash (\)
+
 ```powershell
 Write-Host "Line1`nLine2"     # Newline
 Write-Host "Tab`there"        # Tab
@@ -350,6 +384,7 @@ Write-Host "`$variable"       # Literal dollar sign
 ```
 
 **Common CI Failure**: Using backslash escapes in PowerShell
+
 ```powershell
 # WRONG: Backslash is not escape character
 Write-Host "Line1\nLine2"  # Output: Line1\nLine2
@@ -372,6 +407,7 @@ Two syntaxes for command substitution:
 | $(cmd) | Easy | Simple | Yes |
 
 **Backtick Issues**:
+
 ```bash
 # Escaping is confusing
 echo `echo \`pwd\``  # Nested backticks need escaping
@@ -381,6 +417,7 @@ echo `echo "\$HOME"`  # May not work as expected
 ```
 
 **$() is Better**:
+
 ```bash
 # Clear nesting
 echo $(echo $(pwd))  # No escaping needed
@@ -392,12 +429,14 @@ echo $(echo "\$HOME")
 **Common CI Failure**: Nested backticks without proper escaping
 
 **WRONG**:
+
 ```bash
 # Fails: unbalanced backticks
 result=`echo `date``
 ```
 
 **CORRECT**:
+
 ```bash
 result=$(echo $(date))
 ```
@@ -405,6 +444,7 @@ result=$(echo $(date))
 ### 3.3.2 Nested Command Substitution
 
 **Pattern**: Building complex commands
+
 ```bash
 # Get directory of a symlink target
 dir=$(dirname $(readlink -f "$0"))
@@ -414,6 +454,7 @@ result=$(command1 $(command2 $(command3)))
 ```
 
 **In YAML** (watch quote escaping):
+
 ```yaml
 - name: Get script directory
   run: |
@@ -422,6 +463,7 @@ result=$(command1 $(command2 $(command3)))
 ```
 
 **PowerShell Equivalent**:
+
 ```powershell
 # Use $() inside strings
 $result = "Today is $(Get-Date -Format 'yyyy-MM-dd')"

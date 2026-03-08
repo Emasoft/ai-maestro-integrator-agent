@@ -14,6 +14,7 @@
 Complex features should be broken into smaller, independently assignable sub-issues. This enables parallel work by multiple agents and provides clear progress tracking.
 
 **When to Use Sub-Issues:**
+
 - Feature requires more than 3 days of work
 - Feature has distinct, parallelizable components
 - Multiple agents can work on different parts

@@ -155,6 +155,7 @@ body:
 ### Steps to Reproduce
 
 Use numbered steps for clear reproduction:
+
 ```markdown
 1. Go to [location]
 2. Click on [element]
@@ -163,6 +164,7 @@ Use numbered steps for clear reproduction:
 ```
 
 **Best practices**:
+
 - Be specific about data used (include examples)
 - Note any preconditions
 - Include timing if relevant
@@ -171,11 +173,13 @@ Use numbered steps for clear reproduction:
 ### Expected vs Actual Behavior
 
 **Expected Behavior**: Describe what SHOULD happen according to:
+
 - Documentation
 - Normal user expectations
 - Previous working behavior
 
 **Actual Behavior**: Describe what ACTUALLY happens:
+
 - Include exact error messages
 - Note any partial success
 - Describe visual or functional differences
@@ -183,6 +187,7 @@ Use numbered steps for clear reproduction:
 ### Environment Section
 
 Required environment details:
+
 ```markdown
 - OS: macOS 14.0 / Windows 11 / Ubuntu 22.04
 - Browser: Chrome 120 / Firefox 121 / Safari 17
@@ -191,6 +196,7 @@ Required environment details:
 ```
 
 Additional context when relevant:
+
 - Network conditions
 - User role/permissions
 - Data volume or scale
@@ -201,12 +207,14 @@ Additional context when relevant:
 The `render: shell` attribute provides syntax highlighting for logs.
 
 Include:
+
 - Full stack traces
 - Console errors
 - Server logs (sanitized)
 - Network request/response data
 
 **Example format**:
+
 ```
 TypeError: Cannot read property 'hash' of undefined
     at AuthService.validatePassword (src/services/auth.js:42:15)
@@ -217,6 +225,7 @@ TypeError: Cannot read property 'hash' of undefined
 ### Severity and Frequency
 
 **Severity levels**:
+
 | Level | Description | Response Time |
 |-------|-------------|---------------|
 | Low | Minor inconvenience | Normal backlog |
@@ -225,6 +234,7 @@ TypeError: Cannot read property 'hash' of undefined
 | Critical | Security issue or data loss | Immediate |
 
 **Frequency levels**:
+
 | Level | Description | Debug Difficulty |
 |-------|-------------|------------------|
 | Always | 100% reproducible | Easier to debug |
@@ -235,6 +245,7 @@ TypeError: Cannot read property 'hash' of undefined
 ### Workaround Section
 
 Document any temporary fixes users can apply while waiting for resolution. This helps:
+
 - Unblock users immediately
 - Reduce support requests
 - Provide debugging hints

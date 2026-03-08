@@ -1,6 +1,7 @@
 # Worktree Operations Part 1: Listing and Switching
 
 ## Table of Contents
+
 1. [When you need to see all active worktrees → Listing Worktrees](#listing-worktrees)
 2. [If you need to work in a different worktree → Switching Between Worktrees](#switching-between-worktrees)
 
@@ -13,16 +14,19 @@
 ### Basic Listing
 
 **Command**:
+
 ```bash
 git worktree list
 ```
 
 **What This Does**: Displays all worktrees in a human-readable format with three columns:
+
 1. **Worktree Path**: The absolute filesystem path to the worktree directory
 2. **Commit Hash**: The shortened SHA hash of the current commit (first 7 characters)
 3. **Branch Name**: The branch currently checked out in that worktree
 
 **Example Output**:
+
 ```
 /Users/username/myproject        a1b2c3d [main]
 /Users/username/review-GH-42     e4f5g6h [review/issue-42]
@@ -30,6 +34,7 @@ git worktree list
 ```
 
 **Interpreting the Output**:
+
 - First line shows the main repository worktree (where the `.git` directory lives)
 - Subsequent lines show additional worktrees
 - Branch names in square brackets indicate active branches
@@ -38,6 +43,7 @@ git worktree list
 ### Machine-Readable Listing
 
 **Command**:
+
 ```bash
 git worktree list --porcelain
 ```
@@ -45,6 +51,7 @@ git worktree list --porcelain
 **What This Does**: Outputs worktree information in a structured, machine-parseable format. Each worktree is represented by a block of key-value pairs separated by blank lines.
 
 **Example Output**:
+
 ```
 worktree /Users/username/myproject
 HEAD a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
@@ -61,6 +68,7 @@ locked working tree has a lock file
 ```
 
 **Field Definitions**:
+
 - `worktree`: Absolute path to the worktree directory
 - `HEAD`: Full 40-character SHA hash of the current commit
 - `branch`: Full reference path to the branch (starts with `refs/heads/`)
@@ -68,6 +76,7 @@ locked working tree has a lock file
 - `prunable`: Present only if the worktree is prunable (missing or corrupted)
 
 **When to Use Porcelain Format**:
+
 - Writing scripts that need to parse worktree information
 - Automating worktree management tasks
 - Integrating with other tools or continuous integration systems
@@ -86,11 +95,13 @@ Git worktrees are **separate directories** on your filesystem. Switching between
 ### Method 1: Using cd (Change Directory)
 
 **Command**:
+
 ```bash
 cd /path/to/worktree
 ```
 
 **Example**:
+
 ```bash
 # Currently in main worktree
 pwd
@@ -111,11 +122,13 @@ git branch --show-current
 ### Method 2: Using Absolute Paths
 
 **Command**:
+
 ```bash
 cd /absolute/path/to/worktree
 ```
 
 **Example**:
+
 ```bash
 # Switch using absolute path
 cd /Users/username/review-GH-42
@@ -126,6 +139,7 @@ cd /Users/username/review-GH-42
 ### Method 3: Creating Shell Aliases for Quick Switching
 
 **Setup** (add to your `~/.bashrc` or `~/.zshrc`):
+
 ```bash
 # Define aliases for common worktrees
 alias goto-main='cd /Users/username/myproject'
@@ -134,6 +148,7 @@ alias goto-hotfix='cd /Users/username/hotfix-login'
 ```
 
 **Usage**:
+
 ```bash
 # Switch to review worktree instantly
 goto-review
@@ -145,12 +160,14 @@ goto-main
 ### Method 4: Using CDPATH Environment Variable
 
 **Setup** (add to your `~/.bashrc` or `~/.zshrc`):
+
 ```bash
 # Add parent directory of worktrees to CDPATH
 export CDPATH=".:$HOME:$HOME/Code"
 ```
 
 **Usage**:
+
 ```bash
 # If worktrees are in /Users/username/Code/
 cd review-GH-42  # Works from anywhere!

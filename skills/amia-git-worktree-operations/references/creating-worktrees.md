@@ -61,13 +61,17 @@ This guide has been split into focused parts for easier navigation:
 Follow these 6 steps **in order** when creating any worktree:
 
 ### STEP 1: Check Registry for Conflicts
+
 Verify no name/port/branch conflicts exist.
+
 ```bash
 cat .worktree-registry.json | jq -r '.worktrees[].path' | grep "review-GH-42"
 ```
+
 [Full details](./creating-worktrees-part1-standard-flow.md#step-1-check-registry-for-conflicts)
 
 ### STEP 2: Determine Naming Based on Purpose
+
 Choose appropriate naming pattern.
 
 | Purpose | Pattern | Example |
@@ -80,23 +84,31 @@ Choose appropriate naming pattern.
 [Full details](./creating-worktrees-part1-standard-flow.md#step-2-determine-naming-based-on-purpose)
 
 ### STEP 3: Allocate Ports If Needed
+
 Reserve unique ports for services.
+
 ```bash
 # Main repo: 3000, 3001
 # First worktree: 3002, 3003
 # Second worktree: 3004, 3005
 ```
+
 [Full details](./creating-worktrees-part1-standard-flow.md#step-3-allocate-ports-if-needed)
 
 ### STEP 4: Create Git Worktree
+
 Run the creation command.
+
 ```bash
 git worktree add ../review-GH-42 origin/feature/new-auth
 ```
+
 [Full details](./creating-worktrees-part1-standard-flow.md#step-4-create-git-worktree)
 
 ### STEP 5: Register in Registry
+
 Add entry to `.worktree-registry.json`.
+
 ```json
 {
   "name": "review-GH-42",
@@ -107,16 +119,20 @@ Add entry to `.worktree-registry.json`.
   "status": "active"
 }
 ```
+
 [Full details](./creating-worktrees-part1-standard-flow.md#step-5-register-in-registry)
 
 ### STEP 6: Setup Environment
+
 Install dependencies and configure.
+
 ```bash
 cd ../review-GH-42
 npm install
 cp .env.example .env
 npm test
 ```
+
 [Full details](./creating-worktrees-part1-standard-flow.md#step-6-setup-environment)
 
 ---
@@ -124,36 +140,48 @@ npm test
 ## Quick Reference: Purpose-Specific Patterns
 
 ### Review Worktrees
+
 For PR reviews. Named `review-GH-{number}`.
+
 ```bash
 git fetch origin
 git worktree add ../review-GH-42 origin/feature/new-auth
 cd ../review-GH-42 && npm install && npm test
 ```
+
 [Full details](./creating-worktrees-part2-purpose-patterns.md#review-worktrees)
 
 ### Feature Worktrees
+
 For new features. Named `feature-{name}`.
+
 ```bash
 git worktree add ../feature-user-profiles -b feature/user-profiles
 cd ../feature-user-profiles && npm install
 ```
+
 [Full details](./creating-worktrees-part2-purpose-patterns.md#feature-worktrees)
 
 ### Bugfix Worktrees
+
 For bug fixes. Named `bugfix-GH-{number}-{desc}`.
+
 ```bash
 git worktree add ../bugfix-GH-55-crash -b bugfix/crash-on-login origin/main
 cd ../bugfix-GH-55-crash && npm install
 ```
+
 [Full details](./creating-worktrees-part2-purpose-patterns.md#bugfix-worktrees)
 
 ### Testing Worktrees
+
 For extensive tests. Named `test-{type}-{target}`.
+
 ```bash
 git worktree add ../test-integration-api -b test/integration-api
 cd ../test-integration-api && npm install
 ```
+
 [Full details](./creating-worktrees-part2-purpose-patterns.md#testing-worktrees)
 
 ---
@@ -161,10 +189,12 @@ cd ../test-integration-api && npm install
 ## Quick Reference: Port Allocation
 
 ### When to Allocate
+
 - **Yes**: Web servers, API servers, databases, cache services
 - **No**: Code review only, documentation, quick fixes
 
 ### Standard Port Ranges
+
 | Service Type | Range |
 |--------------|-------|
 | Frontend | 3000-3099 |
@@ -179,6 +209,7 @@ cd ../test-integration-api && npm install
 ## Quick Reference: Environment Setup
 
 ### 7 Setup Steps
+
 1. Navigate to worktree
 2. Install dependencies (`npm install` / `pip install` / `bundle install`)
 3. Configure environment variables (`.env` file)
@@ -194,6 +225,7 @@ cd ../test-integration-api && npm install
 ## Quick Reference: Essential Commands
 
 ### Create Worktree
+
 ```bash
 # From existing branch
 git worktree add ../review-GH-42 origin/feature/new-auth
@@ -206,12 +238,14 @@ git worktree add ../inspect-commit --detach abc123def
 ```
 
 ### List Worktrees
+
 ```bash
 git worktree list
 git worktree list --porcelain
 ```
 
 ### Registry Queries
+
 ```bash
 jq -r '.worktrees[].name' .worktree-registry.json
 jq -r '.worktrees[].ports[]' .worktree-registry.json | sort -n
@@ -224,6 +258,7 @@ jq -r '.worktrees[].ports[]' .worktree-registry.json | sort -n
 ## Quick Reference: Post-Creation Checklist
 
 ### Required Checks
+
 - [ ] Worktree directory exists
 - [ ] Git worktree registered (`git worktree list`)
 - [ ] Correct branch checked out
@@ -232,6 +267,7 @@ jq -r '.worktrees[].ports[]' .worktree-registry.json | sort -n
 - [ ] Environment configured
 
 ### Verification Checks
+
 - [ ] Tests pass
 - [ ] Application starts
 - [ ] No port conflicts
@@ -269,6 +305,7 @@ Creating git worktrees follows this standard process:
 7. **Verify** - Run tests and start services
 
 **Key principles**:
+
 - One worktree = one purpose
 - Consistent naming = easier management
 - Separate ports = no conflicts
@@ -276,6 +313,7 @@ Creating git worktrees follows this standard process:
 - Tests pass = setup correct
 
 **When in doubt**:
+
 - Consult the registry before creating
 - Follow naming conventions strictly
 - Test immediately after creation
@@ -293,6 +331,7 @@ Creating git worktrees follows this standard process:
 - [Troubleshooting Guide](./troubleshooting.md) - In-depth troubleshooting
 
 ### Part Files
+
 - [Part 1: Standard Creation Flow](./creating-worktrees-part1-standard-flow.md)
 - [Part 2: Purpose-Specific Patterns](./creating-worktrees-part2-purpose-patterns.md)
 - [Part 3: Port Allocation Strategy](./creating-worktrees-part3-port-allocation.md)

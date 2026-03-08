@@ -26,6 +26,7 @@
 **Error:** `FileNotFoundError: SSH key not found`
 
 **Solution:**
+
 ```bash
 # Run setup to generate the key
 python3 gh_multiuser.py setup <identity>
@@ -38,6 +39,7 @@ python3 gh_multiuser.py setup <identity>
 **Cause:** SSH agent is offering the wrong key first.
 
 **Solution:**
+
 ```bash
 # Clear agent and reload correct key
 ssh-add -D
@@ -50,6 +52,7 @@ python3 gh_multiuser.py test secondary
 **Error:** SSH test fails after setup
 
 **Solution:** Check `~/.ssh/config` manually:
+
 ```
 Host github-secondary
   HostName github.com
@@ -63,6 +66,7 @@ Host github-secondary
 **Error:** `Permission to owner/repo.git denied to wrong-user`
 
 **Solution:**
+
 ```bash
 # Reconfigure the repository
 python3 gh_multiuser.py repo /path/to/repo correct-identity
@@ -76,6 +80,7 @@ git remote -v
 **Error:** `gh auth switch` fails
 
 **Solution:**
+
 ```bash
 # Verify accounts are authenticated
 gh auth status
@@ -89,6 +94,7 @@ gh auth login
 **Error:** `identities.json not found`
 
 **Solution:**
+
 ```bash
 # Copy template
 cp identities.example.json identities.json
@@ -136,6 +142,7 @@ python3 gh_multiuser.py switch secondary
 ### Shell Profile Integration
 
 Add to `~/.bashrc` or `~/.zshrc`:
+
 ```bash
 alias gh-primary='python3 /path/to/gh_multiuser.py switch primary'
 alias gh-secondary='python3 /path/to/gh_multiuser.py switch secondary'

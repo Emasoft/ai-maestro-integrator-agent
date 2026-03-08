@@ -23,6 +23,7 @@
 4. [If you need a quick summary - Summary](#summary)
 
 **Related Documentation:**
+
 - [Part 1: Setup & Configuration](docker-worktree-testing-part1-setup.md) - Overview, patterns, Docker Compose, port configuration, workflow example
 
 ---
@@ -34,16 +35,19 @@
 **Always include worktree identifier in container names:**
 
 Good:
+
 - `app-test-int-api`
 - `db-hotfix-security`
 - `redis-feat-caching`
 
 Bad:
+
 - `app` (conflicts with other worktrees)
 - `myapp` (unclear which worktree)
 - `container1` (meaningless)
 
 **Benefits:**
+
 - Easy to identify which worktree owns each container
 - Prevents name conflicts
 - Simplifies cleanup and debugging
@@ -71,6 +75,7 @@ services:
 ```
 
 **Recommended Limits:**
+
 - **Small worktrees** (unit tests): 512MB RAM, 0.5 CPU
 - **Medium worktrees** (integration tests): 1GB RAM, 1 CPU
 - **Large worktrees** (performance tests): 2GB RAM, 2 CPU
@@ -126,6 +131,7 @@ def cleanup_docker(worktree_name):
 **Choose based on testing needs:**
 
 1. **Ephemeral Data** (default for testing):
+
    ```yaml
    volumes:
      # Anonymous volume - deleted with container
@@ -133,6 +139,7 @@ def cleanup_docker(worktree_name):
    ```
 
 2. **Persistent Data** (keep between test runs):
+
    ```yaml
    volumes:
      # Named volume - survives container removal
@@ -140,6 +147,7 @@ def cleanup_docker(worktree_name):
    ```
 
 3. **Host-Mounted Data** (direct access from host):
+
    ```yaml
    volumes:
      # Mount host directory
@@ -160,6 +168,7 @@ networks:
 ```
 
 **Benefits:**
+
 - Containers in different worktrees can't communicate
 - Prevents cross-contamination of test data
 - Allows same internal hostnames across worktrees
@@ -169,6 +178,7 @@ networks:
 **Never commit `.env.docker` files:**
 
 Add to `.gitignore`:
+
 ```
 .env.docker
 .env.*.docker
@@ -233,6 +243,7 @@ For advanced Docker patterns and optimization, see the **docker-container-expert
 - **Volume backup and restore** procedures
 
 Read the `docker-container-expert` skill for:
+
 - Complex multi-container orchestration
 - Production-like testing environments
 - Container debugging techniques
@@ -246,12 +257,15 @@ Read the `docker-container-expert` skill for:
 ### Problem: Port Already in Use
 
 **Symptoms:**
+
 ```
 Error: bind: address already in use
 ```
 
 **Solution:**
+
 1. Check what's using the port:
+
    ```bash
    lsof -i :8081
    # Or on Linux:
@@ -259,12 +273,14 @@ Error: bind: address already in use
    ```
 
 2. Either stop the process or allocate different port:
+
    ```bash
    # Update .env.docker
    WEB_PORT=8082  # Use different port
    ```
 
 3. Restart containers:
+
    ```bash
    docker compose down
    docker compose up -d
@@ -273,17 +289,21 @@ Error: bind: address already in use
 ### Problem: Container Name Conflict
 
 **Symptoms:**
+
 ```
 Error: container name already in use
 ```
 
 **Solution:**
+
 1. Check existing containers:
+
    ```bash
    docker ps -a | grep test-int-api
    ```
 
 2. Remove old containers:
+
    ```bash
    docker rm -f app-test-int-api
    # Or remove all for worktree:
@@ -295,21 +315,26 @@ Error: container name already in use
 ### Problem: Database Connection Refused
 
 **Symptoms:**
+
 - Tests fail with "connection refused"
 - Can't connect to database on allocated port
 
 **Solution:**
+
 1. Check if database container is running:
+
    ```bash
    docker compose ps db
    ```
 
 2. Check database logs:
+
    ```bash
    docker compose logs db
    ```
 
 3. Wait for database to be ready:
+
    ```bash
    # Use health check
    docker compose up -d --wait
@@ -319,6 +344,7 @@ Error: container name already in use
    ```
 
 4. Verify port mapping:
+
    ```bash
    docker compose port db 5432
    # Should show: 0.0.0.0:5433
@@ -327,13 +353,16 @@ Error: container name already in use
 ### Problem: Volume Permission Issues
 
 **Symptoms:**
+
 ```
 Error: permission denied
 mkdir: cannot create directory: Permission denied
 ```
 
 **Solution:**
+
 1. Run container with matching user ID:
+
    ```yaml
    services:
      app:
@@ -341,12 +370,14 @@ mkdir: cannot create directory: Permission denied
    ```
 
 2. Set in `.env.docker`:
+
    ```bash
    UID=$(id -u)
    GID=$(id -g)
    ```
 
 3. Or fix permissions in Dockerfile:
+
    ```dockerfile
    RUN chown -R appuser:appuser /app
    USER appuser
@@ -355,22 +386,27 @@ mkdir: cannot create directory: Permission denied
 ### Problem: Old Data in Containers
 
 **Symptoms:**
+
 - Tests pass locally but fail in worktree
 - Database has unexpected data
 
 **Solution:**
+
 1. Complete cleanup:
+
    ```bash
    docker compose down -v  # Remove volumes
    ```
 
 2. Rebuild images:
+
    ```bash
    docker compose build --no-cache
    docker compose up -d
    ```
 
 3. Run migrations again:
+
    ```bash
    docker compose exec app python manage.py migrate
    ```
@@ -378,17 +414,21 @@ mkdir: cannot create directory: Permission denied
 ### Problem: Slow Build Times
 
 **Symptoms:**
+
 - `docker compose up` takes minutes
 - Building on every code change
 
 **Solution:**
+
 1. Use volume mounts (already in template):
+
    ```yaml
    volumes:
      - .:/app  # Changes reflected immediately
    ```
 
 2. Add `.dockerignore`:
+
    ```
    .git
    .venv
@@ -398,6 +438,7 @@ mkdir: cannot create directory: Permission denied
    ```
 
 3. Use BuildKit:
+
    ```bash
    DOCKER_BUILDKIT=1 docker compose build
    ```
@@ -405,17 +446,21 @@ mkdir: cannot create directory: Permission denied
 ### Problem: Can't Access Service from Host
 
 **Symptoms:**
+
 - `curl localhost:8081` fails
 - Browser can't connect to app
 
 **Solution:**
+
 1. Verify port mapping:
+
    ```bash
    docker compose ps
    # Check PORTS column
    ```
 
 2. Check container is listening on 0.0.0.0, not 127.0.0.1:
+
    ```yaml
    # In app code:
    app.run(host='0.0.0.0', port=8080)  # Good
@@ -425,6 +470,7 @@ mkdir: cannot create directory: Permission denied
 3. Check firewall rules
 
 4. Test from inside container:
+
    ```bash
    docker compose exec app curl localhost:8080
    ```
@@ -434,12 +480,14 @@ mkdir: cannot create directory: Permission denied
 ## Summary
 
 Docker worktree testing provides:
+
 - **Isolated environments** for each branch/worktree
 - **Parallel testing** without conflicts
 - **Reproducible setups** across team
 - **Clean state** for each test run
 
 **Key points:**
+
 1. Use unique ports per worktree
 2. Include worktree ID in container names
 3. Generate `.env.docker` from allocated ports
@@ -447,6 +495,7 @@ Docker worktree testing provides:
 5. Use health checks before running tests
 
 **See Also:**
+
 - [Part 1: Setup & Configuration](docker-worktree-testing-part1-setup.md) - Patterns, templates, workflow
 - `worktree-creation.md` - Creating worktrees
 - `port-allocation.md` - Port management system

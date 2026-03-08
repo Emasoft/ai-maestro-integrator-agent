@@ -1,6 +1,7 @@
 # Troubleshooting: Coverage Gaps in Code Reviews
 
 ## Table of Contents
+
 - If you need to understand the problem → Problem Description
 - When analyzing why coverage is incomplete → Root Causes
 - If you're looking for solutions → Solutions and Workarounds
@@ -14,30 +15,35 @@ Important issues are slipping through code reviews and being discovered later in
 ## Root Causes
 
 ### 1. Incomplete Review Scope
+
 - Reviewers focusing only on code logic, missing broader concerns
 - Security, performance, or accessibility not part of review mindset
 - Integration points and dependencies overlooked
 - Documentation and tests not reviewed with same rigor as code
 
 ### 2. Knowledge Gaps
+
 - Reviewers lack expertise in specific areas (security, performance, etc.)
 - Domain-specific concerns not understood
 - Unfamiliarity with system architecture or data flow
 - Missing context about why certain practices matter
 
 ### 3. Review Fatigue and Shortcuts
+
 - Large PRs leading to superficial reviews
 - Time pressure causing reviewers to skim
 - Over-reliance on automated checks
 - Assumption that author already verified everything
 
 ### 4. Systemic Blind Spots
+
 - Entire team lacks awareness of certain issue categories
 - No one responsible for specialized review areas
 - Missing review checklists or guidelines
 - Lessons from past bugs not incorporated into review process
 
 ### 5. Tool and Process Limitations
+
 - Automated checks don't cover certain issue types
 - Review interface makes some problems hard to spot
 - No clear assignment of specialized reviewers
@@ -48,6 +54,7 @@ Important issues are slipping through code reviews and being discovered later in
 ### Immediate Actions
 
 #### 1. Implement Comprehensive Review Checklist
+
 ```markdown
 ACTION: Use multi-dimensional checklist for every review
 
@@ -124,6 +131,7 @@ INTEGRATION:
 ```
 
 #### 2. Apply Risk-Based Review Depth
+
 ```markdown
 ACTION: Adjust review thoroughness based on change risk
 
@@ -145,6 +153,7 @@ APPROACH:
 ```
 
 #### 3. Specialized Review Roles
+
 ```markdown
 ACTION: Assign reviewers based on expertise needed
 
@@ -164,6 +173,7 @@ PROCESS:
 ```
 
 #### 4. Review the Tests Thoroughly
+
 ```markdown
 ACTION: Make test review first-class concern
 
@@ -185,6 +195,7 @@ WATCH FOR:
 ```
 
 #### 5. Validate in Review Environment
+
 ```markdown
 ACTION: Actually run and test the changes
 
@@ -207,6 +218,7 @@ ESPECIALLY FOR:
 ### Long-Term Solutions
 
 #### 1. Build Review Knowledge Base
+
 ```markdown
 ACTION: Capture lessons from escaped defects
 
@@ -225,6 +237,7 @@ RESULT:
 ```
 
 #### 2. Expand Automation Coverage
+
 ```markdown
 ACTION: Automate detection of missed issues
 
@@ -248,6 +261,7 @@ INTEGRATE:
 ```
 
 #### 3. Structured Review Training
+
 ```markdown
 ACTION: Develop reviewer skills systematically
 
@@ -268,6 +282,7 @@ METHODS:
 ```
 
 #### 4. Enhanced Review Process
+
 ```markdown
 ACTION: Strengthen review workflow
 
@@ -290,6 +305,7 @@ TOOLS:
 ### For PR Authors
 
 #### Reduce Reviewer Burden
+
 1. **Self-Review First**: Catch obvious issues before requesting review
 2. **Provide Context**: Explain what to focus on and why
 3. **Highlight Risks**: Call out security, performance, or integration concerns
@@ -297,6 +313,7 @@ TOOLS:
 5. **Right-Size PR**: Smaller PRs get more thorough reviews
 
 #### Enable Thorough Review
+
 1. **Write Tests First**: Demonstrate code actually works
 2. **Document Tricky Parts**: Don't make reviewer guess your intent
 3. **Link References**: Connect to design docs, tickets, or discussions
@@ -306,6 +323,7 @@ TOOLS:
 ### For Reviewers
 
 #### Systematic Approach
+
 1. **Use Checklist**: Don't rely on memory for what to check
 2. **Read Description First**: Understand intent before reading code
 3. **Review Tests Early**: Understand what author thinks code should do
@@ -314,6 +332,7 @@ TOOLS:
 6. **Check Integration**: Look beyond the changed files
 
 #### When Uncertain
+
 1. **Ask Questions**: Don't approve what you don't understand
 2. **Request Expert**: Tag someone with relevant expertise
 3. **Suggest Testing**: Ask author to verify specific scenarios
@@ -323,6 +342,7 @@ TOOLS:
 ### For Teams
 
 #### Process Improvements
+
 1. **Regular Retrospectives**: Review what issues escaped and why
 2. **Evolving Standards**: Update guidelines based on learnings
 3. **Knowledge Sharing**: Rotate reviewers to spread expertise
@@ -330,6 +350,7 @@ TOOLS:
 5. **Balanced Workload**: Avoid reviewer burnout that leads to shortcuts
 
 #### Capability Building
+
 1. **Cross-Training**: Build T-shaped skills (depth + breadth)
 2. **Documentation**: Capture specialized knowledge for others
 3. **Mentoring**: Pair experienced and learning reviewers
@@ -339,6 +360,7 @@ TOOLS:
 ## Identifying Coverage Gaps
 
 ### Analyze Escaped Defects
+
 ```markdown
 PROCESS:
 1. Track all post-merge issues (bugs, security, performance, etc.)
@@ -356,6 +378,7 @@ TRACK:
 ```
 
 ### Review Metrics
+
 ```markdown
 MONITOR:
 - Defects found in different test stages
@@ -374,6 +397,7 @@ USE INSIGHTS TO:
 ## When to Escalate
 
 Consider process changes or additional resources if:
+
 - Same categories of issues repeatedly escape review
 - Severe issues (security, data loss) found in production
 - Reviewers express uncertainty about what to check

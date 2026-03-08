@@ -19,6 +19,7 @@
 5. [When you need a complete example - Workflow Example](#workflow-example)
 
 **Related Documentation:**
+
 - [Part 2: Best Practices & Troubleshooting](docker-worktree-testing-part2-best-practices.md) - Resource limits, cleanup, health checks, common problems
 
 ---
@@ -78,11 +79,13 @@ Worktree: test-auth-fix (localhost:8082, 5434, 6381)
 ### Container Naming Convention
 
 Use this naming pattern for containers:
+
 ```
 <service>-<worktree-identifier>
 ```
 
 Examples:
+
 - `app-test-int-api` (app service in test-int-api worktree)
 - `db-hotfix-security` (database in hotfix-security worktree)
 - `redis-feat-caching` (Redis in feat-caching worktree)
@@ -196,11 +199,13 @@ To run multiple worktrees simultaneously, each must use different external ports
 ### Port Assignment Flow
 
 1. **Create worktree with ports**:
+
    ```bash
    python scripts/worktree_create.py --purpose test --identifier int-api --branch feat --ports
    ```
 
 2. **System allocates ports** and stores in `allocated_ports.json`:
+
    ```json
    {
      "test-int-api": {
@@ -342,6 +347,7 @@ docker compose -f docker-compose.yml --env-file .env.docker up -d
 ```
 
 **Command Breakdown:**
+
 - `-f docker-compose.yml`: Specify compose file
 - `--env-file .env.docker`: Load environment variables from file
 - `up`: Create and start containers
@@ -426,6 +432,7 @@ python scripts/worktree_remove.py test-int-api
 ## Next Steps
 
 Continue to [Part 2: Best Practices & Troubleshooting](docker-worktree-testing-part2-best-practices.md) for:
+
 - Container naming conventions
 - Resource limits per worktree
 - Cleanup procedures

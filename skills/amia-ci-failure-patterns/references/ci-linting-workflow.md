@@ -86,15 +86,19 @@ For JavaScript/TypeScript:
 1. Choose a single source of truth for the linter version (usually the project
    configuration file: `pyproject.toml` for Python, `package.json` for JS/TS)
 2. Reference that version in CI by installing from the project config:
+
    ```yaml
    - name: Install linter from project config
      run: pip install -e ".[lint]"
    ```
+
    or for JavaScript:
+
    ```yaml
    - name: Install dependencies
      run: npm ci
    ```
+
 3. Update versions in one place; CI and pre-commit inherit automatically
 
 ---
@@ -115,6 +119,7 @@ conceptually different:
 ### 5.3.2 Check Mode Detects Violations; Format Mode Shows What Would Change
 
 For ruff:
+
 ```bash
 # Lint check -- reports violations
 ruff check src/ tests/
@@ -124,6 +129,7 @@ ruff format --check src/ tests/
 ```
 
 For ESLint:
+
 ```bash
 # Lint check
 npx eslint src/ --max-warnings=0
@@ -133,6 +139,7 @@ npx eslint src/ --fix-dry-run
 ```
 
 For Biome:
+
 ```bash
 # Lint and format check in CI mode
 npx @biomejs/biome ci src/
@@ -168,6 +175,7 @@ ruff check src/ tests/ --output-format=github
 ```
 
 This produces output in the GitHub Actions annotation format:
+
 ```
 ::error file=src/main.py,line=42,col=5::F841 Local variable `x` is assigned to but never used
 ```
@@ -184,6 +192,7 @@ npx eslint src/ --format @microsoft/eslint-formatter-sarif --output-file eslint-
 ```
 
 Then upload the SARIF file:
+
 ```yaml
 - name: Upload SARIF
   if: always()
@@ -193,6 +202,7 @@ Then upload the SARIF file:
 ```
 
 Alternatively, use the stylish formatter and rely on the problem matcher:
+
 ```yaml
 - name: Run ESLint
   run: npx eslint src/ --max-warnings=0

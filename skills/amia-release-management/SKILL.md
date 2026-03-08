@@ -92,41 +92,56 @@ Release Request Received
 ## Reference Documentation
 
 ### 1. Release Management Responsibilities
+
 [references/release-responsibilities.md](references/release-responsibilities.md) - What coordinators must/must not do
+
 - **Contents:** Overview, Core Roles, Release Manager, Technical Lead, Quality Assurance Lead, DevOps Engineer, Product Owner, Responsibility Matrix (RACI), Escalation Path, Level 1: Team Level, Level 2: Management Level, Level 3: Executive Level, Communication Responsibilities, Daily During Release Window, Weekly (Pre-Release), Post-Release, Decision Authority, Release Manager Has Final Authority On, Technical Lead Has Final Authority On, QA Lead Has Final Authority On, DevOps Engineer Has Final Authority On, Product Owner Has Final Authority On, Handoff Procedures, Development to QA, QA to DevOps, DevOps to Operations, Accountability Measures, Success Metrics by Role, Cross-Functional Collaboration, Required Collaboration Points, Collaboration Best Practices, Conflict Resolution, Continuous Improvement, Training and Development
 
 ### 2. Release Types
+
 [references/release-types.md](references/release-types.md) - Patch, minor, major, pre-release definitions
   <!-- TOC: release-types.md -->
-  - Overview
-  - Major Release
-  - Definition
+- Overview
+- Major Release
+- Definition
   <!-- /TOC -->
 
 ### 3. Semantic Versioning Rules
+
 [references/semantic-versioning.md](references/semantic-versioning.md) - Version format and incrementing rules
 
 ### 4. Release Process
+
 [references/release-process.md](references/release-process.md) - Version bumping, changelog, release notes, tagging
 
 ### 5. Pre-Release Verification
+
 [references/pre-release-verification.md](references/pre-release-verification.md) - Quality gates and verification checklist
+
 - **Contents:** Overview, Verification Principles, Core Principles, Verification Levels, Verification Checklist by Category, Code Quality Verification, Testing Verification, Data Verification, Infrastructure Verification, Monitoring and Observability, Documentation Verification, Compliance and Legal Verification, Business Verification, Communication and Training, Contingency Planning, Final Go/No-Go Decision, Decision Meeting, Go Decision Criteria, No-Go Criteria (any one triggers delay), Conditional Go, Decision Documentation, Post-Verification Activities, Final Preparation, Pre-Deployment Brief, Verification Sign-Off, Verification Automation, Automated Verification Gates, Verification Dashboard, Continuous Improvement, Verification Metrics, Process Improvements
 
 ### 6. Post-Release Verification
+
 [references/post-release-verification.md](references/post-release-verification.md) - Deployment verification and smoke testing
+
 - **Contents:** Overview, Verification Timeline, Immediate (0-4 hours), Short-term (4-24 hours), Medium-term (24-72 hours), Long-term (1-2 weeks), Immediate Post-Release Verification (0-4 Hours), Deployment Completion Verification, Smoke Test Execution, Error Monitoring, Performance Baseline, User Experience Validation, Security Validation, Short-Term Verification (4-24 Hours), Comprehensive Monitoring, Issue Identification and Triage, Performance Analysis, Medium-Term Verification (24-72 Hours), Trend Analysis, Feature Adoption Tracking, Support and Feedback Analysis, Long-Term Verification (1-2 Weeks), Business Value Validation, Stability Assessment, Cost Analysis, Release Retrospective, Continuous Verification, Ongoing Monitoring, Continuous Improvement, Post-Release Verification Checklist Summary, Verification Success Criteria
 
 ### 7. Rollback Procedures
+
 [references/rollback-procedures.md](references/rollback-procedures.md) - When and how to rollback releases
+
 - **Contents:** Overview, Rollback Fundamentals, What is a Rollback?, When to Rollback vs. Fix Forward, Rollback Decision Criteria, Rollback Planning (Pre-Release), Rollback Readiness Assessment, Rollback Documentation, Rollback Execution, Rollback Decision Process, Rollback Execution Steps, Communication During Rollback, Post-Rollback Activities, Incident Documentation, Root Cause Analysis, Prevention Measures, Re-Release Planning, Rollback Best Practices, Rollback Anti-Patterns, Conclusion
 
 ### 8. CI/CD Integration
+
 [references/cicd-integration.md](references/cicd-integration.md) - Pipeline configuration and automation
+
 - **Contents:** Overview, CI/CD Fundamentals, Continuous Integration (CI), Continuous Deployment (CD), Release Management Integration, CI/CD Pipeline Architecture, Standard Pipeline Stages, CI Pipeline Configuration, Build Stage, Test Stage, Analysis Stage, Artifact Publishing, CD Pipeline Configuration, Deployment Stages, Database Migration Integration, Release Gates and Approvals, Rollback Automation, Advanced CI/CD Patterns, Deployment Strategies, Multi-Environment Pipeline, Monitoring and Observability, Pipeline Monitoring, Notification Integration, Best Practices, CI/CD Pipeline Design, Release Automation, Quality and Security, Documentation and Communication, Conclusion
 
 ### 9. Tag-Branch Collision Troubleshooting
+
 [references/troubleshooting-tag-branch-collision.md](references/troubleshooting-tag-branch-collision.md) - Tag-branch collision detection and resolution
+
 - **Contents:** What is a tag-branch name collision, How collisions cause HTTP 300 errors, How to detect collisions using amia_cleanup_version_branches.py, How to resolve collisions safely, Best practices to prevent future collisions
 
 **Script**: `scripts/amia_cleanup_version_branches.py` -- Detects and reports version tag/branch name collisions (safe, print-only)
@@ -194,6 +209,7 @@ UNVERIFIED --> VERIFICATION_IN_PROGRESS
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 

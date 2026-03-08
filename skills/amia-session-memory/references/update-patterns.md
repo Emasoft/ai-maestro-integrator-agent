@@ -261,6 +261,7 @@ cat "$FILE_PATH" | head -3 || echo "ERROR: File not readable"
 **Scenario**: Multiple sessions trying to update same memory
 
 **Resolution**:
+
 1. PR comments: No conflict (GitHub handles sequential comments)
 2. Handoff files: Last write wins (use file locking if critical)
 

@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Execute Pre-Merge Gate
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -86,6 +85,7 @@ python3 amia_get_pr_checks.py --pr <NUMBER> --required-only
 ```
 
 Verify all required checks are passing:
+
 ```bash
 gh pr checks <NUMBER> --required
 ```
@@ -97,6 +97,7 @@ gh pr view <NUMBER> --json mergeable,mergeStateStatus
 ```
 
 Possible values:
+
 - `MERGEABLE` - Can be merged
 - `CONFLICTING` - Has merge conflicts
 - `UNKNOWN` - Status being calculated
@@ -112,6 +113,7 @@ If `CONFLICTING`, gate fails.
 ### Step 4: Verify Approval Validity
 
 Check if approvals are still valid (not dismissed by new commits):
+
 ```bash
 gh pr view <NUMBER> --json reviewDecision,reviews
 ```
@@ -119,11 +121,13 @@ gh pr view <NUMBER> --json reviewDecision,reviews
 ### Step 5: Check Branch Freshness
 
 Check if branch is up-to-date with base:
+
 ```bash
 gh pr view <NUMBER> --json mergeStateStatus --jq '.mergeStateStatus'
 ```
 
 Status values:
+
 - `CLEAN` - Ready to merge
 - `BEHIND` - Branch needs update (warning)
 - `BLOCKED` - Branch protection blocking
@@ -133,11 +137,13 @@ Status values:
 ### Step 6: Apply Gate Decision
 
 If all checks pass:
+
 ```bash
 gh pr edit <NUMBER> --remove-label "gate:pre-merge-pending" --add-label "gate:pre-merge-passed"
 ```
 
 If any check fails:
+
 ```bash
 gh pr edit <NUMBER> --add-label "gate:pre-merge-failed"
 ```
@@ -145,6 +151,7 @@ gh pr edit <NUMBER> --add-label "gate:pre-merge-failed"
 ## Gate Pass Criteria
 
 ALL of these must be true:
+
 - [ ] All required CI checks are passing
 - [ ] No merge conflicts
 - [ ] At least one valid approval exists
@@ -189,8 +196,10 @@ git add .
 git commit -m "Resolve merge conflicts"
 git push
 ```
+
 EOF
 )"
+
 ```
 
 ### CI Failing

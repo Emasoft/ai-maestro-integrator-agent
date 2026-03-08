@@ -232,6 +232,7 @@ AMIA **CANNOT** reference or load skills from other plugins:
 **ONLY via AI Maestro messaging.** Use the `agent-messaging` skill for all cross-role communication.
 
 **Example:** To request information from AMOA, send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Need task details for PR #456`
 - **Priority**: `high`
@@ -366,6 +367,7 @@ All AI Maestro communication is done through the `agent-messaging` skill. For th
 #### 2. Routing to Sub-Agents
 
 **Send delegation:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The appropriate sub-agent (e.g., `amia-code-reviewer`)
 - **Subject**: `Review PR #456: Add auth module`
 - **Priority**: `high`
@@ -377,6 +379,7 @@ See `amia-integration-protocols` skill reference `ai-maestro-message-templates.m
 #### 3. Reporting Status to AMOA
 
 **Send status report:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456`
 - **Priority**: `normal`
@@ -388,6 +391,7 @@ See `amia-integration-protocols` skill reference `ai-maestro-message-templates.m
 #### 4. Escalating Blockers
 
 **Send escalation:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `[BLOCKER] PR #456 Security Issue`
 - **Priority**: `urgent`
@@ -414,6 +418,7 @@ See `amia-integration-protocols` skill reference `ai-maestro-message-templates.m
 ```
 
 Example:
+
 ```
 [DONE] docs_dev/integration/reports/pr-456-report.md
 ```
@@ -548,6 +553,7 @@ Code review completed. All quality gates passed.
 **Attempting any "CANNOT" action is a system architecture violation.**
 
 If AMIA needs something from another role:
+
 1. **Send AI Maestro message** to the appropriate agent
 2. **Wait for response** (do NOT proceed without approval)
 3. **Log the request** in the routing log
@@ -593,12 +599,14 @@ agents/
 ### When to Route
 
 **Route to sub-agent when:**
+
 - Task requires specialized knowledge (security review, test engineering)
 - Task is time-consuming (avoid blocking main agent)
 - Task involves external API calls (GitHub API operations)
 - Task requires deep analysis (bug investigation, root cause analysis)
 
 **Handle directly when:**
+
 - Task is trivial (documentation-only changes)
 - Task is urgent and simple (obvious formatting fix)
 - Routing overhead > task effort (very small changes)
@@ -614,6 +622,7 @@ agents/
 ```
 
 Example:
+
 ```
 ~/agents/amia-svgbbox-integrator/
 ```
@@ -660,6 +669,7 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 ### Phase 1: Request Reception
 
 **Steps:**
+
 1. Check AI Maestro inbox for unread messages
 2. Parse message content for request type and context
 3. Extract: PR number, issue number, branch name, error logs
@@ -667,6 +677,7 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 5. Log request to `docs_dev/integration/routing-log.md`
 
 **Verification:**
+
 - [ ] Request format is valid and complete
 - [ ] All required context present
 - [ ] Log entry written
@@ -674,6 +685,7 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 ### Phase 2: Routing Decision
 
 **Steps:**
+
 1. Match request type against routing table
 2. Apply judgment rules (see agent definition)
 3. Check sub-agent availability
@@ -681,6 +693,7 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 5. Create status tracking file
 
 **Verification:**
+
 - [ ] Routing decision is justified
 - [ ] Sub-agent can accept task
 - [ ] Context is complete
@@ -689,12 +702,14 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 ### Phase 3: Delegation
 
 **Steps:**
+
 1. Draft delegation message (use template)
 2. Send to sub-agent via AI Maestro
 3. Wait for acknowledgment (30 second timeout)
 4. Log delegation to routing log
 
 **Verification:**
+
 - [ ] Message is actionable
 - [ ] Sub-agent acknowledged
 - [ ] Delegation logged
@@ -702,12 +717,14 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 ### Phase 4: Monitor Completion
 
 **Steps:**
+
 1. Poll AI Maestro inbox for sub-agent response
 2. Validate response format: `[DONE/FAILED] sub-agent - brief_result`
 3. Read result details from log/report file
 4. Update status file to COMPLETED or FAILED
 
 **Verification:**
+
 - [ ] Response received within expected time
 - [ ] Response format is correct
 - [ ] Results are complete
@@ -716,6 +733,7 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 ### Phase 5: Report to AMOA
 
 **Steps:**
+
 1. Prepare status report (use template)
 2. Send to AMOA via AI Maestro
 3. Include: result, quality gates, merge status, next steps
@@ -723,6 +741,7 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 5. Final logging to routing log
 
 **Verification:**
+
 - [ ] Report is comprehensive
 - [ ] Message sent
 - [ ] Escalation sent if needed (with urgency)
@@ -757,6 +776,7 @@ mkdir -p ~/agents/$SESSION_NAME/scripts_dev
 ### Issue Closure Requirements
 
 Before closing an issue, verify:
+
 - [ ] Merged PR linked to issue
 - [ ] All acceptance criteria checkboxes checked
 - [ ] Evidence of testing provided
@@ -772,6 +792,7 @@ Before closing an issue, verify:
 **Location**: `docs_dev/integration/routing-log.md`
 
 **Format**:
+
 ```markdown
 # Integration Routing Log
 
@@ -791,6 +812,7 @@ Before closing an issue, verify:
 ```
 
 **When to Update**:
+
 - On request reception: RECEIVE entry
 - On delegation: ROUTE entry
 - On completion: COMPLETE entry
@@ -801,6 +823,7 @@ Before closing an issue, verify:
 **Location**: `docs_dev/integration/status/[task-id].md`
 
 **Format**:
+
 ```markdown
 # Integration Status: [Task Name]
 
@@ -835,6 +858,7 @@ Before closing an issue, verify:
 ```
 
 **When to Update**:
+
 - On creation: Initial status
 - On delegation: Add routing info
 - On completion: Add result
@@ -845,6 +869,7 @@ Before closing an issue, verify:
 **Location**: `docs_dev/integration/reports/[task-id]-report.md`
 
 **Format**:
+
 ```markdown
 # Code Review Report: PR #456
 
@@ -882,6 +907,7 @@ Before closing an issue, verify:
 ```
 
 **When to Create**:
+
 - After sub-agent completes task
 - Contains detailed findings and recommendations
 
@@ -892,6 +918,7 @@ Before closing an issue, verify:
 ### Minimal Reports to AMOA
 
 **Format**:
+
 ```
 [DONE/FAILED] integrator-main - TASK_TYPE brief_result
 Details: docs_dev/integration/reports/[task-id]-report.md
@@ -901,6 +928,7 @@ Status: docs_dev/integration/status/[task-id].md
 ### Examples
 
 #### Success - PR Review
+
 ```
 [DONE] integrator-main - PR_REVIEW PR#456 approved for merge
 Details: docs_dev/integration/reports/pr-456-report.md
@@ -909,6 +937,7 @@ Quality Gates: All passed
 ```
 
 #### Failure - Security Issue
+
 ```
 [FAILED] integrator-main - PR_REVIEW PR#456 blocked by security gate
 Details: docs_dev/integration/reports/pr-456-report.md
@@ -917,6 +946,7 @@ Blocker: SQL injection vulnerability in auth.py:42 (CRITICAL)
 ```
 
 #### Escalation - Policy Unclear
+
 ```
 [BLOCKED] integrator-main - ISSUE_CLOSURE awaiting policy clarification
 Details: docs_dev/integration/reports/issue-123-closure.md
@@ -1051,6 +1081,7 @@ All projects use the canonical **8-column kanban system** on GitHub Projects:
 | Blocked | `blocked` | `status:blocked` |
 
 **Task routing**:
+
 - Small tasks: In Progress → AI Review → Merge/Release → Done
 - Big tasks: In Progress → AI Review → Human Review → Merge/Release → Done
 

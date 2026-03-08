@@ -20,11 +20,13 @@ This document covers the standard 6-step flow for creating git worktrees systema
 **Purpose**: Prevent duplicate worktree names and port conflicts.
 
 **Action**: Before creating any worktree, check the registry file to ensure:
+
 - The worktree name is not already in use
 - The ports you plan to allocate are not already assigned
 - The target branch is not already checked out in another worktree
 
 **Command**:
+
 ```bash
 # Check if worktree name exists
 cat .worktree-registry.json | jq -r '.worktrees[].path' | grep "review-GH-42"
@@ -36,6 +38,7 @@ cat .worktree-registry.json | jq -r '.worktrees[].ports[]' | grep "3001"
 **What "registry" means**: The registry is a JSON file (`.worktree-registry.json`) in the main repository root that tracks all active worktrees, their paths, branches, ports, and metadata.
 
 **What "conflict" means**: A conflict occurs when:
+
 - Two worktrees have the same name
 - Two worktrees try to use the same port number
 - The same branch is checked out in multiple worktrees (git prevents this)
@@ -60,6 +63,7 @@ cat .worktree-registry.json | jq -r '.worktrees[].ports[]' | grep "3001"
 | Experiment | `exp-{name}` | `exp-new-architecture` |
 
 **Why use these patterns**: Consistent naming allows you to:
+
 - Identify the purpose of a worktree at a glance
 - Link worktrees to GitHub issues/PRs automatically
 - Sort and filter worktrees programmatically
@@ -74,6 +78,7 @@ cat .worktree-registry.json | jq -r '.worktrees[].ports[]' | grep "3001"
 **Action**: If the worktree will run services (web servers, databases, APIs), allocate ports now.
 
 **When to allocate ports**:
+
 - Yes: Web applications that run dev servers
 - Yes: API services
 - Yes: Database services
@@ -83,12 +88,14 @@ cat .worktree-registry.json | jq -r '.worktrees[].ports[]' | grep "3001"
 - No: Quick code reviews without testing
 
 **Port allocation rules**:
+
 1. Start from base port 3000 and increment
 2. Check registry to avoid conflicts
 3. Allocate at least 2 ports per worktree (app + API)
 4. Reserve ports immediately, before creating worktree
 
 **Example port allocation**:
+
 ```bash
 # Main repository uses: 3000 (app), 3001 (API)
 # First worktree gets: 3002 (app), 3003 (API)
@@ -106,15 +113,18 @@ See [Port Allocation Strategy](./creating-worktrees-part3-port-allocation.md) fo
 **Action**: Use the `git worktree add` command with the appropriate options.
 
 **Basic syntax**:
+
 ```bash
 git worktree add <path> <branch-or-commit>
 ```
 
 **What each part means**:
+
 - `<path>`: Where the worktree directory will be created (relative or absolute path)
 - `<branch-or-commit>`: What to check out (branch name, commit hash, or tag)
 
 **Location convention**: Create worktrees as **siblings** to the main repository, not inside it:
+
 ```
 project/
 ├── main-repo/          # Main repository
@@ -124,12 +134,14 @@ project/
 ```
 
 **Why use sibling directories**:
+
 - Keeps worktrees isolated from main repo
 - Prevents accidental commits in wrong directory
 - Makes cleanup easier
 - Avoids .gitignore complications
 
 **Example commands**:
+
 ```bash
 # Create from existing remote branch
 git worktree add ../review-GH-42 origin/feature/new-auth
@@ -145,6 +157,7 @@ git worktree add ../inspect-commit --detach abc123def
 ```
 
 **Verification**: After creation, verify the worktree exists:
+
 ```bash
 # List all worktrees
 git worktree list
@@ -162,6 +175,7 @@ ls -la ../review-GH-42
 **Action**: Add an entry to `.worktree-registry.json` with all relevant metadata.
 
 **Registry entry structure**:
+
 ```json
 {
   "worktrees": [
@@ -181,6 +195,7 @@ ls -la ../review-GH-42
 ```
 
 **What each field means**:
+
 - `name`: The worktree identifier (matches directory name)
 - `path`: Relative path from main repo to worktree
 - `branch`: Git branch checked out in worktree
@@ -192,6 +207,7 @@ ls -la ../review-GH-42
 - `notes`: Human-readable description
 
 **How to add registry entry**:
+
 ```bash
 # Using jq to add entry (recommended)
 jq '.worktrees += [{
@@ -221,6 +237,7 @@ mv .worktree-registry.tmp.json .worktree-registry.json
 See [Environment Setup](./creating-worktrees-part4-environment-setup.md) for complete instructions.
 
 **Quick setup checklist**:
+
 - [ ] Navigate to worktree directory
 - [ ] Install dependencies
 - [ ] Copy/configure environment files

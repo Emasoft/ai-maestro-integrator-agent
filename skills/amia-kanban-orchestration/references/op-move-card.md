@@ -1,6 +1,5 @@
 # Operation: Move Card Between Columns
 
-
 ## Contents
 
 - [Metadata](#metadata)

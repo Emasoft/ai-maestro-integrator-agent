@@ -79,6 +79,7 @@ python scripts/quick_scan_template.py --pr 123 --repo owner/repo
 ```
 
 **Decision thresholds:**
+
 - Confidence >= 70%: Proceed to Stage 2 (Deep Dive)
 - Confidence < 70%: Request clarification from PR author
 
@@ -102,11 +103,13 @@ python scripts/review_report_generator.py --pr 456 --output review.md
 ```
 
 **Script sequence:**
+
 1. `quick_scan_template.py` - Initial assessment (threshold: 70%)
 2. `deep_dive_calculator.py` - Full 8-dimension analysis (threshold: 80%)
 3. `review_report_generator.py` - Final report generation
 
 **Final decision thresholds:**
+
 - Confidence >= 80%: Approve and merge
 - Confidence 60-79%: Request specific changes
 - Confidence < 60%: Reject, major rework needed

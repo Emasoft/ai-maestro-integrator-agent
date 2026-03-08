@@ -7,6 +7,7 @@ This document provides GraphQL and CLI queries for retrieving board state and it
 ## Table of Contents
 
 ### Part 1: Basic Queries
+
 See [board-queries-part1-basic.md](board-queries-part1-basic.md)
 
 - 7.1 Full Board State - Get complete board with all items and field values
@@ -21,6 +22,7 @@ See [board-queries-part1-basic.md](board-queries-part1-basic.md)
   - 7.3.3 Workload summary per assignee
 
 ### Part 2: Filtered Queries
+
 See [board-queries-part2-filtered.md](board-queries-part2-filtered.md)
 
 - 7.4 Blocked Items - Get blocked items with blocker info
@@ -35,6 +37,7 @@ See [board-queries-part2-filtered.md](board-queries-part2-filtered.md)
   - 7.6.3 Calculate progress percentage
 
 ### Part 3: History and Completion
+
 See [board-queries-part3-history.md](board-queries-part3-history.md)
 
 - 7.7 Item History - Get timeline and transitions

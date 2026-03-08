@@ -20,12 +20,14 @@
 Issue was created but not added to the project.
 
 **Diagnosis:**
+
 ```bash
 # Check if issue is in project
 gh project item-list PROJECT_NUMBER --owner OWNER --format json | jq '.items[] | select(.content.number == 42)'
 ```
 
 **Solution:**
+
 ```bash
 # Add issue to project
 gh project item-add PROJECT_NUMBER --owner OWNER --url https://github.com/OWNER/REPO/issues/42
@@ -36,6 +38,7 @@ gh project item-add PROJECT_NUMBER --owner OWNER --url https://github.com/OWNER/
 Issue exists in project but fields not set, so it appears in wrong view.
 
 **Diagnosis:**
+
 ```bash
 # Check item field values
 gh api graphql -f query='
@@ -59,6 +62,7 @@ gh api graphql -f query='
 ```
 
 **Solution:**
+
 ```bash
 # Set status field
 # [GraphQL mutation to set Status = "Backlog"]
@@ -69,10 +73,12 @@ gh api graphql -f query='
 Board view has filters that exclude the item.
 
 **Diagnosis:**
+
 - Check board filters in GitHub UI
 - Look for filter icons on columns
 
 **Solution:**
+
 - Clear filters
 - Or adjust item to match filter criteria
 
@@ -87,6 +93,7 @@ Board view has filters that exclude the item.
 Using incorrect field ID or option ID.
 
 **Diagnosis:**
+
 ```bash
 # Get correct field IDs
 gh api graphql -f query='
@@ -113,6 +120,7 @@ Use the returned field ID and option IDs in your mutation.
 GraphQL mutation returned success but didn't actually update.
 
 **Diagnosis:**
+
 ```bash
 # Check the response
 gh api graphql -f query='
@@ -144,9 +152,11 @@ Check for errors in response, verify all IDs are correct.
 Browser or API caching showing stale data.
 
 **Diagnosis:**
+
 - Hard refresh browser (Cmd+Shift+R)
 - Query API directly
 
 **Solution:**
+
 - Wait a moment and refresh
 - Query directly instead of relying on cached view

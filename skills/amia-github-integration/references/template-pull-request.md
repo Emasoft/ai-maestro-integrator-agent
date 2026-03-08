@@ -10,41 +10,41 @@ description: "Universal pull request template with AI disclosure, platform testi
 - 1. When to Use This Template
   - 1.1 Installing the template in a repository
   - 1.2 Choosing the correct base branch for a pull request
-- 2. Template Structure Overview
+- 1. Template Structure Overview
   - 2.1 Required sections every pull request must have
   - 2.2 Optional sections for specific change types
-- 3. Description and Issue Linking
+- 1. Description and Issue Linking
   - 3.1 Writing a clear pull request description
   - 3.2 Linking related issues with closing keywords
-- 4. Type of Change Classification
+- 1. Type of Change Classification
   - 4.1 Standard change type checkboxes
   - 4.2 Area designation for large projects
-- 5. Commit Message Format
+- 1. Commit Message Format
   - 5.1 Conventional commits reminder
   - 5.2 Examples of well-formed commit messages
-- 6. AI Disclosure Section
+- 1. AI Disclosure Section
   - 6.1 Why AI disclosure matters for code review
   - 6.2 Testing level classification for AI-generated code
   - 6.3 Understanding attestation checkbox
-- 7. General Review Checklist
+- 1. General Review Checklist
   - 7.1 Sync and branch hygiene checks
   - 7.2 Code quality and focus checks
-- 8. Platform Testing Checklist
+- 1. Platform Testing Checklist
   - 8.1 Windows, macOS, and Linux verification
   - 8.2 When platform testing is required versus optional
-- 9. CI and Testing Requirements
+- 1. CI and Testing Requirements
   - 9.1 Mandatory CI gates
   - 9.2 Test coverage expectations for new code and bug fixes
-- 10. Screenshots and Visual Changes
+- 1. Screenshots and Visual Changes
   - 10.1 Before and after comparison table
-- 11. Feature Toggle Section
+- 1. Feature Toggle Section
   - 11.1 How incomplete features are hidden behind toggles
   - 11.2 Toggle mechanism options
-- 12. Breaking Changes Section
+- 1. Breaking Changes Section
   - 12.1 Identifying breaking changes
   - 12.2 Migration instructions format
-- 13. Complete Template (Ready to Copy)
-- 14. Customization Notes
+- 1. Complete Template (Ready to Copy)
+- 1. Customization Notes
   - 14.1 Which sections are universal versus project-specific
   - 14.2 Adding project-specific fields
 
@@ -91,6 +91,7 @@ The following sections are included in the template but may be marked "N/A" when
 ### 3.1 Writing a clear pull request description
 
 The description must answer three questions:
+
 1. What does this change do?
 2. Why is this change needed?
 3. How was this change tested?
@@ -177,6 +178,7 @@ test(api): add integration tests for user endpoint
 ### 6.1 Why AI disclosure matters for code review
 
 When code is generated or substantially assisted by AI tools, reviewers need to know because:
+
 - AI-generated code may contain subtle logic errors that look syntactically correct
 - The contributor must demonstrate understanding of the generated code
 - Testing standards may need to be higher for AI-assisted contributions

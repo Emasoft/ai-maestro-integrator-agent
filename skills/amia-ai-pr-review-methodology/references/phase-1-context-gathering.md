@@ -42,6 +42,7 @@ For each file modified in the PR:
 4. Then read the diff to understand what the PR changes.
 
 If the PR modifies more than 10 files, prioritize reading complete files for:
+
 - Files containing the core logic change (not just configuration or formatting)
 - Files that handle paths, commands, or system integration (these are high-risk for false positives)
 - Files with security-sensitive code (authentication, authorization, input handling)
@@ -123,9 +124,11 @@ When a PR references a file path (for example, `/usr/local/lib/myapp/config.json
 
 1. Check the official documentation for the software or tool to confirm this is the correct path.
 2. If possible, verify the path exists on target systems by requesting the author to run:
+
    ```
    ls -la /usr/local/lib/myapp/config.json
    ```
+
 3. Check whether the path varies by platform (macOS vs Linux vs Windows) and whether the PR handles platform differences.
 4. Check whether the path depends on the installation method (package manager vs manual install vs containerized) and whether the PR accounts for this variation.
 

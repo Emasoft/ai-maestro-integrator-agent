@@ -1,6 +1,7 @@
 # Core Concepts
 
 ## Use-Case TOC
+
 - When you need to understand GitHub Projects V2 → [What is GitHub Projects V2](#what-is-github-projects-v2)
 - When you need to understand the label system → [The 9-Label System](#the-9-label-system)
 - When you need to understand synchronization → [Bidirectional Synchronization](#bidirectional-synchronization)
@@ -51,6 +52,7 @@ GitHub Projects V2 is a table-based project management system built directly int
 ### Why Use Projects V2
 
 Projects V2 provides:
+
 1. **Centralized View**: See all work items across multiple repositories
 2. **Custom Workflows**: Define status transitions specific to your team
 3. **Real-time Updates**: Changes in GitHub automatically reflect in the project
@@ -119,12 +121,14 @@ Use this decision guide when choosing which label to apply:
 - **Improving CI/CD, build, or development tools?** → `workflow`
 
 **When uncertain:**
+
 1. Read the issue description carefully
 2. Identify the primary goal (not side effects)
 3. Choose the label that best matches the primary goal
 4. If truly split between two categories, create two separate issues
 
 **Examples of correct labeling:**
+
 - "Add OAuth login" → `feature` (primary: new capability)
 - "Fix crash on login" → `bug` (primary: defect)
 - "Extract auth service layer" → `refactor` (primary: code structure)
@@ -138,6 +142,7 @@ Bidirectional synchronization means that changes in one direction (agent creates
 ### How Bidirectional Sync Works
 
 **Direction 1: Agent → GitHub**
+
 ```
 Agent creates task
     ↓
@@ -149,6 +154,7 @@ Issue gets status "Backlog"
 ```
 
 **Direction 2: GitHub → Agent**
+
 ```
 User updates issue status in Projects V2
     ↓
@@ -162,12 +168,14 @@ Agent reflects new status
 ### Sync Triggers
 
 **Actions that trigger sync from Agent to GitHub:**
+
 - Agent creates new task
 - Agent updates task status
 - Agent assigns task to user
 - Agent sets due date or priority
 
 **Actions that trigger sync from GitHub to Agent:**
+
 - Issue status changes in Projects V2
 - Issue is assigned or reassigned
 - Issue is closed
@@ -201,6 +209,7 @@ tail -f sync-projects-v2.log
 ### When Sync Fails
 
 If synchronization fails:
+
 1. Check GitHub CLI authentication: `gh auth status`
 2. Verify project ID exists: `gh project list`
 3. Review sync logs for error messages

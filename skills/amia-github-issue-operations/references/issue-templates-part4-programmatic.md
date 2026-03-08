@@ -21,6 +21,7 @@ Back to index: [issue-templates.md](issue-templates.md)
 Use placeholder variables in templates that get replaced at runtime.
 
 **Template with variables:**
+
 ```markdown
 ## Bug Report
 
@@ -39,6 +40,7 @@ Use placeholder variables in templates that get replaced at runtime.
 ```
 
 **Python substitution:**
+
 ```python
 import string
 from datetime import datetime
@@ -66,6 +68,7 @@ body = t.safe_substitute(
 ```
 
 **Jinja2 substitution (more powerful):**
+
 ```python
 from jinja2 import Template
 
@@ -104,6 +107,7 @@ body = template.render(
 Insert computed or fetched content into templates.
 
 **Example: Inject system information:**
+
 ```python
 import platform
 import subprocess
@@ -130,6 +134,7 @@ def inject_environment(template: str, system_info: dict) -> str:
 ```
 
 **Example: Inject git information:**
+
 ```python
 def get_git_info() -> dict:
     """Get current git state for context."""
@@ -150,6 +155,7 @@ def get_git_info() -> dict:
 ```
 
 **Example: Inject error logs:**
+
 ```python
 def get_recent_errors(log_file: str, max_lines: int = 20) -> str:
     """Extract recent error entries from log file."""
@@ -257,6 +263,7 @@ def detect_issue_type(title: str, body: str) -> IssueType:
 ```
 
 **Combining template selection with population:**
+
 ```python
 def create_issue_body(
     issue_type: IssueType,

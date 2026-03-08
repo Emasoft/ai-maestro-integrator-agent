@@ -176,6 +176,7 @@ This test works because:
 **When the author cannot perform the reversibility test:**
 
 If the original problem was reported by a user and the author cannot reproduce it even without the fix, this is a strong signal that:
+
 - The problem may have been caused by a transient condition
 - The problem may have been fixed by a different change
 - The author's environment may differ from the reporter's environment
@@ -220,18 +221,22 @@ These patterns are strong indicators that a fix may be a false positive:
 **Analysis using the 5 dimensions:**
 
 **Dimension 1 (Problem Verification):**
+
 - The exact error is identified: `FileNotFoundError: [Errno 2] No such file or directory: '/etc/mytool/config.yaml'`
 - Root cause analysis: The tool expects a config file at `/etc/mytool/config.yaml`, but after a fresh pip install, this file does not exist.
 - PROBLEM: The new path `/usr/share/local/mytool/config.yaml` also does not exist after a fresh pip install. The fix adds a path that is equally nonexistent.
 
 **Dimension 2 (Redundancy):**
+
 - The existing path `~/.config/mytool/config.yaml` is the user-level config location. If the tool created a default config here during first run, the problem would be solved.
 - The PR adds a new path instead of fixing the initialization code.
 
 **Dimension 3 (System Integration):**
+
 - `/usr/share/local/` is not a standard directory path. The FreeDesktop standard uses `/usr/local/share/` (note the different order). This path likely does not exist on any system.
 
 **Dimension 5 (False Positive Detection):**
+
 - **Reversibility test:** If we remove the new path, the error still occurs. But if we add the path, the error STILL occurs because `/usr/share/local/mytool/config.yaml` does not exist either.
 - **Why did the author think it worked?** The author likely tested by also manually creating the config file at the new path. The fix was not the path addition -- it was the manual file creation.
 - **The actual fix:** The tool should create a default config file at `~/.config/mytool/config.yaml` on first run if no config file exists.
@@ -243,6 +248,7 @@ These patterns are strong indicators that a fix may be a false positive:
 The root cause is that no config file exists after a fresh installation. Adding another non-existent path to the search list does not fix this. The fix should be to create a default configuration file at `~/.config/mytool/config.yaml` during first run.
 
 Can you verify:
+
 1. Run `ls -la /usr/share/local/mytool/config.yaml` -- does this path exist?
 2. Revert your change, then run the tool -- does the error still occur?
 3. With your change, but without manually creating any config file -- does the error still occur?

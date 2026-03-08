@@ -7,6 +7,7 @@ This document provides templates for creating different types of GitHub issues: 
 ## Table of Contents
 
 ### Part 1: Bug Report Templates
+
 See [issue-templates-part1-bug-reports.md](issue-templates-part1-bug-reports.md)
 
 - 2.1 Bug report template
@@ -15,6 +16,7 @@ See [issue-templates-part1-bug-reports.md](issue-templates-part1-bug-reports.md)
   - 2.1.3 Reproduction steps format (numbered steps, prerequisites)
 
 ### Part 2: Feature Request Templates
+
 See [issue-templates-part2-feature-requests.md](issue-templates-part2-feature-requests.md)
 
 - 2.2 Feature request template
@@ -23,6 +25,7 @@ See [issue-templates-part2-feature-requests.md](issue-templates-part2-feature-re
   - 2.2.3 Acceptance criteria (checkbox format, measurable requirements)
 
 ### Part 3: Task Templates
+
 See [issue-templates-part3-tasks.md](issue-templates-part3-tasks.md)
 
 - 2.3 Task template
@@ -31,6 +34,7 @@ See [issue-templates-part3-tasks.md](issue-templates-part3-tasks.md)
   - 2.3.3 Dependencies section (blocked by, blocks, table format)
 
 ### Part 4: Programmatic Template Population
+
 See [issue-templates-part4-programmatic.md](issue-templates-part4-programmatic.md)
 
 - 2.4 Populating templates programmatically
@@ -53,16 +57,19 @@ See [issue-templates-part4-programmatic.md](issue-templates-part4-programmatic.m
 ### Minimal Required Sections by Type
 
 **Bug Report:**
+
 1. Description - What is broken
 2. Steps to Reproduce - How to trigger it
 3. Expected vs Actual - What should happen vs what does
 
 **Feature Request:**
+
 1. Problem Statement - Why this is needed
 2. Proposed Solution - What to build
 3. Acceptance Criteria - When it's done
 
 **Task:**
+
 1. Summary - What to do
 2. Checklist - Step-by-step items
 3. Definition of Done - Completion criteria

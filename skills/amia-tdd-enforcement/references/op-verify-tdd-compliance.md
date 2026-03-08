@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Verify TDD Compliance
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -74,6 +73,7 @@ Each feature should have commits in this order.
 ## Verification Procedure
 
 1. **Get commit history for PR/branch**
+
    ```bash
    git log --oneline origin/main..HEAD
    # or
@@ -81,6 +81,7 @@ Each feature should have commits in this order.
    ```
 
 2. **Check for RED-GREEN-REFACTOR pattern**
+
    ```bash
    git log --oneline | grep -E "^[a-f0-9]+ (RED|GREEN|REFACTOR):"
    ```

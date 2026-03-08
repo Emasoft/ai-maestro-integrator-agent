@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Merge Decision Execution
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -203,6 +202,7 @@ gh pr close <NUMBER>
 ### Notify Stakeholders
 
 Send a notification using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `PR #<NUMBER> Review Complete: <DECISION>`
 - **Priority**: `normal`

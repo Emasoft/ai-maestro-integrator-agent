@@ -1,6 +1,7 @@
 # Worktree Operations Part 6: Best Practices
 
 ## Table of Contents
+
 1. [Keep Worktrees Updated](#practice-1-keep-worktrees-updated)
 2. [Clean Working Tree Before Switching](#practice-2-clean-working-tree-before-switching)
 3. [Use Meaningful Worktree Names](#practice-3-use-meaningful-worktree-names)
@@ -18,6 +19,7 @@
 **Why**: Prevents large, difficult merge conflicts and keeps your work compatible with latest codebase changes.
 
 **How**:
+
 ```bash
 # Daily routine for each active worktree
 cd /path/to/worktree
@@ -28,6 +30,7 @@ git push --force-with-lease origin <branch-name>
 
 **Automation Idea**:
 Create a shell script `~/bin/sync-worktrees.sh`:
+
 ```bash
 #!/bin/bash
 WORKTREES=$(git worktree list --porcelain | grep '^worktree' | cut -d' ' -f2)
@@ -52,6 +55,7 @@ done
 **Why**: Prevents confusion about which changes belong to which worktree.
 
 **How**:
+
 ```bash
 # Before switching to another worktree:
 
@@ -69,6 +73,7 @@ cd /path/to/other/worktree
 ### Practice 3: Use Meaningful Worktree Names
 
 **Bad Names** (vague, hard to remember):
+
 ```bash
 git worktree add ../wt1 review/issue-42
 git worktree add ../temp hotfix/bug
@@ -76,6 +81,7 @@ git worktree add ../new-feature feature/auth
 ```
 
 **Good Names** (descriptive, self-documenting):
+
 ```bash
 git worktree add ../review-auth-refactor review/issue-42
 git worktree add ../hotfix-login-timeout hotfix/bug-login
@@ -83,6 +89,7 @@ git worktree add ../feature-oauth-integration feature/auth
 ```
 
 **Naming Convention Recommendation**:
+
 ```
 <purpose>-<description>
 
@@ -99,12 +106,14 @@ test-ci-pipeline        # For testing CI/CD changes
 **Why**: Prevents accidental deletion and signals to others (or your future self) that the worktree is important.
 
 **When to Lock**:
+
 - Starting a multi-day code review
 - Working on a worktree located on a removable drive
 - Worktree contains experiments you want to preserve
 - Shared worktree being used by multiple people
 
 **How**:
+
 ```bash
 # Lock with descriptive reason
 git worktree lock ../review-GH-42 --reason "3-day security audit in progress"
@@ -118,12 +127,14 @@ git worktree unlock ../review-GH-42
 **Why**: Reduces clutter, prevents confusion, frees disk space.
 
 **When to Remove**:
+
 - After PR is merged
 - After branch is deleted
 - After review is complete
 - After hotfix is deployed
 
 **How**:
+
 ```bash
 # Step 1: Verify work is committed and pushed
 cd ../review-GH-42
@@ -142,6 +153,7 @@ git worktree remove ../review-GH-42
 **Why**: Removes git metadata for worktrees that were manually deleted.
 
 **How**:
+
 ```bash
 # Check for prunable worktrees
 git worktree list
@@ -156,11 +168,13 @@ git worktree prune --dry-run
 ### Practice 7: Document Worktree Purpose
 
 **Method 1: Lock Reason**:
+
 ```bash
 git worktree lock ../review-GH-42 --reason "Reviewing authentication refactor"
 ```
 
 **Method 2: README in Worktree**:
+
 ```bash
 cd ../review-GH-42
 echo "Purpose: Review authentication refactor for PR #42" > WORKTREE_README.md
@@ -169,6 +183,7 @@ echo "Created: 2025-12-31" >> WORKTREE_README.md
 ```
 
 **Method 3: Branch Naming**:
+
 ```bash
 # Branch name itself documents purpose
 git worktree add ../review-auth-pr42 review/auth-refactor-pr42

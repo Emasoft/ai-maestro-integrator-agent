@@ -10,20 +10,20 @@ workflow-instruction: support
 ## Contents
 
 - 1. When to validate release tags before creating them
-- 2. How to compare version numbers against existing tags using semantic versioning
+- 1. How to compare version numbers against existing tags using semantic versioning
   - 2.1. Listing existing tags sorted by version
   - 2.2. Semver comparison using npx semver
   - 2.3. Semver comparison using Python (no external tools)
-- 3. Why PAT_TOKEN is required for cross-workflow triggers
+- 1. Why PAT_TOKEN is required for cross-workflow triggers
   - 3.1. The GITHUB_TOKEN limitation
   - 3.2. How to validate PAT_TOKEN is configured
   - 3.3. How to create a PAT_TOKEN
-- 4. How to create annotated tags vs lightweight tags
+- 1. How to create annotated tags vs lightweight tags
   - 4.1. Annotated tags (recommended for releases)
   - 4.2. Lightweight tags (not recommended for releases)
-- 5. How to use workflow_dispatch with a force option as a safety valve
-- 6. How to prevent HTTP 300 errors from branch/tag name collisions
-- 7. Troubleshooting release tag issues
+- 1. How to use workflow_dispatch with a force option as a safety valve
+- 1. How to prevent HTTP 300 errors from branch/tag name collisions
+- 1. Troubleshooting release tag issues
 
 ## Purpose
 

@@ -56,6 +56,7 @@ docs_dev/handoffs/
 ### Integration with GitHub Issues
 
 When handoff relates to a GitHub issue:
+
 1. Save handoff document locally first
 2. Optionally link in issue comment: `See handoff: docs_dev/handoffs/handoff-{uuid}.md`
 3. Primary delivery remains via AI Maestro with local path

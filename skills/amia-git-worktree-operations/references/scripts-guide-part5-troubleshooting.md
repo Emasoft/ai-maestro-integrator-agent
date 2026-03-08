@@ -1,6 +1,7 @@
 # Worktree Automation Scripts Guide - Part 5: Troubleshooting
 
 **Related Documents:**
+
 - [Main Index](scripts-guide.md)
 - [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
 - [Part 2: Management Scripts](scripts-guide-part2-management-scripts.md)
@@ -38,12 +39,14 @@ This section covers common problems and their solutions.
 ### Problem: Script says "worktree already exists" but directory is empty
 
 **Symptoms:**
+
 ```bash
 $ python scripts/worktree_create.py --purpose review --identifier GH-42 --branch feature/auth
 Error: Worktree 'review-GH-42' already exists in registry
 ```
 
 But when you check:
+
 ```bash
 $ ls worktrees/
 # Directory doesn't exist or is empty
@@ -52,6 +55,7 @@ $ ls worktrees/
 **Cause:** Registry has entry but filesystem doesn't have directory (orphaned entry).
 
 **Solution:**
+
 ```bash
 # Option 1: Validate and fix registry
 python scripts/registry_validate.py --fix
@@ -66,6 +70,7 @@ python scripts/worktree_create.py --purpose review --identifier GH-42 --branch f
 ### Problem: Port allocation fails with "no ports available"
 
 **Symptoms:**
+
 ```bash
 $ python scripts/worktree_create.py --purpose feature --identifier test --branch test --ports
 Error: No available ports for service 'web' in range 8000-8099
@@ -74,6 +79,7 @@ Error: No available ports for service 'web' in range 8000-8099
 **Cause:** All 100 ports in the range are allocated (unlikely) or registry is corrupted.
 
 **Solution:**
+
 ```bash
 # Check current port usage
 python scripts/port_status.py --all
@@ -93,6 +99,7 @@ python scripts/port_allocate.py --available web
 ### Problem: Registry validation fails with "corrupted JSON"
 
 **Symptoms:**
+
 ```bash
 $ python scripts/registry_validate.py
 Error: Registry file is corrupted (invalid JSON)
@@ -101,6 +108,7 @@ Error: Registry file is corrupted (invalid JSON)
 **Cause:** Manual editing broke JSON syntax, or file write was interrupted.
 
 **Solution:**
+
 ```bash
 # Check if backup exists
 ls -la .claude/worktree-registry.json.backup*
@@ -120,6 +128,7 @@ python scripts/rebuild_registry.py
 ### Problem: Health check shows "ERROR" for all ports
 
 **Symptoms:**
+
 ```bash
 $ python scripts/port_status.py --all --health-check
 review-GH-42:
@@ -130,6 +139,7 @@ review-GH-42:
 **Cause:** Firewall blocking connections, or script doesn't have network permissions.
 
 **Solution:**
+
 ```bash
 # Test manual connection
 nc -zv localhost 8002
@@ -150,6 +160,7 @@ sudo ufw status
 ### Problem: Worktree removal says "uncommitted changes" but there are none
 
 **Symptoms:**
+
 ```bash
 $ python scripts/worktree_remove.py review-GH-42
 Error: Worktree has uncommitted changes (use --force to override)
@@ -163,6 +174,7 @@ nothing to commit, working tree clean
 **Cause:** Untracked files or different git behavior than script expects.
 
 **Solution:**
+
 ```bash
 # Check for untracked files
 cd worktrees/review-GH-42
@@ -185,17 +197,19 @@ git stash --include-untracked
 ### Problem: Port shows "RUNNING" but browser says "Connection refused"
 
 **Symptoms:**
+
 ```bash
 $ python scripts/port_status.py --worktree feature-test --health-check
 feature-test:
   web:       8001    [RUNNING]  ✓
 ```
 
-But browser at http://localhost:8001 shows "Connection refused"
+But browser at <http://localhost:8001> shows "Connection refused"
 
 **Cause:** Different service is running on that port (not your development server).
 
 **Solution:**
+
 ```bash
 # Check what's actually running on the port
 lsof -i :8001
@@ -215,6 +229,7 @@ npm run dev -- --port 8001
 ### Problem: Multiple worktrees have same identifier
 
 **Symptoms:**
+
 ```bash
 $ python scripts/worktree_list.py
 review-GH-42
@@ -231,6 +246,7 @@ All have identifier "GH-42" but different purposes.
 **Not a problem unless:** You want to prevent this for clarity.
 
 **Optional solution:**
+
 ```bash
 # Use more specific identifiers
 --identifier GH-42-auth-review
@@ -243,6 +259,7 @@ All have identifier "GH-42" but different purposes.
 ### Problem: Script fails with "Python version too old"
 
 **Symptoms:**
+
 ```bash
 $ python scripts/worktree_create.py --purpose review --identifier test --branch test
 SyntaxError: invalid syntax (type hints not supported)
@@ -251,6 +268,7 @@ SyntaxError: invalid syntax (type hints not supported)
 **Cause:** Running Python 2.7 or Python 3.6/3.7 instead of required 3.8+.
 
 **Solution:**
+
 ```bash
 # Check current version
 python --version
@@ -272,6 +290,7 @@ sudo apt install python3.12
 ### Problem: Git says "worktree already exists" after script failure
 
 **Symptoms:**
+
 ```bash
 $ python scripts/worktree_create.py --purpose review --identifier GH-42 --branch feature/auth
 Error: Git command failed: worktree already exists
@@ -280,6 +299,7 @@ Error: Git command failed: worktree already exists
 **Cause:** Script failed mid-execution, git created worktree but registry wasn't updated.
 
 **Solution:**
+
 ```bash
 # Check git's worktree list
 git worktree list
@@ -299,6 +319,7 @@ python scripts/registry_validate.py --fix
 ### Problem: "Permission denied" when running scripts
 
 **Symptoms:**
+
 ```bash
 $ python scripts/worktree_create.py --purpose review --identifier test --branch test
 -bash: python: Permission denied
@@ -307,6 +328,7 @@ $ python scripts/worktree_create.py --purpose review --identifier test --branch 
 **Cause:** Scripts need execute permissions or Python path is wrong.
 
 **Solution:**
+
 ```bash
 # Check file permissions
 ls -la scripts/worktree_create.py
@@ -326,12 +348,14 @@ which python3
 ### Problem: Registry grows too large and slows down scripts
 
 **Symptoms:**
+
 - Scripts take several seconds to run
 - Registry file is over 1MB
 
 **Cause:** Too many completed worktrees still in registry.
 
 **Solution:**
+
 ```bash
 # Remove all completed worktrees
 python scripts/worktree_remove.py --all-completed --force
@@ -350,6 +374,7 @@ ls -lh .claude/worktree-registry.json
 ### Problem: Branch doesn't exist and script can't create it
 
 **Symptoms:**
+
 ```bash
 $ python scripts/worktree_create.py --purpose feature --identifier test --branch feature/new
 Error: Branch 'feature/new' does not exist and cannot be created
@@ -358,6 +383,7 @@ Error: Branch 'feature/new' does not exist and cannot be created
 **Cause:** Starting point for new branch is ambiguous (git doesn't know what to branch from).
 
 **Solution:**
+
 ```bash
 # Create branch manually first from current HEAD
 git branch feature/new

@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Get Check Details
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -103,6 +102,7 @@ python3 amia_get_check_details.py --pr <NUMBER> --check "<CHECK_NAME>"
 ### Step 3: Analyze Failure
 
 Based on the output:
+
 - Review the failure summary
 - Click details_url for full output
 - Check logs_url for raw logs
@@ -156,6 +156,7 @@ gh api repos/{owner}/{repo}/check-runs/{check_run_id}
 ### Annotations
 
 Annotations point to specific lines in code:
+
 ```json
 {
   "annotations": [

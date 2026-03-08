@@ -53,6 +53,7 @@ Message Received
 ## Step 4: ACK Protocol
 
 After processing any message:
+
 1. Send ACK with status (received/processing/completed/failed)
 2. Include estimated completion time if processing
 3. Include result summary if completed

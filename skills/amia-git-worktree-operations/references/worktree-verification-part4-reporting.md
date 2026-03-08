@@ -46,17 +46,20 @@ When an isolation violation is detected, document it:
 ### Escalation Criteria
 
 **Escalate IMMEDIATELY if:**
+
 - Sensitive data written to wrong location
 - Multiple worktrees contaminated
 - Production branches affected
 - Data loss detected
 
 **Escalate SOON if:**
+
 - Repeated violations by same agent
 - Violation pattern indicates systemic issue
 - Resolution requires manual intervention
 
 **Handle LOCALLY if:**
+
 - Single file in wrong location
 - Easily reversible
 - No sensitive data involved

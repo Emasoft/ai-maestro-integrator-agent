@@ -1,6 +1,7 @@
 # Architecture and Design Review
 
 ## Table of Contents
+
 - When evaluating SOLID principles adherence → Verification Checklist: Architectural Principles
 - If you're concerned about code organization → Verification Checklist: Code Organization
 - When verifying design patterns are appropriate → Verification Checklist: Design Patterns
@@ -14,11 +15,13 @@
 - When identifying design problems → Architecture Smells
 
 ## Purpose
+
 Evaluate the structural design, architectural patterns, and design decisions to ensure the code is maintainable, scalable, and follows established patterns.
 
 ## Verification Checklist
 
 ### Architectural Principles
+
 - [ ] Single Responsibility Principle (SRP) is followed
 - [ ] Open/Closed Principle (OCP) is respected
 - [ ] Liskov Substitution Principle (LSP) is maintained
@@ -29,6 +32,7 @@ Evaluate the structural design, architectural patterns, and design decisions to 
 - [ ] Keep It Simple, Stupid (KISS) is applied
 
 ### Code Organization
+
 - [ ] Code is organized into logical modules/packages
 - [ ] Related functionality is grouped together
 - [ ] Clear separation of concerns
@@ -39,6 +43,7 @@ Evaluate the structural design, architectural patterns, and design decisions to 
 - [ ] No circular dependencies
 
 ### Design Patterns
+
 - [ ] Appropriate patterns are used
 - [ ] Patterns are implemented correctly
 - [ ] Patterns solve actual problems (not over-engineered)
@@ -48,6 +53,7 @@ Evaluate the structural design, architectural patterns, and design decisions to 
 - [ ] Custom patterns are documented
 
 ### API Design
+
 - [ ] APIs are intuitive and easy to use
 - [ ] Function signatures are clear
 - [ ] Parameter order is logical
@@ -58,6 +64,7 @@ Evaluate the structural design, architectural patterns, and design decisions to 
 - [ ] Backward compatibility is maintained
 
 ### Data Structures
+
 - [ ] Appropriate data structures chosen
 - [ ] Time complexity is acceptable
 - [ ] Space complexity is reasonable
@@ -67,6 +74,7 @@ Evaluate the structural design, architectural patterns, and design decisions to 
 - [ ] Data encapsulation is proper
 
 ### Dependencies
+
 - [ ] Dependencies are minimal and justified
 - [ ] Dependency versions are specified
 - [ ] No unnecessary dependencies
@@ -80,6 +88,7 @@ Evaluate the structural design, architectural patterns, and design decisions to 
 ### Violation of SOLID Principles
 
 **Single Responsibility Principle violation**
+
 ```python
 # WRONG: Class does too many things
 class UserManager:
@@ -111,6 +120,7 @@ class ReportGenerator:
 ```
 
 **Dependency Inversion violation**
+
 ```python
 # WRONG: High-level module depends on low-level
 class UserService:
@@ -126,6 +136,7 @@ class UserService:
 ### Poor Abstraction
 
 **Leaky abstraction**
+
 ```python
 # WRONG: Implementation details leak through
 class DataStore:
@@ -141,6 +152,7 @@ class DataStore:
 ```
 
 **Wrong abstraction level**
+
 ```python
 # WRONG: Too low-level for the abstraction
 class PaymentProcessor:
@@ -157,6 +169,7 @@ class PaymentProcessor:
 ### Tight Coupling
 
 **Direct dependencies**
+
 ```python
 # WRONG: Classes tightly coupled
 class OrderProcessor:
@@ -174,6 +187,7 @@ class OrderProcessor:
 ```
 
 **Global state**
+
 ```python
 # WRONG: Global state creates coupling
 config = GlobalConfig()
@@ -194,6 +208,7 @@ class Service:
 ### Poor Code Organization
 
 **Mixed concerns**
+
 ```python
 # WRONG: UI, business logic, and data access mixed
 def handle_submit():
@@ -210,6 +225,7 @@ def handle_submit():
 ```
 
 **God object**
+
 ```python
 # WRONG: One class does everything
 class Application:
@@ -237,6 +253,7 @@ class Application:
 ### Anti-Patterns
 
 **Spaghetti code**
+
 ```python
 # WRONG: Complex, tangled control flow
 def process():
@@ -260,6 +277,7 @@ def process():
 ```
 
 **Magic numbers/strings**
+
 ```python
 # WRONG: Unexplained literals
 if status == 42:
@@ -280,6 +298,7 @@ if type == TYPE_ACTIVE:
 ## Scoring Criteria
 
 ### Critical (Must Fix)
+
 - Violations of core architectural principles
 - Circular dependencies
 - Tight coupling that prevents testing
@@ -289,6 +308,7 @@ if type == TYPE_ACTIVE:
 - Missing separation of concerns
 
 ### High Priority (Should Fix)
+
 - Poor abstraction choices
 - Unnecessary dependencies
 - Code duplication across modules
@@ -298,6 +318,7 @@ if type == TYPE_ACTIVE:
 - Wrong data structure choice
 
 ### Medium Priority (Consider Fixing)
+
 - Minor SOLID principle violations
 - Suboptimal design patterns
 - Slightly tight coupling
@@ -307,6 +328,7 @@ if type == TYPE_ACTIVE:
 - Missing design documentation
 
 ### Low Priority (Nice to Have)
+
 - Potential future scalability improvements
 - Alternative design pattern suggestions
 - Code organization improvements
@@ -342,6 +364,7 @@ if type == TYPE_ACTIVE:
 ## Architecture Smells
 
 ### Structural Smells
+
 - **Cyclic Dependency**: Modules depend on each other cyclically
 - **Unstable Dependency**: Depending on less stable modules
 - **God Class**: One class doing too much
@@ -349,6 +372,7 @@ if type == TYPE_ACTIVE:
 - **Inappropriate Intimacy**: Classes too tightly coupled
 
 ### Design Smells
+
 - **Refused Bequest**: Subclass doesn't use inherited methods
 - **Lazy Class**: Class doing too little to justify existence
 - **Speculative Generality**: Over-engineering for future needs
@@ -356,6 +380,7 @@ if type == TYPE_ACTIVE:
 - **Data Class**: Class with only data, no behavior
 
 ### Implementation Smells
+
 - **Long Method**: Method too long (>20 lines)
 - **Long Parameter List**: Too many parameters (>5)
 - **Large Class**: Class too large (>300 lines)

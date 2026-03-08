@@ -1,6 +1,7 @@
 # Implementation Guide Part 2: Advanced Topics
 
 ## Use-Case TOC
+
 - When you need to onboard your team → [Team Onboarding](#team-onboarding)
 - When you need multi-repo projects → [Multi-Repository Projects](#multi-repository-projects)
 - When you need custom GitHub Actions → [Custom GitHub Actions Workflows](#custom-github-actions-workflows)
@@ -34,6 +35,7 @@
 ### Onboarding New Team Members
 
 **Day 1: Setup**
+
 - [ ] Provide GitHub account access
 - [ ] Grant repository write permissions
 - [ ] Add to Projects V2 board
@@ -41,6 +43,7 @@
 - [ ] Clone repository
 
 **Day 2: Training**
+
 - [ ] Review 9-label system
 - [ ] Demonstrate issue creation
 - [ ] Show Projects V2 board usage
@@ -48,12 +51,14 @@
 - [ ] Practice creating test issue and PR
 
 **Week 1: Supervised Practice**
+
 - [ ] Create first real issue under supervision
 - [ ] Create first PR with code review
 - [ ] Participate in sprint planning
 - [ ] Use Projects V2 board to track work
 
 **Ongoing:**
+
 - [ ] Answer questions as they arise
 - [ ] Review issue/PR quality regularly
 - [ ] Provide feedback and coaching
@@ -91,17 +96,20 @@ For teams ready to go beyond basic implementation, these advanced topics extend 
 **Purpose:** Manage work across multiple related repositories in a single project board.
 
 **Use cases:**
+
 - Microservices architecture with separate repositories
 - Frontend/backend split repositories
 - Mono-repository with multiple subprojects
 
 **Implementation steps:**
+
 1. Create organization-level Projects V2 board
 2. Enable auto-add workflow for multiple repositories
 3. Add custom field "Repository" to track source
 4. Filter and group by repository in project views
 
 **Commands:**
+
 ```bash
 # Create organization project
 gh project create --title "Multi-Repo Project" --owner "@org-name"
@@ -112,6 +120,7 @@ gh project item-add <project_id> --url "https://github.com/org/repo2/issues/5"
 ```
 
 **Sync considerations:**
+
 - Maintain separate sync agents for each repository
 - Use repository prefix in task IDs to avoid collisions
 - Implement cross-repository dependency tracking
@@ -123,6 +132,7 @@ gh project item-add <project_id> --url "https://github.com/org/repo2/issues/5"
 **Common workflows:**
 
 **1. Auto-label based on file changes:**
+
 ```yaml
 name: Auto-label PR
 on:
@@ -140,6 +150,7 @@ jobs:
 ```
 
 **2. Slack notification for high-priority issues:**
+
 ```yaml
 name: Notify High Priority
 on:
@@ -160,6 +171,7 @@ jobs:
 ```
 
 **3. Auto-update project status:**
+
 ```yaml
 name: Update Project Status
 on:
@@ -184,6 +196,7 @@ jobs:
 **Purpose:** Perform complex filtering and bulk operations efficiently.
 
 **Example 1: Fetch all issues with specific label and status:**
+
 ```bash
 gh api graphql -f query='
 query {
@@ -208,6 +221,7 @@ query {
 ```
 
 **Example 2: Bulk update issue statuses:**
+
 ```bash
 gh api graphql -f query='
 mutation {
@@ -225,6 +239,7 @@ mutation {
 ```
 
 **Example 3: Generate custom metrics:**
+
 ```bash
 gh api graphql -f query='
 query {
@@ -253,6 +268,7 @@ query {
 **Purpose:** Enable instant synchronization instead of polling-based sync.
 
 **Setup webhook receiver:**
+
 ```python
 from flask import Flask, request
 import hmac
@@ -298,6 +314,7 @@ def handle_issue_event(payload):
 ```
 
 **Configure webhook in GitHub:**
+
 1. Repository Settings → Webhooks → Add webhook
 2. Payload URL: `https://your-server.com/webhook`
 3. Content type: `application/json`
@@ -306,6 +323,7 @@ def handle_issue_event(payload):
 6. Active: Checked
 
 **Security best practices:**
+
 - Always verify webhook signature
 - Use HTTPS for webhook endpoint
 - Rotate webhook secret regularly
@@ -317,6 +335,7 @@ def handle_issue_event(payload):
 **Purpose:** Link issue tracking to deployment lifecycle.
 
 **Example: Tag issues with deployment environment:**
+
 ```yaml
 name: Tag Deployed Issues
 on:
@@ -344,6 +363,7 @@ jobs:
 ```
 
 **Example: Generate release notes from issues:**
+
 ```bash
 #!/bin/bash
 # generate-release-notes.sh
@@ -377,6 +397,7 @@ done
 ```
 
 **Best practices:**
+
 - Tag issues with deployment environment (staging, production)
 - Track deployment timestamp in custom field
 - Link deployments to specific issue resolution
@@ -390,24 +411,28 @@ done
 Track these metrics to measure implementation success:
 
 ### Adoption Metrics
+
 - % of team using issue workflow
 - % of PRs properly linked to issues
 - % of issues with correct labels
 - Projects V2 board usage frequency
 
 ### Quality Metrics
+
 - Average time to close issues
 - Average time in review
 - % of issues closed on first PR
 - Number of reopened issues
 
 ### Efficiency Metrics
+
 - Issues closed per week/sprint
 - PRs merged per week/sprint
 - Sync success rate
 - CI/CD pass rate
 
 ### Team Satisfaction
+
 - Workflow satisfaction score (survey)
 - Number of process improvement suggestions
 - Reduction in manual coordination overhead

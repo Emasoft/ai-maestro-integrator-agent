@@ -10,12 +10,12 @@ This document explains how to retrieve and interpret GitHub Pull Request metadat
   - 1.3 Branch and merge information
   - 1.4 Labels, milestones, and projects
   - 1.5 Review and approval status
-- 2. Extracting Specific Fields
+- 1. Extracting Specific Fields
   - 2.1 Getting PR title and description
   - 2.2 Finding the source and target branches
   - 2.3 Checking mergeable status and conflicts
   - 2.4 Listing reviewers and their decisions
-- 3. Common Metadata Queries
+- 1. Common Metadata Queries
   - 3.1 Is this PR ready to merge?
   - 3.2 Who needs to approve this PR?
   - 3.3 What labels are applied?

@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Identify Current Gate
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -95,6 +94,7 @@ gh pr view <NUMBER> --json labels --jq '.labels[].name | select(startswith("gate
 ### Step 3: Determine Current Gate
 
 Parse the highest-progress gate label:
+
 1. If post-merge label exists -> Post-Merge Gate
 2. If pre-merge label exists -> Pre-Merge Gate
 3. If review label exists -> Review Gate
@@ -104,6 +104,7 @@ Parse the highest-progress gate label:
 ### Step 4: Determine Gate Status
 
 From the label suffix:
+
 - `-pending` -> Pending
 - `-passed` -> Passed (proceed to next gate)
 - `-failed` -> Failed (requires action)

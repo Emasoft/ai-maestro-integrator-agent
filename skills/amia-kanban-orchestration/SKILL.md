@@ -33,6 +33,7 @@ This skill establishes GitHub Projects V2 as the absolute center of AMOA orchest
 ## Prerequisites
 
 Before using this skill, ensure:
+
 1. GitHub CLI is installed and authenticated (`gh auth status`)
 2. GitHub Projects V2 is enabled for the repository
 3. GraphQL API access is available
@@ -72,6 +73,7 @@ Copy this checklist and track your progress:
 ### When to Use This Skill
 
 Read this skill when:
+
 - Starting any orchestration session
 - Planning new work (modules, features, tasks)
 - Assigning work to agents or humans
@@ -111,6 +113,7 @@ The `/create-issue-tasks` command creates Claude Tasks checklists for handling i
 **Categories:** BUG, BLOCKER, QUESTION, ENHANCEMENT, CONFIG, INVESTIGATION
 
 **Example:**
+
 ```
 /create-issue-tasks BUG implementer-1 auth-core "Login fails with OAuth" "401 error after token expiry"
 ```
@@ -152,6 +155,7 @@ python3 scripts/amia_kanban_check_completion.py OWNER REPO PROJECT_NUMBER
 ```
 
 **Exit codes:**
+
 - 0: All items Done
 - 1: Items still in progress
 - 2: Blocked items exist
@@ -163,6 +167,7 @@ python3 scripts/amia_kanban_check_completion.py OWNER REPO PROJECT_NUMBER
 Read this when understanding how Kanban connects to planning, orchestration, stop hooks, assignments, and PR completion.
 
 **Contents:**
+
 - IP.1 Planning Phase workflow
 - IP.2 Orchestration Phase workflow
 - IP.3 Stop Hook Phase workflow
@@ -199,6 +204,7 @@ github-kanban-core/
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 
@@ -333,6 +339,7 @@ python3 scripts/amia_kanban_check_completion.py owner repo 1
 - [references/board-queries.md](references/board-queries.md) - GraphQL queries for board state
   <!-- TOC: board-queries.md -->
   - ### Part 1: Basic Queries
+
   - 1 Full Board State - Get complete board with all items and field values
   - 1 GraphQL query for full project state
   <!-- /TOC -->
@@ -350,6 +357,7 @@ python3 scripts/amia_kanban_check_completion.py owner repo 1
 - [references/ai-agent-vs-human-workflow.md](references/ai-agent-vs-human-workflow.md) - Different workflows for AI vs humans
   <!-- TOC: ai-agent-vs-human-workflow.md -->
   - ### Part 1: Fundamentals and Communication
+
   - 1 Key differences in AI vs human workflow
   - 1 Comparison matrix (availability, response time, context)
   <!-- /TOC -->
@@ -368,6 +376,7 @@ python3 scripts/amia_kanban_check_completion.py owner repo 1
 - [references/troubleshooting.md](references/troubleshooting.md) - Common issues and solutions
   <!-- TOC: troubleshooting.md -->
   - ### Part 1: Issue and Status Problems
+
   - 1 Issue not appearing on board after creation
   - Cause 1: Issue Not Added to Project
   <!-- /TOC -->
@@ -379,6 +388,7 @@ python3 scripts/amia_kanban_check_completion.py owner repo 1
 Read this when setting up or running proactive board monitoring during orchestration sessions.
 
 **Contents:**
+
 - M.1 Overview of proactive monitoring
 - M.2 Polling configuration and frequency
 - M.3 What to check on each poll (detection table)

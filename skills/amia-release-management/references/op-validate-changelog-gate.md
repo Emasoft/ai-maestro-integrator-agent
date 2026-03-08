@@ -10,18 +10,18 @@ workflow-instruction: support
 ## Contents
 
 - 1. When to enforce changelog validation as a release gate
-- 2. How to extract a version section from CHANGELOG.md using AWK
+- 1. How to extract a version section from CHANGELOG.md using AWK
   - 2.1. AWK command for Keep a Changelog format
   - 2.2. AWK command for git-cliff format
-- 3. How to block a release when changelog entry is missing
+- 1. How to block a release when changelog entry is missing
   - 3.1. Exit code conventions for release gates
   - 3.2. Error message with fix instructions
-- 4. How to produce a job summary for CI/CD systems
+- 1. How to produce a job summary for CI/CD systems
   - 4.1. Success summary
   - 4.2. Failure summary with remediation steps
   - 4.3. Skip summary when no release is needed
-- 5. How to integrate changelog validation into a release pipeline
-- 6. Troubleshooting changelog validation failures
+- 1. How to integrate changelog validation into a release pipeline
+- 1. Troubleshooting changelog validation failures
 
 ## Purpose
 
@@ -59,7 +59,7 @@ AWK is a text processing tool available on all Unix-like systems (Linux, macOS).
 
 ### 2.1. AWK Command for Keep a Changelog Format
 
-The "Keep a Changelog" format uses headers like `## [1.2.3] - 2025-02-05` or `## 1.2.3 - Release Title`. Sections are separated by the next `## ` header or a horizontal rule (`---`).
+The "Keep a Changelog" format uses headers like `## [1.2.3] - 2025-02-05` or `## 1.2.3 - Release Title`. Sections are separated by the next `##` header or a horizontal rule (`---`).
 
 ```bash
 VERSION="1.2.3"
@@ -92,7 +92,7 @@ CHANGELOG_CONTENT=$(awk -v ver="$VERSION" '
 **How this AWK command works, line by line:**
 
 - `BEGIN { found=0; content="" }` -- Initialize: not yet found, content buffer empty
-- `/^## /` -- When a line starts with `## ` (a level-2 markdown header):
+- `/^## /` -- When a line starts with `##` (a level-2 markdown header):
   - `if (found) exit` -- If we already found our version, the next header means we are done
   - The `if` condition matches the version with or without brackets, with or without a trailing title
   - `found=1; next` -- Mark as found, skip the header line itself (we only want the body)
@@ -102,7 +102,7 @@ CHANGELOG_CONTENT=$(awk -v ver="$VERSION" '
 
 ### 2.2. AWK Command for git-cliff Format
 
-git-cliff (a Rust-based changelog generator) produces headers like `## [1.2.3] - 2025-02-05` with grouped sections. The same AWK command from section 2.1 works for git-cliff output because it also uses `## ` headers for version separation.
+git-cliff (a Rust-based changelog generator) produces headers like `## [1.2.3] - 2025-02-05` with grouped sections. The same AWK command from section 2.1 works for git-cliff output because it also uses `##` headers for version separation.
 
 ## 3. How to Block a Release When Changelog Entry Is Missing
 

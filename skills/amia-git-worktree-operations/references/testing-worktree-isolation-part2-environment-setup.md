@@ -15,6 +15,7 @@
 **Why**: Each worktree needs its own dependencies to avoid conflicts.
 
 **How to Install**:
+
 ```bash
 # Navigate to test worktree
 cd worktrees/test-integration-api-endpoints
@@ -31,6 +32,7 @@ pip install -r requirements-test.txt
 ```
 
 **Automated Setup Script**:
+
 ```python
 # scripts/setup_test_env.py
 import os
@@ -65,6 +67,7 @@ def setup_test_environment(worktree_path):
 Each test worktree should use its own database to ensure isolation.
 
 **Naming Convention**:
+
 ```
 testdb_<purpose>_<identifier>
 
@@ -75,6 +78,7 @@ Examples:
 ```
 
 **Creating Test Database**:
+
 ```bash
 # PostgreSQL example
 createdb testdb_integration_api_endpoints
@@ -86,6 +90,7 @@ mysql -e "CREATE DATABASE testdb_integration_api_endpoints;"
 **Database Configuration in Test Worktree**:
 
 Create `.env.test` file in worktree:
+
 ```bash
 # .env.test
 DATABASE_URL=postgresql://localhost/testdb_integration_api_endpoints
@@ -100,6 +105,7 @@ TEST_MODE=true
 **Why Run Migrations in Test Worktrees**: Ensures database schema matches the code being tested.
 
 **How to Run**:
+
 ```bash
 # Navigate to test worktree
 cd worktrees/test-integration-api-endpoints
@@ -122,6 +128,7 @@ alembic upgrade head      # SQLAlchemy example
 **Test-Specific Environment Variables**:
 
 Create `.env.test` with test-appropriate values:
+
 ```bash
 # .env.test - Example for integration test worktree
 
@@ -148,6 +155,7 @@ CACHE_ENABLED=false
 ```
 
 **Loading Environment**:
+
 ```bash
 # In test worktree
 source .venv/bin/activate
@@ -161,11 +169,13 @@ export $(cat .env.test | xargs)
 **Why Allocate Ports**: Multiple test worktrees running simultaneously need different ports.
 
 **Port Allocation Strategy**:
+
 - Each worktree gets 3 consecutive ports
 - Ports start from configurable base (default: 8000)
 - Tracked in `worktrees_registry.json`
 
 **Example Port Assignment**:
+
 ```
 Worktree 1: 8001, 8002, 8003
 Worktree 2: 8004, 8005, 8006
@@ -173,6 +183,7 @@ Worktree 3: 8007, 8008, 8009
 ```
 
 **Using Allocated Ports**:
+
 ```python
 # Read ports from metadata
 import json
@@ -191,6 +202,7 @@ uvicorn.run(app, host="0.0.0.0", port=app_port)
 ---
 
 **Related Documents**:
+
 - [Testing Worktree Isolation Overview](testing-worktree-isolation.md)
 - [Types and Creation](testing-worktree-isolation-part1-types-and-creation.md)
 - [Running Tests](testing-worktree-isolation-part3-running-tests.md)

@@ -57,9 +57,11 @@ Template for documenting test execution results and analysis.
 
 **Error**:
 ```
+
 AssertionError: Expected connection status 'connected', got 'timeout'
   File "tests/test_database.py", line 45, in test_database_connection
     assert db.status == 'connected'
+
 ```
 
 **Recommendation**: Check database service availability and timeout configuration.
@@ -71,9 +73,11 @@ AssertionError: Expected connection status 'connected', got 'timeout'
 
 **Error**:
 ```
-ConnectionError: External API unreachable at https://api.example.com
+
+ConnectionError: External API unreachable at <https://api.example.com>
   File "tests/test_integration.py", line 78, in test_integration_external_api
     response = payment_api.charge(amount=100)
+
 ```
 
 **Recommendation**: Ensure test environment has network access to external API.

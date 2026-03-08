@@ -144,6 +144,7 @@ This document defines the complete status lifecycle for project items, including
 For complete lifecycle policy including closure conditions, reproduction attempt requirements, and prohibited actions, see **[Part 2: Operations - Issue Lifecycle](./status-management-part2-operations.md#issue-lifecycle-policy-no-stale)**.
 
 Quick reference:
+
 - **Features**: Close only when implemented+merged OR explicitly declined with reason
 - **Bugs**: Close only when fixed+verified OR after 3 documented reproduction attempts failed
 - **Chores**: Close only when completed and verified

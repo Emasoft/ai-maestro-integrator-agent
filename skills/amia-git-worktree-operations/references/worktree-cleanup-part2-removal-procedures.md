@@ -25,6 +25,7 @@
 ### Complete Safe Removal Procedure
 
 **Step 1: Navigate away from worktree**
+
 ```bash
 # NEVER be inside the worktree when removing it
 cd /tmp
@@ -33,12 +34,14 @@ cd /path/to/main-repo
 ```
 
 **Step 2: Verify worktree status**
+
 ```bash
 git worktree list
 # Confirm worktree exists and note its path
 ```
 
 **Step 3: Check for uncommitted changes**
+
 ```bash
 cd /tmp/worktrees/pr-123
 git status
@@ -47,6 +50,7 @@ cd /tmp  # Navigate away again
 ```
 
 **Step 4: Verify commits are pushed**
+
 ```bash
 cd /tmp/worktrees/pr-123
 git log origin/pr-123..HEAD
@@ -55,12 +59,14 @@ cd /tmp  # Navigate away again
 ```
 
 **Step 5: Remove the worktree**
+
 ```bash
 cd /path/to/main-repo
 git worktree remove /tmp/worktrees/pr-123
 ```
 
 **Step 6: Verify removal**
+
 ```bash
 git worktree list
 # Should no longer show the removed worktree
@@ -70,6 +76,7 @@ ls /tmp/worktrees/pr-123
 ```
 
 **Step 7: Optionally delete the branch**
+
 ```bash
 # Only if branch is no longer needed
 git branch -d pr-123  # Safe delete (fails if not merged)
@@ -80,6 +87,7 @@ git branch -D pr-123  # Force delete (use with caution)
 ### One-Liner for Clean Worktrees
 
 If you've already verified the worktree is clean:
+
 ```bash
 git -C /path/to/main-repo worktree remove /tmp/worktrees/pr-123
 ```
@@ -91,16 +99,19 @@ git -C /path/to/main-repo worktree remove /tmp/worktrees/pr-123
 ### Common Stuck Worktree Scenarios
 
 **Scenario 1: Lock file exists**
+
 ```
 fatal: Unable to create '/path/to/repo/.git/worktrees/pr-123/locked': File exists
 ```
 
 **Scenario 2: Worktree path doesn't exist**
+
 ```
 fatal: '/tmp/worktrees/pr-123' does not exist
 ```
 
 **Scenario 3: Stale worktree entry**
+
 ```
 Worktree in .git/worktrees but directory missing
 ```
@@ -108,24 +119,28 @@ Worktree in .git/worktrees but directory missing
 ### Fixing Lock File Issues
 
 **Step 1: Check for lock files**
+
 ```bash
 ls -la /path/to/main-repo/.git/worktrees/pr-123/
 # Look for files named 'locked'
 ```
 
 **Step 2: Check if lock is legitimate**
+
 ```bash
 cat /path/to/main-repo/.git/worktrees/pr-123/locked
 # Shows reason for lock if intentional
 ```
 
 **Step 3: Remove stale lock**
+
 ```bash
 # ONLY if no operations are in progress
 rm /path/to/main-repo/.git/worktrees/pr-123/locked
 ```
 
 **Step 4: Retry removal**
+
 ```bash
 git worktree remove /tmp/worktrees/pr-123
 ```

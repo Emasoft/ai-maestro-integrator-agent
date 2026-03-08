@@ -31,11 +31,13 @@
 | Author association | CONTRIBUTOR, MEMBER, OWNER | Not `NONE` with bot characteristics |
 
 **Verification command**:
+
 ```bash
 gh api repos/{owner}/{repo}/pulls/{pr_number} --jq '.user.type, .user.login'
 ```
 
 **Human contributor categories**:
+
 1. **Repository owner**: Full authority, can merge
 2. **Maintainer**: Trusted contributor with merge rights
 3. **Collaborator**: Has write access
@@ -57,6 +59,7 @@ gh api repos/{owner}/{repo}/pulls/{pr_number} --jq '.user.type, .user.login'
 | Labels | Automation labels | `dependencies`, `automated` |
 
 **Common AI/automation authors**:
+
 - `dependabot[bot]`
 - `renovate[bot]`
 - `github-actions[bot]`
@@ -74,6 +77,7 @@ Not all bots are equal. Different bot types require different handling.
 **Examples**: Claude agent creating a PR, custom AI development agent
 
 **Characteristics**:
+
 - Can understand complex instructions
 - Can make autonomous code changes
 - Can respond to review comments programmatically
@@ -87,6 +91,7 @@ Not all bots are equal. Different bot types require different handling.
 **Examples**: `/rebase`, `@bot please update`, `@claude-reviewer review this`
 
 **Characteristics**:
+
 - React to specific trigger phrases
 - Perform predefined actions
 - Limited autonomous capability
@@ -100,6 +105,7 @@ Not all bots are equal. Different bot types require different handling.
 **Examples**: CodeClimate, SonarQube, linters as GitHub Apps
 
 **Characteristics**:
+
 - Comment on code quality issues
 - May block merge based on rules
 - Cannot make changes, only report
@@ -113,6 +119,7 @@ Not all bots are equal. Different bot types require different handling.
 **Examples**: Dependabot, Renovate
 
 **Characteristics**:
+
 - Create PRs automatically
 - Update based on schedules or triggers
 - Limited response to feedback
@@ -128,12 +135,14 @@ Not all bots are equal. Different bot types require different handling.
 **Tone**: Professional, courteous, explanatory
 
 **Structure**:
+
 - Acknowledge their work
 - Explain reasoning for requests
 - Ask questions rather than demand
 - Thank them for contributions
 
 **Example review comment for human PR**:
+
 ```
 Thanks for this contribution! The implementation looks good overall.
 
@@ -153,12 +162,14 @@ Happy to discuss any of these points. Let me know if you have questions!
 **Tone**: Direct, technical, concise
 
 **Structure**:
+
 - State required changes clearly
 - No need for social pleasantries
 - Reference specific lines/files
 - Use structured formats
 
 **Example review comment for AI PR**:
+
 ```
 Required changes:
 - Line 45: Use `const` instead of `let` (variable not reassigned)
@@ -186,6 +197,7 @@ After changes, re-request review.
 ### Never act autonomously on human PRs
 
 The orchestrator MUST NOT:
+
 - Approve human PRs
 - Request changes on human PRs
 - Close human PRs
@@ -195,6 +207,7 @@ The orchestrator MUST NOT:
 ### Delegation for human PRs
 
 When user approves delegation:
+
 1. Subagent performs technical work (analysis, testing)
 2. Subagent prepares feedback draft
 3. Orchestrator presents draft to user
@@ -228,16 +241,19 @@ When user approves delegation:
 ### Direct interaction with bots
 
 **For agent-controlled bots**:
+
 - Can send AI Maestro messages directly
 - Can post structured commands in comments
 - Expect programmatic response
 
 **For mention-triggered bots**:
+
 - Use documented trigger syntax
 - Example: `@dependabot rebase`
 - Example: `@renovate refresh`
 
 **For review bots**:
+
 - Cannot interact directly
 - Address feedback through code changes
 - May need to update bot configuration for persistent issues

@@ -31,6 +31,7 @@ A task is BLOCKED when an agent cannot continue working on it and must wait for 
 ### What is NOT a blocker
 
 The following are NOT blockers — agents should handle them directly:
+
 - A test failure (fix the code)
 - A linting error (fix the formatting)
 - A merge conflict (resolve it)
@@ -183,6 +184,7 @@ gh issue comment 42 --body "Blocked by #$BLOCKER_ISSUE"
 ```
 
 **Why create a separate issue for the blocker:**
+
 - Makes the blocking problem visible to all agents and team members
 - Allows tracking resolution progress independently
 - Can be assigned to whoever can resolve it (user, DBA, architect, etc.)
@@ -192,6 +194,7 @@ gh issue comment 42 --body "Blocked by #$BLOCKER_ISSUE"
 ### Step 5: Notify Orchestrator
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-master`
 - **Subject**: `Issue #42 Blocked`
 - **Priority**: `high`
@@ -264,11 +267,13 @@ Every blocker MUST have this information documented:
 ### Parallel self-resolution attempts
 
 While the escalation chain runs, agents MAY attempt to resolve the blocker themselves:
+
 - Check if a dependency task is close to completion
 - Search for alternative resources or approaches
 - Consult with other agents via AI Maestro
 
 If the agent resolves the blocker before the user responds:
+
 1. Remove status:blocked label
 2. Move task back to its ORIGINAL column (the column it was in before being blocked)
 3. Notify AMOA that the blocker was self-resolved
@@ -299,6 +304,7 @@ If the agent resolves the blocker before the user responds:
 ### Returning a task to its original column after unblocking
 
 When a blocker is resolved:
+
 1. Remove the `status:blocked` label
 2. Move the task back to the column it was in BEFORE being blocked:
    - If it was in "In Progress" → return to "In Progress"
@@ -513,6 +519,7 @@ gh api graphql -f query='
 Copy this checklist and track your progress:
 
 **When marking a task as blocked:**
+
 - [ ] Confirm the agent cannot resolve the issue independently (not a test failure, merge conflict, etc.)
 - [ ] Record the task's current Kanban column (`$CURRENT_STATUS`) before moving to Blocked
 - [ ] Move the card to the Blocked column via GraphQL (section 6.2 Step 1)
@@ -523,6 +530,7 @@ Copy this checklist and track your progress:
 - [ ] Notify the orchestrator via AI Maestro with `blocker_issue_number` (section 6.2 Step 5)
 
 **When resolving a blocker and unblocking the task:**
+
 - [ ] Verify the blocker is actually resolved (do not assume)
 - [ ] Add resolution comment on the blocked task issue (section 6.5 Resolution Comment Template)
 - [ ] Close the blocker issue: `gh issue close $BLOCKER_ISSUE --comment "Resolved: [details]"`

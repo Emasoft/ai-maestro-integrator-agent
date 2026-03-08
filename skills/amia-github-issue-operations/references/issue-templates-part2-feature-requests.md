@@ -36,6 +36,7 @@ If you have a workaround, describe it here. This helps prioritize based on urgen
 ```
 
 **Good problem statement:**
+
 ```markdown
 ## Problem Statement
 
@@ -68,6 +69,7 @@ List other solutions you've thought about and why they don't fully address the p
 ```
 
 **Example:**
+
 ```markdown
 ## Proposed Solution
 
@@ -104,6 +106,7 @@ A checklist of requirements that must be met for this feature to be considered c
 ```
 
 **Acceptance criteria best practices:**
+
 - Use checkbox syntax `- [ ]` for easy tracking
 - Be specific and measurable
 - Include edge cases and limits

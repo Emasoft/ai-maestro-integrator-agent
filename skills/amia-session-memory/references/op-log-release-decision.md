@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Log Release Decision
 
-
 ## Contents
 
 - [Purpose](#purpose)

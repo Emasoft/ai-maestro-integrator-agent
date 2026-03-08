@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Check Merge Readiness
 
-
 ## Contents
 
 - [Purpose](#purpose)

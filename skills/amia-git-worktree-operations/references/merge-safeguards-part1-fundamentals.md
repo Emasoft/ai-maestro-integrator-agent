@@ -44,6 +44,7 @@ Each worktree can be in one of four merge states:
 A **file conflict** occurs when the same file is modified in multiple worktrees. This doesn't guarantee a merge conflict, but indicates high risk.
 
 **Example:**
+
 ```
 worktrees/feature-A/: Modified src/api.py
 worktrees/feature-B/: Modified src/api.py
@@ -60,6 +61,7 @@ The system determines merge order using:
 3. **Conflict minimization** - Reduce total rebases needed
 
 **Why oldest-first?**
+
 ```
 Timeline:
 t0: feature-A created (first commit: Jan 1)
@@ -99,6 +101,7 @@ python skills/amia-git-worktree-operations/scripts/merge_safeguard.py \
 ```
 
 **Interpretation:**
+
 - `needs_rebase` - Rebase before merging
 - No conflicting files - Rebase should be clean
 
@@ -197,6 +200,7 @@ python skills/amia-git-worktree-operations/scripts/merge_safeguard.py --conflict
 ```
 
 **Use this to:**
+
 - Identify high-risk files before merging
 - Coordinate with other developers
 - Split large PRs to reduce conflicts
@@ -225,6 +229,7 @@ python skills/amia-git-worktree-operations/scripts/merge_safeguard.py \
 ```
 
 **Resolution:**
+
 ```bash
 cd worktrees/feature-auth
 

@@ -14,6 +14,7 @@
 **Pattern**: Each test worktree uses its own database instance or database name.
 
 **Implementation**:
+
 ```bash
 # Create database for worktree
 createdb testdb_integration_api_endpoints
@@ -23,6 +24,7 @@ echo "DATABASE_URL=postgresql://localhost/testdb_integration_api_endpoints" > .e
 ```
 
 **Benefits**:
+
 - Complete data isolation
 - Parallel test execution
 - No test interference
@@ -37,6 +39,7 @@ echo "DATABASE_URL=postgresql://localhost/testdb_integration_api_endpoints" > .e
 **Pattern for Testing Migrations**:
 
 1. **Create migration test worktree**:
+
 ```bash
 python scripts/worktree_create.py \
     --purpose test-migration \
@@ -44,7 +47,8 @@ python scripts/worktree_create.py \
     --branch feature/user-roles
 ```
 
-2. **Set up base database**:
+1. **Set up base database**:
+
 ```bash
 cd worktrees/test-migration-add-user-roles
 source .venv/bin/activate
@@ -57,7 +61,8 @@ export DATABASE_URL=postgresql://localhost/testdb_migration_user_roles
 python manage.py migrate 0042_previous_migration
 ```
 
-3. **Test forward migration**:
+1. **Test forward migration**:
+
 ```bash
 # Apply your new migration
 python manage.py migrate 0043_add_user_roles
@@ -69,7 +74,8 @@ psql testdb_migration_user_roles -c "\d users"
 pytest tests/migrations/test_0043_add_user_roles.py
 ```
 
-4. **Test backward migration** (rollback):
+1. **Test backward migration** (rollback):
+
 ```bash
 # Rollback migration
 python manage.py migrate 0042_previous_migration
@@ -85,6 +91,7 @@ pytest tests/migrations/test_0043_rollback.py
 **What Is Rollback Testing**: Verifying migrations can be safely reversed.
 
 **Pattern**:
+
 ```python
 # tests/migrations/test_migration_rollback.py
 import pytest
@@ -123,6 +130,7 @@ def test_migration_0043_rollback():
 **Implementation**:
 
 1. **Separate database names**:
+
 ```python
 # conftest.py - Generate database name from worktree
 import os
@@ -138,7 +146,8 @@ def test_database():
     return metadata['database']
 ```
 
-2. **Clean database before each test run**:
+1. **Clean database before each test run**:
+
 ```python
 # conftest.py
 @pytest.fixture(scope='session', autouse=True)
@@ -164,6 +173,7 @@ def setup_test_database(test_database):
 ---
 
 **Related Documents**:
+
 - [Testing Worktree Isolation Overview](testing-worktree-isolation.md)
 - [Running Tests](testing-worktree-isolation-part3-running-tests.md)
 - [Cleanup After Tests](testing-worktree-isolation-part5-cleanup.md)

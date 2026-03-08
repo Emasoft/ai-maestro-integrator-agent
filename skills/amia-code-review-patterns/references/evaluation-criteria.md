@@ -43,12 +43,14 @@ This document defines the key criteria for evaluating code during reviews. Each 
 ## 1. Code Quality
 
 ### 1.1 Readability
+
 - **Clear naming**: Variables, functions, and classes have descriptive, unambiguous names
 - **Consistent style**: Follows project's style guide (indentation, naming conventions, formatting)
 - **Appropriate comments**: Complex logic is explained; self-documenting code is preferred over excessive comments
 - **Modular structure**: Functions/methods have single responsibilities and reasonable length (<50 lines preferred)
 
 **Example - Good:**
+
 ```python
 def calculate_total_price(items: list[Item], discount_rate: float) -> Decimal:
     """Calculate total price after applying discount."""
@@ -57,6 +59,7 @@ def calculate_total_price(items: list[Item], discount_rate: float) -> Decimal:
 ```
 
 **Example - Bad:**
+
 ```python
 def calc(x, y):  # Unclear what x and y represent
     t = 0
@@ -66,6 +69,7 @@ def calc(x, y):  # Unclear what x and y represent
 ```
 
 ### 1.2 Maintainability
+
 - **DRY principle**: No unnecessary code duplication
 - **Clear abstractions**: Appropriate use of functions, classes, and modules
 - **Low coupling**: Components are loosely coupled
@@ -73,6 +77,7 @@ def calc(x, y):  # Unclear what x and y represent
 - **Testability**: Code is structured to be easily testable
 
 ### 1.3 Correctness
+
 - **Logic verification**: Implementation matches requirements and specifications
 - **Edge cases**: Handles boundary conditions, empty inputs, null values
 - **Error conditions**: Appropriate error handling for expected failures
@@ -81,17 +86,20 @@ def calc(x, y):  # Unclear what x and y represent
 ## 2. Code Style
 
 ### 2.1 Language Conventions
+
 - Follows language-specific best practices (PEP 8 for Python, ESLint for JavaScript, etc.)
 - Uses language features appropriately (list comprehensions, async/await, etc.)
 - Avoids anti-patterns and code smells
 
 ### 2.2 Project Standards
+
 - Matches existing codebase patterns and conventions
 - Uses project's preferred libraries and frameworks
 - Follows established architectural patterns
 - Adheres to team coding guidelines
 
 ### 2.3 Documentation Style
+
 - Clear docstrings/comments for public APIs
 - Consistent documentation format
 - Up-to-date README and inline documentation
@@ -100,12 +108,14 @@ def calc(x, y):  # Unclear what x and y represent
 ## 3. Security
 
 ### 3.1 Input Validation
+
 - **Sanitization**: All user inputs are validated and sanitized
 - **Type checking**: Input types are verified before use
 - **Range validation**: Numeric inputs are checked for valid ranges
 - **Injection prevention**: SQL/command injection vulnerabilities are prevented
 
 **Example - Secure:**
+
 ```python
 def get_user(user_id: int) -> User:
     if not isinstance(user_id, int) or user_id <= 0:
@@ -115,6 +125,7 @@ def get_user(user_id: int) -> User:
 ```
 
 **Example - Insecure:**
+
 ```python
 def get_user(user_id):
     query = f"SELECT * FROM users WHERE id = {user_id}"  # SQL injection risk
@@ -122,18 +133,21 @@ def get_user(user_id):
 ```
 
 ### 3.2 Authentication & Authorization
+
 - Proper authentication checks are in place
 - Authorization is verified before sensitive operations
 - Session management is secure
 - Password handling follows best practices (hashing, salting)
 
 ### 3.3 Data Protection
+
 - Sensitive data is encrypted at rest and in transit
 - No hardcoded secrets or credentials
 - Secure random number generation where needed
 - Proper access controls on resources
 
 ### 3.4 Common Vulnerabilities
+
 - No XSS (Cross-Site Scripting) vulnerabilities
 - No CSRF (Cross-Site Request Forgery) vulnerabilities
 - No path traversal vulnerabilities
@@ -143,11 +157,13 @@ def get_user(user_id):
 ## 4. Performance
 
 ### 4.1 Algorithmic Efficiency
+
 - **Time complexity**: Algorithm uses appropriate time complexity for the problem
 - **Space complexity**: Memory usage is reasonable for the use case
 - **Data structures**: Appropriate data structures are chosen (hash maps vs lists, etc.)
 
 **Example - Efficient:**
+
 ```python
 def find_duplicates(items: list[str]) -> set[str]:
     seen = set()
@@ -160,6 +176,7 @@ def find_duplicates(items: list[str]) -> set[str]:
 ```
 
 **Example - Inefficient:**
+
 ```python
 def find_duplicates(items: list[str]) -> list[str]:
     duplicates = []
@@ -170,18 +187,21 @@ def find_duplicates(items: list[str]) -> list[str]:
 ```
 
 ### 4.2 Resource Management
+
 - **Database queries**: N+1 queries avoided; appropriate indexing considered
 - **Network calls**: Batch requests where possible; caching implemented
 - **File I/O**: Files are properly closed; streaming used for large files
 - **Memory leaks**: No circular references or unclosed resources
 
 ### 4.3 Scalability
+
 - Code handles increasing load gracefully
 - No hardcoded limits that would prevent scaling
 - Asynchronous operations used where appropriate
 - Rate limiting and throttling considered
 
 ### 4.4 Optimization Level
+
 - **Premature optimization avoided**: Code is clear first, optimized only when needed
 - **Profiling-driven**: Optimizations are based on actual bottlenecks
 - **Trade-offs documented**: Performance vs readability trade-offs are explained
@@ -189,18 +209,21 @@ def find_duplicates(items: list[str]) -> list[str]:
 ## 5. Testing
 
 ### 5.1 Test Coverage
+
 - Critical paths have test coverage
 - Edge cases are tested
 - Error conditions are tested
 - Unit tests exist for individual components
 
 ### 5.2 Test Quality
+
 - Tests are deterministic (no flaky tests)
 - Tests are independent (can run in any order)
 - Tests are fast (no unnecessary delays)
 - Test names clearly describe what is being tested
 
 ### 5.3 Test Maintainability
+
 - Tests use appropriate fixtures and mocking
 - Tests avoid duplication through helper functions
 - Tests are updated when code changes
@@ -209,17 +232,20 @@ def find_duplicates(items: list[str]) -> list[str]:
 ## 6. Architecture & Design
 
 ### 6.1 Design Patterns
+
 - Appropriate design patterns are used
 - Patterns are applied correctly, not forced
 - SOLID principles are followed
 
 ### 6.2 Dependencies
+
 - Dependencies are necessary and well-justified
 - No circular dependencies
 - Dependency versions are pinned or constrained
 - License compatibility is verified
 
 ### 6.3 API Design
+
 - APIs are intuitive and consistent
 - Breaking changes are avoided or documented
 - Backward compatibility is maintained where required
@@ -230,24 +256,28 @@ def find_duplicates(items: list[str]) -> list[str]:
 ### Priority Levels
 
 **P0 - Critical (Must Fix)**
+
 - Security vulnerabilities
 - Data loss or corruption risks
 - Breaking changes without migration path
 - Correctness issues affecting core functionality
 
 **P1 - High (Should Fix)**
+
 - Performance issues affecting user experience
 - Maintainability issues that block future development
 - Missing critical test coverage
 - Significant violations of project standards
 
 **P2 - Medium (Nice to Have)**
+
 - Code style inconsistencies
 - Minor performance optimizations
 - Documentation improvements
 - Refactoring opportunities
 
 **P3 - Low (Optional)**
+
 - Naming improvements
 - Comment clarity
 - Code organization preferences

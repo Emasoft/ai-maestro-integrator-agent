@@ -1,6 +1,5 @@
 # Operation: Get Issue Context
 
-
 ## Contents
 
 - [Metadata](#metadata)

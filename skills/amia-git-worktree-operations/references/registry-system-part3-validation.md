@@ -9,6 +9,7 @@ All registry operations must enforce these validation rules:
 **Rule:** Each `id` must be unique across all entries
 
 **Check:**
+
 ```python
 def validate_unique_id(registry, new_id):
     existing_ids = [wt["id"] for wt in registry["worktrees"]]
@@ -21,12 +22,14 @@ def validate_unique_id(registry, new_id):
 ### 2. Valid Paths
 
 **Rule:** Each `path` must:
+
 - Be relative (start with `../`)
 - Not already exist in registry
 - Not point inside main repository
 - Follow naming convention for the purpose
 
 **Check:**
+
 ```python
 def validate_path(registry, path, purpose):
     # Check path is relative
@@ -50,6 +53,7 @@ def validate_path(registry, path, purpose):
 **Rule:** Each port can only be allocated to one worktree at a time
 
 **Check:**
+
 ```python
 def validate_ports(registry, new_ports):
     allocated_ports = []
@@ -69,6 +73,7 @@ def validate_ports(registry, new_ports):
 **Rule:** `status` must be one of: `active`, `locked`, `pending-removal`
 
 **Check:**
+
 ```python
 VALID_STATUSES = ["active", "locked", "pending-removal"]
 
@@ -84,6 +89,7 @@ def validate_status(status):
 **Rule:** All required fields must be present in every entry
 
 **Check:**
+
 ```python
 REQUIRED_FIELDS = ["id", "path", "branch", "created", "purpose", "status"]
 

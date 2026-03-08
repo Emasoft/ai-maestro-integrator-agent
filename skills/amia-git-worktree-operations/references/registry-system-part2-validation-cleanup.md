@@ -40,6 +40,7 @@ All registry operations must enforce these validation rules:
 **Rule:** Each `id` must be unique across all entries
 
 **Check:**
+
 ```python
 def validate_unique_id(registry, new_id):
     existing_ids = [wt["id"] for wt in registry["worktrees"]]
@@ -52,12 +53,14 @@ def validate_unique_id(registry, new_id):
 ### 2. Valid Paths
 
 **Rule:** Each `path` must:
+
 - Be relative (start with `../`)
 - Not already exist in registry
 - Not point inside main repository
 - Follow naming convention for the purpose
 
 **Check:**
+
 ```python
 def validate_path(registry, path, purpose):
     # Check path is relative
@@ -81,6 +84,7 @@ def validate_path(registry, path, purpose):
 **Rule:** Each port can only be allocated to one worktree at a time
 
 **Check:**
+
 ```python
 def validate_ports(registry, new_ports):
     allocated_ports = []
@@ -100,6 +104,7 @@ def validate_ports(registry, new_ports):
 **Rule:** `status` must be one of: `active`, `locked`, `pending-removal`
 
 **Check:**
+
 ```python
 VALID_STATUSES = ["active", "locked", "pending-removal"]
 
@@ -115,6 +120,7 @@ def validate_status(status):
 **Rule:** All required fields must be present in every entry
 
 **Check:**
+
 ```python
 REQUIRED_FIELDS = ["id", "path", "branch", "created", "purpose", "status"]
 
@@ -193,11 +199,13 @@ def detect_stale_entries(registry):
 ### Cleanup Process
 
 **Automatic cleanup runs:**
+
 - On every worktree create/remove operation (cleanup others)
 - On demand via `eia cleanup-worktrees` command
 - Daily via cron/scheduled task (optional)
 
 **Cleanup steps:**
+
 1. Detect stale entries using algorithm above
 2. For each stale entry:
    - Log reason for staleness
@@ -206,6 +214,7 @@ def detect_stale_entries(registry):
 3. After 7 days in `pending-removal`, force remove
 
 **Example output:**
+
 ```
 Stale worktree cleanup:
   - review-GH-42: Directory missing → Removed from registry
@@ -232,11 +241,14 @@ This bypasses the 7-day pending-removal period and removes immediately.
 **Symptom:** JSON parse errors when reading registry
 
 **Solution:**
+
 1. Restore from backup: `design/worktrees/registry.json.backup`
 2. If no backup, rebuild registry:
+
    ```bash
    eia rebuild-registry --scan-worktrees
    ```
+
    This scans filesystem and rebuilds registry from actual worktrees
 
 ### Port Already in Use (but not in registry)
@@ -244,9 +256,11 @@ This bypasses the 7-day pending-removal period and removes immediately.
 **Symptom:** Port allocation fails but registry shows port as available
 
 **Solution:**
+
 1. Check actual port usage: `lsof -i :8080`
 2. If port used by non-worktree process, update port ranges to exclude it
 3. If port used by unregistered worktree, register it:
+
    ```bash
    eia register-existing ../path/to/worktree
    ```
@@ -256,6 +270,7 @@ This bypasses the 7-day pending-removal period and removes immediately.
 **Symptom:** Registry validation fails with "duplicate ID" error
 
 **Solution:**
+
 1. Open `design/worktrees/registry.json` in editor
 2. Find duplicate `id` values
 3. Rename one of them to make unique (follow naming convention)
@@ -266,6 +281,7 @@ This bypasses the 7-day pending-removal period and removes immediately.
 **Symptom:** Git worktree shows in `git worktree list` but not in AMIA registry
 
 **Solution:**
+
 ```bash
 eia register-existing ../path/to/worktree --purpose review --issue GH-42
 ```

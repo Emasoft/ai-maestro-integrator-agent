@@ -101,6 +101,7 @@ ETA: {{ESTIMATED_COMPLETION}}
 ### Examples
 
 **Successful ACK**:
+
 ```
 [ACK] TASK-001 - RECEIVED
 Understanding: Implement user authentication with JWT tokens
@@ -108,6 +109,7 @@ ETA: 2 hours
 ```
 
 **Clarification Needed**:
+
 ```
 [ACK] TASK-001 - CLARIFICATION_NEEDED
 Understanding: Implement authentication, but unclear on token expiry requirements
@@ -117,6 +119,7 @@ Questions:
 ```
 
 **Rejection**:
+
 ```
 [ACK] TASK-001 - REJECTED
 Understanding: Database migration task

@@ -5,6 +5,7 @@
 This document is organized into four parts for easier reference:
 
 ### Part 1: Pre-Cleanup and Isolation Detection
+
 [worktree-verification-part1-pre-cleanup-detection.md](worktree-verification-part1-pre-cleanup-detection.md)
 
 - 4.1 Pre-cleanup verification checklist
@@ -20,6 +21,7 @@ This document is organized into four parts for easier reference:
   - Automated Isolation Check
 
 ### Part 2: Branch and Remote Sync Verification
+
 [worktree-verification-part2-branch-remote-sync.md](worktree-verification-part2-branch-remote-sync.md)
 
 - 4.3 Branch state verification procedures
@@ -37,6 +39,7 @@ This document is organized into four parts for easier reference:
   - Remote Sync Verification Script
 
 ### Part 3: Automated and Manual Verification
+
 [worktree-verification-part3-automated-manual.md](worktree-verification-part3-automated-manual.md)
 
 - 4.5 Automated verification script usage
@@ -49,6 +52,7 @@ This document is organized into four parts for easier reference:
   - Manual Verification Checklist
 
 ### Part 4: Reporting Violations
+
 [worktree-verification-part4-reporting.md](worktree-verification-part4-reporting.md)
 
 - 4.7 Reporting isolation violations

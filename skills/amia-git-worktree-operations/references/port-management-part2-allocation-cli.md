@@ -15,6 +15,7 @@
    - 2.5 [Command: Find Next Available Port](#command-find-next-available-port)
 
 **Related Parts:**
+
 - [Part 1: Overview and Registry Structure](port-management-part1-overview-registry.md)
 - [Part 3: Conflict Detection and Health Checking](port-management-part3-conflicts-health.md)
 - [Part 4: Docker Integration](port-management-part4-docker.md)
@@ -31,6 +32,7 @@ These Python functions manage port allocation operations. They are implemented i
 **Purpose:** Allocate a port from the specified service range to a worktree.
 
 **Signature:**
+
 ```python
 def allocate_port(service_type: str, worktree_id: str, description: str = "") -> int:
     """
@@ -52,6 +54,7 @@ def allocate_port(service_type: str, worktree_id: str, description: str = "") ->
 ```
 
 **Algorithm:**
+
 1. Load the registry from `design/worktrees/ports.json`
 2. Verify `service_type` exists in `ranges`
 3. Get the start and end port for the service type
@@ -64,6 +67,7 @@ def allocate_port(service_type: str, worktree_id: str, description: str = "") ->
 10. Return the allocated port number
 
 **Example Usage:**
+
 ```python
 from scripts.port_allocate import allocate_port
 
@@ -77,6 +81,7 @@ print(f"Allocated port: {port}")  # Output: Allocated port: 8080
 ```
 
 **Example Output:**
+
 ```
 Allocating port for service 'web' in worktree 'feature-login'
 Found available port: 8080
@@ -89,6 +94,7 @@ Allocated port: 8080
 **Purpose:** Release a previously allocated port, making it available for reuse.
 
 **Signature:**
+
 ```python
 def release_port(port: int) -> bool:
     """
@@ -106,6 +112,7 @@ def release_port(port: int) -> bool:
 ```
 
 **Algorithm:**
+
 1. Load the registry from `design/worktrees/ports.json`
 2. Search for the port in the allocations array
 3. If found:
@@ -117,6 +124,7 @@ def release_port(port: int) -> bool:
    - Return False (port was not allocated)
 
 **Example Usage:**
+
 ```python
 from scripts.port_allocate import release_port
 
@@ -129,6 +137,7 @@ else:
 ```
 
 **Example Output:**
+
 ```
 Releasing port 8080
 Port 8080 released successfully
@@ -140,6 +149,7 @@ Updated registry at design/worktrees/ports.json
 **Purpose:** Check if a specific port is available for allocation.
 
 **Signature:**
+
 ```python
 def check_port_available(port: int) -> bool:
     """
@@ -154,6 +164,7 @@ def check_port_available(port: int) -> bool:
 ```
 
 **Algorithm:**
+
 1. Load the registry from `design/worktrees/ports.json`
 2. Check if the port exists in any allocation entry
 3. If found in allocations: Return False
@@ -162,6 +173,7 @@ def check_port_available(port: int) -> bool:
 6. Return True if both checks pass, False otherwise
 
 **Example Usage:**
+
 ```python
 from scripts.port_allocate import check_port_available
 
@@ -198,6 +210,7 @@ def is_port_free_on_system(port: int) -> bool:
 **Purpose:** List all ports allocated to a specific worktree.
 
 **Signature:**
+
 ```python
 def list_allocated_ports(worktree_id: str) -> List[Dict[str, Any]]:
     """
@@ -212,11 +225,13 @@ def list_allocated_ports(worktree_id: str) -> List[Dict[str, Any]]:
 ```
 
 **Algorithm:**
+
 1. Load the registry from `design/worktrees/ports.json`
 2. Filter allocations where `worktree` field matches `worktree_id`
 3. Return the filtered list
 
 **Example Usage:**
+
 ```python
 from scripts.port_allocate import list_allocated_ports
 
@@ -228,6 +243,7 @@ for alloc in allocations:
 ```
 
 **Example Output:**
+
 ```
 Port 8080 (web): Frontend development server for PR #42
 Port 5432 (database): PostgreSQL instance for PR #42 testing
@@ -247,22 +263,26 @@ The port management system provides command-line scripts for common operations.
 **Purpose:** Allocate a port to a worktree service.
 
 **Usage:**
+
 ```bash
 python scripts/port_allocate.py --service SERVICE_TYPE --worktree WORKTREE_NAME [--description DESC]
 ```
 
 **Parameters:**
+
 - `--service SERVICE_TYPE`: Service type (web, database, testing, debug, api, cache)
 - `--worktree WORKTREE_NAME`: Name of the worktree
 - `--description DESC`: Optional description of the service
 
 **Example:**
+
 ```bash
 # Allocate a web server port for worktree 'review-GH-42'
 python scripts/port_allocate.py --service web --worktree review-GH-42 --description "Frontend dev server"
 ```
 
 **Output:**
+
 ```
 Allocating port for service 'web' in worktree 'review-GH-42'
 Found available port: 8080
@@ -275,6 +295,7 @@ You can start your service with:
 ```
 
 **When to Use:**
+
 - Before starting a new service in a worktree
 - When you need to reserve a port in advance
 - When documenting service requirements
@@ -286,20 +307,24 @@ You can start your service with:
 **Purpose:** Release a previously allocated port.
 
 **Usage:**
+
 ```bash
 python scripts/port_allocate.py --release PORT_NUMBER
 ```
 
 **Parameters:**
+
 - `--release PORT_NUMBER`: Port number to release
 
 **Example:**
+
 ```bash
 # Release port 8080
 python scripts/port_allocate.py --release 8080
 ```
 
 **Output:**
+
 ```
 Releasing port 8080
 Port 8080 released successfully
@@ -307,6 +332,7 @@ Registry updated: design/worktrees/ports.json
 ```
 
 **When to Use:**
+
 - After removing a worktree
 - When a service is no longer needed
 - When reconfiguring port allocations
@@ -318,16 +344,19 @@ Registry updated: design/worktrees/ports.json
 **Purpose:** Display status of all allocated ports.
 
 **Usage:**
+
 ```bash
 python scripts/port_status.py --all
 ```
 
 **Example:**
+
 ```bash
 python scripts/port_status.py --all
 ```
 
 **Output:**
+
 ```
 Port Allocation Status
 ======================
@@ -352,6 +381,7 @@ Total Available: 143 ports
 ```
 
 **When to Use:**
+
 - To get an overview of all port allocations
 - Before allocating a new port
 - During troubleshooting
@@ -364,16 +394,19 @@ Total Available: 143 ports
 **Purpose:** Display status of ports allocated to a specific worktree.
 
 **Usage:**
+
 ```bash
 python scripts/port_status.py --worktree WORKTREE_NAME
 ```
 
 **Example:**
+
 ```bash
 python scripts/port_status.py --worktree review-GH-42
 ```
 
 **Output:**
+
 ```
 Ports for Worktree: review-GH-42
 ===================================
@@ -388,6 +421,7 @@ Total: 3 ports allocated
 ```
 
 **When to Use:**
+
 - Before starting services in a worktree
 - When switching to a worktree
 - During worktree debugging
@@ -399,16 +433,19 @@ Total: 3 ports allocated
 **Purpose:** Find the next available port in a service range without allocating it.
 
 **Usage:**
+
 ```bash
 python scripts/port_allocate.py --find-next SERVICE_TYPE
 ```
 
 **Example:**
+
 ```bash
 python scripts/port_allocate.py --find-next web
 ```
 
 **Output:**
+
 ```
 Next available port in 'web' range: 8082
 Range: 8080-8099
@@ -416,6 +453,7 @@ Currently allocated: 8080, 8081
 ```
 
 **When to Use:**
+
 - To preview available ports before allocation
 - When planning port usage
 - For manual port configuration

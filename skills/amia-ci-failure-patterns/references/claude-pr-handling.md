@@ -32,6 +32,7 @@ This document describes how to handle Pull Requests using Claude Code Action (`a
 ## When to Use This Workflow
 
 Use this workflow when:
+
 - A PR needs automated code review
 - A PR has `CHANGES_REQUESTED` status and needs guidance
 - Multiple review bots have provided feedback that needs synthesis
@@ -150,6 +151,7 @@ Provide inline comments for specific issues and a summary comment with overall a
 ### Step 4: Monitor Claude's Response
 
 Claude Code Action will:
+
 1. Create a tracking comment showing progress
 2. Post inline comments on specific code issues
 3. Post a summary comment with overall assessment
@@ -253,7 +255,9 @@ Use inline comments for each issue location.
 @claude CI is failing with the following error:
 
 ```
+
 Error: ModuleNotFoundError: No module named 'utils'
+
 ```
 
 Please:
@@ -340,6 +344,7 @@ done
 **Cause**: The `claude-mention.yml` workflow may not be configured or the mention syntax is incorrect.
 
 **Solution**:
+
 1. Verify `.github/workflows/claude-mention.yml` exists and is correct
 2. Check workflow runs in the Actions tab
 3. Ensure `ANTHROPIC_API_KEY` secret is set
@@ -350,6 +355,7 @@ done
 **Cause**: Permissions or workflow configuration issues.
 
 **Solution**:
+
 1. Check repository Actions settings
 2. Verify `pull-requests: write` permission
 3. Ensure workflow file is on the default branch
@@ -360,6 +366,7 @@ done
 **Cause**: Context or prompt may be insufficient.
 
 **Solution**: Provide more specific guidance:
+
 ```markdown
 @claude Please review this PR with specific focus on:
 - Files changed: `src/handler.ts`, `src/utils.ts`

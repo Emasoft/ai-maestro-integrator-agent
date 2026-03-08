@@ -10,16 +10,16 @@ description: "Documentation improvement issue YAML form for GitHub Issues with s
 - 1. When to Use This Template
   - 1.1 Installing the documentation issue form in a repository
   - 1.2 What types of documentation issues this covers
-- 2. Template Fields Explained
+- 1. Template Fields Explained
   - 2.1 Documentation issue type dropdown
   - 2.2 Location input field for file path or URL
   - 2.3 Description textarea for the improvement
   - 2.4 Contribution willingness checkbox
-- 3. Auto-Labeling Strategy
+- 1. Auto-Labeling Strategy
   - 3.1 Default labels for documentation issues
   - 3.2 Why "help wanted" is included by default
-- 4. Complete YAML Template (Ready to Copy)
-- 5. Customization Notes
+- 1. Complete YAML Template (Ready to Copy)
+- 1. Customization Notes
   - 5.1 Adding project-specific documentation categories
   - 5.2 Adding a documentation area dropdown for large doc sets
 
@@ -88,6 +88,7 @@ This field categorizes the issue so maintainers can filter and prioritize. Missi
 ```
 
 This field is required because documentation improvements without a specific location are difficult to act on. The reporter must point to either:
+
 - A file path relative to the repository root (e.g., `docs/api/authentication.md`)
 - A URL of the rendered documentation site (e.g., `https://docs.example.com/guides/setup`)
 
@@ -123,6 +124,7 @@ The placeholder provides an example of a well-structured documentation improveme
 ```
 
 This checkbox is intentionally not required. It serves two purposes:
+
 1. It identifies potential contributors who can be assigned the issue
 2. It reminds reporters that documentation contributions are welcome and valued
 
@@ -145,6 +147,7 @@ labels: ["documentation", "backlog", "help wanted"]
 ### 3.2 Why "help wanted" is included by default
 
 Documentation issues are ideal for new contributors because:
+
 - They require writing skills rather than deep codebase knowledge
 - The scope is usually well-defined (fix this page, add this section)
 - They have low risk of breaking functionality

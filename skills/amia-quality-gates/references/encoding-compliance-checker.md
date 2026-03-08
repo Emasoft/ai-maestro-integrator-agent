@@ -1,6 +1,7 @@
 # Encoding Compliance Checker
 
 ## Contents
+
 - When to run the encoding compliance checker
 - How to run amia_check_encoding.py on specific files
 - How to run amia_check_encoding.py on an entire directory
@@ -13,6 +14,7 @@
 ## When to Run the Encoding Compliance Checker
 
 Run `amia_check_encoding.py` in these situations:
+
 1. **Before committing Python code** — as part of pre-commit or pre-push hooks
 2. **During PR review** — to verify all file operations specify UTF-8 encoding
 3. **After porting scripts from external sources** — to catch missing encoding parameters
@@ -51,6 +53,7 @@ This recursively finds all `.py` files in the directory and checks them all.
 | 5 | `json.dump(open())` without encoding | `json.dump(data, open(path))` | Add `encoding="utf-8"` to `open()` |
 
 The checker skips:
+
 - Binary mode opens (`"rb"`, `"wb"`, etc.)
 - Calls that already have `encoding=`
 - Method calls on `self`/`cls` (custom methods, not Path)
@@ -60,6 +63,7 @@ The checker skips:
 ## How to Fix Each Violation
 
 ### Fix 1: open() without encoding
+
 ```python
 # WRONG
 with open(path) as f:
@@ -69,6 +73,7 @@ with open(path, encoding="utf-8") as f:
 ```
 
 ### Fix 2: .read_text() without encoding
+
 ```python
 # WRONG
 content = path.read_text()
@@ -78,6 +83,7 @@ content = path.read_text(encoding="utf-8")
 ```
 
 ### Fix 3: .write_text() without encoding
+
 ```python
 # WRONG
 path.write_text(content)
@@ -87,6 +93,7 @@ path.write_text(content, encoding="utf-8")
 ```
 
 ### Fix 4-5: json.load/dump with open()
+
 ```python
 # WRONG
 data = json.load(open(path))

@@ -11,6 +11,7 @@ This index provides links to all documentation for safely removing Git worktrees
 ### Basics
 
 See [removing-worktrees-part1-basics.md](./removing-worktrees-part1-basics.md):
+
 - Pre-removal checklist
 - Basic removal commands
 - Handling removal failures
@@ -19,6 +20,7 @@ See [removing-worktrees-part1-basics.md](./removing-worktrees-part1-basics.md):
 ### Post-Removal Steps
 
 See [removing-worktrees-part2-post-removal.md](./removing-worktrees-part2-post-removal.md):
+
 - Registry cleanup after removal
 - Port deallocation
 - Branch cleanup options
@@ -27,6 +29,7 @@ See [removing-worktrees-part2-post-removal.md](./removing-worktrees-part2-post-r
 ### Advanced Removal
 
 See [removing-worktrees-part3-advanced.md](./removing-worktrees-part3-advanced.md):
+
 - Bulk removal operations
 - Force removal for stuck worktrees
 - Cleanup scripts and automation

@@ -1,6 +1,5 @@
 # Operation: Add Issue to Project Board
 
-
 ## Contents
 
 - [Metadata](#metadata)

@@ -1,6 +1,7 @@
 # Testing Analysis Review
 
 ## Table of Contents
+
 - When reviewing test coverage → Verification Checklist: Test Coverage
 - If you need to evaluate test quality → Verification Checklist: Test Quality
 - When assessing test types used → Verification Checklist: Test Types
@@ -12,11 +13,13 @@
 - When identifying testing issues → Common Issues to Look For
 
 ## Purpose
+
 Evaluate test coverage, quality, and effectiveness to ensure code is properly tested and maintained with confidence.
 
 ## Verification Checklist
 
 ### Test Coverage
+
 - [ ] Critical paths are tested
 - [ ] Edge cases are covered
 - [ ] Error conditions are tested
@@ -27,6 +30,7 @@ Evaluate test coverage, quality, and effectiveness to ensure code is properly te
 - [ ] All public APIs tested
 
 ### Test Quality
+
 - [ ] Tests are independent
 - [ ] Tests are repeatable
 - [ ] Tests are fast
@@ -37,6 +41,7 @@ Evaluate test coverage, quality, and effectiveness to ensure code is properly te
 - [ ] Tests clean up after themselves
 
 ### Test Types
+
 - [ ] Unit tests for components
 - [ ] Integration tests for interactions
 - [ ] End-to-end tests for critical flows
@@ -47,6 +52,7 @@ Evaluate test coverage, quality, and effectiveness to ensure code is properly te
 - [ ] Property-based tests for complex logic
 
 ### Test Data
+
 - [ ] Test data is realistic
 - [ ] Test fixtures are maintainable
 - [ ] No production data in tests
@@ -56,6 +62,7 @@ Evaluate test coverage, quality, and effectiveness to ensure code is properly te
 - [ ] Database seeding automated
 
 ### Mocking and Stubbing
+
 - [ ] External dependencies mocked
 - [ ] Mocks verify behavior correctly
 - [ ] Stubs provide appropriate data
@@ -65,6 +72,7 @@ Evaluate test coverage, quality, and effectiveness to ensure code is properly te
 - [ ] Mocks cleaned up properly
 
 ### Assertions
+
 - [ ] Assertions are specific
 - [ ] Error messages are clear
 - [ ] Multiple related assertions grouped logically
@@ -74,6 +82,7 @@ Evaluate test coverage, quality, and effectiveness to ensure code is properly te
 - [ ] Type assertions included
 
 ### Test Maintenance
+
 - [ ] Tests updated with code changes
 - [ ] Failing tests are fixed immediately
 - [ ] Flaky tests are eliminated
@@ -83,6 +92,7 @@ Evaluate test coverage, quality, and effectiveness to ensure code is properly te
 - [ ] Parameterized tests used for variations
 
 ### Continuous Integration
+
 - [ ] Tests run automatically on commits
 - [ ] Test failures block merges
 - [ ] Coverage reports generated
@@ -96,6 +106,7 @@ Evaluate test coverage, quality, and effectiveness to ensure code is properly te
 ### Insufficient Coverage
 
 **Missing edge cases**
+
 ```python
 # WRONG: Only tests happy path
 def test_divide():
@@ -117,6 +128,7 @@ def test_divide_float():
 ```
 
 **Missing error conditions**
+
 ```python
 # WRONG: No error testing
 def test_get_user():
@@ -140,6 +152,7 @@ def test_get_user_invalid_id():
 ### Poor Test Quality
 
 **Tests not independent**
+
 ```python
 # WRONG: Tests depend on each other
 class TestUser:
@@ -167,6 +180,7 @@ class TestUser:
 ```
 
 **Non-deterministic tests**
+
 ```python
 # WRONG: Flaky test
 def test_process_timestamp():
@@ -181,6 +195,7 @@ def test_process_timestamp():
 ```
 
 **Vague test names**
+
 ```python
 # WRONG: Unclear test name
 def test_user():
@@ -196,6 +211,7 @@ def test_create_user_returns_user_object_with_given_name():
 ### Over-Mocking
 
 **Testing implementation, not behavior**
+
 ```python
 # WRONG: Over-mocked, tests implementation
 def test_process_order(mock_db, mock_email, mock_inventory):
@@ -227,6 +243,7 @@ def test_process_order():
 ### Weak Assertions
 
 **No assertions**
+
 ```python
 # WRONG: Test doesn't assert anything
 def test_process():
@@ -240,6 +257,7 @@ def test_process():
 ```
 
 **Vague assertions**
+
 ```python
 # WRONG: Weak assertion
 def test_get_users():
@@ -257,6 +275,7 @@ def test_get_users():
 ### Test Data Issues
 
 **Hard to maintain test data**
+
 ```python
 # WRONG: Inline test data
 def test_create_order():
@@ -289,6 +308,7 @@ def test_create_order():
 ```
 
 **Using production data**
+
 ```python
 # WRONG: Production data in tests
 def test_get_user():
@@ -305,6 +325,7 @@ def test_get_user():
 ### Missing Test Types
 
 **No integration tests**
+
 ```python
 # WRONG: Only unit tests, no integration
 def test_process_payment(mock_gateway):
@@ -323,6 +344,7 @@ def test_process_payment_integration():
 ```
 
 **No performance tests**
+
 ```python
 # MISSING: Performance test for critical operation
 def test_search_performance():
@@ -339,6 +361,7 @@ def test_search_performance():
 ## Scoring Criteria
 
 ### Critical (Must Fix)
+
 - No tests for critical functionality
 - Tests that always pass (no assertions)
 - Tests using production data
@@ -348,6 +371,7 @@ def test_search_performance():
 - Security vulnerabilities untested
 
 ### High Priority (Should Fix)
+
 - Low code coverage (<60%)
 - Missing edge case tests
 - Missing error condition tests
@@ -358,6 +382,7 @@ def test_search_performance():
 - Weak or missing assertions
 
 ### Medium Priority (Consider Fixing)
+
 - Moderate coverage (60-80%)
 - Some edge cases missing
 - Unclear test names
@@ -368,6 +393,7 @@ def test_search_performance():
 - Incomplete regression tests
 
 ### Low Priority (Nice to Have)
+
 - Coverage gaps in non-critical code
 - Additional parameterized tests
 - Property-based tests
@@ -409,18 +435,21 @@ def test_search_performance():
 ## Test Pyramid
 
 ### Unit Tests (70%)
+
 - Fast, isolated, focused
 - Test individual components
 - Mock external dependencies
 - Run frequently during development
 
 ### Integration Tests (20%)
+
 - Test component interactions
 - Use real dependencies where practical
 - Verify contracts between modules
 - Run before commits
 
 ### End-to-End Tests (10%)
+
 - Test complete user workflows
 - Use real or production-like environment
 - Verify business scenarios

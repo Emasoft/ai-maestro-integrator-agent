@@ -1,6 +1,5 @@
 # Operation: Set Issue Milestone
 
-
 ## Contents
 
 - [Metadata](#metadata)
@@ -92,6 +91,7 @@ gh issue edit 123 --repo owner/repo --milestone "v2.0"
 ```
 
 If milestone was created:
+
 ```json
 {
   "issue_number": 123,
@@ -136,6 +136,7 @@ gh api repos/owner/repo/milestones | jq '.[] | {title, open_issues, closed_issue
 ```
 
 Output:
+
 ```json
 {
   "title": "v2.0",

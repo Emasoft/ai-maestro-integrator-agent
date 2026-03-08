@@ -158,18 +158,21 @@ EOF
 ### Write-Through (Immediate)
 
 For PR-specific state, write **immediately after event**:
+
 - Review completed → Post PR comment
 - Approval given → Post PR comment
 
 ### Append (Accumulate)
 
 For patterns and history, **append new entries**:
+
 - Pattern observed → Append to patterns-learned.md
 - Release deployed → Append to release-history.md
 
 ### Overwrite (Latest State)
 
 For current states, **overwrite with latest**:
+
 - CI state changed → Overwrite ci-states.md
 - Session ending → Overwrite current.md
 
@@ -191,8 +194,10 @@ cat "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md" |
 ## Error Handling
 
 **If PR comment fails:**
+
 - Fallback to handoff document: `$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/pr-<PR_NUMBER>-state.md`
 
 **If file write fails:**
+
 - Check directory exists: `mkdir -p $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/`
 - Check permissions: `ls -ld $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/`

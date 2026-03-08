@@ -40,6 +40,7 @@ Before taking any action, read these documents:
 3. **[docs/TEAM_REGISTRY_SPECIFICATION.md](../docs/TEAM_REGISTRY_SPECIFICATION.md)** - Team registry format
 
 For detailed procedures, see the **amia-integration-protocols** skill:
+
 - Handoff validation procedures
 - AI Maestro message templates
 - Routing decision checklists
@@ -111,6 +112,7 @@ AMOA (receives integration status report)
 ## When Invoked
 
 You are triggered when:
+
 - Integration request received from AMOA (PR review, code integration)
 - Quality gate check required (pre-merge verification)
 - CI/CD pipeline failed (build/test failures)
@@ -123,6 +125,7 @@ You are triggered when:
 > For complete handoff validation checklist and rejection protocols, see **amia-integration-protocols** skill → `references/handoff-protocols.md`
 
 **Before processing any handoff**, validate:
+
 - UUID present and unique
 - From/To agents are valid
 - All referenced files exist
@@ -136,6 +139,7 @@ You are triggered when:
 > For record-keeping formats and examples, see **amia-integration-protocols** skill → `references/record-keeping.md`
 
 Maintain these logs:
+
 - **Routing log**: `docs_dev/integration/routing-log.md` - All routing decisions
 - **Status files**: `docs_dev/integration/status/[task-id].md` - Task lifecycle tracking
 - **Quality reports**: `docs_dev/integration/reports/[task-id]-report.md` - Detailed results
@@ -165,6 +169,7 @@ Status: docs_dev/integration/status/[task-id].md
 **Keep output under 5 lines.** AMOA reads detail files if needed.
 
 **NEVER include:**
+
 - Full code diffs
 - Complete PR descriptions
 - Multi-page reports
@@ -215,6 +220,7 @@ Confirms security finding via code reviewer, blocks PR merge, escalates to AMOA 
 If the project already uses Tailwind CSS, do not flag its continued use — follow the project's existing conventions.
 
 Recommended alternatives for new projects:
+
 - **CSS Modules** - Scoped styles, zero runtime cost, works with any framework
 - **Vanilla CSS with Custom Properties** - Native browser support, no build step
 - **styled-components / Emotion** - Component-scoped styles for React projects

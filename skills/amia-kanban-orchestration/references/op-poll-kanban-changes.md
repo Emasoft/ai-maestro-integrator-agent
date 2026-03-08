@@ -1,6 +1,5 @@
 # Operation: Poll Kanban Board for Changes
 
-
 ## Contents
 
 - [Metadata](#metadata)
@@ -110,6 +109,7 @@ save_state(current_state)
 ### Assignment Notification
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The assigned agent
 - **Subject**: `Kanban Update: Issue #123 assigned to you`
 - **Priority**: `normal`
@@ -119,6 +119,7 @@ Send a message using the `agent-messaging` skill with:
 ### Status Change Notification
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Kanban Update: Issue #123 moved to AI Review`
 - **Priority**: `normal`

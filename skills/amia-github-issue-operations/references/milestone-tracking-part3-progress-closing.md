@@ -18,6 +18,7 @@
 ### 3.3.1 Querying Completion Percentage
 
 **Get milestone with progress:**
+
 ```bash
 gh api repos/{owner}/{repo}/milestones \
   --jq '.[] | select(.title=="v2.1.0") | {
@@ -31,6 +32,7 @@ gh api repos/{owner}/{repo}/milestones \
 ```
 
 **Python progress calculation:**
+
 ```python
 def get_milestone_progress(repo: str, milestone_title: str) -> dict:
     """Get milestone completion percentage and issue counts."""
@@ -66,12 +68,14 @@ def get_milestone_progress(repo: str, milestone_title: str) -> dict:
 ### 3.3.2 Open vs Closed Issues Count
 
 **List all milestones with counts:**
+
 ```bash
 gh api repos/{owner}/{repo}/milestones \
   --jq '.[] | "\(.title): \(.closed_issues)/\(.open_issues + .closed_issues) done"'
 ```
 
 **Output:**
+
 ```
 v2.0.0: 15/15 done
 v2.1.0: 8/12 done
@@ -79,6 +83,7 @@ v2.2.0: 0/5 done
 ```
 
 **Detailed breakdown by milestone:**
+
 ```bash
 gh api repos/{owner}/{repo}/milestones \
   --jq '.[] | {
@@ -93,6 +98,7 @@ gh api repos/{owner}/{repo}/milestones \
 ### 3.3.3 Overdue Detection
 
 **Check if milestone is overdue:**
+
 ```bash
 gh api repos/{owner}/{repo}/milestones \
   --jq --arg now "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
@@ -104,6 +110,7 @@ gh api repos/{owner}/{repo}/milestones \
 ```
 
 **Python overdue check:**
+
 ```python
 from datetime import datetime
 
@@ -147,12 +154,14 @@ def check_overdue_milestones(repo: str) -> list[dict]:
 ### 3.4.1 When to Close
 
 Close a milestone when:
+
 1. All planned work is complete (all issues closed)
 2. The release has been shipped
 3. The sprint/quarter has ended
 4. The milestone is being abandoned (document reason)
 
 **Close milestone via CLI:**
+
 ```bash
 # Get milestone number
 milestone_number=$(gh api repos/{owner}/{repo}/milestones \
@@ -165,6 +174,7 @@ gh api repos/{owner}/{repo}/milestones/${milestone_number} \
 ```
 
 **Close only if all issues are done:**
+
 ```bash
 milestone_info=$(gh api repos/{owner}/{repo}/milestones \
   --jq '.[] | select(.title=="v2.1.0")')
@@ -187,6 +197,7 @@ fi
 When closing a milestone with open issues, decide what to do with them:
 
 **Option 1: Move to next milestone**
+
 ```bash
 # Get open issues from milestone being closed
 issues=$(gh issue list --repo owner/repo \
@@ -204,6 +215,7 @@ done
 ```
 
 **Option 2: Remove from milestone (backlog)**
+
 ```bash
 issues=$(gh issue list --repo owner/repo \
   --milestone "v2.1.0" \
@@ -219,6 +231,7 @@ done
 ```
 
 **Option 3: Add "deferred" label and close anyway**
+
 ```bash
 issues=$(gh issue list --repo owner/repo \
   --milestone "v2.1.0" \
@@ -234,6 +247,7 @@ done
 ### 3.4.3 Archive vs Delete
 
 **Closing (archiving):**
+
 - Milestone remains visible in "Closed" filter
 - Historical data preserved
 - Issues still reference the milestone
@@ -246,6 +260,7 @@ gh api repos/{owner}/{repo}/milestones/{number} \
 ```
 
 **Deleting:**
+
 - Milestone completely removed
 - Issues become unassigned from milestone
 - Historical tracking lost
@@ -257,6 +272,7 @@ gh api repos/{owner}/{repo}/milestones/{number} \
 ```
 
 **Reopen a closed milestone:**
+
 ```bash
 gh api repos/{owner}/{repo}/milestones/{number} \
   --method PATCH \
@@ -264,6 +280,7 @@ gh api repos/{owner}/{repo}/milestones/{number} \
 ```
 
 **Python helper for safe milestone closure:**
+
 ```python
 def close_milestone(
     repo: str,

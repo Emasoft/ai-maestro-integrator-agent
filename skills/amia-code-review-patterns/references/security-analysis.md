@@ -1,6 +1,7 @@
 # Security Analysis Review
 
 ## Table of Contents
+
 - When validating input handling → Verification Checklist: Input Validation
 - If you're reviewing authentication and authorization → Verification Checklist: Authentication & Authorization
 - When checking sensitive data protection → Verification Checklist: Data Protection
@@ -12,11 +13,13 @@
 - When identifying security vulnerabilities → Common Issues to Look For
 
 ## Purpose
+
 Identify security vulnerabilities, assess risk exposure, and ensure code follows security best practices to protect against common attacks.
 
 ## Verification Checklist
 
 ### Input Validation
+
 - [ ] All user input is validated
 - [ ] Input length limits enforced
 - [ ] Input type checking performed
@@ -27,6 +30,7 @@ Identify security vulnerabilities, assess risk exposure, and ensure code follows
 - [ ] Command injection prevented
 
 ### Authentication & Authorization
+
 - [ ] Authentication required for protected resources
 - [ ] Password strength requirements enforced
 - [ ] Password hashing uses modern algorithms (bcrypt, Argon2)
@@ -37,6 +41,7 @@ Identify security vulnerabilities, assess risk exposure, and ensure code follows
 - [ ] Multi-factor authentication supported
 
 ### Data Protection
+
 - [ ] Sensitive data encrypted at rest
 - [ ] Sensitive data encrypted in transit (TLS)
 - [ ] No sensitive data in logs
@@ -47,6 +52,7 @@ Identify security vulnerabilities, assess risk exposure, and ensure code follows
 - [ ] PII handling complies with regulations
 
 ### SQL Injection Prevention
+
 - [ ] Parameterized queries used
 - [ ] ORM used correctly
 - [ ] No string concatenation for queries
@@ -56,6 +62,7 @@ Identify security vulnerabilities, assess risk exposure, and ensure code follows
 - [ ] Database user has minimal privileges
 
 ### XSS Prevention
+
 - [ ] Output encoding applied
 - [ ] User input escaped in HTML
 - [ ] Content Security Policy implemented
@@ -65,6 +72,7 @@ Identify security vulnerabilities, assess risk exposure, and ensure code follows
 - [ ] No eval() with user input
 
 ### CSRF Protection
+
 - [ ] CSRF tokens implemented
 - [ ] Same-site cookie attribute set
 - [ ] State-changing operations require POST
@@ -74,6 +82,7 @@ Identify security vulnerabilities, assess risk exposure, and ensure code follows
 - [ ] Synchronizer token pattern implemented
 
 ### Cryptography
+
 - [ ] Strong algorithms used (AES-256, RSA-2048+)
 - [ ] No deprecated algorithms (MD5, SHA1 for security)
 - [ ] Proper key management
@@ -83,6 +92,7 @@ Identify security vulnerabilities, assess risk exposure, and ensure code follows
 - [ ] Certificate validation enabled
 
 ### Dependency Security
+
 - [ ] Dependencies up to date
 - [ ] Known vulnerabilities checked
 - [ ] Dependency scanning automated
@@ -96,6 +106,7 @@ Identify security vulnerabilities, assess risk exposure, and ensure code follows
 ### SQL Injection
 
 **Vulnerable string concatenation**
+
 ```python
 # WRONG: SQL injection vulnerability
 user_id = request.get('user_id')
@@ -112,6 +123,7 @@ db.execute(query, (user_id,))
 ```
 
 **ORM misuse**
+
 ```python
 # WRONG: Using raw queries with user input
 search = request.get('search')
@@ -125,6 +137,7 @@ User.objects.filter(name__contains=search)
 ### XSS (Cross-Site Scripting)
 
 **Unescaped output**
+
 ```python
 # WRONG: Direct output of user input
 @app.route('/hello')
@@ -144,6 +157,7 @@ def hello():
 ```
 
 **Dangerous innerHTML**
+
 ```javascript
 // WRONG: XSS vulnerability
 const comment = userInput;
@@ -159,6 +173,7 @@ element.innerHTML = DOMPurify.sanitize(comment);
 ### Authentication Issues
 
 **Weak password hashing**
+
 ```python
 # WRONG: Weak hashing
 import hashlib
@@ -170,6 +185,7 @@ password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 ```
 
 **Hardcoded credentials**
+
 ```python
 # WRONG: Hardcoded secrets
 API_KEY = "sk_live_1234567890abcdef"
@@ -182,6 +198,7 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 ```
 
 **Missing authentication**
+
 ```python
 # WRONG: No authentication check
 @app.route('/admin/delete-user/<user_id>')
@@ -201,6 +218,7 @@ def delete_user(user_id):
 ### Authorization Issues
 
 **Missing authorization checks**
+
 ```python
 # WRONG: No ownership verification
 @app.route('/document/<doc_id>')
@@ -219,6 +237,7 @@ def get_document(doc_id):
 ```
 
 **Insecure Direct Object Reference**
+
 ```python
 # WRONG: Predictable IDs expose data
 @app.route('/api/order/<order_id>')
@@ -240,6 +259,7 @@ def get_order(order_uuid):
 ### Path Traversal
 
 **Unvalidated file paths**
+
 ```python
 # WRONG: Path traversal vulnerability
 @app.route('/download/<filename>')
@@ -264,6 +284,7 @@ def download(filename):
 ### Command Injection
 
 **Unsanitized shell commands**
+
 ```python
 # WRONG: Command injection vulnerability
 import os
@@ -282,6 +303,7 @@ subprocess.run(['cat', filename], check=True)
 ### Information Disclosure
 
 **Verbose error messages**
+
 ```python
 # WRONG: Exposes internal details
 try:
@@ -298,6 +320,7 @@ except Exception as e:
 ```
 
 **Sensitive data in logs**
+
 ```python
 # WRONG: Logs sensitive data
 logger.info(f"User {user.email} logged in with password {password}")
@@ -309,6 +332,7 @@ logger.info(f"User {user.email} logged in successfully")
 ### Cryptographic Issues
 
 **Weak algorithms**
+
 ```python
 # WRONG: Weak encryption
 from Crypto.Cipher import DES
@@ -320,6 +344,7 @@ cipher = AES.new(key, AES.MODE_GCM)
 ```
 
 **Predictable randomness**
+
 ```python
 # WRONG: Predictable random
 import random
@@ -333,6 +358,7 @@ token = secrets.token_urlsafe(32)
 ## Scoring Criteria
 
 ### Critical (Must Fix)
+
 - SQL injection vulnerabilities
 - XSS vulnerabilities
 - Authentication bypass
@@ -344,6 +370,7 @@ token = secrets.token_urlsafe(32)
 - Insecure cryptography (MD5, DES, etc.)
 
 ### High Priority (Should Fix)
+
 - Missing authentication on sensitive endpoints
 - Missing authorization checks
 - Weak password hashing
@@ -355,6 +382,7 @@ token = secrets.token_urlsafe(32)
 - Sensitive data in logs
 
 ### Medium Priority (Consider Fixing)
+
 - Weak password requirements
 - Missing security headers
 - Incomplete input validation
@@ -365,6 +393,7 @@ token = secrets.token_urlsafe(32)
 - Insufficient error handling
 
 ### Low Priority (Nice to Have)
+
 - Additional security headers
 - Enhanced logging
 - More restrictive CSP
@@ -406,6 +435,7 @@ token = secrets.token_urlsafe(32)
 ## Security Testing
 
 ### OWASP Top 10 Checks
+
 1. **Injection**: SQL, command, LDAP, etc.
 2. **Broken Authentication**: Session management, credential storage
 3. **Sensitive Data Exposure**: Encryption, secure transmission
@@ -418,6 +448,7 @@ token = secrets.token_urlsafe(32)
 10. **Insufficient Logging & Monitoring**: Security events, incident response
 
 ### Security Tools
+
 - **Static Analysis**: Bandit, Semgrep, SonarQube
 - **Dependency Scanning**: Snyk, npm audit, Safety
 - **SAST**: Static Application Security Testing

@@ -37,7 +37,8 @@
 
 ## AMCOS (Chief of Staff) - Responsibilities
 
-### AMCOS CAN:
+### AMCOS CAN
+
 - ✅ Create agents (with AMAMA approval)
 - ✅ Terminate agents (with AMAMA approval)
 - ✅ Hibernate/wake agents (with AMAMA approval)
@@ -48,7 +49,8 @@
 - ✅ Replace failed agents (with AMAMA approval)
 - ✅ Report agent performance to AMAMA
 
-### AMCOS CANNOT:
+### AMCOS CANNOT
+
 - ❌ Create projects (AMAMA only)
 - ❌ Assign tasks to agents (AMOA only)
 - ❌ Manage GitHub Project kanban (AMOA only)
@@ -56,7 +58,8 @@
 - ❌ Perform code review (AMIA only)
 - ❌ Communicate directly with user (AMAMA only)
 
-### AMCOS Scope:
+### AMCOS Scope
+
 - **Project-independent**: One AMCOS manages agents across ALL projects
 - **Team-agnostic**: Creates teams but doesn't manage their work
 - **Infrastructure-focused**: Ensures agents exist and are configured
@@ -65,7 +68,8 @@
 
 ## AMOA (Orchestrator) - Responsibilities
 
-### AMOA CAN:
+### AMOA CAN
+
 - ✅ Assign tasks to agents
 - ✅ Manage GitHub Project kanban for their project
 - ✅ Track task progress
@@ -74,13 +78,15 @@
 - ✅ Coordinate agent work within their project
 - ✅ Request AMCOS to create/replace agents for their project
 
-### AMOA CANNOT:
+### AMOA CANNOT
+
 - ❌ Create agents directly (request via AMCOS)
 - ❌ Configure agent skills/plugins (AMCOS only)
 - ❌ Create projects (AMAMA only)
 - ❌ Manage agents outside their project
 
-### AMOA Scope:
+### AMOA Scope
+
 - **Project-linked**: One AMOA per project
 - **Task-focused**: Manages what agents DO, not what agents EXIST
 - **Kanban owner**: Owns the GitHub Project board for their project
@@ -89,7 +95,8 @@
 
 ## AMAMA (Manager) - Responsibilities
 
-### AMAMA CAN:
+### AMAMA CAN
+
 - ✅ Create projects
 - ✅ Approve/reject AMCOS requests (agent create/terminate/etc.)
 - ✅ Communicate with user
@@ -97,11 +104,13 @@
 - ✅ Override any agent decision
 - ✅ Grant autonomous operation directives
 
-### AMAMA CANNOT:
+### AMAMA CANNOT
+
 - ❌ Create agents directly (delegates to AMCOS)
 - ❌ Assign tasks directly (delegates to AMOA)
 
-### AMAMA Scope:
+### AMAMA Scope
+
 - **Organization-wide**: Oversees all projects and agents
 - **User-facing**: Only agent that talks to user
 - **Decision authority**: Final approval on all significant operations

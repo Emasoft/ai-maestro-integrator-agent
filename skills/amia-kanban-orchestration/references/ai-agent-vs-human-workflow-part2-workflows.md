@@ -1,6 +1,7 @@
 # AI Agent vs Human Workflow - Part 2: Workflows and Coordination
 
 <a name="part-2-toc"></a>
+
 ## Table of Contents
 
 - 9.5 [Review workflow differences and routing](#95-review-workflow)
@@ -73,6 +74,7 @@ EOF
 ### Human as Reviewer (Human Review Column)
 
 Human reviewers in the Human Review column can:
+
 - Approve PRs → task moves to Merge/Release
 - Request changes → task moves back to In Progress
 - Final authority on code quality for big tasks
@@ -91,6 +93,7 @@ Merge/Release: PR is merged (automatic → Done)
 ---
 
 <a name="95a-review-routing"></a>
+
 ## 9.5a Review Routing by Task Size
 
 ### How Task Size Affects the Flow
@@ -303,6 +306,7 @@ When AI agents cannot proceed.
 ### Escalation Process
 
 **Step 1: AI agent reports blocker.** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-master`
 - **Subject**: `Escalation: Issue #42 Blocked`
 - **Priority**: `urgent`
@@ -361,6 +365,7 @@ AI Agent blocks -> Orchestrator notified
 ## Previous: Part 1
 
 Return to [ai-agent-vs-human-workflow-part1-fundamentals.md](ai-agent-vs-human-workflow-part1-fundamentals.md) for:
+
 - Key differences in AI vs human workflow
 - Assignment strategies for AI agents
 - Assignment strategies for human developers

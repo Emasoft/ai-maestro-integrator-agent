@@ -11,6 +11,7 @@
 - Contents:
 
 ## Use-Case TOC
+
 - When starting to implement a new feature → [Part 1: Writing Tests](implementation-procedure-part1-writing-tests.md)
 - If you need to write a failing test → [Part 1: Writing Tests](implementation-procedure-part1-writing-tests.md)
 - When you have a failing test and need to implement → [Part 2: Implementation and Refactoring](implementation-procedure-part2-implementation-refactor.md)
@@ -23,7 +24,8 @@
 
 **File:** [implementation-procedure-part1-writing-tests.md](implementation-procedure-part1-writing-tests.md)
 
-### Contents:
+### Contents
+
 - Step 1: Understand the Requirement
   - Questions to answer before coding
   - Process for analyzing requirements
@@ -41,7 +43,8 @@
 
 **File:** [implementation-procedure-part2-implementation-refactor.md](implementation-procedure-part2-implementation-refactor.md)
 
-### Contents:
+### Contents
+
 - Step 3: Make the Test Pass
   - Minimum Implementation Rules (Do's and Don'ts)
   - Implementation examples in Python, JavaScript, Java
@@ -59,7 +62,8 @@
 
 **File:** [implementation-procedure-part3-complete-example.md](implementation-procedure-part3-complete-example.md)
 
-### Contents:
+### Contents
+
 - Complete RED-GREEN-REFACTOR walkthrough
 - Feature: User can login with valid credentials
 - RED Phase: Write test, run test, commit

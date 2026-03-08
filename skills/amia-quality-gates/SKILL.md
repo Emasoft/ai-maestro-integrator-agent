@@ -21,6 +21,7 @@ Quality gates are **mandatory checkpoints** that code must pass before advancing
 ## Prerequisites
 
 Before using this skill, ensure:
+
 - Repository has CI/CD pipeline configured
 - GitHub labels from **amia-label-taxonomy** are applied
 - Review checklist from **amia-code-review-patterns** is available
@@ -39,6 +40,7 @@ Before using this skill, ensure:
 7. Notify responsible parties per escalation order
 
 **Step 5: Process Overrides (if applicable)**
+
 - Verify override authority per Override Authority Matrix
 - Document override justification in PR
 - Apply `gate:override-applied` label
@@ -64,6 +66,7 @@ Copy this checklist and track your progress:
 ## Output
 
 When executing quality gates, provide:
+
 - **Gate Status**: Current gate name and pass/fail decision
 - **Check Results**: List of all checks performed with outcomes
 - **Labels Applied**: All labels added or removed
@@ -71,6 +74,7 @@ When executing quality gates, provide:
 - **Next Steps**: What should happen next in the pipeline
 
 **Example Output Format**:
+
 ```
 Gate: Pre-Review Gate
 Status: FAILED
@@ -127,6 +131,7 @@ Next Steps:
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 
@@ -135,9 +140,11 @@ When invoking from agents or automated workflows, always pass `--output-file` to
 ## Examples
 
 See [references/gate-examples.md](references/gate-examples.md) for complete examples including:
+
 - **Contents:** Example 1: Pre-Review Gate Success, Example 2: Review Gate Failure (Low Confidence), Example 3: Pre-Merge Gate Failure (Merge Conflict), Example 4: Post-Merge Gate Failure (Main Branch Broken), Example 5: Gate Override Application
 
 **Purpose of Quality Gates:**
+
 - Prevent defective code from reaching production
 - Ensure consistent quality standards across all contributions
 - Provide clear, objective criteria for advancement
@@ -150,16 +157,19 @@ See [references/gate-examples.md](references/gate-examples.md) for complete exam
 ## Gate Types and Pipeline Position
 
 The integration pipeline has four sequential gates. See [references/gate-pipeline.md](references/gate-pipeline.md) for the complete flow diagram.
+
 - **Contents:** Overview, Pipeline Diagram, Gate Transitions, Failure Handling, Parallel Gates, Gate Bypass
 
 ## Gate 1: Pre-Review Gate
 
 See [references/pre-review-gate.md](references/pre-review-gate.md) for:
+
 - **Contents:** Purpose, Required Checks, Tests Pass, Linting Pass, Build Success, PR Description Present, Issue Linked, Warning Conditions (Non-Blocking), Gate Pass Procedure, Gate Fail Procedure, Re-Evaluation Triggers, Troubleshooting, Flaky Test Failures, Infrastructure Issues
 
 ## Gate 2: Review Gate
 
 See [references/review-gate.md](references/review-gate.md) for:
+
 - Required checks (8 dimensions, 80% confidence)
 - Blocking conditions
 - Warning conditions
@@ -168,11 +178,13 @@ See [references/review-gate.md](references/review-gate.md) for:
 ## Gate 3: Pre-Merge Gate
 
 See [references/pre-merge-gate.md](references/pre-merge-gate.md) for:
+
 - **Contents:** Purpose, Required Checks, CI Pipeline Success, No Merge Conflicts, Valid Approval, Branch Up-to-Date, Warning Conditions (Non-Blocking), Gate Pass Procedure, Gate Fail Procedure, Merge Strategies, Squash Merge (Default), Merge Commit, Rebase Merge, Re-Evaluation Triggers, Troubleshooting, CI Stuck in Pending, Approval Disappeared, Intermittent Merge Conflicts, Fast-Moving Main Branch
 
 ## Gate 4: Post-Merge Gate
 
 See [references/post-merge-gate.md](references/post-merge-gate.md) for:
+
 - Required checks (main branch health)
 - Blocking conditions
 - Issue closure procedures
@@ -182,6 +194,7 @@ See [references/post-merge-gate.md](references/post-merge-gate.md) for:
 ## Escalation Paths
 
 See [references/escalation-paths.md](references/escalation-paths.md) for complete escalation procedures including:
+
 - Escalation Path A: Pre-Review Gate Failure
 - Escalation Path B: Review Gate Failure (with Override Authority matrix)
 - Escalation Path C: Pre-Merge Gate Failure
@@ -193,6 +206,7 @@ See [references/escalation-paths.md](references/escalation-paths.md) for complet
 ## Gate Override Policies
 
 See [references/override-policies.md](references/override-policies.md) for:
+
 - Override Authority Matrix (who can override which gates)
 - Override procedure and documentation requirements
 - When overrides are allowed vs forbidden (e.g., security gates cannot be overridden)
@@ -202,6 +216,7 @@ See [references/override-policies.md](references/override-policies.md) for:
 ## Complete Label Reference
 
 See [references/label-reference.md](references/label-reference.md) for complete list of:
+
 - Gate status labels (passed/failed/pending for each gate)
 - Warning labels (coverage, changelog, large PR, style issues, performance, flaky tests, etc.)
 - When each label should be applied
@@ -211,6 +226,7 @@ See [references/label-reference.md](references/label-reference.md) for complete 
 ## Gate Enforcement Checklist
 
 See [references/gate-checklist.md](references/gate-checklist.md) for a copy-paste checklist covering:
+
 - Pre-Review Gate verification steps
 - Review Gate verification steps
 - Pre-Merge Gate verification steps
@@ -237,6 +253,7 @@ This skill uses labels defined in **amia-label-taxonomy**. Ensure the label taxo
 ## Troubleshooting
 
 See [references/troubleshooting.md](references/troubleshooting.md) for solutions to common issues:
+
 - Gate appears stuck
 - False positive gate failure
 - Escalation not triggering
@@ -259,6 +276,7 @@ These scripts manage design documents for quality gate integration:
 **Script**: `scripts/amia_check_encoding.py` — Checks Python files for missing UTF-8 encoding parameters
 
 For encoding compliance checking, see [encoding-compliance-checker.md](references/encoding-compliance-checker.md):
+
 - When to run the encoding compliance checker
 - How to run amia_check_encoding.py on specific files
 - How to run amia_check_encoding.py on an entire directory
@@ -271,6 +289,7 @@ For encoding compliance checking, see [encoding-compliance-checker.md](reference
 **Script**: `../../scripts/amia_unicode_compliance.py` — Full Unicode compliance checker (BOM, line endings, encoding, non-ASCII identifiers)
 
 For Unicode enforcement hook details, see [unicode-enforcement-hook.md](references/unicode-enforcement-hook.md):
+
 - When the Unicode enforcement hook runs
 - What the hook checks (4 checks)
 - How to fix each type of Unicode violation
@@ -297,6 +316,7 @@ All scripts are located in the **root `scripts/` directory** of the ai-maestro-i
 ## Resources
 
 ### Gate Details
+
 - [references/gate-pipeline.md](references/gate-pipeline.md) - Complete pipeline flow diagram
   <!-- TOC: gate-pipeline.md -->
   - Overview
@@ -324,6 +344,7 @@ All scripts are located in the **root `scripts/` directory** of the ai-maestro-i
   <!-- /TOC -->
 
 ### Code Quality Checks
+
 - [references/encoding-compliance-checker.md](references/encoding-compliance-checker.md) - UTF-8 encoding compliance checker
   <!-- TOC: encoding-compliance-checker.md -->
   - When to run the encoding compliance checker
@@ -338,6 +359,7 @@ All scripts are located in the **root `scripts/` directory** of the ai-maestro-i
   <!-- /TOC -->
 
 ### Procedures and Examples
+
 - [references/gate-examples.md](references/gate-examples.md) - Practical examples for all gates
   <!-- TOC: gate-examples.md -->
   - Example 1: Pre-Review Gate Success
@@ -376,6 +398,7 @@ All scripts are located in the **root `scripts/` directory** of the ai-maestro-i
   <!-- /TOC -->
 
 ### Reference Materials
+
 - [references/gate-decision-flowchart.md](references/gate-decision-flowchart.md) - Visual decision flowchart
   <!-- TOC: gate-decision-flowchart.md -->
   - Visual Decision Tree

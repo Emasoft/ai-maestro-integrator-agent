@@ -70,6 +70,7 @@ python scripts/worktree_create.py --purpose review --identifier GH-42 --branch f
 ```
 
 **What this does:**
+
 1. Creates directory: `worktrees/review-GH-42/`
 2. Checks out branch: `feature/auth`
 3. Creates registry entry with purpose `review`, identifier `GH-42`
@@ -86,6 +87,7 @@ python scripts/worktree_create.py --purpose feature --identifier auth-system --b
 ```
 
 **What this does:**
+
 1. Creates directory: `worktrees/feature-auth-system/`
 2. Checks out branch: `feature/authentication`
 3. Allocates ports automatically:
@@ -105,6 +107,7 @@ python scripts/worktree_create.py --purpose hotfix --identifier CVE-2024-001 --b
 ```
 
 **What this does:**
+
 1. Creates directory: `worktrees/hotfix-CVE-2024-001/`
 2. Checks out tag: `v2.1.3` (detached HEAD state)
 3. Registers as hotfix purpose
@@ -121,6 +124,7 @@ python scripts/worktree_create.py --purpose experiment --identifier async-rewrit
 ```
 
 **What this does:**
+
 1. Creates directory: `worktrees/experiment-async-rewrite/`
 2. Creates new branch: `experiment/async-refactor` (if doesn't exist)
 3. Marks as experimental in registry
@@ -187,6 +191,7 @@ python scripts/worktree_list.py
 ```
 
 **Output:**
+
 ```
 ┌─────────────────────────┬─────────────────────────────┬─────────┬────────────┬───────────┐
 │ Name                    │ Path                        │ Branch  │ Purpose    │ Completed │
@@ -208,6 +213,7 @@ python scripts/worktree_list.py --purpose review
 ```
 
 **Output:**
+
 ```
 ┌─────────────────────────┬─────────────────────────────┬─────────┬─────────┬───────────┐
 │ Name                    │ Path                        │ Branch  │ Purpose │ Completed │
@@ -228,6 +234,7 @@ python scripts/worktree_list.py --ports
 ```
 
 **Output:**
+
 ```
 ┌─────────────────────────┬─────────┬──────────────────┬───────────┐
 │ Name                    │ Purpose │ Allocated Ports  │ Completed │
@@ -249,6 +256,7 @@ python scripts/worktree_list.py --status active --json
 ```
 
 **Output:**
+
 ```json
 [
   {
@@ -278,6 +286,7 @@ python scripts/worktree_list.py --validate
 ```
 
 **Output:**
+
 ```
 ✓ review-GH-42: Directory exists
 ✓ feature-auth-system: Directory exists
@@ -344,6 +353,7 @@ python scripts/worktree_remove.py review-GH-42
 ```
 
 **Interaction:**
+
 ```
 Worktree: review-GH-42
 Path: /repo/worktrees/review-GH-42
@@ -360,6 +370,7 @@ Are you sure you want to remove it? [y/N]:
 ```
 
 **What happens when you type 'y':**
+
 1. Removes directory: `/repo/worktrees/review-GH-42/`
 2. Deletes registry entry for `review-GH-42`
 3. Releases ports 8001 and 9001 back to the pool
@@ -376,6 +387,7 @@ python scripts/worktree_remove.py feature-broken-experiment --force
 ```
 
 **What this does:**
+
 1. Skips all safety checks
 2. Removes worktree immediately without prompts
 3. Cleans up registry and ports
@@ -394,6 +406,7 @@ python scripts/worktree_remove.py review-GH-42 --dry-run
 ```
 
 **Output:**
+
 ```
 [DRY RUN] Would perform these actions:
 
@@ -425,6 +438,7 @@ python scripts/worktree_remove.py --all-completed
 ```
 
 **Interaction:**
+
 ```
 Found 3 completed worktrees:
 - review-GH-42 (completed 2 days ago)
@@ -436,6 +450,7 @@ Continue? [y/N]:
 ```
 
 **What happens when you type 'y':**
+
 1. Removes all three worktree directories
 2. Deletes all three registry entries
 3. Releases all six allocated ports
@@ -452,6 +467,7 @@ python scripts/worktree_remove.py --all-completed --force
 ```
 
 **What this does:**
+
 1. Finds all worktrees with `completed: true`
 2. Removes them immediately without any prompts
 3. Displays summary of removed worktrees

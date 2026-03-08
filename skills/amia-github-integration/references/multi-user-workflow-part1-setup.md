@@ -26,6 +26,7 @@
   - [Helper Function for Repository Configuration](#helper-function-for-repository-configuration)
 
 ## Use-Case TOC
+
 - When you need multiple GitHub identities on the same machine → [Why Multiple Identities](#why-multiple-identities)
 - When setting up SSH keys for a secondary account → [SSH Key Setup](#ssh-key-setup)
 - When configuring SSH host aliases → [SSH Host Aliases](#ssh-host-aliases)
@@ -34,6 +35,7 @@
 - When configuring a repository for a specific identity → [Repository Identity Configuration](#repository-identity-configuration)
 
 **Related Documents:**
+
 - [Part 2: Operations and Troubleshooting](multi-user-workflow-part2-operations.md) - Per-command overrides, collaborator management, troubleshooting, and agent orchestration
 
 ---
@@ -50,6 +52,7 @@ Multiple GitHub identities are needed when:
 ### Identity Components
 
 Each GitHub identity consists of:
+
 - **GitHub Account**: Username and associated email
 - **SSH Key**: Dedicated key pair for authentication
 - **Git Identity**: `user.name` and `user.email` for commits
@@ -78,6 +81,7 @@ chmod 644 ~/.ssh/id_ed25519_secondary.pub
 ```
 
 **Parameters Explained:**
+
 - `-t ed25519`: Use the Ed25519 algorithm (modern, secure, fast)
 - `-f <path>`: Output file path (avoid overwriting existing keys)
 - `-C "email"`: Comment field (use the GitHub noreply email for the account)
@@ -86,6 +90,7 @@ chmod 644 ~/.ssh/id_ed25519_secondary.pub
 ### Step 2: Add Public Key to GitHub Account
 
 1. Display the public key:
+
    ```bash
    cat ~/.ssh/id_ed25519_secondary.pub
    ```
@@ -113,6 +118,7 @@ ssh-add -l
 ```
 
 **macOS Note:** For persistence across reboots, add to `~/.ssh/config`:
+
 ```
 Host *
   AddKeysToAgent yes
@@ -146,6 +152,7 @@ Host github-secondary
 ```
 
 **Key Configuration Options:**
+
 - `Host`: The alias you'll use in git remotes
 - `HostName`: Actual server (always github.com)
 - `User`: Always `git` for GitHub
@@ -163,6 +170,7 @@ ssh -T git@github-secondary
 ```
 
 **Expected Output:**
+
 ```
 Hi <username>! You've successfully authenticated, but GitHub does not provide shell access.
 ```
@@ -182,6 +190,7 @@ gh auth login
 ```
 
 Choose:
+
 - GitHub.com
 - HTTPS or SSH (match your preference)
 - Complete browser authentication
@@ -193,6 +202,7 @@ gh auth login
 ```
 
 When prompted, you'll see you're already logged in. Choose to add another account:
+
 - Complete browser authentication **while logged into the secondary GitHub account in your browser**
 
 ### Step 3: Verify Both Accounts
@@ -202,6 +212,7 @@ gh auth status
 ```
 
 **Expected Output:**
+
 ```
 github.com
   ✓ Logged in to github.com account primary-user (keyring)
@@ -291,6 +302,7 @@ with_identity() {
 ```
 
 **Usage:**
+
 ```bash
 # Switch shell to secondary identity
 use_secondary

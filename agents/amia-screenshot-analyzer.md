@@ -61,6 +61,7 @@ ACTIONABLE: [what orchestrator should do, if anything]
 For complex images, write details to `docs_dev/image-analysis-[timestamp].md` and mention filename.
 
 **Requirement Compliance** (for UI screenshots):
+
 ```markdown
 ## Compliance Check
 - Matches specs: [YES/NO]

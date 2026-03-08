@@ -14,6 +14,7 @@
 GitHub Projects Sync integrates with other AMOA (Emasoft Orchestrator Agent) skills to provide a complete task management workflow. This document describes the integration points and protocols.
 
 **Key Integrations:**
+
 - Remote Agent Coordinator: Task assignment and tracking
 - Code Reviewer: PR status and review workflow
 - Report Generator: Project status in reports
@@ -239,6 +240,7 @@ gh api graphql -f query='
 ## AI Maestro Messaging
 
 For complete messaging documentation, see the official AI Maestro skill:
+
 ```
 ~/.claude/skills/agent-messaging/SKILL.md
 ```
@@ -256,6 +258,7 @@ For complete messaging documentation, see the official AI Maestro skill:
 ### Sending Notifications
 
 Send notifications using the `agent-messaging` skill. For example, to send a task blocked notification:
+
 - **Recipient**: `orchestrator-master`
 - **Subject**: `Task Blocked: #42`
 - **Priority**: `high`
@@ -267,12 +270,14 @@ Send notifications using the `agent-messaging` skill. For example, to send a tas
 GitHub Projects is for team/project tasks. Claude Tasks is for orchestrator personal tasks only.
 
 **GitHub Projects** (team tasks):
+
 - Feature implementation
 - Bug fixes
 - Code reviews
 - Documentation
 
 **Claude Tasks** (orchestrator personal tasks):
+
 - Read skill documentation
 - Review agent reports
 - Plan sprint priorities

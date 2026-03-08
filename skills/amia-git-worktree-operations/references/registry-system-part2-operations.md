@@ -18,6 +18,7 @@
 **When:** Creating a new worktree
 
 **Steps:**
+
 1. Generate unique ID from naming convention template
 2. Validate ID doesn't already exist
 3. Allocate ports from appropriate ranges
@@ -26,6 +27,7 @@
 6. Return entry object to caller
 
 **Example:**
+
 ```python
 entry = {
     "id": "review-GH-42",
@@ -46,12 +48,14 @@ save_registry(registry)
 **When:** Changing worktree state (active → locked, active → pending-removal)
 
 **Steps:**
+
 1. Find entry by ID
 2. Validate new status is allowed (see status transition rules)
 3. Update `status` field
 4. Write updated registry to disk
 
 **Example:**
+
 ```python
 entry = find_entry_by_id("review-GH-42")
 entry["status"] = "locked"
@@ -59,6 +63,7 @@ save_registry(registry)
 ```
 
 **Status transition rules:**
+
 - `active` → `locked` ✓ (allowed)
 - `active` → `pending-removal` ✓ (allowed)
 - `locked` → `active` ✓ (allowed)
@@ -70,12 +75,14 @@ save_registry(registry)
 **When:** Deleting a worktree
 
 **Steps:**
+
 1. Find entry by ID
 2. Release allocated ports (make them available for reuse)
 3. Remove entry from `worktrees` array
 4. Write updated registry to disk
 
 **Example:**
+
 ```python
 entry = find_entry_by_id("review-GH-42")
 release_ports(entry["port_allocations"])
@@ -90,10 +97,12 @@ save_registry(registry)
 **When:** Finding all worktrees of a specific type
 
 **Steps:**
+
 1. Filter `worktrees` array by `purpose` field
 2. Return matching entries
 
 **Example:**
+
 ```python
 review_worktrees = [wt for wt in registry["worktrees"] if wt["purpose"] == "review"]
 ```
@@ -103,10 +112,12 @@ review_worktrees = [wt for wt in registry["worktrees"] if wt["purpose"] == "revi
 **When:** Finding worktree associated with a GitHub issue
 
 **Steps:**
+
 1. Filter `worktrees` array by `issue` field
 2. Return matching entry (should be unique)
 
 **Example:**
+
 ```python
 worktree = next((wt for wt in registry["worktrees"] if wt["issue"] == "GH-42"), None)
 ```

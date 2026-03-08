@@ -7,7 +7,6 @@ description: "Apply the recommended fix based on identified CI failure pattern"
 
 # Operation: Apply Pattern Fix
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -242,4 +241,5 @@ If the suggested fix doesn't apply:
 ## Next Operation
 
 After applying the fix:
+
 - [op-verify-fix-locally.md](op-verify-fix-locally.md) - Verify the fix locally before pushing

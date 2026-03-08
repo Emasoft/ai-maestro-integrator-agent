@@ -39,9 +39,11 @@ Different types of releases serve different purposes and have different risk pro
 ## Major Release
 
 ### Definition
+
 A major release introduces significant new features, breaking changes, or fundamental architectural changes. Typically increments the major version number (e.g., 1.x.x → 2.0.0).
 
 ### Characteristics
+
 - Contains breaking changes to APIs or user interfaces
 - May require database migrations or data transformations
 - Includes significant new features or capabilities
@@ -50,6 +52,7 @@ A major release introduces significant new features, breaking changes, or fundam
 - May require user training or migration guides
 
 ### When to Use
+
 - Introducing breaking changes that cannot be backward compatible
 - Major architectural overhauls
 - Significant feature sets that redefine product capabilities
@@ -57,6 +60,7 @@ A major release introduces significant new features, breaking changes, or fundam
 - Security model changes
 
 ### Requirements
+
 - **Planning Horizon**: 3-6 months
 - **Testing**: Full regression suite + extended UAT
 - **Documentation**: Complete update of all user and technical docs
@@ -65,14 +69,17 @@ A major release introduces significant new features, breaking changes, or fundam
 - **Monitoring**: Enhanced monitoring for at least 2 weeks post-release
 
 ### Risk Level
+
 **HIGH** - Requires extensive planning, testing, and stakeholder coordination
 
 ## Minor Release
 
 ### Definition
+
 A minor release adds new features or capabilities in a backward-compatible manner. Increments the minor version number (e.g., 1.2.x → 1.3.0).
 
 ### Characteristics
+
 - Adds new features without breaking existing functionality
 - Backward compatible with previous minor versions
 - May include performance improvements
@@ -81,6 +88,7 @@ A minor release adds new features or capabilities in a backward-compatible manne
 - Documentation additions for new features
 
 ### When to Use
+
 - Adding new features that don't break existing APIs
 - Enhancing existing features with new options
 - Performance optimizations
@@ -88,6 +96,7 @@ A minor release adds new features or capabilities in a backward-compatible manne
 - Non-breaking improvements to user experience
 
 ### Requirements
+
 - **Planning Horizon**: 1-3 months
 - **Testing**: Standard regression suite + new feature testing
 - **Documentation**: Updates for new features and enhancements
@@ -96,14 +105,17 @@ A minor release adds new features or capabilities in a backward-compatible manne
 - **Monitoring**: Standard monitoring with focus on new features
 
 ### Risk Level
+
 **MEDIUM** - Requires careful testing but less risky than major releases
 
 ## Patch Release
 
 ### Definition
+
 A patch release addresses bugs, security vulnerabilities, or minor issues without adding new features. Increments the patch version number (e.g., 1.2.3 → 1.2.4).
 
 ### Characteristics
+
 - Fixes bugs without introducing new features
 - Backward compatible with same major.minor version
 - Can be applied quickly with minimal risk
@@ -111,6 +123,7 @@ A patch release addresses bugs, security vulnerabilities, or minor issues withou
 - Minimal documentation updates (changelog only)
 
 ### When to Use
+
 - Critical bug fixes
 - Security vulnerability patches
 - Performance regression fixes
@@ -118,6 +131,7 @@ A patch release addresses bugs, security vulnerabilities, or minor issues withou
 - Minor usability improvements
 
 ### Requirements
+
 - **Planning Horizon**: 1-2 weeks
 - **Testing**: Focused testing on affected areas + smoke tests
 - **Documentation**: Changelog and specific fix documentation
@@ -126,14 +140,17 @@ A patch release addresses bugs, security vulnerabilities, or minor issues withou
 - **Monitoring**: Focused on patched areas for 24-48 hours
 
 ### Risk Level
+
 **LOW to MEDIUM** - Depends on the scope and criticality of fixes
 
 ## Hotfix Release
 
 ### Definition
+
 An emergency release to address critical production issues, security vulnerabilities, or system outages. Follows expedited process.
 
 ### Characteristics
+
 - Addresses critical production issues immediately
 - Bypasses standard release procedures (with approval)
 - Minimal scope focused on the critical issue
@@ -141,6 +158,7 @@ An emergency release to address critical production issues, security vulnerabili
 - May be deployed outside normal release windows
 
 ### When to Use
+
 - Production outages affecting users
 - Critical security vulnerabilities being exploited
 - Data integrity issues
@@ -148,6 +166,7 @@ An emergency release to address critical production issues, security vulnerabili
 - Revenue-impacting bugs
 
 ### Requirements
+
 - **Planning Horizon**: Hours to days
 - **Testing**: Focused testing on critical fix + essential smoke tests
 - **Documentation**: Incident report and fix description
@@ -156,9 +175,11 @@ An emergency release to address critical production issues, security vulnerabili
 - **Monitoring**: Intensive monitoring for 24-72 hours
 
 ### Risk Level
+
 **HIGH** - Expedited process increases risk, but justified by severity
 
 ### Hotfix Process
+
 1. **Immediate Response**
    - Assess severity and impact
    - Assemble emergency response team
@@ -182,9 +203,11 @@ An emergency release to address critical production issues, security vulnerabili
 ## Release Candidate (RC)
 
 ### Definition
+
 A pre-release version that is feature-complete and potentially ready for production, pending final validation.
 
 ### Characteristics
+
 - Feature-complete for the intended release
 - Deployed to staging or pre-production environments
 - Subject to final UAT and stakeholder review
@@ -192,12 +215,14 @@ A pre-release version that is feature-complete and potentially ready for product
 - Code freeze in effect for the release branch
 
 ### When to Use
+
 - Before major or minor releases
 - For validation of significant changes
 - When extensive stakeholder testing is required
 - To validate deployment procedures
 
 ### Requirements
+
 - **Planning Horizon**: 1-2 weeks before target release
 - **Testing**: Full regression suite + UAT
 - **Documentation**: Complete and ready for review
@@ -206,14 +231,17 @@ A pre-release version that is feature-complete and potentially ready for product
 - **Monitoring**: Test environment monitoring
 
 ### Risk Level
+
 **LOW** - Pre-production release for validation purposes
 
 ## Beta Release
 
 ### Definition
+
 A pre-release version made available to a limited audience for testing and feedback before general availability.
 
 ### Characteristics
+
 - May contain known bugs or incomplete features
 - Deployed to select users or environments
 - Feedback collection mechanism in place
@@ -221,6 +249,7 @@ A pre-release version made available to a limited audience for testing and feedb
 - May have multiple beta phases (closed beta, open beta)
 
 ### When to Use
+
 - Testing new features with real users
 - Gathering feedback on usability
 - Performance testing at scale
@@ -228,6 +257,7 @@ A pre-release version made available to a limited audience for testing and feedb
 - Early adopter programs
 
 ### Requirements
+
 - **Planning Horizon**: Weeks to months
 - **Testing**: Standard testing completed, user testing in progress
 - **Documentation**: Beta program guidelines and known issues
@@ -236,14 +266,17 @@ A pre-release version made available to a limited audience for testing and feedb
 - **Monitoring**: Enhanced monitoring with feedback collection
 
 ### Risk Level
+
 **MEDIUM** - Limited audience reduces risk exposure
 
 ## Canary Release
 
 ### Definition
+
 A deployment strategy where changes are gradually rolled out to a small subset of users before full deployment.
 
 ### Characteristics
+
 - Deployed to a small percentage of production traffic
 - Gradual rollout based on metrics
 - Can be quickly rolled back if issues detected
@@ -251,12 +284,14 @@ A deployment strategy where changes are gradually rolled out to a small subset o
 - Full production environment
 
 ### When to Use
+
 - High-risk changes in production
 - Validating performance at scale
 - Testing new features with real users
 - Reducing blast radius of potential issues
 
 ### Requirements
+
 - **Planning Horizon**: Same as the target release type
 - **Testing**: Full testing completed before canary
 - **Documentation**: Standard release documentation
@@ -265,9 +300,11 @@ A deployment strategy where changes are gradually rolled out to a small subset o
 - **Monitoring**: Real-time monitoring with alerting
 
 ### Risk Level
+
 **LOW to MEDIUM** - Gradual rollout limits exposure
 
 ### Canary Process
+
 1. **Initial Deployment** - 1-5% of traffic
 2. **Monitor** - Watch key metrics for 1-24 hours
 3. **Gradual Increase** - 10% → 25% → 50% → 100%
@@ -277,9 +314,11 @@ A deployment strategy where changes are gradually rolled out to a small subset o
 ## Blue-Green Release
 
 ### Definition
+
 A deployment strategy where two identical production environments (blue and green) are maintained, with traffic switched between them.
 
 ### Characteristics
+
 - Two complete production environments
 - Instant traffic cutover between environments
 - Zero-downtime deployments
@@ -287,12 +326,14 @@ A deployment strategy where two identical production environments (blue and gree
 - Higher infrastructure costs
 
 ### When to Use
+
 - Zero-downtime requirements
 - Quick rollback capability needed
 - Database migrations that can be applied to both environments
 - Services with strict SLAs
 
 ### Requirements
+
 - **Planning Horizon**: Same as the target release type
 - **Testing**: Full testing in green environment before cutover
 - **Documentation**: Standard release documentation
@@ -301,14 +342,17 @@ A deployment strategy where two identical production environments (blue and gree
 - **Monitoring**: Both environments during transition period
 
 ### Risk Level
+
 **LOW** - Instant rollback capability significantly reduces risk
 
 ## Feature Flag Release
 
 ### Definition
+
 Deploying code with new features hidden behind feature flags, allowing gradual feature enablement without redeployment.
 
 ### Characteristics
+
 - Code deployed to production but features disabled
 - Features enabled gradually via configuration
 - Per-user or per-group feature enablement
@@ -316,6 +360,7 @@ Deploying code with new features hidden behind feature flags, allowing gradual f
 - No redeployment needed for feature rollout
 
 ### When to Use
+
 - Gradual feature rollouts
 - A/B testing scenarios
 - Features not ready for all users
@@ -323,6 +368,7 @@ Deploying code with new features hidden behind feature flags, allowing gradual f
 - Decoupling deployment from release
 
 ### Requirements
+
 - **Planning Horizon**: Same as code deployment
 - **Testing**: Testing with flags on and off
 - **Documentation**: Feature flag configuration guide
@@ -331,14 +377,17 @@ Deploying code with new features hidden behind feature flags, allowing gradual f
 - **Monitoring**: Per-feature metrics and monitoring
 
 ### Risk Level
+
 **LOW** - Feature can be disabled without redeployment
 
 ## Emergency Maintenance Release
 
 ### Definition
+
 A scheduled maintenance window for critical updates that require downtime or system unavailability.
 
 ### Characteristics
+
 - Scheduled downtime communicated in advance
 - May include database migrations or system reconfigurations
 - Requires coordination with stakeholders
@@ -346,6 +395,7 @@ A scheduled maintenance window for critical updates that require downtime or sys
 - Runbook prepared for maintenance activities
 
 ### When to Use
+
 - Database schema changes requiring downtime
 - Infrastructure upgrades
 - Security patches requiring system restart
@@ -353,6 +403,7 @@ A scheduled maintenance window for critical updates that require downtime or sys
 - Third-party system maintenance dependencies
 
 ### Requirements
+
 - **Planning Horizon**: 1-2 weeks notice minimum
 - **Testing**: Full testing in staging with same maintenance procedures
 - **Documentation**: Maintenance runbook and communication plan
@@ -361,6 +412,7 @@ A scheduled maintenance window for critical updates that require downtime or sys
 - **Monitoring**: Intensive monitoring during and after maintenance
 
 ### Risk Level
+
 **MEDIUM to HIGH** - Downtime and system changes increase risk
 
 ## Release Type Selection Guide
@@ -382,6 +434,7 @@ A scheduled maintenance window for critical updates that require downtime or sys
 ## Version Numbering by Release Type
 
 **Semantic Versioning (MAJOR.MINOR.PATCH):**
+
 - **Major Release**: Increment MAJOR (1.2.3 → 2.0.0)
 - **Minor Release**: Increment MINOR (1.2.3 → 1.3.0)
 - **Patch Release**: Increment PATCH (1.2.3 → 1.2.4)
@@ -394,16 +447,19 @@ A scheduled maintenance window for critical updates that require downtime or sys
 Multiple strategies can be combined for complex releases:
 
 **Example 1: Major Release with Canary**
+
 - Deploy major version as canary
 - Gradual rollout to minimize risk
 - Monitor before full deployment
 
 **Example 2: Minor Release with Feature Flags**
+
 - Deploy code with features disabled
 - Enable features gradually post-deployment
 - A/B test new capabilities
 
 **Example 3: Patch Release with Blue-Green**
+
 - Zero-downtime patch deployment
 - Instant rollback if issues detected
 - Maintain SLA during patching

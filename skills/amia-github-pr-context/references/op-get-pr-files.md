@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Get PR Files
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -114,6 +113,7 @@ python3 amia_get_pr_files.py --pr <NUMBER>
 ### Step 3: Analyze File Distribution
 
 Categorize files for review planning:
+
 - By directory/module
 - By file type
 - By change magnitude
@@ -167,6 +167,7 @@ python3 amia_get_pr_files.py --pr 123 | jq -r '.[].filename' | cut -d'/' -f1-2 |
 ```
 
 Output:
+
 ```
   3 src/auth
   2 src/db
@@ -180,6 +181,7 @@ python3 amia_get_pr_files.py --pr 123 | jq -r '.[].filename' | rev | cut -d'.' -
 ```
 
 Output:
+
 ```
   7 py
   2 md
@@ -232,6 +234,7 @@ python3 amia_get_pr_files.py --pr 123 --include-patch
 ## Large PRs (>100 files)
 
 For very large PRs:
+
 1. GitHub API paginates at 100 files
 2. Script handles pagination automatically
 3. Consider requesting PR be split if >100 files

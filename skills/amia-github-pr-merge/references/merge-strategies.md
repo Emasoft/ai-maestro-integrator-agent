@@ -52,6 +52,7 @@ The merge commit strategy creates a new commit that joins the PR branch into the
 **GraphQL merge method value**: `MERGE`
 
 **CLI command:**
+
 ```bash
 gh pr merge 123 --merge
 ```
@@ -59,6 +60,7 @@ gh pr merge 123 --merge
 ### 2.1.2 Commit History Implications
 
 **Advantages:**
+
 - Full development history preserved
 - Clear visibility of what was merged and when
 - Easy to revert entire feature with single revert
@@ -66,12 +68,14 @@ gh pr merge 123 --merge
 - Bisect works across all commits
 
 **Disadvantages:**
+
 - Non-linear history can be harder to read
 - Many small/fixup commits visible in main branch
 - "Merge commit" noise in history
 - Can make `git log --oneline` cluttered
 
 **History shape:**
+
 ```
 main:    A---B---C---M---E
               \     /
@@ -105,6 +109,7 @@ The squash merge strategy combines all PR commits into a single commit on the ba
 **GraphQL merge method value**: `SQUASH`
 
 **CLI command:**
+
 ```bash
 gh pr merge 123 --squash
 ```
@@ -175,6 +180,7 @@ The rebase merge strategy replays each PR commit on top of the base branch, crea
 **GraphQL merge method value**: `REBASE`
 
 **CLI command:**
+
 ```bash
 gh pr merge 123 --rebase
 ```
@@ -182,6 +188,7 @@ gh pr merge 123 --rebase
 ### 2.3.2 Linear History Benefits
 
 **Advantages:**
+
 - Perfectly linear history (no merge commits)
 - Each commit preserves its message and author
 - Easy to read `git log --oneline`
@@ -189,12 +196,14 @@ gh pr merge 123 --rebase
 - Cherry-pick individual commits easily
 
 **Disadvantages:**
+
 - New commit SHAs created (original SHAs lost)
 - Can't easily identify "this feature was merged as one unit"
 - If PR had conflicts resolved, resolution may need re-application
 - Pre-merge CI ran on different SHAs than final commits
 
 **History shape:**
+
 ```
 Before:
 main:    A---B---C
@@ -209,6 +218,7 @@ main:    A---B---C---D'---E'
 **Important note on SHAs:**
 
 The rebased commits have different SHAs than the original PR commits. This means:
+
 - References to original commit SHAs won't work
 - CI that ran on PR won't match final commits
 - Any downstream branches based on PR will diverge
@@ -253,6 +263,7 @@ query {
 Branch protection can require a minimum number of approving reviews.
 
 **Review requirements:**
+
 - Minimum number of approvals (1, 2, 3, etc.)
 - CODEOWNERS approval
 - Dismiss stale reviews on new commits
@@ -277,6 +288,7 @@ query {
 ```
 
 **Review decision values:**
+
 - `APPROVED`: Has required approvals
 - `CHANGES_REQUESTED`: Has unaddressed change requests
 - `REVIEW_REQUIRED`: Waiting for required reviews
@@ -299,6 +311,7 @@ gh api repos/{owner}/{repo} --jq '{
 **Branch protection can further restrict:**
 
 Some organizations use branch protection to enforce specific merge methods for different branches:
+
 - `main`: Squash only for clean history
 - `develop`: Merge commits allowed for feature tracking
 - `release/*`: Merge commits for audit trail
@@ -321,10 +334,12 @@ Some organizations use branch protection to enforce specific merge methods for d
 GitHub can automatically delete the PR branch after merge.
 
 **Repository setting:**
+
 - Settings > General > "Automatically delete head branches"
 - When enabled, PR branches are deleted immediately after merge
 
 **Benefits:**
+
 - Keeps repository clean
 - No stale branches accumulating
 - Clear signal that work is complete
@@ -377,6 +392,7 @@ query {
 ```
 
 **When NOT to delete branches:**
+
 - Release branches that may need hotfixes
 - Long-lived development branches
 - Branches used by other PRs as base

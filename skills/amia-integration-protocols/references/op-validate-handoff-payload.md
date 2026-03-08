@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Validate Handoff Payload
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -65,6 +64,7 @@ fi
 ### Step 2: Check required fields
 
 Required fields:
+
 - `handoff_type`
 - `from_agent`
 - `to_agent`

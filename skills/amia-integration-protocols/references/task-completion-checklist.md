@@ -25,12 +25,14 @@
 STOP and verify ALL of the following:
 
 ### 1. Acceptance Criteria Met
+
 - [ ] ALL acceptance criteria from task definition satisfied
 - [ ] Evidence documented for each criterion
 - [ ] No "partial" or "mostly" completions
 - [ ] Integration endpoints verified working
 
 ### 2. Quality Gates Passed
+
 - [ ] Linting passed (ruff check, eslint)
 - [ ] Type checking passed (mypy, pyright)
 - [ ] Tests pass (pytest, jest)
@@ -38,6 +40,7 @@ STOP and verify ALL of the following:
 - [ ] API contracts validated
 
 ### 3. Integration Verification
+
 - [ ] All API endpoints tested with real requests
 - [ ] Authentication flows verified
 - [ ] Error responses match expected format
@@ -47,6 +50,7 @@ STOP and verify ALL of the following:
 - [ ] Data transformation validated both directions
 
 ### 4. Documentation Updated
+
 - [ ] Code comments explain WHY (not just what)
 - [ ] README updated if behavior changed
 - [ ] CHANGELOG entry added (if applicable)
@@ -54,18 +58,21 @@ STOP and verify ALL of the following:
 - [ ] Integration diagrams updated (if applicable)
 
 ### 5. Handoff Prepared
+
 - [ ] Handoff document written to docs_dev/handoffs/
 - [ ] Next steps clearly defined
 - [ ] AI Maestro message queued
 - [ ] Integration credentials documented (secure location)
 
 ### 6. GitHub Updated (if applicable)
+
 - [ ] PR created/updated with description
 - [ ] Issue comments added with progress
 - [ ] Labels updated to reflect status
 - [ ] Projects board item moved
 
 ### 7. Session Memory Updated
+
 - [ ] activeContext.md reflects completed work
 - [ ] progress.md has completion entry
 - [ ] patterns.md captures any new learnings
@@ -137,6 +144,7 @@ Before declaring ANY integration task complete:
 ## Integration-Specific Verification
 
 ### API Integrations
+
 - [ ] Tested with valid credentials
 - [ ] Tested with invalid credentials (should fail gracefully)
 - [ ] Tested with expired credentials (should fail gracefully)
@@ -144,12 +152,14 @@ Before declaring ANY integration task complete:
 - [ ] Pagination handling verified (if applicable)
 
 ### Webhook Integrations
+
 - [ ] Webhook receives payloads correctly
 - [ ] Signature verification works
 - [ ] Idempotency handling tested
 - [ ] Retry handling tested
 
 ### Database Integrations
+
 - [ ] Connection pooling configured
 - [ ] Timeout handling verified
 - [ ] Transaction handling tested

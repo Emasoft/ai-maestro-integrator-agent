@@ -1,6 +1,5 @@
 # Operation: Classify Work Needed
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -14,9 +13,13 @@
 - [Example](#example)
 
 ---
+
+```yaml
 procedure: proc-request-pr-review
 workflow-instruction: Step 20 - PR Review Request
 operation-id: op-classify-work
+```
+
 ---
 
 ## Purpose
@@ -38,16 +41,19 @@ Analyze a PR and determine what type of work is required to move it forward.
 ## Steps
 
 1. **Get PR status details**:
+
    ```bash
    gh pr view <PR_NUMBER> --json state,reviewDecision,statusCheckRollup,mergeable,isDraft
    ```
 
 2. **Check review status**:
+
    ```bash
    gh pr view <PR_NUMBER> --json reviews --jq '.reviews[] | {state: .state, author: .author.login}'
    ```
 
 3. **Check CI status**:
+
    ```bash
    gh pr checks <PR_NUMBER>
    ```

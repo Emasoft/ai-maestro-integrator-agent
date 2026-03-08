@@ -20,17 +20,20 @@
 **Symptom:** Stop hook blocks exit but work is actually complete.
 
 **Diagnosis:**
+
 ```bash
 # Check what stop hook sees
 python3 scripts/amia_kanban_check_completion.py OWNER REPO PROJECT_NUMBER
 ```
 
 **Cause:**
+
 - Board not updated after merge
 - Item stuck in wrong status
 - Orphaned items
 
 **Solution:**
+
 1. Update board to reflect reality
 2. Or use manual override if verified complete
 
@@ -39,11 +42,13 @@ python3 scripts/amia_kanban_check_completion.py OWNER REPO PROJECT_NUMBER
 **Symptom:** Can exit with incomplete work (stop hook not running).
 
 **Diagnosis:**
+
 - Check hook configuration
 - Verify hook script is executable
 - Check hook logs
 
 **Solution:**
+
 ```bash
 # Verify hook is configured
 cat .claude/plugins/integrator-agent/hooks/hooks.json | jq '.hooks.Stop'
@@ -60,10 +65,12 @@ chmod +x scripts/stop_hook.sh
 **Symptom:** Stop hook takes too long, times out.
 
 **Diagnosis:**
+
 - Check network connectivity
 - Check API rate limits
 
 **Solution:**
+
 - Increase timeout in configuration
 - Cache board state for faster checks
 
@@ -164,6 +171,7 @@ When automation fails, manual fix via GitHub UI:
 4. Verify issue states match
 
 Document all manual fixes:
+
 ```bash
 gh issue comment 42 --body "Manual fix: Moved to Done column after PR merge automation failed."
 ```

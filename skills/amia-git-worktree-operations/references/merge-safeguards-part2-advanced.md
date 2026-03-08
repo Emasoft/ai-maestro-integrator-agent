@@ -221,6 +221,7 @@ done
 ### Issue: Rebase Fails with Conflicts
 
 **Symptom:**
+
 ```bash
 python skills/amia-git-worktree-operations/scripts/merge_safeguard.py \
     --rebase worktrees/feature-auth
@@ -229,6 +230,7 @@ python skills/amia-git-worktree-operations/scripts/merge_safeguard.py \
 ```
 
 **Solution:**
+
 ```bash
 cd worktrees/feature-auth
 
@@ -245,12 +247,14 @@ python ../scripts/merge_safeguard.py --validate .
 ### Issue: Validation Shows "Behind Remote"
 
 **Symptom:**
+
 ```
 ✗ Validation failed for feature-auth:
   - Branch is 2 commits behind remote
 ```
 
 **Solution:**
+
 ```bash
 cd worktrees/feature-auth
 git pull --rebase
@@ -259,12 +263,14 @@ git pull --rebase
 ### Issue: Multiple Conflicting Files
 
 **Symptom:**
+
 ```
 File Conflicts:
   src/api.py: modified in feature-A, feature-B, feature-C
 ```
 
 **Solution:**
+
 ```bash
 # Merge in sequence, rebase between each
 # 1. Merge feature-A

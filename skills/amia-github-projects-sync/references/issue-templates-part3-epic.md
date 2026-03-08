@@ -135,6 +135,7 @@ Objectives:
 ```
 
 **Best practices**:
+
 - Use measurable outcomes when possible
 - Align with business goals
 - Consider non-functional requirements
@@ -142,6 +143,7 @@ Objectives:
 ### Sub-Issues Breakdown
 
 Use checkbox format for tracking:
+
 ```markdown
 - [ ] User registration endpoint
 - [ ] Email verification flow
@@ -151,6 +153,7 @@ Use checkbox format for tracking:
 ```
 
 **Guidelines**:
+
 - Each sub-issue should be completable in 1-3 days
 - Create actual issues from this list after epic approval
 - Link sub-issues back to the epic
@@ -170,6 +173,7 @@ Define completion conditions:
 ```
 
 **Types of criteria**:
+
 - Technical: tests, coverage, performance
 - Process: reviews, audits, documentation
 - Business: stakeholder approval, metrics
@@ -177,6 +181,7 @@ Define completion conditions:
 ### Dependencies and Risks
 
 **Dependencies format**:
+
 ```markdown
 Prerequisites:
 - Database schema finalized (#5)
@@ -189,6 +194,7 @@ External dependencies:
 ```
 
 **Risks format**:
+
 ```markdown
 Technical risks:
 - OAuth provider rate limits

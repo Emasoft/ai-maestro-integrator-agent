@@ -180,26 +180,31 @@ golangci-lint run --fix ./...    # Auto-fix issues
 Use this combined checklist for comprehensive Go code reviews:
 
 ### Style
+
 - [ ] Code formatted with gofmt/goimports
 - [ ] Naming conventions followed
 - [ ] No stuttering (package.PackageThing)
 
 ### Errors
+
 - [ ] All errors checked
 - [ ] Errors wrapped with context (%w)
 - [ ] No panic for recoverable errors
 
 ### Packages
+
 - [ ] Clear package purposes
 - [ ] No circular dependencies
 - [ ] Imports grouped and sorted
 
 ### Tests
+
 - [ ] Table-driven tests used
 - [ ] t.Helper() in helpers
 - [ ] Race detector passes
 
 ### Linting
+
 - [ ] go vet passes
 - [ ] staticcheck passes
 - [ ] Doc comments on exports

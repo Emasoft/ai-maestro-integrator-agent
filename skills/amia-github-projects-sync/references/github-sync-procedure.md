@@ -30,11 +30,13 @@
 Before performing any GitHub synchronization operations, you must verify authentication:
 
 1. **Check current authentication status**:
+
    ```bash
    gh auth status
    ```
 
 2. **If not authenticated, log in**:
+
    ```bash
    gh auth login
    ```
@@ -44,6 +46,7 @@ Before performing any GitHub synchronization operations, you must verify authent
    - Verify that the authenticated account has access to the target repository
 
 **Authentication is required for:**
+
 - Querying GitHub Projects V2 via GraphQL
 - Reading and updating issue labels
 - Modifying issue bodies
@@ -63,11 +66,13 @@ export GH_REPO_NAME="your-repo"
 ```
 
 **Verify project configuration**:
+
 ```bash
 gh project list --owner ${GH_REPO_OWNER}
 ```
 
 **Verification checkpoint**:
+
 - Confirm the project appears in the list with the correct number
 - Verify the project name matches expectations
 
@@ -85,6 +90,7 @@ Use GitHub's GraphQL API to fetch project board data with all necessary metadata
    - Label assignments
 
 **Verification checkpoint**:
+
 - Confirm JSON response contains expected fields (`issues`, `fields`, `items`)
 - Validate that issue count matches expected project size
 
@@ -129,11 +135,13 @@ query {
 Parse the response to extract:
 
 **Labels** (classification system):
+
 - **Priority**: `priority:critical`, `priority:high`, `priority:normal`, `priority:low`
 - **Status**: `status:backlog`, `status:todo`, `status:in-progress`, `status:ai-review`, `status:human-review`, `status:merge-release`, `status:blocked`, `status:done`
 - **Type**: `type:feature`, `type:bug`, `type:refactor`, `type:docs`
 
 **Custom fields**:
+
 - Extract field values from Project V2 custom field schema
 - Map custom fields to corresponding labels
 - Validate field values before processing
@@ -162,6 +170,7 @@ After extracting all GitHub state:
 3. **Log all updates** for audit trail
 
 **Verification checkpoint**:
+
 - Confirm issue count in project matches local state
 - Verify all labels were correctly parsed
 - Check that task completion percentages are accurate
@@ -182,6 +191,7 @@ Query the orchestrator's internal state to identify changes:
    - Priority or type changes
 
 **Verification checkpoint**:
+
 - Log all pending changes before applying them
 - Confirm each change has a corresponding GitHub issue number
 
@@ -210,6 +220,7 @@ gh issue edit <issue_number> --remove-label "status:todo"
 ```
 
 **Batch operations**:
+
 - Group label updates to minimize API calls
 - Apply changes in priority order (status → priority → type)
 
@@ -222,6 +233,7 @@ When task checklist state changes locally:
 3. **Write updated body** via `gh issue edit`
 
 **Task syntax format**:
+
 ```markdown
 - [ ] Pending task
 - [x] Completed task
@@ -251,6 +263,7 @@ mutation {
 ```
 
 **Verification checkpoint**:
+
 - Query updated issues to verify changes persisted
 - Confirm issues moved to correct columns on project board
 
@@ -301,11 +314,13 @@ GitHub Projects V2 supports custom fields that can be mapped to labels:
 ### Bidirectional Sync Process
 
 **GitHub → Local**:
+
 1. Query custom field values via GraphQL
 2. Map field values to labels
 3. Update local task tracking
 
 **Local → GitHub**:
+
 1. Read local label changes
 2. Convert to custom field updates
 3. Execute GraphQL mutations to update fields
@@ -313,6 +328,7 @@ GitHub Projects V2 supports custom fields that can be mapped to labels:
 ### Field Validation
 
 Before pushing updates:
+
 1. Validate field value against schema
 2. Check required fields are populated
 3. Verify data types match field definitions
@@ -341,6 +357,7 @@ Use Claude Code's TaskList API to synchronize task checklists:
 ### Task Parsing
 
 When reading issue bodies:
+
 1. Validate task syntax with TaskList API before processing
 2. Log unparseable issues for manual review
 3. Provide clear error messages in sync report
@@ -361,6 +378,7 @@ Implement robust error handling to maintain data integrity:
 ### Conflict Logging
 
 When sync conflicts occur:
+
 1. **Log conflict details** to sync report
 2. **Preserve conflicting data** for manual review
 3. **Do not overwrite** GitHub data automatically
@@ -368,6 +386,7 @@ When sync conflicts occur:
 ### Data Validation
 
 Before applying updates:
+
 1. Validate data format and structure
 2. Check required fields are present
 3. Verify API response success status
@@ -375,6 +394,7 @@ Before applying updates:
 ### Error Preservation
 
 On errors:
+
 1. **Preserve data integrity** - do not partially commit changes
 2. **Roll back local state** if GitHub update fails
 3. **Generate detailed error report** with recovery steps
@@ -403,6 +423,7 @@ After every sync operation, generate a comprehensive report:
 Write sync logs to: `docs_dev/github-sync-YYYYMMDD-HHMMSS.log`
 
 **Verification checkpoint**:
+
 - Confirm log file exists and contains timestamp
 - Verify all operations are logged with status
 
@@ -411,17 +432,20 @@ Write sync logs to: `docs_dev/github-sync-YYYYMMDD-HHMMSS.log`
 Return minimal status (1-3 lines max):
 
 **Success**:
+
 ```
 [DONE] github-sync - synced 12 issues (5→GitHub, 7→Local), 0 conflicts
 Details: docs_dev/github-sync-20250131-143022.log
 ```
 
 **Failure**:
+
 ```
 [FAILED] github-sync - sync error: <brief_error_reason>
 ```
 
 **Conflicts**:
+
 ```
 [DONE] github-sync - synced with N conflicts, see docs_dev/github-sync-YYYYMMDD-HHMMSS.log
 ```
@@ -435,15 +459,19 @@ Details: docs_dev/github-sync-20250131-143022.log
 **Problem**: GitHub API returns 403 with rate limit exceeded message.
 
 **Solutions**:
+
 1. **Add delays** between batch operations (minimum 1 second)
 2. **Use GraphQL batching** to reduce request count
 3. **Check remaining quota**:
+
    ```bash
    gh api rate-limit
    ```
+
 4. **Implement request throttling** with exponential backoff
 
 **Rate limits**:
+
 - REST API: 5000 requests/hour (authenticated)
 - GraphQL API: 5000 points/hour (query cost varies)
 
@@ -452,6 +480,7 @@ Details: docs_dev/github-sync-20250131-143022.log
 **Problem**: Multiple labels from the same category applied to an issue.
 
 **Solutions**:
+
 1. **Implement priority rules** for competing labels:
    - Status: `done` > `merge-release` > `human-review` > `ai-review` > `in-progress` > `todo` > `backlog` (and `blocked` is orthogonal)
    - Priority: `critical` > `high` > `normal` > `low`
@@ -460,6 +489,7 @@ Details: docs_dev/github-sync-20250131-143022.log
 4. **Log conflicts** in sync report for manual review
 
 **Prevention**:
+
 - Validate labels before applying
 - Remove conflicting labels before adding new ones
 
@@ -468,17 +498,20 @@ Details: docs_dev/github-sync-20250131-143022.log
 **Problem**: Issue body contains malformed task checklist syntax.
 
 **Solutions**:
+
 1. **Validate task syntax** with TaskList API before processing
 2. **Log unparseable issues** to sync report with issue numbers
 3. **Provide clear error messages** indicating syntax problems
 4. **Skip malformed tasks** and continue with remaining tasks
 
 **Common syntax errors**:
+
 - Missing `[ ]` or `[x]` markers
 - Incorrect indentation for nested tasks
 - Special characters breaking Markdown parsing
 
 **Validation process**:
+
 1. Test parse issue body with TaskList API
 2. If parse fails, log error and skip task extraction
 3. Continue sync operation with remaining valid tasks

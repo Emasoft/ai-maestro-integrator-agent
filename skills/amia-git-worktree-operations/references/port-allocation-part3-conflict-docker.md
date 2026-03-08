@@ -14,11 +14,13 @@
 #### 1. Port Already in Use by System
 
 **Problem:**
+
 ```bash
 ERROR: Port 8080 is already in use by another process
 ```
 
 **How to detect:**
+
 ```bash
 # Check what's using the port
 lsof -i :8080
@@ -27,6 +29,7 @@ netstat -an | grep 8080
 ```
 
 **Solution:**
+
 ```bash
 # Option 1: Stop the conflicting process
 kill <PID>
@@ -44,6 +47,7 @@ eia port config --web-range 8100-8199
 Registry says port is free, but it's actually in use.
 
 **Symptoms:**
+
 ```bash
 $ eia worktree create feature-new
 Allocated port 8081
@@ -51,6 +55,7 @@ ERROR: Port 8081 already in use
 ```
 
 **Solution:**
+
 ```bash
 # Scan all ports and rebuild registry
 eia port scan-rebuild
@@ -64,11 +69,13 @@ eia port scan-rebuild
 #### 3. Port Range Exhausted
 
 **Problem:**
+
 ```bash
 ERROR: No available ports in web range (8080-8099)
 ```
 
 **Solution:**
+
 ```bash
 # Option 1: Expand the range
 eia port config --web-range 8080-8199
@@ -88,6 +95,7 @@ eia port compact
 Worktree was deleted manually (not via eia), ports still marked as used.
 
 **Solution:**
+
 ```bash
 # List all allocated ports
 eia port list
@@ -105,6 +113,7 @@ eia port cleanup
 ### Automatic Conflict Resolution
 
 **Enable auto-resolution:**
+
 ```bash
 # In .git/worktree-registry/config.json
 {
@@ -130,6 +139,7 @@ When running services in Docker containers, you need to map container ports to h
 ### Docker Compose Template
 
 **File: `docker-compose.worktree.template.yml`**
+
 ```yaml
 version: '3.8'
 

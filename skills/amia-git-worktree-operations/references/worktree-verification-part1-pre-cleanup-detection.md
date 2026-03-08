@@ -93,6 +93,7 @@ git -C /path/to/main-repo status --porcelain
 ### The Isolation Violation Problem
 
 When agents write files outside their assigned worktree:
+
 - Changes appear in wrong branch
 - Commits contain unrelated changes
 - PR reviews fail

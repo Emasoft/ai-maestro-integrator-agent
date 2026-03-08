@@ -32,16 +32,19 @@ Clean up a worktree when ANY of these conditions are met:
 ### Timing Considerations
 
 **Clean up IMMEDIATELY when:**
+
 - PR is merged and branch deleted on remote
 - PR is closed/rejected
 - Sensitive data was in the worktree
 
 **Clean up SOON when:**
+
 - Work is complete and pushed
 - Agent has moved to different task
 - Worktree hasn't been used for days
 
 **Delay cleanup when:**
+
 - PR is pending review (might need changes)
 - Tests are still running
 - Waiting for CI/CD results
@@ -71,6 +74,7 @@ git status --porcelain
 ```
 
 **Interpreting output:**
+
 - Empty output: Clean, safe to remove
 - Any output: Has uncommitted changes, do NOT remove
 
@@ -118,6 +122,7 @@ echo "OK: Worktree is clean"
 ### What to Do with Uncommitted Changes
 
 **Option 1: Commit and push them**
+
 ```bash
 git add -A
 git commit -m "Final changes before cleanup"
@@ -125,6 +130,7 @@ git push origin pr-123
 ```
 
 **Option 2: Discard them (if truly unwanted)**
+
 ```bash
 # WARNING: This permanently discards changes
 git checkout -- .
@@ -132,12 +138,14 @@ git clean -fd
 ```
 
 **Option 3: Stash them (if unsure)**
+
 ```bash
 git stash save "Stashed before worktree cleanup"
 # Note: Stash is accessible from main repo
 ```
 
 **Option 4: Move changes to main repo (rare)**
+
 ```bash
 # Create patch
 git diff > /tmp/changes.patch

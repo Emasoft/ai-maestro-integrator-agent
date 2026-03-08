@@ -1,6 +1,7 @@
 # Backward Compatibility Review
 
 ## Table of Contents
+
 - When reviewing API compatibility → Verification Checklist: API Compatibility
 - If you need to verify data compatibility → Verification Checklist: Data Compatibility
 - When checking behavioral compatibility → Verification Checklist: Behavioral Compatibility
@@ -11,11 +12,13 @@
 - If you suspect breaking changes → Common Issues to Look For
 
 ## Purpose
+
 Identify breaking changes and ensure modifications maintain compatibility with existing code, APIs, and client integrations.
 
 ## Verification Checklist
 
 ### API Compatibility
+
 - [ ] Public API signatures unchanged
 - [ ] No removed public methods
 - [ ] No removed public properties
@@ -26,6 +29,7 @@ Identify breaking changes and ensure modifications maintain compatibility with e
 - [ ] Required parameters remain required
 
 ### Data Compatibility
+
 - [ ] Database schema changes backward compatible
 - [ ] Data migrations preserve existing data
 - [ ] File format changes versioned
@@ -35,6 +39,7 @@ Identify breaking changes and ensure modifications maintain compatibility with e
 - [ ] Protocol versions maintained
 
 ### Behavioral Compatibility
+
 - [ ] Function behavior consistent
 - [ ] Error conditions unchanged
 - [ ] Side effects preserved
@@ -44,6 +49,7 @@ Identify breaking changes and ensure modifications maintain compatibility with e
 - [ ] Validation rules consistent
 
 ### Deprecation Strategy
+
 - [ ] Deprecated features clearly marked
 - [ ] Deprecation warnings added
 - [ ] Migration path documented
@@ -53,6 +59,7 @@ Identify breaking changes and ensure modifications maintain compatibility with e
 - [ ] Removal plan scheduled
 
 ### Versioning
+
 - [ ] Semantic versioning followed
 - [ ] Version numbers updated correctly
 - [ ] Breaking changes in major version
@@ -62,6 +69,7 @@ Identify breaking changes and ensure modifications maintain compatibility with e
 - [ ] Changelog maintained
 
 ### Client Impact
+
 - [ ] Existing client code continues working
 - [ ] Client migrations not required
 - [ ] Client dependencies compatible
@@ -71,6 +79,7 @@ Identify breaking changes and ensure modifications maintain compatibility with e
 - [ ] Partner APIs compatible
 
 ### Documentation
+
 - [ ] Breaking changes documented
 - [ ] Migration guide provided
 - [ ] Changelog updated
@@ -84,6 +93,7 @@ Identify breaking changes and ensure modifications maintain compatibility with e
 ### Breaking API Changes
 
 **Removing parameters**
+
 ```python
 # WRONG: Breaking change - removed parameter
 # v1.0
@@ -106,6 +116,7 @@ def process_order(order_id, user_id=None, options=None):
 ```
 
 **Changing parameter order**
+
 ```python
 # WRONG: Breaking change - parameter order
 # v1.0
@@ -123,6 +134,7 @@ def create_user(name, email, age, phone=None):  # New param at end
 ```
 
 **Changing return types**
+
 ```python
 # WRONG: Breaking change - return type
 # v1.0
@@ -144,6 +156,7 @@ def get_users_detailed() -> dict:
 ```
 
 **Making parameters required**
+
 ```python
 # WRONG: Breaking change - new required parameter
 # v1.0
@@ -163,6 +176,7 @@ def send_email(to, subject, body, priority="normal"):  # Optional
 ### Breaking Data Changes
 
 **Schema changes without migration**
+
 ```python
 # WRONG: Breaking change - renamed column
 # v1.0
@@ -186,6 +200,7 @@ class User:
 ```
 
 **File format changes**
+
 ```python
 # WRONG: Breaking change - incompatible format
 # v1.0
@@ -221,6 +236,7 @@ def load_config():
 ### Breaking Behavioral Changes
 
 **Changed error conditions**
+
 ```python
 # WRONG: Breaking change - different exceptions
 # v1.0
@@ -244,6 +260,7 @@ def get_user(user_id):
 ```
 
 **Changed side effects**
+
 ```python
 # WRONG: Breaking change - removed side effect
 # v1.0
@@ -272,6 +289,7 @@ def update_user(user_id, data):
 ### Poor Deprecation
 
 **No warning**
+
 ```python
 # WRONG: Removing without deprecation
 # v1.0
@@ -302,6 +320,7 @@ def new_method():
 ```
 
 **No migration path**
+
 ```python
 # WRONG: Deprecate without alternative
 @deprecated("This method is deprecated")
@@ -323,6 +342,7 @@ def process_v2():
 ### Versioning Issues
 
 **Wrong version bump**
+
 ```python
 # WRONG: Breaking change in minor version
 # v1.5.0
@@ -346,6 +366,7 @@ def get_data() -> dict:
 ## Scoring Criteria
 
 ### Critical (Must Fix)
+
 - Breaking API changes in minor/patch version
 - Removed public methods without deprecation
 - Changed return types without migration
@@ -355,6 +376,7 @@ def get_data() -> dict:
 - Breaking changes without documentation
 
 ### High Priority (Should Fix)
+
 - Changed parameter order
 - New required parameters
 - Removed deprecated features without grace period
@@ -364,6 +386,7 @@ def get_data() -> dict:
 - Inadequate deprecation warnings
 
 ### Medium Priority (Consider Fixing)
+
 - Deprecation without clear timeline
 - Missing upgrade documentation
 - Version number inconsistencies
@@ -373,6 +396,7 @@ def get_data() -> dict:
 - Unclear migration guides
 
 ### Low Priority (Nice to Have)
+
 - Enhanced deprecation messages
 - Additional migration examples
 - Better version documentation
@@ -416,6 +440,7 @@ def get_data() -> dict:
 ### API Evolution Patterns
 
 **Additive changes only**
+
 ```python
 # Safe: Add new optional parameters
 def process(data, format='json', validate=True):
@@ -423,6 +448,7 @@ def process(data, format='json', validate=True):
 ```
 
 **Facade for compatibility**
+
 ```python
 # Old API (deprecated)
 def old_api(x, y):
@@ -435,6 +461,7 @@ def new_api(x, y, z=None):
 ```
 
 **Version-specific endpoints**
+
 ```python
 # Multiple API versions
 @app.route('/v1/users')
@@ -449,6 +476,7 @@ def get_users_v2():
 ### Data Migration Patterns
 
 **Multi-phase migration**
+
 ```python
 # Phase 1: Add new column
 ALTER TABLE users ADD COLUMN email_address VARCHAR(255);
@@ -462,6 +490,7 @@ ALTER TABLE users DROP COLUMN email;
 ```
 
 **Read both, write new**
+
 ```python
 def get_config():
     # Read from new location, fall back to old

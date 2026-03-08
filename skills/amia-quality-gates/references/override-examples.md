@@ -29,6 +29,7 @@ Gate overrides are **exceptions to normal quality gate enforcement**. This docum
 **Override Authority**: Project Maintainer
 
 **Override Documentation**:
+
 ```markdown
 **GATE OVERRIDE**
 
@@ -57,6 +58,7 @@ Gate overrides are **exceptions to normal quality gate enforcement**. This docum
 ```
 
 **Commands**:
+
 ```bash
 # Apply override label
 gh pr edit 123 --add-label "gate:override-applied"
@@ -79,6 +81,7 @@ gh pr merge 123 --squash
 **Override Authority**: Senior Reviewer
 
 **Override Documentation**:
+
 ```markdown
 **GATE OVERRIDE**
 
@@ -119,6 +122,7 @@ gh pr merge 123 --squash
 ```
 
 **Note**: This override is acceptable because:
+
 - Non-security issue
 - Senior reviewer has authority
 - Functional code quality is high
@@ -135,6 +139,7 @@ gh pr merge 123 --squash
 **Override Authority**: AMOA
 
 **Override Documentation**:
+
 ```markdown
 **GATE OVERRIDE**
 
@@ -170,6 +175,7 @@ gh pr merge 123 --squash
 ```
 
 **Note**: Infrastructure outages are valid override reasons when:
+
 - Outage is confirmed external
 - Manual verification completed
 - Risk is assessed as acceptable
@@ -186,6 +192,7 @@ gh pr merge 123 --squash
 **Override Request**: Author requests override for urgent feature launch
 
 **REJECTION Documentation**:
+
 ```markdown
 **GATE OVERRIDE REQUEST: REJECTED**
 
@@ -229,6 +236,7 @@ Per quality gate policy:
 **Override Authority**: Original Reviewer
 
 **Override Documentation**:
+
 ```markdown
 **GATE OVERRIDE**
 
@@ -264,6 +272,7 @@ Per quality gate policy:
 ```
 
 **Note**: Stale approval overrides acceptable when:
+
 - Original reviewer verifies new changes
 - Changes are trivial (docs, formatting, comments)
 - No functional code modified
@@ -280,6 +289,7 @@ Per quality gate policy:
 **Decision**: REVERT (override not applicable)
 
 **Response Documentation**:
+
 ```markdown
 🚨 **POST-MERGE GATE FAILED**
 
@@ -338,6 +348,7 @@ When documenting any override, ensure ALL fields are completed:
 ## Override Audit Trail
 
 All overrides should be:
+
 1. Documented in PR comments (as shown above)
 2. Logged in repository wiki or override log file
 3. Reviewed monthly for patterns

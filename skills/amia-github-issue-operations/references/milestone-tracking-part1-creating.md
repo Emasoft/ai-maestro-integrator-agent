@@ -25,6 +25,7 @@ Milestone titles should be clear, consistent, and sortable.
 | Feature-based | `User Authentication` | Feature-driven development |
 
 **Creating a milestone via gh CLI:**
+
 ```bash
 gh api repos/{owner}/{repo}/milestones \
   --method POST \
@@ -33,6 +34,7 @@ gh api repos/{owner}/{repo}/milestones \
 ```
 
 **Naming best practices:**
+
 1. Use consistent format across all milestones
 2. Make titles sortable (use leading zeros: `Sprint 01` not `Sprint 1`)
 3. Include version numbers for release milestones
@@ -43,6 +45,7 @@ gh api repos/{owner}/{repo}/milestones \
 Due dates help track milestone progress and identify delays.
 
 **Creating milestone with due date:**
+
 ```bash
 gh api repos/{owner}/{repo}/milestones \
   --method POST \
@@ -53,6 +56,7 @@ gh api repos/{owner}/{repo}/milestones \
 **Date format:** ISO 8601 format with timezone (`YYYY-MM-DDTHH:MM:SSZ`)
 
 **Python helper for due date:**
+
 ```python
 from datetime import datetime, timedelta
 
@@ -69,6 +73,7 @@ due_on = get_milestone_due_date(2)
 ```
 
 **Updating due date:**
+
 ```bash
 # First, get milestone number
 milestone_number=$(gh api repos/{owner}/{repo}/milestones \
@@ -85,6 +90,7 @@ gh api repos/{owner}/{repo}/milestones/${milestone_number} \
 Descriptions provide context about milestone goals and scope.
 
 **Creating with description:**
+
 ```bash
 gh api repos/{owner}/{repo}/milestones \
   --method POST \
@@ -102,6 +108,7 @@ gh api repos/{owner}/{repo}/milestones \
 ```
 
 **Description template:**
+
 ```markdown
 ## Goals
 

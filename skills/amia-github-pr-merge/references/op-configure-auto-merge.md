@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Configure Auto-Merge
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -137,6 +136,7 @@ Without these, auto-merge cannot be enabled.
 ## Auto-Merge Trigger Conditions
 
 Auto-merge will execute when ALL of the following are true:
+
 - All required status checks pass
 - All required reviews are approved
 - No merge conflicts exist
@@ -146,6 +146,7 @@ Auto-merge will execute when ALL of the following are true:
 ## When Auto-Merge is Canceled
 
 Auto-merge is automatically canceled when:
+
 - New commits are pushed to the PR
 - A review is dismissed
 - The PR is closed

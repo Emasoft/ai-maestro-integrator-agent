@@ -9,6 +9,7 @@ This reference covers Python-specific code review patterns, organized into detai
 ## Table of Contents
 
 ### Part 1: Style, Types, and Documentation
+
 **File**: [python-review-patterns-part1-style-types-docstrings.md](python-review-patterns-part1-style-types-docstrings.md)
 
 - 2.1 Python code style and formatting checklist
@@ -28,6 +29,7 @@ This reference covers Python-specific code review patterns, organized into detai
 ---
 
 ### Part 2: Imports, Tests, and Linting
+
 **File**: [python-review-patterns-part2-imports-tests-linting.md](python-review-patterns-part2-imports-tests-linting.md)
 
 - 2.4 Import organization and dependency management
@@ -65,27 +67,32 @@ This reference covers Python-specific code review patterns, organized into detai
 ## Summary Checklists
 
 ### Style Quick Check
+
 - [ ] PEP 8 naming conventions followed
 - [ ] Consistent 4-space indentation
 - [ ] Line length under 88 characters
 - [ ] Proper import organization
 
 ### Type Hints Quick Check
+
 - [ ] All public functions have type annotations
 - [ ] Using `X | None` not `Optional[X]` (Python 3.10+)
 - [ ] mypy passes without errors
 
 ### Documentation Quick Check
+
 - [ ] All public APIs have docstrings
 - [ ] Consistent docstring style (Google/NumPy)
 - [ ] Args, Returns, Raises documented
 
 ### Testing Quick Check
+
 - [ ] Descriptive test names
 - [ ] Proper use of fixtures
 - [ ] Edge cases covered with parametrize
 
 ### Linting Quick Check
+
 - [ ] ruff check passes
 - [ ] mypy strict mode passes
 - [ ] No high-severity bandit findings

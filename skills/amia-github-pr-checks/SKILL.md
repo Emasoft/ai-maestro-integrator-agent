@@ -145,6 +145,7 @@ START: What do you need to know about PR checks?
 **Purpose**: Retrieve all check statuses for a Pull Request.
 
 **Usage**:
+
 ```bash
 # Get all checks for PR #123
 python amia_get_pr_checks.py --pr 123
@@ -160,6 +161,7 @@ python amia_get_pr_checks.py --pr 123 --repo owner/repo
 ```
 
 **Output Format**:
+
 ```json
 {
   "pr_number": 123,
@@ -186,6 +188,7 @@ python amia_get_pr_checks.py --pr 123 --repo owner/repo
 **Purpose**: Poll and wait for all PR checks to complete.
 
 **Usage**:
+
 ```bash
 # Wait up to 10 minutes for checks
 python amia_wait_for_checks.py --pr 123 --timeout 600
@@ -198,6 +201,7 @@ python amia_wait_for_checks.py --pr 123 --interval 60
 ```
 
 **Output Format**:
+
 ```json
 {
   "pr_number": 123,
@@ -218,6 +222,7 @@ python amia_wait_for_checks.py --pr 123 --interval 60
 **Purpose**: Get detailed information about a specific check.
 
 **Usage**:
+
 ```bash
 # Get details for a specific check
 python amia_get_check_details.py --pr 123 --check "build"
@@ -227,6 +232,7 @@ python amia_get_check_details.py --pr 123 --check "test" --include-logs-url
 ```
 
 **Output Format**:
+
 ```json
 {
   "name": "build",
@@ -254,15 +260,15 @@ For detailed guidance on interpreting check statuses, see [ci-status-interpretat
   - 1.1 Complete list of conclusion values
   - 1.2 When each conclusion occurs
   - 1.3 How to respond to each conclusion
-- 2. Required vs Optional Checks
+- 1. Required vs Optional Checks
   - 2.1 How branch protection defines required checks
   - 2.2 Identifying required checks programmatically
   - 2.3 Handling optional check failures
-- 3. Check Run vs Check Suite
+- 1. Check Run vs Check Suite
   - 3.1 Difference between check runs and check suites
   - 3.2 When to query which API endpoint
   - 3.3 Aggregating results from multiple providers
-- 4. Common CI Providers
+- 1. Common CI Providers
   - 4.1 GitHub Actions check naming conventions
   - 4.2 CircleCI integration patterns
   - 4.3 Jenkins GitHub plugin behavior
@@ -276,15 +282,15 @@ For guidance on waiting for checks, see [polling-strategies.md](references/polli
   - 1.1 Scenarios requiring polling
   - 1.2 Avoiding unnecessary polling
   - 1.3 Webhook alternatives
-- 2. Exponential Backoff Implementation
+- 1. Exponential Backoff Implementation
   - 2.1 Why exponential backoff matters
   - 2.2 Recommended backoff parameters
   - 2.3 Jitter for distributed systems
-- 3. Timeout Handling
+- 1. Timeout Handling
   - 3.1 Setting appropriate timeouts
   - 3.2 Graceful timeout behavior
   - 3.3 Partial completion scenarios
-- 4. Partial Success Scenarios
+- 1. Partial Success Scenarios
   - 4.1 Handling mixed results
   - 4.2 Re-running failed checks
   - 4.3 Determining merge readiness with failures
@@ -292,6 +298,7 @@ For guidance on waiting for checks, see [polling-strategies.md](references/polli
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 

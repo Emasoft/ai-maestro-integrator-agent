@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Generate Changelog
 
-
 ## Contents
 
 - [Purpose](#purpose)

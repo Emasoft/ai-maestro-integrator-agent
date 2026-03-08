@@ -1,6 +1,5 @@
 # Sub-Agent Role Boundaries Template
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -66,6 +65,7 @@ STATUS: DONE | FAILED | BLOCKED
 ```
 
 Examples:
+
 ```
 [DONE] amia-code-reviewer - 3 issues found, report at docs_dev/reviews/review-20260205-143022.md
 [FAILED] amia-test-engineer - Coverage 45% (below 80% threshold), report at docs_dev/tdd/tdd-violation-20260205-143045.md
@@ -93,10 +93,12 @@ Examples:
 ### Report to Main Agent Only
 
 Sub-agents communicate ONLY with:
+
 - **The Integrator Agent** (their orchestrator)
 - **Remote developers** (via AI Maestro messages when violations found)
 
 Sub-agents do NOT:
+
 - Spawn other sub-agents
 - Message other orchestrators directly
 - Make independent workflow decisions
@@ -105,6 +107,7 @@ Sub-agents do NOT:
 ### AI Maestro Messaging Protocol
 
 When sub-agents need to communicate violations or findings to remote developers, send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The remote developer session name
 - **Subject**: `[<SUB-AGENT-NAME>] <violation-type>`
 - **Priority**: `high`
@@ -114,6 +117,7 @@ When sub-agents need to communicate violations or findings to remote developers,
 **Example:**
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `remote-dev-alice`
 - **Subject**: `[amia-code-reviewer] Code quality violations found`
 - **Priority**: `high`
@@ -223,6 +227,7 @@ After task completion, sub-agent MUST:
 2. **Update GitHub Projects** status if applicable
 3. **Send AI Maestro message** if violations found
 4. **Return minimal report** to orchestrator:
+
    ```
    [STATUS] agent-name - brief_result, report at <path>
    ```
@@ -232,6 +237,7 @@ After task completion, sub-agent MUST:
 ### DO NOT: Verbose Context Pollution
 
 ❌ **WRONG** (pollutes orchestrator context):
+
 ```
 [DONE] amia-test-engineer - Tests executed successfully!
 
@@ -248,6 +254,7 @@ src/user.py: 92% coverage
 ```
 
 ✅ **CORRECT** (minimal report):
+
 ```
 [DONE] amia-test-engineer - Coverage 88% (above threshold), 1 failed test, report at docs_dev/tests/test-results-20260205-143022.md
 ```
@@ -255,11 +262,13 @@ src/user.py: 92% coverage
 ### DO NOT: Decision Making
 
 ❌ **WRONG** (worker agent making orchestrator decisions):
+
 ```
 Code review found 3 issues. I will now spawn amia-committer to commit the fixes and create a PR.
 ```
 
 ✅ **CORRECT** (report findings, await instructions):
+
 ```
 [DONE] amia-code-reviewer - 3 issues found (2 critical, 1 major), report at docs_dev/reviews/review-20260205-143022.md
 ```
@@ -267,11 +276,13 @@ Code review found 3 issues. I will now spawn amia-committer to commit the fixes 
 ### DO NOT: Autonomous Task Selection
 
 ❌ **WRONG** (deciding what to work on):
+
 ```
 I notice the test coverage is low. I will now review all tests and create a coverage improvement plan.
 ```
 
 ✅ **CORRECT** (wait for task assignment):
+
 ```
 [BLOCKED] amia-test-engineer - No task assigned, awaiting orchestrator instruction
 ```

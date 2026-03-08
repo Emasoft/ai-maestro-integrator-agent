@@ -1,6 +1,7 @@
 # Functional Correctness Review
 
 ## Table of Contents
+
 - When you need to verify core functionality → Verification Checklist: Core Functionality
 - If you need to check logic correctness → Verification Checklist: Logic Correctness
 - When reviewing data flow → Verification Checklist: Data Flow
@@ -9,11 +10,13 @@
 - If you suspect logic errors → Common Issues to Look For
 
 ## Purpose
+
 Verify that code implements the intended functionality correctly, handles edge cases appropriately, and produces expected outputs for given inputs.
 
 ## Verification Checklist
 
 ### Core Functionality
+
 - [ ] Code implements all requirements from the specification or issue
 - [ ] All documented features are present and working
 - [ ] Function signatures match their documented behavior
@@ -24,6 +27,7 @@ Verify that code implements the intended functionality correctly, handles edge c
 - [ ] Optional parameters work as expected
 
 ### Logic Correctness
+
 - [ ] Conditional logic is correct (no inverted conditions)
 - [ ] Loop boundaries are correct (no off-by-one errors)
 - [ ] Recursion has proper base cases and termination
@@ -34,6 +38,7 @@ Verify that code implements the intended functionality correctly, handles edge c
 - [ ] Integer overflow/underflow is prevented
 
 ### Data Flow
+
 - [ ] Variables are initialized before use
 - [ ] Data transformations preserve correctness
 - [ ] Type conversions are safe and intentional
@@ -43,6 +48,7 @@ Verify that code implements the intended functionality correctly, handles edge c
 - [ ] Data races are prevented in concurrent code
 
 ### Input Validation
+
 - [ ] All inputs are validated before use
 - [ ] Input ranges are enforced
 - [ ] Input formats are verified
@@ -52,6 +58,7 @@ Verify that code implements the intended functionality correctly, handles edge c
 - [ ] Database queries are parameterized
 
 ### Output Verification
+
 - [ ] Output format matches specification
 - [ ] Output encoding is correct
 - [ ] Output is complete (no truncation)
@@ -63,7 +70,9 @@ Verify that code implements the intended functionality correctly, handles edge c
 ## Common Issues to Look For
 
 ### Logic Errors
+
 **Off-by-one errors**
+
 ```python
 # WRONG: Misses last element
 for i in range(len(items) - 1):
@@ -75,6 +84,7 @@ for i in range(len(items)):
 ```
 
 **Inverted conditions**
+
 ```python
 # WRONG: Logic is backwards
 if user.is_authenticated():
@@ -86,6 +96,7 @@ if not user.is_authenticated():
 ```
 
 **Incorrect boolean logic**
+
 ```python
 # WRONG: Should be OR, not AND
 if status == "active" and status == "pending":
@@ -97,7 +108,9 @@ if status == "active" or status == "pending":
 ```
 
 ### Edge Case Failures
+
 **Null/None handling**
+
 ```python
 # WRONG: No null check
 def get_name(user):
@@ -111,6 +124,7 @@ def get_name(user):
 ```
 
 **Empty collection handling**
+
 ```python
 # WRONG: Assumes non-empty
 def get_first(items):
@@ -124,6 +138,7 @@ def get_first(items):
 ```
 
 **Boundary value errors**
+
 ```python
 # WRONG: Doesn't handle min/max
 def validate_age(age):
@@ -135,7 +150,9 @@ def validate_age(age):
 ```
 
 ### Type Errors
+
 **Unsafe type conversions**
+
 ```python
 # WRONG: Can raise ValueError
 age = int(user_input)
@@ -148,6 +165,7 @@ except ValueError:
 ```
 
 **Type mismatches**
+
 ```python
 # WRONG: Mixing types
 result = "Count: " + count
@@ -157,7 +175,9 @@ result = "Count: " + str(count)
 ```
 
 ### State Management
+
 **Uninitialized variables**
+
 ```python
 # WRONG: total might be undefined
 if condition:
@@ -172,6 +192,7 @@ return total
 ```
 
 **Invalid state transitions**
+
 ```python
 # WRONG: Allows invalid state change
 def cancel_order(order):
@@ -187,6 +208,7 @@ def cancel_order(order):
 ## Scoring Criteria
 
 ### Critical (Must Fix)
+
 - Logic errors that produce incorrect results
 - Missing validation that allows invalid data
 - Edge cases that cause crashes or data corruption
@@ -195,6 +217,7 @@ def cancel_order(order):
 - Security vulnerabilities from logic flaws
 
 ### High Priority (Should Fix)
+
 - Missing edge case handling
 - Incomplete error handling
 - Unsafe type conversions
@@ -203,6 +226,7 @@ def cancel_order(order):
 - State management issues
 
 ### Medium Priority (Consider Fixing)
+
 - Missing null checks in non-critical paths
 - Redundant validations
 - Overly permissive validations
@@ -210,6 +234,7 @@ def cancel_order(order):
 - Inconsistent error handling
 
 ### Low Priority (Nice to Have)
+
 - Additional defensive checks
 - More detailed error messages
 - Enhanced logging

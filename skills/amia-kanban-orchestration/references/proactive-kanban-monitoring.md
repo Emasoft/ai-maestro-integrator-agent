@@ -21,6 +21,7 @@ The orchestrator must PROACTIVELY monitor the GitHub Project Kanban board for ch
 **Poll Frequency**: Every 5 minutes during active orchestration sessions.
 
 **Polling Command**:
+
 ```bash
 # Get all items from the project board
 gh project item-list --owner Emasoft --format json
@@ -66,6 +67,7 @@ save_state(current_state)
 When changes are detected, notify relevant agents using the `agent-messaging` skill.
 
 **Assignment notification:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The assigned agent
 - **Subject**: `Kanban Update: Issue #123 assigned to you`
 - **Priority**: `normal`
@@ -73,6 +75,7 @@ When changes are detected, notify relevant agents using the `agent-messaging` sk
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Status change notification:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Kanban Update: Issue #123 moved to AI Review`
 - **Priority**: `normal`

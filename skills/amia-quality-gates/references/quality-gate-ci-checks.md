@@ -77,6 +77,7 @@ gh api "repos/{owner}/{repo}/commits/$PR_SHA/check-runs" \
 **status** field: `queued` (waiting), `in_progress` (running), `completed` (finished -- check `conclusion`).
 
 **conclusion** field (when status is `completed`):
+
 - `success` -- passed
 - `failure` -- failed (test or validation error)
 - `neutral` -- no pass/fail assertion
@@ -162,6 +163,7 @@ The pre-merge gate passes only when every mandatory check shows `success` on the
 ## 9. Integration with the Gate Pipeline
 
 **Sequence within the pre-merge gate**:
+
 1. Verify CI status (this document)
 2. Verify changelog (see [quality-gate-changelog.md](quality-gate-changelog.md))
 3. Verify no merge conflicts (see [pre-merge-gate.md](pre-merge-gate.md), section 2)

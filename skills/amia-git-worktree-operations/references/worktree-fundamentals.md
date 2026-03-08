@@ -18,6 +18,7 @@ A git worktree is an additional working directory attached to an existing git re
 ### The Problem Worktrees Solve
 
 Traditional git workflow requires you to:
+
 1. Stash or commit your current changes
 2. Switch branches
 3. Do work on the new branch
@@ -25,6 +26,7 @@ Traditional git workflow requires you to:
 5. Pop your stash or continue
 
 This workflow breaks down when:
+
 - You need to work on multiple features simultaneously
 - You have long-running builds or tests on one branch
 - You need to compare code across branches visually
@@ -33,6 +35,7 @@ This workflow breaks down when:
 ### How Worktrees Solve This
 
 With worktrees, you can:
+
 ```
 /path/to/main-repo/           ← main worktree (e.g., 'main' branch)
     └── .git/                 ← shared git database
@@ -45,12 +48,14 @@ With worktrees, you can:
 ```
 
 Each worktree has its own:
+
 - Working directory with files
 - Checked out branch
 - Staged changes (index)
 - Local modifications
 
 All worktrees share:
+
 - The git object database (commits, blobs, trees)
 - Remote configurations
 - Branches and tags
@@ -75,17 +80,20 @@ All worktrees share:
 ### When to Use Each
 
 **Use `git checkout` when:**
+
 - You work on one thing at a time
 - You can stash/commit before switching
 - You don't need parallel execution
 
 **Use `git clone` when:**
+
 - You need complete independence
 - You want to test destructive operations safely
 - Network bandwidth is not a concern
 - You need different remote configurations
 
 **Use `git worktree` when:**
+
 - You need multiple branches active simultaneously
 - Disk space is limited
 - You want fast setup/teardown
@@ -139,11 +147,13 @@ When you create a worktree, git does NOT copy the objects. Instead:
 
 1. **Main repository:** Has the full `.git` directory
 2. **Additional worktree:** Has a `.git` FILE (not directory) containing:
+
    ```
    gitdir: /path/to/main-repo/.git/worktrees/<worktree-name>
    ```
 
 3. **Worktree-specific data** is stored in main repo's `.git/worktrees/<name>/`:
+
    ```
    .git/worktrees/<name>/
    ├── HEAD           ← This worktree's current branch
@@ -155,6 +165,7 @@ When you create a worktree, git does NOT copy the objects. Instead:
 ### What This Means Practically
 
 **Shared (changes visible everywhere):**
+
 - New commits (once created)
 - Branch creations/deletions
 - Tags
@@ -162,6 +173,7 @@ When you create a worktree, git does NOT copy the objects. Instead:
 - Git configuration
 
 **Not shared (worktree-specific):**
+
 - Working directory files
 - Staged changes
 - Which branch is checked out
@@ -187,10 +199,12 @@ git log --oneline --all | grep "New feature"
 ### Scenario 1: Parallel PR Review and Development
 
 **Without worktrees:**
+
 - Review PR: stash, checkout, review, checkout back, pop stash
 - Time lost: Context switching, stash conflicts, mental overhead
 
 **With worktrees:**
+
 - Review PR in one worktree while developing in another
 - Zero context switching
 - Time saved: 5-10 minutes per PR review session
@@ -198,11 +212,13 @@ git log --oneline --all | grep "New feature"
 ### Scenario 2: Long-Running Tests
 
 **Without worktrees:**
+
 - Run tests on feature branch
 - Wait for completion (30+ minutes)
 - Cannot work on other branches
 
 **With worktrees:**
+
 - Run tests in worktree A
 - Continue development in worktree B
 - Productivity maintained during test runs
@@ -210,11 +226,13 @@ git log --oneline --all | grep "New feature"
 ### Scenario 3: Multi-Agent PR Processing
 
 **Without worktrees:**
+
 - Agents must serialize branch operations
 - One agent blocks all others
 - Throughput limited to one PR at a time
 
 **With worktrees:**
+
 - Each agent gets isolated worktree
 - Parallel PR processing
 - Throughput scales with agent count
@@ -241,11 +259,13 @@ git log --oneline --all | grep "New feature"
 ### Misconception 2: "I can checkout the same branch in multiple worktrees"
 
 **Reality:** Git enforces ONE branch per worktree. Attempting to checkout an already-checked-out branch fails:
+
 ```
 fatal: 'feature-a' is already checked out at '/tmp/worktrees/feature-a'
 ```
 
 **Workaround:** Create a new branch from the same commit:
+
 ```bash
 git worktree add /tmp/new-worktree -b new-branch-name existing-branch
 ```
@@ -259,6 +279,7 @@ git worktree add /tmp/new-worktree -b new-branch-name existing-branch
 ### Misconception 4: "I can just delete the worktree directory"
 
 **Reality:** Deleting the directory leaves stale entries in `.git/worktrees/`. Always use:
+
 ```bash
 git worktree remove <path>
 # Or if directory already deleted:
@@ -280,11 +301,13 @@ git worktree prune
 **Git 2.5.0 (July 2015):** Basic worktree support (`git worktree add`)
 
 **Git 2.15.0 (October 2017):** Recommended minimum
+
 - `git worktree remove` command added
 - `git worktree move` command added
 - Improved worktree locking
 
 **Git 2.17.0 (April 2018):**
+
 - Better worktree pruning
 - `--track` option for worktree add
 
@@ -316,15 +339,18 @@ git worktree list
 ### Known Limitations by Platform
 
 **Windows:**
+
 - Long path issues (enable long paths in git config)
 - File locking can cause issues
 - NTFS performs worse than ext4/APFS
 
 **macOS:**
+
 - Case-insensitive by default (can cause branch name issues)
 - Works well otherwise
 
 **Linux:**
+
 - Best performance and compatibility
 - No known limitations
 
@@ -340,6 +366,7 @@ Git worktrees provide a powerful mechanism for parallel development by allowing 
 4. Context-switch-free development
 
 Key constraints to remember:
+
 - One branch per worktree
 - Shared git database means coordinated operations
 - Always use `git worktree remove` for cleanup

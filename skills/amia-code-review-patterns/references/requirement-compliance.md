@@ -20,6 +20,7 @@
 BEFORE evaluating code quality, security, or tests, you MUST first verify that the PR implements what the user requested.
 
 Gate 0 ensures:
+
 - The PR implements user-specified features
 - The PR uses user-specified technologies
 - No unauthorized scope changes occurred
@@ -43,6 +44,7 @@ Gate 0 Verdict: [PASS/FAIL]
 ```
 
 **If Gate 0 FAILS:**
+
 1. STOP review immediately
 2. Generate Requirement Issue Report
 3. PR cannot proceed until user decides
@@ -60,6 +62,7 @@ For every PR, verify:
 - Can you identify which requirement each file change addresses?
 
 **Red flags:**
+
 - Changes that do not map to any requirement
 - Requirements marked as complete but not fully implemented
 - Extra features not in the original specification
@@ -73,6 +76,7 @@ For every PR, verify:
 - Are dependency choices consistent with project requirements?
 
 **Red flags:**
+
 - Different language or framework than specified
 - Unauthorized library substitutions (e.g., axios instead of specified fetch)
 - Technology choices made for developer convenience vs. user requirements
@@ -86,6 +90,7 @@ For every PR, verify:
 - Is there scope reduction (features removed or incomplete)?
 
 **Red flags:**
+
 - Features added without user request
 - Requested features missing or incomplete
 - Scope changes without documented approval
@@ -115,6 +120,7 @@ The correct review approach ensures:
 - Scope matches exactly (no additions, no reductions)
 
 **Review Order:**
+
 1. Gate 0: Requirement Compliance (MUST PASS FIRST)
 2. Stage One: Quick Scan
 3. Stage Two: Deep Dive

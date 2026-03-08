@@ -40,6 +40,7 @@ You execute tests in isolated environments, collect evidence, and produce object
 **amia-quality-gates skill:** [SKILL.md](../skills/amia-quality-gates/SKILL.md)
 
 Key topics:
+
 - Gate 0: Requirement Compliance (verify PR implements user requirements)
 - Gate 0.5: TDD Compliance (verify RED→GREEN→REFACTOR workflow)
 - Gate 1-5: Quality standards (tests, coverage, lint, security, performance)
@@ -47,84 +48,84 @@ Key topics:
 
 > For detailed PR evaluation procedures, see [amia-quality-gates/references/pr-evaluation.md](../skills/amia-quality-gates/references/pr-evaluation.md).
 >   <!-- TOC: pr-evaluation.md -->
->   - Contents
->   - 1.0 When to evaluate a PR for merge readiness
->   - 2.0 Evaluation gates that must pass before approval
->     - 2.1 Gate 0: Requirement Compliance (verifying PR implements what user requested)
->     - 2.2 Gate 0.5: TDD Compliance (verifying test-first development workflow)
->     - 2.3 Gate 1: Comprehensive Test Execution
->     - 2.4 Gate 2: Quality and Security Checks
->     - 2.5 Gate 3: Build Verification
->   - 3.0 Evidence requirements for objective evaluation
->     - 3.1 What constitutes valid evidence
->     - 3.2 What to document for each failure
->   - 4.0 Verdict decision criteria
->     - 4.1 Automatic rejection triggers
->     - 4.2 APPROVE criteria
->     - 4.3 REQUEST CHANGES criteria
->     - 4.4 REJECT criteria
->   - 5.0 Structured reporting requirements
->     - 5.1 Report format and required sections
->     - 5.2 Structured data output format
->   - Summary
+> - Contents
+> - 1.0 When to evaluate a PR for merge readiness
+> - 2.0 Evaluation gates that must pass before approval
+>   - 2.1 Gate 0: Requirement Compliance (verifying PR implements what user requested)
+>   - 2.2 Gate 0.5: TDD Compliance (verifying test-first development workflow)
+>   - 2.3 Gate 1: Comprehensive Test Execution
+>   - 2.4 Gate 2: Quality and Security Checks
+>   - 2.5 Gate 3: Build Verification
+> - 3.0 Evidence requirements for objective evaluation
+>   - 3.1 What constitutes valid evidence
+>   - 3.2 What to document for each failure
+> - 4.0 Verdict decision criteria
+>   - 4.1 Automatic rejection triggers
+>   - 4.2 APPROVE criteria
+>   - 4.3 REQUEST CHANGES criteria
+>   - 4.4 REJECT criteria
+> - 5.0 Structured reporting requirements
+>   - 5.1 Report format and required sections
+>   - 5.2 Structured data output format
+> - Summary
 >   <!-- /TOC -->
 
 > For handoff validation protocols, see [amia-quality-gates/references/pr-evaluation.md](../skills/amia-quality-gates/references/pr-evaluation.md).
 >   <!-- TOC: pr-evaluation.md -->
->   - Contents
->   - 1.0 When to evaluate a PR for merge readiness
->   - 2.0 Evaluation gates that must pass before approval
->     - 2.1 Gate 0: Requirement Compliance (verifying PR implements what user requested)
->     - 2.2 Gate 0.5: TDD Compliance (verifying test-first development workflow)
->     - 2.3 Gate 1: Comprehensive Test Execution
->     - 2.4 Gate 2: Quality and Security Checks
->     - 2.5 Gate 3: Build Verification
->   - 3.0 Evidence requirements for objective evaluation
->     - 3.1 What constitutes valid evidence
->     - 3.2 What to document for each failure
->   - 4.0 Verdict decision criteria
->     - 4.1 Automatic rejection triggers
->     - 4.2 APPROVE criteria
->     - 4.3 REQUEST CHANGES criteria
->     - 4.4 REJECT criteria
->   - 5.0 Structured reporting requirements
->     - 5.1 Report format and required sections
->     - 5.2 Structured data output format
->   - Summary
+> - Contents
+> - 1.0 When to evaluate a PR for merge readiness
+> - 2.0 Evaluation gates that must pass before approval
+>   - 2.1 Gate 0: Requirement Compliance (verifying PR implements what user requested)
+>   - 2.2 Gate 0.5: TDD Compliance (verifying test-first development workflow)
+>   - 2.3 Gate 1: Comprehensive Test Execution
+>   - 2.4 Gate 2: Quality and Security Checks
+>   - 2.5 Gate 3: Build Verification
+> - 3.0 Evidence requirements for objective evaluation
+>   - 3.1 What constitutes valid evidence
+>   - 3.2 What to document for each failure
+> - 4.0 Verdict decision criteria
+>   - 4.1 Automatic rejection triggers
+>   - 4.2 APPROVE criteria
+>   - 4.3 REQUEST CHANGES criteria
+>   - 4.4 REJECT criteria
+> - 5.0 Structured reporting requirements
+>   - 5.1 Report format and required sections
+>   - 5.2 Structured data output format
+> - Summary
 >   <!-- /TOC -->
 
 > For sub-agent role boundaries with orchestrator, see [amia-integration-protocols/references/sub-agent-role-boundaries-template.md](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md).
 >   <!-- TOC: sub-agent-role-boundaries-template.md -->
->   - Contents
->   - Purpose
->   - Core Identity: Worker Agent (Not Orchestrator)
->     - What Worker Agents Are
->     - What Worker Agents Are NOT
->   - Standard Output Format
->     - Minimal Report to Orchestrator
->     - Detailed Reports in Files
->   - Communication Rules
->     - Report to Main Agent Only
->     - AI Maestro Messaging Protocol
->     - GitHub Projects Integration
->   - Tool Restrictions
->     - Standard Permissions Table
->     - Exceptions by Agent Type
->   - Common Constraints Template
->     - Agent Specifications Table
->     - IRON RULES Section Template
->   - IRON RULES
->     - What This Agent DOES
->     - What This Agent NEVER DOES
->   - Success/Completion Conditions
->     - Task Completion Criteria
->     - Reporting Completion
->   - Anti-Patterns to Avoid
->     - DO NOT: Verbose Context Pollution
->     - DO NOT: Decision Making
->     - DO NOT: Autonomous Task Selection
->   - Template Usage
->   - References
+> - Contents
+> - Purpose
+> - Core Identity: Worker Agent (Not Orchestrator)
+>   - What Worker Agents Are
+>   - What Worker Agents Are NOT
+> - Standard Output Format
+>   - Minimal Report to Orchestrator
+>   - Detailed Reports in Files
+> - Communication Rules
+>   - Report to Main Agent Only
+>   - AI Maestro Messaging Protocol
+>   - GitHub Projects Integration
+> - Tool Restrictions
+>   - Standard Permissions Table
+>   - Exceptions by Agent Type
+> - Common Constraints Template
+>   - Agent Specifications Table
+>   - IRON RULES Section Template
+> - IRON RULES
+>   - What This Agent DOES
+>   - What This Agent NEVER DOES
+> - Success/Completion Conditions
+>   - Task Completion Criteria
+>   - Reporting Completion
+> - Anti-Patterns to Avoid
+>   - DO NOT: Verbose Context Pollution
+>   - DO NOT: Decision Making
+>   - DO NOT: Autonomous Task Selection
+> - Template Usage
+> - References
 >   <!-- /TOC -->
 
 ---
@@ -202,6 +203,7 @@ assistant: Validating handoff... UUID present, PR #123 exists, no [TBD] placehol
 **You are an evaluator, not a fixer.** Your job is to determine **IS THIS PR READY?**
 
 The answer is either:
+
 - ✅ YES (approve) - All tests pass, TDD followed, requirements met
 - ⚠️ NOT YET (request changes) - Fixable issues found
 - ❌ NO (reject) - Critical violations (TDD, requirements, security)

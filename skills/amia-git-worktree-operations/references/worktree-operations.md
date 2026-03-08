@@ -38,6 +38,7 @@ This document serves as an index to the worktree operations reference, which has
 **File**: [worktree-operations-part1-listing-switching.md](worktree-operations-part1-listing-switching.md)
 
 ### Table of Contents
+
 1. **Listing Worktrees** - When you need to see all active worktrees
    - 1.1 Basic Listing (`git worktree list`)
    - 1.2 Machine-Readable Listing (`git worktree list --porcelain`)
@@ -59,6 +60,7 @@ This document serves as an index to the worktree operations reference, which has
 **File**: [worktree-operations-part2-updating.md](worktree-operations-part2-updating.md)
 
 ### Table of Contents
+
 1. **Phase 1: Pulling Latest Changes from Remote**
    - 1.1 What Pulling Does
    - 1.2 Command and Example
@@ -85,6 +87,7 @@ This document serves as an index to the worktree operations reference, which has
 **File**: [worktree-operations-part3-locking-moving.md](worktree-operations-part3-locking-moving.md)
 
 ### Table of Contents
+
 1. **Locking and Unlocking Worktrees** - If you need to protect a worktree from deletion
    - 1.1 What Locking Does (and Does NOT Do)
    - 1.2 Locking a Worktree (basic and with reason)
@@ -106,6 +109,7 @@ This document serves as an index to the worktree operations reference, which has
 **File**: [worktree-operations-part4-status.md](worktree-operations-part4-status.md)
 
 ### Table of Contents
+
 1. **Phase 1: Basic Status Check**
    - 1.1 Command: `git status`
    - 1.2 Output When Clean
@@ -141,6 +145,7 @@ This document serves as an index to the worktree operations reference, which has
 **File**: [worktree-operations-part5-syncing.md](worktree-operations-part5-syncing.md)
 
 ### Table of Contents
+
 1. **Why Sync Regularly**
    - 1.1 Benefits of Regular Syncing
    - 1.2 Recommended Frequency
@@ -186,6 +191,7 @@ This document serves as an index to the worktree operations reference, which has
 **File**: [worktree-operations-part6-best-practices.md](worktree-operations-part6-best-practices.md)
 
 ### Table of Contents
+
 1. **Practice 1: Keep Worktrees Updated**
    - Why and How
    - Automation script
@@ -219,6 +225,7 @@ This document serves as an index to the worktree operations reference, which has
 **File**: [worktree-operations-part7-troubleshooting.md](worktree-operations-part7-troubleshooting.md)
 
 ### Table of Contents
+
 1. **Problem 1: Cannot Remove Worktree (Locked)**
    - Error and Solution
 

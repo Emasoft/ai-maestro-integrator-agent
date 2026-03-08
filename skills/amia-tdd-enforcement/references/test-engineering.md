@@ -79,6 +79,7 @@ pytest <test-file>  # Should fail
 ```
 
 **Pass criteria:**
+
 - Test commit exists with "RED:" prefix
 - Test fails when run in isolation
 - Failure message indicates missing functionality
@@ -108,6 +109,7 @@ pytest <test-file>  # Should pass
 ```
 
 **Pass criteria:**
+
 - GREEN commit follows RED commit chronologically
 - Tests pass after GREEN commit
 - Implementation is minimal (no extra features)
@@ -137,6 +139,7 @@ pytest  # Should still pass
 ```
 
 **Pass criteria:**
+
 - REFACTOR commit follows GREEN commit
 - All tests still pass
 - No new tests added during refactor
@@ -147,6 +150,7 @@ pytest  # Should still pass
 **Analysis procedure:**
 
 1. **Extract full commit log:**
+
    ```bash
    git log --oneline --decorate feature-branch
    ```
@@ -168,6 +172,7 @@ pytest  # Should still pass
    - [ ] No implementation commits without test commits
 
 **Violation detection:**
+
 - Implementation commit before test commit = FAIL
 - Missing commit prefix = FAIL
 - Multiple GREEN commits for single RED = WARN
@@ -210,6 +215,7 @@ npm run test -- --coverage --coverageReporters=lcov
 ```
 
 **Coverage output locations:**
+
 - Python: `coverage.json`, `.coverage`, `htmlcov/`
 - JavaScript: `coverage/`, `coverage/lcov.info`
 
@@ -279,6 +285,7 @@ cat coverage/coverage-summary.json | jq 'to_entries[] | select(.value.lines.pct 
 ```
 
 **Coverage report sections to extract:**
+
 - Overall coverage percentages
 - Per-file coverage breakdown
 - Uncovered lines list
@@ -290,6 +297,7 @@ cat coverage/coverage-summary.json | jq 'to_entries[] | select(.value.lines.pct 
 **Critical path definition:**
 
 Critical paths are code sections that:
+
 - Handle user authentication
 - Process financial transactions
 - Implement security controls
@@ -300,6 +308,7 @@ Critical paths are code sections that:
 **Identification procedure:**
 
 1. **Load requirements document:**
+
    ```bash
    # Read USER_REQUIREMENTS.md
    cat docs_dev/requirements/USER_REQUIREMENTS.md
@@ -316,6 +325,7 @@ Critical paths are code sections that:
    - Document missing tests for critical paths
 
 4. **Report critical gaps:**
+
    ```markdown
    Critical Path Coverage Gaps:
    - Requirement REQ-AUTH-001: src/auth.py line 45-52 uncovered
@@ -323,6 +333,7 @@ Critical paths are code sections that:
    ```
 
 **Automatic FAIL conditions:**
+
 - Any critical path with <100% coverage
 - Any security-related code uncovered
 - Any error handling in critical paths untested
@@ -358,6 +369,7 @@ Quality Score = (Assertion * 0.20) + (EdgeCase * 0.20) + (Isolation * 0.15) +
 ```
 
 **Pass criteria:**
+
 - Quality Score >= 70% → PASS
 - Quality Score 60-70% → WARN (advisory)
 - Quality Score < 60% → FAIL (does not block, but documented)
@@ -382,6 +394,7 @@ Quality Score = (Assertion * 0.20) + (EdgeCase * 0.20) + (Isolation * 0.15) +
    - Example: `assert result == 5, f"Expected 5 but got {result}"`
 
 **Scoring:**
+
 - 100%: All tests have exactly 1 meaningful assertion with clear message
 - 75%: Most tests have 1 assertion, some lack messages
 - 50%: Multiple assertions per test, unclear messages
@@ -433,6 +446,7 @@ Edge Case Score = (Edge cases tested / Total expected edge cases) * 100
 **Isolation checks:**
 
 1. **No shared mutable state:**
+
    ```python
    # BAD: Shared state between tests
    class TestSuite:
@@ -469,6 +483,7 @@ pytest test_file.py::test_function_name
 ```
 
 **Scoring:**
+
 - 100%: All tests pass in any order, individually
 - 75%: Tests pass normally but fail in random order
 - 50%: Tests depend on specific order
@@ -489,6 +504,7 @@ Apply three-gate quality system to determine if code can proceed to review and m
 **Verification steps:**
 
 1. **Read git log for feature branch:**
+
    ```bash
    git log --oneline feature-branch
    ```
@@ -513,18 +529,21 @@ Apply three-gate quality system to determine if code can proceed to review and m
    - Checkout GREEN commit → tests should pass
 
 **Pass criteria:**
+
 - Every implementation has a preceding failing test
 - Correct commit message pattern followed
 - No implementation commits without test commits
 - Tests fail at RED, pass at GREEN
 
 **Fail action:**
+
 - Generate TDD Violation Report
 - Block code review
 - Send violation notice via AI Maestro
 - Return: `G1:FAIL`
 
 **Output:**
+
 - `G1:PASS` → Proceed to Gate 2
 - `G1:FAIL` → Block, skip Gate 2 and Gate 3
 
@@ -535,6 +554,7 @@ Apply three-gate quality system to determine if code can proceed to review and m
 **Verification steps:**
 
 1. **Run test suite with coverage enabled:**
+
    ```bash
    # Python
    pytest --cov=src --cov-report=json
@@ -559,18 +579,21 @@ Apply three-gate quality system to determine if code can proceed to review and m
    - Verify 100% coverage for critical paths
 
 **Pass criteria:**
+
 - Line coverage >= 80%
 - Branch coverage >= 75%
 - Function coverage >= 90%
 - Critical paths at 100%
 
 **Fail action:**
+
 - Generate Coverage Gap Report
 - List uncovered lines and branches
 - Block merge until coverage improved
 - Return: `G2:FAIL`
 
 **Output:**
+
 - `G2:PASS` → Proceed to Gate 3
 - `G2:FAIL` → Block, Gate 3 may still run for advisory info
 
@@ -606,16 +629,19 @@ Apply three-gate quality system to determine if code can proceed to review and m
    - Compute overall quality score
 
 **Pass criteria:**
+
 - Quality score >= 70%
 - No critical quality issues
 
 **Advisory action (if below threshold):**
+
 - Generate Quality Improvement Suggestions
 - Document in report
 - Does NOT block (advisory only)
 - Return: `G3:WARN`
 
 **Output:**
+
 - `G3:PASS` → All gates passed
 - `G3:WARN` → Advisory warnings, does not block
 - `G3:FAIL` → Serious quality issues, documented but not blocking
@@ -652,6 +678,7 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
 ```
 
 **Validation:**
+
 - [ ] PR number valid and accessible
 - [ ] Feature branch exists
 - [ ] Files changed list retrieved
@@ -663,11 +690,13 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
 **Audit procedure:**
 
 1. **Get commit history:**
+
    ```bash
    git log --oneline feature-branch
    ```
 
 2. **Identify commit patterns:**
+
    ```bash
    # Find RED commits
    git log --grep="^RED:" feature-branch
@@ -685,6 +714,7 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
    - Document any violations
 
 4. **Test failure verification:**
+
    ```bash
    # For each RED commit, verify test fails
    git checkout <RED_COMMIT>
@@ -696,6 +726,7 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
    ```
 
 **Verification checklist:**
+
 - [ ] Feature branch has test commits
 - [ ] Test commits precede implementation commits
 - [ ] Commit messages follow RED/GREEN/REFACTOR pattern
@@ -703,6 +734,7 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
 - [ ] Tests pass at GREEN commits
 
 **Output:**
+
 - TDD compliance status: COMPLIANT or VIOLATION
 - Violation details if any
 - Commit timeline document
@@ -712,6 +744,7 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
 **Analysis procedure:**
 
 1. **Run test suite with coverage:**
+
    ```bash
    # Python
    pytest --cov=src --cov-report=term-missing --cov-report=json
@@ -721,6 +754,7 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
    ```
 
 2. **Parse coverage report:**
+
    ```bash
    # Python
    cat coverage.json | jq '.totals'
@@ -741,12 +775,14 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
    - Function >= 90%?
 
 5. **Identify gaps:**
+
    ```bash
    # List uncovered lines
    pytest --cov=src --cov-report=term-missing | grep "TOTAL"
    ```
 
 **Coverage checklist:**
+
 - [ ] Line coverage meets threshold
 - [ ] Branch coverage meets threshold
 - [ ] Function coverage meets threshold
@@ -754,6 +790,7 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
 - [ ] Coverage gaps documented
 
 **Output:**
+
 - Coverage percentages: line/branch/function
 - Coverage status: PASS or FAIL
 - Uncovered lines list
@@ -764,6 +801,7 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
 **Review procedure:**
 
 1. **Read all test files:**
+
    ```bash
    # Get list of test files
    find . -name "test_*.py" -o -name "*_test.js"
@@ -797,6 +835,7 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
    - Prioritize fixes
 
 **Quality checklist:**
+
 - [ ] One assertion per test method
 - [ ] Tests follow Arrange-Act-Assert pattern
 - [ ] No shared mutable state between tests
@@ -805,6 +844,7 @@ gh pr diff <PR_NUMBER> --name-only | grep -E '(test_|_test\.)'
 - [ ] Tests are independent
 
 **Output:**
+
 - Quality score percentage
 - Quality status: PASS/WARN/FAIL
 - Quality issues list
@@ -918,6 +958,7 @@ Gate 3 (Test Quality): [PASS/WARN/FAIL]
 **Communication steps:**
 
 1. **Generate report file:**
+
    ```bash
    # Save report to standard location
    REPORT_FILE="reports/tdd-compliance-PR${PR_NUMBER}-$(date +%Y%m%d%H%M%S).md"
@@ -932,6 +973,7 @@ Gate 3 (Test Quality): [PASS/WARN/FAIL]
    - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 3. **Post PR comment:**
+
    ```bash
    gh pr comment ${PR_NUMBER} --body "## TDD Compliance Report
 
@@ -943,6 +985,7 @@ Gate 3 (Test Quality): [PASS/WARN/FAIL]
    ```
 
 4. **Update GitHub Projects board:**
+
    ```bash
    # Add "needs-tests" label if failed
    if [ "$GATE1_STATUS" == "FAIL" ] || [ "$GATE2_STATUS" == "FAIL" ]; then
@@ -954,6 +997,7 @@ Gate 3 (Test Quality): [PASS/WARN/FAIL]
    ```
 
 5. **Return minimal output to orchestrator:**
+
    ```
    [DONE] test-engineer - PR#${PR_NUMBER} G1:${GATE1} G2:${GATE2} G3:${GATE3}
    Coverage: ${LINE}%/${BRANCH}%/${FUNCTION}% | TDD: ${STATUS}
@@ -1134,12 +1178,14 @@ grep -E "REQ-[A-Z]+-[0-9]+" docs_dev/requirements/USER_REQUIREMENTS.md > require
 **Mapping procedure:**
 
 1. **Extract requirement IDs:**
+
    ```bash
    # Get all requirement IDs from USER_REQUIREMENTS.md
    grep -oE "REQ-[A-Z]+-[0-9]+" docs_dev/requirements/USER_REQUIREMENTS.md | sort -u > req-ids.txt
    ```
 
 2. **Search for tests referencing each requirement:**
+
    ```bash
    # For each requirement ID, find tests
    while read REQ_ID; do
@@ -1149,6 +1195,7 @@ grep -E "REQ-[A-Z]+-[0-9]+" docs_dev/requirements/USER_REQUIREMENTS.md > require
    ```
 
 3. **Create requirement-to-test mapping:**
+
    ```bash
    # Generate mapping document
    echo "# Requirement Traceability Matrix" > traceability-matrix.md
@@ -1286,40 +1333,50 @@ Define proper usage of Read, Write, and Bash tools for TDD enforcement tasks.
 **What to read:**
 
 1. **Test files:**
+
    ```
    Read test_module.py
    Read test_feature.js
    ```
+
    - Purpose: Analyze test structure and quality
    - Look for: Assertions, edge cases, isolation
 
 2. **Implementation files:**
+
    ```
    Read src/module.py
    Read src/feature.js
    ```
+
    - Purpose: Understand what is being tested
    - Look for: Functions, classes, critical paths
 
 3. **Coverage reports:**
+
    ```
    Read coverage.json
    Read coverage/coverage-summary.json
    ```
+
    - Purpose: Extract coverage metrics
    - Look for: Line/branch/function percentages
 
 4. **Requirement documents:**
+
    ```
    Read docs_dev/requirements/USER_REQUIREMENTS.md
    ```
+
    - Purpose: Verify test-to-requirement traceability
    - Look for: Requirement IDs, acceptance criteria
 
 5. **Git history:**
+
    ```
    Read .git/logs/HEAD
    ```
+
    - Purpose: Verify TDD cycle compliance
    - Look for: Commit patterns, chronological order
 
@@ -1335,33 +1392,43 @@ Define proper usage of Read, Write, and Bash tools for TDD enforcement tasks.
 **What to write:**
 
 1. **TDD compliance reports:**
+
    ```
    Write reports/tdd-compliance-PR{number}-{timestamp}.md
    ```
+
    - Content: Gate results, compliance status, violations
 
 2. **Coverage gap reports:**
+
    ```
    Write reports/coverage-gaps-PR{number}-{timestamp}.md
    ```
+
    - Content: Uncovered lines, missing tests, gap analysis
 
 3. **Test quality reports:**
+
    ```
    Write reports/test-quality-PR{number}-{timestamp}.md
    ```
+
    - Content: Quality scores, issues, recommendations
 
 4. **Violation notices:**
+
    ```
    Write reports/violations/tdd-violation-PR{number}-{timestamp}.md
    ```
+
    - Content: Specific TDD violations, required fixes
 
 5. **Traceability reports:**
+
    ```
    Write reports/traceability-PR{number}-{timestamp}.md
    ```
+
    - Content: Requirement-to-test mapping, missing tests
 
 **Write tool best practices:**
@@ -1377,6 +1444,7 @@ Define proper usage of Read, Write, and Bash tools for TDD enforcement tasks.
 **What to execute:**
 
 1. **Run test suites:**
+
    ```bash
    # Python
    pytest tests/ -v
@@ -1386,6 +1454,7 @@ Define proper usage of Read, Write, and Bash tools for TDD enforcement tasks.
    ```
 
 2. **Run coverage analysis:**
+
    ```bash
    # Python with coverage
    pytest --cov=src --cov-report=term-missing --cov-report=json
@@ -1395,6 +1464,7 @@ Define proper usage of Read, Write, and Bash tools for TDD enforcement tasks.
    ```
 
 3. **Query git history:**
+
    ```bash
    # Get commit log
    git log --oneline feature-branch
@@ -1404,6 +1474,7 @@ Define proper usage of Read, Write, and Bash tools for TDD enforcement tasks.
    ```
 
 4. **Execute linting tools:**
+
    ```bash
    # Python linting
    ruff check src/ tests/
@@ -1417,6 +1488,7 @@ Define proper usage of Read, Write, and Bash tools for TDD enforcement tasks.
    - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 6. **Update GitHub PR:**
+
    ```bash
    # Post PR comment
    gh pr comment {PR_NUMBER} --body "..."
@@ -1525,6 +1597,7 @@ Resolve common problems encountered during test enforcement.
 Cannot identify test commits in git history. No commits with "RED:" prefix.
 
 **Symptoms:**
+
 - `git log --grep="^RED:"` returns no results
 - Unable to verify TDD compliance
 - Uncertain if developer followed TDD
@@ -1546,6 +1619,7 @@ Cannot identify test commits in git history. No commits with "RED:" prefix.
 **Solutions:**
 
 1. **Check for alternate patterns:**
+
    ```bash
    # Search for "test" in commit messages
    git log --grep="test" --grep="Test" -i feature-branch
@@ -1555,6 +1629,7 @@ Cannot identify test commits in git history. No commits with "RED:" prefix.
    ```
 
 2. **Review all commits manually:**
+
    ```bash
    # Show detailed commit info
    git log --stat feature-branch
@@ -1569,6 +1644,7 @@ Cannot identify test commits in git history. No commits with "RED:" prefix.
    - Mark as "TDD UNCERTAIN" (not PASS or FAIL)
 
 4. **Document the issue:**
+
    ```markdown
    **TDD Compliance:** UNCERTAIN
 
@@ -1586,6 +1662,7 @@ Cannot identify test commits in git history. No commits with "RED:" prefix.
 Coverage tool crashes or produces no output.
 
 **Symptoms:**
+
 - `pytest --cov=src` fails with error
 - No `coverage.json` file generated
 - Coverage report is empty or corrupted
@@ -1593,6 +1670,7 @@ Coverage tool crashes or produces no output.
 **Possible causes:**
 
 1. **Coverage tool not installed:**
+
    ```bash
    # Python
    pip show pytest-cov  # Check if installed
@@ -1613,6 +1691,7 @@ Coverage tool crashes or produces no output.
 **Solutions:**
 
 1. **Verify test framework installed:**
+
    ```bash
    # Python
    pip install pytest pytest-cov
@@ -1622,6 +1701,7 @@ Coverage tool crashes or produces no output.
    ```
 
 2. **Check configuration:**
+
    ```bash
    # Python - check .coveragerc
    cat .coveragerc
@@ -1631,6 +1711,7 @@ Coverage tool crashes or produces no output.
    ```
 
 3. **Run tests manually first:**
+
    ```bash
    # Python - run tests without coverage
    pytest tests/ -v
@@ -1640,12 +1721,14 @@ Coverage tool crashes or produces no output.
    ```
 
 4. **Try manual test run first:**
+
    ```bash
    # If tests pass, try coverage again
    pytest --cov=src --cov-report=term
    ```
 
 5. **Check for import errors:**
+
    ```bash
    # Python - verify imports work
    python -c "import src.module"
@@ -1655,6 +1738,7 @@ Coverage tool crashes or produces no output.
    ```
 
 6. **Document the failure:**
+
    ```markdown
    **Gate 2 (Coverage):** SKIPPED
 
@@ -1671,6 +1755,7 @@ Coverage tool crashes or produces no output.
 Tests run successfully but coverage is below threshold.
 
 **Symptoms:**
+
 - All tests pass (green)
 - Coverage report shows <80% line coverage
 - Gate 2 fails despite passing tests
@@ -1693,6 +1778,7 @@ Tests run successfully but coverage is below threshold.
 **Solutions:**
 
 1. **Identify uncovered lines:**
+
    ```bash
    # Python - show missing lines
    pytest --cov=src --cov-report=term-missing
@@ -1702,6 +1788,7 @@ Tests run successfully but coverage is below threshold.
    ```
 
 2. **Generate coverage HTML report:**
+
    ```bash
    # Python
    pytest --cov=src --cov-report=html
@@ -1713,6 +1800,7 @@ Tests run successfully but coverage is below threshold.
    ```
 
 3. **Document gaps:**
+
    ```markdown
    ## Uncovered Code
 
@@ -1726,6 +1814,7 @@ Tests run successfully but coverage is below threshold.
    ```
 
 4. **Request additional tests:**
+
    ```bash
    # Send AI Maestro message to developer
    Send a message using the `agent-messaging` skill with:
@@ -1736,6 +1825,7 @@ Tests run successfully but coverage is below threshold.
    - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 5. **Block merge until fixed:**
+
    ```markdown
    **Gate 2 Result:** FAIL
 
@@ -1750,6 +1840,7 @@ Tests run successfully but coverage is below threshold.
 Cannot definitively determine if TDD was followed.
 
 **Symptoms:**
+
 - Git history unclear
 - No standard commit patterns
 - Commits mixed (tests + implementation together)
@@ -1772,6 +1863,7 @@ Cannot definitively determine if TDD was followed.
 **Solutions:**
 
 1. **Review all commits chronologically:**
+
    ```bash
    # Show detailed commit history
    git log --all --decorate --oneline --graph feature-branch
@@ -1781,6 +1873,7 @@ Cannot definitively determine if TDD was followed.
    ```
 
 2. **Look for test files in early commits:**
+
    ```bash
    # Show when test files were created/modified
    git log --follow -- tests/test_feature.py
@@ -1790,6 +1883,7 @@ Cannot definitively determine if TDD was followed.
    ```
 
 3. **Ask developer for TDD evidence:**
+
    ```bash
    # Send AI Maestro message using the `agent-messaging` skill with:
    # - Recipient: `developer-agent`
@@ -1800,6 +1894,7 @@ Cannot definitively determine if TDD was followed.
    ```
 
 4. **Document uncertainty:**
+
    ```markdown
    **Gate 1 (TDD Compliance):** UNCERTAIN
 
@@ -1829,6 +1924,7 @@ Cannot definitively determine if TDD was followed.
 Different tools report different coverage percentages.
 
 **Symptoms:**
+
 - `pytest --cov` shows 85% coverage
 - HTML report shows 78% coverage
 - Different tools give different results
@@ -1851,6 +1947,7 @@ Different tools report different coverage percentages.
 **Solutions:**
 
 1. **Use project's canonical coverage tool:**
+
    ```bash
    # Check project documentation for standard tool
    cat README.md | grep -i coverage
@@ -1860,6 +1957,7 @@ Different tools report different coverage percentages.
    ```
 
 2. **Verify coverage scope:**
+
    ```bash
    # Python - check what's included
    pytest --cov=src --cov-report=term
@@ -1869,6 +1967,7 @@ Different tools report different coverage percentages.
    ```
 
 3. **Clear coverage cache:**
+
    ```bash
    # Python - remove old coverage data
    rm -f .coverage coverage.json
@@ -1882,6 +1981,7 @@ Different tools report different coverage percentages.
    ```
 
 4. **Document discrepancy:**
+
    ```markdown
    **Coverage Discrepancy Detected:**
 
@@ -1899,6 +1999,7 @@ Different tools report different coverage percentages.
    - Explain why this tool chosen
 
 6. **Standardize for future:**
+
    ```markdown
    **Recommendation:** Standardize coverage tool in project documentation.
 
@@ -1909,6 +2010,7 @@ Different tools report different coverage percentages.
    ```
 
    Coverage reports from other tools should not be used for enforcement.
+
    ```
 
 ---

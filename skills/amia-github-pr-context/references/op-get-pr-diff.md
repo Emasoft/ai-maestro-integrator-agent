@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Get PR Diff
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -98,6 +97,7 @@ python3 amia_get_pr_diff.py --pr <NUMBER> --files src/auth.py tests/test_auth.py
 ### Step 2: Review the Output
 
 For full diff, output is unified diff format:
+
 ```diff
 diff --git a/src/auth.py b/src/auth.py
 index abc123..def456 100644
@@ -173,6 +173,7 @@ index abc123..def456 100644          # Git blob references
 ### Hunk Header Explained
 
 `@@ -10,5 +10,15 @@`
+
 - `-10,5` = Original file: starts at line 10, shows 5 lines
 - `+10,15` = Modified file: starts at line 10, shows 15 lines
 
@@ -222,6 +223,7 @@ python3 amia_get_pr_diff.py --pr 123 | grep -c "^\+.*def test_"
 ## Large Diffs
 
 For large PRs:
+
 - Use `--stat` first to understand scope
 - Use `--files` to review section by section
 - Consider requesting PR split if diff > 1000 lines

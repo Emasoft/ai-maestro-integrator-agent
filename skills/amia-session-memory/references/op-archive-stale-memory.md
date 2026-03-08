@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Archive Stale Memory
 
-
 ## Contents
 
 - [Purpose](#purpose)

@@ -29,6 +29,7 @@ Manages team tasks through GitHub Projects V2, enabling AMOA (Emasoft Orchestrat
 ## Iron Rules
 
 This skill is **READ + STATUS UPDATE ONLY**:
+
 - Query project state via GraphQL API
 - Update card status (Todo -> In Progress -> Done)
 - Add comments and labels to issues

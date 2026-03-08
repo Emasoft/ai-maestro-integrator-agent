@@ -1,6 +1,7 @@
 # Parallel PR Workflow - Part 3: Concurrent Operations and Example Workflow
 
 This document covers:
+
 - Handling concurrent git operation limitations
 - Complete example workflow for processing 3 PRs in parallel
 
@@ -26,6 +27,7 @@ This document covers:
 ### The Concurrency Problem
 
 Git uses file locks to prevent concurrent modifications:
+
 - `.git/index.lock` during staging operations
 - `.git/refs/heads/<branch>.lock` during branch updates
 - `.git/COMMIT_EDITMSG` during commits
@@ -45,6 +47,7 @@ git rebase main           git merge main            CONFLICT!
 ### Safe Concurrent Operations
 
 These operations are generally safe to run in parallel:
+
 - `git status`
 - `git diff`
 - `git log`
@@ -56,6 +59,7 @@ These operations are generally safe to run in parallel:
 **Strategy 1: Orchestrator-Controlled Git Operations**
 
 Only the orchestrator runs git operations, one at a time:
+
 ```python
 async def safe_git_operation(worktree: str, operation: list[str]):
     async with git_lock:  # Global lock
@@ -65,6 +69,7 @@ async def safe_git_operation(worktree: str, operation: list[str]):
 **Strategy 2: Agent Queuing**
 
 Agents request git operations through a queue:
+
 ```
 Agent A: REQUEST commit in pr-123
 Agent B: REQUEST push in pr-456
@@ -74,6 +79,7 @@ Orchestrator: EXECUTE A's commit, then B's push
 **Strategy 3: Worktree-Level Locking**
 
 Lock at worktree level for operations affecting only that worktree:
+
 ```bash
 # In worktree pr-123
 flock /tmp/worktrees/pr-123/.git.lock git commit -m "fix"

@@ -178,9 +178,11 @@ git worktree repair
 
 1. Orchestrator receives notification that PR is ready
 2. Create review worktree:
+
    ```bash
    git worktree add ../repo-review-pr-{number} {branch}
    ```
+
 3. Install dependencies in worktree
 4. Run automated tests
 5. Perform manual verification
@@ -192,9 +194,11 @@ git worktree repair
 
 1. Update status to "Done"
 2. Remove review worktree:
+
    ```bash
    git worktree remove ../repo-review-pr-{number}
    ```
+
 3. Merge PR
 
 #### If Changes Requested
@@ -240,6 +244,7 @@ Each worktree is completely independent.
 ### "fatal: is already checked out"
 
 Branch is checked out in another worktree:
+
 ```bash
 # Find which worktree has the branch
 git worktree list
@@ -261,6 +266,7 @@ git clean -fd
 ### Dependencies fail to install
 
 Review worktree should have same environment as CI:
+
 ```bash
 # Check Python version matches CI
 python --version

@@ -11,16 +11,19 @@
 ## Removing Test Worktrees
 
 **When to Remove**:
+
 - After tests complete
 - When branch is merged
 - When worktree is no longer needed
 
 **Manual Removal**:
+
 ```bash
 python scripts/worktree_remove.py --identifier api-endpoints
 ```
 
 **Automated Removal** (in CI or cleanup script):
+
 ```python
 # scripts/cleanup_test_worktrees.py
 import json
@@ -56,11 +59,13 @@ def cleanup_old_test_worktrees(max_age_hours=24):
 **How Ports Are Released**:
 
 When you run `worktree_remove.py`, it automatically:
+
 1. Reads allocated ports from worktree metadata
 2. Removes port allocation from registry
 3. Makes ports available for reuse
 
 **Manual Port Release** (if needed):
+
 ```python
 # scripts/release_ports.py
 import json
@@ -95,6 +100,7 @@ def release_ports(worktree_id):
 **Pattern**: Remove test databases when worktree is removed.
 
 **Automated Cleanup**:
+
 ```python
 # In worktree_remove.py
 def cleanup_test_database(metadata):
@@ -112,6 +118,7 @@ def cleanup_test_database(metadata):
 ```
 
 **Manual Database Cleanup**:
+
 ```bash
 # List all test databases
 psql -l | grep testdb_
@@ -126,6 +133,7 @@ psql -l | grep testdb_ | cut -d'|' -f1 | xargs -I {} dropdb {}
 ---
 
 **Related Documents**:
+
 - [Testing Worktree Isolation Overview](testing-worktree-isolation.md)
 - [Database Testing Patterns](testing-worktree-isolation-part4-database-testing.md)
 - [CI/CD Integration](testing-worktree-isolation-part6-cicd.md)

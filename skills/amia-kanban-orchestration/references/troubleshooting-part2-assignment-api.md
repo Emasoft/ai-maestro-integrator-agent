@@ -21,12 +21,14 @@
 Username doesn't exist or is misspelled.
 
 **Diagnosis:**
+
 ```bash
 # Check if user exists
 gh api users/agent-1
 ```
 
 **Solution:**
+
 ```bash
 # Use correct username
 gh issue edit 42 --add-assignee correct-username
@@ -37,12 +39,14 @@ gh issue edit 42 --add-assignee correct-username
 User cannot be assigned because they're not a collaborator.
 
 **Diagnosis:**
+
 ```bash
 # Check collaborators
 gh api repos/OWNER/REPO/collaborators --jq '.[].login'
 ```
 
 **Solution:**
+
 ```bash
 # Add as collaborator first
 gh api repos/OWNER/REPO/collaborators/username --method PUT
@@ -53,6 +57,7 @@ gh api repos/OWNER/REPO/collaborators/username --method PUT
 GitHub limits assignees (usually 10).
 
 **Diagnosis:**
+
 ```bash
 # Check current assignees
 gh issue view 42 --json assignees --jq '.assignees | length'
@@ -70,11 +75,13 @@ Remove some assignees before adding new ones.
 **Symptom:** `401 Unauthorized` from API calls.
 
 **Diagnosis:**
+
 ```bash
 gh auth status
 ```
 
 **Solution:**
+
 ```bash
 # Re-authenticate
 gh auth login
@@ -88,12 +95,14 @@ gh auth refresh
 **Symptom:** `403 Forbidden` - usually rate limiting or permissions.
 
 **Diagnosis:**
+
 ```bash
 # Check rate limit
 gh api rate_limit --jq '.resources.graphql'
 ```
 
 **Solution:**
+
 - If rate limited: Wait for reset
 - If permissions: Check token scopes
 
@@ -102,6 +111,7 @@ gh api rate_limit --jq '.resources.graphql'
 **Symptom:** `API rate limit exceeded`
 
 **Diagnosis:**
+
 ```bash
 gh api rate_limit --jq '{
   limit: .resources.graphql.limit,
@@ -111,6 +121,7 @@ gh api rate_limit --jq '{
 ```
 
 **Solution:**
+
 - Wait until reset time
 - Batch operations
 - Use conditional requests (ETags)
@@ -121,6 +132,7 @@ gh api rate_limit --jq '{
 
 **Diagnosis:**
 Check query syntax, especially:
+
 - Missing variables
 - Wrong types
 - Invalid field names

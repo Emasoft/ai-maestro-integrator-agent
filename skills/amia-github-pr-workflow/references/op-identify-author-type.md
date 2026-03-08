@@ -1,6 +1,5 @@
 # Operation: Identify PR Author Type
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -16,9 +15,13 @@
 - [Critical Rule](#critical-rule)
 
 ---
+
+```yaml
 procedure: proc-request-pr-review
 workflow-instruction: Step 20 - PR Review Request
 operation-id: op-identify-author-type
+```
+
 ---
 
 ## Purpose
@@ -40,6 +43,7 @@ Determine if a PR is from a human contributor or an AI/bot, as this affects hand
 ## Steps
 
 1. **Get PR author information**:
+
    ```bash
    gh pr view <PR_NUMBER> --json author,authorAssociation --jq '.author.login, .authorAssociation'
    ```
@@ -76,12 +80,14 @@ Determine if a PR is from a human contributor or an AI/bot, as this affects hand
 ## Handling Rules
 
 ### Human PRs
+
 - **Escalate to user** for guidance on communication
 - **Never** modify without explicit approval
 - **Polite, formal** communication style
 - **Wait** for human response before proceeding
 
 ### AI/Bot PRs
+
 - **Direct delegation** allowed
 - Can modify without escalation
 - **Technical, direct** communication style

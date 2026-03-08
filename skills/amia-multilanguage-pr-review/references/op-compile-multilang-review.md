@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Compile Multilanguage Review
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -151,6 +150,7 @@ Aggregate all findings from language detection, linting, and cross-language anal
    - COMMENT: Only suggestions, no judgment
 
 5. **Post the review**
+
    ```bash
    gh pr review <PR_NUMBER> --approve --body "$(cat review.md)"
    # or

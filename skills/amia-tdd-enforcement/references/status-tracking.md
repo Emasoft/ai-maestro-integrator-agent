@@ -1,6 +1,7 @@
 # Status Tracking System
 
 ## Table of Contents
+
 - [Use-Case TOC](#use-case-toc)
 - [Status States](#status-states)
   - [State Descriptions](#state-descriptions)
@@ -19,6 +20,7 @@
 ---
 
 ## Use-Case TOC
+
 - When you need to track TDD cycle progress → [Status States](#status-states)
 - If you need to document current phase → [Status Tracking Format](#status-tracking-format)
 - When managing multiple features → [Multi-Feature Tracking](#multi-feature-tracking)
@@ -40,24 +42,28 @@ Each piece of work is tracked through four states:
 ### State Descriptions
 
 **pending:**
+
 - Test is being written
 - Not yet committed
 - Preparing for RED phase
 - No production code exists for this test
 
 **RED:**
+
 - Test is committed
 - Test fails when run
 - Failure is measurable and clear
 - Ready for implementation
 
 **GREEN:**
+
 - Production code implemented
 - Test now passes
 - All other tests still pass
 - Code works but may be messy
 
 **refactor:**
+
 - Code quality improved
 - All tests still pass
 - Behavior unchanged
@@ -131,6 +137,7 @@ When managing multiple features simultaneously:
 ```
 
 **Rules for Multi-Feature:**
+
 - Only ONE feature in GREEN or REFACTOR at a time
 - Can have multiple features in RED (tests written, awaiting implementation)
 - Complete one full cycle before starting another
@@ -143,6 +150,7 @@ When managing multiple features simultaneously:
 ### Transition: pending → RED
 
 **Requirements:**
+
 - [ ] Test is written
 - [ ] Test uses Arrange-Act-Assert pattern
 - [ ] Test is committed to version control
@@ -150,6 +158,7 @@ When managing multiple features simultaneously:
 - [ ] Failure message is clear
 
 **Action:**
+
 ```bash
 git add tests/test_feature.py
 git commit -m "RED: test for [feature]"
@@ -159,6 +168,7 @@ git commit -m "RED: test for [feature]"
 ### Transition: RED → GREEN
 
 **Requirements:**
+
 - [ ] Currently in RED state
 - [ ] Test fails when run
 - [ ] Production code is written
@@ -167,6 +177,7 @@ git commit -m "RED: test for [feature]"
 - [ ] No refactoring done yet
 
 **Action:**
+
 ```bash
 git add src/feature.py
 git commit -m "GREEN: implement [feature]"
@@ -176,6 +187,7 @@ git commit -m "GREEN: implement [feature]"
 ### Transition: GREEN → REFACTOR
 
 **Requirements:**
+
 - [ ] Currently in GREEN state
 - [ ] All tests pass
 - [ ] Code improvements identified
@@ -183,6 +195,7 @@ git commit -m "GREEN: implement [feature]"
 - [ ] Tests still pass after refactoring
 
 **Action:**
+
 ```bash
 git add src/feature.py
 git commit -m "REFACTOR: improve [aspect]"
@@ -192,6 +205,7 @@ git commit -m "REFACTOR: improve [aspect]"
 ### Transition: REFACTOR → pending (next feature)
 
 **Requirements:**
+
 - [ ] Currently in REFACTOR state
 - [ ] All tests pass
 - [ ] Code quality is acceptable
@@ -199,6 +213,7 @@ git commit -m "REFACTOR: improve [aspect]"
 - [ ] Ready for next feature
 
 **Action:**
+
 ```markdown
 # Update tracking
 - Mark current feature as complete
@@ -248,6 +263,7 @@ fi
 ## Status Tracking Best Practices
 
 **Do:**
+
 - Update status immediately after each phase
 - Include commit SHAs in tracking
 - Keep tracking document in version control
@@ -255,6 +271,7 @@ fi
 - Track test names explicitly
 
 **Don't:**
+
 - Skip status updates
 - Use ambiguous status labels
 - Track implementation details instead of status

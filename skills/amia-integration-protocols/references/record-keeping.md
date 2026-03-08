@@ -5,18 +5,20 @@ This reference describes the logging, tracking, and documentation formats used b
 ## Contents
 
 - 1. Routing Log Format
-- 2. Integration Status Files
-- 3. Quality Reports
-- 4. Session State Structure
+- 1. Integration Status Files
+- 1. Quality Reports
+- 1. Session State Structure
 
 ---
 
 ## 1. Routing Log Format
 
 ### Purpose
+
 Track all routing decisions, delegations, and completions in chronological order.
 
 ### Location
+
 `docs_dev/integration/routing-log.md`
 
 ### Format Structure
@@ -73,9 +75,11 @@ Track all routing decisions, delegations, and completions in chronological order
 ## 2. Integration Status Files
 
 ### Purpose
+
 Track the full lifecycle of an integration task from creation to completion.
 
 ### Location
+
 `docs_dev/integration/status/[pr-number].md` or `docs_dev/integration/status/[task-id].md`
 
 ### Format Structure
@@ -138,9 +142,11 @@ Track the full lifecycle of an integration task from creation to completion.
 ## 3. Quality Reports
 
 ### Purpose
+
 Document detailed findings from code reviews, quality checks, and integration validations.
 
 ### Location
+
 `docs_dev/integration/reports/pr-[number]-report.md` or `docs_dev/integration/reports/[task-id]-report.md`
 
 ### Format Structure
@@ -211,9 +217,11 @@ All reports should include these standard metrics:
 ## 4. Session State Structure
 
 ### Purpose
+
 Maintain the current state of the integration session for context and continuity.
 
 ### Location
+
 In-memory during session, saved to `docs_dev/integration/session-state.json`
 
 ### JSON Structure
@@ -298,26 +306,31 @@ Each task (active or completed) contains:
 ## Best Practices
 
 ### 1. Update Immediately
+
 - Log routing decisions as they happen
 - Update status files when state changes
 - Don't batch updates
 
 ### 2. Be Consistent
+
 - Use standard formats for all entries
 - Follow naming conventions for files
 - Use ISO 8601 for all timestamps
 
 ### 3. Include Context
+
 - Reference PR numbers, issue numbers, branches
 - Link to detailed reports
 - Provide rationale for decisions
 
 ### 4. Track Duration
+
 - Record start and end times
 - Calculate and log duration
 - Use for performance monitoring
 
 ### 5. Link Documents
+
 - Status files reference reports
 - Reports reference PRs/issues
 - Routing log references both

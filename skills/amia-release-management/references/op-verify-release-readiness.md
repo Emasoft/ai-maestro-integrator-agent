@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Verify Release Readiness
 
-
 ## Contents
 
 - [Purpose](#purpose)

@@ -65,6 +65,7 @@ python3 scripts/amia_kanban_check_completion.py OWNER REPO PROJECT_NUMBER [--ver
 ```
 
 **Exit codes:**
+
 - `0`: All items Done (can exit)
 - `1`: Items still in progress (cannot exit)
 - `2`: Blocked items exist (needs attention)

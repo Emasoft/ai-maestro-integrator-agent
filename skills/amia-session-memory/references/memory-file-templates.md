@@ -130,6 +130,7 @@ Copy-paste this template when appending to `patterns-learned.md`:
 
 - [Related pattern 1]
 - [Related pattern 2]
+
 ```
 
 ## Release History Entry Template

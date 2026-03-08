@@ -1,6 +1,7 @@
 # TDD Troubleshooting - Part 1: Test Failures
 
 ## Table of Contents
+
 - [Test Fails During Refactoring](#test-fails-during-refactoring)
   - [Symptoms](#symptoms)
   - [Root Cause](#root-cause)
@@ -17,17 +18,20 @@
 ## Test Fails During Refactoring
 
 ### Symptoms
+
 - Test passed before refactoring
 - Made a refactoring change
 - Test now fails
 - All other tests still pass
 
 ### Root Cause
+
 Refactoring changed behavior instead of just improving code structure.
 
 ### Solution
 
 **Step 1: Immediately revert the refactoring change**
+
 ```bash
 # Undo the change
 git checkout .
@@ -37,18 +41,21 @@ git revert HEAD
 ```
 
 **Step 2: Verify tests pass again**
+
 ```bash
 pytest tests/
 # All tests: PASS
 ```
 
 **Step 3: Commit the test-passing state**
+
 ```bash
 git add .
 git commit -m "REFACTOR: reverted unsafe change, tests passing"
 ```
 
 **Step 4: Try a different, smaller refactoring**
+
 ```python
 # Instead of:
 # - Moving method AND renaming AND changing logic
@@ -59,12 +66,14 @@ git commit -m "REFACTOR: reverted unsafe change, tests passing"
 ```
 
 **Step 5: Run tests after EACH micro-change**
+
 ```bash
 # After each line of refactoring
 pytest tests/
 ```
 
 ### Prevention
+
 - Make tiny refactoring changes
 - Run tests after each change
 - Commit each successful refactoring
@@ -75,12 +84,14 @@ pytest tests/
 ## Cannot Write a Failing Test
 
 ### Symptoms
+
 - Requirement is clear
 - But can't figure out how to write a test
 - Test is too complex
 - Test covers too much
 
 ### Root Cause
+
 The requirement is too vague or too large to test in one cycle.
 
 ### Solution
@@ -88,11 +99,13 @@ The requirement is too vague or too large to test in one cycle.
 **Step 1: Break requirement into smaller behaviors**
 
 **Too large:**
+
 ```
 Requirement: "User authentication system"
 ```
 
 **Broken down:**
+
 ```
 1. User can register with email and password
 2. User can login with valid credentials
@@ -115,6 +128,7 @@ def test_user_can_register_with_email_and_password():
 ```
 
 **Step 3: Verify the test fails**
+
 ```bash
 pytest tests/test_user_service.py::test_user_can_register_with_email_and_password
 # FAIL: NameError: name 'UserService' is not defined
@@ -125,12 +139,14 @@ pytest tests/test_user_service.py::test_user_can_register_with_email_and_passwor
 The code already implements this behavior. Either:
 
 **A) Don't rewrite it:**
+
 ```markdown
 - Behavior already works
 - Move to next behavior
 ```
 
 **B) Write a different test that DOES fail:**
+
 ```python
 def test_user_cannot_register_with_duplicate_email():
     """User cannot register with an email that's already taken"""
@@ -142,6 +158,7 @@ def test_user_cannot_register_with_duplicate_email():
 ```
 
 ### Prevention
+
 - Start with the smallest possible behavior
 - Ask: "What is the ONE thing this should do?"
 - Ignore edge cases initially

@@ -63,6 +63,7 @@ gh run view <latest-run-id> --log-failed
 **Documentation requirements:**
 
 Document the following metadata for every CI failure:
+
 - **Timestamp**: When the failure occurred (ISO8601 format)
 - **Workflow name**: Which workflow file triggered the job
 - **Job name**: Which job within the workflow failed
@@ -90,6 +91,7 @@ Document the following metadata for every CI failure:
 Before proceeding to pattern identification, confirm:
 
 **Verification Checklist Step 1:**
+
 - [ ] Full failure log collected (not truncated)
 - [ ] Workflow name and job identified
 - [ ] Runner OS and architecture documented
@@ -137,6 +139,7 @@ Once a category is identified, reference the appropriate pattern file:
 | Language-Specific | language-specific-patterns.md | Python venv, Node.js modules, Rust cargo, Go modules |
 
 **Verification Checklist Step 2:**
+
 - [ ] Decision tree followed systematically (in order)
 - [ ] Pattern category identified (or marked as Unknown)
 - [ ] Reference document noted for next analysis phase
@@ -338,18 +341,22 @@ Once a category is identified, reference the appropriate pattern file:
 **Common root causes by language:**
 
 **Python:**
+
 - **Virtual environment not activated:** Commands run outside venv, can't find packages
 - **Check:** Is `source .venv/bin/activate` (Linux/macOS) or `.venv\Scripts\Activate.ps1` (Windows) called before Python commands?
 
 **JavaScript/Node.js:**
+
 - **node_modules not cached or installed:** Packages missing after checkout
 - **Check:** Is `npm install` or `yarn install` run before using modules?
 
 **Rust:**
+
 - **Cargo target directory pollution:** Old build artifacts cause errors
 - **Check:** Is `cargo clean` needed before rebuild?
 
 **Go:**
+
 - **Module resolution failure:** Go modules not downloaded or incorrect version
 - **Check:** Is `go mod download` run before build?
 
@@ -408,16 +415,20 @@ Runner: {os}-{arch}
 
 ### Log Excerpt 1: {Description}
 ```
+
 Line {N}: {log line}
 Line {N+1}: {log line}
 ...
+
 ```
 
 ### Log Excerpt 2: {Description}
 ```
+
 Line {M}: {log line}
 Line {M+1}: {log line}
 ...
+
 ```
 
 ## Recommended Fix Category
@@ -484,6 +495,7 @@ Section: {specific section showing the fix pattern}
 ```
 
 **Verification Checklist Step 4:**
+
 - [ ] Report written to `docs_dev/ci-debug/CI-DEBUG-{timestamp}.md`
 - [ ] All sections completed (no placeholders)
 - [ ] Evidence includes specific log excerpts with line numbers
@@ -509,12 +521,14 @@ Section: {specific section showing the fix pattern}
 6. **RETURN** to orchestrator with minimal report
 
 **Do NOT:**
+
 - Write or modify code in the codebase
 - Use the Edit tool
 - Implement the fix directly
 - Make assumptions about fix implementation details
 
 **Do:**
+
 - Document the root cause completely
 - Specify what type of change is needed
 - Provide reference patterns for implementation
@@ -523,16 +537,19 @@ Section: {specific section showing the fix pattern}
 ### 1.5.2 AI Maestro message format
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `{remote-agent-name}` (see routing table below)
 - **Subject**: `[FIX REQUEST] CI failure - {pattern_category}`
 - **Priority**: `high`
 - **Content**:
+
   ```json
   {
     "type": "fix_request",
     "message": "Root cause: {one_line_summary}\nFix spec: docs_dev/ci-debug/CI-DEBUG-{timestamp}.md\nReference: amia-ci-failure-patterns/references/{pattern-file}.md"
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Agent routing by fix category:**
@@ -571,6 +588,7 @@ EOF
 ```
 
 **Verification Checklist Step 5:**
+
 - [ ] Fix specification documented (NOT implemented)
 - [ ] AI Maestro message prepared for delegation
 - [ ] Correct remote agent identified for fix category
@@ -727,6 +745,7 @@ python scripts/amia_diagnose_ci_failure.py --log-file ci.log --os windows
 ```
 
 **When to use:**
+
 - Large log files (>1000 lines) that are hard to analyze manually
 - Multiple potential patterns need to be checked
 - Structured output needed for further processing
@@ -779,6 +798,7 @@ python scripts/amia_detect_platform_issue.py --path project/ --json
 ```
 
 **When to use:**
+
 - Before making CI workflow changes
 - After adding new scripts to the project
 - When platform-specific failures are suspected
@@ -843,25 +863,31 @@ python scripts/amia_detect_platform_issue.py --path project/ --json
 **Solution:**
 
 1. **Focus on failed step only:**
+
    ```bash
    gh run view <run-id> --log-failed
    ```
+
    This returns only the output from the failed step, not the entire workflow log.
 
 2. **Use log excerpts:**
    Instead of reading the entire log, extract excerpts around the error:
+
    ```bash
    # Get 10 lines before and after error line
    grep -C 10 "error message" ci.log
    ```
 
 3. **Use automated analysis:**
+
    ```bash
    python scripts/amia_diagnose_ci_failure.py --log-file ci.log --json
    ```
+
    The script scans the log and extracts relevant patterns automatically.
 
 **When NOT to use:**
+
 - Do NOT try to load the entire log into memory if it's >10MB
 - Do NOT manually read logs >1000 lines without automated assistance
 
@@ -879,6 +905,7 @@ python scripts/amia_detect_platform_issue.py --path project/ --json
    - What was ruled out during analysis
 
 2. **Escalate with evidence:**
+
    ```
    [ESCALATE] debug-specialist - Unknown failure pattern
    Root cause: [Unknown] - No matching pattern in decision tree
@@ -893,6 +920,7 @@ python scripts/amia_detect_platform_issue.py --path project/ --json
    - Suggested reference document section
 
 **When to escalate:**
+
 - After systematically checking all 6 pattern categories
 - When error message is too ambiguous to categorize
 - When multiple patterns apply simultaneously
@@ -911,6 +939,7 @@ python scripts/amia_detect_platform_issue.py --path project/ --json
 
 2. **Document dependencies between failures:**
    If one failure causes another, note the dependency:
+
    ```markdown
    ## Failure Dependencies
    - Failure 2 is caused by Failure 1 (temp file not created)
@@ -919,6 +948,7 @@ python scripts/amia_detect_platform_issue.py --path project/ --json
 
 3. **Prioritize fixes:**
    Recommend fix order based on dependencies:
+
    ```markdown
    ## Recommended Fix Order
    1. Fix Failure 1 first (creates temp file)
@@ -942,6 +972,7 @@ Details: docs_dev/ci-debug/CI-DEBUG-20250131-160000-summary.md
 
 1. **Document test flakiness:**
    Note the test name and failure frequency:
+
    ```markdown
    ## Flaky Test Detection
    - Test: tests/test_plugin.py::test_hook_execution
@@ -987,6 +1018,7 @@ The test does not wait for async operation to complete before assertion.
    - `CI-DEBUG-20250131-143000-macos.md`
 
 2. **Identify common vs platform-specific issues:**
+
    ```markdown
    ## Cross-Platform Analysis
 
@@ -1001,6 +1033,7 @@ The test does not wait for async operation to complete before assertion.
    ```
 
 3. **Recommend platform-specific fixes:**
+
    ```markdown
    ## Recommended Fix Category
 

@@ -5,6 +5,7 @@
 This document is split into multiple parts for easier navigation. Use the links below to find the section you need.
 
 ### Part 1: Installation and Overview
+
 **File:** [script-multi-user-identity-part1-installation.md](script-multi-user-identity-part1-installation.md)
 
 - When you need to understand what the script does → Overview
@@ -16,6 +17,7 @@ This document is split into multiple parts for easier navigation. Use the links 
 - When you need to authenticate the gh CLI → Step 6: Authenticate gh CLI
 
 ### Part 2: Core Commands
+
 **File:** [script-multi-user-identity-part2-core-commands.md](script-multi-user-identity-part2-core-commands.md)
 
 - When you need to generate SSH keys for a specific identity → Setup Command
@@ -25,6 +27,7 @@ This document is split into multiple parts for easier navigation. Use the links 
 - When you need to configure multiple repositories at once → Bulk-Repo Command
 
 ### Part 3: Advanced Commands
+
 **File:** [script-multi-user-identity-part3-advanced-commands.md](script-multi-user-identity-part3-advanced-commands.md)
 
 - When you need to check current identity status → Status Command
@@ -33,6 +36,7 @@ This document is split into multiple parts for easier navigation. Use the links 
 - When you need to automatically fix common issues → Fix Command
 
 ### Part 4: Troubleshooting and Integration
+
 **File:** [script-multi-user-identity-part4-troubleshooting.md](script-multi-user-identity-part4-troubleshooting.md)
 
 - When SSH key is not found → SSH Key Not Found
@@ -60,11 +64,13 @@ This document is split into multiple parts for easier navigation. Use the links 
 ### Running the Script
 
 **Linux/macOS:**
+
 ```bash
 python3 gh_multiuser.py <command> [args...]
 ```
 
 **Windows:**
+
 ```powershell
 python gh_multiuser.py <command> [args...]
 # or

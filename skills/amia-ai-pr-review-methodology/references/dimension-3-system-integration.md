@@ -44,7 +44,7 @@ Every file path referenced in a PR must be verified to exist on each supported p
 | Linux (RHEL/Fedora) | `/usr/` | `/home/<username>/` | `/usr/bin/`, `/usr/local/bin/`, `~/.local/bin/` |
 | Windows | `C:\Program Files\` | `C:\Users\<username>\` | `C:\Program Files\<app>\`, `%APPDATA%\<app>\` |
 
-3. Request evidence from the author:
+1. Request evidence from the author:
 
 ```
 Please provide the output of the following commands on each supported platform:
@@ -78,6 +78,7 @@ Do not trust paths based on convention or intuition. Always cross-reference with
 A PR claims that a tool installs to `/usr/share/mytool/bin/mytool` on Linux.
 
 Cross-reference with the tool's official documentation:
+
 - The official Debian package installs the binary to `/usr/bin/mytool`
 - The official tarball installs to `/opt/mytool/bin/mytool`
 - No documentation mentions `/usr/share/mytool/bin/mytool`

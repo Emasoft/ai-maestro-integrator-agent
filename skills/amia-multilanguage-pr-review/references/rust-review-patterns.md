@@ -7,6 +7,7 @@ This document provides comprehensive Rust code review patterns covering style, m
 ## Table of Contents
 
 ### 4.1 Rust Code Style and Idioms
+
 **File:** [rust-review-patterns-part1-style-idioms.md](rust-review-patterns-part1-style-idioms.md)
 
 - Essential Style Rules (naming, indentation, line length)
@@ -19,6 +20,7 @@ This document provides comprehensive Rust code review patterns covering style, m
 ---
 
 ### 4.2 Memory Safety Patterns and Ownership
+
 **File:** [rust-review-patterns-part2-memory-safety.md](rust-review-patterns-part2-memory-safety.md)
 
 - Ownership Rules (the three fundamental rules)
@@ -32,6 +34,7 @@ This document provides comprehensive Rust code review patterns covering style, m
 ---
 
 ### 4.3 Error Handling with Result and Option
+
 **File:** [rust-review-patterns-part3-error-handling.md](rust-review-patterns-part3-error-handling.md)
 
 - Result Patterns (returning Result, custom error types, thiserror crate)
@@ -43,6 +46,7 @@ This document provides comprehensive Rust code review patterns covering style, m
 ---
 
 ### 4.4 Clippy Lints and Configuration
+
 **File:** [rust-review-patterns-part4-clippy.md](rust-review-patterns-part4-clippy.md)
 
 - Clippy Configuration (Cargo.toml lints section)
@@ -56,6 +60,7 @@ This document provides comprehensive Rust code review patterns covering style, m
 ---
 
 ### 4.5 Documentation Standards with rustdoc
+
 **File:** [rust-review-patterns-part5-documentation.md](rust-review-patterns-part5-documentation.md)
 
 - Documentation Comments (crate-level, item-level, field-level)

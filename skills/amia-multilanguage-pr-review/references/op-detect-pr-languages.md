@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Detect PR Languages
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -157,6 +156,7 @@ The script uses multiple methods to detect languages:
 ## Next Steps After Detection
 
 For each detected language:
+
 1. Read the corresponding review patterns document
 2. Run `op-get-language-linters` to get appropriate linters
 3. Execute language-specific review checks

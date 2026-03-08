@@ -48,6 +48,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **To check for incoming messages:** Check your inbox using the `agent-messaging` skill. Filter for messages with `content.type == "integration-request"`.
 
 **Expected Message Format from AMOA:**
+
 ```json
 {
   "from": "orchestrator-amoa",
@@ -75,10 +76,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Received handoff document fails validation (missing UUID, invalid references, TBD placeholders).
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `[HANDOFF REJECTED] Invalid handoff document`
 - **Priority**: `high`
 - **Content**:
+
   ```json
   {
     "type": "handoff-rejected",
@@ -90,6 +93,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     ]
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ---
@@ -101,10 +105,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Routing a task (PR review, bug investigation, code review) to a specialized sub-agent.
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The appropriate sub-agent (e.g., `amia-code-reviewer`)
 - **Subject**: `Review PR #456: Add auth module`
 - **Priority**: `high`
 - **Content**:
+
   ```json
   {
     "type": "task-delegation",
@@ -121,9 +127,11 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     "callback_agent": "ai-maestro-integrator"
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Valid Sub-Agent Targets:**
+
 - `amia-api-coordinator` - GitHub API operations
 - `amia-code-reviewer` - Code quality assessment
 - `amia-pr-evaluator` - PR readiness check
@@ -144,10 +152,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: PR review completed successfully, all quality gates passed, ready to merge.
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456 - COMPLETED`
 - **Priority**: `normal`
 - **Content**:
+
   ```json
   {
     "type": "integration-status",
@@ -162,6 +172,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     "next_steps": "Issue #123 ready to close, all acceptance criteria met"
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ### 4.2 Integration Status Report (In Progress)
@@ -169,10 +180,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Integration task in progress, awaiting sub-agent completion.
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456 - IN PROGRESS`
 - **Priority**: `normal`
 - **Content**:
+
   ```json
   {
     "type": "integration-status",
@@ -187,6 +200,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     "next_steps": "Awaiting code review completion"
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ### 4.3 Integration Status Report (Failed)
@@ -194,10 +208,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Integration task failed due to quality gate failure or technical issue.
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456 - FAILED`
 - **Priority**: `high`
 - **Content**:
+
   ```json
   {
     "type": "integration-status",
@@ -213,6 +229,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     "next_steps": "Request implementor add tests for uncovered code paths"
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ### 4.4 Blocker Escalation (Critical Issues)
@@ -220,10 +237,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Critical blocker prevents integration (security vulnerability, resource conflict, policy unclear).
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `[BLOCKER] PR #456 Security Issue`
 - **Priority**: `urgent`
 - **Content**:
+
   ```json
   {
     "type": "blocker-escalation",
@@ -238,9 +257,11 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     "requires_decision": true
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Valid Blocker Types:**
+
 - `QUALITY_GATE_FAILED` - Tests failed, coverage insufficient, security issue
 - `RESOURCE_CONFLICT` - Multiple agents editing same file
 - `POLICY_UNCLEAR` - Quality gate policy needs clarification
@@ -255,10 +276,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: PR review finished, all quality gates passed, no issues found.
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `PR Review Complete: PR #456 - ALL GATES PASSED`
 - **Priority**: `normal`
 - **Content**:
+
   ```json
   {
     "type": "integration-status",
@@ -279,6 +302,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     "next_steps": "Ready to merge, issue #123 can close after merge"
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ### 5.2 PR Review Complete (Tests Failed)
@@ -286,10 +310,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: PR review found test failures or insufficient test coverage.
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `PR Review Complete: PR #456 - TESTS FAILED`
 - **Priority**: `high`
 - **Content**:
+
   ```json
   {
     "type": "integration-status",
@@ -314,6 +340,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     "next_steps": "Request implementor fix failing tests and add coverage for uncovered code paths"
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ### 5.3 Merge Approved
@@ -321,10 +348,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Quality gates passed, PR approved for merge into main branch.
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Merge Approved: PR #456`
 - **Priority**: `normal`
 - **Content**:
+
   ```json
   {
     "type": "merge-decision",
@@ -338,6 +367,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     "linked_issues": [123]
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ### 5.4 Merge Rejected
@@ -345,10 +375,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: Quality gates failed, PR rejected and cannot be merged.
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Merge Rejected: PR #456`
 - **Priority**: `high`
 - **Content**:
+
   ```json
   {
     "type": "merge-decision",
@@ -372,6 +404,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     ]
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ### 5.5 Release Ready Notification
@@ -379,10 +412,12 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 **Scenario**: All PRs merged, tests passed, release candidate ready for tagging.
 
 **Action:** Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `Release Ready: v1.2.0`
 - **Priority**: `high`
 - **Content**:
+
   ```json
   {
     "type": "release-ready",
@@ -400,6 +435,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
     "next_steps": "Create git tag v1.2.0, push to main, create GitHub release"
   }
   ```
+
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ---

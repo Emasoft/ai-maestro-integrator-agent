@@ -49,11 +49,12 @@ strategy:
 This creates 3 operating systems multiplied by 3 Python versions = 9 jobs.
 
 Each additional dimension multiplies the total. Adding `architecture: [x64, arm64]`
-would create 3 * 3 * 2 = 18 jobs. CI costs grow rapidly with each new dimension.
+would create 3 *3* 2 = 18 jobs. CI costs grow rapidly with each new dimension.
 
 ### 4.1.2 When the Cartesian Product Is Appropriate
 
 The full Cartesian product is appropriate when:
+
 - Every combination genuinely needs testing (all OS + all versions used in production)
 - The test suite is fast (under 5 minutes per job)
 - The repository has sufficient CI minute budget
@@ -321,8 +322,9 @@ it to `true` runs the upload step.
 Formula: `(Cartesian jobs - Include jobs) * average minutes per job = saved minutes`
 
 For a project running CI 20 times per day:
-- Cartesian: 9 jobs * 8 min * 20 runs = 1,440 minutes/day
-- Include: 5 jobs * 8 min * 20 runs = 800 minutes/day
+
+- Cartesian: 9 jobs *8 min* 20 runs = 1,440 minutes/day
+- Include: 5 jobs *8 min* 20 runs = 800 minutes/day
 - Savings: 640 minutes/day = approximately 19,200 minutes/month
 
 ### 4.6.2 Deciding Which Combinations to Drop

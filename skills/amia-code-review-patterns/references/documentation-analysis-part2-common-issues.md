@@ -21,6 +21,7 @@ This document covers common documentation issues to look for during code review,
 ### Missing Docstrings
 
 **Undocumented public function**
+
 ```python
 # WRONG: No docstring
 def calculate_discount(price, customer_type, quantity):
@@ -63,6 +64,7 @@ def calculate_discount(price: float, customer_type: str, quantity: int) -> float
 ```
 
 **Undocumented class**
+
 ```python
 # WRONG: No class documentation
 class UserManager:
@@ -116,6 +118,7 @@ class UserManager:
 ### Poor Documentation Quality
 
 **Redundant docstring**
+
 ```python
 # WRONG: States the obvious
 def add(a, b):
@@ -141,6 +144,7 @@ def add(a: Number, b: Number) -> Number:
 ```
 
 **Outdated documentation**
+
 ```python
 # WRONG: Documentation doesn't match implementation
 def process_order(order_id, user_id):
@@ -177,6 +181,7 @@ def process_order(order_id: int, user_id: int) -> Order:
 ```
 
 **Vague parameter descriptions**
+
 ```python
 # WRONG: Vague descriptions
 def send_notification(user, message, level):
@@ -214,6 +219,7 @@ def send_notification(
 ### Missing Examples
 
 **Complex function without examples**
+
 ```python
 # WRONG: Complex function, no examples
 def parse_date_range(date_string, format_string=None, timezone=None):
@@ -259,6 +265,7 @@ def parse_date_range(
 ### Poor README
 
 **Incomplete README**
+
 ```markdown
 <!-- WRONG: Minimal README -->
 # MyProject
@@ -267,7 +274,9 @@ A project that does stuff.
 
 ## Installation
 ```
+
 pip install myproject
+
 ```
 
 <!-- CORRECT: Comprehensive README -->
@@ -301,6 +310,7 @@ pip install myproject
 ```
 
 ### Install from source
+
 ```bash
 git clone https://github.com/user/myproject.git
 cd myproject
@@ -338,7 +348,7 @@ cache:
 
 ## Documentation
 
-Full documentation is available at https://myproject.readthedocs.io
+Full documentation is available at <https://myproject.readthedocs.io>
 
 ## Contributing
 
@@ -347,6 +357,7 @@ See [CONTRIBUTING.md]\(CONTRIBUTING.md\) for guidelines.
 ## License
 
 MIT License - see [LICENSE]\(LICENSE\) for details.
+
 ```
 
 ### Missing Error Documentation
@@ -400,6 +411,7 @@ def get_user(user_id: int) -> User:
 ### Unhelpful Comments
 
 **Obvious comments**
+
 ```python
 # WRONG: Comment states the obvious
 # Increment counter
@@ -422,6 +434,7 @@ utc_time = local_time.astimezone(timezone.utc)
 ```
 
 **Why vs what comments**
+
 ```python
 # WRONG: Comment explains what
 # Set timeout to 30 seconds

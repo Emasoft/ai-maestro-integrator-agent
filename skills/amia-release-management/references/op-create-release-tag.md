@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Create Release Tag
 
-
 ## Contents
 
 - [Purpose](#purpose)

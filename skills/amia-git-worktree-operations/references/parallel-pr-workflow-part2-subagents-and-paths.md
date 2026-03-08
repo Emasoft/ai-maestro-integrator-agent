@@ -1,6 +1,7 @@
 # Parallel PR Workflow - Part 2: Subagent Management and Path Validation
 
 This document covers:
+
 - Working directory management for subagents
 - Path validation rules and common violations
 
@@ -76,12 +77,14 @@ When multiple agents work on different PRs:
 ### Preventing Cross-Worktree Contamination
 
 **DO NOT:**
+
 ```bash
 # WRONG: Agent A accidentally writes to Agent B's worktree
 echo "fix" > /tmp/worktrees/pr-456/file.py  # Agent A should NOT do this
 ```
 
 **DO:**
+
 ```bash
 # CORRECT: Agent A only writes to their own worktree
 echo "fix" > /tmp/worktrees/pr-123/file.py  # Agent A's worktree
@@ -112,6 +115,7 @@ echo "fix" > /tmp/worktrees/pr-123/file.py  # Agent A's worktree
 ### Common Violation Patterns
 
 **Violation 1: Hardcoded Main Repo Path**
+
 ```python
 # WRONG
 with open("/home/user/project/config.json") as f:
@@ -124,6 +128,7 @@ with open(f"{worktree}/config.json") as f:
 ```
 
 **Violation 2: Relative Path Escape**
+
 ```bash
 # WRONG: Escapes worktree via parent reference
 cd /tmp/worktrees/pr-123
@@ -135,6 +140,7 @@ cat ./config/settings.txt
 ```
 
 **Violation 3: Symlink Following**
+
 ```bash
 # DANGEROUS: Symlink points outside worktree
 ls -la link  # link -> /path/to/main-repo/src
@@ -145,6 +151,7 @@ realpath link  # Check where it really points
 ```
 
 **Violation 4: Tool Default Paths**
+
 ```bash
 # WRONG: Tool writes to default location
 prettier --write src/  # Might use main repo if not in worktree

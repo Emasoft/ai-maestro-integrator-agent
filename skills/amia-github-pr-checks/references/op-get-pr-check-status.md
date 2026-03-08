@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Get PR Check Status
 
-
 ## Contents
 
 - [Purpose](#purpose)

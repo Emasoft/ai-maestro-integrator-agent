@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Bump Version
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -251,21 +250,21 @@ done
 
 ### File not writable
 
-**Cause**: Permission denied.
+__Cause__: Permission denied.
 
-**Solution**: Check file permissions.
+__Solution__: Check file permissions.
 
 ### Version mismatch after update
 
-**Cause**: Sed pattern didn't match.
+__Cause__: Sed pattern didn't match.
 
-**Solution**: Check file format, update pattern.
+__Solution__: Check file format, update pattern.
 
 ### Lock file update fails
 
-**Cause**: Package manager error.
+__Cause__: Package manager error.
 
-**Solution**: Run package manager manually.
+__Solution__: Run package manager manually.
 
 ## Complete Bump Script
 

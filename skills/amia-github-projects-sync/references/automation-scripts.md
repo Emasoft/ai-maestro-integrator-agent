@@ -13,6 +13,7 @@
 The github-projects-sync skill includes automation scripts for common operations. All scripts are located in the `scripts/` directory.
 
 **Script Locations:**
+
 ```
 github-projects-sync/
 ├── scripts/
@@ -55,6 +56,7 @@ python scripts/sync_tasks.py --repo OWNER/REPO --project PROJECT_NUMBER --tasks 
 ### Examples
 
 **Dry-run to preview:**
+
 ```bash
 python scripts/sync_tasks.py \
   --repo myorg/myrepo \
@@ -64,6 +66,7 @@ python scripts/sync_tasks.py \
 ```
 
 **Create issues:**
+
 ```bash
 python scripts/sync_tasks.py \
   --repo myorg/myrepo \
@@ -83,6 +86,7 @@ python scripts/sync_tasks.py \
 ```
 
 **Syntax:**
+
 - `- [ ]` - Task marker
 - `#labels:label1,label2` - Labels (comma-separated)
 - `@assignee` - Assignee username

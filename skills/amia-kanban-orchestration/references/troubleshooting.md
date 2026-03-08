@@ -5,6 +5,7 @@ This document provides troubleshooting guidance for common GitHub Projects Kanba
 ## Table of Contents
 
 ### Part 1: Issue and Status Problems
+
 See [troubleshooting-part1-issues-status.md](troubleshooting-part1-issues-status.md)
 
 - 10.1 Issue not appearing on board after creation
@@ -17,6 +18,7 @@ See [troubleshooting-part1-issues-status.md](troubleshooting-part1-issues-status
   - Cause 3: Caching
 
 ### Part 2: Assignment and API Issues
+
 See [troubleshooting-part2-assignment-api.md](troubleshooting-part2-assignment-api.md)
 
 - 10.3 Assignment not showing correctly
@@ -30,6 +32,7 @@ See [troubleshooting-part2-assignment-api.md](troubleshooting-part2-assignment-a
   - Error: Bad Request
 
 ### Part 3: Permissions and Sync Issues
+
 See [troubleshooting-part3-permissions-sync.md](troubleshooting-part3-permissions-sync.md)
 
 - 10.5 Permission denied errors
@@ -42,6 +45,7 @@ See [troubleshooting-part3-permissions-sync.md](troubleshooting-part3-permission
   - Multiple Items in Wrong Status
 
 ### Part 4: Stop Hook and Recovery Issues
+
 See [troubleshooting-part4-hooks-recovery.md](troubleshooting-part4-hooks-recovery.md)
 
 - 10.7 Stop hook blocking exit incorrectly

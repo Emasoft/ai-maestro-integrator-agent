@@ -11,23 +11,23 @@ description: "Step-by-step procedure for installing and configuring a pre-push g
   - 1.1. Where git hooks live and how git discovers them
   - 1.2. How the pre-push hook receives push information via stdin
   - 1.3. How exit codes control whether the push proceeds or is blocked
-- 2. Creating a pre-push hook from scratch
+- 1. Creating a pre-push hook from scratch
   - 2.1. Writing the hook shell script skeleton
   - 2.2. Making the hook executable
   - 2.3. Testing the hook locally before relying on it
-- 3. Choosing which checks to include and in what order
+- 1. Choosing which checks to include and in what order
   - 3.1. Ordering principle: fast checks first, slow checks last
   - 3.2. Fail-fast: stop on first failure to save time
-- 4. Language-specific pre-push hook examples
+- 1. Language-specific pre-push hook examples
   - 4.1. Python project pre-push hook (ruff, mypy, pytest, bandit)
   - 4.2. JavaScript and TypeScript project pre-push hook (eslint, prettier, tsc, vitest, npm audit)
   - 4.3. Rust project pre-push hook (clippy, cargo fmt, cargo test, cargo audit)
   - 4.4. Go project pre-push hook (golangci-lint, go vet, go test, govulncheck)
-- 5. Making hooks team-wide and reproducible
+- 1. Making hooks team-wide and reproducible
   - 5.1. Storing hook scripts in the repository
   - 5.2. Using a Makefile target to install hooks
   - 5.3. Documenting the bypass procedure for emergencies
-- 6. Performance optimization techniques
+- 1. Performance optimization techniques
   - 6.1. Running independent checks in parallel
   - 6.2. Running checks only on changed files
   - 6.3. Caching results across runs
@@ -362,10 +362,10 @@ project-root/
 ```makefile
 .PHONY: install-hooks
 install-hooks:
-	@echo "Installing git hooks..."
-	@cp hooks/* .git/hooks/
-	@chmod +x .git/hooks/*
-	@echo "Git hooks installed."
+ @echo "Installing git hooks..."
+ @cp hooks/* .git/hooks/
+ @chmod +x .git/hooks/*
+ @echo "Git hooks installed."
 ```
 
 Developers run `make install-hooks` after cloning. Alternatively, use `core.hooksPath`:
@@ -373,8 +373,8 @@ Developers run `make install-hooks` after cloning. Alternatively, use `core.hook
 ```makefile
 .PHONY: install-hooks
 install-hooks:
-	git config core.hooksPath ./hooks
-	@echo "Git hooks path set to ./hooks/"
+ git config core.hooksPath ./hooks
+ @echo "Git hooks path set to ./hooks/"
 ```
 
 ### 5.3. Documenting the bypass procedure for emergencies

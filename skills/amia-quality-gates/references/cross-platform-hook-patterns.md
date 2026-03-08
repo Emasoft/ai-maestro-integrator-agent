@@ -11,28 +11,28 @@ description: "Patterns for writing git hooks that work correctly on Linux, macOS
   - 1.1. Unix virtual environment paths versus Windows virtual environment paths
   - 1.2. Writing a portable Python detection function
   - 1.3. Fallback to system Python when no virtual environment exists
-- 2. Running linters and formatters only on staged files
+- 1. Running linters and formatters only on staged files
   - 2.1. Extracting staged file paths filtered by extension
   - 2.2. Running a linter on only the staged files
   - 2.3. Re-staging files after an auto-formatter modifies them
-- 3. Enforcing UTF-8 encoding in source files
+- 1. Enforcing UTF-8 encoding in source files
   - 3.1. Why encoding enforcement matters for cross-platform teams
   - 3.2. Common Python encoding pitfalls and detection patterns
   - 3.3. Grep pattern to find files missing explicit encoding parameters
   - 3.4. Enforcing encoding in other languages
-- 4. Line ending normalization across operating systems
+- 1. Line ending normalization across operating systems
   - 4.1. Configuring gitattributes for automatic line ending handling
   - 4.2. Detecting and fixing mixed line endings in a hook
   - 4.3. Python-based line ending normalization
-- 5. Path handling that works on all platforms
+- 1. Path handling that works on all platforms
   - 5.1. Never hardcode path separators
   - 5.2. Using POSIX paths in shell hooks
   - 5.3. Using pathlib in Python hook scripts
-- 6. Shell portability: writing hooks that work in sh, bash, and Git Bash
+- 1. Shell portability: writing hooks that work in sh, bash, and Git Bash
   - 6.1. Using sh instead of bash for maximum compatibility
   - 6.2. Common bash-isms to avoid and their POSIX alternatives
   - 6.3. How Git Bash on Windows affects hook execution
-- 7. Graceful dependency detection and tool availability checks
+- 1. Graceful dependency detection and tool availability checks
   - 7.1. Checking if a tool exists before running it
   - 7.2. Skipping checks when tools are missing without blocking the operation
   - 7.3. Providing installation instructions in skip messages

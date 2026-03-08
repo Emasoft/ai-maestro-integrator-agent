@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Get PR Context
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -118,6 +117,7 @@ python3 amia_get_pr_context.py --pr <NUMBER>
 ### Step 3: Use Context for Review Planning
 
 Based on context:
+
 - Assess scope (files changed, lines modified)
 - Identify reviewers
 - Check mergeable status

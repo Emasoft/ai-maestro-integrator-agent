@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Load Handoff Documents
 
-
 ## Contents
 
 - [Purpose](#purpose)

@@ -71,6 +71,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 1.1 Static Analysis
 
 **Automated Checks**:
+
 - [ ] No critical code quality issues
 - [ ] Code complexity within acceptable limits
 - [ ] No code duplication above threshold
@@ -78,11 +79,13 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] All linting rules passed
 
 **Tools**:
+
 - SonarQube, CodeClimate (code quality)
 - ESLint, Pylint, RuboCop (linting)
 - Prettier, Black (formatting)
 
 **Thresholds**:
+
 - Code coverage: ≥ 80%
 - Maintainability rating: A or B
 - Technical debt ratio: < 5%
@@ -91,17 +94,20 @@ Pre-release verification is the critical quality gate before production deployme
 #### 1.2 Security Scanning
 
 **Dependency Scanning**:
+
 - [ ] No critical or high severity vulnerabilities in dependencies
 - [ ] All dependencies up to date or documented exceptions
 - [ ] License compliance verified
 - [ ] No outdated dependencies with known CVEs
 
 **Tools**:
+
 - Dependabot, Snyk, WhiteSource
 - npm audit, pip-audit
 - OWASP Dependency-Check
 
 **SAST (Static Application Security Testing)**:
+
 - [ ] No SQL injection vulnerabilities
 - [ ] No XSS vulnerabilities
 - [ ] No hardcoded secrets or credentials
@@ -109,17 +115,20 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] No authentication/authorization flaws
 
 **Tools**:
+
 - SonarQube Security
 - Checkmarx, Veracode
 - Semgrep, Bandit
 
 **Secrets Scanning**:
+
 - [ ] No API keys or tokens in code
 - [ ] No passwords in configuration
 - [ ] No private keys committed
 - [ ] .env files properly ignored
 
 **Tools**:
+
 - git-secrets, TruffleHog
 - GitHub Secret Scanning
 - GitGuardian
@@ -127,12 +136,14 @@ Pre-release verification is the critical quality gate before production deployme
 #### 1.3 Code Review Verification
 
 **Review Completeness**:
+
 - [ ] All pull requests reviewed and approved
 - [ ] No pending review comments
 - [ ] All discussions resolved
 - [ ] Reviewer checklist completed for each PR
 
 **Review Quality Indicators**:
+
 - [ ] At least one senior developer review
 - [ ] Security-sensitive changes reviewed by security expert
 - [ ] Performance-critical changes reviewed for efficiency
@@ -143,18 +154,21 @@ Pre-release verification is the critical quality gate before production deployme
 #### 2.1 Unit Test Verification
 
 **Metrics**:
+
 - [ ] All unit tests passing
 - [ ] Code coverage ≥ 80% (or project standard)
 - [ ] No skipped or ignored tests without justification
 - [ ] Test execution time within acceptable limits
 
 **Coverage Areas**:
+
 - [ ] New code covered by tests
 - [ ] Bug fixes have regression tests
 - [ ] Edge cases tested
 - [ ] Error handling tested
 
 **Test Quality**:
+
 - [ ] Tests are maintainable and clear
 - [ ] No flaky tests
 - [ ] Tests follow naming conventions
@@ -163,6 +177,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 2.2 Integration Test Verification
 
 **API Testing**:
+
 - [ ] All API endpoints tested
 - [ ] Request/response validation
 - [ ] Error handling verified
@@ -170,6 +185,7 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Rate limiting verified
 
 **Database Integration**:
+
 - [ ] CRUD operations verified
 - [ ] Transaction handling tested
 - [ ] Connection pooling working
@@ -177,12 +193,14 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Data integrity maintained
 
 **External Services**:
+
 - [ ] Third-party API integrations tested
 - [ ] Timeout and retry logic verified
 - [ ] Error handling for service failures
 - [ ] Fallback mechanisms tested
 
 **Message Queues/Event Streams**:
+
 - [ ] Message publishing verified
 - [ ] Message consumption tested
 - [ ] Dead letter queue handling
@@ -191,24 +209,28 @@ Pre-release verification is the critical quality gate before production deployme
 #### 2.3 End-to-End Test Verification
 
 **User Flows**:
+
 - [ ] Critical user journeys tested
 - [ ] Happy path scenarios verified
 - [ ] Error scenarios tested
 - [ ] Edge cases covered
 
 **Cross-Browser Testing** (if web application):
+
 - [ ] Chrome (latest 2 versions)
 - [ ] Firefox (latest 2 versions)
 - [ ] Safari (latest 2 versions)
 - [ ] Edge (latest version)
 
 **Cross-Platform Testing** (if applicable):
+
 - [ ] Windows
 - [ ] macOS
 - [ ] Linux
 - [ ] Mobile (iOS/Android if applicable)
 
 **Accessibility Testing**:
+
 - [ ] Keyboard navigation works
 - [ ] Screen reader compatible
 - [ ] WCAG 2.1 Level AA compliance
@@ -217,12 +239,14 @@ Pre-release verification is the critical quality gate before production deployme
 #### 2.4 Performance Testing
 
 **Load Testing**:
+
 - [ ] System handles expected load
 - [ ] Performance under peak load acceptable
 - [ ] No memory leaks under sustained load
 - [ ] Resource utilization within limits
 
 **Metrics to Verify**:
+
 - [ ] Response time p50 < target
 - [ ] Response time p95 < target
 - [ ] Response time p99 < target
@@ -230,12 +254,14 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Error rate < 0.1% under normal load
 
 **Stress Testing**:
+
 - [ ] System gracefully degrades under excessive load
 - [ ] Circuit breakers trigger appropriately
 - [ ] System recovers after stress period
 - [ ] No data corruption under stress
 
 **Endurance Testing**:
+
 - [ ] No memory leaks over 24+ hours
 - [ ] No file descriptor leaks
 - [ ] No database connection leaks
@@ -244,6 +270,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 2.5 Security Testing
 
 **Authentication Testing**:
+
 - [ ] Login with valid credentials works
 - [ ] Login with invalid credentials fails appropriately
 - [ ] Password reset flow secure
@@ -251,12 +278,14 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Multi-factor authentication working (if applicable)
 
 **Authorization Testing**:
+
 - [ ] Role-based access control enforced
 - [ ] Privilege escalation prevented
 - [ ] Resource access restricted appropriately
 - [ ] API endpoint authorization verified
 
 **DAST (Dynamic Application Security Testing)**:
+
 - [ ] No SQL injection vulnerabilities
 - [ ] No XSS vulnerabilities
 - [ ] No CSRF vulnerabilities
@@ -264,11 +293,13 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] HTTPS enforced where required
 
 **Tools**:
+
 - OWASP ZAP, Burp Suite
 - Nikto, Acunetix
 - Nessus, Qualys
 
 **Penetration Testing** (for major releases):
+
 - [ ] External penetration test completed
 - [ ] All critical and high findings resolved
 - [ ] Medium findings documented and planned
@@ -279,6 +310,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 3.1 Database Migration Verification
 
 **Pre-Migration**:
+
 - [ ] Backup completed and verified
 - [ ] Migration scripts reviewed
 - [ ] Rollback scripts prepared and tested
@@ -287,6 +319,7 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Migration duration estimated
 
 **Migration Testing**:
+
 - [ ] Migration completes successfully in staging
 - [ ] No data loss during migration
 - [ ] Data integrity maintained
@@ -295,6 +328,7 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Performance after migration acceptable
 
 **Post-Migration Validation**:
+
 - [ ] Record counts match expectations
 - [ ] Sample data spot-checked
 - [ ] Application functions with migrated data
@@ -304,6 +338,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 3.2 Data Integrity Verification
 
 **Data Validation**:
+
 - [ ] No orphaned records
 - [ ] Referential integrity maintained
 - [ ] Data format consistency
@@ -311,6 +346,7 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Data ranges within expected bounds
 
 **Data Quality Checks**:
+
 - [ ] Duplicate detection runs clean
 - [ ] Data validation rules pass
 - [ ] Business rules enforced in database
@@ -321,6 +357,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 4.1 Environment Readiness
 
 **Staging Environment**:
+
 - [ ] Staging matches production configuration
 - [ ] All required services running
 - [ ] Database populated with test data
@@ -328,6 +365,7 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Monitoring and logging active
 
 **Production Environment**:
+
 - [ ] Infrastructure capacity verified
 - [ ] Scaling policies configured
 - [ ] Load balancers configured
@@ -338,6 +376,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 4.2 Deployment Automation
 
 **CI/CD Pipeline**:
+
 - [ ] Pipeline runs successfully end-to-end
 - [ ] All stages passing
 - [ ] Artifacts built correctly
@@ -345,6 +384,7 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Automated tests in pipeline passing
 
 **Deployment Scripts**:
+
 - [ ] Deployment scripts tested in staging
 - [ ] Rollback scripts tested
 - [ ] Database migration automation working
@@ -354,6 +394,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 4.3 Configuration Management
 
 **Configuration Verification**:
+
 - [ ] All required environment variables set
 - [ ] Configuration files updated
 - [ ] Secrets properly secured (not in code)
@@ -361,6 +402,7 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] API keys and credentials valid
 
 **Configuration Differences**:
+
 - [ ] Differences between environments documented
 - [ ] Production-specific settings verified
 - [ ] No debug flags enabled in production config
@@ -371,6 +413,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 5.1 Logging Verification
 
 **Log Configuration**:
+
 - [ ] Log levels appropriate for production
 - [ ] Sensitive data not logged
 - [ ] Structured logging implemented
@@ -378,6 +421,7 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Log retention policies set
 
 **Log Testing**:
+
 - [ ] Errors logged with sufficient context
 - [ ] Request/response logging working
 - [ ] Performance metrics logged
@@ -387,6 +431,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 5.2 Monitoring Setup
 
 **Application Monitoring**:
+
 - [ ] Application performance monitoring (APM) configured
 - [ ] Error tracking active (e.g., Sentry, Rollbar)
 - [ ] Custom metrics instrumented
@@ -394,6 +439,7 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] Synthetic monitoring configured
 
 **Infrastructure Monitoring**:
+
 - [ ] CPU, memory, disk monitoring active
 - [ ] Network monitoring configured
 - [ ] Service health checks working
@@ -403,6 +449,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 5.3 Alerting Configuration
 
 **Alert Verification**:
+
 - [ ] Critical alerts configured
 - [ ] Alert thresholds set appropriately
 - [ ] Alert recipients configured
@@ -410,6 +457,7 @@ Pre-release verification is the critical quality gate before production deployme
 - [ ] On-call schedule updated
 
 **Alert Testing**:
+
 - [ ] Test alerts sent and received
 - [ ] Alert fatigue minimized (no excessive alerts)
 - [ ] Runbooks linked to alerts
@@ -418,6 +466,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 5.4 Dashboards
 
 **Dashboard Availability**:
+
 - [ ] Application dashboard created
 - [ ] Infrastructure dashboard available
 - [ ] Business metrics dashboard ready
@@ -459,6 +508,7 @@ Pre-release verification is the critical quality gate before production deployme
 #### 7.1 Regulatory Compliance
 
 **Applicable Regulations** (check relevant ones):
+
 - [ ] GDPR compliance verified (if handling EU data)
 - [ ] CCPA compliance verified (if handling CA data)
 - [ ] HIPAA compliance verified (if handling health data)
@@ -549,6 +599,7 @@ Pre-release verification is the critical quality gate before production deployme
 ### Decision Meeting
 
 **Participants**:
+
 - Release Manager (decision owner)
 - Technical Lead
 - QA Lead
@@ -559,6 +610,7 @@ Pre-release verification is the critical quality gate before production deployme
 ### Go Decision Criteria
 
 **All criteria must be met**:
+
 - [ ] All critical and high-priority bugs resolved
 - [ ] No blocking issues outstanding
 - [ ] All quality gates passed
@@ -581,6 +633,7 @@ Pre-release verification is the critical quality gate before production deployme
 ### Conditional Go
 
 **Allowed with mitigation**:
+
 - Low-priority bugs (documented as known issues)
 - Minor performance issues (with monitoring plan)
 - Incomplete non-critical documentation (with completion date)
@@ -589,6 +642,7 @@ Pre-release verification is the critical quality gate before production deployme
 ### Decision Documentation
 
 **Record**:
+
 - Date and time of decision
 - Participants and their votes
 - Decision rationale
@@ -600,6 +654,7 @@ Pre-release verification is the critical quality gate before production deployme
 ### 1. Final Preparation
 
 **24 Hours Before Deployment**:
+
 - [ ] Final verification checklist review
 - [ ] Team roles and responsibilities confirmed
 - [ ] Communication channels tested
@@ -609,6 +664,7 @@ Pre-release verification is the critical quality gate before production deployme
 ### 2. Pre-Deployment Brief
 
 **1 Hour Before Deployment**:
+
 - [ ] Team assembled
 - [ ] Runbook reviewed
 - [ ] Rollback criteria reviewed
@@ -618,6 +674,7 @@ Pre-release verification is the critical quality gate before production deployme
 ### 3. Verification Sign-Off
 
 **Final Sign-Offs Required**:
+
 - [ ] Technical Lead
 - [ ] QA Lead
 - [ ] DevOps Engineer
@@ -629,6 +686,7 @@ Pre-release verification is the critical quality gate before production deployme
 ### Automated Verification Gates
 
 **In CI/CD Pipeline**:
+
 1. Unit tests (automated)
 2. Integration tests (automated)
 3. Security scans (automated)
@@ -641,6 +699,7 @@ Pre-release verification is the critical quality gate before production deployme
 ### Verification Dashboard
 
 **Real-Time Verification Status**:
+
 - Test results (pass/fail/pending)
 - Code coverage trends
 - Security scan results
@@ -653,6 +712,7 @@ Pre-release verification is the critical quality gate before production deployme
 ### Verification Metrics
 
 **Track Over Time**:
+
 - Time spent in verification phase
 - Number of issues found
 - Number of issues found in production (escapes)
@@ -662,12 +722,14 @@ Pre-release verification is the critical quality gate before production deployme
 ### Process Improvements
 
 **Regular Reviews**:
+
 - Monthly verification process review
 - Post-release verification retrospective
 - Quarterly metrics analysis
 - Annual comprehensive assessment
 
 **Improvement Actions**:
+
 - Add verification steps for recurring issues
 - Automate manual verification steps
 - Update thresholds based on experience

@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Escalate Gate Failure
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -94,11 +93,13 @@ Follow the appropriate escalation path when a quality gate fails. Ensures proper
 ### Steps
 
 1. **Apply failure label**
+
    ```bash
    gh pr edit <NUMBER> --add-label "gate:pre-review-failed"
    ```
 
 2. **Comment with failure details**
+
    ```bash
    gh pr comment <NUMBER> --body "## Pre-Review Gate Failed
 
@@ -124,6 +125,7 @@ Follow the appropriate escalation path when a quality gate fails. Ensures proper
 ### Steps
 
 1. **Apply failure label and request changes**
+
    ```bash
    gh pr edit <NUMBER> --add-label "gate:review-failed"
    gh pr review <NUMBER> --request-changes --body "<REVIEW_COMMENTS>"
@@ -156,11 +158,13 @@ For urgent cases, overrides may be requested:
 ### Steps
 
 1. **Apply failure label**
+
    ```bash
    gh pr edit <NUMBER> --add-label "gate:pre-merge-failed"
    ```
 
 2. **Document blocking issue**
+
    ```bash
    gh pr comment <NUMBER> --body "## Pre-Merge Gate Failed
 
@@ -185,6 +189,7 @@ For urgent cases, overrides may be requested:
 ### Steps
 
 1. **Apply failure label**
+
    ```bash
    gh pr edit <NUMBER> --add-label "gate:post-merge-failed"
    ```
@@ -199,6 +204,7 @@ For urgent cases, overrides may be requested:
    - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 4. **Initiate revert if necessary**
+
    ```bash
    git revert <MERGE_COMMIT>
    gh pr create --title "Revert PR #<NUMBER>" --body "Emergency revert due to main branch failure"

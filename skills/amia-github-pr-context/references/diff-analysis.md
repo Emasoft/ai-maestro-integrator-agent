@@ -8,15 +8,15 @@ This document explains how to retrieve, interpret, and analyze GitHub Pull Reque
   - 1.1 Unified diff format explanation
   - 1.2 File headers and hunks
   - 1.3 Addition, deletion, and context lines
-- 2. File-Level Analysis
+- 1. File-Level Analysis
   - 2.1 Identifying file types by extension
   - 2.2 Detecting rename and copy operations
   - 2.3 Binary file changes
-- 3. Change Statistics
+- 1. Change Statistics
   - 3.1 Lines added vs deleted
   - 3.2 Files by change type (added, modified, deleted)
   - 3.3 Estimating review complexity
-- 4. Filtering and Focusing
+- 1. Filtering and Focusing
   - 4.1 Filtering by file path patterns
   - 4.2 Ignoring generated files
   - 4.3 Focusing on specific directories
@@ -115,6 +115,7 @@ Context lines are unchanged lines shown for reference. By default, 3 lines of co
 ```
 
 This shows a function being rewritten:
+
 - 2 lines removed (old implementation)
 - 4 lines added (new implementation with type hints and docstring)
 

@@ -21,6 +21,7 @@ This document serves as an index to detailed maintenance operations for git work
 **WHEN TO USE**: When you need to incorporate the latest changes from the main branch into your worktree branch.
 
 ### Contents
+
 1. Why Sync Regularly
 2. Phase 1: Fetch Latest Main
 3. Phase 2: Verify Current State
@@ -39,6 +40,7 @@ This document serves as an index to detailed maintenance operations for git work
 **WHEN TO USE**: When you need guidelines for managing worktrees effectively and avoiding common mistakes.
 
 ### Contents
+
 1. Practice 1: Keep Worktrees Updated
 2. Practice 2: Clean Working Tree Before Switching
 3. Practice 3: Use Meaningful Worktree Names
@@ -56,6 +58,7 @@ This document serves as an index to detailed maintenance operations for git work
 **WHEN TO USE**: When you encounter problems with worktree operations and need solutions.
 
 ### Contents
+
 1. Problem 1: Cannot Remove Worktree (Locked)
 2. Problem 2: Worktree Path Already Exists
 3. Problem 3: Cannot Rebase (Uncommitted Changes)

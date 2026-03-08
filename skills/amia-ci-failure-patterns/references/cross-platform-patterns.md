@@ -38,11 +38,13 @@ Windows uses multiple environment variables for temp paths:
 **Common CI Failure**: Hardcoding `/tmp` in code that runs on Windows.
 
 **Error Message Example**:
+
 ```
 FileNotFoundError: [WinError 3] The system cannot find the path specified: '/tmp/myfile.txt'
 ```
 
 **PowerShell Solution**:
+
 ```powershell
 # Get system temp directory
 $tempDir = [System.IO.Path]::GetTempPath()
@@ -66,6 +68,7 @@ Linux and macOS use POSIX-style temp paths:
 **Common CI Failure**: Assuming `$TMPDIR` is always set.
 
 **Bash Solution**:
+
 ```bash
 # Use TMPDIR if set, otherwise fall back to /tmp
 TEMP_DIR="${TMPDIR:-/tmp}"
@@ -154,6 +157,7 @@ Path separators cause subtle bugs that only appear on specific platforms.
 **Common CI Failure**: Building a path with backslashes that fails on Linux.
 
 **Error Message Example**:
+
 ```
 Error: ENOENT: no such file or directory, open 'src\config\settings.json'
 ```
@@ -234,11 +238,13 @@ Line endings cause CI failures when files are modified during checkout or when s
 **Common CI Failure**: Git converts line endings on checkout, causing file hash mismatches or test failures.
 
 **Error Message Example**:
+
 ```
 AssertionError: 'expected content\n' != 'expected content\r\n'
 ```
 
 **Detection Commands**:
+
 ```bash
 # Check line endings in a file
 file myfile.txt
@@ -282,6 +288,7 @@ Git's `core.autocrlf` setting controls line ending conversion:
 **Step 1**: Add `.gitattributes` to repository
 
 **Step 2**: Normalize existing files:
+
 ```bash
 # Re-normalize all files
 git add --renormalize .
@@ -289,6 +296,7 @@ git commit -m "Normalize line endings"
 ```
 
 **Step 3**: In CI workflow, ensure consistent checkout:
+
 ```yaml
 - uses: actions/checkout@v4
   with:
@@ -297,6 +305,7 @@ git commit -m "Normalize line endings"
 ```
 
 **Python Fix**: Handle both line endings in tests:
+
 ```python
 # Read file with universal newlines
 with open("file.txt", "r", newline=None) as f:
@@ -346,6 +355,7 @@ git status  # May show no changes on case-insensitive filesystem
 ```
 
 **Fix**: Use `git mv` with intermediate step:
+
 ```bash
 git mv MyFile.txt myfile_temp.txt
 git mv myfile_temp.txt myfile.txt
@@ -355,12 +365,14 @@ git commit -m "Rename MyFile.txt to myfile.txt"
 ### 1.4.3 Enforcing Consistent Casing
 
 **Git Configuration**:
+
 ```bash
 # Make Git aware of case changes
 git config core.ignorecase false
 ```
 
 **CI Check**: Add a workflow step to detect case issues:
+
 ```yaml
 - name: Check for case conflicts
   run: |
@@ -379,6 +391,7 @@ git config core.ignorecase false
 ```
 
 **Best Practice**: Use lowercase for all filenames:
+
 - `my_module.py` instead of `MyModule.py`
 - `config.json` instead of `Config.json`
 - `readme.md` instead of `README.md` (if not required by convention)

@@ -105,6 +105,7 @@ Please address failures and push fixes. Gate will re-evaluate on next commit."
 ## Re-Evaluation Triggers
 
 The Pre-Review Gate automatically re-evaluates when:
+
 - New commits are pushed
 - CI jobs are manually re-run
 - Gate checks are manually triggered via `/amia-run-gate pre-review` command
@@ -114,6 +115,7 @@ The Pre-Review Gate automatically re-evaluates when:
 ### Flaky Test Failures
 
 If tests fail intermittently:
+
 1. Add `gate:flaky-test` label
 2. Re-run CI
 3. If persistent, require test stabilization before advancing
@@ -121,6 +123,7 @@ If tests fail intermittently:
 ### Infrastructure Issues
 
 If CI infrastructure fails (not code issues):
+
 1. Document infrastructure failure
 2. Apply `gate:ci-infrastructure-issue` label
 3. Escalate to AMOA for resolution

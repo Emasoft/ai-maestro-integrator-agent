@@ -11,6 +11,7 @@ This document is split into parts for efficient progressive disclosure. Read onl
 **File:** [registry-system-part1-schema.md](./registry-system-part1-schema.md)
 
 **Contents:**
+
 - 1.1 When you need to understand the registry system → Overview
 - 1.2 If you need to find the registry file → Registry Location
 - 1.3 When you need to understand registry structure → Registry Schema
@@ -28,6 +29,7 @@ This document is split into parts for efficient progressive disclosure. Read onl
 **File:** [registry-system-part2-operations.md](./registry-system-part2-operations.md)
 
 **Contents:**
+
 - 2.1 When you need to modify the registry → Registry Operations
   - 2.1.1 If you're adding a new worktree → Create Entry
   - 2.1.2 When you need to change worktree state → Update Status
@@ -42,6 +44,7 @@ This document is split into parts for efficient progressive disclosure. Read onl
 **File:** [registry-system-part3-validation.md](./registry-system-part3-validation.md)
 
 **Contents:**
+
 - 3.1 When you need to enforce registry rules → Validation Rules
   - 3.1.1 If you need to check ID uniqueness → Unique IDs
   - 3.1.2 When you need to validate paths → Valid Paths
@@ -56,6 +59,7 @@ This document is split into parts for efficient progressive disclosure. Read onl
 **File:** [registry-system-part4-cleanup.md](./registry-system-part4-cleanup.md)
 
 **Contents:**
+
 - 4.1 When you need to clean stale entries → Automatic Cleanup
   - 4.1.1 If you need to identify stale entries → What is a Stale Entry?
   - 4.1.2 When you need the detection logic → Stale Detection Algorithm

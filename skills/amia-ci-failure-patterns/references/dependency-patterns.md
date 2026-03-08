@@ -49,17 +49,20 @@ from src.main import main_function  # Requires src/ in PYTHONPATH
 **Common CI Failure**: Import works locally (IDE adds paths) but fails in CI.
 
 **Error Message**:
+
 ```
 ModuleNotFoundError: No module named 'src'
 ```
 
 **Fix 1**: Install package in development mode
+
 ```yaml
 - name: Install package
   run: pip install -e .
 ```
 
 **Fix 2**: Set PYTHONPATH explicitly
+
 ```yaml
 - name: Run tests
   run: pytest
@@ -68,6 +71,7 @@ ModuleNotFoundError: No module named 'src'
 ```
 
 **Fix 3**: Use absolute imports with proper package structure
+
 ```python
 # In pyproject.toml or setup.py, define package
 # Then use: from mypackage.utils.helpers import my_function
@@ -78,12 +82,14 @@ ModuleNotFoundError: No module named 'src'
 Each language resolves imports differently:
 
 **Python Import Resolution Order**:
+
 1. Built-in modules
 2. Modules in `sys.path[0]` (script directory)
 3. Installed packages (site-packages)
 4. Paths in `PYTHONPATH` environment variable
 
 **JavaScript/Node.js Resolution Order**:
+
 1. Core modules (fs, path, etc.)
 2. File path (if starts with `./`, `../`, or `/`)
 3. `node_modules` folders (traversing up directory tree)
@@ -91,6 +97,7 @@ Each language resolves imports differently:
 **Common CI Failure**: Module found locally but not in CI due to different directory structure.
 
 **JavaScript Example**:
+
 ```javascript
 // WRONG: Relies on specific directory structure
 const config = require('../../../config');
@@ -103,6 +110,7 @@ const config = require(path.join(process.cwd(), 'config'));
 ```
 
 **Go Import Resolution**:
+
 ```go
 // Go uses module paths from go.mod
 import "github.com/user/project/pkg/utils"
@@ -113,6 +121,7 @@ import "mymodule/internal/helpers"  // CORRECT
 ```
 
 **Rust Import Resolution**:
+
 ```rust
 // Crate-relative paths
 use crate::utils::helpers;
@@ -129,12 +138,14 @@ Scripts often assume they run from a specific directory.
 **Common CI Failure**: Script assumes it's run from project root.
 
 **WRONG**:
+
 ```bash
 # Assumes current directory is project root
 python src/main.py
 ```
 
 **CORRECT**:
+
 ```bash
 # Use script's directory as reference
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -146,6 +157,7 @@ python src/main.py
 ```
 
 **GitHub Actions Behavior**:
+
 - `$GITHUB_WORKSPACE` is the repository root
 - Each `run:` step starts in `$GITHUB_WORKSPACE` by default
 - Use `working-directory:` to change
@@ -179,11 +191,13 @@ Lock files ensure reproducible builds but cause CI failures when out of sync.
 **Common CI Failure**: Lock file doesn't match package manifest.
 
 **npm Error**:
+
 ```
 npm ERR! `npm ci` can only install packages with an existing package-lock.json
 ```
 
 **Solution**: Ensure lock files are committed and up to date
+
 ```yaml
 - name: Verify lock file is in sync
   run: |
@@ -196,6 +210,7 @@ npm ERR! `npm ci` can only install packages with an existing package-lock.json
 Optional dependencies work locally but may be missing in CI.
 
 **Python Optional Dependencies**:
+
 ```toml
 # pyproject.toml
 [project.optional-dependencies]
@@ -204,6 +219,7 @@ docs = ["sphinx"]
 ```
 
 **CI Installation**:
+
 ```yaml
 - name: Install with dev dependencies
   run: pip install -e ".[dev]"
@@ -212,11 +228,13 @@ docs = ["sphinx"]
 **Common CI Failure**: Test dependency not installed.
 
 **Error Message**:
+
 ```
 ModuleNotFoundError: No module named 'pytest'
 ```
 
 **JavaScript Optional Dependencies**:
+
 ```json
 {
   "dependencies": {},
@@ -236,6 +254,7 @@ ModuleNotFoundError: No module named 'pytest'
 **Common CI Failure**: Running tests without dev dependencies.
 
 **Python Pattern**:
+
 ```yaml
 # WRONG: Production dependencies only
 - run: pip install .
@@ -250,6 +269,7 @@ ModuleNotFoundError: No module named 'pytest'
 ```
 
 **JavaScript Pattern**:
+
 ```yaml
 # WRONG: Production only
 - run: npm ci --omit=dev
@@ -259,6 +279,7 @@ ModuleNotFoundError: No module named 'pytest'
 ```
 
 **Rust Pattern**:
+
 ```yaml
 # WRONG: Release mode might not include test deps
 - run: cargo build --release
@@ -278,6 +299,7 @@ Pinning versions prevents "works on my machine" but causes CI failures when pins
 **Common CI Failure**: Dependency version conflict.
 
 **pip Error**:
+
 ```
 ERROR: Cannot install package-a and package-b because these package versions have conflicting dependencies.
 ```
@@ -285,20 +307,24 @@ ERROR: Cannot install package-a and package-b because these package versions hav
 **Resolution Strategies**:
 
 1. **Find compatible versions**:
+
 ```bash
 pip install package-a package-b --dry-run
 ```
 
-2. **Use a constraint file**:
+1. **Use a constraint file**:
+
 ```
 # constraints.txt
 shared-dependency>=1.0,<2.0
 ```
+
 ```yaml
 - run: pip install -c constraints.txt -r requirements.txt
 ```
 
-3. **Loosen version pins**:
+1. **Loosen version pins**:
+
 ```
 # WRONG: Too strict
 numpy==1.21.0
@@ -314,6 +340,7 @@ Transitive (indirect) dependencies can cause subtle CI failures.
 **Problem**: Direct dependency updates, pulling incompatible transitive version.
 
 **Detection**:
+
 ```bash
 # Python: Show dependency tree
 pip install pipdeptree
@@ -327,6 +354,7 @@ cargo tree
 ```
 
 **CI Fix**: Pin transitive dependencies explicitly
+
 ```yaml
 - name: Install with pinned transitive deps
   run: |
@@ -350,6 +378,7 @@ install_requires=[
 ```
 
 **CI Environment Matrix**:
+
 ```yaml
 strategy:
   matrix:
@@ -363,6 +392,7 @@ steps:
 ```
 
 **Version Compatibility Matrix**:
+
 ```yaml
 # Test against multiple versions
 strategy:

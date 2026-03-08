@@ -72,20 +72,20 @@ gh issue create \
   --assignee "username"
 ```
 
-4. **Execute the command** and capture the issue number:
+1. **Execute the command** and capture the issue number:
 
 ```bash
 ISSUE_URL=$(gh issue create --repo owner/repo --title "..." --body "..." --label "bug" --json url -q .url)
 ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oE '[0-9]+$')
 ```
 
-5. **Log the operation** to `logs/api-operations-YYYYMMDD.log`:
+1. **Log the operation** to `logs/api-operations-YYYYMMDD.log`:
 
 ```bash
 echo "$(date -Iseconds) | CREATE_ISSUE | owner/repo | #$ISSUE_NUMBER | SUCCESS" >> logs/api-operations-$(date +%Y%m%d).log
 ```
 
-6. **Return the issue number and URL** to the caller.
+1. **Return the issue number and URL** to the caller.
 
 **Error handling**: If the issue creation fails, capture the error message and log it. If rate limited (HTTP 429), apply exponential backoff (see section 1.5.2).
 
@@ -103,13 +103,13 @@ echo "$(date -Iseconds) | CREATE_ISSUE | owner/repo | #$ISSUE_NUMBER | SUCCESS" 
 gh issue view ISSUE_NUMBER --repo owner/repo --json number
 ```
 
-2. **Check the issue is in a valid state** (run Gate 4):
+1. **Check the issue is in a valid state** (run Gate 4):
 
 ```bash
 gh issue view ISSUE_NUMBER --repo owner/repo --json state
 ```
 
-3. **Update the issue**:
+1. **Update the issue**:
 
 ```bash
 # Update title and body
@@ -125,7 +125,7 @@ gh issue edit ISSUE_NUMBER --repo owner/repo --remove-label "wontfix"
 gh issue edit ISSUE_NUMBER --repo owner/repo --milestone "v2.0"
 ```
 
-4. **Log the operation**.
+1. **Log the operation**.
 
 **Note**: Multiple updates can be combined in a single command for efficiency.
 
@@ -182,14 +182,14 @@ gh pr create \
   --assignee "@me"
 ```
 
-4. **Capture PR number**:
+1. **Capture PR number**:
 
 ```bash
 PR_URL=$(gh pr create --repo owner/repo ... --json url -q .url)
 PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
 ```
 
-5. **Log the operation**.
+1. **Log the operation**.
 
 **Using a PR body from file**:
 
@@ -211,7 +211,7 @@ gh pr create --repo owner/repo --base main --head feature --title "..." --body-f
 gh pr view PR_NUMBER --repo owner/repo --json number
 ```
 
-2. **Request reviewers**:
+1. **Request reviewers**:
 
 ```bash
 # Request individual reviewers
@@ -221,13 +221,13 @@ gh pr edit PR_NUMBER --repo owner/repo --add-reviewer "username1,username2"
 gh pr edit PR_NUMBER --repo owner/repo --add-reviewer "org/team-name"
 ```
 
-3. **Add assignees**:
+1. **Add assignees**:
 
 ```bash
 gh pr edit PR_NUMBER --repo owner/repo --add-assignee "username"
 ```
 
-4. **Remove reviewers or assignees**:
+1. **Remove reviewers or assignees**:
 
 ```bash
 gh pr edit PR_NUMBER --repo owner/repo --remove-reviewer "username"
@@ -252,19 +252,19 @@ gh pr edit PR_NUMBER --repo owner/repo --remove-assignee "username"
 gh pr review PR_NUMBER --repo owner/repo --approve --body "LGTM! Changes look good."
 ```
 
-3. **Request changes**:
+1. **Request changes**:
 
 ```bash
 gh pr review PR_NUMBER --repo owner/repo --request-changes --body "Please address the following issues..."
 ```
 
-4. **Submit a comment review** (no approval/rejection):
+1. **Submit a comment review** (no approval/rejection):
 
 ```bash
 gh pr review PR_NUMBER --repo owner/repo --comment --body "General feedback on the PR."
 ```
 
-5. **Submit inline comments** (on specific lines):
+1. **Submit inline comments** (on specific lines):
 
 ```bash
 gh pr review PR_NUMBER --repo owner/repo --comment --body "Comment text" --comment-file review-comments.json
@@ -282,7 +282,7 @@ gh pr review PR_NUMBER --repo owner/repo --comment --body "Comment text" --comme
 ]
 ```
 
-6. **Log the review submission**.
+1. **Log the review submission**.
 
 ---
 
@@ -306,7 +306,7 @@ if [ "$MERGEABLE" != "MERGEABLE" ]; then
 fi
 ```
 
-2. **Execute merge with chosen strategy**:
+1. **Execute merge with chosen strategy**:
 
 ```bash
 # Merge commit (default)
@@ -319,13 +319,13 @@ gh pr merge PR_NUMBER --repo owner/repo --squash --body "Squashed commit message
 gh pr merge PR_NUMBER --repo owner/repo --rebase
 ```
 
-3. **Delete the source branch** (optional):
+1. **Delete the source branch** (optional):
 
 ```bash
 gh pr merge PR_NUMBER --repo owner/repo --squash --delete-branch
 ```
 
-4. **Log the merge operation** with strategy used.
+1. **Log the merge operation** with strategy used.
 
 **Important**: Always verify `mergeStateStatus` is `CLEAN` before merging to avoid conflicts.
 
@@ -367,7 +367,7 @@ gh api graphql -f query='
 ' -q .data.organization.projectV2.id
 ```
 
-2. **Get the content ID** (issue or PR global node ID):
+1. **Get the content ID** (issue or PR global node ID):
 
 ```bash
 # For issue
@@ -377,7 +377,7 @@ CONTENT_ID=$(gh issue view ISSUE_NUMBER --repo owner/repo --json id -q .id)
 CONTENT_ID=$(gh pr view PR_NUMBER --repo owner/repo --json id -q .id)
 ```
 
-3. **Add the item to the project**:
+1. **Add the item to the project**:
 
 ```bash
 gh api graphql -f query='
@@ -392,9 +392,9 @@ gh api graphql -f query='
 ' -q .data.addProjectV2ItemById.item.id
 ```
 
-4. **Capture the project item ID** for future operations.
+1. **Capture the project item ID** for future operations.
 
-5. **Log the operation**.
+2. **Log the operation**.
 
 ---
 
@@ -428,7 +428,7 @@ gh api graphql -f query='
 
 Find the field with `name: "Status"` and note its `id` and the option IDs for each column (e.g., "Todo", "In Progress", "Done").
 
-2. **Update the item's status field**:
+1. **Update the item's status field**:
 
 ```bash
 gh api graphql -f query='
@@ -445,9 +445,9 @@ gh api graphql -f query='
 '
 ```
 
-3. **Verify the update** by querying the item's current field value.
+1. **Verify the update** by querying the item's current field value.
 
-4. **Log the operation**.
+2. **Log the operation**.
 
 **Note**: This same pattern works for any single-select custom field (Priority, Sprint, etc.).
 
@@ -561,13 +561,13 @@ gh api graphql -f query='
 '
 ```
 
-2. **Filter items in JSON** to find those matching criteria (e.g., Status = "Todo"):
+1. **Filter items in JSON** to find those matching criteria (e.g., Status = "Todo"):
 
 ```bash
 ITEMS=$(... | jq '.data.node.items.nodes[] | select(.fieldValues.nodes[] | select(.field.name == "Status" and .optionId == "TODO_OPTION_ID")) | .id')
 ```
 
-3. **Loop through items** and update each:
+1. **Loop through items** and update each:
 
 ```bash
 for ITEM_ID in $ITEMS; do
@@ -589,7 +589,7 @@ for ITEM_ID in $ITEMS; do
 done
 ```
 
-4. **Log the batch operation** with count of updated items.
+1. **Log the batch operation** with count of updated items.
 
 **Important**: For large batches (>50 items), check rate limits before each update (see section 1.5.1).
 
@@ -623,7 +623,7 @@ gh api repos/owner/repo/issues/ISSUE_NUMBER/comments | jq '.[] | {id, body}'
 gh api repos/owner/repo/pulls/PR_NUMBER/comments | jq '.[] | {id, body}'
 ```
 
-2. **Post a reply** (using REST API):
+1. **Post a reply** (using REST API):
 
 ```bash
 gh api repos/owner/repo/issues/comments/COMMENT_ID/replies \
@@ -647,7 +647,7 @@ gh api repos/owner/repo/issues/comments/COMMENT_ID/replies \
 gh api repos/owner/repo/pulls/PR_NUMBER/comments | jq '.[] | select(.body | contains("specific comment")) | .id'
 ```
 
-2. **Resolve the thread**:
+1. **Resolve the thread**:
 
 ```bash
 gh api graphql -f query='
@@ -661,7 +661,7 @@ gh api graphql -f query='
 '
 ```
 
-3. **Verify resolution**:
+1. **Verify resolution**:
 
 ```bash
 gh api graphql -f query='
@@ -696,6 +696,7 @@ gh api repos/owner/repo/pulls/PR_NUMBER/lock --method PUT \
 ```
 
 **Valid lock reasons**:
+
 - `resolved` - Issue/PR is resolved
 - `off-topic` - Conversation went off-topic
 - `too heated` - Discussion became unconstructive
@@ -740,7 +741,7 @@ gh api rate_limit | jq '.resources.core'
 }
 ```
 
-2. **Interpret the status**:
+1. **Interpret the status**:
 
 | Remaining | Status | Action |
 |-----------|--------|--------|
@@ -749,14 +750,14 @@ gh api rate_limit | jq '.resources.core'
 | 10-100 | Orange | Only critical operations |
 | < 10 | Red | STOP all operations, wait for reset |
 
-3. **If in Yellow or Orange zone**, send warning to orchestrator using the `agent-messaging` skill with:
+1. **If in Yellow or Orange zone**, send warning to orchestrator using the `agent-messaging` skill with:
    - **Recipient**: `orchestrator-master`
    - **Subject**: `GitHub Rate Limit Warning`
    - **Priority**: `high`
    - **Content**: `{"type": "warning", "message": "GitHub API rate limit in YELLOW zone: <REMAINING> remaining"}`
    - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
-4. **If in Red zone**, calculate wait time:
+2. **If in Red zone**, calculate wait time:
 
 ```bash
 RESET_TIME=$(gh api rate_limit | jq '.resources.core.reset')
@@ -766,7 +767,7 @@ WAIT_SECONDS=$((RESET_TIME - CURRENT_TIME))
 echo "BLOCKED: Rate limit critical. Reset in $WAIT_SECONDS seconds."
 ```
 
-5. **Log the rate limit check**.
+1. **Log the rate limit check**.
 
 ---
 
@@ -785,7 +786,7 @@ if [ $? -eq 4 ]; then
 fi
 ```
 
-2. **Implement exponential backoff**:
+1. **Implement exponential backoff**:
 
 ```bash
 DELAY=1
@@ -817,6 +818,7 @@ fi
 ```
 
 **Backoff schedule**:
+
 - Attempt 1: Immediate
 - Attempt 2: Wait 1 second
 - Attempt 3: Wait 2 seconds
@@ -824,9 +826,9 @@ fi
 - Attempt 5: Wait 8 seconds
 - Attempt 6: Wait 16 seconds (final)
 
-3. **If all retries exhausted**, queue the operation for later retry and report failure.
+1. **If all retries exhausted**, queue the operation for later retry and report failure.
 
-4. **Log each retry attempt** with the delay used.
+2. **Log each retry attempt** with the delay used.
 
 ---
 
@@ -848,7 +850,7 @@ fi
 REMAINING=$(gh api rate_limit | jq '.resources.core.remaining')
 ```
 
-3. **Apply priority-based throttling**:
+1. **Apply priority-based throttling**:
 
 ```bash
 if [ "$REMAINING" -lt 500 ] && [ "$REMAINING" -ge 100 ]; then
@@ -868,7 +870,7 @@ elif [ "$REMAINING" -lt 100 ]; then
 fi
 ```
 
-4. **Process queued operations** when rate limit recovers:
+1. **Process queued operations** when rate limit recovers:
 
 ```bash
 # Run this periodically (e.g., every 5 minutes)
@@ -887,7 +889,7 @@ if [ "$REMAINING" -gt 500 ]; then
 fi
 ```
 
-5. **Notify orchestrator** when operations are queued.
+1. **Notify orchestrator** when operations are queued.
 
 ---
 
@@ -925,12 +927,12 @@ gh api graphql -f query='
 }
 ```
 
-2. **Estimate query cost** before execution:
+1. **Estimate query cost** before execution:
    - Simple queries (fetch single item): 1 point
    - Medium queries (fetch list with filters): 10-50 points
    - Complex queries (nested data, large lists): 100+ points
 
-3. **Verify sufficient points remain**:
+2. **Verify sufficient points remain**:
 
 ```bash
 REMAINING=$(gh api graphql -f query='{ rateLimit { remaining } }' | jq '.data.rateLimit.remaining')
@@ -941,14 +943,14 @@ if [ "$REMAINING" -lt 100 ]; then
 fi
 ```
 
-4. **After query execution**, check the actual cost:
+1. **After query execution**, check the actual cost:
 
 ```bash
 COST=$(gh api graphql -f query='...' | jq '.extensions.cost.actualCost // .data.rateLimit.cost')
 echo "Query consumed $COST points"
 ```
 
-5. **Apply the same backoff and queueing strategies** as REST API rate limits.
+1. **Apply the same backoff and queueing strategies** as REST API rate limits.
 
 **Important**: GraphQL and REST API have **separate rate limits**. Monitor both independently.
 
@@ -980,7 +982,7 @@ github.com
   - Token: gho_****
 ```
 
-2. **Verify the output**:
+1. **Verify the output**:
 
 ```bash
 if ! gh auth status 2>&1 | grep -q "Logged in to github.com"; then
@@ -989,7 +991,7 @@ if ! gh auth status 2>&1 | grep -q "Logged in to github.com"; then
 fi
 ```
 
-3. **If authentication failed**, block the operation and report:
+1. **If authentication failed**, block the operation and report:
 
 ```bash
 echo "FAILED: Authentication verification failed. Run 'gh auth login' to authenticate."
@@ -1017,12 +1019,13 @@ PERMISSION=$(gh repo view owner/repo --json viewerPermission -q .viewerPermissio
 ```
 
 **Possible values**:
+
 - `ADMIN` - Full access
 - `WRITE` - Can push and merge
 - `READ` - Read-only access
 - `NONE` - No access
 
-2. **Verify sufficient permission for operation**:
+1. **Verify sufficient permission for operation**:
 
 ```bash
 case "$OPERATION" in
@@ -1059,7 +1062,7 @@ gh api graphql -f query='
 ' | jq '.data.node.viewerCanUpdate'
 ```
 
-2. **Verify `viewerCanUpdate` is true**:
+1. **Verify `viewerCanUpdate` is true**:
 
 ```bash
 CAN_UPDATE=$(gh api graphql -f query='...' | jq '.data.node.viewerCanUpdate')
@@ -1149,6 +1152,7 @@ fi
 ```
 
 **Possible merge states**:
+
 - `CLEAN` - Ready to merge
 - `UNSTABLE` - Checks failed but merge allowed
 - `BLOCKED` - Merge blocked by rules
@@ -1199,7 +1203,7 @@ fi
 REMAINING=$(gh api rate_limit | jq '.resources.core.remaining')
 ```
 
-2. **Apply threshold policy**:
+1. **Apply threshold policy**:
 
 ```bash
 if [ "$REMAINING" -lt 10 ]; then
@@ -1220,7 +1224,7 @@ elif [ "$REMAINING" -lt 100 ]; then
 fi
 ```
 
-3. **Log the rate limit check**:
+1. **Log the rate limit check**:
 
 ```bash
 echo "Gate 5: Rate limit check PASS ($REMAINING remaining)"
@@ -1270,7 +1274,7 @@ echo "Gate 5: Rate limit check PASS ($REMAINING remaining)"
 }
 ```
 
-4. **Extract operation parameters**:
+1. **Extract operation parameters**:
 
 ```bash
 OPERATION=$(echo "$MESSAGE" | jq -r '.content.operation')
@@ -1279,9 +1283,9 @@ CALLBACK=$(echo "$MESSAGE" | jq -r '.content.callback_agent')
 PRIORITY=$(echo "$MESSAGE" | jq -r '.priority')
 ```
 
-5. **Mark message as read**: Mark the message as read using the `agent-messaging` skill.
+1. **Mark message as read**: Mark the message as read using the `agent-messaging` skill.
 
-6. **Execute the operation** (proceed to section 1.8).
+2. **Execute the operation** (proceed to section 1.8).
 
 ---
 
@@ -1292,6 +1296,7 @@ PRIORITY=$(echo "$MESSAGE" | jq -r '.priority')
 **Purpose**: Close the request-response loop via AI Maestro messaging.
 
 **Procedure for successful operations**: Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The callback agent
 - **Subject**: `API Operation Complete: <OPERATION>`
 - **Priority**: `normal`
@@ -1299,6 +1304,7 @@ PRIORITY=$(echo "$MESSAGE" | jq -r '.priority')
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Procedure for failed operations**: Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The callback agent
 - **Subject**: `API Operation Failed: <OPERATION>`
 - **Priority**: `high`
@@ -1306,6 +1312,7 @@ PRIORITY=$(echo "$MESSAGE" | jq -r '.priority')
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Procedure for rate-limited operations**: Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The callback agent
 - **Subject**: `API Operation Queued: <OPERATION>`
 - **Priority**: `normal`
@@ -1338,6 +1345,7 @@ PRIORITY=$(echo "$MESSAGE" | jq -r '.priority')
 ```
 
 **Valid operation types**:
+
 - Issue operations: `create-issue`, `update-issue`, `close-issue`, `reopen-issue`, `transfer-issue`
 - PR operations: `create-pr`, `update-pr`, `merge-pr`, `close-pr`, `review-pr`
 - Project operations: `add-to-project`, `update-project-item`, `move-project-item`
@@ -1405,13 +1413,13 @@ if ! echo "$OPERATION" | grep -qE "^($VALID_OPS)$"; then
 fi
 ```
 
-4. **Log the request**:
+1. **Log the request**:
 
 ```bash
 echo "$(date -Iseconds) | REQUEST | $OPERATION | from: $CALLBACK | priority: $PRIORITY" >> logs/api-operations-$(date +%Y%m%d).log
 ```
 
-5. **Proceed to Gate 1** (section 1.6.1).
+1. **Proceed to Gate 1** (section 1.6.1).
 
 ---
 
@@ -1434,7 +1442,7 @@ fi
 echo "Gate 1: PASS - Authentication verified"
 ```
 
-2. **Run Gate 2 (Permissions)**:
+1. **Run Gate 2 (Permissions)**:
 
 ```bash
 PERMISSION=$(gh repo view owner/repo --json viewerPermission -q .viewerPermission)
@@ -1447,7 +1455,7 @@ fi
 echo "Gate 2: PASS - Permissions verified ($PERMISSION)"
 ```
 
-3. **Run Gate 3 (Resource Existence)** - if operation is update/delete:
+1. **Run Gate 3 (Resource Existence)** - if operation is update/delete:
 
 ```bash
 if [[ "$OPERATION" =~ ^(update-issue|close-issue|merge-pr)$ ]]; then
@@ -1460,7 +1468,7 @@ if [[ "$OPERATION" =~ ^(update-issue|close-issue|merge-pr)$ ]]; then
 fi
 ```
 
-4. **Run Gate 4 (State Validation)** - if operation is state-changing:
+1. **Run Gate 4 (State Validation)** - if operation is state-changing:
 
 ```bash
 if [ "$OPERATION" = "merge-pr" ]; then
@@ -1474,7 +1482,7 @@ if [ "$OPERATION" = "merge-pr" ]; then
 fi
 ```
 
-5. **Run Gate 5 (Rate Limit Check)**:
+1. **Run Gate 5 (Rate Limit Check)**:
 
 ```bash
 REMAINING=$(gh api rate_limit | jq '.resources.core.remaining')
@@ -1487,13 +1495,13 @@ fi
 echo "Gate 5: PASS - Rate limit OK ($REMAINING remaining)"
 ```
 
-6. **Log gate results**:
+1. **Log gate results**:
 
 ```bash
 echo "$(date -Iseconds) | GATES_PASS | $OPERATION | All quality gates passed" >> logs/api-operations-$(date +%Y%m%d).log
 ```
 
-7. **Proceed to execute API call** (section 1.8.3).
+1. **Proceed to execute API call** (section 1.8.3).
 
 **If ANY gate fails**, skip to section 1.8.6 to report failure.
 
@@ -1532,7 +1540,7 @@ case "$OPERATION" in
 esac
 ```
 
-2. **Execute with retry logic**:
+1. **Execute with retry logic**:
 
 ```bash
 DELAY=1
@@ -1570,7 +1578,7 @@ if [ "$SUCCESS" != "true" ]; then
 fi
 ```
 
-3. **Capture the result**:
+1. **Capture the result**:
 
 ```bash
 # Parse JSON response
@@ -1578,13 +1586,13 @@ ISSUE_NUMBER=$(echo "$RESULT" | jq -r '.number')
 ISSUE_URL=$(echo "$RESULT" | jq -r '.url')
 ```
 
-4. **Log the execution**:
+1. **Log the execution**:
 
 ```bash
 echo "$(date -Iseconds) | EXECUTE_SUCCESS | $OPERATION | attempts: $ATTEMPT | result: $RESULT" >> logs/api-operations-$(date +%Y%m%d).log
 ```
 
-5. **Proceed to process response** (section 1.8.4).
+1. **Proceed to process response** (section 1.8.4).
 
 ---
 
@@ -1625,7 +1633,7 @@ case "$OPERATION" in
 esac
 ```
 
-2. **Build result object** for response message:
+1. **Build result object** for response message:
 
 ```bash
 RESULT_JSON=$(jq -n \
@@ -1634,7 +1642,7 @@ RESULT_JSON=$(jq -n \
   '{issue_number: $issue_number, issue_url: $issue_url}')
 ```
 
-3. **Validate critical fields**:
+1. **Validate critical fields**:
 
 ```bash
 # Ensure all expected fields are present and non-null
@@ -1646,13 +1654,13 @@ else
 fi
 ```
 
-4. **Log the processed response**:
+1. **Log the processed response**:
 
 ```bash
 echo "$(date -Iseconds) | PROCESS_SUCCESS | $OPERATION | result: $RESULT_JSON" >> logs/api-operations-$(date +%Y%m%d).log
 ```
 
-5. **Proceed to logging** (section 1.8.5).
+1. **Proceed to logging** (section 1.8.5).
 
 ---
 
@@ -1673,7 +1681,7 @@ LOG_FILE="logs/api-operations-$(date +%Y%m%d).log"
 mkdir -p logs
 ```
 
-2. **Write detailed log entry**:
+1. **Write detailed log entry**:
 
 ```bash
 cat >> "$LOG_FILE" <<EOF
@@ -1692,7 +1700,7 @@ Rate Limit After: $(gh api rate_limit | jq '.resources.core.remaining') remainin
 EOF
 ```
 
-3. **For failures, log the failure reason**:
+1. **For failures, log the failure reason**:
 
 ```bash
 cat >> "$LOG_FILE" <<EOF
@@ -1707,7 +1715,7 @@ Status: FAILED
 EOF
 ```
 
-4. **Verify log entry was written**:
+1. **Verify log entry was written**:
 
 ```bash
 if ! tail -1 "$LOG_FILE" | grep -q "---"; then
@@ -1715,7 +1723,7 @@ if ! tail -1 "$LOG_FILE" | grep -q "---"; then
 fi
 ```
 
-5. **Proceed to report result** (section 1.8.6).
+1. **Proceed to report result** (section 1.8.6).
 
 ---
 
@@ -1726,6 +1734,7 @@ fi
 **Purpose**: Close the request-response loop by notifying the requesting agent of the outcome.
 
 **Procedure for success**: Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The callback agent
 - **Subject**: `API Operation Complete: <OPERATION>`
 - **Priority**: `normal`
@@ -1735,6 +1744,7 @@ fi
 Then output: `[DONE] api-coordinator - <OPERATION> completed successfully`
 
 **Procedure for failure**: Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The callback agent
 - **Subject**: `API Operation Failed: <OPERATION>`
 - **Priority**: `high`
@@ -1744,6 +1754,7 @@ Then output: `[DONE] api-coordinator - <OPERATION> completed successfully`
 Then output: `[FAILED] api-coordinator - <OPERATION> failed: <FAILURE_REASON>`
 
 **Procedure for rate-limited/queued**: Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: The callback agent
 - **Subject**: `API Operation Queued: <OPERATION>`
 - **Priority**: `normal`

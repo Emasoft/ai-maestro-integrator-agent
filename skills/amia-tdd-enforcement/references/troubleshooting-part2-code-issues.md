@@ -1,6 +1,7 @@
 # TDD Troubleshooting - Part 2: Code Issues
 
 ## Table of Contents
+
 - [Code Passes But Seems Wrong](#code-passes-but-seems-wrong)
   - [Symptoms](#symptoms)
   - [Root Cause](#root-cause)
@@ -17,11 +18,13 @@
 ## Code Passes But Seems Wrong
 
 ### Symptoms
+
 - Test passes
 - All assertions succeed
 - But code seems incorrect/incomplete/buggy
 
 ### Root Cause
+
 The test does not fully specify the intended behavior.
 
 ### Solution
@@ -35,6 +38,7 @@ The code passes the test = it meets the specification = it is correct.
 **Example:**
 
 Current test:
+
 ```python
 def test_user_can_login():
     service = UserService()
@@ -44,6 +48,7 @@ def test_user_can_login():
 ```
 
 Current code:
+
 ```python
 def login(self, email, password):
     # BUG: Always returns True (but test passes!)
@@ -64,6 +69,7 @@ def test_user_cannot_login_with_wrong_password():
 ```
 
 **Step 4: Run new test to verify it fails**
+
 ```bash
 pytest tests/test_user_service.py::test_user_cannot_login_with_wrong_password
 # FAIL: Expected False, got True
@@ -79,12 +85,14 @@ def login(self, email, password):
 ```
 
 **Step 6: Run all tests**
+
 ```bash
 pytest tests/
 # All tests: PASS
 ```
 
 ### Prevention
+
 - Think about what could go wrong
 - Write tests for negative cases
 - Write tests for edge cases
@@ -95,12 +103,14 @@ pytest tests/
 ## Refactoring Takes Too Long
 
 ### Symptoms
+
 - Spent 30+ minutes refactoring
 - Still not satisfied with code
 - Many changes made
 - Afraid to commit
 
 ### Root Cause
+
 Trying to refactor too much code at once.
 
 ### Solution
@@ -126,14 +136,17 @@ After implementing more features, patterns will emerge.
 **Step 4: Make smaller refactoring changes**
 
 Instead of:
+
 - "Refactor entire UserService class"
 
 Do:
+
 - "Extract email validation method" (5 min)
 - "Rename _hash_password to _hash_password_bcrypt" (2 min)
 - "Extract User class" (10 min)
 
 ### Prevention
+
 - Set a 10-15 minute timer for REFACTOR phase
 - When timer expires, commit and move on
 - Small, frequent refactorings > large, rare ones

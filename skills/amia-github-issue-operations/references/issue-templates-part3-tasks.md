@@ -40,6 +40,7 @@ How do we know this task is complete?
 ```
 
 **Example:**
+
 ```markdown
 ## Task Description
 
@@ -74,12 +75,14 @@ Our dependencies haven't been updated in 6 months. We need to:
 GitHub supports task lists with special checkbox syntax.
 
 **Basic syntax:**
+
 ```markdown
 - [ ] Unchecked item
 - [x] Checked item
 ```
 
 **Nested checklists:**
+
 ```markdown
 - [ ] Main task
   - [ ] Subtask 1
@@ -88,6 +91,7 @@ GitHub supports task lists with special checkbox syntax.
 ```
 
 **With assignees (informal):**
+
 ```markdown
 ## Checklist
 
@@ -102,6 +106,7 @@ GitHub supports task lists with special checkbox syntax.
 GitHub automatically shows progress percentage in issue lists when checklists are present.
 
 **Checklist with time estimates:**
+
 ```markdown
 ## Checklist
 
@@ -113,6 +118,7 @@ GitHub automatically shows progress percentage in issue lists when checklists ar
 ```
 
 **Checklist with priority markers:**
+
 ```markdown
 ## Checklist
 
@@ -147,6 +153,7 @@ Issues waiting on this task to complete:
 ```
 
 **Alternative format with status:**
+
 ```markdown
 ## Dependencies
 
@@ -158,16 +165,18 @@ Issues waiting on this task to complete:
 ```
 
 **Dependency visualization:**
-```markdown
+
+````markdown
 ## Dependencies
 
 ### Dependency Chain
 
 ```
-#120 (Done) → #123 (In Progress) → THIS ISSUE → #130 (Waiting)
+# 120 (Done) → #123 (In Progress) → THIS ISSUE → #130 (Waiting)
                 ↓
               #124 (Done) ────────────────────↗
 ```
+````
 
 ---
 

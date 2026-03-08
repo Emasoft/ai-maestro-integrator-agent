@@ -7,7 +7,6 @@ procedure: "support-skill"
 
 # Operation: Start PR Review
 
-
 ## Contents
 
 - [Purpose](#purpose)

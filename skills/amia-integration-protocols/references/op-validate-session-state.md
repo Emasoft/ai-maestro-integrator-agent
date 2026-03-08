@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Validate Session State
 
-
 ## Contents
 
 - [Purpose](#purpose)

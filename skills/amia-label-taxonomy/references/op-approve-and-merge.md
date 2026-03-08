@@ -7,7 +7,6 @@ procedure: "support-skill"
 
 # Operation: Approve and Merge
 
-
 ## Contents
 
 - [Purpose](#purpose)

@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Refactor Code (REFACTOR Phase)
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -64,6 +63,7 @@ Improve the quality, readability, and design of the code while ensuring all test
 **Change structure, preserve behavior.**
 
 You may:
+
 - Rename variables, functions, classes
 - Extract methods or functions
 - Remove duplication
@@ -72,6 +72,7 @@ You may:
 - Add comments
 
 You may NOT:
+
 - Add new features
 - Change behavior
 - Break any tests

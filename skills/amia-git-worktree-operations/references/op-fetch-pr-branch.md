@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Fetch PR Branch
 
-
 ## Contents
 
 - [Purpose](#purpose)

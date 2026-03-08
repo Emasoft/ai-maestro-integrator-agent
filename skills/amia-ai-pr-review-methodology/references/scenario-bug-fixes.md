@@ -85,6 +85,7 @@ This identifies the symptom (NullPointerException) but not the root cause (why i
 **Why reproduction matters:**
 
 If the bug cannot be reproduced:
+
 - The fix cannot be verified (you cannot confirm it resolves something you cannot trigger)
 - The bug may be caused by a transient condition that has already resolved
 - The fix may be a false positive (see [dimension-5-false-positive-detection.md](./dimension-5-false-positive-detection.md))
@@ -92,6 +93,7 @@ If the bug cannot be reproduced:
 **What to ask the author:**
 
 "Can you provide reproduction steps that consistently trigger the bug on the base branch (before your changes)? Please include:
+
 1. Starting state (clean install, specific configuration, specific data)
 2. Exact steps to trigger the error
 3. Expected result vs actual result
@@ -100,6 +102,7 @@ If the bug cannot be reproduced:
 **If the bug is intermittent:**
 
 Intermittent bugs require additional evidence. The author should:
+
 1. Run the reproduction steps multiple times (at least 10 attempts)
 2. Document the frequency (for example, "fails 3 out of 10 times")
 3. After applying the fix, run the same steps the same number of times
@@ -145,6 +148,7 @@ Exit code: 0
 **Why regression tests are required:**
 
 Without a regression test:
+
 - The bug can be reintroduced by a future change
 - There is no automated proof that the fix works
 - Future refactoring may accidentally remove the fix without anyone noticing
@@ -162,6 +166,7 @@ def test_dashboard_handles_user_without_profile():
 ```
 
 This test:
+
 - Describes the scenario in the docstring
 - Sets up the specific condition that caused the bug (user without profile)
 - Verifies the correct behavior (redirect, not crash)
@@ -183,6 +188,7 @@ This test:
 PR description says: "The application crashes with IndexError when processing a CSV file with no data rows."
 
 Error message provided:
+
 ```
 IndexError: list index out of range
   File "processor.py", line 87, in process_csv
@@ -200,6 +206,7 @@ PASS -- The root cause (missing empty file check) is clearly identified.
 **Step 3: Check reproduction (S-BUG.4).**
 
 PR description includes reproduction steps:
+
 ```
 1. Create an empty file: touch empty.csv
 2. Run: python processor.py empty.csv
@@ -211,6 +218,7 @@ PASS -- Reproduction steps are provided and specific.
 **Step 4: Check fix demonstration (S-BUG.5).**
 
 PR description includes before/after:
+
 ```
 BEFORE: python processor.py empty.csv -> IndexError
 AFTER:  python processor.py empty.csv -> "Warning: empty.csv has no data rows. Skipping."
@@ -221,6 +229,7 @@ PASS -- Before/after demonstration is provided.
 **Step 5: Check regression test (S-BUG.6).**
 
 PR includes a new test:
+
 ```python
 def test_process_csv_with_empty_file(tmp_path):
     """Verify that processing an empty CSV produces a warning and

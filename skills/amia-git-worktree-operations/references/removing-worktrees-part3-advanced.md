@@ -1,6 +1,7 @@
 # Removing Worktrees - Part 3: Advanced Operations
 
 ## Table of Contents
+
 1. [If you need to remove multiple worktrees → Bulk Removal](#bulk-removal)
    - 1.1 [Method 1: Loop Through List](#method-1-loop-through-list)
    - 1.2 [Method 2: From Registry Query](#method-2-from-registry-query)
@@ -20,6 +21,7 @@
 4. [Quick command reference → Quick Reference](#quick-reference)
 
 **Related Parts:**
+
 - [Part 1: Preparation and Basic Commands](removing-worktrees-part1-basics.md)
 - [Part 2: Post-Removal and Automation](removing-worktrees-part2-post-removal.md)
 - [Index: All Removal Topics](removing-worktrees-index.md)
@@ -138,6 +140,7 @@ echo "✓ Bulk cleanup complete"
 ## Verification
 
 **Why verify:**
+
 - Confirm removal was successful
 - Detect partial failures
 - Ensure registry is consistent
@@ -160,24 +163,28 @@ echo "✓ Bulk cleanup complete"
 ### Verification Commands
 
 **Check 1: Git worktree list**
+
 ```bash
 git worktree list | grep review-GH-42
 # Should return nothing (exit code 1)
 ```
 
 **Check 2: Directory exists**
+
 ```bash
 test -d "${PROJECT_ROOT}/review-GH-42" && echo "EXISTS" || echo "REMOVED"
 # Should output: REMOVED
 ```
 
 **Check 3: Registry updated**
+
 ```bash
 jq '.worktrees[] | select(.worktree_id == "review-GH-42")' design/worktree-registry.json
 # Should return nothing
 ```
 
 **Check 4: Ports released**
+
 ```bash
 # Check each port that was allocated
 lsof -i :3000  # Should return nothing
@@ -185,6 +192,7 @@ lsof -i :8000  # Should return nothing
 ```
 
 **Check 5: No git references**
+
 ```bash
 git branch -a | grep review-GH-42
 # Should return nothing (unless branch still exists on remote)
@@ -266,6 +274,7 @@ fi
 ### Problem: "Cannot remove current worktree"
 
 **Full error:**
+
 ```
 fatal: 'review-GH-42' is the current worktree
 ```
@@ -274,6 +283,7 @@ fatal: 'review-GH-42' is the current worktree
 You're inside the worktree you're trying to remove.
 
 **Solution:**
+
 ```bash
 # Change to main repository or different directory
 cd "${PROJECT_ROOT}"
@@ -285,11 +295,13 @@ git worktree remove review-GH-42
 ### Problem: Removal succeeds but directory still exists
 
 **Cause:**
+
 - Permissions prevent deletion
 - Files in use by process
 - File system issue
 
 **Solution:**
+
 ```bash
 # Check for processes
 lsof +D /path/to/review-GH-42
@@ -307,6 +319,7 @@ git worktree prune
 Worktrees removed without updating registry.
 
 **Solution:**
+
 ```bash
 # Sync registry with git truth
 ./scripts/sync-registry-with-git.sh
@@ -319,6 +332,7 @@ Worktrees removed without updating registry.
 
 **Prevention:**
 Always use `git worktree prune --dry-run` first:
+
 ```bash
 git worktree prune --dry-run
 # Review what would be removed
@@ -328,6 +342,7 @@ git worktree prune
 ### Problem: Force removal fails
 
 **Full error:**
+
 ```
 fatal: unable to delete 'review-GH-42': Directory not empty
 ```
@@ -336,6 +351,7 @@ fatal: unable to delete 'review-GH-42': Directory not empty
 Files with special permissions or attributes.
 
 **Solution:**
+
 ```bash
 # Remove immutable attribute (if on Linux)
 chattr -R -i /path/to/review-GH-42
@@ -354,6 +370,7 @@ git worktree prune
 ### Common Removal Workflows
 
 **Standard removal:**
+
 ```bash
 # 1. Check status
 cd worktree-dir && git status
@@ -369,11 +386,13 @@ jq 'del(.worktrees[] | select(.worktree_id == "ID"))' registry.json > temp && mv
 ```
 
 **Emergency removal:**
+
 ```bash
 git worktree remove --force worktree-dir && git worktree prune
 ```
 
 **Bulk removal:**
+
 ```bash
 ./scripts/bulk-cleanup-worktrees.sh merged
 ```

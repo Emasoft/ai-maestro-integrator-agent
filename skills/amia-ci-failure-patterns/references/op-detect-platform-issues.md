@@ -7,7 +7,6 @@ description: "Run amia_detect_platform_issue.py to scan source code for cross-pl
 
 # Operation: Detect Platform Issues
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -265,5 +264,6 @@ Run this scanner:
 ## Next Operations
 
 After detecting platform issues:
+
 - [op-apply-pattern-fix.md](op-apply-pattern-fix.md) - Apply fixes for detected issues
 - [op-verify-fix-locally.md](op-verify-fix-locally.md) - Verify fixes work on all platforms

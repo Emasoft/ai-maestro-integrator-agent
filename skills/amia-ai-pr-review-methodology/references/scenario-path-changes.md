@@ -167,5 +167,6 @@ Flatpak is primarily a Linux technology. If the search is also used on macOS, th
 3. Flatpak is Linux-only. Is there a platform check to skip this path on macOS and Windows?
 
 Please provide:
+
 - Output of `flatpak info com.example.mytool` and `ls -la /var/lib/flatpak/app/com.example.mytool/` on a system with the Flatpak installation
 - Confirmation of whether `~/.local/bin/mytool` exists when mytool is installed via Flatpak"

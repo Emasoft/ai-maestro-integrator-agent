@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Create Review Report
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -172,6 +171,7 @@ Generate the final comprehensive review document that combines Quick Scan result
 ### Step 1: Gather All Data
 
 Collect:
+
 - Quick Scan report
 - Deep Dive report
 - Confidence calculation
@@ -190,6 +190,7 @@ python3 scripts/review_report_generator.py \
 ### Step 3: Review Generated Report
 
 Verify:
+
 - All sections populated
 - Scores match calculations
 - Decision is consistent with score
@@ -198,6 +199,7 @@ Verify:
 ### Step 4: Save Report
 
 Save to standardized location:
+
 ```
 docs_dev/integration/reports/pr-<NUMBER>-review-<TIMESTAMP>.md
 ```

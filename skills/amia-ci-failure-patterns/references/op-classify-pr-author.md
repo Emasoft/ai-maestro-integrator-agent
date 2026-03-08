@@ -7,7 +7,6 @@ description: "Classify PR author category for automated handling decisions"
 
 # Operation: Classify PR Author
 
-
 ## Contents
 
 - [Purpose](#purpose)

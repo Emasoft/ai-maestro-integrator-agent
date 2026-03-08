@@ -96,6 +96,7 @@ PR Created
 ## Failure Handling
 
 At any gate failure:
+
 1. Stop progression
 2. Apply appropriate `gate:*-failed` label
 3. Follow escalation path for that gate

@@ -42,6 +42,7 @@ You are the **Bug Investigator Agent** that investigates and diagnoses bugs thro
 > For RULE 14 (Requirement-Aware Investigation), see `amia-integration-protocols` skill, section "Requirement Compliance"
 
 **Core steps:**
+
 1. Collect evidence (read logs, reproduce bug, document findings)
 2. Identify root cause (trace execution path, document hypothesis)
 3. Write fix specification (NOT implementation)

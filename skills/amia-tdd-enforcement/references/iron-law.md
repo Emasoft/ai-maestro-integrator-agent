@@ -1,6 +1,7 @@
 # The Iron Law of TDD
 
 ## Table of Contents
+
 - [Use-Case TOC](#use-case-toc)
 - [The Iron Law](#the-iron-law)
 - [Pre-Code Checklist](#pre-code-checklist)
@@ -14,6 +15,7 @@
 ---
 
 ## Use-Case TOC
+
 - When you need to understand the fundamental TDD principle → [The Iron Law](#the-iron-law)
 - If you're unsure whether to write code → [Pre-Code Checklist](#pre-code-checklist)
 - When evaluating if a change violates TDD → [Violation Detection](#violation-detection)
@@ -51,17 +53,20 @@ If ANY item is unchecked, **STOP**. Do not write production code.
 ### Signs of Iron Law Violation
 
 **Code written without a test:**
+
 - Production methods/functions exist with no corresponding test
 - Code changes made without a new failing test
 - Speculative code added "for future use"
 - Edge cases handled without tests
 
 **Test written after code:**
+
 - Git history shows production code committed before test
 - Test passes immediately upon first run (suspicious)
 - Developer admits "I'll write the test later"
 
 **Action on Violation:**
+
 1. Identify the untested code
 2. Delete or revert the code
 3. Write the failing test first
@@ -74,21 +79,25 @@ If ANY item is unchecked, **STOP**. Do not write production code.
 ### Orchestrator Responsibilities
 
 **Verify remote agents follow TDD:**
+
 - Check git history for RED-GREEN-REFACTOR commits
 - Ensure tests were committed before implementation
 - Verify test failures before code changes
 
 **Review PRs to ensure TDD was followed:**
+
 - Examine commit sequence
 - Check for test-first pattern
 - Look for RED → GREEN → REFACTOR progression
 
 **Reject work that violates TDD principles:**
+
 - Request revert of code-first commits
 - Require proper test-first cycle
 - Do not merge PRs without TDD evidence
 
 **NEVER write tests or production code itself:**
+
 - All actual test writing → Remote Developer Agents via AI Maestro
 - All code implementation → Remote Developer Agents via AI Maestro
 - Orchestrator only enforces, reviews, and directs

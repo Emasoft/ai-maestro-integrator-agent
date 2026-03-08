@@ -22,6 +22,7 @@ Create handoff documents in these situations:
 | Delegating to another agent | Cross-agent handoff | `current.md` + issue comment |
 
 **DO NOT create handoff if:**
+
 - Work is 100% complete
 - All state is already in PR/issue comments
 - No continuation needed
@@ -113,6 +114,7 @@ When handing off to another agent (e.g., Orchestrator, Architect):
 
 1. Write detailed `current.md` handoff
 2. Post comment on related issue:
+
    ```markdown
    @[agent-name] - AMIA handoff available
 
@@ -123,6 +125,7 @@ When handing off to another agent (e.g., Orchestrator, Architect):
 
    Please continue from where I left off. All context is in the handoff document.
    ```
+
 3. If using AI Maestro messaging, send a message using the `agent-messaging` skill with:
    - **Recipient**: `target-agent-session`
    - **Subject**: `AMIA Integration Handoff`
@@ -135,16 +138,19 @@ When handing off to another agent (e.g., Orchestrator, Architect):
 When you receive a handoff:
 
 1. Load handoff document:
+
    ```bash
    cat "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md"
    ```
 
 2. Verify freshness:
+
    ```bash
    stat -f "%Sm" "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md"
    ```
 
 3. Check if links still valid:
+
    ```bash
    # Verify PR still open
    gh pr view <PR_NUMBER> --json state -q .state

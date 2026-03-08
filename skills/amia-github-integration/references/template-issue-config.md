@@ -10,18 +10,18 @@ description: "Issue template chooser configuration that disables blank issues an
 - 1. When to Use This Configuration
   - 1.1 What is config.yml and where it goes
   - 1.2 How the issue template chooser works in GitHub
-- 2. Disabling Blank Issues
+- 1. Disabling Blank Issues
   - 2.1 Why blank issues should be disabled
   - 2.2 The blank_issues_enabled setting
-- 3. Contact Links
+- 1. Contact Links
   - 3.1 Redirecting feature requests to GitHub Discussions
   - 3.2 Redirecting questions to a community forum or chat
   - 3.3 Adding custom external links
-- 4. Complete Configuration (Ready to Copy)
-- 5. How the Template Chooser Appears to Users
+- 1. Complete Configuration (Ready to Copy)
+- 1. How the Template Chooser Appears to Users
   - 5.1 Visual layout of the chooser page
   - 5.2 Order of templates and links
-- 6. Customization Notes
+- 1. Customization Notes
   - 6.1 Adding project-specific contact links
   - 6.2 Combining with issue templates
 
@@ -98,6 +98,7 @@ contact_links:
 Replace `YOUR_ORG/YOUR_REPO` with your actual repository path. You must have GitHub Discussions enabled on the repository and create a "Feature Requests" category.
 
 To enable GitHub Discussions:
+
 1. Go to repository Settings
 2. Scroll to the Features section
 3. Check "Discussions"
@@ -214,6 +215,7 @@ Issue templates are displayed in alphabetical order by filename. Contact links a
 Common additional links for different project types:
 
 For libraries:
+
 ```yaml
   - name: "API Question"
     url: https://stackoverflow.com/questions/tagged/your-library
@@ -221,6 +223,7 @@ For libraries:
 ```
 
 For applications with paid support:
+
 ```yaml
   - name: "Enterprise Support"
     url: https://yourcompany.com/support
@@ -228,6 +231,7 @@ For applications with paid support:
 ```
 
 For projects with a roadmap:
+
 ```yaml
   - name: "Roadmap"
     url: https://github.com/orgs/YOUR_ORG/projects/1

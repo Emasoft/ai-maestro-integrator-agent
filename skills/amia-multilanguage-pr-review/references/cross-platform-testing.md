@@ -7,6 +7,7 @@ This reference covers comprehensive strategies for testing applications across m
 ## Table of Contents
 
 ### Part 1: Testing on Multiple Operating Systems
+
 **File**: [cross-platform-testing-part1-multi-os.md](cross-platform-testing-part1-multi-os.md)
 
 - 7.1.1 Platform categories and key differences
@@ -15,6 +16,7 @@ This reference covers comprehensive strategies for testing applications across m
 - 7.1.4 Platform detection in tests (Python and TypeScript)
 
 ### Part 2: CI Matrix Configuration for GitHub Actions
+
 **File**: [cross-platform-testing-part2-ci-matrix.md](cross-platform-testing-part2-ci-matrix.md)
 
 - 7.2.1 Basic matrix configuration (os, python-version)
@@ -24,6 +26,7 @@ This reference covers comprehensive strategies for testing applications across m
 - 7.2.5 Conditional steps based on matrix
 
 ### Part 3: Platform-Specific Test Skips and Annotations
+
 **File**: [cross-platform-testing-part3-test-skips.md](cross-platform-testing-part3-test-skips.md)
 
 - 7.3.1 Python (pytest) platform skips and custom markers
@@ -32,6 +35,7 @@ This reference covers comprehensive strategies for testing applications across m
 - 7.3.4 Go build tags and runtime skips
 
 ### Part 4: Using Docker for Reproducible Builds
+
 **File**: [cross-platform-testing-part4-docker.md](cross-platform-testing-part4-docker.md)
 
 - 7.4.1 Multi-platform Docker build with multi-stage
@@ -57,6 +61,7 @@ This reference covers comprehensive strategies for testing applications across m
 ### Platform Detection Quick Reference
 
 **Python**:
+
 ```python
 import sys
 sys.platform == 'win32'   # Windows
@@ -65,6 +70,7 @@ sys.platform.startswith('linux')  # Linux
 ```
 
 **TypeScript/JavaScript**:
+
 ```typescript
 process.platform === 'win32'   // Windows
 process.platform === 'darwin'  // macOS
@@ -72,6 +78,7 @@ process.platform === 'linux'   // Linux
 ```
 
 **GitHub Actions**:
+
 ```yaml
 if: runner.os == 'Windows'
 if: runner.os == 'macOS'

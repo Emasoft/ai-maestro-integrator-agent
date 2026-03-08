@@ -1,6 +1,7 @@
 # Troubleshooting: Reviewer Calibration Issues
 
 ## Table of Contents
+
 - If you need to understand the problem → Problem Description
 - When analyzing why calibration issues occur → Root Causes
 - If you're looking for fixes → Solutions and Workarounds
@@ -15,30 +16,35 @@ Different reviewers apply inconsistent standards when reviewing code. What one r
 ## Root Causes
 
 ### 1. Lack of Shared Standards
+
 - No written review guidelines or expectations
 - Undocumented team conventions and patterns
 - Implicit knowledge not captured anywhere
 - Style guide exists but is incomplete or outdated
 
 ### 2. Different Experience Levels
+
 - Junior reviewers unsure what to look for
 - Senior reviewers applying different mental models
 - Specialized domain knowledge not evenly distributed
 - Varying familiarity with codebase areas
 
 ### 3. Personal Preferences Over Team Standards
+
 - Reviewers imposing individual style preferences
 - Inconsistent application of existing guidelines
 - "I would have done it differently" syndrome
 - Lack of clarity on what's required vs optional
 
 ### 4. Unclear Review Scope
+
 - Confusion about what aspects to review deeply
 - Uncertainty about when to approve vs request changes
 - No guidance on blocking vs non-blocking comments
 - Ambiguity about reviewer responsibilities
 
 ### 5. Limited Calibration Opportunities
+
 - Reviews happen in isolation
 - No discussion of review decisions
 - Lack of feedback on review quality
@@ -49,6 +55,7 @@ Different reviewers apply inconsistent standards when reviewing code. What one r
 ### Immediate Actions
 
 #### 1. Establish Review Comment Categories
+
 ```markdown
 ACTION: Use consistent labels for comment types
 
@@ -67,6 +74,7 @@ USAGE:
 ```
 
 #### 2. Define Approval Criteria
+
 ```markdown
 ACTION: Document when to approve vs request changes
 
@@ -91,6 +99,7 @@ COMMENT (NO APPROVAL) WHEN:
 ```
 
 #### 3. Create Review Checklist
+
 ```markdown
 ACTION: Apply standardized checklist to every review
 
@@ -132,6 +141,7 @@ STANDARDS:
 ```
 
 #### 4. Distinguish Standards from Preferences
+
 ```markdown
 ACTION: Clarify what's enforceable vs personal taste
 
@@ -156,6 +166,7 @@ WHEN MAKING SUGGESTIONS:
 ### Long-Term Solutions
 
 #### 1. Conduct Calibration Sessions
+
 ```markdown
 ACTION: Regular team sessions to align review standards
 
@@ -179,6 +190,7 @@ BENEFITS:
 ```
 
 #### 2. Develop Comprehensive Guidelines
+
 ```markdown
 ACTION: Create and maintain review documentation
 
@@ -198,6 +210,7 @@ MAINTAIN:
 ```
 
 #### 3. Implement Review of Reviews
+
 ```markdown
 ACTION: Provide feedback on review quality
 
@@ -215,6 +228,7 @@ FOCUS ON:
 ```
 
 #### 4. Create Pattern Library
+
 ```markdown
 ACTION: Document approved patterns and anti-patterns
 
@@ -239,12 +253,14 @@ USAGE:
 ### For New Team Members
 
 #### Onboarding
+
 1. **Review Guidelines**: Study team review standards and pattern library
 2. **Shadow Reviews**: Observe experienced reviewers' comments and reasoning
 3. **Paired Reviews**: Co-review PRs with senior team members initially
 4. **Gradual Ramp-Up**: Start with smaller, less critical PRs
 
 #### Early Contributions
+
 1. **Seek Feedback**: Ask for review-of-review from experienced teammates
 2. **Ask Questions**: When unsure, ask rather than assuming
 3. **Learn Patterns**: Study approved patterns before enforcing standards
@@ -253,12 +269,14 @@ USAGE:
 ### For Experienced Reviewers
 
 #### Consistency Practices
+
 1. **Reference Standards**: Link to documented guidelines in comments
 2. **Distinguish Types**: Always categorize comments (critical/suggestion/nitpick)
 3. **Explain Reasoning**: Don't just say what's wrong, explain why it matters
 4. **Check Yourself**: Periodically review your own comment patterns
 
 #### Mentoring
+
 1. **Share Knowledge**: Document implicit knowledge you carry
 2. **Coach Juniors**: Help less experienced reviewers develop skills
 3. **Stay Humble**: Be open to learning from others' perspectives
@@ -267,12 +285,14 @@ USAGE:
 ### For Teams
 
 #### Process Design
+
 1. **Clear Ownership**: Define who reviews what types of changes
 2. **Multiple Reviewers**: Use 2+ reviewers for complex or critical changes
 3. **Review Templates**: Provide structured templates for common review types
 4. **Escalation Path**: Clear process for resolving review disagreements
 
 #### Continuous Improvement
+
 1. **Regular Calibration**: Schedule recurring alignment sessions
 2. **Documentation Updates**: Keep guidelines current with team decisions
 3. **Metrics Review**: Examine patterns in review comments and approvals
@@ -281,12 +301,14 @@ USAGE:
 ## Measuring Calibration
 
 ### Quantitative Indicators
+
 - Variance in review comment counts across reviewers
 - Distribution of comment types (critical vs nitpick) by reviewer
 - Approval rate variation between reviewers
 - Number of issues found post-merge by original reviewer
 
 ### Qualitative Indicators
+
 - Team confidence in review process
 - Consistency of review standards as perceived by authors
 - New reviewer ramp-up time
@@ -297,6 +319,7 @@ USAGE:
 ### During Reviews
 
 #### When Another Reviewer Disagrees
+
 ```markdown
 APPROACH:
 1. Understand their perspective: Ask clarifying questions
@@ -308,6 +331,7 @@ APPROACH:
 ```
 
 #### When Author Pushes Back
+
 ```markdown
 APPROACH:
 1. Verify your comment: Is it based on team standard or personal preference?
@@ -321,6 +345,7 @@ APPROACH:
 ### Team Resolution
 
 #### For Recurring Conflicts
+
 ```markdown
 PROCESS:
 1. Identify the pattern: What type of issue keeps causing disagreement?

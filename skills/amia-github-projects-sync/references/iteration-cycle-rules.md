@@ -26,6 +26,7 @@ A task stays in review until ALL criteria pass. There is no "good enough" - only
 ### 100% Approval Rule
 
 The **100% Approval Rule** means:
+
 - ALL checklist items must pass (not "most" or "almost all")
 - ALL tests must succeed (0 failures allowed)
 - ALL review comments must be addressed
@@ -68,6 +69,7 @@ Partial completion is NOT completion. A PR cannot be merged until it achieves 10
 ## Review Checklist (ALL Must Pass)
 
 ### Code Quality
+
 - [ ] All tests pass (0 failures)
 - [ ] Code coverage ≥ 80%
 - [ ] No linting errors
@@ -75,18 +77,21 @@ Partial completion is NOT completion. A PR cannot be merged until it achieves 10
 - [ ] Follows project style guide
 
 ### Functionality
+
 - [ ] Meets all acceptance criteria
 - [ ] No regressions in existing features
 - [ ] Edge cases handled
 - [ ] Error handling complete
 
 ### Security
+
 - [ ] No hardcoded secrets
 - [ ] Input validation present
 - [ ] No SQL injection risks
 - [ ] Authentication/authorization correct
 
 ### Documentation
+
 - [ ] Code comments where needed
 - [ ] API documentation updated
 - [ ] README updated if applicable
@@ -143,6 +148,7 @@ After each review iteration:
 ### Automation Note
 
 The iteration table update is MANUAL. Agent must:
+
 1. Edit PR description (not add comment)
 2. Add new row to table
 3. Update previous row if re-reviewing same iteration

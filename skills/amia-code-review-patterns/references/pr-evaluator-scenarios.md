@@ -173,25 +173,33 @@ Solution:
 ## Best Practices
 
 ### 1. Always Use Isolated Environments
+
 Never evaluate PRs in main working directory. Always use worktrees, containers, or dedicated clones.
 
 ### 2. Collect Complete Evidence
+
 Capture all logs, outputs, and reports. Future debugging may require this evidence.
 
 ### 3. Be Deterministic
+
 Same PR should produce same evaluation results. Ensure environment consistency.
 
 ### 4. Report Objectively
+
 Stick to facts. No speculation, no opinions, no implementation suggestions.
 
 ### 5. Compare with Baseline
+
 When possible, compare PR results with base branch results to identify regressions.
 
 ### 6. Detect Hanging Tests
+
 Monitor test progress for responsiveness. Non-progressing tests indicate PR issues.
 
 ### 7. Clean Up Thoroughly
+
 Always remove evaluation environments after completion to avoid disk space issues.
 
 ### 8. Version Your Reports
+
 Include timestamps, commit SHAs, and environment details in reports for reproducibility.

@@ -1,6 +1,7 @@
 # Step-by-Step Procedures
 
 ## Contents
+
 - [Phase 1: Understanding Prerequisites](#phase-1-understanding-worktree-prerequisites) - Before creating worktrees
 - [Phase 2: Create a Worktree](#phase-2-create-a-worktree) - Creating new worktrees
 - [Phase 3: Manage Multiple Worktrees](#phase-3-manage-multiple-worktrees) - Working with multiple worktrees
@@ -27,6 +28,7 @@ git log --oneline -1
 ```
 
 **Requirements:**
+
 - The main repository exists at the target path
 - You have write permissions to the repository
 - The repository has at least one commit (initial commit)
@@ -47,6 +49,7 @@ touch ~/design/.write-test && rm ~/design/.write-test
 ```
 
 **Requirements:**
+
 - The `~/design/` directory exists or can be created
 - You have write permissions to `~/design/`
 - The directory will store the `worktree-registry.json` file
@@ -62,6 +65,7 @@ Document your port requirements before creating worktrees:
 | test-integration | Integration tests | 8110 | Test runner |
 
 **Guidelines:**
+
 - Identify which ports will be needed (8100-8199 range)
 - Document the port usage in advance
 - Avoid conflicts with existing services
@@ -84,6 +88,7 @@ python scripts/worktree_create.py \
 ```
 
 **Internal Process:**
+
 1. Calculate available port from registry
 2. Add worktree metadata to registry
 3. Record: worktree name, path, branch, port, creation timestamp
@@ -98,6 +103,7 @@ git worktree add ../my-feature feature/my-feature
 ```
 
 **What Happens:**
+
 - Git creates worktree directory at specified path
 - Links to specific branch (creates if doesn't exist)
 - Shares Git object database with main repository
@@ -118,6 +124,7 @@ cd ../my-feature && git branch --show-current
 ```
 
 **Expected Results:**
+
 - Directory exists with full working copy
 - `.git` file contains path to main repo's `.git` directory
 - Correct branch is active
@@ -135,6 +142,7 @@ python scripts/worktree_list.py
 ```
 
 **Output Format:**
+
 ```
 Name              Branch                  Port   Status   Path
 ----------------  ----------------------  -----  -------  ------------------
@@ -177,6 +185,7 @@ git push -u origin feature/user-auth
 ```
 
 **Key Points:**
+
 - Changes in one worktree don't affect others
 - Each worktree has independent staging area
 - Push commits independently
@@ -194,6 +203,7 @@ python scripts/port_allocate.py --worktree my-feature --port 8101
 ```
 
 **Process:**
+
 1. Check port not already allocated
 2. Reserve port in registry with service name
 3. Update registry file atomically
@@ -215,6 +225,7 @@ flask run --port 8101
 ```
 
 **Verification:**
+
 ```bash
 curl http://localhost:8101/health
 ```
@@ -257,6 +268,7 @@ pkill -f "port 8101"
 ```
 
 **Checklist:**
+
 - [ ] No uncommitted changes
 - [ ] All commits pushed if needed
 - [ ] No services running in worktree
@@ -270,6 +282,7 @@ python scripts/worktree_remove.py --name my-feature
 ```
 
 **Process:**
+
 1. Find worktree entry in registry
 2. Remove from active worktrees list
 3. Mark port as available
@@ -285,6 +298,7 @@ git worktree remove ../my-feature
 ```
 
 **Verification:**
+
 ```bash
 # Confirm directory deleted
 ls ../my-feature  # Should fail
@@ -306,6 +320,7 @@ python scripts/registry_validate.py
 ```
 
 **Checks Performed:**
+
 - Registry file is valid JSON
 - All registered worktrees physically exist
 - No duplicate port allocations
@@ -320,6 +335,7 @@ python scripts/registry_validate.py --fix-orphans
 ```
 
 **Process:**
+
 1. Remove registry entries for deleted worktrees
 2. Free up ports for reuse
 3. Update registry file atomically
@@ -337,6 +353,7 @@ python scripts/port_status.py
 ```
 
 **Report Contents:**
+
 - All active worktrees
 - Port allocations
 - Status information

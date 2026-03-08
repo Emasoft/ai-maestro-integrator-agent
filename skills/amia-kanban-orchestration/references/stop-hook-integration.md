@@ -30,6 +30,7 @@ Stop hook ensures:
 ### When Stop Hook Fires
 
 The stop hook runs when:
+
 - Orchestrator attempts to exit session
 - User requests session end
 - Conversation reaches natural conclusion
@@ -231,6 +232,7 @@ If absolutely necessary, force exit with override (see 8.7).
 ### Deferral Tracking
 
 When deferring, ensure next session can pick up:
+
 1. Document current state in comment
 2. List remaining work
 3. Note any context that would be lost
@@ -280,6 +282,7 @@ EOF
 ### Exit with Blocked Items
 
 After acknowledgment:
+
 1. Blocked items stay in Blocked status
 2. Escalation timeline continues
 3. Next session inherits blocked items

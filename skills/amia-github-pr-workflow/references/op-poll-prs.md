@@ -1,6 +1,5 @@
 # Operation: Poll for PRs Requiring Attention
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -14,9 +13,13 @@
 - [Example](#example)
 
 ---
+
+```yaml
 procedure: proc-request-pr-review
 workflow-instruction: Step 20 - PR Review Request
 operation-id: op-poll-prs
+```
+
 ---
 
 ## Purpose
@@ -39,11 +42,13 @@ Survey all open PRs in a repository and identify which ones require action.
 ## Steps
 
 1. **Run the polling script**:
+
    ```bash
    python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
    ```
 
 2. **Parse the output** - JSON with prioritized PR list:
+
    ```json
    {
      "prs": [

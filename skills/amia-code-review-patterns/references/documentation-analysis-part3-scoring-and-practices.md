@@ -24,6 +24,7 @@ This document covers scoring criteria, review questions, red flags, documentatio
 ## Scoring Criteria
 
 ### Critical (Must Fix)
+
 - No documentation for public API
 - Outdated documentation that misleads
 - Missing critical error documentation
@@ -32,6 +33,7 @@ This document covers scoring criteria, review questions, red flags, documentatio
 - Breaking changes undocumented
 
 ### High Priority (Should Fix)
+
 - Missing docstrings on public functions
 - Missing parameter documentation
 - Missing return value documentation
@@ -41,6 +43,7 @@ This document covers scoring criteria, review questions, red flags, documentatio
 - Configuration not documented
 
 ### Medium Priority (Consider Fixing)
+
 - Missing type hints
 - Vague parameter descriptions
 - No examples for simple functions
@@ -50,6 +53,7 @@ This document covers scoring criteria, review questions, red flags, documentatio
 - Grammar/spelling errors
 
 ### Low Priority (Nice to Have)
+
 - Additional examples
 - More detailed architecture docs
 - Enhanced inline comments
@@ -98,12 +102,14 @@ This document covers scoring criteria, review questions, red flags, documentatio
 ## Documentation Types
 
 ### Code-Level Documentation
+
 - **Docstrings**: Function/class documentation
 - **Type Hints**: Parameter and return types
 - **Inline Comments**: Complex logic explanation
 - **Examples**: Usage demonstrations
 
 ### Project Documentation
+
 - **README**: Project overview and quick start
 - **API Documentation**: Public interface reference
 - **Architecture Docs**: System design and structure
@@ -111,6 +117,7 @@ This document covers scoring criteria, review questions, red flags, documentatio
 - **FAQ**: Common questions and answers
 
 ### Process Documentation
+
 - **Contributing Guide**: How to contribute
 - **Changelog**: Version history
 - **Migration Guides**: Upgrade instructions

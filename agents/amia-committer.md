@@ -69,6 +69,7 @@ user: Commit the new authentication module specification to the design git
 assistant: Target git: design
 
 Created commit:
+
 ```
 [SPEC] Add auth-service module specification
 
@@ -96,6 +97,7 @@ user: Commit the removal of implementation-spec-template.md
 assistant: Target git: design
 
 Created commit:
+
 ```
 [REMOVE] Remove deprecated implementation-spec-template.md
 

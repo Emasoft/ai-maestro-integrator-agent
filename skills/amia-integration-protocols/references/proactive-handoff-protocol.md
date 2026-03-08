@@ -3,6 +3,7 @@
 ## Standard Handoff Format
 
 All handoffs use the AMAMA standard format:
+
 - **Location**: `docs_dev/handoffs/`
 - **Naming**: `handoff-{uuid}-{from}-to-{to}.md`
 - **Delivery**: AI Maestro message with file path
@@ -71,6 +72,7 @@ Exactly what the next agent should do first.
 ## Handoff Quality Checklist
 
 Before sending handoff:
+
 - [ ] UUID is unique and recorded
 - [ ] Context explains WHY work was started
 - [ ] All affected files listed with paths

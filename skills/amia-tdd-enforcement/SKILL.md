@@ -51,6 +51,7 @@ This skill enforces Test-Driven Development (TDD) discipline through the RED-GRE
 **This skill enforces TDD discipline on remote agents. The coordinator delegates testing and coding to developer agents — it verifies compliance, not performs implementation.**
 
 **Coordinator Responsibilities:**
+
 - **VERIFY** remote agents follow TDD (tests before code)
 - **REVIEW** PRs to ensure TDD was followed
 - **REJECT** work that violates TDD principles
@@ -133,6 +134,7 @@ This SKILL.md is a **map** to detailed reference documents. Each section below s
 - When you need to know what actions are forbidden → Forbidden Actions
 
 **Contents:**
+
 - The Iron Law (Absolute)
 - Rule 1: No Code Without a Failing Test
 - Rule 2: Test Must Fail Before Implementation
@@ -181,6 +183,7 @@ This SKILL.md is a **map** to detailed reference documents. Each section below s
 Copy this checklist and track your progress:
 
 **Before Writing ANY Production Code:**
+
 - [ ] A failing test exists for this specific behavior
 - [ ] The test has been run and actually fails
 - [ ] The failure message is clear and measurable
@@ -188,12 +191,14 @@ Copy this checklist and track your progress:
 - [ ] Status is marked as `RED`
 
 **TDD Cycle Summary:**
+
 1. **RED**: Write failing test → Commit → Mark as RED
 2. **GREEN**: Write minimum code → All tests pass → Commit → Mark as GREEN
 3. **REFACTOR**: Improve code → Tests still pass → Commit → Mark as REFACTOR
 4. **Repeat**: Return to RED for next feature
 
 **Git Commit Pattern:**
+
 ```
 RED: test for [feature]
 GREEN: implement [feature]
@@ -201,6 +206,7 @@ REFACTOR: improve [aspect] in [feature]
 ```
 
 **Status States:**
+
 - `pending` → Test being written
 - `RED` → Test fails, needs implementation
 - `GREEN` → Test passes, implementation complete
@@ -315,6 +321,7 @@ def test_output_format_matches_requirement():
 ### When Tests Reveal Requirement Issues
 
 If writing tests reveals a requirement problem:
+
 1. STOP test writing
 2. Document the issue
 3. Generate Requirement Issue Report

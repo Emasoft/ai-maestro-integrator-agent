@@ -124,6 +124,7 @@ gh api graphql -f query='
 ```
 
 **Required Permissions:**
+
 - Must be authenticated as the PR author OR a repository collaborator
 - Read/write access to pull requests
 
@@ -145,6 +146,7 @@ The mutation response includes the thread's new state. Verify that `isResolved` 
 ```
 
 **If `isResolved` is still `false`:**
+
 - Check authentication and permissions
 - Verify the thread ID is correct
 - The thread may already be deleted
@@ -217,6 +219,7 @@ In a batch mutation, each aliased mutation is independent. If one fails, others 
 ```
 
 **Handling strategy:**
+
 1. Check if `errors` array exists in response
 2. For each alias in `data`, check if value is `null` (failed) or has `thread.isResolved: true` (succeeded)
 3. Report failed thread IDs for retry or investigation
@@ -229,6 +232,7 @@ In a batch mutation, each aliased mutation is independent. If one fails, others 
 | Batch resolution | 1 call for N threads | Low |
 
 **Recommended batch sizes:**
+
 - Up to 50 threads per batch is safe
 - GitHub may reject very large mutations (>100 threads)
 - For >50 threads, split into multiple batches

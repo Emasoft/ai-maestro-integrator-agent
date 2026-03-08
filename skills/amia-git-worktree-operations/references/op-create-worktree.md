@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Create Worktree
 
-
 ## Contents
 
 - [Purpose](#purpose)

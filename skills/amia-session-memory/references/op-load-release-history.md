@@ -7,7 +7,6 @@ workflow-instruction: support
 
 # Operation: Load Release History
 
-
 ## Contents
 
 - [Purpose](#purpose)

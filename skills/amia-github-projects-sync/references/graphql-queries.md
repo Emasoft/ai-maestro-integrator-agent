@@ -8,7 +8,7 @@ related:
   - graphql-queries-part2-mutations.md
 ---
 
-# GraphQL Queries for GitHub Projects
+## GraphQL Queries for GitHub Projects
 
 ## Overview
 

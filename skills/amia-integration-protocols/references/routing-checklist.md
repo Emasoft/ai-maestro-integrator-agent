@@ -1,6 +1,5 @@
 # AMIA Sub-Agent Routing and Delegation Checklist
 
-
 ## Contents
 
 - [Sub-Agent Routing Table](#sub-agent-routing-table)
@@ -46,33 +45,38 @@ This document provides the complete routing decision framework and delegation pr
 
 ## Routing Decision Guidelines
 
-### Route to code-reviewer when:
+### Route to code-reviewer when
+
 - PR has structural or architectural concerns
 - Code quality issues suspected (complexity, maintainability)
 - Security implications present
 - Multiple files affected requiring holistic review
 - New patterns or abstractions introduced
 
-### Route to bug-investigator when:
+### Route to bug-investigator when
+
 - CI pipeline reports test failures
 - Unexpected behavior reported in issue
 - Integration tests failing
 - Need to reproduce bug before fixing
 - Root cause analysis required
 
-### Handle PR directly when:
+### Handle PR directly when
+
 - Simple documentation-only changes
 - Obvious formatting fixes (verified by linter)
 - Version bumps with passing CI
 - Automated dependency updates from trusted sources
 
-### Spawn verifier when:
+### Spawn verifier when
+
 - PR modifies critical path code
 - Changes affect multiple integration points
 - Post-merge verification required
 - Need to verify issue resolution
 
-### Escalate to orchestrator when:
+### Escalate to orchestrator when
+
 - Quality gate policies need clarification
 - Resource conflicts detected (multiple agents editing same file)
 - Blocking issues prevent merge
@@ -90,6 +94,7 @@ This document provides the complete routing decision framework and delegation pr
 ## Success Criteria Checklist
 
 ### Integration Request Received
+
 - [ ] Request parsed from AI Maestro or AMOA task delegation
 - [ ] Request type identified (PR review, CI fix, code review, testing)
 - [ ] Request completeness verified (has PR number, branch name, or issue reference)
@@ -97,6 +102,7 @@ This document provides the complete routing decision framework and delegation pr
 - [ ] Logged to `docs_dev/integration/routing-log.md`
 
 ### Routing Decision Made
+
 - [ ] Task category matched to routing table
 - [ ] Sub-agent availability confirmed (not already busy)
 - [ ] Context package prepared (relevant files, issue/PR links, error logs)
@@ -104,6 +110,7 @@ This document provides the complete routing decision framework and delegation pr
 - [ ] Routing decision logged with rationale
 
 ### Sub-Agent Completed
+
 - [ ] Sub-agent returned success/failure status
 - [ ] Output validated (matches expected format)
 - [ ] Results logged to appropriate subdirectory
@@ -111,6 +118,7 @@ This document provides the complete routing decision framework and delegation pr
 - [ ] Status file updated: `docs_dev/integration/status/[task-id].md`
 
 ### Quality Verified
+
 - [ ] All quality gates passed (or explicitly bypassed with justification)
 - [ ] Tests passing (CI green)
 - [ ] Code reviewed (or review waived for trivial changes)
@@ -124,12 +132,14 @@ This document provides the complete routing decision framework and delegation pr
 Before delegating to a sub-agent, complete ALL steps:
 
 ### Step 1: Identify Request Type
+
 - [ ] Read request details from AI Maestro message or AMOA delegation
 - [ ] Extract request type: `PR_REVIEW | CI_FIX | CODE_REVIEW | TESTING | RELEASE | ISSUE_CLOSURE`
 - [ ] Extract context: PR number, issue number, branch name, error logs
 - [ ] **Verification**: Request type is clear and valid
 
 ### Step 2: Check Request Completeness
+
 - [ ] PR number or issue number present (if applicable)
 - [ ] Branch name or commit SHA provided (if applicable)
 - [ ] Error logs or failure details included (for failures)
@@ -137,12 +147,14 @@ Before delegating to a sub-agent, complete ALL steps:
 - [ ] **Verification**: Have all information needed to route
 
 ### Step 3: Select Appropriate Sub-Agent
+
 - [ ] Consult routing table above
 - [ ] Check sub-agent availability (not busy with another task)
 - [ ] Verify sub-agent has necessary skills loaded
 - [ ] **Verification**: Sub-agent match is correct
 
 ### Step 4: Prepare Handoff Context
+
 - [ ] Gather relevant files (use Glob to find affected files)
 - [ ] Collect error logs (if CI failure)
 - [ ] Extract PR/issue description
@@ -150,6 +162,7 @@ Before delegating to a sub-agent, complete ALL steps:
 - [ ] **Verification**: Context package is complete
 
 ### Step 5: Draft Delegation Message
+
 - [ ] Subject: Clear task name (e.g., "Review PR #456: Add auth module")
 - [ ] Body: Full context (what, why, how to verify)
 - [ ] Success criteria: Explicit (e.g., "All tests pass, code quality score > 8/10")
@@ -157,24 +170,28 @@ Before delegating to a sub-agent, complete ALL steps:
 - [ ] **Verification**: Message is actionable and complete
 
 ### Step 6: Log Routing Decision
+
 - [ ] Append entry to `docs_dev/integration/routing-log.md`
 - [ ] Include: timestamp, request type, sub-agent, rationale
 - [ ] Format: `[YYYY-MM-DD HH:MM] ROUTE request_type -> sub-agent (reason)`
 - [ ] **Verification**: Log entry written
 
 ### Step 7: Execute Delegation
+
 - [ ] Send AI Maestro message to sub-agent
 - [ ] Wait for acknowledgment (within 30 seconds)
 - [ ] Create status tracking file: `docs_dev/integration/status/[task-id].md`
 - [ ] **Verification**: Sub-agent received and acknowledged task
 
 ### Step 8: Monitor Completion
+
 - [ ] Check AI Maestro inbox for sub-agent response
 - [ ] Validate response format (DONE/FAILED with details)
 - [ ] Read result log file if provided
 - [ ] **Verification**: Sub-agent task completed or failed definitively
 
 ### Step 9: Report to AMOA
+
 - [ ] Send AI Maestro message to AMOA with outcome
 - [ ] Include: task result, quality gate status, next steps
 - [ ] Update status file to COMPLETED or FAILED

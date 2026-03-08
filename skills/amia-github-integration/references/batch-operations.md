@@ -32,6 +32,7 @@
 - [Best Practices](#best-practices)
 
 ## Use-Case TOC
+
 - When you need to filter issues by label → [Filtering by Label](#filtering-by-label)
 - When you need to update multiple issues → [Batch Issue Updates](#batch-issue-updates)
 - When you need to change labels on many issues → [Bulk Label Operations](#bulk-label-operations)
@@ -123,6 +124,7 @@ Combine multiple filters for complex queries.
 ### Complex Filter Examples
 
 **Example 1: Open bugs assigned to you, updated recently**
+
 ```bash
 gh issue list \
   --label "bug" \
@@ -132,6 +134,7 @@ gh issue list \
 ```
 
 **Example 2: Features without assignee, ready to work**
+
 ```bash
 gh issue list \
   --label "feature" \
@@ -141,6 +144,7 @@ gh issue list \
 ```
 
 **Example 3: High-priority security issues**
+
 ```bash
 gh issue list \
   --label "security,high-priority" \

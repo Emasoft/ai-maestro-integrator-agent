@@ -43,6 +43,7 @@ These scripts automate five critical operations:
 ### Why Use These Scripts Instead of Manual Commands?
 
 **Manual approach problems:**
+
 - Forgetting to update the registry file (`.claude/worktree-registry.json`)
 - Port conflicts between worktrees running development servers
 - Inconsistent naming conventions
@@ -50,6 +51,7 @@ These scripts automate five critical operations:
 - No tracking of worktree purpose or completion status
 
 **Automated approach benefits:**
+
 - Automatic registry updates with metadata
 - Guaranteed unique port allocation per service
 - Enforced naming standards (purpose-identifier format)
@@ -138,6 +140,7 @@ The registry file (`.claude/worktree-registry.json`) is automatically created an
 See [scripts-guide-part1-core-scripts.md](scripts-guide-part1-core-scripts.md) for full details.
 
 **worktree_create.py** - Creates new git worktrees
+
 - TOC:
   - Purpose and usage syntax
   - Required arguments (--purpose, --identifier, --branch)
@@ -146,6 +149,7 @@ See [scripts-guide-part1-core-scripts.md](scripts-guide-part1-core-scripts.md) f
   - Exit codes
 
 **worktree_list.py** - Lists and filters worktrees
+
 - TOC:
   - Purpose and usage syntax
   - Filter arguments (--purpose, --status, --ports, --json, --validate)
@@ -157,6 +161,7 @@ See [scripts-guide-part1-core-scripts.md](scripts-guide-part1-core-scripts.md) f
 See [scripts-guide-part2-management-scripts.md](scripts-guide-part2-management-scripts.md) for full details.
 
 **worktree_remove.py** - Safely removes worktrees
+
 - TOC:
   - Purpose and usage syntax
   - Arguments (WORKTREE_NAME, --force, --dry-run, --all-completed)
@@ -165,6 +170,7 @@ See [scripts-guide-part2-management-scripts.md](scripts-guide-part2-management-s
   - Exit codes
 
 **registry_validate.py** - Validates and fixes registry
+
 - TOC:
   - Purpose and usage syntax
   - Arguments (--fix, --verbose)
@@ -177,6 +183,7 @@ See [scripts-guide-part2-management-scripts.md](scripts-guide-part2-management-s
 See [scripts-guide-part3-port-scripts.md](scripts-guide-part3-port-scripts.md) for full details.
 
 **port_allocate.py** - Allocates and releases ports
+
 - TOC:
   - Purpose and usage syntax
   - Arguments (--service, --release, --check, --available, --worktree)
@@ -185,6 +192,7 @@ See [scripts-guide-part3-port-scripts.md](scripts-guide-part3-port-scripts.md) f
   - Exit codes
 
 **port_status.py** - Displays port allocation status
+
 - TOC:
   - Purpose and usage syntax
   - Arguments (--all, --worktree, --service, --health-check, --json)
@@ -286,6 +294,7 @@ See [scripts-guide-part5-troubleshooting.md](scripts-guide-part5-troubleshooting
 **End of Scripts Guide Index**
 
 **Detailed documentation:**
+
 - [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
 - [Part 2: Management Scripts](scripts-guide-part2-management-scripts.md)
 - [Part 3: Port Scripts](scripts-guide-part3-port-scripts.md)

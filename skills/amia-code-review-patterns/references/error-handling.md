@@ -53,6 +53,7 @@ Proper error handling is critical for robust, maintainable software. This guide 
 ### 1. Try-Catch-Finally (Exception-Based)
 
 **Python example:**
+
 ```python
 def read_config(file_path: str) -> dict:
     """Read configuration from file."""
@@ -74,6 +75,7 @@ def read_config(file_path: str) -> dict:
 ```
 
 **Review checklist:**
+
 - [ ] Specific exception types are caught (not bare `except`)
 - [ ] Resources are cleaned up in `finally` block
 - [ ] Errors are re-raised with context
@@ -82,6 +84,7 @@ def read_config(file_path: str) -> dict:
 ### 2. Context Managers (Resource Management)
 
 **Better approach using context manager:**
+
 ```python
 def read_config(file_path: str) -> dict:
     """Read configuration from file."""
@@ -99,6 +102,7 @@ def read_config(file_path: str) -> dict:
 ```
 
 **Review checklist:**
+
 - [ ] Context managers used for file/network/database resources
 - [ ] No manual cleanup needed
 - [ ] Errors still propagate correctly
@@ -106,6 +110,7 @@ def read_config(file_path: str) -> dict:
 ### 3. Result Types (Functional Approach)
 
 **Example (Rust-style Result in Python):**
+
 ```python
 from typing import Union
 from dataclasses import dataclass
@@ -135,6 +140,7 @@ else:
 ```
 
 **Review checklist:**
+
 - [ ] Errors are explicit in return type
 - [ ] Caller is forced to handle error case
 - [ ] No exceptions can be silently ignored
@@ -142,6 +148,7 @@ else:
 ### 4. Error Codes (Legacy/C-Style)
 
 **Example:**
+
 ```python
 def save_user(user: User) -> tuple[bool, str]:
     """Save user to database.
@@ -163,6 +170,7 @@ def save_user(user: User) -> tuple[bool, str]:
 ```
 
 **Review checklist:**
+
 - [ ] Return value convention is documented
 - [ ] Caller checks return code before using value
 - [ ] Error messages are informative
@@ -174,6 +182,7 @@ def save_user(user: User) -> tuple[bool, str]:
 ### ❌ 1. Silent Failures
 
 **Bad:**
+
 ```python
 try:
     result = risky_operation()
@@ -182,11 +191,13 @@ except Exception:
 ```
 
 **Why it's bad:**
+
 - Errors are hidden
 - Debugging becomes impossible
 - Failures cascade silently
 
 **Fix:**
+
 ```python
 try:
     result = risky_operation()
@@ -198,6 +209,7 @@ except Exception as e:
 ### ❌ 2. Catching Too Broadly
 
 **Bad:**
+
 ```python
 try:
     config = load_config()
@@ -208,11 +220,13 @@ except Exception as e:
 ```
 
 **Why it's bad:**
+
 - Catches unintended exceptions (KeyboardInterrupt, MemoryError, etc.)
 - Loses information about which operation failed
 - Makes debugging difficult
 
 **Fix:**
+
 ```python
 try:
     config = load_config()
@@ -236,6 +250,7 @@ except EmailError as e:
 ### ❌ 3. Losing Error Context
 
 **Bad:**
+
 ```python
 try:
     user = get_user(user_id)
@@ -244,10 +259,12 @@ except UserNotFound:
 ```
 
 **Why it's bad:**
+
 - Debugging requires guessing which user_id failed
 - Original error details are lost
 
 **Fix:**
+
 ```python
 try:
     user = get_user(user_id)
@@ -258,17 +275,20 @@ except UserNotFound as e:
 ### ❌ 4. Generic Error Messages
 
 **Bad:**
+
 ```python
 if not user:
     raise ValueError("Invalid input")
 ```
 
 **Why it's bad:**
+
 - Doesn't tell user what's wrong
 - Doesn't tell developer what to fix
 - Multiple validation errors have same message
 
 **Fix:**
+
 ```python
 if not user:
     raise ValueError("User object cannot be None")
@@ -280,6 +300,7 @@ if not user.email:
 ### ❌ 5. Ignoring Resource Cleanup
 
 **Bad:**
+
 ```python
 def process_file(path):
     f = open(path)
@@ -290,11 +311,13 @@ def process_file(path):
 ```
 
 **Why it's bad:**
+
 - File descriptors leak
 - Database connections leak
 - Can cause "too many open files" errors
 
 **Fix:**
+
 ```python
 def process_file(path):
     with open(path) as f:
@@ -305,6 +328,7 @@ def process_file(path):
 ### ❌ 6. Returning None on Error
 
 **Bad:**
+
 ```python
 def get_user_age(user_id: int) -> int | None:
     try:
@@ -315,11 +339,13 @@ def get_user_age(user_id: int) -> int | None:
 ```
 
 **Why it's bad:**
+
 - Caller can't distinguish "user not found" from "age is None"
 - Forces None-checking everywhere
 - Errors are hidden in data flow
 
 **Fix (Option 1 - Explicit exception):**
+
 ```python
 def get_user_age(user_id: int) -> int:
     """Get user age. Raises UserNotFound if user doesn't exist."""
@@ -330,6 +356,7 @@ def get_user_age(user_id: int) -> int:
 ```
 
 **Fix (Option 2 - Optional with specific meaning):**
+
 ```python
 def get_user_age(user_id: int) -> int | None:
     """Get user age. Returns None if age not set.
@@ -344,6 +371,7 @@ def get_user_age(user_id: int) -> int | None:
 ### ❌ 7. Creating "God" Error Handlers
 
 **Bad:**
+
 ```python
 def handle_all_errors(error):
     """Central error handler for everything."""
@@ -357,12 +385,14 @@ def handle_all_errors(error):
 ```
 
 **Why it's bad:**
+
 - Centralizes error handling logic
 - Makes errors hard to trace
 - Violates single responsibility
 
 **Fix:**
 Handle errors close to where they occur:
+
 ```python
 # In database layer
 try:
@@ -386,6 +416,7 @@ except RequestException as e:
 ### Python
 
 **Custom exceptions:**
+
 ```python
 class ApplicationError(Exception):
     """Base exception for application."""
@@ -403,6 +434,7 @@ class ValidationError(ApplicationError):
 ```
 
 **Chaining exceptions:**
+
 ```python
 try:
     config = parse_config(raw_data)
@@ -414,6 +446,7 @@ except json.JSONDecodeError as e:
 ### JavaScript/TypeScript
 
 **Async error handling:**
+
 ```typescript
 // Bad
 async function fetchUser(id: number) {
@@ -436,6 +469,7 @@ async function fetchUser(id: number): Promise<User> {
 ```
 
 **Promise rejection:**
+
 ```typescript
 // Bad
 someAsyncOperation()
@@ -454,6 +488,7 @@ someAsyncOperation()
 ### Go
 
 **Error wrapping:**
+
 ```go
 // Bad
 func GetUser(id int) (*User, error) {
@@ -534,6 +569,7 @@ def get_user(user_id: int) -> User:
 ```
 
 **What to check:**
+
 - [ ] Database connection errors are handled
 - [ ] Query errors are logged
 - [ ] Transactions are rolled back on error
@@ -561,6 +597,7 @@ def fetch_weather(city: str) -> dict:
 ```
 
 **What to check:**
+
 - [ ] Timeout is set (prevents hanging forever)
 - [ ] HTTP errors are checked (4xx, 5xx)
 - [ ] Network errors are caught
@@ -586,6 +623,7 @@ def load_config(path: str) -> dict:
 ```
 
 **What to check:**
+
 - [ ] File not found is handled
 - [ ] Invalid format is handled
 - [ ] Permission errors are handled
@@ -619,6 +657,7 @@ def create_user(data: dict) -> User:
 ```
 
 **What to check:**
+
 - [ ] All required fields are validated
 - [ ] Type checking is performed
 - [ ] Range/format validation is done
@@ -632,12 +671,14 @@ def create_user(data: dict) -> User:
 ### What to Log
 
 **Always log:**
+
 - Exception type and message
 - Context (user_id, request_id, etc.)
 - Timestamp
 - Stack trace (for unexpected errors)
 
 **Example:**
+
 ```python
 logger.error(
     "Payment processing failed",
@@ -654,17 +695,20 @@ logger.error(
 ### What NOT to Log
 
 **Never log:**
+
 - Passwords or API keys
 - Credit card numbers
 - Personally identifiable information (PII) without necessity
 - Full request bodies with sensitive data
 
 **Bad:**
+
 ```python
 logger.error(f"Login failed for {username} with password {password}")
 ```
 
 **Good:**
+
 ```python
 logger.error(f"Login failed for user {user_id}")
 ```
@@ -676,11 +720,13 @@ logger.error(f"Login failed for user {user_id}")
 ### Reviewers Should Verify Tests Exist
 
 **Questions to ask:**
+
 - Does the test suite cover error paths?
 - Are edge cases tested?
 - Are resource leaks tested?
 
 **Example test:**
+
 ```python
 def test_get_user_not_found():
     """Test get_user raises UserNotFound when user doesn't exist."""
@@ -715,6 +761,7 @@ When reviewing error handling:
 6. **Check tests cover error cases**
 
 **Red flags:**
+
 - Silent failures (`except: pass`)
 - Broad exception catches (`except Exception`)
 - Missing resource cleanup

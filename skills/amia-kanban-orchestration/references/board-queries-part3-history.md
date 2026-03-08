@@ -41,6 +41,7 @@ gh api repos/OWNER/REPO/issues/42/timeline --jq '
 ### Project Item History
 
 Note: GitHub Projects V2 doesn't have built-in item history API. Track via:
+
 1. Issue timeline events
 2. Comments with status change logs
 3. Custom logging in comments

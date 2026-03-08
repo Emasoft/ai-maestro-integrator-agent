@@ -18,6 +18,7 @@
 **Every module is exactly one GitHub issue. No exceptions.**
 
 This means:
+
 - One module = One issue = One work item on the board
 - If work requires multiple issues, it's multiple modules
 - If work is too big for one issue, break it into sub-modules
@@ -35,6 +36,7 @@ This means:
 ### What Is a Module?
 
 A module is a self-contained unit of work that:
+
 - Has clear inputs and outputs
 - Can be assigned to one agent
 - Can be completed in a bounded time
@@ -125,6 +127,7 @@ Every module issue MUST have these fields populated:
 ```
 
 **Examples:**
+
 - `[MODULE] auth-core: Implement JWT token validation`
 - `[MODULE] data-pipeline: Add batch processing`
 - `[MODULE] ui-components: Create login form`
@@ -141,10 +144,12 @@ Every module issue MUST have these fields populated:
 ### Label Conventions
 
 Always include:
+
 - `type:feature` or `type:bug` or `type:chore`
 - `module:<module-name>` - custom label for filtering
 
 Optional:
+
 - `priority:high`, `priority:medium`, `priority:low`
 - `effort:S`, `effort:M`, `effort:L`
 
@@ -177,6 +182,7 @@ Complete user authentication with login, logout, JWT tokens, and password reset.
 ### Module Issue Reference
 
 In each module issue body:
+
 ```markdown
 ## Parent Issue
 
@@ -186,6 +192,7 @@ Relates to #41 ([EPIC] User Authentication System)
 ### Tracking Epic Progress
 
 Query all modules for an epic:
+
 ```bash
 gh issue list --label "epic:auth-system" --json number,title,state
 ```

@@ -175,6 +175,7 @@ A comment is considered "addressed" when one of these conditions is met:
 | Comment is outdated AND thread resolved | `isOutdated: true` + `isResolved: true` |
 
 **Unaddressed comments are:**
+
 - In unresolved threads
 - Have no replies from the PR author
 - Are not minimized
@@ -292,11 +293,13 @@ Thread (PRRT_xxx)
 ```
 
 **Root comment characteristics:**
+
 - Always the first comment in `comments.nodes` array
 - `replyTo` field is `null`
 - Creates the thread when submitted
 
 **Reply comment characteristics:**
+
 - Has `replyTo.id` pointing to the comment it replies to
 - Position in array indicates chronological order
 
@@ -339,6 +342,7 @@ When the code at a comment's location changes (file modified, line changed), the
 ```
 
 **What outdated means:**
+
 - The comment was on line 38 in the original diff
 - Code changes have shifted or modified that line
 - The comment now shows at line 42 (best-effort placement)
@@ -405,11 +409,13 @@ Minimized comments are hidden by default in the GitHub UI. They're collapsed and
 ### 2.4.2 When to Consider Minimized Comments
 
 **Generally ignore minimized comments when:**
+
 - Finding unaddressed comments (they're intentionally hidden)
 - Counting active discussion threads
 - Generating review summaries
 
 **Include minimized comments when:**
+
 - Auditing all PR activity
 - Investigating flagged content
 - Building complete thread history

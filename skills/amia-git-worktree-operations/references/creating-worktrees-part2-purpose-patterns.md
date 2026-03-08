@@ -20,6 +20,7 @@ Different types of worktrees have specific creation patterns optimized for their
 **Naming**: `review-GH-{number}` where `{number}` is the GitHub PR number.
 
 **Creation flow**:
+
 ```bash
 # 1. Fetch latest from remote
 git fetch origin
@@ -41,12 +42,14 @@ PORT=3002 npm start
 ```
 
 **When to use review worktrees**:
+
 - Yes: Reviewing PRs that require running the code
 - Yes: Testing PRs for bugs or regressions
 - Yes: Verifying PR functionality before merge
 - No: Simple typo fixes or documentation PRs (just review on GitHub)
 
 **Best practices**:
+
 - Always create from the PR's remote branch, not a local copy
 - Test thoroughly before approving PR
 - Clean up review worktree after PR is merged/closed
@@ -61,6 +64,7 @@ PORT=3002 npm start
 **Naming**: `feature-{name}` where `{name}` is a short, descriptive feature name using kebab-case.
 
 **Creation flow**:
+
 ```bash
 # 1. Create worktree with new branch
 git worktree add ../feature-user-profiles -b feature/user-profiles
@@ -81,12 +85,14 @@ git push -u origin feature/user-profiles
 ```
 
 **When to use feature worktrees**:
+
 - Yes: Large features that take multiple days/weeks
 - Yes: Features that need to run alongside main dev environment
 - Yes: Experimental features you want to keep separate
 - No: Small, quick features (just use main repo)
 
 **Best practices**:
+
 - Create feature worktrees for significant work only
 - Keep feature branch updated with main regularly
 - Run full test suite before merging
@@ -99,10 +105,12 @@ git push -u origin feature/user-profiles
 **Purpose**: Fix bugs in isolation, especially when linked to GitHub issues.
 
 **Naming**: `bugfix-GH-{number}-{desc}` where:
+
 - `{number}`: GitHub issue number
 - `{desc}`: Short bug description (1-2 words, kebab-case)
 
 **Creation flow**:
+
 ```bash
 # 1. Identify base branch (usually main or a release branch)
 git fetch origin
@@ -125,12 +133,14 @@ npm test  # Verify fix
 ```
 
 **When to use bugfix worktrees**:
+
 - Yes: Bugs that require running the application
 - Yes: Bugs that might take multiple sessions to fix
 - Yes: Bugs that need testing against production-like data
 - No: Trivial bugs (typos, simple logic errors) - fix in main repo
 
 **Best practices**:
+
 - Always reproduce the bug first before fixing
 - Write regression test before fixing
 - Verify fix with tests
@@ -143,10 +153,12 @@ npm test  # Verify fix
 **Purpose**: Run extensive tests, experiments, or performance benchmarks without affecting main environment.
 
 **Naming**: `test-{type}-{target}` where:
+
 - `{type}`: Type of testing (integration, e2e, performance, load, etc.)
 - `{target}`: What's being tested
 
 **Creation flow**:
+
 ```bash
 # 1. Create worktree from appropriate branch
 git worktree add ../test-integration-api -b test/integration-api
@@ -168,6 +180,7 @@ npm run test:integration
 ```
 
 **When to use testing worktrees**:
+
 - Yes: Long-running test suites
 - Yes: Performance/load testing
 - Yes: Testing that requires specific environment setup
@@ -175,6 +188,7 @@ npm run test:integration
 - No: Quick unit tests (run in main repo)
 
 **Best practices**:
+
 - Use separate test databases
 - Allocate different ports
 - Document test results in GitHub issue or PR

@@ -1,6 +1,7 @@
 # Parallel PR Workflow - Part 1: Creating Worktrees and Isolation
 
 This document covers the foundational aspects of parallel PR workflow:
+
 - Creating worktrees for multiple simultaneous PRs
 - Isolation requirements and enforcement rules
 
@@ -26,17 +27,20 @@ This document covers the foundational aspects of parallel PR workflow:
 For each PR you want to work on in parallel:
 
 **Step 1: Fetch the PR branch from remote**
+
 ```bash
 cd /path/to/main-repo
 git fetch origin pull/<PR_NUMBER>/head:pr-<PR_NUMBER>
 ```
 
 **Step 2: Create the worktree**
+
 ```bash
 git worktree add /tmp/worktrees/pr-<PR_NUMBER> pr-<PR_NUMBER>
 ```
 
 **Step 3: Verify the worktree was created**
+
 ```bash
 git worktree list
 # Should show new worktree in output
@@ -55,6 +59,7 @@ Use a consistent naming scheme to avoid confusion:
 ```
 
 **Rules:**
+
 - Use `/tmp/worktrees/` or similar temporary location
 - Include PR number in directory name
 - Use lowercase, hyphen-separated names
@@ -90,6 +95,7 @@ git worktree add -b hotfix-123 /tmp/worktrees/hotfix-123 main
 **EVERY file operation MUST happen within the assigned worktree directory.**
 
 This means:
+
 - File reads: ONLY from within worktree
 - File writes: ONLY to within worktree
 - File edits: ONLY files within worktree
@@ -99,6 +105,7 @@ This means:
 ### Why Isolation Matters
 
 Violating isolation causes:
+
 1. **Merge conflicts:** Changes appear in wrong branch
 2. **Lost work:** Changes committed to wrong PR
 3. **Repository corruption:** Mixed states across branches
@@ -108,6 +115,7 @@ Violating isolation causes:
 
 **Rule 1: Path Prefix Validation**
 Before any file operation, verify the target path starts with the assigned worktree:
+
 ```python
 def validate_path(target_path: str, worktree_path: str) -> bool:
     """Returns True if target is inside worktree."""
@@ -118,6 +126,7 @@ def validate_path(target_path: str, worktree_path: str) -> bool:
 
 **Rule 2: Working Directory Lock**
 Set and verify working directory at operation start:
+
 ```bash
 cd /tmp/worktrees/pr-123
 # Verify we're in the right place
@@ -132,6 +141,7 @@ Never use paths like `/path/to/main-repo/src/file.py` when working in a worktree
 
 **Rule 4: Environment Variable for Worktree Root**
 Set an environment variable for validation:
+
 ```bash
 export WORKTREE_ROOT="/tmp/worktrees/pr-123"
 ```
@@ -139,6 +149,7 @@ export WORKTREE_ROOT="/tmp/worktrees/pr-123"
 ### Automated Isolation Checking
 
 Run the verification script periodically:
+
 ```bash
 python scripts/amia_verify_worktree_isolation.py \
     --worktree-path /tmp/worktrees/pr-123 \

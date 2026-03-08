@@ -7,7 +7,6 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Execute Post-Merge Gate
 
-
 ## Contents
 
 - [Purpose](#purpose)
@@ -82,6 +81,7 @@ gh pr view <NUMBER> --json state,mergedAt,mergeCommit
 ```
 
 Confirm:
+
 - `state` is `MERGED`
 - `mergedAt` has timestamp
 - `mergeCommit` exists
@@ -94,6 +94,7 @@ gh api repos/{owner}/{repo}/commits/main/status
 ```
 
 Or check specific workflows:
+
 ```bash
 gh run list --branch main --limit 5
 ```
@@ -108,6 +109,7 @@ python3 amia_wait_for_checks.py --branch main --timeout 600
 ### Step 4: Verify No Regressions
 
 Compare test results before and after merge:
+
 - No new test failures
 - No decrease in coverage
 - No performance degradation
@@ -115,6 +117,7 @@ Compare test results before and after merge:
 ### Step 5: Close Related Issues
 
 If main branch healthy, close linked issues:
+
 ```bash
 # Get linked issues
 gh pr view <NUMBER> --json closingIssuesReferences
@@ -128,11 +131,13 @@ See [op-close-related-issues.md](../../amia-code-review-patterns/references/op-c
 ### Step 6: Apply Gate Decision
 
 If main branch healthy:
+
 ```bash
 gh pr edit <NUMBER> --add-label "gate:post-merge-passed"
 ```
 
 If main branch broken:
+
 ```bash
 gh pr edit <NUMBER> --add-label "gate:post-merge-failed"
 ```
@@ -140,6 +145,7 @@ gh pr edit <NUMBER> --add-label "gate:post-merge-failed"
 ## Gate Pass Criteria
 
 ALL of these must be true:
+
 - [ ] Main branch CI is passing
 - [ ] No new test failures introduced
 - [ ] No critical errors in logs (if deployed)
@@ -195,6 +201,7 @@ git push origin main
 ### Notification
 
 Send a message using the `agent-messaging` skill with:
+
 - **Recipient**: `orchestrator-amoa`
 - **Subject**: `[CRITICAL] Main Branch Broken - PR #<NUMBER>`
 - **Priority**: `urgent`

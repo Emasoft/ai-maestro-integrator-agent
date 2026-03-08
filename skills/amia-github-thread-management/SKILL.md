@@ -121,6 +121,7 @@ START: You need to handle a review thread
 ### The Reply-Resolve Separation
 
 GitHub's API separates these operations because:
+
 1. Replying adds a comment to the conversation
 2. Resolving changes the thread's status metadata
 
@@ -129,9 +130,11 @@ You might reply without resolving (asking for clarification), or resolve without
 ## Reference Documents
 
 ### Thread Resolution Protocol
+
 See [references/thread-resolution-protocol.md](references/thread-resolution-protocol.md)
 
 **Contents:**
+
 - 1.1 Why thread resolution is separate from replying
 - 1.2 Single thread resolution workflow
   - 1.2.1 Getting the thread's GraphQL node ID
@@ -147,9 +150,11 @@ See [references/thread-resolution-protocol.md](references/thread-resolution-prot
 - 1.5 Unresolving threads (reopening discussion)
 
 ### Thread Conversation Tracking
+
 See [references/thread-conversation-tracking.md](references/thread-conversation-tracking.md)
 
 **Contents:**
+
 - 2.1 Getting thread history via GraphQL
   - 2.1.1 Query structure for review threads
   - 2.1.2 Pagination for threads with many comments
@@ -215,6 +220,7 @@ python3 scripts/amia_get_unaddressed_comments.py --owner OWNER --repo REPO --pr 
 ## Output Discipline
 
 All scripts support the `--output-file <path>` flag:
+
 - **With flag**: Full JSON written to file; concise summary printed to stderr
 - **Without flag**: Full JSON printed to stdout (backward compatible)
 

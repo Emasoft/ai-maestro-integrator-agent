@@ -16,6 +16,7 @@ This document provides quick navigation to common TDD issues and their solutions
 ## Use-Case TOC
 
 ### Part 1: Test Failures
+
 See [troubleshooting-part1-test-failures.md](troubleshooting-part1-test-failures.md)
 
 - If tests fail during refactoring → Test Fails During Refactoring
@@ -31,6 +32,7 @@ See [troubleshooting-part1-test-failures.md](troubleshooting-part1-test-failures
 ---
 
 ### Part 2: Code Issues
+
 See [troubleshooting-part2-code-issues.md](troubleshooting-part2-code-issues.md)
 
 - If code passes test but seems wrong → Code Passes But Seems Wrong
@@ -46,6 +48,7 @@ See [troubleshooting-part2-code-issues.md](troubleshooting-part2-code-issues.md)
 ---
 
 ### Part 3: Passing Tests
+
 See [troubleshooting-part3-passing-tests.md](troubleshooting-part3-passing-tests.md)
 
 - If test passes but code seems incomplete → Test Passes But Code Incomplete
@@ -61,6 +64,7 @@ See [troubleshooting-part3-passing-tests.md](troubleshooting-part3-passing-tests
 ---
 
 ### Part 4: Workflow Issues
+
 See [troubleshooting-part4-workflow.md](troubleshooting-part4-workflow.md)
 
 - If you're not sure what to test next → Unsure What to Test Next

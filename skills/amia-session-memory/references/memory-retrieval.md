@@ -83,11 +83,13 @@ gh pr view <PR_NUMBER> --json updatedAt -q .updatedAt
 ## Handling Missing Memory
 
 **If no memory found:**
+
 1. DO NOT assume prior context
 2. Start fresh with current information
 3. Build new memory as you work
 
 **If partial memory found:**
+
 1. Load what exists
 2. Verify against current GitHub state
 3. Fill gaps from actual PR/issue data

@@ -10,16 +10,16 @@ Common issues and solutions when working with git worktrees.
   - 1.1 If worktree creation fails with "already checked out"
   - 1.2 If worktree path already exists
   - 1.3 If remote branch not found
-- 2. Isolation Violations
+- 1. Isolation Violations
   - 2.1 If agent writes to wrong worktree
   - 2.2 If main repo is contaminated
-- 3. Git Operation Errors
+- 1. Git Operation Errors
   - 3.1 If concurrent operations cause lock conflicts
   - 3.2 If push fails with non-fast-forward
-- 4. Cleanup Issues
+- 1. Cleanup Issues
   - 4.1 If worktree removal fails
   - 4.2 If orphaned worktree references remain
-- 5. Recovery Procedures
+- 1. Recovery Procedures
   - 5.1 When to force-remove worktrees
   - 5.2 When to recreate from scratch
 
@@ -34,6 +34,7 @@ Common issues and solutions when working with git worktrees.
 **Cause**: The branch is checked out in another worktree or the main repo.
 
 **Solution**:
+
 ```bash
 # Option 1: Use a different branch name
 git worktree add /tmp/worktrees/pr-123 -b pr-123-work origin/pr-123
@@ -48,6 +49,7 @@ git worktree remove /path/to/existing/worktree
 **Error**: `fatal: '/tmp/worktrees/pr-123' already exists`
 
 **Solution**:
+
 ```bash
 # Remove the directory if it's not a valid worktree
 rm -rf /tmp/worktrees/pr-123
@@ -61,6 +63,7 @@ git worktree remove /tmp/worktrees/pr-123 --force
 **Error**: `fatal: invalid reference: origin/feature-branch`
 
 **Solution**:
+
 ```bash
 # Fetch all remote branches
 git fetch origin --all
@@ -76,6 +79,7 @@ git fetch origin pull/123/head:pr-123
 ### 2.1 If agent writes to wrong worktree
 
 **Detection**:
+
 ```bash
 # Check git status in all worktrees
 for wt in /tmp/worktrees/*; do
@@ -84,6 +88,7 @@ done
 ```
 
 **Recovery**:
+
 ```bash
 # Save changes
 cd /wrong/worktree
@@ -100,12 +105,14 @@ git apply /tmp/misplaced-changes.patch
 ### 2.2 If main repo is contaminated
 
 **Detection**:
+
 ```bash
 cd /path/to/main-repo
 git status
 ```
 
 **Recovery**:
+
 ```bash
 # Stash or save changes
 git stash
@@ -126,6 +133,7 @@ git clean -fd
 **Cause**: Multiple agents running git operations simultaneously.
 
 **Solution**:
+
 ```bash
 # Wait for other operations to complete, then remove stale lock
 rm -f /path/to/repo/.git/index.lock
@@ -140,6 +148,7 @@ rm -f /path/to/repo/.git/index.lock
 **Cause**: Remote has changes not in local branch.
 
 **Solution**:
+
 ```bash
 git fetch origin
 git rebase origin/target-branch
@@ -155,6 +164,7 @@ git push
 **Error**: Various locking or dirty-tree errors
 
 **Solution**:
+
 ```bash
 # Force removal
 git worktree remove /tmp/worktrees/pr-123 --force
@@ -167,11 +177,13 @@ git worktree prune
 ### 4.2 If orphaned worktree references remain
 
 **Detection**:
+
 ```bash
 git worktree list  # Shows worktrees that don't exist on disk
 ```
 
 **Solution**:
+
 ```bash
 git worktree prune
 ```
@@ -183,6 +195,7 @@ git worktree prune
 ### 5.1 When to force-remove worktrees
 
 Force removal is acceptable when:
+
 - Worktree directory is corrupted
 - Changes have been saved elsewhere
 - PR has been closed/merged
@@ -191,6 +204,7 @@ Force removal is acceptable when:
 ### 5.2 When to recreate from scratch
 
 Recreate the worktree when:
+
 1. Corruption is detected
 2. Base branch has diverged significantly
 3. After force-removal

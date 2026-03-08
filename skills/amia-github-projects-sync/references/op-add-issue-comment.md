@@ -1,6 +1,5 @@
 # Operation: Add Issue Comment
 
-
 ## Contents
 
 - [Metadata](#metadata)
@@ -120,6 +119,7 @@ mutation {
 ```
 
 If marker exists (no duplicate created):
+
 ```json
 {
   "comment_id": null,

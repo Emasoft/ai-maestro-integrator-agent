@@ -7,6 +7,7 @@ This document provides comprehensive guidance for working with GitHub milestones
 ## Table of Contents
 
 ### Part 1: Creating Milestones
+
 **File:** [milestone-tracking-part1-creating.md](milestone-tracking-part1-creating.md)
 
 - 3.1 Creating milestones
@@ -25,6 +26,7 @@ This document provides comprehensive guidance for working with GitHub milestones
 ---
 
 ### Part 2: Assigning Issues to Milestones
+
 **File:** [milestone-tracking-part2-assigning.md](milestone-tracking-part2-assigning.md)
 
 - 3.2 Assigning issues to milestones
@@ -44,6 +46,7 @@ This document provides comprehensive guidance for working with GitHub milestones
 ---
 
 ### Part 3: Progress Tracking and Closing Milestones
+
 **File:** [milestone-tracking-part3-progress-closing.md](milestone-tracking-part3-progress-closing.md)
 
 - 3.3 Milestone progress tracking

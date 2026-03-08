@@ -1,6 +1,5 @@
 # Operation: Create Issue
 
-
 ## Contents
 
 - [Metadata](#metadata)

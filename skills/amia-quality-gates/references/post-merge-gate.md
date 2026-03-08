@@ -34,6 +34,7 @@ The Post-Merge Gate verifies that the merged code integrates cleanly into main a
 **Failure Action**: Immediate escalation, consider revert
 
 **Monitoring**:
+
 ```bash
 # Check main branch status
 gh run list --branch main --limit 1
@@ -150,12 +151,14 @@ Author can fix issues and re-submit PR."
 ## Hotfix vs Revert Decision
 
 **Choose Hotfix when**:
+
 - Fix is trivial (< 10 lines)
 - Hotfix can be deployed within 1 hour
 - Impact is minor (no user-facing breakage)
 - Team has high confidence in hotfix
 
 **Choose Revert when**:
+
 - Main branch is broken
 - Fix is complex or uncertain
 - Impact is severe
@@ -167,6 +170,7 @@ Author can fix issues and re-submit PR."
 ## Monitoring Period
 
 Post-merge monitoring continues for:
+
 - **Immediate** (0-15 minutes): CI completion, deployment success
 - **Short-term** (15 minutes - 2 hours): Error rate monitoring, performance metrics
 - **Medium-term** (2-24 hours): Regression detection, user feedback
@@ -178,6 +182,7 @@ Post-merge monitoring continues for:
 **Symptom**: Test failure on main, but unrelated to merged PR
 
 **Resolution**:
+
 1. Verify test was passing before merge
 2. Check if flaky test (historical flakiness)
 3. Check if parallel merge caused issue
@@ -188,6 +193,7 @@ Post-merge monitoring continues for:
 **Symptom**: Code is correct, deployment infrastructure failed
 
 **Resolution**:
+
 1. Do not revert code
 2. Rollback deployment
 3. Fix deployment infrastructure
@@ -199,6 +205,7 @@ Post-merge monitoring continues for:
 **Symptom**: Main CI was failing before this merge
 
 **Resolution**:
+
 1. Verify main status before merge timestamp
 2. If main was already broken, not this PR's fault
 3. Do not revert this PR
@@ -210,6 +217,7 @@ Post-merge monitoring continues for:
 **Symptom**: Multiple PRs merged around same time, unclear which broke main
 
 **Resolution**:
+
 1. Review all recent merges (git log)
 2. Revert most recent merge first
 3. Test if main recovers

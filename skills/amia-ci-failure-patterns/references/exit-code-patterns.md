@@ -34,6 +34,7 @@ PowerShell maintains `$LASTEXITCODE` separately from `$?`. This causes confusion
 **Critical Issue**: `$LASTEXITCODE` persists until another native command runs.
 
 **Example of the Problem**:
+
 ```powershell
 # Native command fails
 git status --invalid-option
@@ -50,6 +51,7 @@ Write-Host "Continuing..."
 **CI Failure Symptom**: Workflow fails with unexpected exit code even though last visible command succeeded.
 
 **Solution 1**: Explicit exit at end of script:
+
 ```powershell
 # Always end PowerShell scripts with explicit exit
 Write-Host "Script completed"
@@ -57,6 +59,7 @@ exit 0
 ```
 
 **Solution 2**: Check and handle exit codes immediately:
+
 ```powershell
 git status --invalid-option
 if ($LASTEXITCODE -ne 0) {
@@ -66,6 +69,7 @@ if ($LASTEXITCODE -ne 0) {
 ```
 
 **Solution 3**: Use `$ErrorActionPreference`:
+
 ```powershell
 # Stop on any error
 $ErrorActionPreference = "Stop"
@@ -81,6 +85,7 @@ Bash's `$?` contains the exit code of the most recent command. It gets overwritt
 **Critical Issue**: `$?` is overwritten immediately, even by `echo`.
 
 **Example of the Problem**:
+
 ```bash
 # Command fails
 grep "pattern" nonexistent_file.txt
@@ -95,6 +100,7 @@ echo "Grep finished"
 ```
 
 **Solution 1**: Capture exit code immediately:
+
 ```bash
 grep "pattern" file.txt
 exit_code=$?
@@ -107,6 +113,7 @@ fi
 ```
 
 **Solution 2**: Use `set -e` (exit on error):
+
 ```bash
 #!/bin/bash
 set -e  # Exit immediately if any command fails
@@ -116,6 +123,7 @@ echo "This only runs if grep succeeded"
 ```
 
 **Solution 3**: Use `set -o pipefail` for pipelines:
+
 ```bash
 #!/bin/bash
 set -eo pipefail  # Exit on error, including in pipelines
@@ -126,6 +134,7 @@ cat file.txt | grep "pattern" | wc -l
 ```
 
 **Recommended Bash Script Header**:
+
 ```bash
 #!/bin/bash
 set -euo pipefail  # Exit on error, undefined vars, pipe failures
@@ -158,6 +167,7 @@ set -euo pipefail  # Exit on error, undefined vars, pipe failures
 ```
 
 **PowerShell Pattern**:
+
 ```yaml
 - name: Run PowerShell with error checking
   shell: pwsh
@@ -288,6 +298,7 @@ npm test  # Exit code = exit code of "jest" or "mocha" etc.
 ### 2.3.1 Step Failure Detection
 
 GitHub Actions considers a step failed when:
+
 1. Exit code is non-zero
 2. The `shell` returns non-zero
 
@@ -323,6 +334,7 @@ Use `continue-on-error: true` to prevent step failure from failing the job:
 **Important**: The step is still marked as failed (red X), but the job continues.
 
 **Access step outcome**:
+
 ```yaml
 - name: Optional check
   id: optional

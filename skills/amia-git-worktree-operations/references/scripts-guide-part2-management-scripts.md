@@ -1,6 +1,7 @@
 # Worktree Automation Scripts Guide - Part 2: Management Scripts
 
 **Related Documents:**
+
 - [Main Index](scripts-guide.md)
 - [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
 - [Part 3: Port Scripts](scripts-guide-part3-port-scripts.md)
@@ -33,6 +34,7 @@
 ## Script Reference: Management Scripts
 
 This section covers scripts for worktree lifecycle management:
+
 - **worktree_remove.py** - Safely remove worktrees with cleanup
 - **registry_validate.py** - Validate and fix registry inconsistencies
 
@@ -83,6 +85,7 @@ python scripts/worktree_remove.py review-GH-42
 ```
 
 **Interaction:**
+
 ```
 Worktree: review-GH-42
 Path: /repo/worktrees/review-GH-42
@@ -99,6 +102,7 @@ Are you sure you want to remove it? [y/N]:
 ```
 
 **What happens when you type 'y':**
+
 1. Removes directory: `/repo/worktrees/review-GH-42/`
 2. Deletes registry entry for `review-GH-42`
 3. Releases ports 8001 and 9001 back to the pool
@@ -115,6 +119,7 @@ python scripts/worktree_remove.py feature-broken-experiment --force
 ```
 
 **What this does:**
+
 1. Skips all safety checks
 2. Removes worktree immediately without prompts
 3. Cleans up registry and ports
@@ -133,6 +138,7 @@ python scripts/worktree_remove.py review-GH-42 --dry-run
 ```
 
 **Output:**
+
 ```
 [DRY RUN] Would perform these actions:
 
@@ -164,6 +170,7 @@ python scripts/worktree_remove.py --all-completed
 ```
 
 **Interaction:**
+
 ```
 Found 3 completed worktrees:
 - review-GH-42 (completed 2 days ago)
@@ -175,6 +182,7 @@ Continue? [y/N]:
 ```
 
 **What happens when you type 'y':**
+
 1. Removes all three worktree directories
 2. Deletes all three registry entries
 3. Releases all six allocated ports
@@ -191,6 +199,7 @@ python scripts/worktree_remove.py --all-completed --force
 ```
 
 **What this does:**
+
 1. Finds all worktrees with `completed: true`
 2. Removes them immediately without any prompts
 3. Displays summary of removed worktrees
@@ -254,6 +263,7 @@ python scripts/registry_validate.py
 ```
 
 **Output:**
+
 ```
 Worktree Registry Validation Report
 ====================================
@@ -295,6 +305,7 @@ python scripts/registry_validate.py --fix
 ```
 
 **Output:**
+
 ```
 Worktree Registry Validation Report
 ====================================
@@ -339,6 +350,7 @@ python scripts/registry_validate.py --verbose
 ```
 
 **Output:**
+
 ```
 [VERBOSE] Loading registry from: .claude/worktree-registry.json
 [VERBOSE] Registry file size: 2,345 bytes
@@ -381,6 +393,7 @@ python scripts/registry_validate.py --fix --verbose
 ```
 
 **Output:**
+
 ```
 [VERBOSE] Creating backup...
 [VERBOSE]   Source: .claude/worktree-registry.json
