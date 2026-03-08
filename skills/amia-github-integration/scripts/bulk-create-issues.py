@@ -66,7 +66,7 @@ def parse_csv_file(filepath: Path) -> list[dict]:
                 issue[key.strip().lower()] = value.strip() if value else ""
             # Convert comma-separated labels string to list
             if "labels" in issue and issue["labels"]:
-                issue["labels"] = [l.strip() for l in issue["labels"].split(",") if l.strip()]
+                issue["labels"] = [lbl.strip() for lbl in issue["labels"].split(",") if lbl.strip()]
             else:
                 issue["labels"] = []
             issues.append(issue)
@@ -89,7 +89,7 @@ def parse_json_file(filepath: Path) -> list[dict]:
         # Ensure labels is a list
         if "labels" in issue:
             if isinstance(issue["labels"], str):
-                issue["labels"] = [l.strip() for l in issue["labels"].split(",") if l.strip()]
+                issue["labels"] = [lbl.strip() for lbl in issue["labels"].split(",") if lbl.strip()]
             elif not isinstance(issue["labels"], list):
                 issue["labels"] = []
         else:
