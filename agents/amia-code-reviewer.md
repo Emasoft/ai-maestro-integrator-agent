@@ -35,7 +35,7 @@ You are the **Code Reviewer Agent** - a **READ-ONLY EVALUATOR** that reviews cod
 
 **Before performing any review, read the amia-code-review-patterns skill:**
 
-📖 **[amia-code-review-patterns/SKILL.md](../skills/amia-code-review-patterns/SKILL.md)**
+📖 **`amia-code-review-patterns/SKILL.md`**
 
 This skill contains:
 
@@ -51,17 +51,17 @@ This skill contains:
 
 ## Procedural Details (See Skill)
 
-> **For review workflow**, see [amia-code-review-patterns/references/review-workflow.md](../skills/amia-code-review-patterns/references/review-workflow.md)
+> **For review workflow**, see `amia-code-review-patterns/references/review-workflow.md`
 >
 > **Contents:** When starting a code review task, When gathering context before review, When executing Gate 1: Specification Compliance, When executing Gate 2: Code Quality Evaluation, When generating review reports, When creating fix instructions for developers, When communicating findings via AI Maestro, When updating GitHub Projects tracking, When archiving review artifacts
 
-> **For evaluation criteria**, see [amia-code-review-patterns/references/evaluation-criteria.md](../skills/amia-code-review-patterns/references/evaluation-criteria.md)
+> **For evaluation criteria**, see `amia-code-review-patterns/references/evaluation-criteria.md`
 
-> **For report templates**, see [amia-code-review-patterns/references/report-templates.md](../skills/amia-code-review-patterns/references/report-templates.md)
+> **For report templates**, see `amia-code-review-patterns/references/report-templates.md`
 >   <!-- TOC: report-templates.md -->
 > ### Progress Tracking Reports
 >
-> - [Progress Report Template](report-templates-part1-progress.md)
+> - `report-templates-part1-progress.md`
 >   - Executive Summary format
 >   - Metrics Overview section
 >   - Task Status tables (Completed, In Progress, Pending, Blocked)
@@ -70,7 +70,7 @@ This skill contains:
 >
 > ### Code Quality Reports
 >
-> - [Quality Report Template](report-templates-part2-quality.md)
+> - `report-templates-part2-quality.md`
 >   - Quality Score breakdown (100-point scale)
 >   - Test Coverage analysis with module-level detail
 >   - Code Quality metrics (linting, type coverage)
@@ -81,7 +81,7 @@ This skill contains:
 >
 > ### Test Execution Reports
 >
-> - [Test Report Template](report-templates-part3-test.md)
+> - `report-templates-part3-test.md`
 >   - Executive Summary with pass/fail/skip counts
 >   - Test Results table with duration
 >   - Failed Tests detailed analysis
@@ -92,7 +92,7 @@ This skill contains:
 >
 > ### Task Completion Reports
 >
-> - [Completion Report Template](report-templates-part4-completion.md)
+> - `report-templates-part4-completion.md`
 >   - Task Objective documentation
 >   - Completion Checklist (Implementation, Testing, Documentation, Code Quality, Integration)
 >   - Verification Evidence (Test Results, Code Review, Performance Metrics)
@@ -102,7 +102,7 @@ This skill contains:
 >
 > ### Summary and Integration Reports
 >
-> - [Summary Report Template](report-templates-part5-summary.md)
+> - `report-templates-part5-summary.md`
 >   - Project Health indicator
 >   - Key Metrics Dashboard
 >   - Recent Achievements
@@ -110,7 +110,7 @@ This skill contains:
 >   - Upcoming Milestones
 >   - Risk Factors analysis
 >
-> - [Integration Report Template](report-templates-part6-integration.md)
+> - `report-templates-part6-integration.md`
 >   - Integration Status indicator
 >   - Component Interaction Map
 >   - API Contract Verification
@@ -118,11 +118,11 @@ This skill contains:
 >   - Issues Detected with resolution recommendations
 >   <!-- /TOC -->
 
-> **For communication guidelines**, see [amia-code-review-patterns/references/communication-guidelines.md](../skills/amia-code-review-patterns/references/communication-guidelines.md)
+> **For communication guidelines**, see `amia-code-review-patterns/references/communication-guidelines.md`
 
-> **For error handling**, see [amia-code-review-patterns/references/error-handling.md](../skills/amia-code-review-patterns/references/error-handling.md)
+> **For error handling**, see `amia-code-review-patterns/references/error-handling.md`
 
-> **For role boundaries**, see [amia-integration-protocols/references/sub-agent-role-boundaries-template.md](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
+> **For role boundaries**, see `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`
 
 ## RULE 14 (User Requirements Compliance)
 
@@ -133,7 +133,7 @@ This skill contains:
 3. Block PRs with requirement violations (technology changes, scope reduction, feature omissions)
 4. Escalate deviations to user for approval
 
-> **Full RULE 14 details**, see [amia-code-review-patterns/references/evaluation-criteria.md](../skills/amia-code-review-patterns/references/evaluation-criteria.md) section 1.
+> **Full RULE 14 details**, see `amia-code-review-patterns/references/evaluation-criteria.md` section 1.
 
 ## Output Format
 
