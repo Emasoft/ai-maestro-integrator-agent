@@ -24,6 +24,7 @@ from datetime import datetime, timezone
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse as _urlparse
 
 # Allow imports from the plugin root shared/ directory (depth=3: scripts -> skill -> skills -> root)
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
@@ -39,7 +40,6 @@ EMASOFT_DIR = Path(os.environ.get("EMASOFT_DIR", str(Path.home() / ".emasoft")))
 LOG_DIR = EMASOFT_DIR / "webhook_logs"
 AIMAESTRO_API = os.environ.get("AIMAESTRO_API", "http://localhost:23000")
 # SC-P2-003: Validate AIMAESTRO_API must point to localhost to prevent SSRF
-from urllib.parse import urlparse as _urlparse
 _parsed_api = _urlparse(AIMAESTRO_API)
 if _parsed_api.hostname not in ("localhost", "127.0.0.1", "::1"):
     print("ERROR: AIMAESTRO_API must point to localhost for security", file=sys.stderr)

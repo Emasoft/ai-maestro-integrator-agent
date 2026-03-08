@@ -218,8 +218,8 @@ def generate_markdown(repo: str, stats: dict, days: int) -> str:
     # Summary
     lines.append("## Summary")
     lines.append("")
-    lines.append(f"| Metric | Count |")
-    lines.append(f"|--------|-------|")
+    lines.append("| Metric | Count |")
+    lines.append("|--------|-------|")
     lines.append(f"| Open Issues | {stats['issues']['open']} |")
     lines.append(f"| Closed Issues | {stats['issues']['closed']} |")
     lines.append(f"| Open PRs | {stats['prs']['open']} |")
@@ -241,8 +241,8 @@ def generate_markdown(repo: str, stats: dict, days: int) -> str:
     recent = stats["recent_activity"]
     lines.append(f"## Recent Activity (last {days} days)")
     lines.append("")
-    lines.append(f"| Activity | Count |")
-    lines.append(f"|----------|-------|")
+    lines.append("| Activity | Count |")
+    lines.append("|----------|-------|")
     lines.append(f"| Issues Opened | {recent['issues_opened']} |")
     lines.append(f"| Issues Closed | {recent['issues_closed']} |")
     lines.append(f"| PRs Opened | {recent['prs_opened']} |")
