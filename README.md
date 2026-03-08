@@ -1,6 +1,6 @@
 # Integrator Agent (amia-)
 
-**Version**: 1.1.8
+**Version**: 1.1.17
 
 ## Overview
 
@@ -36,26 +36,26 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 
 | Skill | Description |
 |-------|-------------|
-| `amia-github-integration` | GitHub API integration |
-| `amia-github-pr-workflow` | PR workflow patterns |
-| `amia-github-pr-checks` | PR check patterns |
-| `amia-github-pr-merge` | PR merge strategies |
-| `amia-github-pr-context` | PR context management |
-| `amia-github-issue-operations` | Issue CRUD operations |
-| `amia-kanban-orchestration` | Kanban board patterns |
-| `amia-github-projects-sync` | Projects sync |
-| `amia-github-thread-management` | Thread management |
-| `amia-code-review-patterns` | Code review patterns |
-| `amia-multilanguage-pr-review` | Multi-language reviews |
-| `amia-tdd-enforcement` | TDD enforcement |
-| `amia-ci-failure-patterns` | CI failure patterns |
-| `amia-git-worktree-operations` | Worktree operations |
-| `amia-integration-protocols` | Shared utilities |
-| `amia-quality-gates` | Quality gate pipelines and enforcement |
-| `amia-release-management` | Release verification and changelog |
-| `amia-ai-pr-review-methodology` | AI-assisted PR review methodology |
-| `amia-label-taxonomy` | Issue/PR label taxonomy and standards |
-| `amia-session-memory` | Session state persistence |
+| `amia-github-integration` | GitHub Projects integration, label setup, PR workflows |
+| `amia-github-pr-workflow` | PR review orchestration with delegation and verification |
+| `amia-github-pr-checks` | CI status monitoring and PR readiness verification |
+| `amia-github-pr-merge` | PR merge strategies and auto-merge configuration |
+| `amia-github-pr-context` | PR metadata, diff, and changed files retrieval |
+| `amia-github-issue-operations` | Issue creation, labels, milestones, assignees, comments |
+| `amia-kanban-orchestration` | GitHub Kanban board state and card management |
+| `amia-github-projects-sync` | GitHub Projects V2 synchronization via GraphQL |
+| `amia-github-thread-management` | PR review thread management and resolution |
+| `amia-code-review-patterns` | Two-stage PR review with 8-dimension analysis |
+| `amia-multilanguage-pr-review` | Multi-language PR review routing |
+| `amia-tdd-enforcement` | TDD enforcement via RED-GREEN-REFACTOR |
+| `amia-ci-failure-patterns` | CI/CD failure diagnosis and pattern matching |
+| `amia-git-worktree-operations` | Parallel PR processing with git worktrees |
+| `amia-integration-protocols` | Shared utilities and cross-skill protocols |
+| `amia-quality-gates` | Pre-review, review, pre-merge, post-merge checkpoints |
+| `amia-release-management` | Version bumping, changelogs, release coordination |
+| `amia-ai-pr-review-methodology` | Evidence-based PR review (4 phases, 5 dimensions) |
+| `amia-label-taxonomy` | GitHub label taxonomy for PR/issue management |
+| `amia-session-memory` | Session state persistence for PR reviews |
 
 ### Hooks
 
@@ -119,9 +119,15 @@ claude --agent amia-integrator-main-agent --plugin-dir ./ai-maestro-integrator-a
 
 All plugin scripts are written in Python for cross-platform compatibility (Linux, macOS, Windows).
 
+## Skill Architecture
+
+Skills use a **progressive discovery** pattern: each `SKILL.md` is a compact index (under 4000 chars) that agents read first, with detailed content in `references/*.md` files discovered on demand. All 60+ scripts support `--output-file <path>` to write full JSON to a file and print only a summary to stdout, minimizing token consumption.
+
 ## Validation
 
 ```bash
 cd ai-maestro-integrator-agent
 uv run --with pyyaml python scripts/validate_plugin.py . --verbose
 ```
+
+Current status: **0 CRITICAL, 0 MAJOR, 0 MINOR, 0 NIT** issues.

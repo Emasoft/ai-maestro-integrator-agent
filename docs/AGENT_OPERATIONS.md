@@ -1,7 +1,7 @@
 # AGENT_OPERATIONS.md - AMIA Integrator
 
-**Version**: 1.1.8
-**Last Updated**: 2026-02-04
+**Version**: 1.1.17
+**Last Updated**: 2026-03-08
 **Status**: SINGLE SOURCE OF TRUTH for AMIA Agent Operations
 
 ---
@@ -169,6 +169,7 @@ ai-maestro-integrator-agent/
 │   ├── amia-git-worktree-operations/
 │   ├── amia-multilanguage-pr-review/
 │   ├── amia-tdd-enforcement/
+│   ├── amia-ai-pr-review-methodology/
 │   ├── amia-integration-protocols/
 │   ├── amia-label-taxonomy/
 │   └── amia-session-memory/
@@ -294,6 +295,7 @@ Skills are **automatically loaded** from the `skills/` directory. You do NOT nee
 | **amia-git-worktree-operations** | Git worktree management |
 | **amia-multilanguage-pr-review** | Multi-language code review |
 | **amia-tdd-enforcement** | TDD requirement enforcement |
+| **amia-ai-pr-review-methodology** | Evidence-based AI PR review methodology |
 | **amia-integration-protocols** | Integration workflow protocols |
 | **amia-label-taxonomy** | GitHub label taxonomy |
 | **amia-session-memory** | Session state persistence |
@@ -1115,7 +1117,16 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 
 ---
 
-## Recent Changes (2026-02-07)
+## Recent Changes (2026-03-08)
+
+- All 20 SKILL.md files trimmed under 4000 chars for progressive discovery algorithm
+- Added `--output-file` support to all 60+ agent scripts for token-efficient output
+- Added `write_output()` utility in `shared/thresholds.py` for standardized script output
+- All validation passes with 0 CRITICAL, 0 MAJOR, 0 MINOR, 0 NIT issues
+- Added `amia-ai-pr-review-methodology` skill (evidence-based PR review)
+- Fixed markdownlint issues across 74 files (MD012, MD022, MD031, MD041)
+
+## Changes (2026-02-07)
 
 - Added 8-column canonical kanban system (unified from 5 conflicting systems)
 - Added Wave 1-7 skills: ci-failure-patterns, github-pr-workflow, release-management, quality-gates, github-projects-sync, kanban-orchestration
@@ -1134,8 +1145,8 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 
 Any changes to AMIA operations **MUST** be reflected in this document first.
 
-**Version**: 1.1.8
-**Last Updated**: 2026-02-04
+**Version**: 1.1.17
+**Last Updated**: 2026-03-08
 **Maintained By**: AMCOS Plugin Development Team
 **Review Cycle**: Monthly or on major system changes
 

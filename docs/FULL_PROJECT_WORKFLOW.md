@@ -1,7 +1,7 @@
 # Full Project Workflow: From Requirements to Delivery
 
-**Version**: 1.1.8
-**Last Updated**: 2026-02-07
+**Version**: 1.1.17
+**Last Updated**: 2026-03-08
 
 This document describes the complete workflow for how the Emasoft agent system handles a project from initial requirements to delivery. All agents must understand this workflow to coordinate effectively.
 
@@ -514,28 +514,32 @@ All projects use an **8-column kanban system** on GitHub Projects. Every agent m
 
 ---
 
-## Wave 1-7 Skill Additions (2026-02-06 — 2026-02-07)
+## AMIA Skills (20 skills, v1.1.17)
 
-The following skills were added to AMIA and AMOA plugins, integrating techniques from the DOCS_AND_SCRIPTS reference collection:
+The Integrator Agent (AMIA) has 20 skills covering code review, quality gates, GitHub operations, and release management:
 
-### AMIA (Integrator) New Skills
+- **amia-code-review-patterns**: Two-stage PR review with 8-dimension analysis
+- **amia-ai-pr-review-methodology**: Evidence-based PR review (4 phases, 5 dimensions)
+- **amia-multilanguage-pr-review**: Multi-language PR review routing
+- **amia-quality-gates**: Pre-review, review, pre-merge, post-merge checkpoints
+- **amia-tdd-enforcement**: TDD enforcement via RED-GREEN-REFACTOR
+- **amia-ci-failure-patterns**: CI/CD failure diagnosis and pattern matching
+- **amia-release-management**: Version bumping, changelogs, release coordination
+- **amia-github-pr-workflow**: PR review orchestration with delegation
+- **amia-github-pr-merge**: PR merge strategies and auto-merge
+- **amia-github-pr-checks**: CI status monitoring and PR readiness
+- **amia-github-pr-context**: PR metadata, diff, and changed files
+- **amia-github-issue-operations**: Issue creation, labels, milestones, comments
+- **amia-github-thread-management**: PR review thread management
+- **amia-github-integration**: GitHub Projects integration and label setup
+- **amia-github-projects-sync**: GitHub Projects V2 synchronization via GraphQL
+- **amia-kanban-orchestration**: GitHub Kanban board state and card management
+- **amia-git-worktree-operations**: Parallel PR processing with git worktrees
+- **amia-integration-protocols**: Shared utilities and cross-skill protocols
+- **amia-label-taxonomy**: GitHub label taxonomy for PR/issue management
+- **amia-session-memory**: Session state persistence for PR reviews
 
-- **amia-ci-cd-pipeline**: CI/CD pipeline management, GitHub Actions workflows
-- **amia-pr-review-workflow**: PR review automation, code quality checks
-- **amia-release-management**: Version management, changelog generation, release automation
-- **amia-quality-gates**: Code quality enforcement, linting, type checking
-- **amia-github-projects-sync**: GitHub Projects kanban synchronization
-- **amia-kanban-management**: Kanban column management and task routing
-
-### AMOA (Orchestrator) New Skills
-
-- **amoa-agent-replacement**: Agent failure detection and replacement protocols
-- **amoa-remote-agent-coordinator**: Remote agent coordination and multi-host management
-- **amoa-messaging-templates**: Standardized AI Maestro message templates
-- **amoa-orchestration-patterns**: Task distribution, load balancing, dependency management
-- **amoa-module-management**: Module lifecycle and dependency tracking
-
-These skills integrate CI/CD best practices, PR review workflows, release automation, quality gates, and multi-agent coordination patterns into the Emasoft ecosystem.
+All skills use progressive discovery (compact SKILL.md under 4000 chars + `references/` for details).
 
 ---
 

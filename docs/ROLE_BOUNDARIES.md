@@ -200,6 +200,6 @@ AMOA: Sends handoff to agent-456
 
 ---
 
-**Document Version**: 1.1.8
-**Last Updated**: 2026-02-02
+**Document Version**: 1.1.17
+**Last Updated**: 2026-03-08
 **Author**: AMCOS Plugin Development
