@@ -321,7 +321,7 @@ Examples:
 
     # ── Step 4: Validate ──
     print(f"\n{BLUE}═══ Step 4: Validate plugin (--strict) ═══{NC}")
-    run(["uv", "run", "python", "scripts/validate_plugin.py", ".", "--strict"], cwd=root)
+    run(["uv", "run", "--with", "pyyaml", "python", "scripts/validate_plugin.py", ".", "--strict"], cwd=root)
     print(f"{GREEN}✓ Plugin validation passed{NC}")
 
     # ── Step 5: Version consistency ──
