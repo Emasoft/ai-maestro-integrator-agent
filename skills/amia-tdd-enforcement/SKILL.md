@@ -61,45 +61,7 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Core Principles:**
-
-- `references/iron-law.md` — Fundamental TDD principle, pre-code checklist
-- `references/red-green-refactor-cycle.md` — RED-GREEN-REFACTOR cycle phases
-
-**Implementation:**
-
-- `references/implementation-procedure.md` — Step-by-step TDD guide
-- `references/implementation-procedure-part1-writing-tests.md` — Writing tests
-- `references/implementation-procedure-part1-test-creation.md` — Test creation
-- `references/implementation-procedure-part2-implementation-refactor.md` — Implementation and refactor
-- `references/implementation-procedure-part3-complete-example.md` — Worked example
-- `references/common-patterns.md` — Best practices (AAA, edge cases, isolation)
-
-**Rules and Enforcement:**
-
-- `references/rules-and-constraints.md` — Phase rules, forbidden actions, violation recovery
-- `references/status-tracking.md` — Status states, phase transitions, multi-feature tracking
-
-**Operations:**
-
-- `references/op-write-failing-test.md` — Write a failing test
-- `references/op-implement-minimum-code.md` — Implement minimum code
-- `references/op-refactor-code.md` — Refactor code
-- `references/op-verify-tdd-compliance.md` — Verify TDD compliance
-- `references/op-handle-tdd-violation.md` — Handle TDD violations
-
-**Troubleshooting:**
-
-- `references/troubleshooting.md` — Problem solving index
-- `references/troubleshooting-part1-test-failures.md` — Test failure issues
-- `references/troubleshooting-part2-code-issues.md` — Code-level issues
-- `references/troubleshooting-part3-passing-tests.md` — Unexpected passes
-- `references/troubleshooting-part4-workflow.md` — Workflow issues
-
-**Other:**
-
-- `references/test-engineering.md` — Test engineering procedures from AMIA Test Engineer
-- `references/detailed-guide.md` — Extended guidance, learning paths, RULE 14 compliance
+See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
 
 ## Error Handling
 
@@ -107,7 +69,23 @@ Script failures return non-zero exit codes. Check stderr for details. See `refer
 
 ## Examples
 
-See `references/detailed-guide.md` for usage examples.
+### RED-GREEN-REFACTOR Cycle
+
+```bash
+# Red phase: write failing test
+python -m pytest tests/test_auth.py::test_login -x
+# Output: FAILED (1 error) — test_login not implemented
+
+# Green phase: implement minimum code, run tests
+python -m pytest tests/test_auth.py::test_login -x
+# Output: PASSED (1 passed)
+
+# Refactor phase: improve code, verify tests still pass
+python -m pytest tests/ -x
+# Output: PASSED (12 passed)
+```
+
+See `references/detailed-guide.md` for extended examples.
 
 ## Resources
 

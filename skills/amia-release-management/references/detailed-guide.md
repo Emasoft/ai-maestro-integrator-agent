@@ -145,3 +145,40 @@ python scripts/amia_release_verify.py --repo owner/repo --version 1.2.3 --mode v
 ### CI/CD Integration
 
 `references/cicd-integration.md` - Contents: Overview, CI/CD Fundamentals, Pipeline Architecture, Standard Pipeline Stages, CI Pipeline Configuration (Build, Test, Analysis, Artifact Publishing), CD Pipeline Configuration (Deployment Stages, Database Migration, Release Gates), Rollback Automation, Deployment Strategies, Multi-Environment Pipeline, Monitoring and Observability, Best Practices.
+
+## Full Reference Document Index
+
+Content moved from SKILL.md for brevity. All files are in the `references/` directory:
+
+**Process & Definitions:**
+
+- `release-types.md` — Patch/minor/major/pre-release definitions
+- `semantic-versioning.md` — Version format and rules
+- `release-process.md` — Bumping, changelog, notes, tagging
+- `release-workflow-chain.md` — Two-workflow automation
+
+**Verification:**
+
+- `pre-release-verification.md` — Quality gates checklist
+- `post-release-verification.md` — Deployment smoke testing
+
+**Operations:**
+
+- `rollback-procedures.md` — Rollback procedures
+- `cicd-integration.md` — Pipeline automation
+- `release-responsibilities.md` — Roles and RACI matrix
+- `troubleshooting-tag-branch-collision.md` — Tag-branch collisions
+
+**Operational Procedures:**
+
+- `op-determine-version.md` — Version determination
+- `op-bump-version.md` — Version bump
+- `op-generate-changelog.md` — Changelog generation
+- `op-create-release-tag.md` — Release tag creation
+- `op-verify-release-readiness.md` — Readiness verification
+- `op-validate-changelog-gate.md` — Changelog gate
+- `op-validate-release-tags.md` — Tag validation
+- `op-execute-rollback.md` — Rollback execution
+- `op-escalate-release-blocker.md` — Blocker escalation
+- `op-update-readme-badges.md` — Badge updates
+- `git-cliff-integration.md` — Git-cliff integration

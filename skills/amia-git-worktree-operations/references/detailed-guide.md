@@ -220,3 +220,58 @@ git fsck --lost-found
 │ 4. VERIFY before cleanup                                            │
 └─────────────────────────────────────────────────────────────────────┘
 ```
+
+## Content Moved from SKILL.md
+
+### Original Reference Documents Section
+
+**Core:**
+
+- `references/worktree-fundamentals.md` — Worktree concepts, shared git model, prerequisites
+- `references/detailed-guide.md` — Constraints, decision tree, error handling, safety
+
+**Workflows:**
+
+- `references/parallel-pr-workflow.md` — Parallel PR processing (parts 1-4 in same folder)
+- `references/quick-start-workflows.md` — Common workflow shortcuts
+
+**Operations:**
+
+- `references/creating-worktrees.md` — Creation procedures (parts 1-6 in same folder)
+- `references/worktree-operations.md` — Listing, switching, locking, syncing
+- `references/worktree-cleanup.md` — Safe removal, pruning, disk recovery
+- `references/worktree-verification.md` — Isolation checks, boundary detection
+- `references/removing-worktrees.md` — Removal and post-removal
+
+**Scripts and Testing:**
+
+- `references/scripts-guide.md` — All script usage and workflows
+- `references/testing-worktree-isolation.md` — Test types, CI/CD, database testing
+- `references/docker-worktree-testing.md` — Docker setup and best practices
+
+**Infrastructure:**
+
+- `references/port-allocation.md` — Port allocation for worktree services
+- `references/port-management.md` — Port registry and conflict resolution
+- `references/registry-system.md` — Registry schema and validation
+
+**Other:**
+
+- `references/quick-reference.md` — Quick command reference
+- `references/troubleshooting.md` — Common issues and solutions
+- `references/cross-platform-support.md` — Platform-specific notes
+- `references/merge-safeguards.md` — Merge validation
+- `references/worktree-naming-conventions.md` — Naming standards
+
+### Original Resources Section
+
+- `references/creating-worktrees-part1-standard-flow.md`
+- `references/creating-worktrees-part2-purpose-patterns.md`
+- `references/creating-worktrees-part3-port-allocation.md`
+- `references/creating-worktrees-part4-environment-setup.md`
+- `references/creating-worktrees-part5-commands-checklist.md`
+- ...and 102 more in `references/`
+
+### Original Prerequisites (removed items)
+
+- Write access to a directory outside the main repository

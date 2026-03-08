@@ -62,45 +62,15 @@ Exit codes: 0=success, 1=invalid params, 2=not found, 3=API error, 4=auth, 5=alr
 
 ## Reference Documents
 
-**Merge Operations:**
-
-- `references/merge-state-verification.md` -- GraphQL merge state verification, MergeStateStatus values
-- `references/merge-strategies.md` -- Merge/squash/rebase strategy selection guide
-- `references/auto-merge.md` -- Auto-merge configuration via GraphQL mutations
-
-**Operation Guides:**
-
-- `references/op-check-pr-merged.md` -- Check if PR is merged
-- `references/op-check-merge-readiness.md` -- Verify merge eligibility
-- `references/op-execute-pr-merge.md` -- Execute PR merge
-- `references/op-configure-auto-merge.md` -- Configure auto-merge
-- `references/op-verify-merge-completion.md` -- Verify merge completion
-- `references/op-rollback-bad-merge.md` -- Rollback a bad merge
-
-**Detailed Guide:**
-
-- `references/detailed-guide.md` -- Decision trees, workflows, error handling, safety warnings
+See `references/` directory for all reference documents (merge state verification, strategies, auto-merge, operation guides, rollback). Full details in `references/detailed-guide.md`.
 
 ## Error Handling
 
-If a script fails, check the exit code and stderr output. Common issues:
-
-- **Exit 1**: Invalid parameters or missing arguments
-- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
-
-See `references/detailed-guide.md` for detailed error scenarios.
+On failure, check exit code and stderr. Exit 1 = invalid params; Exit 2-4 = API errors. See `references/detailed-guide.md`.
 
 ## Resources
 
-- `references/auto-merge.md`
-- `references/detailed-guide.md`
-- `references/merge-state-verification.md`
-- `references/merge-strategies.md`
-- `references/op-check-merge-readiness.md`
-- `references/op-check-pr-merged.md`
-- `references/op-configure-auto-merge.md`
-- `references/op-execute-pr-merge.md`
-- ...and 2 more in `references/`
+See `references/` directory.
 
 ## Examples
 

@@ -193,3 +193,40 @@ This skill integrates with the Integrator Agent workflow:
 4. **Milestone Tracking:** Use `amia_set_issue_milestone.py` to organize work into releases
 
 See the main Integrator Agent documentation for workflow integration details.
+
+## Reference Document Listings (moved from SKILL.md)
+
+**Operations:**
+
+- `references/op-get-issue-context.md` — Get issue metadata and context
+- `references/op-create-issue.md` — Create new issues
+- `references/op-set-issue-labels.md` — Add, remove, or set labels
+- `references/op-set-issue-milestone.md` — Assign milestones
+- `references/op-post-issue-comment.md` — Post comments with idempotency
+
+**Guides:**
+
+- `references/label-management.md` — Label creation, naming, priorities, categories
+- `references/issue-templates.md` — Bug report, feature request, task templates
+- `references/milestone-tracking.md` — Milestone creation, assignment, progress
+
+**Template Parts:**
+
+- `references/issue-templates-part1-bug-reports.md` — Bug report templates
+- `references/issue-templates-part2-feature-requests.md` — Feature request templates
+- `references/issue-templates-part3-tasks.md` — Task templates
+- `references/issue-templates-part4-programmatic.md` — Programmatic template usage
+- `references/milestone-tracking-part1-creating.md` — Creating milestones
+- `references/milestone-tracking-part2-assigning.md` — Assigning issues to milestones
+- `references/milestone-tracking-part3-progress-closing.md` — Progress tracking and closing
+
+**Resources:**
+
+- `references/issue-templates-part1-bug-reports.md`
+- `references/issue-templates-part2-feature-requests.md`
+- `references/issue-templates-part3-tasks.md`
+- `references/issue-templates-part4-programmatic.md`
+- `references/issue-templates.md`
+- `references/label-management.md`
+- `references/milestone-tracking-part1-creating.md`
+- ...and 8 more in `references/`

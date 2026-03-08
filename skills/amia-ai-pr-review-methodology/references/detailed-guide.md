@@ -110,6 +110,30 @@ A PR adds `$HOME/.local/bin` to the PATH lookup for a CLI tool. During Phase 1, 
 
 A PR replaces a linear search with a hash map lookup, claiming 10x speedup. During Phase 1, the reviewer reads the full module to understand the data flow. During Dimension 1, the reviewer confirms the linear search was indeed the bottleneck. During Dimension 4 (Senior Developer Review), the reviewer notes the hash map increases memory usage and checks whether the tradeoff is acceptable. The reviewer requests benchmark output showing before/after timing across at least 3 runs with statistical variance. The review is COMMENT with a list of required benchmark evidence, referencing `references/scenario-performance.md`.
 
+## Reference Documents Index
+
+**Core Workflow:**
+
+- `references/phase-1-context-gathering.md` -- Context gathering actions
+- `references/phase-2-structured-analysis.md` -- 5 dimensions overview
+- `references/review-output-template.md` -- Review output template
+- `references/quick-reference-checklist.md` -- Pre-approval checklist
+
+**Analysis Dimensions:**
+
+- `references/dimension-1-problem-verification.md` -- Root cause analysis
+- `references/dimension-2-redundancy-check.md` -- Duplicate detection
+- `references/dimension-3-system-integration.md` -- Platform validation
+- `references/dimension-4-senior-review.md` -- Architecture review
+- `references/dimension-5-false-positive-detection.md` -- Reversibility testing
+
+**Scenario Protocols:**
+
+- `references/scenario-path-changes.md` -- Path/file changes
+- `references/scenario-bug-fixes.md` -- Bug fixes
+- `references/scenario-performance.md` -- Performance optimizations
+- `references/scenario-dependency-updates.md` -- Dependency updates
+
 ## Related Skills
 
 - **amia-code-review-patterns** -- General code review patterns and anti-patterns that complement the PR-specific methodology.

@@ -208,3 +208,35 @@ python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 # If complete: true, report to user for merge decision
 # If complete: false, identify failing_criteria and delegate fixes
 ```
+
+## Full Reference Documents Index
+
+Content moved here from SKILL.md to stay within size limits.
+
+**Orchestrator Role:**
+
+- `orchestrator-responsibilities.md` -- Orchestrator role definition and boundaries
+- `delegation-rules.md` -- Subagent delegation patterns and prompt structure
+- `human-vs-ai-assignment.md` -- Author type identification and escalation rules
+
+**Verification and Completion:**
+
+- `verification-workflow.md` -- Pre/post-review verification procedures
+- `completion-criteria.md` -- All 8 criteria that must pass before merge
+- `polling-schedule.md` -- Polling frequency and adaptive rules
+
+**Recovery and Coordination:**
+
+- `merge-failure-recovery.md` -- Merge failure types and recovery steps
+- `worktree-coordination.md` -- Worktree assignment and isolation rules
+
+**Step-by-Step Operations:**
+
+- `op-poll-prs.md` -- Polling for PRs requiring attention
+- `op-identify-author-type.md` -- Identifying PR author type
+- `op-classify-work.md` -- Classifying work needed
+- `op-delegate-subagent.md` -- Delegating to subagents
+- `op-monitor-progress.md` -- Monitoring subagent progress
+- `op-verify-completion.md` -- Verifying completion criteria
+- `op-report-status.md` -- Reporting status to user
+- `op-handle-failure.md` -- Handling verification failures

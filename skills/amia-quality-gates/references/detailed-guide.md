@@ -195,3 +195,74 @@ This skill uses labels defined in **amia-label-taxonomy**. Ensure the label taxo
 | **amia-github-pr-workflow** | PR workflow including gates |
 | **amia-tdd-enforcement** | TDD requirements for Pre-Review Gate |
 | **amia-ci-failure-patterns** | CI failure analysis |
+
+---
+
+## Content Moved from SKILL.md (Trim)
+
+### Full Reference Documents List
+
+**Gate Details:**
+
+- `references/gate-pipeline.md` -- Pipeline flow diagram and transitions
+- `references/pre-review-gate.md` -- Gate 1: tests, lints, build, description
+- `references/review-gate.md` -- Gate 2: 8-dimension review, 80% confidence
+- `references/pre-merge-gate.md` -- Gate 3: CI, conflicts, approval, merge strategies
+- `references/post-merge-gate.md` -- Gate 4: main branch health, issue closure
+
+**Escalation and Overrides:**
+
+- `references/escalation-paths.md` -- Escalation paths A, B, C, D
+- `references/escalation-procedures.md` -- Detailed procedures per level
+- `references/override-policies.md` -- Override authority matrix
+- `references/override-examples.md` -- Override examples
+
+**Code Quality Checks:**
+
+- `references/encoding-compliance-checker.md` -- UTF-8 encoding
+- `references/unicode-enforcement-hook.md` -- BOM, line endings, non-ASCII
+
+**Procedures and Examples:**
+
+- `references/gate-examples.md` -- Examples for all gates
+- `references/gate-checklist.md` -- Enforcement checklist
+- `references/gate-decision-flowchart.md` -- Decision flowchart
+- `references/label-reference.md` -- Gate and warning label list
+- `references/troubleshooting.md` -- Common issues and solutions
+
+**Verification and Evaluation:**
+
+- `references/rule-14-enforcement.md` -- RULE 14 enforcement
+- `references/pr-evaluation.md` -- PR evaluation
+- `references/integration-verification.md` -- Integration verification
+
+### Full Prerequisites
+
+- Repository has CI/CD pipeline configured
+- GitHub labels from **amia-label-taxonomy** applied
+- Review checklist from **amia-code-review-patterns** available
+- GitHub CLI (`gh`) installed and authenticated
+- Understanding of the four-gate pipeline model
+
+### Full Instructions
+
+1. Identify the current gate by checking PR labels (no gate label = Pre-Review)
+2. Execute gate-specific checks (Pre-Review: tests/lints, Review: 8-dimension review, Pre-Merge: CI/conflicts, Post-Merge: main branch health)
+3. Apply gate decision label (passed/failed/warning) based on results
+4. If checks pass, advance PR to next gate
+5. If checks fail, apply "failed" label and follow escalation path (A, B, C, or D)
+6. Document failure reasons in PR comments and notify responsible parties
+7. For overrides: verify authority per Override Matrix, document justification, apply `gate:override-applied` label
+
+### Full Checklist
+
+- [ ] Identify current gate by checking PR labels
+- [ ] Execute gate-specific checks for current gate
+- [ ] Evaluate results against gate criteria
+- [ ] Apply appropriate decision label (passed/failed/warning)
+- [ ] If PASSED: advance to next gate
+- [ ] If FAILED: apply failure label, identify escalation path
+- [ ] Document failure reasons in PR comments
+- [ ] Notify responsible parties per escalation order
+- [ ] If override requested: verify authority and document justification
+- [ ] Verify next steps are clear to all parties

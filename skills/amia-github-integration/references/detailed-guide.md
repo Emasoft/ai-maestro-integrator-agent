@@ -202,3 +202,44 @@ For detailed setup instructions, see `references/prerequisites-and-setup.md`.
 - 2.0.0: Refactored as thin dispatcher to specialized skills, removed duplicated content
 - 1.2.0: Added cross-platform `gh_multiuser.py` script with configuration-driven identity management
 - 1.1.0: Added Multi-User Workflow reference for owner/developer identity separation
+
+---
+
+## Reference Documents Index
+
+Content moved from SKILL.md during trim (2026-03-08).
+
+**Setup and Auth:**
+
+- `references/prerequisites-and-setup.md` -- GitHub CLI installation and authentication
+- `references/multi-user-workflow.md` -- Managing multiple GitHub identities
+- `references/single-account-workflow.md` -- Single account setup
+
+**Operations:**
+
+- `references/api-operations.md` -- REST/GraphQL API operations, rate limits, quality gates
+- `references/batch-operations.md` -- Bulk filtering, label ops, batch updates
+- `references/automation-scripts.md` -- Python scripts for sync, bulk labels, monitoring, reports
+- `references/projects-v2-operations.md` -- Projects V2 specific operations
+- `references/pull-request-management.md` -- PR management details
+- `references/issue-management.md` -- Issue lifecycle management
+
+**Guides and Troubleshooting:**
+
+- `references/troubleshooting.md` -- Common issues and solutions
+- `references/core-concepts.md` -- Core concepts overview
+- `references/implementation-guide.md` -- Full implementation guide
+
+**Templates:**
+
+- `references/template-bug-report.md` -- Bug report template
+- `references/template-pull-request.md` -- PR template
+- `references/template-docs-issue.md` -- Documentation issue template
+
+**Resources:**
+
+- `references/account-strategy-decision-guide.md`
+- `references/automation-scripts.md`
+- `references/batch-operations.md`
+- `references/core-concepts.md`
+- ...and 35 more in `references/`

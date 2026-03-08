@@ -189,3 +189,79 @@ Label categories: type:*, priority:*, status:*, component:*, effort:*, agent:*, 
 - E.1 Find and Query a Project
 - E.2 Update Issue Status
 - E.3-E.7 Troubleshooting: missing projects, board sync, column sync, rate limiting, task sync
+
+## Content Moved from SKILL.md
+
+The following content was trimmed from SKILL.md for size compliance and preserved here.
+
+### Original Overview
+
+Manages team tasks through GitHub Projects V2 via GraphQL API. This is the official task management interface for coordinating work across remote developer agents. READ + STATUS UPDATE ONLY — never executes code or modifies source files.
+
+### Original Prerequisites
+
+- GitHub CLI (`gh`) authenticated with `project` scope
+- GitHub Projects V2 enabled repository
+- GraphQL API access
+- Python 3.8+ for automation scripts
+
+### Original Instructions (7 steps)
+
+1. **Identify task type** — create, update, query, or sync GitHub Projects data
+2. **Authenticate** — verify with `gh auth status` (needs `project` scope)
+3. **Locate project** — find project ID via GraphQL query (see Examples)
+4. **Select operation** — consult Reference Documents for the matching use case
+5. **Execute** — use `gh api graphql` or run automation scripts
+6. **Verify** — check project board or query API to confirm changes
+7. **Notify** — send AI Maestro messages to relevant agents if needed
+
+### Original Checklist (8 items)
+
+- [ ] Identify task type (create/update/query/sync)
+- [ ] Verify GitHub CLI auth with `project` scope
+- [ ] Locate project using GraphQL queries
+- [ ] Select operation from reference documentation
+- [ ] Execute via GraphQL API or automation scripts
+- [ ] Verify result on project board or via API
+- [ ] Notify stakeholders via AI Maestro if needed
+- [ ] Document change in issue comments or task lists
+
+### Original Reference Documents (categorized listing)
+
+**Core Operations:**
+
+- `references/core-operations.md` — day-to-day project operations (create, update, query, link, comment)
+- `references/graphql-queries.md` — complete GraphQL query/mutation reference
+- `references/graphql-queries-part1-read-operations.md` — all read queries
+- `references/graphql-queries-part2-mutations.md` — all mutations
+
+**Status & Labels:**
+
+- `references/status-management.md` — status transitions, lifecycle policy, reports
+- `references/label-taxonomy.md` — label categories, creation, filtering, colors
+
+**Templates & Tracking:**
+
+- `references/issue-templates.md` — issue/PR templates for features, bugs, epics, refactoring
+- `references/sub-issue-tracking.md` — parent/child issues, progress tracking
+
+**Planning & Review:**
+
+- `references/planning-phase-mapping.md` — planning phases to GitHub status mapping
+- `references/iteration-cycle-rules.md` — sprint/iteration management, review flow
+- `references/review-worktree-workflow.md` — isolated review environment setup
+- `references/plan-file-linking.md` — GitHub issue to plan file linking
+
+**Automation & Integration:**
+
+- `references/automation-scripts.md` — sync_tasks.py, ci_webhook_handler.py, amia_kanban_sync.py
+- `references/skill-integrations.md` — coordination with other AMOA skills
+- `references/ci-notification-setup.md` — webhook configuration for CI/project sync
+- `references/github-sync-procedure.md` — full sync procedure with external systems
+
+**Troubleshooting:**
+
+- `references/error-handling.md` — API errors, rate limits, retry logic, auth failures
+- `references/best-practices.md` — dos, don'ts, lifecycle reminders
+- `references/examples-and-inline-troubleshooting.md` — worked examples and common failure fixes
+- `references/detailed-guide.md` — expanded guide with lifecycle policy, thresholds, AI Maestro integration

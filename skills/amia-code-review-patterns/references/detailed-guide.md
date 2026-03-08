@@ -214,3 +214,40 @@ When a critical quality gate fails, send a message using the `agent-messaging` s
 - IRON RULES and Example Commit Messages
 
 **Version**: 1.0 | **Updated**: 2025-01-01 | **Difficulty**: Intermediate
+
+---
+
+## Reference Documents Index (moved from SKILL.md)
+
+**Review Process:**
+
+- `references/requirement-compliance.md` -- Gate 0 compliance checklist
+- `references/stage-one-quick-scan.md` -- Stage 1 quick scan process
+- `references/stage-two-deep-dive.md` -- Stage 2 eight-dimension analysis
+- `references/workflow-and-decision-tree.md` -- Workflow and decision flow
+- `references/review-workflow.md` -- Review workflow with gates
+- `references/implementation-checklist.md` -- Implementation checklist
+
+**8 Dimensions (Deep Dive):**
+
+- `references/functional-correctness.md` -- Dim 1: Functional Correctness
+- `references/architecture-design.md` -- Dim 2: Architecture and Design
+- `references/code-quality.md` -- Dim 3: Code Quality
+- `references/performance-analysis.md` -- Dim 4: Performance
+- `references/security-analysis.md` -- Dim 5: Security
+- `references/testing-analysis.md` -- Dim 6: Testing
+- `references/backward-compatibility.md` -- Dim 7: Backward Compatibility
+- `references/documentation-analysis.md` -- Dim 8: Documentation
+
+**Quality and Standards:**
+
+- `references/pre-pr-quality-gate.md` -- Pre-PR validation steps
+- `references/commit-conventions.md` -- Commit message conventions
+- `references/examples.md` -- Detailed review examples
+
+**Troubleshooting:**
+
+- `references/troubleshooting-performance.md` -- Slow reviews
+- `references/troubleshooting-calibration.md` -- Reviewer calibration
+- `references/troubleshooting-coverage.md` -- Coverage gaps
+- `references/troubleshooting-agreement.md` -- Reviewer disagreements

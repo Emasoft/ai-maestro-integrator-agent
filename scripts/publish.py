@@ -320,16 +320,9 @@ Examples:
     print(f"{GREEN}✓ Linting passed{NC}")
 
     # ── Step 4: Validate ──
-    # Block on CRITICAL (1) and MAJOR (2) only; MINOR (3) and NIT (4) are non-blocking recommendations
     print(f"\n{BLUE}═══ Step 4: Validate plugin (--strict) ═══{NC}")
-    result = run(["uv", "run", "--with", "pyyaml", "python", "scripts/validate_plugin.py", ".", "--strict"], cwd=root, check=False)
-    if result.returncode in (1, 2):
-        print(f"\n{RED}✗ FAILED (exit {result.returncode}): Plugin validation has CRITICAL/MAJOR issues{NC}", file=sys.stderr)
-        sys.exit(result.returncode)
-    if result.returncode >= 3:
-        print(f"{YELLOW}⚠ Plugin validation passed with minor recommendations (exit {result.returncode}){NC}")
-    else:
-        print(f"{GREEN}✓ Plugin validation passed{NC}")
+    run(["uv", "run", "--with", "pyyaml", "python", "scripts/validate_plugin.py", ".", "--strict"], cwd=root)
+    print(f"{GREEN}✓ Plugin validation passed{NC}")
 
     # ── Step 5: Version consistency ──
     print(f"\n{BLUE}═══ Step 5: Check version consistency ═══{NC}")

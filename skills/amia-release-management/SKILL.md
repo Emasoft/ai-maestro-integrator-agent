@@ -17,40 +17,32 @@ user-invocable: false
 
 ## Overview
 
-Coordinates software releases across patch, minor, and major version changes. Handles version bumping, changelog generation, release tagging, CI/CD triggering, and rollback procedures.
+Coordinates software releases: version bumping, changelog, tagging, CI/CD, and rollback.
 
 ## Prerequisites
 
-- GitHub CLI (`gh`) installed and authenticated
-- Repository with proper release permissions
-- Python 3.8+ for helper scripts
+- GitHub CLI (`gh`) authenticated with release permissions
+- Python 3.8+ and CI/CD pipeline configured
 - Semantic versioning followed in the project
-- CI/CD pipeline configured and operational
 
 ## Instructions
 
-1. **Receive release request** with target type (patch/minor/major)
-2. **Determine version** using semver rules (PATCH: bug fixes, MINOR: features, MAJOR: breaking)
-3. **Verify readiness** via pre-release checklist (all tests pass, no critical bugs)
-4. **Generate changelog** from commit history since last release
-5. **Bump version** in all required files and create annotated git tag
-6. **Trigger CI/CD** release pipeline and verify deployment
-7. **Report completion** to requesting agent; rollback if deployment fails
+1. **Receive request** with target type (patch/minor/major)
+2. **Determine version** using semver rules and **verify readiness** (tests pass, no critical bugs)
+3. **Generate changelog** from commits and **bump version** in all required files
+4. **Create tag and trigger CI/CD** release pipeline
+5. **Verify deployment**; rollback if failed; report completion
 
 ### Checklist
 
 Copy this checklist and track your progress:
 
 - [ ] Receive release request with target type
-- [ ] Determine version number (semver rules)
-- [ ] Verify release readiness (tests, bugs, docs)
+- [ ] Determine version and verify readiness
 - [ ] Generate changelog from commit history
-- [ ] Create release notes with highlights
-- [ ] Bump version in all required files
-- [ ] Create annotated git tag
-- [ ] Trigger CI/CD release pipeline
-- [ ] Verify post-release deployment
-- [ ] Report completion to requesting agent
+- [ ] Bump version and create annotated git tag
+- [ ] Trigger CI/CD and verify deployment
+- [ ] Rollback if needed; report completion
 
 ## Output
 
@@ -67,46 +59,11 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Process & Definitions:**
-
-- `references/release-types.md` — Patch/minor/major/pre-release definitions
-- `references/semantic-versioning.md` — Version format and rules
-- `references/release-process.md` — Bumping, changelog, notes, tagging
-- `references/release-workflow-chain.md` — Two-workflow automation
-
-**Verification:**
-
-- `references/pre-release-verification.md` — Quality gates checklist
-- `references/post-release-verification.md` — Deployment smoke testing
-
-**Operations:**
-
-- `references/rollback-procedures.md` — Rollback procedures
-- `references/cicd-integration.md` — Pipeline automation
-- `references/release-responsibilities.md` — Roles and RACI matrix
-- `references/troubleshooting-tag-branch-collision.md` — Tag-branch collisions
-
-**Operational Procedures:**
-
-- `references/op-determine-version.md` — Version determination
-- `references/op-bump-version.md` — Version bump
-- `references/op-generate-changelog.md` — Changelog generation
-- `references/op-create-release-tag.md` — Release tag creation
-- `references/op-verify-release-readiness.md` — Readiness verification
-- `references/op-validate-changelog-gate.md` — Changelog gate
-- `references/op-validate-release-tags.md` — Tag validation
-- `references/op-execute-rollback.md` — Rollback execution
-- `references/op-escalate-release-blocker.md` — Blocker escalation
-- `references/op-update-readme-badges.md` — Badge updates
-- `references/git-cliff-integration.md` — Git-cliff integration
-
-**Detailed Guide:**
-
-- `references/detailed-guide.md` — Decision trees, scripts, error handling, examples
+See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+Script failures return non-zero exit codes with details on stderr.
 
 ## Examples
 

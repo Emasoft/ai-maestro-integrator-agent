@@ -16,40 +16,33 @@ user-invocable: false
 
 ## Overview
 
-Mandatory checkpoints in the four-gate integration pipeline (Pre-Review, Review, Pre-Merge, Post-Merge). Each gate defines criteria, blocking conditions, and escalation paths. See `references/detailed-guide.md` for full details.
+Four-gate integration pipeline (Pre-Review, Review, Pre-Merge, Post-Merge) with blocking conditions and escalation paths.
 
 ## Prerequisites
 
-- Repository has CI/CD pipeline configured
+- CI/CD pipeline configured with GitHub CLI (`gh`) authenticated
 - GitHub labels from **amia-label-taxonomy** applied
 - Review checklist from **amia-code-review-patterns** available
-- GitHub CLI (`gh`) installed and authenticated
-- Understanding of the four-gate pipeline model
 
 ## Instructions
 
-1. Identify the current gate by checking PR labels (no gate label = Pre-Review)
-2. Execute gate-specific checks (Pre-Review: tests/lints, Review: 8-dimension review, Pre-Merge: CI/conflicts, Post-Merge: main branch health)
-3. Apply gate decision label (passed/failed/warning) based on results
-4. If checks pass, advance PR to next gate
-5. If checks fail, apply "failed" label and follow escalation path (A, B, C, or D)
-6. Document failure reasons in PR comments and notify responsible parties
-7. For overrides: verify authority per Override Matrix, document justification, apply `gate:override-applied` label
+1. Identify current gate from PR labels (no label = Pre-Review)
+2. Run gate checks (Pre-Review: tests/lints, Review: 8-dim review, Pre-Merge: CI/conflicts, Post-Merge: main health)
+3. Apply decision label (passed/failed/warning); if passed, advance to next gate
+4. If failed, apply failure label, escalate (path A/B/C/D), document in PR comments
+5. For overrides: verify authority, document justification, apply `gate:override-applied`
 
 ### Checklist
 
 Copy this checklist and track your progress:
 
-- [ ] Identify current gate by checking PR labels
-- [ ] Execute gate-specific checks for current gate
-- [ ] Evaluate results against gate criteria
-- [ ] Apply appropriate decision label (passed/failed/warning)
+- [ ] Identify current gate from PR labels
+- [ ] Execute gate-specific checks
+- [ ] Apply decision label (passed/failed/warning)
 - [ ] If PASSED: advance to next gate
-- [ ] If FAILED: apply failure label, identify escalation path
-- [ ] Document failure reasons in PR comments
-- [ ] Notify responsible parties per escalation order
-- [ ] If override requested: verify authority and document justification
-- [ ] Verify next steps are clear to all parties
+- [ ] If FAILED: apply failure label, escalate, document in PR
+- [ ] Handle overrides: verify authority, document justification
+- [ ] Confirm next steps are clear to all parties
 
 ## Output
 
@@ -65,42 +58,9 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Gate Details:**
+See `references/` directory for all reference documents. Key files: `references/gate-pipeline.md` (pipeline flow), `references/escalation-paths.md` (escalation), `references/override-policies.md` (overrides), `references/detailed-guide.md` (full guide).
 
-- `references/gate-pipeline.md` -- Pipeline flow diagram and transitions
-- `references/pre-review-gate.md` -- Gate 1: tests, lints, build, description
-- `references/review-gate.md` -- Gate 2: 8-dimension review, 80% confidence
-- `references/pre-merge-gate.md` -- Gate 3: CI, conflicts, approval, merge strategies
-- `references/post-merge-gate.md` -- Gate 4: main branch health, issue closure
-
-**Escalation and Overrides:**
-
-- `references/escalation-paths.md` -- Escalation paths A, B, C, D
-- `references/escalation-procedures.md` -- Detailed procedures per level
-- `references/override-policies.md` -- Override authority matrix
-- `references/override-examples.md` -- Override examples
-
-**Code Quality Checks:**
-
-- `references/encoding-compliance-checker.md` -- UTF-8 encoding
-- `references/unicode-enforcement-hook.md` -- BOM, line endings, non-ASCII
-
-**Procedures and Examples:**
-
-- `references/gate-examples.md` -- Examples for all gates
-- `references/gate-checklist.md` -- Enforcement checklist
-- `references/gate-decision-flowchart.md` -- Decision flowchart
-- `references/label-reference.md` -- Gate and warning label list
-- `references/troubleshooting.md` -- Common issues and solutions
-- `references/detailed-guide.md` -- Error handling, scripts, integration
-
-**Verification and Evaluation:**
-
-- `references/rule-14-enforcement.md` -- RULE 14 enforcement
-- `references/pr-evaluation.md` -- PR evaluation
-- `references/integration-verification.md` -- Integration verification
-
-**Related:** amia-label-taxonomy, amia-code-review-patterns, amia-github-pr-workflow, amia-tdd-enforcement, amia-ci-failure-patterns
+**Related skills:** amia-label-taxonomy, amia-code-review-patterns, amia-github-pr-workflow, amia-tdd-enforcement, amia-ci-failure-patterns
 
 ## Error Handling
 
@@ -108,7 +68,12 @@ Script failures return non-zero exit codes. Check stderr for details. See `refer
 
 ## Examples
 
-See `references/detailed-guide.md` for usage examples.
+```bash
+python scripts/amia_quality_gate_check.py --repo owner/repo --pr 42
+# Output: {"gate_status": "pass", "gate": "pre-review", "checks_passed": 5, "checks_failed": 0}
+```
+
+See `references/detailed-guide.md` for more examples.
 
 ## Resources
 

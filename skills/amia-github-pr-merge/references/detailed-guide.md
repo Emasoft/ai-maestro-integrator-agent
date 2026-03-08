@@ -272,3 +272,20 @@ scripts/
 ```
 
 Each script outputs JSON to stdout for easy parsing by automation tools.
+
+## Reference Documents Index
+
+**Merge Operations:**
+
+- `references/merge-state-verification.md` -- GraphQL merge state verification, MergeStateStatus values
+- `references/merge-strategies.md` -- Merge/squash/rebase strategy selection guide
+- `references/auto-merge.md` -- Auto-merge configuration via GraphQL mutations
+
+**Operation Guides:**
+
+- `references/op-check-pr-merged.md` -- Check if PR is merged
+- `references/op-check-merge-readiness.md` -- Verify merge eligibility
+- `references/op-execute-pr-merge.md` -- Execute PR merge
+- `references/op-configure-auto-merge.md` -- Configure auto-merge
+- `references/op-verify-merge-completion.md` -- Verify merge completion
+- `references/op-rollback-bad-merge.md` -- Rollback a bad merge

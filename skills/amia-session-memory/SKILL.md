@@ -16,15 +16,13 @@ user-invocable: false
 
 ## Overview
 
-Persist and retrieve session context so integration work continues seamlessly across session boundaries. Stores memory in GitHub PR comments, issue comments, and handoff documents, retrieving it via state-based triggers.
+Persist and retrieve session context across session boundaries using PR comments, issue comments, and handoff documents.
 
 ## Prerequisites
 
 - AMIA role understood (quality gates, reviews, merging, releases)
 - `gh` CLI configured and authenticated
 - `$CLAUDE_PROJECT_DIR` set and writable
-- Read access to PR and issue comments
-- Handoff directory structure available
 
 ## Instructions
 
@@ -59,38 +57,13 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Architecture and Types:**
+- `references/memory-architecture.md` — Storage locations and persistence patterns
+- `references/memory-retrieval.md` — Triggers and retrieval commands
+- `references/memory-updates.md` — Update triggers and commands
+- `references/handoff-documents.md` — Handoff format and checklist
+- `references/detailed-guide.md` — Error handling, examples, troubleshooting
 
-- `references/memory-architecture.md` — Storage locations, file structure, persistence patterns
-- `references/memory-types.md` — PR states, code patterns, integration issues, release history
-
-**Retrieval and Updates:**
-
-- `references/memory-retrieval.md` — State-based triggers, retrieval decision tree, commands
-- `references/memory-updates.md` — Update triggers, decision tree, update commands
-- `references/retrieval-patterns.md` — PR review continuation, integration work, pattern lookup
-- `references/update-patterns.md` — Immediate PR state, append patterns, release history
-
-**Handoffs and Templates:**
-
-- `references/handoff-documents.md` — When to create, format, checklist
-- `references/memory-file-templates.md` — PR state, handoff, patterns-learned templates
-
-**Operations:**
-
-- `references/op-detect-state-triggers.md` — Detect session triggers
-- `references/op-load-pr-memory.md` — Load PR comment state
-- `references/op-load-handoff-docs.md` — Load handoff documents
-- `references/op-load-release-history.md` — Load release history
-- `references/op-verify-memory-freshness.md` — Verify timestamps against GitHub
-- `references/op-save-pr-state-comment.md` — Save PR state comment
-- `references/op-create-handoff-doc.md` — Create handoff document
-- `references/op-log-release-decision.md` — Log release decision
-- `references/op-archive-stale-memory.md` — Archive stale memory
-
-**Detailed Guide:**
-
-- `references/detailed-guide.md` — Error handling, examples, troubleshooting, quick reference commands
+See `references/` directory for remaining documents.
 
 ## Error Handling
 
@@ -111,9 +84,4 @@ gh pr view 42 --comments --json comments \
 
 ## Resources
 
-- `references/detailed-guide.md`
-- `references/handoff-documents.md`
-- `references/memory-architecture.md`
-- `references/memory-file-templates.md`
-- `references/memory-retrieval.md`
-- ...and 13 more in `references/`
+See `references/` directory for all reference documents and templates.

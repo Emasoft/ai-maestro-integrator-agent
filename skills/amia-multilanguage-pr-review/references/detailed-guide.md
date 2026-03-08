@@ -233,3 +233,41 @@ See `cross-platform-testing.md` for:
 - CI matrix configuration for GitHub Actions
 - Platform-specific test skips and annotations
 - Using Docker for reproducible builds
+
+---
+
+## Full Reference Document Index
+
+Content moved from SKILL.md for reference.
+
+**Language Detection:**
+
+- `language-detection.md` — detection methods overview
+- `language-detection-part1-extensions-shebang.md` — file extensions and shebang detection
+- `language-detection-part2-gitattributes-algorithm.md` — gitattributes and GitHub algorithm
+- `language-detection-part3-mixed-language.md` — mixed-language file handling
+
+**Language-Specific Review Patterns:**
+
+- `python-review-patterns.md` — Python review overview
+- `python-review-patterns-part1-style-types-docstrings.md` — style, types, docstrings
+- `python-review-patterns-part2-imports-tests-linting.md` — imports, tests, linting
+- `javascript-review-patterns.md` — JS/TS review overview
+- `javascript-review-patterns-part1-style-types-modules.md` — style, types, modules
+- `javascript-review-patterns-part2-testing-linting.md` — testing, linting
+- `rust-review-patterns.md` — Rust review overview
+- `go-review-patterns.md` — Go review overview
+- `shell-review-patterns.md` — Shell script review overview
+
+**Cross-Platform and Security:**
+
+- `cross-platform-testing.md` — multi-OS testing overview
+- `security-review-patterns.md` — security review patterns
+
+**Operations:**
+
+- `op-detect-pr-languages.md` — language detection operation
+- `op-get-language-linters.md` — linter lookup operation
+- `op-run-multilang-linters.md` — run linters operation
+- `op-review-cross-language.md` — cross-language review operation
+- `op-compile-multilang-review.md` — compile review operation

@@ -199,3 +199,13 @@ All scripts use standardized exit codes:
 
 **Cause**: Too many API calls in short succession.
 **Solution**: Use batch operations (`amia_resolve_threads_batch.py`) to resolve multiple threads in a single API call.
+
+## Available Scripts (Quick Reference)
+
+| Script | Purpose | Key Parameters |
+|--------|---------|----------------|
+| `amia_get_review_threads.py` | List review threads | `--owner`, `--repo`, `--pr`, `--unresolved-only` |
+| `amia_resolve_thread.py` | Resolve single thread | `--thread-id` |
+| `amia_resolve_threads_batch.py` | Batch resolve (1 API call) | `--thread-ids` (comma-separated) |
+| `amia_reply_to_thread.py` | Reply to thread | `--thread-id`, `--body`, `--and-resolve` |
+| `amia_get_unaddressed_comments.py` | Find unreplied comments | `--owner`, `--repo`, `--pr` |

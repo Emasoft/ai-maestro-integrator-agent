@@ -15,35 +15,29 @@ user-invocable: false
 
 ## Overview
 
-Two-stage PR review methodology. Stage 1 (Quick Scan): surface-level assessment, 70% confidence threshold. Stage 2 (Deep Dive): 8-dimension analysis, 80% approval threshold.
+Two-stage PR review: Quick Scan (70% threshold) then 8-dimension Deep Dive (80% approval).
 
 ## Prerequisites
 
-- Intermediate software development experience
-- Familiarity with code review basics and PR workflows
 - Access to the target repository
 - Python 3.8+ for helper scripts
-- AI Maestro installed for inter-agent communication
+- AI Maestro installed
 
 ## Instructions
 
-1. **Receive PR review request** from AMOA or user via AI Maestro
-2. **Gate 0 compliance check** - Verify requirements per `references/requirement-compliance.md`
-3. **Stage 1: Quick Scan** - Assess file structure, diff magnitude, obvious issues; calculate confidence score; Go/No-Go at 70%+ (see `references/stage-one-quick-scan.md`)
-4. **Stage 2: Deep Dive** - Evaluate all 8 dimensions (Functional, Architecture, Quality, Performance, Security, Testing, Compatibility, Documentation); final score at 80%+ to approve (see `references/stage-two-deep-dive.md`)
-5. **Run quality gates** - Tests, linting, documentation checks
-6. **Create review report** using `scripts/review_report_generator.py`
-7. **Merge or reject PR** based on final decision; close related issues if merged
-8. **Report completion** to requesting agent via AI Maestro
+1. **Gate 0 compliance** - Verify requirements per `references/requirement-compliance.md`
+2. **Stage 1: Quick Scan** - Assess structure, diff, issues; Go/No-Go at 70%+
+3. **Stage 2: Deep Dive** - Score 8 dimensions; approve at 80%+
+4. **Run quality gates and create report** via `scripts/review_report_generator.py`
+5. **Merge or reject PR**; report completion via AI Maestro
 
 ### Checklist
 
 Copy this checklist and track your progress:
 
-- [ ] Receive PR review request
 - [ ] Gate 0 compliance check
-- [ ] Stage 1: Quick Scan (structure, diff, issues, confidence, Go/No-Go)
-- [ ] Stage 2: Deep Dive (8 dimensions, final confidence)
+- [ ] Stage 1: Quick Scan (Go/No-Go at 70%+)
+- [ ] Stage 2: Deep Dive (8 dimensions, approve at 80%+)
 - [ ] Run quality gates (tests, linting, docs)
 - [ ] Create review report via script
 - [ ] Merge or reject; close issues if merged
@@ -61,51 +55,19 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Review Process:**
-
-- `references/requirement-compliance.md` -- Gate 0 compliance checklist
-- `references/stage-one-quick-scan.md` -- Stage 1 quick scan process
-- `references/stage-two-deep-dive.md` -- Stage 2 eight-dimension analysis
-- `references/workflow-and-decision-tree.md` -- Workflow and decision flow
-- `references/review-workflow.md` -- Review workflow with gates
-- `references/implementation-checklist.md` -- Implementation checklist
-
-**8 Dimensions (Deep Dive):**
-
-- `references/functional-correctness.md` -- Dim 1: Functional Correctness
-- `references/architecture-design.md` -- Dim 2: Architecture and Design
-- `references/code-quality.md` -- Dim 3: Code Quality
-- `references/performance-analysis.md` -- Dim 4: Performance
-- `references/security-analysis.md` -- Dim 5: Security
-- `references/testing-analysis.md` -- Dim 6: Testing
-- `references/backward-compatibility.md` -- Dim 7: Backward Compatibility
-- `references/documentation-analysis.md` -- Dim 8: Documentation
-
-**Quality and Standards:**
-
-- `references/pre-pr-quality-gate.md` -- Pre-PR validation steps
-- `references/commit-conventions.md` -- Commit message conventions
-- `references/examples.md` -- Detailed review examples
-
-**Troubleshooting:**
-
-- `references/troubleshooting-performance.md` -- Slow reviews
-- `references/troubleshooting-calibration.md` -- Reviewer calibration
-- `references/troubleshooting-coverage.md` -- Coverage gaps
-- `references/troubleshooting-agreement.md` -- Reviewer disagreements
-
-**Detailed Guide:**
-
-- `references/detailed-guide.md` -- Scoring, dimension weights, AI Maestro templates, reference tables
+See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details.
 
 ## Examples
 
-See `references/detailed-guide.md` for usage examples.
+```bash
+python scripts/review_report_generator.py --repo owner/repo --pr 42
+# Output: {"stage1": "pass", "stage2": "pass", "dimensions": 8, "score": 85, "decision": "approve"}
+```
 
 ## Resources
 
-See `references/` directory for all reference documents.
+See `references/detailed-guide.md` for scoring details and examples.

@@ -209,3 +209,48 @@ python scripts/amia_diagnose_ci_failure.py --log-file ci.log
 - 6.2 JavaScript/TypeScript CI Patterns (node_modules caching, package managers, ESM vs CJS)
 - 6.3 Rust CI Patterns (cargo build, target directory, cross-compilation)
 - 6.4 Go CI Patterns (module resolution, version mismatches, CGO deps)
+
+## Full Reference Document Index
+
+Content moved from SKILL.md for compactness:
+
+**Failure Pattern Categories:**
+
+- `cross-platform-patterns.md` — OS-specific path, line ending, case sensitivity differences
+- `exit-code-patterns.md` — Shell exit code handling and persistence
+- `syntax-patterns.md` — Heredoc, quoting, command substitution issues
+- `dependency-patterns.md` — Import paths, missing packages, version mismatches
+- `github-infrastructure-patterns.md` — Runner labels, permissions, architecture
+- `language-specific-patterns.md` — Python, JS/TS, Rust, Go CI peculiarities
+
+**Automation & PR Handling:**
+
+- `bot-categories.md` — PR author classification for automation
+- `claude-pr-handling.md` — Claude Code Action PR workflow
+
+**Debugging & Procedures:**
+
+- `debug-procedures.md` — Systematic debugging workflow
+
+**CI Best Practices:**
+
+- `ci-concurrency-groups.md` — Concurrency group configuration
+- `ci-gate-job-pattern.md` — Gate job patterns
+- `ci-job-summaries.md` — Job summary generation
+- `ci-linting-workflow.md` — Linting workflow setup
+- `ci-minimum-permissions.md` — Minimum permissions configuration
+- `ci-optimized-matrix.md` — Optimized matrix builds
+- `ci-path-filtered-triggers.md` — Path-filtered triggers
+- `ci-pr-auto-labeling.md` — PR auto-labeling
+- `ci-security-scanning.md` — Security scanning setup
+
+**Operations:**
+
+- `op-apply-pattern-fix.md` — Apply a pattern fix
+- `op-classify-pr-author.md` — Classify PR author
+- `op-collect-ci-logs.md` — Collect CI logs
+- `op-detect-platform-issues.md` — Detect platform issues
+- `op-identify-failure-pattern.md` — Identify failure pattern
+- `op-push-and-monitor.md` — Push and monitor CI
+- `op-run-diagnostic-script.md` — Run diagnostic script
+- `op-verify-fix-locally.md` — Verify fix locally

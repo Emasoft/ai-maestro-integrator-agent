@@ -15,30 +15,27 @@ user-invocable: false
 
 ## Overview
 
-Entry point for all GitHub integration tasks. Routes to specialized skills based on task type (PRs, Projects V2, Kanban, worktrees, API ops, multi-user). Also handles batch operations spanning multiple areas.
+Routes GitHub integration tasks to specialized skills (PRs, Projects V2, Kanban, worktrees, API, multi-user, batch).
 
 ## Prerequisites
 
-- GitHub CLI 2.14+ installed (`gh --version`)
-- GitHub CLI authenticated (`gh auth status`)
+- GitHub CLI 2.14+ authenticated (`gh auth status`)
 - Write permissions on target repository
-- For setup details, see `references/prerequisites-and-setup.md`
+- Setup details: `references/prerequisites-and-setup.md`
 
 ## Instructions
 
-1. Verify GitHub CLI: `gh --version` (must be 2.14+).
-2. Confirm auth: `gh auth status`. If not authenticated, run `gh auth login`.
-3. Identify task type using the routing table below:
-   - **Pull Requests** --> use skill `amia-github-pr-workflow`
-   - **Projects V2 sync** --> use skill `amia-github-projects-sync`
-   - **Kanban board ops** --> use skill `amia-kanban-orchestration`
-   - **Git worktrees** --> use skill `amia-git-worktree-operations`
-   - **Direct API ops** --> see `references/api-operations.md`
-   - **Multi-user identities** --> see `references/multi-user-workflow.md`
-4. For cross-area batch operations (bulk labels, bulk close), use `references/batch-operations.md`.
-5. Always preview before batch changes: `gh issue list --label X --state open`.
-6. Execute the operation, then verify: `gh issue view <N>` or `gh pr status`.
-7. On errors, consult the error table in `references/detailed-guide.md` or `references/troubleshooting.md`.
+1. Confirm auth: `gh auth status` (CLI 2.14+ required).
+2. Route by task type:
+   - **PRs** --> `amia-github-pr-workflow`
+   - **Projects V2** --> `amia-github-projects-sync`
+   - **Kanban** --> `amia-kanban-orchestration`
+   - **Worktrees** --> `amia-git-worktree-operations`
+   - **API ops** --> `references/api-operations.md`
+   - **Multi-user** --> `references/multi-user-workflow.md`
+3. Batch ops: preview first (`gh issue list --label X --state open`), then execute.
+4. Verify result: `gh issue view <N>` or `gh pr status`.
+5. On errors: see `references/detailed-guide.md`.
 
 ### Checklist
 
@@ -64,37 +61,11 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Setup and Auth:**
-
-- `references/prerequisites-and-setup.md` -- GitHub CLI installation and authentication
-- `references/multi-user-workflow.md` -- Managing multiple GitHub identities
-- `references/single-account-workflow.md` -- Single account setup
-
-**Operations:**
-
-- `references/api-operations.md` -- REST/GraphQL API operations, rate limits, quality gates
-- `references/batch-operations.md` -- Bulk filtering, label ops, batch updates
-- `references/automation-scripts.md` -- Python scripts for sync, bulk labels, monitoring, reports
-- `references/projects-v2-operations.md` -- Projects V2 specific operations
-- `references/pull-request-management.md` -- PR management details
-- `references/issue-management.md` -- Issue lifecycle management
-
-**Guides and Troubleshooting:**
-
-- `references/detailed-guide.md` -- Decision tree, error handling, extended examples
-- `references/troubleshooting.md` -- Common issues and solutions
-- `references/core-concepts.md` -- Core concepts overview
-- `references/implementation-guide.md` -- Full implementation guide
-
-**Templates:**
-
-- `references/template-bug-report.md` -- Bug report template
-- `references/template-pull-request.md` -- PR template
-- `references/template-docs-issue.md` -- Documentation issue template
+See `references/` directory for all reference documents. Index in `references/detailed-guide.md`.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+Non-zero exit codes on failure; check stderr and `references/detailed-guide.md`.
 
 ## Examples
 
@@ -119,9 +90,4 @@ gh issue view 15 --json labels --jq '.labels[].name'
 
 ## Resources
 
-- `references/account-strategy-decision-guide.md`
-- `references/api-operations.md`
-- `references/automation-scripts.md`
-- `references/batch-operations.md`
-- `references/core-concepts.md`
-- ...and 35 more in `references/`
+See `references/` directory (40+ documents).

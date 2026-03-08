@@ -15,48 +15,36 @@ user-invocable: false
 
 ## Overview
 
-Evidence-based PR review using 4 phases and 5 analysis dimensions. Catches false positives, redundant code, unverified assumptions, and cargo cult programming before merge.
+Evidence-based PR review using 4 phases and 5 analysis dimensions to catch false positives, redundant code, and unverified assumptions.
 
 ## Prerequisites
 
-- Basic PR workflow knowledge (creating, reviewing, merging)
-- Ability to read diffs and understand file-level changes
-- Shell access to verify paths and tool availability
-- Access to the codebase under review (or ability to search/read it)
+- PR workflow knowledge and ability to read diffs
+- Shell access and codebase access for verification
 
 ## Instructions
 
-1. **Gather Context (Phase 1):** Read `references/phase-1-context-gathering.md` and complete all 4 actions: read complete files (not just diffs), search for duplicates, understand root cause, verify all claims.
+1. **Gather Context (Phase 1):** Read `references/phase-1-context-gathering.md`. Read complete files (not just diffs), search for duplicates, understand root cause, verify all claims.
 
-2. **Run Structured Analysis (Phase 2):** Read `references/phase-2-structured-analysis.md`, then apply each dimension in order:
-   - D1: Problem Verification -- `references/dimension-1-problem-verification.md`
-   - D2: Redundancy Check -- `references/dimension-2-redundancy-check.md`
-   - D3: System Integration -- `references/dimension-3-system-integration.md`
-   - D4: Senior Review -- `references/dimension-4-senior-review.md`
-   - D5: False Positive Detection -- `references/dimension-5-false-positive-detection.md`
+2. **Structured Analysis (Phase 2):** Read `references/phase-2-structured-analysis.md`, then apply dimensions D1-D5 in order (see `references/dimension-*.md`).
 
-3. **Determine Evidence Requirements (Phase 3):** Compile missing evidence from 4 categories: Problem Demonstration, Solution Validation, Assumption Verification, Cross-Platform Testing.
+3. **Evidence Requirements (Phase 3):** Compile missing evidence: Problem Demonstration, Solution Validation, Assumption Verification, Cross-Platform Testing.
 
-4. **Apply Scenario Protocol (if applicable):** Match the PR type to: `references/scenario-path-changes.md`, `references/scenario-bug-fixes.md`, `references/scenario-performance.md`, or `references/scenario-dependency-updates.md`.
+4. **Scenario Protocol (if applicable):** Match PR type to `references/scenario-*.md`.
 
-5. **Generate Review Output (Phase 4):** Use `references/review-output-template.md` to produce the final structured review document.
-
-6. **Final Checklist:** Run through `references/quick-reference-checklist.md` before submitting.
+5. **Generate Review (Phase 4):** Use `references/review-output-template.md` and run `references/quick-reference-checklist.md` before submitting.
 
 ### Checklist
 
 Copy this checklist and track your progress:
 
-- [ ] Read complete files affected by the PR, not just the diff
+- [ ] Read complete files, not just the diff
 - [ ] Search for existing solutions and duplicates
-- [ ] Understand root cause (not just symptoms)
-- [ ] Verify all claims in the PR description
+- [ ] Verify all claims and understand root cause
 - [ ] Apply all 5 analysis dimensions (D1-D5)
 - [ ] Compile missing evidence list
 - [ ] Apply scenario-specific protocol if applicable
 - [ ] Generate structured review using the template
-- [ ] Confirm cross-platform compatibility
-- [ ] Confirm adequate testing (before/after, edge cases)
 
 ## Output
 
@@ -74,40 +62,19 @@ Template: `references/review-output-template.md`
 
 ## Reference Documents
 
-**Core Workflow:**
-
-- `references/phase-1-context-gathering.md` -- Context gathering actions
-- `references/phase-2-structured-analysis.md` -- 5 dimensions overview
-- `references/review-output-template.md` -- Review output template
-- `references/quick-reference-checklist.md` -- Pre-approval checklist
-
-**Analysis Dimensions:**
-
-- `references/dimension-1-problem-verification.md` -- Root cause analysis
-- `references/dimension-2-redundancy-check.md` -- Duplicate detection
-- `references/dimension-3-system-integration.md` -- Platform validation
-- `references/dimension-4-senior-review.md` -- Architecture review
-- `references/dimension-5-false-positive-detection.md` -- Reversibility testing
-
-**Scenario Protocols:**
-
-- `references/scenario-path-changes.md` -- Path/file changes
-- `references/scenario-bug-fixes.md` -- Bug fixes
-- `references/scenario-performance.md` -- Performance optimizations
-- `references/scenario-dependency-updates.md` -- Dependency updates
-
-**Extended Guide:**
-
-- `references/detailed-guide.md` -- Troubleshooting, error handling, examples
+See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for error scenarios.
 
 ## Examples
 
-See `references/detailed-guide.md` for usage examples.
+```bash
+python scripts/amia_pr_review.py --repo owner/repo --pr 42
+# Output: {"verdict": "request_changes", "score": 65, "findings": 4, "false_positives": 1}
+```
 
 ## Resources
 
-See `references/` directory for all reference documents.
+See `references/detailed-guide.md` for extended examples, troubleshooting, and related skills.

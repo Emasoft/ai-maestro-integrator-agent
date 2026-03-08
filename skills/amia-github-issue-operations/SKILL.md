@@ -18,7 +18,7 @@ user-invocable: false
 
 ## Overview
 
-Complete GitHub Issue management for orchestrator agents. Enables programmatic issue creation, labeling, milestone tracking, assignee management, and comment posting via `gh` CLI.
+Programmatic GitHub Issue management (create, label, milestone, assign, comment) via `gh` CLI.
 
 ## Prerequisites
 
@@ -66,51 +66,15 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Operations:**
-
-- `references/op-get-issue-context.md` — Get issue metadata and context
-- `references/op-create-issue.md` — Create new issues
-- `references/op-set-issue-labels.md` — Add, remove, or set labels
-- `references/op-set-issue-milestone.md` — Assign milestones
-- `references/op-post-issue-comment.md` — Post comments with idempotency
-
-**Guides:**
-
-- `references/label-management.md` — Label creation, naming, priorities, categories
-- `references/issue-templates.md` — Bug report, feature request, task templates
-- `references/milestone-tracking.md` — Milestone creation, assignment, progress
-- `references/detailed-guide.md` — Full examples, decision tree, error codes, troubleshooting
-
-**Template Parts:**
-
-- `references/issue-templates-part1-bug-reports.md` — Bug report templates
-- `references/issue-templates-part2-feature-requests.md` — Feature request templates
-- `references/issue-templates-part3-tasks.md` — Task templates
-- `references/issue-templates-part4-programmatic.md` — Programmatic template usage
-- `references/milestone-tracking-part1-creating.md` — Creating milestones
-- `references/milestone-tracking-part2-assigning.md` — Assigning issues to milestones
-- `references/milestone-tracking-part3-progress-closing.md` — Progress tracking and closing
+See `references/` directory for all reference documents. Start with `references/detailed-guide.md` for full examples, decision tree, error codes, and troubleshooting.
 
 ## Error Handling
 
-If a script fails, check the exit code and stderr output. Common issues:
-
-- **Exit 1**: Invalid parameters or missing arguments
-- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
-
-See `references/detailed-guide.md` for detailed error scenarios.
+Check exit codes on failure: 1=bad args, 2=not found, 3=API error, 4=no auth, 5=idempotent skip. See `references/detailed-guide.md` for details.
 
 ## Resources
 
-- `references/detailed-guide.md`
-- `references/issue-templates-part1-bug-reports.md`
-- `references/issue-templates-part2-feature-requests.md`
-- `references/issue-templates-part3-tasks.md`
-- `references/issue-templates-part4-programmatic.md`
-- `references/issue-templates.md`
-- `references/label-management.md`
-- `references/milestone-tracking-part1-creating.md`
-- ...and 8 more in `references/`
+All resources are in the `references/` directory.
 
 ## Examples
 

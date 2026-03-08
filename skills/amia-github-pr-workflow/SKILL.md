@@ -17,45 +17,38 @@ user-invocable: false
 
 ## Overview
 
-Coordination workflow for PR reviews. The coordinator delegates review tasks to subagents, monitors completion, and reports results. It never writes code or merges without user approval.
+Orchestrator workflow for delegating PR reviews to subagents, verifying completion, and reporting to user.
 
 ## Prerequisites
 
-- GitHub CLI (`gh`) installed and authenticated
-- Python 3.8+ for automation scripts
-- AI Maestro configured for inter-agent communication
-- Access to spawn subagents for delegation
+- GitHub CLI (`gh`) authenticated
+- Python 3.8+ and AI Maestro configured
+- Subagent spawning capability
 
 ## Instructions
 
-1. **Poll for PRs** -- Run `amia_orchestrator_pr_poll.py` to get open PRs and status
-2. **Identify author type** -- Human PR = escalate to user; AI/bot PR = direct delegation
-3. **Classify work needed** -- Review, changes, verification, or wait
-4. **Delegate to subagent** -- Spawn specialized subagent (never do work yourself)
-5. **Monitor progress** -- Use polling/background tasks (never block)
-6. **Verify completion** -- Run `amia_verify_pr_completion.py` before reporting ready
-7. **Report to user** -- Provide status, await merge decision (never merge without approval)
+1. **Poll** -- Run `amia_orchestrator_pr_poll.py` to get open PRs
+2. **Classify** -- Human PR = escalate; AI/bot PR = delegate directly
+3. **Delegate** -- Spawn subagent for review/changes (never do work yourself)
+4. **Monitor** -- Poll progress via background tasks (never block)
+5. **Verify** -- Run `amia_verify_pr_completion.py` before reporting
 
 ### Checklist
 
 Copy this checklist and track your progress:
 
-- [ ] Poll for PRs using `amia_orchestrator_pr_poll.py`
-- [ ] Identify if PR author is human or AI/bot
-- [ ] Classify work needed (review/changes/verification/wait)
-- [ ] Delegate to appropriate subagent
-- [ ] Monitor subagent progress via polling
-- [ ] Verify all criteria using `amia_verify_pr_completion.py`
-- [ ] Report status to user and await merge decision
+- [ ] Poll PRs using `amia_orchestrator_pr_poll.py`
+- [ ] Classify author type and work needed
+- [ ] Delegate to subagent
+- [ ] Monitor and verify using `amia_verify_pr_completion.py`
+- [ ] Report to user, await merge decision
 - [ ] Handle failures by delegating fixes
 
 ### Critical Rules
 
-1. **Never Block** -- All long-running tasks delegated or run as background tasks
-2. **Never Write Code** -- Code writing always delegated to implementation subagents
-3. **Never Merge Without User** -- Merge requires explicit user approval
-4. **Always Verify** -- Run verification script before reporting any status
-5. **Human PRs Require Escalation** -- Always escalate human PRs to user for guidance
+- Never block, write code, or merge without user approval
+- Always verify before reporting status
+- Escalate human PRs to user
 
 ## Output
 
@@ -70,54 +63,20 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Orchestrator Role:**
-
-- `references/orchestrator-responsibilities.md` -- Orchestrator role definition and boundaries
-- `references/delegation-rules.md` -- Subagent delegation patterns and prompt structure
-- `references/human-vs-ai-assignment.md` -- Author type identification and escalation rules
-
-**Verification and Completion:**
-
-- `references/verification-workflow.md` -- Pre/post-review verification procedures
-- `references/completion-criteria.md` -- All 8 criteria that must pass before merge
-- `references/polling-schedule.md` -- Polling frequency and adaptive rules
-
-**Recovery and Coordination:**
-
-- `references/merge-failure-recovery.md` -- Merge failure types and recovery steps
-- `references/worktree-coordination.md` -- Worktree assignment and isolation rules
-
-**Step-by-Step Operations:**
-
-- `references/op-poll-prs.md` -- Polling for PRs requiring attention
-- `references/op-identify-author-type.md` -- Identifying PR author type
-- `references/op-classify-work.md` -- Classifying work needed
-- `references/op-delegate-subagent.md` -- Delegating to subagents
-- `references/op-monitor-progress.md` -- Monitoring subagent progress
-- `references/op-verify-completion.md` -- Verifying completion criteria
-- `references/op-report-status.md` -- Reporting status to user
-- `references/op-handle-failure.md` -- Handling verification failures
-
-**Detailed Guide:**
-
-- `references/detailed-guide.md` -- Decision tree, script usage, error handling, and examples
+See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+Script failures return non-zero exit codes. See `references/detailed-guide.md` for details.
 
 ## Examples
 
-### Example 1: Standard PR Review Coordination
-
 ```bash
-# Poll for open PRs requiring action
 python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
-# Delegate each PR needing review to a subagent
-# Verify completion before reporting
 python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
+# Output: {"complete": true, "recommendation": "ready_to_merge"}
 ```
 
 ## Resources
 
-See `references/` directory for all reference documents.
+See `references/detailed-guide.md` for decision tree, scripts, and extended examples.

@@ -18,23 +18,21 @@ user-invocable: false
 
 ## Overview
 
-Systematically diagnose and fix CI/CD failures by recognizing common failure pattern categories and applying proven fixes. Use when workflows fail, tests pass locally but fail in CI, or platform-specific errors appear.
+Diagnose and fix CI/CD failures by recognizing common failure patterns and applying proven fixes.
 
 ## Prerequisites
 
-- Access to CI/CD logs from the failed pipeline
+- CI/CD logs from the failed pipeline
 - `python3` available in PATH
 - Repository access to view workflow files
 
 ## Instructions
 
-1. Collect the CI failure log from the GitHub Actions workflow run
+1. Collect the CI failure log from the GitHub Actions run
 2. Run diagnostic: `python scripts/amia_diagnose_ci_failure.py --log-file ci.log`
 3. If a pattern is identified, read the corresponding reference document for the fix
-4. If not identified, follow the decision tree in `references/detailed-guide.md`
-5. Apply the recommended fix to code or workflow configuration
-6. Verify locally before pushing (when possible)
-7. Push and monitor the CI run to confirm resolution
+4. If not, follow the decision tree in `references/detailed-guide.md`
+5. Apply the fix, verify locally, push and confirm CI passes
 
 ### Checklist
 
@@ -60,47 +58,7 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Failure Pattern Categories:**
-
-- `references/cross-platform-patterns.md` — OS-specific path, line ending, case sensitivity differences
-- `references/exit-code-patterns.md` — Shell exit code handling and persistence
-- `references/syntax-patterns.md` — Heredoc, quoting, command substitution issues
-- `references/dependency-patterns.md` — Import paths, missing packages, version mismatches
-- `references/github-infrastructure-patterns.md` — Runner labels, permissions, architecture
-- `references/language-specific-patterns.md` — Python, JS/TS, Rust, Go CI peculiarities
-
-**Automation & PR Handling:**
-
-- `references/bot-categories.md` — PR author classification for automation
-- `references/claude-pr-handling.md` — Claude Code Action PR workflow
-
-**Debugging & Procedures:**
-
-- `references/debug-procedures.md` — Systematic debugging workflow
-- `references/detailed-guide.md` — Decision tree, quick reference table, error handling, examples
-
-**CI Best Practices:**
-
-- `references/ci-concurrency-groups.md` — Concurrency group configuration
-- `references/ci-gate-job-pattern.md` — Gate job patterns
-- `references/ci-job-summaries.md` — Job summary generation
-- `references/ci-linting-workflow.md` — Linting workflow setup
-- `references/ci-minimum-permissions.md` — Minimum permissions configuration
-- `references/ci-optimized-matrix.md` — Optimized matrix builds
-- `references/ci-path-filtered-triggers.md` — Path-filtered triggers
-- `references/ci-pr-auto-labeling.md` — PR auto-labeling
-- `references/ci-security-scanning.md` — Security scanning setup
-
-**Operations:**
-
-- `references/op-apply-pattern-fix.md` — Apply a pattern fix
-- `references/op-classify-pr-author.md` — Classify PR author
-- `references/op-collect-ci-logs.md` — Collect CI logs
-- `references/op-detect-platform-issues.md` — Detect platform issues
-- `references/op-identify-failure-pattern.md` — Identify failure pattern
-- `references/op-push-and-monitor.md` — Push and monitor CI
-- `references/op-run-diagnostic-script.md` — Run diagnostic script
-- `references/op-verify-fix-locally.md` — Verify fix locally
+See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
 
 ## Error Handling
 
@@ -108,7 +66,7 @@ Script failures return non-zero exit codes. Check stderr for details. See `refer
 
 ## Examples
 
-### Example 1: Cross-Platform Path Failure
+### Cross-Platform Path Failure
 
 ```bash
 # CI log shows: FileNotFoundError: /tmp/build/output.txt
@@ -119,9 +77,4 @@ python scripts/amia_diagnose_ci_failure.py --log-file ci.log
 
 ## Resources
 
-- `references/bot-categories.md`
-- `references/ci-concurrency-groups.md`
-- `references/ci-gate-job-pattern.md`
-- `references/ci-job-summaries.md`
-- `references/ci-linting-workflow.md`
-- ...and 22 more in `references/`
+See `references/` directory — 27 documents covering patterns, operations, and CI best practices.

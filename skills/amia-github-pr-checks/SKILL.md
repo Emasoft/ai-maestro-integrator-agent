@@ -87,13 +87,7 @@ See `references/detailed-guide.md` for detailed error scenarios.
 
 ## Resources
 
-- `references/ci-status-interpretation.md`
-- `references/detailed-guide.md`
-- `references/op-get-check-details.md`
-- `references/op-get-pr-check-status.md`
-- `references/op-interpret-check-conclusions.md`
-- `references/op-wait-for-checks.md`
-- `references/polling-strategies.md`
+See `references/` directory for all reference documents.
 
 ## Examples
 

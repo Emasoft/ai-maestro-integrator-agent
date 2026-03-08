@@ -191,3 +191,64 @@ Read this skill when:
 - Verifying completion before exiting
 - Handling blocked work items
 - Integrating with stop hooks
+
+---
+
+## Content Moved from SKILL.md (trimmed for size)
+
+### Original Reference Documents Listing
+
+**Core Concepts:**
+
+- `references/kanban-as-truth.md` -- Why Kanban is single source of truth
+- `references/board-column-semantics.md` -- Column meanings and requirements
+- `references/issue-to-module-mapping.md` -- Module-to-issue 1:1 mapping
+- `references/status-transitions.md` -- Valid state transitions matrix
+
+**Workflows:**
+
+- `references/agent-assignment-via-board.md` -- Assignment via issue assignees
+- `references/blocking-workflow.md` -- Handling blocked items
+- `references/ai-agent-vs-human-workflow.md` -- AI vs human workflow differences
+- `references/proactive-kanban-monitoring.md` -- Board polling and change detection
+
+**Integration:**
+
+- `references/integration-points.md` -- Planning, orchestration, stop hooks, PRs
+- `references/stop-hook-integration.md` -- Stop hook completion checks
+- `references/instruction-templates.md` -- Message and assignment templates
+- `references/failure-scenarios.md` -- Failure handling and recovery
+
+**Operations:**
+
+- `references/board-queries.md` -- GraphQL queries for board state
+- `references/troubleshooting.md` -- Common issues and solutions
+
+### Original Extended Instructions
+
+1. **Handle blockers** - Move to Blocked with `--reason` per `references/blocking-workflow.md`
+2. **Verify completion** - Run `amia_kanban_check_completion.py` (exit 0 = all done)
+
+### Original Extended Checklist Items
+
+- [ ] Issues added to board in Backlog column
+- [ ] PRs linked to issues, moved to AI Review
+
+### Original Error Handling Details
+
+If a script fails, check the exit code and stderr output. Common issues:
+
+- **Exit 1**: Invalid parameters or missing arguments
+- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
+
+### Original Resources Listing
+
+- `references/agent-assignment-via-board.md`
+- `references/ai-agent-vs-human-workflow-part1-fundamentals.md`
+- `references/ai-agent-vs-human-workflow-part2-workflows.md`
+- `references/ai-agent-vs-human-workflow.md`
+- `references/blocking-workflow.md`
+- `references/board-column-semantics.md`
+- `references/board-queries-part1-basic.md`
+- `references/board-queries-part2-filtered.md`
+- ...and 22 more in `references/`

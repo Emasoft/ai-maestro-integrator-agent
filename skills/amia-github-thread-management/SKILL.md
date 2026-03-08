@@ -62,39 +62,15 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Protocols:**
-
-- `references/thread-resolution-protocol.md` -- Resolution workflow, GraphQL mutations, batch operations, when to resolve vs keep open
-- `references/thread-conversation-tracking.md` -- Thread history queries, addressed vs unaddressed tracking, comment threading model
-
-**Detailed Guide:**
-
-- `references/detailed-guide.md` -- Decision tree, key concepts, error handling, script usage details, exit codes, common workflows
-
-## Available Scripts
-
-| Script | Purpose | Key Parameters |
-|--------|---------|----------------|
-| `amia_get_review_threads.py` | List review threads | `--owner`, `--repo`, `--pr`, `--unresolved-only` |
-| `amia_resolve_thread.py` | Resolve single thread | `--thread-id` |
-| `amia_resolve_threads_batch.py` | Batch resolve (1 API call) | `--thread-ids` (comma-separated) |
-| `amia_reply_to_thread.py` | Reply to thread | `--thread-id`, `--body`, `--and-resolve` |
-| `amia_get_unaddressed_comments.py` | Find unreplied comments | `--owner`, `--repo`, `--pr` |
+See `references/` directory for all reference documents: protocols, conversation tracking, and detailed guide with decision tree, scripts, exit codes, and workflows.
 
 ## Error Handling
 
-If a script fails, check the exit code and stderr output. Common issues:
-
-- **Exit 1**: Invalid parameters or missing arguments
-- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
-
-See `references/detailed-guide.md` for detailed error scenarios.
+Check exit code and stderr on failure. Exit 1: bad params. Exit 2-4: API errors. See `references/detailed-guide.md`.
 
 ## Resources
 
-- `references/detailed-guide.md`
-- `references/thread-conversation-tracking.md`
-- `references/thread-resolution-protocol.md`
+See `references/` directory.
 
 ## Examples
 

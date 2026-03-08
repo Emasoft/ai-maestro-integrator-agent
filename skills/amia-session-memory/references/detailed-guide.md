@@ -219,3 +219,39 @@ Use these HTML comments for machine-readable state:
 <!-- AMIA-INTEGRATION-STATE ... -->  # Integration issue state
 <!-- AMIA-RELEASE-STATE ... -->      # Release state
 ```
+
+## Full Reference Document Listing
+
+**Architecture and Types:**
+
+- `references/memory-architecture.md` — Storage locations, file structure, persistence patterns
+- `references/memory-types.md` — PR states, code patterns, integration issues, release history
+
+**Retrieval and Updates:**
+
+- `references/memory-retrieval.md` — State-based triggers, retrieval decision tree, commands
+- `references/memory-updates.md` — Update triggers, decision tree, update commands
+- `references/retrieval-patterns.md` — PR review continuation, integration work, pattern lookup
+- `references/update-patterns.md` — Immediate PR state, append patterns, release history
+
+**Handoffs and Templates:**
+
+- `references/handoff-documents.md` — When to create, format, checklist
+- `references/memory-file-templates.md` — PR state, handoff, patterns-learned templates
+
+**Operations:**
+
+- `references/op-detect-state-triggers.md` — Detect session triggers
+- `references/op-load-pr-memory.md` — Load PR comment state
+- `references/op-load-handoff-docs.md` — Load handoff documents
+- `references/op-load-release-history.md` — Load release history
+- `references/op-verify-memory-freshness.md` — Verify timestamps against GitHub
+- `references/op-save-pr-state-comment.md` — Save PR state comment
+- `references/op-create-handoff-doc.md` — Create handoff document
+- `references/op-log-release-decision.md` — Log release decision
+- `references/op-archive-stale-memory.md` — Archive stale memory
+
+## Additional Prerequisites (moved from SKILL.md)
+
+- Read access to PR and issue comments
+- Handoff directory structure available

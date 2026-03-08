@@ -15,38 +15,31 @@ user-invocable: false
 
 ## Overview
 
-GitHub Projects V2 Kanban is the single source of truth for AMOA orchestration. Every module = 1 issue, every assignment = 1 assignee, every status = 1 column move. If it's not on the board, it doesn't exist.
+GitHub Projects V2 Kanban is the single source of truth for AMOA orchestration: 1 module = 1 issue, 1 assignee, 1 column move.
 
 ## Prerequisites
 
-- GitHub CLI installed and authenticated (`gh auth status`)
-- GitHub Projects V2 enabled for the repository
-- GraphQL API access available
-- Python 3.8+ for board management scripts
-- AI Maestro installed for agent notifications
+- GitHub CLI authenticated (`gh auth status`) with Projects V2 enabled
+- GraphQL API access and Python 3.8+
+- AI Maestro installed
 
 ## Instructions
 
 1. **Initialize** - Verify `gh auth status` and Projects V2 access
 2. **Query state** - Run `amia_kanban_get_board_state.py OWNER REPO PROJECT_NUMBER`
-3. **Create issues** - 1 issue per module, following `references/issue-to-module-mapping.md`
-4. **Assign work** - Set issue assignees per `references/agent-assignment-via-board.md`
-5. **Track transitions** - Move cards per `references/status-transitions.md`
-6. **Handle blockers** - Move to Blocked with `--reason` per `references/blocking-workflow.md`
-7. **Verify completion** - Run `amia_kanban_check_completion.py` (exit 0 = all done)
+3. **Create & assign** - 1 issue per module, set assignees, add to Backlog
+4. **Track transitions** - Move cards through columns, handle blockers with `--reason`
+5. **Verify completion** - Run `amia_kanban_check_completion.py` (exit 0 = all done)
 
 ### Checklist
 
 Copy this checklist and track your progress:
 
-- [ ] `gh auth status` passes
-- [ ] Projects V2 access verified
+- [ ] `gh auth status` passes and Projects V2 verified
 - [ ] Board state queried successfully
-- [ ] Module issues created (1 issue = 1 module)
-- [ ] Issues added to board in Backlog column
-- [ ] Ready issues moved Backlog -> Todo -> In Progress
+- [ ] Module issues created and added to Backlog
+- [ ] Issues moved Backlog -> Todo -> In Progress
 - [ ] Agents assigned via issue assignees
-- [ ] PRs linked to issues, moved to AI Review
 - [ ] Blockers handled with reason
 - [ ] Completion verified (exit code 0)
 
@@ -62,53 +55,15 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-**Core Concepts:**
-
-- `references/kanban-as-truth.md` -- Why Kanban is single source of truth
-- `references/board-column-semantics.md` -- Column meanings and requirements
-- `references/issue-to-module-mapping.md` -- Module-to-issue 1:1 mapping
-- `references/status-transitions.md` -- Valid state transitions matrix
-
-**Workflows:**
-
-- `references/agent-assignment-via-board.md` -- Assignment via issue assignees
-- `references/blocking-workflow.md` -- Handling blocked items
-- `references/ai-agent-vs-human-workflow.md` -- AI vs human workflow differences
-- `references/proactive-kanban-monitoring.md` -- Board polling and change detection
-
-**Integration:**
-
-- `references/integration-points.md` -- Planning, orchestration, stop hooks, PRs
-- `references/stop-hook-integration.md` -- Stop hook completion checks
-- `references/instruction-templates.md` -- Message and assignment templates
-- `references/failure-scenarios.md` -- Failure handling and recovery
-
-**Operations:**
-
-- `references/board-queries.md` -- GraphQL queries for board state
-- `references/troubleshooting.md` -- Common issues and solutions
-- `references/detailed-guide.md` -- Full board columns, error handling, command integration details
+See `references/` directory for all reference documents.
 
 ## Error Handling
 
-If a script fails, check the exit code and stderr output. Common issues:
-
-- **Exit 1**: Invalid parameters or missing arguments
-- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
-
-See `references/detailed-guide.md` for detailed error scenarios.
+Check exit code and stderr: 1=invalid params, 2-4=GitHub API errors. See `references/detailed-guide.md`.
 
 ## Resources
 
-- `references/agent-assignment-via-board.md`
-- `references/ai-agent-vs-human-workflow-part1-fundamentals.md`
-- `references/ai-agent-vs-human-workflow-part2-workflows.md`
-- `references/ai-agent-vs-human-workflow.md`
-- `references/blocking-workflow.md`
-- `references/board-column-semantics.md`
-- `references/board-queries-part1-basic.md`
-- `references/board-queries-part2-filtered.md`
-- ...and 22 more in `references/`
+See `references/` directory (30+ documents covering all workflows and operations).
 
 ## Examples
 
