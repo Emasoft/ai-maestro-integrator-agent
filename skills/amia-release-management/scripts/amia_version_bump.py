@@ -36,7 +36,6 @@ Exit codes (standardized):
 
 import argparse
 import glob
-import json
 import os
 import re
 import sys
