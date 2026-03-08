@@ -142,7 +142,7 @@ def compute_stats(issues: list[dict], prs: list[dict], days: int) -> dict:
     closed_prs = sum(1 for p in prs if p["state"] == "CLOSED")
 
     # Issues by label
-    label_counter = Counter()
+    label_counter: Counter[str] = Counter()
     for issue in issues:
         for label in issue.get("labels", []):
             label_name = label.get("name", "") if isinstance(label, dict) else str(label)
