@@ -1,10 +1,6 @@
 # Creating Worktrees: Environment Setup
 
-## Overview
-
-After creating a worktree, it needs to be configured before you can work in it. This document covers all 7 steps of environment setup.
-
-## Table of Contents
+## Contents
 
 1. [STEP 1: Navigate to Worktree](#step-1-navigate-to-worktree)
 2. [STEP 2: Install Dependencies](#step-2-install-dependencies)
@@ -15,6 +11,11 @@ After creating a worktree, it needs to be configured before you can work in it. 
 7. [STEP 7: Start Services](#step-7-start-services)
 
 ---
+
+## Overview
+
+After creating a worktree, it needs to be configured before you can work in it. This document covers all 7 steps of environment setup.
+
 
 ## STEP 1: Navigate to Worktree
 

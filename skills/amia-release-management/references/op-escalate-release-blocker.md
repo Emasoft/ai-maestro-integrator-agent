@@ -1,10 +1,3 @@
----
-name: op-escalate-release-blocker
-description: "Escalate a release-blocking issue to the orchestrator or user"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Escalate Release Blocker
 
 ## Contents

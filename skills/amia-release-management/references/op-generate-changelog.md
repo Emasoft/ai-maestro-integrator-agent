@@ -1,10 +1,3 @@
----
-name: op-generate-changelog
-description: "Generate changelog from commit history since last release"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Generate Changelog
 
 ## Contents

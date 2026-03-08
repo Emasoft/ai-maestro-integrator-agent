@@ -1,10 +1,6 @@
 # Removing Worktrees - Complete Index
 
-This document provides a complete table of contents for all worktree removal documentation, split across three parts for efficient progressive disclosure.
-
----
-
-## Table of Contents
+## Contents
 
 - [Quick Navigation](#quick-navigation)
 - [Part 1: Preparation and Basic Commands](#part-1-preparation-and-basic-commands)
@@ -17,6 +13,11 @@ This document provides a complete table of contents for all worktree removal doc
 - [Related Documentation](#related-documentation)
 
 ---
+
+This document provides a complete table of contents for all worktree removal documentation, split across three parts for efficient progressive disclosure.
+
+---
+
 
 ## Quick Navigation
 

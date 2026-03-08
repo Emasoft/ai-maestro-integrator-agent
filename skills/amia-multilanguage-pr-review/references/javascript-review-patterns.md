@@ -1,10 +1,6 @@
 # JavaScript/TypeScript Review Patterns Reference
 
-This is the index file for JavaScript/TypeScript code review patterns. Content is split into multiple parts for efficient loading.
-
----
-
-## Table of Contents
+## Contents
 
 ### Part 1: Style, Types, and Modules
 
@@ -49,6 +45,11 @@ This is the index file for JavaScript/TypeScript code review patterns. Content i
   - 3.5.5 Linting review checklist
 
 ---
+
+This is the index file for JavaScript/TypeScript code review patterns. Content is split into multiple parts for efficient loading.
+
+---
+
 
 ## Quick Reference: When to Read Each Part
 

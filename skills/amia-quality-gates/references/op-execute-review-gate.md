@@ -1,10 +1,3 @@
----
-name: op-execute-review-gate
-description: Execute Review Gate checks (8-dimension analysis, 80% confidence)
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Execute Review Gate
 
 ## Contents

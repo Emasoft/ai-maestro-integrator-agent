@@ -1,18 +1,19 @@
 # Issue Templates Part 1: Bug Report Templates
 
-This document covers the structure and format for creating effective bug reports.
-
-Back to index: [issue-templates.md](issue-templates.md)
-
----
-
-## Table of Contents
+## Contents
 
 - 2.1.1 Required sections (description, steps, expected/actual behavior)
 - 2.1.2 Environment information (web, CLI, mobile formats)
 - 2.1.3 Reproduction steps format (numbered steps, prerequisites)
 
 ---
+
+This document covers the structure and format for creating effective bug reports.
+
+Back to index: [issue-templates.md](issue-templates.md)
+
+---
+
 
 ## 2.1 Bug Report Template
 

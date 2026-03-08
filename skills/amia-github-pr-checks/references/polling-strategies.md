@@ -1,7 +1,5 @@
 # Polling Strategies for GitHub PR Checks
 
-This document provides guidance on efficiently polling for GitHub PR check completion, implementing proper backoff strategies, handling timeouts, and dealing with partial success scenarios.
-
 ## Contents
 
 - 1. When to Poll for Check Completion
@@ -22,6 +20,9 @@ This document provides guidance on efficiently polling for GitHub PR check compl
   - 4.3 Determining merge readiness with failures
 
 ---
+
+This document provides guidance on efficiently polling for GitHub PR check completion, implementing proper backoff strategies, handling timeouts, and dealing with partial success scenarios.
+
 
 ## 1. When to Poll for Check Completion
 

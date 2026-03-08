@@ -1,10 +1,3 @@
----
-name: op-determine-version
-description: "Determine the next version number based on change scope and semantic versioning"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Determine Version
 
 ## Contents

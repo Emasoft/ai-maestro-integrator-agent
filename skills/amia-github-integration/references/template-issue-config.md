@@ -1,8 +1,3 @@
----
-name: template-issue-config
-description: "Issue template chooser configuration that disables blank issues and redirects to structured forms."
----
-
 # Issue Template Chooser Configuration
 
 ## Table of Contents

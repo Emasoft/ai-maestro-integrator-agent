@@ -1,10 +1,3 @@
----
-name: op-get-pr-check-status
-description: Get current status of all PR checks
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Get PR Check Status
 
 ## Contents

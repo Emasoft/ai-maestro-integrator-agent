@@ -1,12 +1,6 @@
 # Documentation Analysis Review
 
-## Purpose
-
-Ensure code is properly documented with clear, accurate, and maintainable documentation that helps developers understand and use the code effectively.
-
----
-
-## Table of Contents
+## Contents
 
 ### When to Use This Document
 
@@ -22,6 +16,13 @@ Ensure code is properly documented with clear, accurate, and maintainable docume
 - When scoring documentation quality → See [Part 3: Scoring and Practices](./documentation-analysis-part3-scoring-and-practices.md)
 
 ---
+
+## Purpose
+
+Ensure code is properly documented with clear, accurate, and maintainable documentation that helps developers understand and use the code effectively.
+
+---
+
 
 ## Document Structure
 

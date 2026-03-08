@@ -1,5 +1,14 @@
 # Rust Clippy Lints Reference
 
+## Contents
+
+- [4.4 Clippy Lints and Configuration](#44-clippy-lints-and-configuration)
+  - [Clippy Configuration](#clippy-configuration)
+  - [Running Clippy](#running-clippy)
+  - [Important Clippy Lints](#important-clippy-lints)
+  - [Clippy Attributes](#clippy-attributes)
+  - [Clippy Review Checklist](#clippy-review-checklist)
+
 ## 4.4 Clippy Lints and Configuration
 
 Clippy is Rust's official linter with hundreds of lints.

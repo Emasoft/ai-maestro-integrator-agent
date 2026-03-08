@@ -1,8 +1,3 @@
----
-name: pre-push-vs-pre-commit
-description: "Why pre-push hooks are preferred over pre-commit hooks for development workflow efficiency."
----
-
 # Pre-Push vs Pre-Commit Hook Strategy
 
 ## Table of Contents

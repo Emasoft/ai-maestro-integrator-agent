@@ -1,8 +1,3 @@
----
-name: quality-gate-changelog
-description: "Verify changelog is updated for version bumps before approving a PR through pre-merge gate."
----
-
 # Changelog Verification for Quality Gates
 
 ## Table of Contents

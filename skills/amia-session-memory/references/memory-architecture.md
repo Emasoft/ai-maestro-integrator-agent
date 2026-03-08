@@ -1,5 +1,20 @@
 # Memory Architecture
 
+## Contents
+
+- [Storage Locations](#storage-locations)
+  - [PR Comments](#pr-comments)
+  - [Issue Comments](#issue-comments)
+  - [Handoff Documents](#handoff-documents)
+- [Memory File Structure](#memory-file-structure)
+- [Current State](#current-state)
+- [Context](#context)
+- [Next Steps](#next-steps)
+- [Data Persistence Patterns](#data-persistence-patterns)
+  - [Write-Through](#write-through)
+  - [Read-On-Demand](#read-on-demand)
+- [Retention Policy](#retention-policy)
+
 ## Storage Locations
 
 AMIA session memory is stored in **three persistent locations**:

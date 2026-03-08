@@ -1,10 +1,3 @@
----
-name: op-rollback-bad-merge
-description: Rollback a merge that introduced issues to the target branch
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Rollback Bad Merge
 
 ## Contents

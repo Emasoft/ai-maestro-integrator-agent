@@ -1,11 +1,6 @@
 # Parallel PR Workflow - Part 3: Concurrent Operations and Example Workflow
 
-This document covers:
-
-- Handling concurrent git operation limitations
-- Complete example workflow for processing 3 PRs in parallel
-
-## Table of Contents
+## Contents
 
 - [2.5 Handling Concurrent Git Operation Limitations](#25-handling-concurrent-git-operation-limitations)
   - [The Concurrency Problem](#the-concurrency-problem)
@@ -21,6 +16,12 @@ This document covers:
   - [Cleanup Phase](#cleanup-phase)
 
 ---
+
+This document covers:
+
+- Handling concurrent git operation limitations
+- Complete example workflow for processing 3 PRs in parallel
+
 
 ## 2.5 Handling Concurrent Git Operation Limitations
 

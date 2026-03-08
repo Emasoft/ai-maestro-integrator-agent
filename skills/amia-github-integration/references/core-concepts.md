@@ -1,13 +1,6 @@
 # Core Concepts
 
-## Use-Case TOC
-
-- When you need to understand GitHub Projects V2 → [What is GitHub Projects V2](#what-is-github-projects-v2)
-- When you need to understand the label system → [The 9-Label System](#the-9-label-system)
-- When you need to understand synchronization → [Bidirectional Synchronization](#bidirectional-synchronization)
-- When choosing which label to use → [Label Selection Guide](#label-selection-guide)
-
-## Table of Contents
+## Contents
 
 - [What is GitHub Projects V2](#what-is-github-projects-v2)
   - [Projects V2 vs Legacy Projects](#projects-v2-vs-legacy-projects)
@@ -29,6 +22,14 @@
   - [For Synchronization](#for-synchronization)
 
 ---
+
+## Use-Case TOC
+
+- When you need to understand GitHub Projects V2 → [What is GitHub Projects V2](#what-is-github-projects-v2)
+- When you need to understand the label system → [The 9-Label System](#the-9-label-system)
+- When you need to understand synchronization → [Bidirectional Synchronization](#bidirectional-synchronization)
+- When choosing which label to use → [Label Selection Guide](#label-selection-guide)
+
 
 ## What is GitHub Projects V2
 

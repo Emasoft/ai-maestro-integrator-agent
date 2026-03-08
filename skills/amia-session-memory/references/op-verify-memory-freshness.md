@@ -1,10 +1,3 @@
----
-name: op-verify-memory-freshness
-description: "Check timestamps and compare memory state with current GitHub state"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Verify Memory Freshness
 
 ## Contents

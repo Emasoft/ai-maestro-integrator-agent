@@ -1,8 +1,3 @@
----
-name: ci-pr-auto-labeling
-description: "How to automatically label pull requests by type (from commit prefix), area (from file paths), and size (from lines changed)."
----
-
 # CI PR Auto-Labeling
 
 ## Table of Contents

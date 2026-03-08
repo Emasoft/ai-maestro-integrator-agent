@@ -1,13 +1,6 @@
 # Prerequisites and Setup
 
-## Use-Case TOC
-
-- When you need to authenticate GitHub CLI → [GitHub CLI Authentication](#github-cli-authentication)
-- When you need to verify authentication status → [Verify Authentication](#verify-authentication)
-- If authentication fails or is expired → [Re-authentication](#re-authentication)
-- When setting up a new machine or environment → [Initial Setup Requirements](#initial-setup-requirements)
-
-## Table of Contents
+## Contents
 
 - [Initial Setup Requirements](#initial-setup-requirements)
   - [Installing GitHub CLI](#installing-github-cli)
@@ -28,6 +21,14 @@
 - [Next Steps](#next-steps)
 
 ---
+
+## Use-Case TOC
+
+- When you need to authenticate GitHub CLI → [GitHub CLI Authentication](#github-cli-authentication)
+- When you need to verify authentication status → [Verify Authentication](#verify-authentication)
+- If authentication fails or is expired → [Re-authentication](#re-authentication)
+- When setting up a new machine or environment → [Initial Setup Requirements](#initial-setup-requirements)
+
 
 ## Initial Setup Requirements
 

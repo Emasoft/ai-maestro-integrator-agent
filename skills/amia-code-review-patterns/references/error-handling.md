@@ -1,8 +1,3 @@
----
-name: "Error Handling in Code Reviews"
-description: "Common error patterns, anti-patterns, and best practices for reviewing error handling code"
----
-
 # Error Handling in Code Reviews
 
 ## Table of Contents

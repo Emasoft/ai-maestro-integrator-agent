@@ -1,10 +1,3 @@
----
-name: op-approve-and-merge
-description: Operation procedure for approving a PR and preparing for merge.
-workflow-instruction: "support"
-procedure: "support-skill"
----
-
 # Operation: Approve and Merge
 
 ## Contents

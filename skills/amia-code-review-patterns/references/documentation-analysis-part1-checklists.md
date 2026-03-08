@@ -1,5 +1,17 @@
 # Documentation Analysis: Verification Checklists
 
+## Contents
+
+- [Verification Checklist](#verification-checklist)
+  - [Code Documentation](#code-documentation)
+  - [Docstring Quality](#docstring-quality)
+  - [API Documentation](#api-documentation)
+  - [Architecture Documentation](#architecture-documentation)
+  - [Code Comments](#code-comments)
+  - [README](#readme)
+  - [Configuration Documentation](#configuration-documentation)
+  - [Error Messages](#error-messages)
+
 This document contains all verification checklists for documentation review.
 
 **Parent document**: [documentation-analysis.md](./documentation-analysis.md)

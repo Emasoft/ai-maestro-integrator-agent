@@ -1,10 +1,3 @@
----
-name: op-apply-gate-label
-description: Apply appropriate gate status label to PR
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Apply Gate Label
 
 ## Contents

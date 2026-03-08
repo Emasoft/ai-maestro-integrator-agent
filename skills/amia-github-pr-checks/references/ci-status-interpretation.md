@@ -1,7 +1,5 @@
 # CI Status Interpretation Guide
 
-This document provides detailed guidance on interpreting GitHub Pull Request check statuses, understanding the difference between check types, and handling results from various CI providers.
-
 ## Contents
 
 - 1. Understanding GitHub Check Conclusions
@@ -23,6 +21,9 @@ This document provides detailed guidance on interpreting GitHub Pull Request che
   - 4.4 Third-party status checks
 
 ---
+
+This document provides detailed guidance on interpreting GitHub Pull Request check statuses, understanding the difference between check types, and handling results from various CI providers.
+
 
 ## 1. Understanding GitHub Check Conclusions
 

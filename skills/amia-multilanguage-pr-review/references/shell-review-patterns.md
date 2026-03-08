@@ -1,12 +1,6 @@
 # Shell Script Review Patterns Reference
 
-## Overview
-
-This reference covers shell script code review patterns, including Bash best practices, POSIX compatibility, ShellCheck integration, and cross-platform considerations.
-
----
-
-## Table of Contents
+## Contents
 
 ### Part 1: Bash/Shell Script Review Checklist
 
@@ -65,6 +59,13 @@ This reference covers shell script code review patterns, including Bash best pra
   - 6.4.8 Cross-platform review checklist
 
 ---
+
+## Overview
+
+This reference covers shell script code review patterns, including Bash best practices, POSIX compatibility, ShellCheck integration, and cross-platform considerations.
+
+---
+
 
 ## Quick Reference
 

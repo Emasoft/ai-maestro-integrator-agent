@@ -1,10 +1,3 @@
----
-name: release-workflow-chain
-description: "Two-workflow release pipeline pattern: prepare-release detects version bump and creates tag, release builds and publishes"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Release Workflow Chain
 
 ## Contents

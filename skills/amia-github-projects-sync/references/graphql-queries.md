@@ -1,20 +1,4 @@
----
-title: GraphQL Queries for GitHub Projects
-category: reference
-parent: github-projects-sync
-related:
-  - graphql-queries-index.md
-  - graphql-queries-part1-read-operations.md
-  - graphql-queries-part2-mutations.md
----
-
-## GraphQL Queries for GitHub Projects
-
-## Overview
-
-This document provides the index to GraphQL queries for GitHub Projects V2 API operations. For detailed queries, see the linked reference files.
-
-## Table of Contents
+## Contents
 
 1. [When listing projects](#list-projects)
 2. [When getting project items](#get-items)
@@ -24,6 +8,13 @@ This document provides the index to GraphQL queries for GitHub Projects V2 API o
 6. [Detailed Query References](#detailed-query-references)
 
 ---
+
+## GraphQL Queries for GitHub Projects
+
+## Overview
+
+This document provides the index to GraphQL queries for GitHub Projects V2 API operations. For detailed queries, see the linked reference files.
+
 
 ## List Projects
 

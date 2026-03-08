@@ -1,10 +1,3 @@
----
-procedure: proc-handle-failed-pr
-workflow-instruction: "Step 22 - Handling Failed PRs"
-operation: op-run-diagnostic-script
-description: "Run amia_diagnose_ci_failure.py to identify CI failure patterns"
----
-
 # Operation: Run Diagnostic Script
 
 ## Contents

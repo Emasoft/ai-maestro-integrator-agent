@@ -1,10 +1,3 @@
----
-name: op-gate0-compliance-check
-description: Perform Gate 0 requirement compliance check before starting PR review
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Gate 0 Compliance Check
 
 ## Contents

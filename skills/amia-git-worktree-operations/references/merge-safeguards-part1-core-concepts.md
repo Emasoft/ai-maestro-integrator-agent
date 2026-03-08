@@ -1,5 +1,13 @@
 # Merge Safeguards - Part 1: Core Concepts
 
+## Contents
+
+- [Overview](#overview)
+- [Core Concepts](#core-concepts)
+  - [Merge Status States](#merge-status-states)
+  - [File Conflicts](#file-conflicts)
+  - [Merge Order Optimization](#merge-order-optimization)
+
 ## Overview
 
 When developing multiple features in parallel across git worktrees, merging them sequentially can create conflicts and integration issues. The merge safeguard system prevents these problems through:

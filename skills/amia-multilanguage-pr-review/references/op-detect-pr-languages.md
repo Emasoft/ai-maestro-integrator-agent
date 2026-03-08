@@ -1,10 +1,3 @@
----
-name: op-detect-pr-languages
-description: Detect all programming languages affected by a pull request
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Detect PR Languages
 
 ## Contents

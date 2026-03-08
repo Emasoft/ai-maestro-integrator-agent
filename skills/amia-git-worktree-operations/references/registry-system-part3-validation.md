@@ -1,5 +1,14 @@
 # Registry System - Part 3: Validation Rules
 
+## Contents
+
+- [Validation Rules](#validation-rules)
+  - [1. Unique IDs](#1-unique-ids)
+  - [2. Valid Paths](#2-valid-paths)
+  - [3. No Port Conflicts](#3-no-port-conflicts)
+  - [4. Valid Status Values](#4-valid-status-values)
+  - [5. Required Fields Present](#5-required-fields-present)
+
 ## Validation Rules
 
 All registry operations must enforce these validation rules:

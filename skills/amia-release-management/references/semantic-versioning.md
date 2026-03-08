@@ -1,9 +1,3 @@
----
-name: Semantic Versioning
-description: Complete guide to semantic versioning principles, rules, and best practices for release management
-version: 1.0.0
----
-
 # Semantic Versioning
 
 ## Table of Contents

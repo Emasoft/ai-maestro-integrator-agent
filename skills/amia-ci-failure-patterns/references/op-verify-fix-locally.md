@@ -1,10 +1,3 @@
----
-procedure: proc-handle-failed-pr
-workflow-instruction: "Step 22 - Handling Failed PRs"
-operation: op-verify-fix-locally
-description: "Verify CI fix locally before pushing to remote"
----
-
 # Operation: Verify Fix Locally
 
 ## Contents

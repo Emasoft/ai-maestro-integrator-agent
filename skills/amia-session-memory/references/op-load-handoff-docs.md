@@ -1,10 +1,3 @@
----
-name: op-load-handoff-docs
-description: "Load handoff documents from the AMIA integration directory"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Load Handoff Documents
 
 ## Contents

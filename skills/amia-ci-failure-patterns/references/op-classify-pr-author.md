@@ -1,10 +1,3 @@
----
-procedure: proc-handle-failed-pr
-workflow-instruction: "Step 22 - Handling Failed PRs"
-operation: op-classify-pr-author
-description: "Classify PR author category for automated handling decisions"
----
-
 # Operation: Classify PR Author
 
 ## Contents

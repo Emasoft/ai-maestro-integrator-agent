@@ -1,8 +1,3 @@
----
-name: "Code Review Communication Guidelines"
-description: "Best practices for communicating code review feedback effectively, constructively, and professionally"
----
-
 # Code Review Communication Guidelines
 
 ## Table of Contents

@@ -1,9 +1,3 @@
----
-name: Post-Release Verification
-description: Comprehensive procedures for monitoring, validating, and stabilizing systems after production deployment
-version: 1.0.0
----
-
 # Post-Release Verification
 
 ## Table of Contents

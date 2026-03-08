@@ -1,10 +1,3 @@
----
-name: op-request-changes
-description: Operation procedure for requesting changes on a PR after review.
-workflow-instruction: "support"
-procedure: "support-skill"
----
-
 # Operation: Request Changes
 
 ## Contents

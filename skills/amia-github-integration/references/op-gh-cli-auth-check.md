@@ -1,10 +1,3 @@
----
-name: op-gh-cli-auth-check
-description: "Verify GitHub CLI authentication status"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: GitHub CLI Authentication Check
 
 ## Contents

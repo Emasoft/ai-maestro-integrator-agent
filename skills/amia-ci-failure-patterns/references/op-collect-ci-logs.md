@@ -1,10 +1,3 @@
----
-procedure: proc-handle-failed-pr
-workflow-instruction: "Step 22 - Handling Failed PRs"
-operation: op-collect-ci-logs
-description: "Collect CI failure logs from GitHub Actions workflow run"
----
-
 # Operation: Collect CI Failure Logs
 
 ## Contents

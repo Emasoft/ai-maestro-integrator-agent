@@ -1,10 +1,3 @@
----
-name: op-quick-scan
-description: Execute Stage 1 Quick Scan for surface-level PR assessment
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Quick Scan (Stage 1)
 
 ## Contents

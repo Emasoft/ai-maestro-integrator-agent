@@ -1,10 +1,6 @@
 # Worktree Operations: Syncing with Main Branch
 
-**WHEN TO USE THIS**: When you need to incorporate the latest changes from the main branch into your worktree branch to keep it up to date and avoid large merge conflicts later.
-
----
-
-## Table of Contents
+## Contents
 
 1. [Why Sync Regularly](#why-sync-regularly)
 2. [Phase 1: Fetch Latest Main](#phase-1-fetch-latest-main)
@@ -16,6 +12,11 @@
 8. [Complete Sync Workflow Example](#complete-sync-workflow-example)
 
 ---
+
+**WHEN TO USE THIS**: When you need to incorporate the latest changes from the main branch into your worktree branch to keep it up to date and avoid large merge conflicts later.
+
+---
+
 
 ## Why Sync Regularly
 

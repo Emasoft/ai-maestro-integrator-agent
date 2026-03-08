@@ -1,10 +1,3 @@
----
-name: op-execute-rollback
-description: "Roll back to a previous version after release failure"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Execute Rollback
 
 ## Contents

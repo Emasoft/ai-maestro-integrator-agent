@@ -1,10 +1,3 @@
----
-name: op-configure-auto-merge
-description: Enable or disable auto-merge for a pull request
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Configure Auto-Merge
 
 ## Contents

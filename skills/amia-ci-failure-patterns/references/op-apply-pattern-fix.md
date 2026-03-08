@@ -1,10 +1,3 @@
----
-procedure: proc-handle-failed-pr
-workflow-instruction: "Step 22 - Handling Failed PRs"
-operation: op-apply-pattern-fix
-description: "Apply the recommended fix based on identified CI failure pattern"
----
-
 # Operation: Apply Pattern Fix
 
 ## Contents

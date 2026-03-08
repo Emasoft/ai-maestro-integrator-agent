@@ -1,18 +1,19 @@
 # Issue Templates Part 3: Task Templates
 
-This document covers the structure and format for creating effective task issues.
-
-Back to index: [issue-templates.md](issue-templates.md)
-
----
-
-## Table of Contents
+## Contents
 
 - 2.3.1 Task description format (summary, details, definition of done)
 - 2.3.2 Checklist syntax (basic, nested, with assignees)
 - 2.3.3 Dependencies section (blocked by, blocks, table format)
 
 ---
+
+This document covers the structure and format for creating effective task issues.
+
+Back to index: [issue-templates.md](issue-templates.md)
+
+---
+
 
 ## 2.3 Task Template
 

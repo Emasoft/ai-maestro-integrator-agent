@@ -1,8 +1,6 @@
 # Auto-Merge Configuration
 
-This document explains how to configure and manage GitHub's auto-merge feature, which automatically merges a pull request when all requirements are satisfied.
-
-## Table of Contents
+## Contents
 
 - 3.1 Setting up auto-merge via GraphQL API
   - 3.1.1 EnablePullRequestAutoMerge mutation
@@ -19,6 +17,9 @@ This document explains how to configure and manage GitHub's auto-merge feature, 
   - 3.4.2 Review dismissal handling
 
 ---
+
+This document explains how to configure and manage GitHub's auto-merge feature, which automatically merges a pull request when all requirements are satisfied.
+
 
 ## 3.1 Setting Up Auto-Merge via GraphQL API
 

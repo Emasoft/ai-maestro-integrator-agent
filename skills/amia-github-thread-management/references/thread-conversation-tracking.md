@@ -1,8 +1,6 @@
 # Thread Conversation Tracking
 
-This document explains how to track conversations within GitHub PR review threads, including getting thread history and finding unaddressed comments.
-
-## Table of Contents
+## Contents
 
 - 2.1 Getting thread history via GraphQL
   - 2.1.1 Query structure for review threads
@@ -18,6 +16,9 @@ This document explains how to track conversations within GitHub PR review thread
   - 2.4.2 When to consider minimized comments
 
 ---
+
+This document explains how to track conversations within GitHub PR review threads, including getting thread history and finding unaddressed comments.
+
 
 ## 2.1 Getting Thread History via GraphQL
 

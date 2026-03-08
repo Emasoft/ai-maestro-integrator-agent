@@ -1,8 +1,3 @@
----
-name: template-pull-request
-description: "Universal pull request template with AI disclosure, platform testing, and breaking changes sections."
----
-
 # Universal Pull Request Template
 
 ## Table of Contents

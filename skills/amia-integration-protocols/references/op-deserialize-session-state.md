@@ -1,10 +1,3 @@
----
-name: op-deserialize-session-state
-description: "Parse and load session state from JSON storage"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Deserialize Session State
 
 ## Contents

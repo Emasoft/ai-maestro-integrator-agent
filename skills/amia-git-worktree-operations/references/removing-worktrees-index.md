@@ -1,5 +1,16 @@
 # Removing Worktrees Index
 
+## Contents
+
+- [Overview](#overview)
+- [Removal Documentation Sections](#removal-documentation-sections)
+  - [Basics](#basics)
+  - [Post-Removal Steps](#post-removal-steps)
+  - [Advanced Removal](#advanced-removal)
+- [Quick Reference](#quick-reference)
+- [Main Document](#main-document)
+- [Related Documents](#related-documents)
+
 Quick navigation to worktree removal documentation.
 
 ## Overview

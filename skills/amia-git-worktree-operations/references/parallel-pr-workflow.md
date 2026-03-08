@@ -1,10 +1,6 @@
 # Parallel PR Workflow with Git Worktrees
 
-This document provides the complete guide for managing multiple PRs simultaneously using git worktrees, with strict isolation between agents.
-
----
-
-## Table of Contents
+## Contents
 
 ### Part 1: Creating Worktrees and Isolation
 
@@ -70,6 +66,11 @@ This document provides the complete guide for managing multiple PRs simultaneous
   - Key requirements for parallel PR workflow
 
 ---
+
+This document provides the complete guide for managing multiple PRs simultaneously using git worktrees, with strict isolation between agents.
+
+---
+
 
 ## Quick Reference
 

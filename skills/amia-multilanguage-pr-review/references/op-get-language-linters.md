@@ -1,10 +1,3 @@
----
-name: op-get-language-linters
-description: Get recommended linters and commands for detected programming languages
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Get Language Linters
 
 ## Contents

@@ -1,10 +1,3 @@
----
-name: op-verify-release-readiness
-description: "Run pre-release verification checklist to confirm release readiness"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Verify Release Readiness
 
 ## Contents

@@ -1,10 +1,3 @@
----
-name: op-implement-minimum-code
-description: GREEN phase - Write minimum code to make the failing test pass
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Implement Minimum Code (GREEN Phase)
 
 ## Contents

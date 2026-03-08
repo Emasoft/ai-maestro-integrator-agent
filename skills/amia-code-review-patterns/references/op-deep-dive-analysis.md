@@ -1,10 +1,3 @@
----
-name: op-deep-dive-analysis
-description: Execute Stage 2 Deep Dive with 8-dimension analysis
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Deep Dive Analysis (Stage 2)
 
 ## Contents

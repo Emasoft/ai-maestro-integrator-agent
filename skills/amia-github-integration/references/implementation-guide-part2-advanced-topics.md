@@ -1,17 +1,6 @@
 # Implementation Guide Part 2: Advanced Topics
 
-## Use-Case TOC
-
-- When you need to onboard your team → [Team Onboarding](#team-onboarding)
-- When you need multi-repo projects → [Multi-Repository Projects](#multi-repository-projects)
-- When you need custom GitHub Actions → [Custom GitHub Actions Workflows](#custom-github-actions-workflows)
-- When you need advanced GraphQL queries → [Advanced GraphQL Queries](#advanced-graphql-queries)
-- When you need real-time webhooks → [Real-time Webhooks](#real-time-webhooks)
-- When you need CI/CD integration → [CI/CD Integration](#cicd-integration)
-- When you need to measure success → [Success Metrics](#success-metrics)
-- For basic workflow setup → See [implementation-guide-part1-basic-workflow.md](implementation-guide-part1-basic-workflow.md)
-
-## Table of Contents
+## Contents
 
 - [Team Onboarding](#team-onboarding)
   - [Onboarding New Team Members](#onboarding-new-team-members)
@@ -29,6 +18,18 @@
   - [Team Satisfaction](#team-satisfaction)
 
 ---
+
+## Use-Case TOC
+
+- When you need to onboard your team → [Team Onboarding](#team-onboarding)
+- When you need multi-repo projects → [Multi-Repository Projects](#multi-repository-projects)
+- When you need custom GitHub Actions → [Custom GitHub Actions Workflows](#custom-github-actions-workflows)
+- When you need advanced GraphQL queries → [Advanced GraphQL Queries](#advanced-graphql-queries)
+- When you need real-time webhooks → [Real-time Webhooks](#real-time-webhooks)
+- When you need CI/CD integration → [CI/CD Integration](#cicd-integration)
+- When you need to measure success → [Success Metrics](#success-metrics)
+- For basic workflow setup → See [implementation-guide-part1-basic-workflow.md](implementation-guide-part1-basic-workflow.md)
+
 
 ## Team Onboarding
 

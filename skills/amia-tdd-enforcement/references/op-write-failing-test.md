@@ -1,10 +1,3 @@
----
-name: op-write-failing-test
-description: RED phase - Write a failing test before implementing any production code
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Write Failing Test (RED Phase)
 
 ## Contents

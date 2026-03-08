@@ -1,8 +1,6 @@
 # Implementation Guide Part 3: Advanced Implementation Topics
 
-For teams ready to go beyond basic implementation, these advanced topics extend the GitHub integration capabilities. These features are optional and should only be implemented after mastering the basic workflow.
-
-## Table of Contents
+## Contents
 
 - [Multi-Repository Projects](#multi-repository-projects)
 - [Custom GitHub Actions Workflows](#custom-github-actions-workflows)
@@ -26,6 +24,9 @@ For teams ready to go beyond basic implementation, these advanced topics extend 
   - [Team Satisfaction](#team-satisfaction)
 
 ---
+
+For teams ready to go beyond basic implementation, these advanced topics extend the GitHub integration capabilities. These features are optional and should only be implemented after mastering the basic workflow.
+
 
 ## Multi-Repository Projects
 

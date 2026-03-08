@@ -1,10 +1,3 @@
----
-procedure: proc-handle-failed-pr
-workflow-instruction: "Step 22 - Handling Failed PRs"
-operation: op-identify-failure-pattern
-description: "Use decision tree to manually identify CI failure pattern category"
----
-
 # Operation: Identify Failure Pattern
 
 ## Contents

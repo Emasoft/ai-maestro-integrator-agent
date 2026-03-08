@@ -1,10 +1,6 @@
 # Cross-Platform Testing Reference
 
-This reference covers comprehensive strategies for testing applications across multiple operating systems, architectures, and runtime environments.
-
----
-
-## Table of Contents
+## Contents
 
 ### Part 1: Testing on Multiple Operating Systems
 
@@ -46,6 +42,11 @@ This reference covers comprehensive strategies for testing applications across m
 - 7.4.6 Docker testing checklist
 
 ---
+
+This reference covers comprehensive strategies for testing applications across multiple operating systems, architectures, and runtime environments.
+
+---
+
 
 ## Quick Reference
 

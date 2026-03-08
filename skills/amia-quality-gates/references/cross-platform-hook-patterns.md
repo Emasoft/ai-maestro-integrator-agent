@@ -1,8 +1,3 @@
----
-name: cross-platform-hook-patterns
-description: "Patterns for writing git hooks that work correctly on Linux, macOS, and Windows (Git Bash)."
----
-
 # Cross-Platform Hook Patterns
 
 ## Table of Contents

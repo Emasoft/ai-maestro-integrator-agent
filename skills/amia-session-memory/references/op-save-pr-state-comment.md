@@ -1,10 +1,3 @@
----
-name: op-save-pr-state-comment
-description: "Post session state as a comment on a GitHub PR"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Save PR State Comment
 
 ## Contents

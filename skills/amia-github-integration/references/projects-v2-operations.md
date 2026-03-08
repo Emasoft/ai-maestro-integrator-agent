@@ -1,15 +1,6 @@
 # GitHub Projects V2 Operations
 
-## Use-Case TOC
-
-- When you need to create a new project board → [Creating Projects V2 Board](#creating-projects-v2-board)
-- When you need to add issues to a project → [Adding Issues to Projects](#adding-issues-to-projects)
-- When you need to update issue status → [Updating Issue Status](#updating-issue-status)
-- When you need to configure project fields → [Configuring Custom Fields](#configuring-custom-fields)
-- When you need to set up automation → [Setting Up Automation Rules](#setting-up-automation-rules)
-- When you need to sync agent tasks with GitHub → [Bidirectional Sync Workflow](#bidirectional-sync-workflow)
-
-## Table of Contents
+## Contents
 
 - [Creating Projects V2 Board](#creating-projects-v2-board)
   - [Create New Project](#create-new-project)
@@ -39,6 +30,16 @@
   - [Monitoring Sync Health](#monitoring-sync-health)
   - [Conflict Resolution](#conflict-resolution)
 - [Best Practices](#best-practices)
+
+## Use-Case TOC
+
+- When you need to create a new project board → [Creating Projects V2 Board](#creating-projects-v2-board)
+- When you need to add issues to a project → [Adding Issues to Projects](#adding-issues-to-projects)
+- When you need to update issue status → [Updating Issue Status](#updating-issue-status)
+- When you need to configure project fields → [Configuring Custom Fields](#configuring-custom-fields)
+- When you need to set up automation → [Setting Up Automation Rules](#setting-up-automation-rules)
+- When you need to sync agent tasks with GitHub → [Bidirectional Sync Workflow](#bidirectional-sync-workflow)
+
 
 ## Creating Projects V2 Board
 

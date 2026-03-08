@@ -1,10 +1,3 @@
----
-name: git-cliff-integration
-description: "Configure and use git-cliff for automated changelog generation from conventional commits"
-procedure: support-skill
-workflow-instruction: support
----
-
 # git-cliff Integration
 
 ## Contents

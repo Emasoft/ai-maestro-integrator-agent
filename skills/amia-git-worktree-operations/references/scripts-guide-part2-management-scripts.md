@@ -1,16 +1,6 @@
 # Worktree Automation Scripts Guide - Part 2: Management Scripts
 
-**Related Documents:**
-
-- [Main Index](scripts-guide.md)
-- [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
-- [Part 3: Port Scripts](scripts-guide-part3-port-scripts.md)
-- [Part 4: Common Workflows](scripts-guide-part4-workflows.md)
-- [Part 5: Troubleshooting](scripts-guide-part5-troubleshooting.md)
-
----
-
-## Table of Contents
+## Contents
 
 - [Script Reference: Management Scripts](#script-reference-management-scripts)
   - [worktree_remove.py](#worktree_removepy)
@@ -30,6 +20,17 @@
     - [Exit Codes](#exit-codes-1)
 
 ---
+
+**Related Documents:**
+
+- [Main Index](scripts-guide.md)
+- [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
+- [Part 3: Port Scripts](scripts-guide-part3-port-scripts.md)
+- [Part 4: Common Workflows](scripts-guide-part4-workflows.md)
+- [Part 5: Troubleshooting](scripts-guide-part5-troubleshooting.md)
+
+---
+
 
 ## Script Reference: Management Scripts
 

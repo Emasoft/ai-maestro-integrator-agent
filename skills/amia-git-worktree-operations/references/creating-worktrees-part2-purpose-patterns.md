@@ -1,10 +1,6 @@
 # Creating Worktrees: Purpose-Specific Patterns
 
-## Overview
-
-Different types of worktrees have specific creation patterns optimized for their use case. This document covers the four main worktree types.
-
-## Table of Contents
+## Contents
 
 1. [Review Worktrees](#review-worktrees) - For reviewing Pull Requests
 2. [Feature Worktrees](#feature-worktrees) - For developing new features
@@ -12,6 +8,11 @@ Different types of worktrees have specific creation patterns optimized for their
 4. [Testing Worktrees](#testing-worktrees) - For extensive tests and experiments
 
 ---
+
+## Overview
+
+Different types of worktrees have specific creation patterns optimized for their use case. This document covers the four main worktree types.
+
 
 ## Review Worktrees
 

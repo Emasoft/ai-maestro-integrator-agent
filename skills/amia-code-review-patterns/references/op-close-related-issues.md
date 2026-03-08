@@ -1,10 +1,3 @@
----
-name: op-close-related-issues
-description: Close GitHub issues linked to a merged PR
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Close Related Issues
 
 ## Contents

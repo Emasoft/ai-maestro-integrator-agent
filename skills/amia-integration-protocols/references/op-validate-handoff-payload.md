@@ -1,10 +1,3 @@
----
-name: op-validate-handoff-payload
-description: "Validate structure and content of an agent handoff payload"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Validate Handoff Payload
 
 ## Contents

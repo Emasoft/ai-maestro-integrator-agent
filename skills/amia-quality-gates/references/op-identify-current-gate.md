@@ -1,10 +1,3 @@
----
-name: op-identify-current-gate
-description: Identify the current quality gate by checking PR labels
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Identify Current Gate
 
 ## Contents

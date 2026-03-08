@@ -1,16 +1,6 @@
 # Worktree Automation Scripts Guide - Part 3: Port Scripts
 
-**Related Documents:**
-
-- [Main Index](scripts-guide.md)
-- [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
-- [Part 2: Management Scripts](scripts-guide-part2-management-scripts.md)
-- [Part 4: Common Workflows](scripts-guide-part4-workflows.md)
-- [Part 5: Troubleshooting](scripts-guide-part5-troubleshooting.md)
-
----
-
-## Table of Contents
+## Contents
 
 - [Script Reference: Port Scripts](#script-reference-port-scripts)
   - [port_allocate.py](#port_allocatepy)
@@ -30,6 +20,17 @@
     - [Exit Codes](#exit-codes-1)
 
 ---
+
+**Related Documents:**
+
+- [Main Index](scripts-guide.md)
+- [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
+- [Part 2: Management Scripts](scripts-guide-part2-management-scripts.md)
+- [Part 4: Common Workflows](scripts-guide-part4-workflows.md)
+- [Part 5: Troubleshooting](scripts-guide-part5-troubleshooting.md)
+
+---
+
 
 ## Script Reference: Port Scripts
 

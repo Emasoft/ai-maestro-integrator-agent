@@ -1,10 +1,3 @@
----
-name: op-verify-tdd-compliance
-description: Verify that a PR or commit history follows TDD discipline
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Verify TDD Compliance
 
 ## Contents

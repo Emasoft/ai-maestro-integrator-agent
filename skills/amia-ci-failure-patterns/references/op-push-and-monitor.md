@@ -1,10 +1,3 @@
----
-procedure: proc-handle-failed-pr
-workflow-instruction: "Step 22 - Handling Failed PRs"
-operation: op-push-and-monitor
-description: "Push CI fix and monitor workflow run to confirm resolution"
----
-
 # Operation: Push and Monitor
 
 ## Contents

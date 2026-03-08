@@ -1,18 +1,19 @@
 # Issue Templates Part 4: Programmatic Template Population
 
-This document covers how to populate issue templates programmatically using variable substitution and dynamic content injection.
-
-Back to index: [issue-templates.md](issue-templates.md)
-
----
-
-## Table of Contents
+## Contents
 
 - 2.4.1 Variable substitution (placeholder syntax, Python substitution)
 - 2.4.2 Dynamic content injection (system info, git info)
 - 2.4.3 Template selection logic (type detection, combining selection with population)
 
 ---
+
+This document covers how to populate issue templates programmatically using variable substitution and dynamic content injection.
+
+Back to index: [issue-templates.md](issue-templates.md)
+
+---
+
 
 ## 2.4 Populating Templates Programmatically
 

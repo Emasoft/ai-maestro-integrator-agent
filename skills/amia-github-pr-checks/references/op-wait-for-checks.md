@@ -1,10 +1,3 @@
----
-name: op-wait-for-checks
-description: Wait for PR checks to complete with polling
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Wait for Checks
 
 ## Contents

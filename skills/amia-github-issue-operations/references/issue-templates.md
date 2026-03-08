@@ -1,10 +1,6 @@
 # Issue Templates Reference
 
-This document provides templates for creating different types of GitHub issues: bug reports, feature requests, and tasks. It also covers programmatic template population.
-
----
-
-## Table of Contents
+## Contents
 
 ### Part 1: Bug Report Templates
 
@@ -43,6 +39,11 @@ See [issue-templates-part4-programmatic.md](issue-templates-part4-programmatic.m
   - 2.4.3 Template selection logic (type detection, combining selection with population)
 
 ---
+
+This document provides templates for creating different types of GitHub issues: bug reports, feature requests, and tasks. It also covers programmatic template population.
+
+---
+
 
 ## Quick Reference
 

@@ -1,10 +1,3 @@
----
-name: op-review-cross-language
-description: Review cross-language interfaces and dependencies in a PR
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Review Cross-Language Interfaces
 
 ## Contents

@@ -1,5 +1,14 @@
 # Go Linting Tools Reference
 
+## Contents
+
+- [5.5 Linting with golint, go vet, and staticcheck](#55-linting-with-golint-go-vet-and-staticcheck)
+  - [go vet (Built-in)](#go-vet-built-in)
+  - [staticcheck (Recommended)](#staticcheck-recommended)
+  - [Common staticcheck Checks](#common-staticcheck-checks)
+  - [golangci-lint (All-in-One)](#golangci-lint-all-in-one)
+  - [Linting Checklist](#linting-checklist)
+
 ## 5.5 Linting with golint, go vet, and staticcheck
 
 ### go vet (Built-in)

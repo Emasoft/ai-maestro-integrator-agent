@@ -1,10 +1,3 @@
----
-name: op-execute-pre-review-gate
-description: Execute Pre-Review Gate checks (tests, linting, build)
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Execute Pre-Review Gate
 
 ## Contents

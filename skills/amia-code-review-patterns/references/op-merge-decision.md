@@ -1,10 +1,3 @@
----
-name: op-merge-decision
-description: Execute merge or reject decision based on review results
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Merge Decision Execution
 
 ## Contents

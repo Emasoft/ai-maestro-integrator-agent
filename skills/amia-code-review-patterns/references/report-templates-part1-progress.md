@@ -1,5 +1,21 @@
 # Progress Report Template
 
+## Contents
+
+- [Template](#template)
+- [Executive Summary](#executive-summary)
+- [Metrics Overview](#metrics-overview)
+- [Task Status](#task-status)
+  - [Completed (X)](#completed-x)
+  - [In Progress (Y)](#in-progress-y)
+  - [Pending (Z)](#pending-z)
+  - [Blocked (W)](#blocked-w)
+- [Milestones](#milestones)
+- [Recommendations](#recommendations)
+- [Next Actions](#next-actions)
+- [Field Definitions](#field-definitions)
+- [Status Icons](#status-icons)
+
 Template for tracking task and milestone progress over a reporting period.
 
 ---

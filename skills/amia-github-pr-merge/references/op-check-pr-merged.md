@@ -1,11 +1,19 @@
----
-name: op-check-pr-merged
-description: Check if a pull request is already merged using GraphQL API
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Check if PR is Merged
+
+## Contents
+
+- [Purpose](#purpose)
+- [When to Use](#when-to-use)
+- [Prerequisites](#prerequisites)
+- [Input](#input)
+- [Output](#output)
+- [Exit Codes](#exit-codes)
+- [Procedure](#procedure)
+- [Command](#command)
+- [Example](#example)
+- [Critical Note](#critical-note)
+- [Error Handling](#error-handling)
+- [Related Operations](#related-operations)
 
 ## Purpose
 

@@ -1,10 +1,3 @@
----
-name: op-document-failure
-description: Document gate failure reasons in PR comments
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Document Gate Failure
 
 ## Contents

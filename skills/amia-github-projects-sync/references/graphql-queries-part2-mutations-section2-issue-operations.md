@@ -1,12 +1,6 @@
 # Issue Operations for GitHub Projects V2
 
-This section covers GraphQL queries and mutations for working with GitHub issues.
-
-**Parent document**: [graphql-queries-part2-mutations.md](./graphql-queries-part2-mutations.md)
-
----
-
-## Table of Contents
+## Contents
 
 - 2.1 [Get Issue Node ID](#get-issue-node-id)
 - 2.2 [Create Issue](#create-issue)
@@ -17,6 +11,13 @@ This section covers GraphQL queries and mutations for working with GitHub issues
 - 2.7 [Assign User to Issue](#assign-user-to-issue)
 
 ---
+
+This section covers GraphQL queries and mutations for working with GitHub issues.
+
+**Parent document**: [graphql-queries-part2-mutations.md](./graphql-queries-part2-mutations.md)
+
+---
+
 
 ## Get Issue Node ID
 

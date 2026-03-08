@@ -1,10 +1,3 @@
----
-name: op-validate-changelog-gate
-description: "Validate that CHANGELOG.md has an entry for a given version before allowing release"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Validate Changelog Gate
 
 ## Contents

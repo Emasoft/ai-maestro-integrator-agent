@@ -1,9 +1,3 @@
----
-name: Pre-Release Verification
-description: Comprehensive checklist and procedures for verifying release readiness before production deployment
-version: 1.0.0
----
-
 # Pre-Release Verification
 
 ## Table of Contents

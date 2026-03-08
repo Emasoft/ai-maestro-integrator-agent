@@ -1,5 +1,13 @@
 # Implementation Procedure Part 3: Complete Example
 
+## Contents
+
+- [Use-Case TOC](#use-case-toc)
+- [Complete Procedure Example](#complete-procedure-example)
+  - [RED Phase](#red-phase)
+  - [GREEN Phase](#green-phase)
+  - [REFACTOR Phase](#refactor-phase)
+
 ## Use-Case TOC
 
 - When you need a complete RED-GREEN-REFACTOR walkthrough → [Complete Procedure Example](#complete-procedure-example)

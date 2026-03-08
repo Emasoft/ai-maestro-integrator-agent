@@ -1,10 +1,3 @@
----
-name: op-create-review-report
-description: Create final review document combining Quick Scan and Deep Dive results
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Create Review Report
 
 ## Contents

@@ -1,8 +1,3 @@
----
-name: conventional-commits-validation
-description: "Conventional Commits format specification, validation regex, and commit-msg hook implementation for enforcing structured commit messages."
----
-
 # Conventional Commits Validation
 
 ## Table of Contents

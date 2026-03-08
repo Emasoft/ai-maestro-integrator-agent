@@ -1,8 +1,3 @@
----
-name: worktree-safety-checks
-description: "Safety checks for git hooks running in worktree environments to prevent cross-repository contamination."
----
-
 # Worktree Safety Checks for Git Hooks
 
 ## Table of Contents

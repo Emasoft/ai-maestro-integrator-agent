@@ -1,10 +1,3 @@
----
-name: op-batch-issue-filter
-description: "Filter GitHub issues by multiple criteria for batch operations"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Batch Issue Filter
 
 ## Contents

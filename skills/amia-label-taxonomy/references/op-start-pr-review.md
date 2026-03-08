@@ -1,10 +1,3 @@
----
-name: op-start-pr-review
-description: Operation procedure for starting a PR review by updating review labels.
-workflow-instruction: "support"
-procedure: "support-skill"
----
-
 # Operation: Start PR Review
 
 ## Contents

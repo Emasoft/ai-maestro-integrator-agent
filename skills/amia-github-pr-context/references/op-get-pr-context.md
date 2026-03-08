@@ -1,10 +1,3 @@
----
-name: op-get-pr-context
-description: Get full PR context including metadata, files, and status
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Get PR Context
 
 ## Contents

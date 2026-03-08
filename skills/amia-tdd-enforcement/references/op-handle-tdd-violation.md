@@ -1,10 +1,3 @@
----
-name: op-handle-tdd-violation
-description: Handle and recover from TDD discipline violations
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Handle TDD Violation
 
 ## Contents

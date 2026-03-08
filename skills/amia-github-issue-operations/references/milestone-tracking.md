@@ -1,10 +1,6 @@
 # Milestone Tracking Reference
 
-This document provides comprehensive guidance for working with GitHub milestones, including creation, assignment, progress tracking, and closure operations.
-
----
-
-## Table of Contents
+## Contents
 
 ### Part 1: Creating Milestones
 
@@ -76,6 +72,11 @@ This document provides comprehensive guidance for working with GitHub milestones
     - Python helper for safe milestone closure with options
 
 ---
+
+This document provides comprehensive guidance for working with GitHub milestones, including creation, assignment, progress tracking, and closure operations.
+
+---
+
 
 ## Quick Reference
 

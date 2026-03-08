@@ -1,10 +1,3 @@
----
-name: op-interpret-check-conclusions
-description: Interpret and act on check conclusion values
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Interpret Check Conclusions
 
 ## Contents

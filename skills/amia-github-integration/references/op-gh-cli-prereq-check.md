@@ -1,10 +1,3 @@
----
-name: op-gh-cli-prereq-check
-description: "Verify GitHub CLI prerequisites (version, installation, configuration)"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: GitHub CLI Prerequisites Check
 
 ## Contents

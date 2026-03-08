@@ -1,10 +1,3 @@
----
-name: op-verify-merge-completion
-description: Verify that a merge operation completed successfully
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Verify Merge Completion
 
 ## Contents

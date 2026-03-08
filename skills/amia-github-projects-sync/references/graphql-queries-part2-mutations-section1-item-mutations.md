@@ -1,12 +1,6 @@
 # Item Mutations for GitHub Projects V2
 
-This section covers mutations for creating, updating, and managing project items.
-
-**Parent document**: [graphql-queries-part2-mutations.md](./graphql-queries-part2-mutations.md)
-
----
-
-## Table of Contents
+## Contents
 
 - 1.1 [Add Issue to Project](#add-issue-to-project)
 - 1.2 [Update Item Status](#update-item-status)
@@ -17,6 +11,13 @@ This section covers mutations for creating, updating, and managing project items
 - 1.7 [Delete Item from Project](#delete-item-from-project)
 
 ---
+
+This section covers mutations for creating, updating, and managing project items.
+
+**Parent document**: [graphql-queries-part2-mutations.md](./graphql-queries-part2-mutations.md)
+
+---
+
 
 ## Add Issue to Project
 

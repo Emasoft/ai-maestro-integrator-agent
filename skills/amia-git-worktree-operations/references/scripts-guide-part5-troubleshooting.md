@@ -1,16 +1,6 @@
 # Worktree Automation Scripts Guide - Part 5: Troubleshooting
 
-**Related Documents:**
-
-- [Main Index](scripts-guide.md)
-- [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
-- [Part 2: Management Scripts](scripts-guide-part2-management-scripts.md)
-- [Part 3: Port Scripts](scripts-guide-part3-port-scripts.md)
-- [Part 4: Common Workflows](scripts-guide-part4-workflows.md)
-
----
-
-## Table of Contents
+## Contents
 
 - [Troubleshooting](#troubleshooting)
   - [Problem: Script says "worktree already exists" but directory is empty](#problem-script-says-worktree-already-exists-but-directory-is-empty)
@@ -29,6 +19,17 @@
 - [Quick Reference Command Matrix](#quick-reference-command-matrix)
 
 ---
+
+**Related Documents:**
+
+- [Main Index](scripts-guide.md)
+- [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
+- [Part 2: Management Scripts](scripts-guide-part2-management-scripts.md)
+- [Part 3: Port Scripts](scripts-guide-part3-port-scripts.md)
+- [Part 4: Common Workflows](scripts-guide-part4-workflows.md)
+
+---
+
 
 ## Troubleshooting
 

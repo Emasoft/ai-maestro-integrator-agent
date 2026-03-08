@@ -1,5 +1,17 @@
 # Integration Report Template
 
+## Contents
+
+- [Template](#template)
+- [Integration Status: 🟢 HEALTHY / 🟡 ISSUES / 🔴 BROKEN](#integration-status-healthy-issues-broken)
+- [Component Interaction Map](#component-interaction-map)
+- [API Contract Verification](#api-contract-verification)
+- [Integration Test Results](#integration-test-results)
+- [Issues Detected](#issues-detected)
+- [Integration Status Types](#integration-status-types)
+- [Component Status Icons](#component-status-icons)
+- [Common Interface Types](#common-interface-types)
+
 Template for documenting system integration status and component interactions.
 
 ---

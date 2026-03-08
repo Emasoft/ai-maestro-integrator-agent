@@ -1,5 +1,20 @@
 # Worktree Verification - Part 4: Reporting Violations
 
+## Contents
+
+- [4.7 Reporting Isolation Violations](#47-reporting-isolation-violations)
+  - [Violation Report Format](#violation-report-format)
+- [Summary](#summary)
+- [Violation Details](#violation-details)
+  - [Files Affected](#files-affected)
+  - [Impact Assessment](#impact-assessment)
+- [Root Cause](#root-cause)
+- [Resolution](#resolution)
+- [Prevention](#prevention)
+  - [Escalation Criteria](#escalation-criteria)
+  - [Violation Categories](#violation-categories)
+  - [Reporting Template for Orchestrator](#reporting-template-for-orchestrator)
+
 [Back to Worktree Verification Index](worktree-verification.md)
 
 ---

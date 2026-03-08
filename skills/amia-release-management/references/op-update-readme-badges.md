@@ -1,10 +1,3 @@
----
-name: op-update-readme-badges
-description: "Update version badges and download links in README using marker-delimited sections"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Update README Badges
 
 ## Contents

@@ -1,8 +1,6 @@
 # Merge Strategies
 
-This document explains the three merge strategies available for GitHub pull requests, when to use each one, and how they interact with branch protection rules.
-
-## Table of Contents
+## Contents
 
 - 2.1 Merge commit strategy
   - 2.1.1 When to use merge commits
@@ -22,6 +20,9 @@ This document explains the three merge strategies available for GitHub pull requ
   - 2.5.2 Manual branch deletion
 
 ---
+
+This document explains the three merge strategies available for GitHub pull requests, when to use each one, and how they interact with branch protection rules.
+
 
 ## 2.1 Merge Commit Strategy
 

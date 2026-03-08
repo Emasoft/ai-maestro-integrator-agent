@@ -1,10 +1,3 @@
----
-name: op-validate-release-tags
-description: "Prevent branch/tag collisions and validate release tag configuration"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Validate Release Tags
 
 ## Contents

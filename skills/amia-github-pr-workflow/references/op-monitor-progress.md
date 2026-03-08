@@ -1,5 +1,18 @@
 # Operation: Monitor Subagent Progress
 
+## Contents
+
+- [Purpose](#purpose)
+- [When to Use](#when-to-use)
+- [Prerequisites](#prerequisites)
+- [Steps](#steps)
+- [Polling Frequency](#polling-frequency)
+- [Output](#output)
+- [Stale Detection](#stale-detection)
+- [Error Handling](#error-handling)
+- [Example](#example)
+- [Critical Rule](#critical-rule)
+
 ---
 
 ```yaml

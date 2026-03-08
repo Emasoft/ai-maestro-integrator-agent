@@ -1,10 +1,3 @@
----
-name: op-check-merge-readiness
-description: Verify all merge requirements are met before executing a PR merge
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Check Merge Readiness
 
 ## Contents

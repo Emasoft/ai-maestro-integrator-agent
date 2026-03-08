@@ -1,5 +1,15 @@
 # Worktree Automation Scripts Guide
 
+## Contents
+
+1. [Overview](#overview)
+2. [Prerequisites](#prerequisites)
+3. [Script Reference](#script-reference) (links to parts)
+4. [Best Practices Summary](#best-practices-summary)
+5. [Quick Reference Command Matrix](#quick-reference-command-matrix)
+
+---
+
 ## Document Map
 
 This guide has been split into focused parts for easier navigation:
@@ -14,15 +24,6 @@ This guide has been split into focused parts for easier navigation:
 
 ---
 
-## Table of Contents
-
-1. [Overview](#overview)
-2. [Prerequisites](#prerequisites)
-3. [Script Reference](#script-reference) (links to parts)
-4. [Best Practices Summary](#best-practices-summary)
-5. [Quick Reference Command Matrix](#quick-reference-command-matrix)
-
----
 
 ## Overview
 

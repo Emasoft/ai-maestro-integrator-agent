@@ -1,16 +1,6 @@
 # Worktree Automation Scripts Guide - Part 4: Common Workflows
 
-**Related Documents:**
-
-- [Main Index](scripts-guide.md)
-- [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
-- [Part 2: Management Scripts](scripts-guide-part2-management-scripts.md)
-- [Part 3: Port Scripts](scripts-guide-part3-port-scripts.md)
-- [Part 5: Troubleshooting](scripts-guide-part5-troubleshooting.md)
-
----
-
-## Table of Contents
+## Contents
 
 - [Common Workflows](#common-workflows)
   - [Workflow 1: Code Review Setup](#workflow-1-code-review-setup)
@@ -21,6 +11,17 @@
   - [Workflow 6: Validate and Fix Registry After Manual Operations](#workflow-6-validate-and-fix-registry-after-manual-operations)
 
 ---
+
+**Related Documents:**
+
+- [Main Index](scripts-guide.md)
+- [Part 1: Core Scripts](scripts-guide-part1-core-scripts.md)
+- [Part 2: Management Scripts](scripts-guide-part2-management-scripts.md)
+- [Part 3: Port Scripts](scripts-guide-part3-port-scripts.md)
+- [Part 5: Troubleshooting](scripts-guide-part5-troubleshooting.md)
+
+---
+
 
 ## Common Workflows
 

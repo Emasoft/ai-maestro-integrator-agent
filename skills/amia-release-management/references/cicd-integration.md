@@ -1,9 +1,3 @@
----
-name: CI/CD Integration
-description: Comprehensive guide to integrating release management with continuous integration and continuous deployment pipelines
-version: 1.0.0
----
-
 # CI/CD Integration for Release Management
 
 ## Table of Contents

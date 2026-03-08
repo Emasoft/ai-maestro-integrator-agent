@@ -1,10 +1,3 @@
----
-name: op-verify-worktree-isolation
-description: "Check for isolation violations in a git worktree"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Verify Worktree Isolation
 
 ## Contents

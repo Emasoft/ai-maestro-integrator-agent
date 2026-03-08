@@ -1,10 +1,3 @@
----
-name: op-validate-session-state
-description: "Validate session state structure and content before use"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Validate Session State
 
 ## Contents

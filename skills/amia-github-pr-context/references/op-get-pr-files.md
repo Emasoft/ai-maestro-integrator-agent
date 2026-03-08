@@ -1,10 +1,3 @@
----
-name: op-get-pr-files
-description: Get list of files changed in a PR with change details
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Get PR Files
 
 ## Contents

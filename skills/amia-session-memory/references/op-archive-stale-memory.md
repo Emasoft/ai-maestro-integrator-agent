@@ -1,10 +1,3 @@
----
-name: op-archive-stale-memory
-description: "Archive outdated memory state to prevent incorrect resumption"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Archive Stale Memory
 
 ## Contents

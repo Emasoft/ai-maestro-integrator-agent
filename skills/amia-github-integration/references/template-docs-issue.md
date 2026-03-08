@@ -1,8 +1,3 @@
----
-name: template-docs-issue
-description: "Documentation improvement issue YAML form for GitHub Issues with structured fields for documentation triage."
----
-
 # Documentation Improvement Issue Template
 
 ## Table of Contents

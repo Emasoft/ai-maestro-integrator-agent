@@ -1,10 +1,3 @@
----
-procedure: proc-handle-failed-pr
-workflow-instruction: "Step 22 - Handling Failed PRs"
-operation: op-detect-platform-issues
-description: "Run amia_detect_platform_issue.py to scan source code for cross-platform issues"
----
-
 # Operation: Detect Platform Issues
 
 ## Contents

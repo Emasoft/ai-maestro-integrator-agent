@@ -1,5 +1,12 @@
 # Go Code Style and Idioms Reference
 
+## Contents
+
+- [5.1 Go Code Style and Idioms Checklist](#51-go-code-style-and-idioms-checklist)
+  - [Essential Style Rules](#essential-style-rules)
+  - [Idiomatic Go Patterns](#idiomatic-go-patterns)
+  - [Style Checklist](#style-checklist)
+
 ## 5.1 Go Code Style and Idioms Checklist
 
 Go has strong conventions enforced by gofmt and community standards.

@@ -1,10 +1,3 @@
----
-name: op-execute-post-merge-gate
-description: Execute Post-Merge Gate checks (main branch health verification)
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Execute Post-Merge Gate
 
 ## Contents

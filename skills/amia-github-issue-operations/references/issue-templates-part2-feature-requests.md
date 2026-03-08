@@ -1,18 +1,19 @@
 # Issue Templates Part 2: Feature Request Templates
 
-This document covers the structure and format for creating effective feature requests.
-
-Back to index: [issue-templates.md](issue-templates.md)
-
----
-
-## Table of Contents
+## Contents
 
 - 2.2.1 Problem statement (pain point description, current workaround)
 - 2.2.2 Proposed solution (ideal solution, alternatives considered)
 - 2.2.3 Acceptance criteria (checkbox format, measurable requirements)
 
 ---
+
+This document covers the structure and format for creating effective feature requests.
+
+Back to index: [issue-templates.md](issue-templates.md)
+
+---
+
 
 ## 2.2 Feature Request Template
 

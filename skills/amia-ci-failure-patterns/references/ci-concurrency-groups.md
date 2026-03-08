@@ -1,8 +1,3 @@
----
-name: ci-concurrency-groups
-description: "How to configure concurrency groups with cancel-in-progress to save CI minutes and avoid redundant runs."
----
-
 # CI Concurrency Groups
 
 ## Table of Contents

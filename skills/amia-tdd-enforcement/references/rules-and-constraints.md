@@ -1,14 +1,6 @@
 # TDD Rules and Constraints
 
-## Use-Case TOC
-
-- When you need absolute rules that cannot be broken → [The Iron Law](#the-iron-law-absolute)
-- If you're in RED phase and unsure what's allowed → [Red Phase Rules](#red-phase-rules)
-- If you're in GREEN phase and unsure what's allowed → [Green Phase Rules](#green-phase-rules)
-- If you're in REFACTOR phase and unsure what's allowed → [Refactor Phase Rules](#refactor-phase-rules)
-- When you need to know what actions are forbidden → [Forbidden Actions](#forbidden-actions)
-
-## Table of Contents
+## Contents
 
 - [The Iron Law (Absolute)](#the-iron-law-absolute)
   - [Rule 1: No Code Without a Failing Test](#rule-1-no-code-without-a-failing-test)
@@ -35,6 +27,15 @@
   - [Test-First Verification](#test-first-verification)
 
 ---
+
+## Use-Case TOC
+
+- When you need absolute rules that cannot be broken → [The Iron Law](#the-iron-law-absolute)
+- If you're in RED phase and unsure what's allowed → [Red Phase Rules](#red-phase-rules)
+- If you're in GREEN phase and unsure what's allowed → [Green Phase Rules](#green-phase-rules)
+- If you're in REFACTOR phase and unsure what's allowed → [Refactor Phase Rules](#refactor-phase-rules)
+- When you need to know what actions are forbidden → [Forbidden Actions](#forbidden-actions)
+
 
 ## The Iron Law (Absolute)
 

@@ -1,10 +1,3 @@
----
-name: op-create-handoff-payload
-description: "Create a structured agent handoff payload for task delegation"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Create Handoff Payload
 
 ## Contents

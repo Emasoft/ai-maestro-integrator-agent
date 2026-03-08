@@ -1,10 +1,3 @@
----
-name: op-process-override
-description: Process gate override requests when authorized
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Process Gate Override
 
 ## Contents

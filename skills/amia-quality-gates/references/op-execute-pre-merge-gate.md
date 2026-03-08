@@ -1,10 +1,3 @@
----
-name: op-execute-pre-merge-gate
-description: Execute Pre-Merge Gate checks (CI green, no conflicts, approval valid)
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Execute Pre-Merge Gate
 
 ## Contents

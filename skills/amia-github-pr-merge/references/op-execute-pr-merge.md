@@ -1,10 +1,3 @@
----
-name: op-execute-pr-merge
-description: Execute the merge of a pull request with specified strategy
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Execute PR Merge
 
 ## Contents

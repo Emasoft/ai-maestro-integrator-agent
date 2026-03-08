@@ -1,5 +1,14 @@
 # Single-Account GitHub Workflow
 
+## Contents
+
+- [Overview](#overview)
+- [Setup](#setup)
+- [Label Taxonomy](#label-taxonomy)
+- [Querying Assignments](#querying-assignments)
+- [Kanban Board](#kanban-board)
+- [Comparison with Multi-Account](#comparison-with-multi-account)
+
 ## Overview
 
 Use this workflow when you have only ONE GitHub account but want to track AI agent assignments.

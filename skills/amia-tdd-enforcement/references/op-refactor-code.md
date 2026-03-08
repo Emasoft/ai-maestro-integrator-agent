@@ -1,10 +1,3 @@
----
-name: op-refactor-code
-description: REFACTOR phase - Improve code quality while keeping all tests passing
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Refactor Code (REFACTOR Phase)
 
 ## Contents

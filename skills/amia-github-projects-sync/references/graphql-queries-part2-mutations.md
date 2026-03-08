@@ -1,14 +1,6 @@
 # GitHub Projects V2 GraphQL Queries - Mutations & Utilities
 
-## Overview
-
-This document is the **index** for mutations and utility queries for GitHub Projects V2 API operations.
-
-For **read-only queries** (listing, discovering, filtering), see [graphql-queries-part1-read-operations.md](./graphql-queries-part1-read-operations.md).
-
----
-
-## Table of Contents
+## Contents
 
 ### Section 1: Item Mutations
 
@@ -58,6 +50,15 @@ For **read-only queries** (listing, discovering, filtering), see [graphql-querie
 | 6.0 Error Handling | When API calls fail or need debugging |
 
 ---
+
+## Overview
+
+This document is the **index** for mutations and utility queries for GitHub Projects V2 API operations.
+
+For **read-only queries** (listing, discovering, filtering), see [graphql-queries-part1-read-operations.md](./graphql-queries-part1-read-operations.md).
+
+---
+
 
 ## Quick Reference
 

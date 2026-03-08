@@ -1,12 +1,6 @@
 # PR Operations, Utilities & Helpers for GitHub Projects V2
 
-This section covers pull request operations, utility queries, pagination, and error handling.
-
-**Parent document**: [graphql-queries-part2-mutations.md](./graphql-queries-part2-mutations.md)
-
----
-
-## Table of Contents
+## Contents
 
 - 3.1 [Get PR Node ID](#get-pr-node-id)
 - 3.2 [Link PR to Issue via Project](#link-pr-to-issue-via-project)
@@ -18,6 +12,13 @@ This section covers pull request operations, utility queries, pagination, and er
 - 6.0 [Error Handling](#error-handling)
 
 ---
+
+This section covers pull request operations, utility queries, pagination, and error handling.
+
+**Parent document**: [graphql-queries-part2-mutations.md](./graphql-queries-part2-mutations.md)
+
+---
+
 
 ## Pull Request Operations
 

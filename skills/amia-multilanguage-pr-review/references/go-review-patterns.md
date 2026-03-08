@@ -1,10 +1,6 @@
 # Go Review Patterns Reference
 
-This document serves as an index to Go code review patterns and best practices. Each section is detailed in a separate reference file for efficient progressive disclosure.
-
----
-
-## Table of Contents
+## Contents
 
 - [5.1 Go Code Style and Idioms](#51-go-code-style-and-idioms)
 - [5.2 Error Handling Patterns](#52-error-handling-patterns)
@@ -13,6 +9,11 @@ This document serves as an index to Go code review patterns and best practices. 
 - [5.5 Linting with golint, go vet, and staticcheck](#55-linting-with-golint-go-vet-and-staticcheck)
 
 ---
+
+This document serves as an index to Go code review patterns and best practices. Each section is detailed in a separate reference file for efficient progressive disclosure.
+
+---
+
 
 ## 5.1 Go Code Style and Idioms
 

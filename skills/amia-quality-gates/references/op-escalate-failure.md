@@ -1,10 +1,3 @@
----
-name: op-escalate-failure
-description: Follow escalation path when a quality gate fails
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Escalate Gate Failure
 
 ## Contents

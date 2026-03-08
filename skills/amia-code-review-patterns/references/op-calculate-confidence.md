@@ -1,10 +1,3 @@
----
-name: op-calculate-confidence
-description: Calculate confidence score from dimension evaluations
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Calculate Confidence Score
 
 ## Contents

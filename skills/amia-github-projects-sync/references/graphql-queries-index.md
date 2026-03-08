@@ -1,5 +1,14 @@
 # GraphQL Queries Index
 
+## Contents
+
+- [Overview](#overview)
+- [Query Categories](#query-categories)
+  - [Read Operations](#read-operations)
+  - [Mutation Operations](#mutation-operations)
+- [Quick Reference](#quick-reference)
+- [Main Document](#main-document)
+
 Quick navigation to GitHub Projects V2 GraphQL query documentation.
 
 ## Overview

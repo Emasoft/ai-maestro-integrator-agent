@@ -1,10 +1,3 @@
----
-name: op-analyze-pr-complexity
-description: Analyze PR complexity for review planning
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Analyze PR Complexity
 
 ## Contents

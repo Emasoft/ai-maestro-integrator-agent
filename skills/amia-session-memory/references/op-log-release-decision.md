@@ -1,10 +1,3 @@
----
-name: op-log-release-decision
-description: "Append a release decision to the release history"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Log Release Decision
 
 ## Contents

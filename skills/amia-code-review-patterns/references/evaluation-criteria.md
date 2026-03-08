@@ -1,8 +1,3 @@
----
-name: "Code Review Evaluation Criteria"
-description: "Comprehensive criteria for evaluating code quality, style, security, and performance in code reviews"
----
-
 # Code Review Evaluation Criteria
 
 ## Table of Contents

@@ -1,10 +1,3 @@
----
-name: op-get-check-details
-description: Get detailed information about a specific check for investigation
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Get Check Details
 
 ## Contents

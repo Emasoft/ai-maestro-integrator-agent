@@ -1,5 +1,18 @@
 # Multi-User Identity Script Reference
 
+## Contents
+
+- [Use-Case TOC](#use-case-toc)
+  - [Part 1: Installation and Overview](#part-1-installation-and-overview)
+  - [Part 2: Core Commands](#part-2-core-commands)
+  - [Part 3: Advanced Commands](#part-3-advanced-commands)
+  - [Part 4: Troubleshooting and Integration](#part-4-troubleshooting-and-integration)
+- [Quick Reference](#quick-reference)
+  - [Script Files](#script-files)
+  - [Running the Script](#running-the-script)
+  - [Command Summary](#command-summary)
+- [See Also](#see-also)
+
 ## Use-Case TOC
 
 This document is split into multiple parts for easier navigation. Use the links below to find the section you need.

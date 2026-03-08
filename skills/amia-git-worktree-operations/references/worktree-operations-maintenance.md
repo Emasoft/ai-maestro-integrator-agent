@@ -1,5 +1,13 @@
 # Worktree Operations: Maintenance
 
+## Contents
+
+- [Quick Reference](#quick-reference)
+- [Part 1: Syncing with Main Branch](#part-1-syncing-with-main-branch)
+- [Part 2: Best Practices](#part-2-best-practices)
+- [Part 3: Troubleshooting](#part-3-troubleshooting)
+- [Related References](#related-references)
+
 This document serves as an index to detailed maintenance operations for git worktrees.
 
 ---

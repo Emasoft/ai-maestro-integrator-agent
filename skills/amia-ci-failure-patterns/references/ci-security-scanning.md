@@ -1,8 +1,3 @@
----
-name: ci-security-scanning
-description: "How to configure CodeQL analysis, Bandit severity filtering, and scheduled weekly security scans in GitHub Actions."
----
-
 # CI Security Scanning
 
 ## Table of Contents

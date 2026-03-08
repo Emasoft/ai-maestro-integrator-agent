@@ -1,10 +1,3 @@
----
-name: op-create-handoff-doc
-description: "Create a handoff document for incomplete work"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Create Handoff Document
 
 ## Contents

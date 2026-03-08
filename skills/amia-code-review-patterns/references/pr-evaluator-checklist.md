@@ -1,5 +1,17 @@
 # PR Evaluator Checklist
 
+## Contents
+
+- [Pre-Evaluation Setup](#pre-evaluation-setup)
+- [Environment Setup](#environment-setup)
+- [Test Execution](#test-execution)
+- [Quality Checks](#quality-checks)
+- [Analysis](#analysis)
+- [Reporting](#reporting)
+- [Cleanup](#cleanup)
+- [Handoff](#handoff)
+- [Quick Reference: Verdict Decision Matrix](#quick-reference-verdict-decision-matrix)
+
 Complete this checklist for every PR evaluation to ensure thorough and consistent results.
 
 ---

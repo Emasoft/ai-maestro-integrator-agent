@@ -1,5 +1,20 @@
 # Proactive Handoff Protocol
 
+## Contents
+
+- [Standard Handoff Format](#standard-handoff-format)
+- [Automatic Handoff Triggers](#automatic-handoff-triggers)
+- [Handoff Document Location](#handoff-document-location)
+- [Mandatory Handoff Sections](#mandatory-handoff-sections)
+- [Context](#context)
+- [Progress](#progress)
+- [Current State](#current-state)
+- [Blockers (if any)](#blockers-if-any)
+- [Next Steps](#next-steps)
+- [References](#references)
+- [Proactive Writing Rules](#proactive-writing-rules)
+- [Handoff Quality Checklist](#handoff-quality-checklist)
+
 ## Standard Handoff Format
 
 All handoffs use the AMAMA standard format:

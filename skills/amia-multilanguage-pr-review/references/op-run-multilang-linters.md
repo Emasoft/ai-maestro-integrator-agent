@@ -1,10 +1,3 @@
----
-name: op-run-multilang-linters
-description: Execute linters for all detected languages and collect results
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Run Multilanguage Linters
 
 ## Contents

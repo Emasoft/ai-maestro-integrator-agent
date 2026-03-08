@@ -1,8 +1,3 @@
----
-name: cross-platform-development-rules
-description: "Cross-platform development rules for quality gate enforcement covering encoding, paths, line endings, and platform testing."
----
-
 # Cross-Platform Development Rules
 
 ## Table of Contents

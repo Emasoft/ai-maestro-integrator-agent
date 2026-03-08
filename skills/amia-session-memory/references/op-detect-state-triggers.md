@@ -1,10 +1,3 @@
----
-name: op-detect-state-triggers
-description: "Detect state-based triggers at session start to determine memory loading"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Detect State Triggers
 
 ## Contents

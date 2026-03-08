@@ -1,5 +1,15 @@
 # Memory Types
 
+## Contents
+
+- [PR Review States](#pr-review-states)
+- [Code Patterns Observed](#code-patterns-observed)
+- [Integration Issues Encountered](#integration-issues-encountered)
+- [Release History and Rollbacks](#release-history-and-rollbacks)
+- [CI/CD Pipeline States](#cicd-pipeline-states)
+- [CI State - 2025-02-04](#ci-state-2025-02-04)
+- [When to Remember What](#when-to-remember-what)
+
 ## PR Review States
 
 **What to Remember**:

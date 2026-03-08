@@ -1,7 +1,5 @@
 # Record-Keeping for Integration Agent
 
-This reference describes the logging, tracking, and documentation formats used by the Integrator Agent to maintain records of all integration activities.
-
 ## Contents
 
 - 1. Routing Log Format
@@ -10,6 +8,9 @@ This reference describes the logging, tracking, and documentation formats used b
 - 1. Session State Structure
 
 ---
+
+This reference describes the logging, tracking, and documentation formats used by the Integrator Agent to maintain records of all integration activities.
+
 
 ## 1. Routing Log Format
 

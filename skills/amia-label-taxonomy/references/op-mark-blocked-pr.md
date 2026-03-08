@@ -1,10 +1,3 @@
----
-name: op-mark-blocked-pr
-description: Operation procedure for marking a PR as blocked when it cannot be reviewed.
-workflow-instruction: "support"
-procedure: "support-skill"
----
-
 # Operation: Mark Blocked PR
 
 ## Contents

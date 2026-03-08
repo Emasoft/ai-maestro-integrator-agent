@@ -1,9 +1,3 @@
----
-name: Rollback Procedures
-description: Comprehensive guide to rollback planning, execution, and recovery procedures for failed releases
-version: 1.0.0
----
-
 # Rollback Procedures
 
 ## Table of Contents

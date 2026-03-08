@@ -1,12 +1,6 @@
 # Python Review Patterns Reference
 
-## Overview
-
-This reference covers Python-specific code review patterns, organized into detailed part files for efficient progressive disclosure.
-
----
-
-## Table of Contents
+## Contents
 
 ### Part 1: Style, Types, and Documentation
 
@@ -50,6 +44,13 @@ This reference covers Python-specific code review patterns, organized into detai
   - 2.6.5 Linting review checklist
 
 ---
+
+## Overview
+
+This reference covers Python-specific code review patterns, organized into detailed part files for efficient progressive disclosure.
+
+---
+
 
 ## Quick Reference: When to Read Each Part
 

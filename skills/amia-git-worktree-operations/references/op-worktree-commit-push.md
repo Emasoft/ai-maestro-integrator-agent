@@ -1,10 +1,3 @@
----
-name: op-worktree-commit-push
-description: "Commit and push changes from within a git worktree"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Worktree Commit Push
 
 ## Contents

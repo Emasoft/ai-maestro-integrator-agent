@@ -1,8 +1,3 @@
----
-name: ci-optimized-matrix
-description: "How to use the include syntax and strategic matrix design to minimize CI job count without sacrificing coverage."
----
-
 # CI Optimized Matrix
 
 ## Table of Contents

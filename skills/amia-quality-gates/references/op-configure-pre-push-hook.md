@@ -1,8 +1,3 @@
----
-name: op-configure-pre-push-hook
-description: "Step-by-step procedure for installing and configuring a pre-push git hook with language-specific check examples."
----
-
 # Operation: Configure a Pre-Push Git Hook
 
 ## Table of Contents

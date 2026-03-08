@@ -1,11 +1,6 @@
 # Parallel PR Workflow - Part 1: Creating Worktrees and Isolation
 
-This document covers the foundational aspects of parallel PR workflow:
-
-- Creating worktrees for multiple simultaneous PRs
-- Isolation requirements and enforcement rules
-
-## Table of Contents
+## Contents
 
 - [2.1 Creating Worktrees for Multiple Simultaneous PRs](#21-creating-worktrees-for-multiple-simultaneous-prs)
   - [Standard Worktree Creation Process](#standard-worktree-creation-process)
@@ -19,6 +14,12 @@ This document covers the foundational aspects of parallel PR workflow:
   - [Automated Isolation Checking](#automated-isolation-checking)
 
 ---
+
+This document covers the foundational aspects of parallel PR workflow:
+
+- Creating worktrees for multiple simultaneous PRs
+- Isolation requirements and enforcement rules
+
 
 ## 2.1 Creating Worktrees for Multiple Simultaneous PRs
 

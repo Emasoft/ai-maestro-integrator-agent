@@ -1,8 +1,6 @@
 # Multi-User GitHub Workflow
 
-This document provides a comprehensive guide to managing multiple GitHub identities on a single machine, enabling formal PR workflows where different users submit and review code.
-
-## Table of Contents
+## Contents
 
 - [Use-Case TOC](#use-case-toc)
   - [Part 1: Setup and Configuration](#part-1-setup-and-configuration)
@@ -21,6 +19,9 @@ This document provides a comprehensive guide to managing multiple GitHub identit
 - [See Also](#see-also)
 
 ---
+
+This document provides a comprehensive guide to managing multiple GitHub identities on a single machine, enabling formal PR workflows where different users submit and review code.
+
 
 ## Use-Case TOC
 

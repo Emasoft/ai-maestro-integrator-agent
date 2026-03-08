@@ -1,9 +1,3 @@
----
-name: Release Responsibilities
-description: Defines roles, responsibilities, and accountability in the release management process
-version: 1.0.0
----
-
 # Release Responsibilities
 
 ## Table of Contents

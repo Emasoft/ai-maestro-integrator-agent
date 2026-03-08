@@ -1,11 +1,6 @@
 # Parallel PR Workflow - Part 2: Subagent Management and Path Validation
 
-This document covers:
-
-- Working directory management for subagents
-- Path validation rules and common violations
-
-## Table of Contents
+## Contents
 
 - [2.3 Working Directory Management for Subagents](#23-working-directory-management-for-subagents)
   - [Assigning Worktrees to Subagents](#assigning-worktrees-to-subagents)
@@ -19,6 +14,12 @@ This document covers:
   - [Path Validation Function](#path-validation-function)
 
 ---
+
+This document covers:
+
+- Working directory management for subagents
+- Path validation rules and common violations
+
 
 ## 2.3 Working Directory Management for Subagents
 

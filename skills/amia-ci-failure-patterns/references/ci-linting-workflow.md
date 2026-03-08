@@ -1,8 +1,3 @@
----
-name: ci-linting-workflow
-description: "How to set up a parallel language-specific linting workflow with pinned versions and GitHub annotation output."
----
-
 # CI Linting Workflow
 
 ## Table of Contents

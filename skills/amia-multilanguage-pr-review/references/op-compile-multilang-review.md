@@ -1,10 +1,3 @@
----
-name: op-compile-multilang-review
-description: Compile comprehensive review summary from multilanguage PR analysis
-procedure: proc-evaluate-pr
-workflow-instruction: Step 21 - PR Evaluation
----
-
 # Operation: Compile Multilanguage Review
 
 ## Contents

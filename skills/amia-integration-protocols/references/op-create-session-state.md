@@ -1,10 +1,3 @@
----
-name: op-create-session-state
-description: "Create a session state snapshot for continuity across session boundaries"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Create Session State
 
 ## Contents

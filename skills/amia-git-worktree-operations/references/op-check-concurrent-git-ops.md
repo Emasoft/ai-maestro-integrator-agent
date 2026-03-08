@@ -1,10 +1,3 @@
----
-name: op-check-concurrent-git-ops
-description: "Check if other git operations are currently running"
-procedure: support-skill
-workflow-instruction: support
----
-
 # Operation: Check Concurrent Git Operations
 
 ## Contents

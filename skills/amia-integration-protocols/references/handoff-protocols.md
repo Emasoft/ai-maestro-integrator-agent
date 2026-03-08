@@ -1,11 +1,5 @@
 # Handoff Protocols Reference
 
-## Purpose
-
-This document defines the standard protocols for handing off tasks, documents, and communications between the orchestrator and remote agents in the AMOA ecosystem.
-
----
-
 ## Contents
 
 - [Document Delivery Protocol](#document-delivery-protocol)
@@ -15,6 +9,13 @@ This document defines the standard protocols for handing off tasks, documents, a
 - [Blocker Escalation Protocol](#blocker-escalation-protocol)
 
 ---
+
+## Purpose
+
+This document defines the standard protocols for handing off tasks, documents, and communications between the orchestrator and remote agents in the AMOA ecosystem.
+
+---
+
 
 ## Document Delivery Protocol
 
