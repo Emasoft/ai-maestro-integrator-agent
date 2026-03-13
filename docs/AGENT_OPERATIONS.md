@@ -218,7 +218,7 @@ Read the skill at: ${CLAUDE_PLUGIN_ROOT}/skills/amia-code-review-patterns/SKILL.
 |--------|--------|
 | **ai-maestro-orchestrator-agent** | AMOA's plugin - task assignment, kanban management |
 | **ai-maestro-architect-agent** | AMAA's plugin - architecture, design decisions |
-| **ai-maestro-assistant-manager-agent** | AMAMA's plugin - user communication, project creation |
+| **ai-maestro-assistant-manager-agent** | EAMA's plugin - user communication, project creation |
 
 ### Skills NOT Available to AMIA
 
@@ -226,7 +226,7 @@ AMIA **CANNOT** reference or load skills from other plugins:
 
 - ❌ `amoa-*` skills (from ai-maestro-orchestrator-agent)
 - ❌ `amaa-*` skills (from ai-maestro-architect-agent)
-- ❌ `amama-*` skills (from ai-maestro-assistant-manager-agent)
+- ❌ `eama-*` skills (from ai-maestro-assistant-manager-agent)
 
 ### Cross-Role Communication
 
@@ -324,8 +324,8 @@ Skills are **automatically loaded** from the `skills/` directory. You do NOT nee
 | **Task assignment** | AMOA's job (Orchestrator) |
 | **Agent creation** | AMCOS's job (Chief of Staff) |
 | **Architecture decisions** | AMAA's job (Architect) |
-| **User communication** | AMAMA's job (Manager) |
-| **Project creation** | AMAMA's job (Manager) |
+| **User communication** | EAMA's job (Manager) |
+| **Project creation** | EAMA's job (Manager) |
 
 ### Read the Role Boundaries Document
 
@@ -544,9 +544,9 @@ Code review completed. All quality gates passed.
 |--------|--------|---------|
 | ❌ Assign tasks | Not AMIA's role | AMOA (Orchestrator) |
 | ❌ Create agents | Not AMIA's role | AMCOS (Chief of Staff) |
-| ❌ Create projects | Not AMIA's role | AMAMA (Manager) |
+| ❌ Create projects | Not AMIA's role | EAMA (Manager) |
 | ❌ Make architecture decisions | Not AMIA's role | AMAA (Architect) |
-| ❌ Talk to user | Not AMIA's role | AMAMA (Manager) |
+| ❌ Talk to user | Not AMIA's role | EAMA (Manager) |
 | ❌ Modify kanban tasks | Read-only access | AMOA (Orchestrator) |
 | ❌ Close issues directly | Must verify first | AMOA (Orchestrator) after AMIA approval |
 

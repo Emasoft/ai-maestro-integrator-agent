@@ -117,7 +117,7 @@ Standard protocols for handing off work between agents:
 ## Resources
 
 - `references/handoff-protocols.md` — Complete handoff protocol reference
-- `references/ai-maestro-message-templates.md` — AI Maestro curl command templates
+- `references/ai-maestro-message-templates.md` — AI Maestro message format templates (use via `agent-messaging` skill)
 - `references/sub-agent-role-boundaries-template.md` — Worker agent role boundary template
 - `references/routing-checklist.md` — Task routing checklist for agent coordination
 - `references/record-keeping.md` — Session record-keeping formats and state management
