@@ -1,0 +1,68 @@
+# Agent profile for ai-maestro-integrator-agent
+# Quad-match rule: plugin.json name = TOML agent.name = main-agent filename prefix = frontmatter name
+
+[agent]
+name = "ai-maestro-integrator-agent"
+source = "plugin:ai-maestro-integrator-agent"
+path = "agents/ai-maestro-integrator-agent-main-agent.md"
+
+[requirements]
+project_type = "library"
+tech_stack = ["python", "markdown", "yaml"]
+
+[skills]
+primary = [
+  "amia-code-review-patterns",
+  "amia-quality-gates",
+  "amia-github-pr-workflow",
+  "amia-github-integration",
+  "amia-ci-failure-patterns",
+  "amia-release-management",
+  "amia-integration-protocols",
+]
+secondary = [
+  "amia-ai-pr-review-methodology",
+  "amia-github-pr-merge",
+  "amia-github-pr-checks",
+  "amia-github-issue-operations",
+  "amia-kanban-orchestration",
+  "amia-tdd-enforcement",
+  "amia-session-memory",
+  "amia-label-taxonomy",
+  "amia-github-projects-sync",
+  "amia-github-thread-management",
+  "amia-github-pr-context",
+  "amia-multilanguage-pr-review",
+]
+specialized = [
+  "amia-git-worktree-operations",
+]
+
+[agents]
+recommended = [
+  "amia-api-coordinator",
+  "amia-code-reviewer",
+  "amia-pr-evaluator",
+  "amia-integration-verifier",
+  "amia-bug-investigator",
+  "amia-github-sync",
+  "amia-committer",
+  "amia-screenshot-analyzer",
+  "amia-debug-specialist",
+  "amia-test-engineer",
+]
+
+[commands]
+recommended = []
+
+[rules]
+recommended = []
+
+[mcp]
+recommended = []
+
+[hooks]
+recommended = ["amia-branch-protection", "amia-issue-closure-gate", "amia-stop-check"]
+
+[lsp]
+recommended = []

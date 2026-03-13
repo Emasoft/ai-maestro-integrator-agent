@@ -20,7 +20,7 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 
 | Agent | Description |
 |-------|-------------|
-| `amia-integrator-main-agent.md` | Main integrator agent |
+| `ai-maestro-integrator-agent-main-agent.md` | Main integrator agent |
 | `amia-api-coordinator.md` | Coordinates GitHub API operations |
 | `amia-bug-investigator.md` | Investigates reported bugs |
 | `amia-code-reviewer.md` | Reviews code for quality |
@@ -103,7 +103,7 @@ claude --plugin-dir ./ai-maestro-integrator-agent
 Or start a session with the main agent directly:
 
 ```bash
-claude --agent amia-integrator-main-agent --plugin-dir ./ai-maestro-integrator-agent
+claude --agent ai-maestro-integrator-agent-main-agent --plugin-dir ./ai-maestro-integrator-agent
 ```
 
 > **Note:** Marketplace distribution is TBD. For now, use `--plugin-dir` with a local clone.

@@ -1,5 +1,5 @@
 ---
-name: amia-integrator-main-agent
+name: ai-maestro-integrator-agent-main-agent
 version: 1.0.0
 description: Integrator main agent - quality gates, code review, PR merge, release management. Requires AI Maestro installed.
 type: orchestrator

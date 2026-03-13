@@ -83,7 +83,7 @@ AMCOS creates AMIA instances using the `ai-maestro-agents-management` skill. The
 - **Working directory**: `~/agents/<session-name>`
 - **Task**: `Review and integrate code for <project>`
 - **Plugin**: `ai-maestro-integrator-agent`
-- **Starting agent**: `amia-integrator-main-agent`
+- **Starting agent**: `ai-maestro-integrator-agent-main-agent`
 
 Refer to the `ai-maestro-agents-management` skill for the exact creation commands and syntax.
 
@@ -95,7 +95,7 @@ Refer to the `ai-maestro-agents-management` skill for the exact creation command
 | `--dir` | `~/agents/$SESSION_NAME` | Working directory |
 | `--task` | Task description | Initial task assignment |
 | `--plugin-dir` | Path to plugin | Loads AMIA plugin |
-| `--agent` | `amia-integrator-main-agent` | Starting agent |
+| `--agent` | `ai-maestro-integrator-agent-main-agent` | Starting agent |
 
 ### AMCOS Responsibilities
 
@@ -141,7 +141,7 @@ ai-maestro-integrator-agent/
 ├── .claude-plugin/
 │   └── plugin.json              # Plugin manifest
 ├── agents/                       # Agent definitions
-│   ├── amia-integrator-main-agent.md
+│   ├── ai-maestro-integrator-agent-main-agent.md
 │   ├── amia-api-coordinator.md
 │   ├── amia-code-reviewer.md
 │   ├── amia-pr-evaluator.md
@@ -585,7 +585,7 @@ All sub-agents are defined in `agents/` directory:
 
 ```
 agents/
-├── amia-integrator-main-agent.md       # Coordinator (you)
+├── ai-maestro-integrator-agent-main-agent.md       # Coordinator (you)
 ├── amia-api-coordinator.md             # GitHub API specialist
 ├── amia-code-reviewer.md               # Code review specialist
 ├── amia-pr-evaluator.md                # PR evaluation specialist
