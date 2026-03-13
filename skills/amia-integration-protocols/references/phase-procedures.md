@@ -92,7 +92,7 @@ This document provides step-by-step procedures for each integration phase. Follo
 
 ### 2. Send to Sub-Agent
 
-- Execute curl POST to AI Maestro API
+- Send message using the `agent-messaging` skill
 - Wait for acknowledgment (30 second timeout)
 - **Verification**: Sub-agent acknowledged
 
@@ -142,7 +142,7 @@ This document provides step-by-step procedures for each integration phase. Follo
 
 ### 2. Send to AMOA
 
-- Execute curl POST to orchestrator-amoa
+- Send message to orchestrator-amoa using the `agent-messaging` skill
 - Include link to detailed report file
 - **Verification**: Message sent
 

@@ -15,7 +15,7 @@ user-invocable: false
 
 ## Overview
 
-GitHub Projects V2 Kanban is the single source of truth for AMOA orchestration: 1 module = 1 issue, 1 assignee, 1 column move.
+GitHub Projects V2 Kanban provides the display layer for task tracking. AI Maestro's task system (`backlog`, `pending`, `in_progress`, `review`, `completed`) is the authoritative status source. GitHub columns map onto these 5 statuses.
 
 ## Prerequisites
 

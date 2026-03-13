@@ -402,18 +402,18 @@ When AMCOS updates the registry, it sends a notification to all team agents usin
 
 ## Kanban System Reference
 
-All projects use the canonical **8-column kanban system** on GitHub Projects:
+AI Maestro uses **5 task statuses** (`backlog`, `pending`, `in_progress`, `review`, `completed`). GitHub Projects uses an 8-column display layer that maps onto these statuses:
 
-| Column | Code | Label |
-|--------|------|-------|
+| GitHub Column | AI Maestro Status | Label |
+|---------------|-------------------|-------|
 | Backlog | `backlog` | `status:backlog` |
-| Todo | `todo` | `status:todo` |
-| In Progress | `in-progress` | `status:in-progress` |
-| AI Review | `ai-review` | `status:ai-review` |
-| Human Review | `human-review` | `status:human-review` |
-| Merge/Release | `merge-release` | `status:merge-release` |
-| Done | `done` | `status:done` |
-| Blocked | `blocked` | `status:blocked` |
+| Todo | `pending` | `status:todo` |
+| In Progress | `in_progress` | `status:in-progress` |
+| AI Review | `review` | `status:ai-review` |
+| Human Review | `review` | `status:human-review` |
+| Merge/Release | `review` | `status:merge-release` |
+| Done | `completed` | `status:done` |
+| Blocked | `backlog` + label | `status:blocked` |
 
 For full kanban workflow details, task routing rules, and code format rules, see **FULL_PROJECT_WORKFLOW.md**.
 

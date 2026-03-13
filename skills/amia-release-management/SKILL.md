@@ -37,6 +37,7 @@ Coordinates software releases: version bumping, changelog, tagging, CI/CD, and r
 
 Copy this checklist and track your progress:
 
+- [ ] Verify governance authorization via `team-governance` skill
 - [ ] Receive release request with target type
 - [ ] Determine version and verify readiness
 - [ ] Generate changelog from commit history

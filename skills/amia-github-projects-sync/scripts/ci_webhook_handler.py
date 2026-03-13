@@ -16,15 +16,14 @@ import hashlib
 import hmac
 import json
 import os
+import shutil
+import subprocess
 import sys
 import tempfile
-import urllib.error
-import urllib.request
 from datetime import datetime, timezone
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse as _urlparse
 
 # Allow imports from the plugin root shared/ directory (depth=3: scripts -> skill -> skills -> root)
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
@@ -38,12 +37,8 @@ WATCHED_BRANCHES = {"main", "master", "develop"}
 MAX_CONTENT_LENGTH = 1_048_576
 EMASOFT_DIR = Path(os.environ.get("EMASOFT_DIR", str(Path.home() / ".emasoft")))
 LOG_DIR = EMASOFT_DIR / "webhook_logs"
-AIMAESTRO_API = os.environ.get("AIMAESTRO_API", "http://localhost:23000")
-# SC-P2-003: Validate AIMAESTRO_API must point to localhost to prevent SSRF
-_parsed_api = _urlparse(AIMAESTRO_API)
-if _parsed_api.hostname not in ("localhost", "127.0.0.1", "::1"):
-    print("ERROR: AIMAESTRO_API must point to localhost for security", file=sys.stderr)
-    sys.exit(1)
+# Resolve amp-send.sh path once at module load
+AMP_SEND_BIN = shutil.which("amp-send.sh") or os.path.expanduser("~/.local/bin/amp-send.sh")
 
 
 def atomic_write_json(data: Any, path: Path) -> None:
@@ -60,23 +55,18 @@ def atomic_write_json(data: Any, path: Path) -> None:
 
 
 def _send_maestro_message(subject: str, message: str, priority: str = "normal") -> None:
-    """Send a notification via the AI Maestro REST API."""
-    payload = json.dumps({
-        "subject": subject,
-        "priority": priority,
-        "content": {"type": "notification", "message": message},
-    })
+    """Send a notification via amp-send.sh (AMP script).
+
+    Uses the official AI Maestro AMP script instead of direct API calls,
+    following the Plugin Abstraction Principle.
+    """
+    # Use orchestrator-amoa as default recipient for webhook notifications
+    recipient = os.environ.get("AIMAESTRO_AGENT", "orchestrator-amoa")
+    cmd = [AMP_SEND_BIN, recipient, subject, message, "--priority", priority, "--type", "notification"]
     try:
-        # CC-XP-012: Use urllib instead of subprocess curl for cross-platform compat
-        req = urllib.request.Request(
-            f"{AIMAESTRO_API}/api/messages",
-            data=payload.encode("utf-8"),
-            headers={"Content-Type": "application/json"},
-            method="POST",
-        )
-        urllib.request.urlopen(req, timeout=10)
-    except (OSError, urllib.error.URLError) as e:
-        print(f"WARNING: Failed to send AI Maestro notification: {e}", file=sys.stderr)
+        subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+    except (OSError, subprocess.TimeoutExpired) as e:
+        print(f"WARNING: Failed to send AI Maestro notification via amp-send.sh: {e}", file=sys.stderr)
 
 
 def handle_github_webhook(event_type: str, payload: dict[str, Any]) -> tuple[bool, str]:

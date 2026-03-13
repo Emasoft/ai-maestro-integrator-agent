@@ -211,6 +211,10 @@ AMOA: Sends handoff to agent-456
 
 ---
 
+**Governance Note**: This document is a **local convenience reference**. The authoritative source for runtime governance rules is the `team-governance` skill. Agents MUST verify team membership and governance authorization via the `team-governance` skill before sensitive operations (merge, release, issue closure).
+
+---
+
 **Document Version**: 1.1.18
 **Last Updated**: 2026-03-13
 **Author**: AMCOS Plugin Development

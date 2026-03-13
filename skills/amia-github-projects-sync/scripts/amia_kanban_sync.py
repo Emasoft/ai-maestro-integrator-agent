@@ -32,16 +32,27 @@ except ImportError:
         "This module is planned but not yet implemented."
     )
 
-try:
-    from aimaestro_notify import notify_task_blocked  # noqa: E402
-except ImportError:
-    raise SystemExit(
-        "ERROR: shared/aimaestro_notify.py not found. "
-        "This module is planned but not yet implemented."
-    )
+import shutil
+import subprocess
+
+# Resolve amp-send.sh path once at module load
+AMP_SEND_BIN = shutil.which("amp-send.sh") or os.path.expanduser("~/.local/bin/amp-send.sh")
 
 
-# Status column mapping
+def notify_task_blocked(task_id: str, reason: str, issue_number: Optional[int] = None) -> None:
+    """Notify AI Maestro about a blocked task via amp-send.sh (AMP script)."""
+    msg = f"Task {task_id} blocked: {reason}"
+    if issue_number:
+        msg += f" (issue #{issue_number})"
+    recipient = os.environ.get("AIMAESTRO_AGENT", "orchestrator-amoa")
+    cmd = [AMP_SEND_BIN, recipient, f"Blocked: {task_id}", msg, "--priority", "high", "--type", "notification"]
+    try:
+        subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+    except (OSError, subprocess.TimeoutExpired) as e:
+        print(f"WARNING: Failed to send blocked notification via amp-send.sh: {e}", file=sys.stderr)
+
+
+# GitHub Projects column → label mapping (display layer)
 STATUS_COLUMNS = {
     "Backlog": "backlog",
     "Todo": "todo",

@@ -32,6 +32,7 @@ None required. This is a reference skill with no external dependencies.
 
 Copy this checklist and track your progress:
 
+- [ ] Verify requesting agent's team membership via `team-governance` skill
 - [ ] Identify the shared protocol or pattern needed
 - [ ] Review the relevant reference document
 - [ ] Apply the protocol or pattern to the workflow

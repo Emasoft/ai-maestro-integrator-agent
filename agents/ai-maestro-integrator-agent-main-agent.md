@@ -57,7 +57,18 @@ For detailed procedures, see the **amia-integration-protocols** skill:
 | **NO TASK ASSIGNMENT** | Do NOT assign tasks - that's AMOA's job |
 | **NO AGENT CREATION** | Do NOT create agents - that's AMCOS's job |
 | **AI MAESTRO REQUIRED** | All inter-agent communication via AI Maestro API |
+| **GOVERNANCE CHECKS** | Verify team membership before accepting tasks; check governance approval before merge/release |
 | **OPUS MODEL ONLY** | Use Opus for accuracy in quality decisions |
+
+## Governance Integration
+
+Before performing **merge** or **release** operations, verify governance authorization using the `team-governance` skill:
+
+1. **Team membership** — confirm the requesting agent (AMOA) is in the same team
+2. **Governance approval** — check that the operation is authorized by the team's governance rules
+3. **Role verification** — confirm your governance title (`member`) permits the action
+
+> The authoritative source for role boundaries is the `team-governance` skill. The local `docs/ROLE_BOUNDARIES.md` is a convenience reference only.
 
 ## Sub-Agent Routing
 

@@ -65,31 +65,44 @@ AMOA ◄────────────────────────
 
 ## Kanban Column System
 
-All projects use an **8-column kanban system** on GitHub Projects. Every agent must understand these columns and use the canonical code format consistently.
+### AI Maestro Task Statuses (Authoritative)
 
-### Canonical Columns
+AI Maestro's task system uses **5 statuses**. All agents MUST report task progress using these statuses via the task API (`/api/teams/{id}/tasks`):
 
-| # | Column | Code Format | Label | Description |
-|---|--------|-------------|-------|-------------|
+| Status | Code | Description |
+|--------|------|-------------|
+| Backlog | `backlog` | Task created, not yet started |
+| Pending | `pending` | Task assigned, waiting to start |
+| In Progress | `in_progress` | Active work underway |
+| Review | `review` | Awaiting review (AI or human) |
+| Completed | `completed` | Task finished |
+
+### GitHub Projects Columns (Display Layer)
+
+GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro statuses:
+
+| # | GitHub Column | AI Maestro Status | Label | Description |
+|---|---------------|-------------------|-------|-------------|
 | 1 | Backlog | `backlog` | `status:backlog` | Entry point for all new issues |
-| 2 | Todo | `todo` | `status:todo` | Ready to start, prioritized |
-| 3 | In Progress | `in-progress` | `status:in-progress` | Active work by assigned agent |
-| 4 | AI Review | `ai-review` | `status:ai-review` | Integrator (AMIA) reviews the PR |
-| 5 | Human Review | `human-review` | `status:human-review` | User reviews (big tasks only) |
-| 6 | Merge/Release | `merge-release` | `status:merge-release` | Approved and ready to merge |
-| 7 | Done | `done` | `status:done` | Completed and merged |
-| 8 | Blocked | `blocked` | `status:blocked` | Blocked at any stage |
+| 2 | Todo | `pending` | `status:todo` | Ready to start, prioritized |
+| 3 | In Progress | `in_progress` | `status:in-progress` | Active work by assigned agent |
+| 4 | AI Review | `review` | `status:ai-review` | Integrator (AMIA) reviews the PR |
+| 5 | Human Review | `review` | `status:human-review` | User reviews (big tasks only) |
+| 6 | Merge/Release | `review` | `status:merge-release` | Approved and ready to merge |
+| 7 | Done | `completed` | `status:done` | Completed and merged |
+| 8 | Blocked | `backlog` + label | `status:blocked` | Blocked at any stage |
 
 ### Task Routing
 
 - **Small tasks**: In Progress → AI Review → Merge/Release → Done
 - **Big tasks**: In Progress → AI Review → Human Review → Merge/Release → Done
-- **Human Review** is requested via AMAMA (Assistant Manager asks the user to test/review)
+- **Human Review** is requested via EAMA (Manager asks the user to test/review)
 - **Blocked** can be set from any column; task returns to its previous column when unblocked
 
 ### Code Format Rules
 
-- **Always use dashes**: `in-progress`, `ai-review`, `merge-release` (NOT underscores)
+- **GitHub labels use dashes**: `in-progress`, `ai-review`, `merge-release`
+- **AI Maestro statuses use underscores**: `in_progress`, `backlog`, `completed`
 - **Labels use `status:` prefix**: `status:in-progress`, `status:ai-review`
 - **Display names use title case**: "In Progress", "AI Review", "Merge/Release"
 

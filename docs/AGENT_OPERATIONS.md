@@ -1069,23 +1069,41 @@ Question: Can we close with partial acceptance criteria met?
 
 ## Kanban Column System
 
-All projects use the canonical **8-column kanban system** on GitHub Projects:
+### AI Maestro Task Statuses (Authoritative)
 
-| Column | Code | Label |
-|--------|------|-------|
+AI Maestro's task system uses **5 statuses**. AMIA MUST report integration results using these statuses:
+
+| Status | Code | When |
+|--------|------|------|
+| Backlog | `backlog` | Task created, not yet started |
+| Pending | `pending` | Task assigned, waiting to start |
+| In Progress | `in_progress` | Active work underway |
+| Review | `review` | Awaiting review (AI or human) |
+| Completed | `completed` | Task finished |
+
+### GitHub Projects Columns (Display Layer)
+
+GitHub Projects V2 may use additional columns for visual workflow management. These are a **display layer** on top of AI Maestro's authoritative statuses:
+
+| GitHub Column | Maps to AI Maestro Status | Label |
+|---------------|---------------------------|-------|
 | Backlog | `backlog` | `status:backlog` |
-| Todo | `todo` | `status:todo` |
-| In Progress | `in-progress` | `status:in-progress` |
-| AI Review | `ai-review` | `status:ai-review` |
-| Human Review | `human-review` | `status:human-review` |
-| Merge/Release | `merge-release` | `status:merge-release` |
-| Done | `done` | `status:done` |
-| Blocked | `blocked` | `status:blocked` |
+| Todo | `pending` | `status:todo` |
+| In Progress | `in_progress` | `status:in-progress` |
+| AI Review | `review` | `status:ai-review` |
+| Human Review | `review` | `status:human-review` |
+| Merge/Release | `review` | `status:merge-release` |
+| Done | `completed` | `status:done` |
+| Blocked | `backlog` (with `blocked` label) | `status:blocked` |
 
-**Task routing**:
+### Task Routing
 
 - Small tasks: In Progress → AI Review → Merge/Release → Done
 - Big tasks: In Progress → AI Review → Human Review → Merge/Release → Done
+
+### AI Maestro Task API Integration
+
+AMIA SHOULD report integration results to AI Maestro's task system (`/api/teams/{id}/tasks`) in addition to file-based tracking. When a PR is merged, CI passes, or a release is tagged, update the corresponding task status via the `agent-messaging` skill.
 
 ---
 

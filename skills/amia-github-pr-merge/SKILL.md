@@ -39,6 +39,7 @@ Merge pull requests, check merge status, verify readiness, and configure auto-me
 
 Copy this checklist and track your progress:
 
+- [ ] Verify governance authorization via `team-governance` skill
 - [ ] Check if PR is already merged (exit 5 = already merged)
 - [ ] Verify merge readiness (exit 0 = ready)
 - [ ] Resolve blocking conditions (CI, conflicts, reviews, threads)
