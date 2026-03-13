@@ -13,7 +13,7 @@ This document describes the complete workflow for how the Emasoft agent system h
 USER
   │
   ▼
-EAMA (Manager) ◄────────────────────────────────────────────┐
+AMAMA (Manager) ◄────────────────────────────────────────────┐
   │                                                          │
   │ 1. Creates project                                       │
   │ 2. Sends requirements to AMCOS                            │
@@ -22,18 +22,18 @@ AMCOS (Chief of Staff)                                        │
   │                                                          │
   │ 3. Evaluates project, suggests team                      │
   │ 4. Creates/assigns agents                                │
-  │ 5. Notifies EAMA: team ready                             │
+  │ 5. Notifies AMAMA: team ready                             │
   ▼                                                          │
-EAMA ─────────────────────────────────────────────────────►  │
+AMAMA ─────────────────────────────────────────────────────►  │
   │                                                          │
   │ 6. Sends requirements to AMAA                             │
   ▼                                                          │
 AMAA (Architect)                                              │
   │                                                          │
   │ 7. Creates design document                               │
-  │ 8. Sends design to EAMA                                  │
+  │ 8. Sends design to AMAMA                                  │
   ▼                                                          │
-EAMA ◄──── USER APPROVAL ─────────────────────────────────►  │
+AMAMA ◄──── USER APPROVAL ─────────────────────────────────►  │
   │                                                          │
   │ 9. Sends approved design to AMOA                          │
   ▼                                                          │
@@ -56,7 +56,7 @@ AMIA (Integrator)                                             │
   ▼                                                          │
 AMOA ◄─────────────────────────────────────────────────────►  │
   │                                                          │
-  │ 18. Reports to EAMA                                      │
+  │ 18. Reports to AMAMA                                      │
   │ 19. Assigns next tasks                                   │
   └──────────────────────────────────────────────────────────┘
 ```
@@ -96,7 +96,7 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 
 - **Small tasks**: In Progress → AI Review → Merge/Release → Done
 - **Big tasks**: In Progress → AI Review → Human Review → Merge/Release → Done
-- **Human Review** is requested via EAMA (Manager asks the user to test/review)
+- **Human Review** is requested via AMAMA (Manager asks the user to test/review)
 - **Blocked** can be set from any column; task returns to its previous column when unblocked
 
 ### Code Format Rules
@@ -114,7 +114,7 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 
 #### Step 1: Manager Creates Project
 
-**Actor**: EAMA (Manager)
+**Actor**: AMAMA (Manager)
 **Action**:
 
 - Create a new project in a new GitHub repository (or in an existing repository)
@@ -136,11 +136,11 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 
 **Communication**:
 
-- AI Maestro: Send team proposal to EAMA with justification
+- AI Maestro: Send team proposal to AMAMA with justification
 
 #### Step 3: Team Discussion and Approval
 
-**Actor**: EAMA (Manager) + AMCOS (Chief of Staff)
+**Actor**: AMAMA (Manager) + AMCOS (Chief of Staff)
 **Action**:
 
 - Manager discusses the team proposal with Chief of Staff
@@ -176,7 +176,7 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 
 **Communication**:
 
-- AI Maestro: Team ready notification to EAMA
+- AI Maestro: Team ready notification to AMAMA
 
 ---
 
@@ -184,7 +184,7 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 
 #### Step 6: Requirements to Architect
 
-**Actor**: EAMA (Manager)
+**Actor**: AMAMA (Manager)
 **Action**:
 
 - Send the requirements to the Architect agent (AMAA)
@@ -213,7 +213,7 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 **Communication**:
 
 - GitHub: Update issue with progress
-- AI Maestro: Progress updates to EAMA
+- AI Maestro: Progress updates to AMAMA
 
 #### Step 8: Design Submission
 
@@ -225,11 +225,11 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 **Communication**:
 
 - GitHub: Attach design document to issue, mark ready for review
-- AI Maestro: Notification to EAMA that design is ready
+- AI Maestro: Notification to AMAMA that design is ready
 
 #### Step 9: Design Approval
 
-**Actor**: EAMA (Manager) + USER
+**Actor**: AMAMA (Manager) + USER
 **Action**:
 
 - Manager examines the design document
@@ -448,14 +448,14 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 - When Integrator reports successful PR merge, move task to `ai-review` column
   - If AI review passes for small tasks: move to `merge-release`, then `done`
   - If AI review passes for big tasks: move to `human-review` first, then `merge-release`, then `done`
-  - Report to Manager (EAMA) for approval
+  - Report to Manager (AMAMA) for approval
   - If Manager approves: assign new task to the agent that finished
   - Keep implementer agents always working, never idle
 
 **Communication**:
 
 - GitHub: Update project item status through kanban columns
-- AI Maestro: Completion report to EAMA
+- AI Maestro: Completion report to AMAMA
 - AI Maestro: New task assignment to agent
 
 #### Step 24: Iteration
@@ -473,17 +473,17 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 
 | From | To | Channel | Purpose |
 |------|-----|---------|---------|
-| EAMA | AMCOS | AI Maestro | Requirements, team requests |
-| AMCOS | EAMA | AI Maestro | Team proposals, status updates |
-| EAMA | AMAA | GitHub + AI Maestro | Requirements, design requests |
-| AMAA | EAMA | GitHub + AI Maestro | Design documents |
-| EAMA | AMOA | GitHub + AI Maestro | Approved designs |
+| AMAMA | AMCOS | AI Maestro | Requirements, team requests |
+| AMCOS | AMAMA | AI Maestro | Team proposals, status updates |
+| AMAMA | AMAA | GitHub + AI Maestro | Requirements, design requests |
+| AMAA | AMAMA | GitHub + AI Maestro | Design documents |
+| AMAMA | AMOA | GitHub + AI Maestro | Approved designs |
 | AMOA | Agents | GitHub + AI Maestro | Task assignments |
 | Agents | AMOA | AI Maestro | Status updates, questions |
 | AMOA | AMAA | AI Maestro | Design change requests |
 | AMOA | AMIA | AI Maestro | PR review requests |
 | AMIA | AMOA | AI Maestro | PR review results |
-| AMOA | EAMA | AI Maestro | Completion reports |
+| AMOA | AMAMA | AI Maestro | Completion reports |
 
 ---
 
@@ -491,7 +491,7 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 
 | Role | Creates | Manages | Cannot Do |
 |------|---------|---------|-----------|
-| **EAMA** | Projects | Approvals, user communication | Task assignment |
+| **AMAMA** | Projects | Approvals, user communication | Task assignment |
 | **AMCOS** | Agents, teams | Agent lifecycle | Task assignment, projects |
 | **AMAA** | Designs | Architecture | Task assignment |
 | **AMOA** | Tasks, plans | Kanban, agent coordination | Agents, projects |
@@ -504,8 +504,8 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 
 | Step | GitHub Action | Actor |
 |------|---------------|-------|
-| 1 | Create repository | EAMA |
-| 6 | Create requirements issue | EAMA |
+| 1 | Create repository | AMAMA |
+| 6 | Create requirements issue | AMAMA |
 | 7 | Update issue with progress | AMAA |
 | 8 | Attach design document | AMAA |
 | 13 | Create task issues, add to project | AMOA |
@@ -519,8 +519,8 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 
 ## Document References
 
-- **Requirements Document**: Created by EAMA, sent to AMAA
-- **Design Document**: Created by AMAA, approved by EAMA/User
+- **Requirements Document**: Created by AMAMA, sent to AMAA
+- **Design Document**: Created by AMAA, approved by AMAMA/User
 - **Task-Requirements-Document**: Created by AMOA for each task
 - **Design-Change-Request**: Created by AMOA when agents suggest improvements
 - **PR Review Report**: Created by AMIA for each PR
