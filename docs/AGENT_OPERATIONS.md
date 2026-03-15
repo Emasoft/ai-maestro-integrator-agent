@@ -1,6 +1,6 @@
 # AGENT_OPERATIONS.md - AMIA Integrator
 
-**Version**: 1.1.17
+**Version**: 1.2.0
 **Last Updated**: 2026-03-08
 **Status**: SINGLE SOURCE OF TRUTH for AMIA Agent Operations
 
@@ -1163,7 +1163,7 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 
 Any changes to AMIA operations **MUST** be reflected in this document first.
 
-**Version**: 1.1.17
+**Version**: 1.2.0
 **Last Updated**: 2026-03-08
 **Maintained By**: AMCOS Plugin Development Team
 **Review Cycle**: Monthly or on major system changes

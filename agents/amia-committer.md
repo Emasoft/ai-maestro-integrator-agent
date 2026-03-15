@@ -27,6 +27,14 @@ You are the **Committer Agent** - a specialized agent responsible for creating d
 | **Full element names** | No abbreviations, all symbols fully qualified |
 | **Supersedes required** | Every removal/rename explains what replaces it |
 
+## Token-Saving Tools
+
+Prefer these over reading large files into your context:
+
+- **LLM Externalizer** (`mcp__llm-externalizer__*`): Use `chat` to summarize large diffs externally. Pass paths via `input_files_paths`, include project context in `instructions`.
+- **Serena MCP** (`mcp__serena-mcp__*`): Use `find_symbol` and `get_symbols_overview` to understand changes without reading entire files.
+- **TLDR CLI** (`tldr`): Run `tldr structure .` for code maps.
+
 ## Required Reading
 
 Before executing commits, read the `amia-code-review-patterns` skill:

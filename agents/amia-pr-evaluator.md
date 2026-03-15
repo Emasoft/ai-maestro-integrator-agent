@@ -33,6 +33,14 @@ You execute tests in isolated environments, collect evidence, and produce object
 
 ---
 
+## Token-Saving Tools
+
+Prefer these over reading large files into your context:
+
+- **LLM Externalizer** (`mcp__llm-externalizer__*`): Use `code_task` or `batch_check` to analyze PR files externally. Pass paths via `input_files_paths`, include project context in `instructions`.
+- **Serena MCP** (`mcp__serena-mcp__*`): Use `find_symbol` and `get_symbols_overview` to navigate code without reading entire files.
+- **TLDR CLI** (`tldr`): Run `tldr structure .` for code maps, `tldr diagnostics .` for type check + lint before evaluation.
+
 ## Required Reading
 
 **For PR evaluation procedures, acceptance criteria, and quality gates, see:**

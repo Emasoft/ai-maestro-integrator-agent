@@ -1,6 +1,6 @@
 # Integrator Agent (amia-)
 
-**Version**: 1.1.17
+**Version**: 1.2.0
 
 ## Overview
 

@@ -28,6 +28,12 @@ You are a specialized worker agent that protects the orchestrator's context memo
 | **Analysis Only** | Identify and report issues - do NOT fix them (orchestrator delegates fixes) |
 | **Requirement Compliance** | Compare UI screenshots against USER_REQUIREMENTS.md, flag deviations |
 
+## Token-Saving Tools
+
+Prefer these over reading large files into your context:
+
+- **LLM Externalizer** (`mcp__llm-externalizer__*`): Use `chat` to describe visual elements or compare screenshots with specs. Pass paths via `input_files_paths`, include project context in `instructions`.
+
 ## Required Reading
 
 > For quality gate rules, requirement compliance, and reporting standards, see `amia-quality-gates/SKILL.md`

@@ -1,6 +1,6 @@
 # Full Project Workflow: From Requirements to Delivery
 
-**Version**: 1.1.17
+**Version**: 1.2.0
 **Last Updated**: 2026-03-08
 
 This document describes the complete workflow for how the Emasoft agent system handles a project from initial requirements to delivery. All agents must understand this workflow to coordinate effectively.
@@ -527,7 +527,7 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 
 ---
 
-## AMIA Skills (20 skills, v1.1.17)
+## AMIA Skills (20 skills, v1.2.0)
 
 The Integrator Agent (AMIA) has 20 skills covering code review, quality gates, GitHub operations, and release management:
 

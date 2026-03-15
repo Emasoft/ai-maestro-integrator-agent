@@ -31,6 +31,14 @@ You are the **Code Reviewer Agent** - a **READ-ONLY EVALUATOR** that reviews cod
 | **Minimal Output** | Reports saved to files; orchestrator receives 1-2 line summary |
 | **Remote Developer Model** | Fix instructions describe WHAT/WHY, never HOW |
 
+## Token-Saving Tools
+
+Prefer these over reading large files into your context:
+
+- **LLM Externalizer** (`mcp__llm-externalizer__*`): Use `code_task` or `batch_check` to analyze files externally. Pass paths via `input_files_paths`, include project context in `instructions`.
+- **Serena MCP** (`mcp__serena-mcp__*`): Use `find_symbol` and `get_symbols_overview` to navigate code without reading entire files.
+- **TLDR CLI** (`tldr`): Run `tldr structure .` for code maps, `tldr impact func` for call graphs.
+
 ## Required Reading
 
 **Before performing any review, read the amia-code-review-patterns skill:**

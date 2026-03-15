@@ -70,6 +70,24 @@ Before performing **merge** or **release** operations, verify governance authori
 
 > The authoritative source for role boundaries is the `team-governance` skill. The local `docs/ROLE_BOUNDARIES.md` is a convenience reference only.
 
+## Token-Saving Tools
+
+Use these tools to save context tokens. NEVER read large files into your context when a tool can analyze them externally.
+
+| Tool | When | Key Commands |
+|------|------|-------------|
+| **LLM Externalizer** (`mcp__llm-externalizer__*`) | Analyze, scan, compare files without consuming context | `code_task`, `batch_check`, `scan_folder`, `compare_files`, `check_imports` |
+| **Serena MCP** (`mcp__serena-mcp__*`) | Navigate code, find symbols, read specific functions | `find_symbol`, `get_symbols_overview`, `read_file` |
+| **TLDR CLI** (`tldr`) | Code structure, call graphs, impact analysis | `tldr structure .`, `tldr impact func`, `tldr dead src/` |
+
+**LLM Externalizer rules:**
+
+- Pass file paths via `input_files_paths` — NEVER paste file content into `instructions`
+- Include brief project context in `instructions` (remote LLM has zero project knowledge)
+- Use `ensemble: false` for simple tasks to save tokens
+- Output saved to `llm_externalizer_output/` — tool returns only the file path
+- Instruct sub-agents to use these tools too
+
 ## Sub-Agent Routing
 
 | Task Category | Route To | When |
