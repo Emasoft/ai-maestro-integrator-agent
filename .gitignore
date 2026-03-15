@@ -53,5 +53,6 @@ node_modules/
 *.log
 *.tmp
 *.bak
+*.externbak
 .DS_Store
 .claude/

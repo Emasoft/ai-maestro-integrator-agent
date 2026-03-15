@@ -143,7 +143,7 @@ app.run(host='localhost', port=web_port)
 **Command:**
 
 ```bash
-eia port list
+amia port list
 ```
 
 **Output:**
@@ -182,13 +182,13 @@ Debug: 3/10 ports used (30%)
 **Command:**
 
 ```bash
-eia port check <port_number>
+amia port check <port_number>
 ```
 
 **Example:**
 
 ```bash
-$ eia port check 8083
+$ amia port check 8083
 
 Port 8083 Status
 ═════════════════════════════════════════════════════════
@@ -200,7 +200,7 @@ Next in use: 8082 (feature-payment)
 **Example (port in use):**
 
 ```bash
-$ eia port check 8081
+$ amia port check 8081
 
 Port 8081 Status
 ═════════════════════════════════════════════════════════
@@ -215,13 +215,13 @@ Started:     2024-01-15 14:30:22
 **Command:**
 
 ```bash
-eia port show <worktree_name>
+amia port show <worktree_name>
 ```
 
 **Example:**
 
 ```bash
-$ eia port show feature-login
+$ amia port show feature-login
 
 Ports for Worktree: feature-login
 ═════════════════════════════════════════════════════════
@@ -239,13 +239,13 @@ To start all services:
 **Command:**
 
 ```bash
-eia port release <worktree_name>
+amia port release <worktree_name>
 ```
 
 **Example:**
 
 ```bash
-$ eia port release feature-login
+$ amia port release feature-login
 
 Releasing ports for: feature-login
 ═════════════════════════════════════════════════════════

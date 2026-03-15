@@ -35,10 +35,10 @@ netstat -an | grep 8080
 kill <PID>
 
 # Option 2: Skip the port in registry
-eia port mark-unavailable 8080 "Used by system service"
+amia port mark-unavailable 8080 "Used by system service"
 
 # Option 3: Change port ranges
-eia port config --web-range 8100-8199
+amia port config --web-range 8100-8199
 ```
 
 #### 2. Registry Out of Sync
@@ -49,7 +49,7 @@ Registry says port is free, but it's actually in use.
 **Symptoms:**
 
 ```bash
-$ eia worktree create feature-new
+$ amia worktree create feature-new
 Allocated port 8081
 ERROR: Port 8081 already in use
 ```
@@ -58,7 +58,7 @@ ERROR: Port 8081 already in use
 
 ```bash
 # Scan all ports and rebuild registry
-eia port scan-rebuild
+amia port scan-rebuild
 
 # This will:
 # 1. Check which ports are actually listening
@@ -78,36 +78,36 @@ ERROR: No available ports in web range (8080-8099)
 
 ```bash
 # Option 1: Expand the range
-eia port config --web-range 8080-8199
+amia port config --web-range 8080-8199
 
 # Option 2: Remove unused worktrees
-eia worktree list --unused
-eia worktree remove old-feature-1
+amia worktree list --unused
+amia worktree remove old-feature-1
 
 # Option 3: Compact port assignments
-eia port compact
+amia port compact
 # This reassigns ports to fill gaps
 ```
 
 #### 4. Stale Port Allocations
 
 **Problem:**
-Worktree was deleted manually (not via eia), ports still marked as used.
+Worktree was deleted manually (not via amia), ports still marked as used.
 
 **Solution:**
 
 ```bash
 # List all allocated ports
-eia port list
+amia port list
 
 # Check if worktree still exists
-eia worktree list
+amia worktree list
 
 # Release ports for non-existent worktree
-eia port release deleted-worktree-name
+amia port release deleted-worktree-name
 
 # Or run cleanup to auto-detect
-eia port cleanup
+amia port cleanup
 ```
 
 ### Automatic Conflict Resolution

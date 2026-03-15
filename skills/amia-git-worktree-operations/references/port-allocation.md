@@ -105,26 +105,26 @@ Generated Docker:   <worktree>/docker-compose.yml
 
 ```bash
 # Allocate ports for new worktree
-eia worktree create <name>  # Auto-allocates
+amia worktree create <name>  # Auto-allocates
 
 # List all ports
-eia port list
+amia port list
 
 # Check specific port
-eia port check <port>
+amia port check <port>
 
 # Show ports for worktree
-eia port show <worktree>
+amia port show <worktree>
 
 # Release ports
-eia port release <worktree>
+amia port release <worktree>
 
 # Clean up stale allocations
-eia port cleanup
+amia port cleanup
 
 # Rebuild registry
-eia port scan-rebuild
+amia port scan-rebuild
 
 # Check port conflicts
-eia port check-conflicts
+amia port check-conflicts
 ```

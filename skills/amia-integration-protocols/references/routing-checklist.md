@@ -24,9 +24,9 @@
   - [Step 6: Log Routing Decision](#step-6-log-routing-decision)
   - [Step 7: Execute Delegation](#step-7-execute-delegation)
   - [Step 8: Monitor Completion](#step-8-monitor-completion)
-  - [Step 9: Report to AMOA](#step-9-report-to-eoa)
+  - [Step 9: Report to AMOA](#step-9-report-to-amoa)
 
-This document provides the complete routing decision framework and delegation procedures for the Emasoft Integrator Agent (AMIA) Main Agent.
+This document provides the complete routing decision framework and delegation procedures for the AI Maestro Integrator Agent (AMIA) Main Agent.
 
 ## Sub-Agent Routing Table
 

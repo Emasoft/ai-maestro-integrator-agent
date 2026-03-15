@@ -11,7 +11,7 @@
 
 ## Overview
 
-GitHub Projects Sync integrates with other AMOA (Emasoft Orchestrator Agent) skills to provide a complete task management workflow. This document describes the integration points and protocols.
+GitHub Projects Sync integrates with other AMOA (AI Maestro Orchestration Agent) skills to provide a complete task management workflow. This document describes the integration points and protocols.
 
 **Key Integrations:**
 

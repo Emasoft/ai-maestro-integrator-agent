@@ -149,11 +149,11 @@ A major version bump with no documented breaking changes blocks the gate.
 
 ## 4. What to Do When Changelog Is Missing for a Version Bump
 
-Block the pre-merge gate and apply the `eia/changelog-missing` label:
+Block the pre-merge gate and apply the `amia/changelog-missing` label:
 
 ```bash
-gh pr edit $PR_NUMBER --add-label "eia/changelog-missing"
-gh pr edit $PR_NUMBER --remove-label "eia/changelog-passed" 2>/dev/null || true
+gh pr edit $PR_NUMBER --add-label "amia/changelog-missing"
+gh pr edit $PR_NUMBER --remove-label "amia/changelog-passed" 2>/dev/null || true
 ```
 
 Post instructions to the PR author:
@@ -177,8 +177,8 @@ The gate will re-evaluate when you push the updated CHANGELOG.md."
 After the author pushes the update, re-run verification. If it passes, swap labels:
 
 ```bash
-gh pr edit $PR_NUMBER --remove-label "eia/changelog-missing"
-gh pr edit $PR_NUMBER --add-label "eia/changelog-passed"
+gh pr edit $PR_NUMBER --remove-label "amia/changelog-missing"
+gh pr edit $PR_NUMBER --add-label "amia/changelog-passed"
 ```
 
 ---
@@ -208,7 +208,7 @@ For automated CI enforcement, see the `amia-release-management` skill's `referen
 4. **Verify non-empty** (section 2.2): Count list items in the section. If zero, block (section 4).
 5. **Validate format** (section 3): Check header format, category headings, and breaking change docs.
 6. **Cross-reference with PR description**: Compare changelog entries with the PR body (non-blocking warning if discrepancies found).
-7. **Apply result label**: `eia/changelog-passed` if all checks pass, `eia/changelog-missing` if any fail.
+7. **Apply result label**: `amia/changelog-passed` if all checks pass, `amia/changelog-missing` if any fail.
 
 ---
 
@@ -224,7 +224,7 @@ Changelog verification is a sub-step of the pre-merge gate, evaluated alongside 
 4. Verify valid approval (see [pre-merge-gate.md](pre-merge-gate.md), section 3)
 5. Verify branch is up-to-date (see [pre-merge-gate.md](pre-merge-gate.md), section 4)
 
-**Labels**: `eia/changelog-missing` (blocks gate), `eia/changelog-passed` (cleared).
+**Labels**: `amia/changelog-missing` (blocks gate), `amia/changelog-passed` (cleared).
 
 ---
 

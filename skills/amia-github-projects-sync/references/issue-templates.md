@@ -18,7 +18,7 @@
 
 ## Overview
 
-This document provides complete issue and pull request templates for the AMOA (Emasoft Orchestrator Agent) system. All templates are designed to provide maximum context for remote developer agents.
+This document provides complete issue and pull request templates for the AMOA (AI Maestro Orchestration Agent) system. All templates are designed to provide maximum context for remote developer agents.
 
 ## Directory Structure
 

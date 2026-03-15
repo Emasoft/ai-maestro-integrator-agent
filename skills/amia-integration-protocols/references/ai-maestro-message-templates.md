@@ -22,7 +22,7 @@
 
 ---
 
-This document contains all AI Maestro messaging templates for Emasoft Integrator Agent (AMIA) communication patterns. For the exact messaging commands and syntax, always refer to the `agent-messaging` skill.
+This document contains all AI Maestro messaging templates for AI Maestro Integrator Agent (AMIA) communication patterns. For the exact messaging commands and syntax, always refer to the `agent-messaging` skill.
 
 ## 1.0 Standard AI Maestro Messaging Approach
 

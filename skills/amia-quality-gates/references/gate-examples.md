@@ -86,7 +86,7 @@ gh pr edit $PR_NUMBER --add-label "gate:post-merge-failed"
 # Immediate escalation
 gh pr comment $PR_NUMBER --body "🚨 **POST-MERGE GATE FAILED**: Main branch CI broken
 
-@author @reviewer @eoa - Immediate attention required.
+@author @reviewer @amoa - Immediate attention required.
 
 Failure: Main branch tests failing in auth module
 

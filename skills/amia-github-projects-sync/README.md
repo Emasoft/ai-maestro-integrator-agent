@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Manages team tasks through GitHub Projects V2, enabling AMOA (Emasoft Orchestrator Agent) to track features, bugs, PRs, and issues with automatic CI integration and project synchronization.
+Manages team tasks through GitHub Projects V2, enabling AMOA (AI Maestro Orchestration Agent) to track features, bugs, PRs, and issues with automatic CI integration and project synchronization.
 
 ## When to Use
 

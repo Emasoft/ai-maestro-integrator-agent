@@ -24,7 +24,7 @@ Ports should be released when:
 **Integrated cleanup:**
 
 ```bash
-eia worktree remove feature-old
+amia worktree remove feature-old
 ```
 
 **This automatically:**
@@ -74,7 +74,7 @@ def remove_worktree_with_cleanup(worktree_name):
 #### Clean Up Stale Allocations
 
 ```bash
-eia port cleanup
+amia port cleanup
 
 # This will:
 # 1. List all worktrees in registry
@@ -102,7 +102,7 @@ Cleanup complete: 8 ports released
 #### Force Release All Ports
 
 ```bash
-eia port release-all --force
+amia port release-all --force
 
 # WARNING: This releases ALL ports
 # Use only when starting fresh
@@ -111,7 +111,7 @@ eia port release-all --force
 #### Reset Port Registry
 
 ```bash
-eia port reset
+amia port reset
 
 # This will:
 # 1. Scan all existing worktrees
@@ -126,8 +126,8 @@ When deleting the entire project:
 ```bash
 # Clean up everything
 cd ~/projects/myapp
-eia port release-all
-eia worktree remove-all
+amia port release-all
+amia worktree remove-all
 cd ..
 rm -rf myapp
 
@@ -143,7 +143,7 @@ rm -rf myapp
 **Symptom:**
 
 ```bash
-$ eia worktree create feature-new
+$ amia worktree create feature-new
 ERROR: Failed to allocate ports
 ```
 
@@ -151,10 +151,10 @@ ERROR: Failed to allocate ports
 
 ```bash
 # Check port range capacity
-eia port status
+amia port status
 
 # Check for conflicts
-eia port check-conflicts
+amia port check-conflicts
 ```
 
 **Solution:**
@@ -179,7 +179,7 @@ ERROR: Port 8082 already in use
 lsof -i :8082
 
 # Is it allocated correctly?
-eia port show feature-payment
+amia port show feature-payment
 ```
 
 **Solution:**
@@ -189,10 +189,10 @@ eia port show feature-payment
 kill <PID>
 
 # If registry is wrong:
-eia port scan-rebuild
+amia port scan-rebuild
 
 # If port is wrong in config:
-eia worktree regenerate-config feature-payment
+amia worktree regenerate-config feature-payment
 ```
 
 ### Problem: Docker Containers Conflict
@@ -211,7 +211,7 @@ ERROR: Bind for 0.0.0.0:8082 failed: port is already allocated
 docker ps | grep 8082
 
 # Check port allocation
-eia port list
+amia port list
 ```
 
 **Solution:**
@@ -221,7 +221,7 @@ eia port list
 docker stop <container_id>
 
 # Or regenerate docker-compose.yml
-eia docker regenerate feature-payment
+amia docker regenerate feature-payment
 ```
 
 ### Problem: Registry Corruption
@@ -229,7 +229,7 @@ eia docker regenerate feature-payment
 **Symptom:**
 
 ```bash
-$ eia port list
+$ amia port list
 ERROR: Invalid registry format
 ```
 
@@ -250,7 +250,7 @@ python -m json.tool .git/worktree-registry/ports.json
 cp .git/worktree-registry/ports.json .git/worktree-registry/ports.json.backup
 
 # Rebuild from scratch
-eia port reset
+amia port reset
 
 # Or restore from backup
 cp .git/worktree-registry/ports.json.backup .git/worktree-registry/ports.json
@@ -261,7 +261,7 @@ cp .git/worktree-registry/ports.json.backup .git/worktree-registry/ports.json
 **Symptom:**
 
 ```bash
-$ eia port list
+$ amia port list
 # Shows ports for deleted worktree
 ```
 
@@ -278,10 +278,10 @@ git worktree list | grep feature-old
 
 ```bash
 # Release manually
-eia port release feature-old
+amia port release feature-old
 
 # Or run cleanup
-eia port cleanup
+amia port cleanup
 ```
 
 ### Problem: Cannot Expand Port Range
@@ -289,7 +289,7 @@ eia port cleanup
 **Symptom:**
 
 ```bash
-$ eia port config --web-range 8080-8199
+$ amia port config --web-range 8080-8199
 ERROR: Range conflicts with existing allocations
 ```
 
@@ -297,17 +297,17 @@ ERROR: Range conflicts with existing allocations
 
 ```bash
 # Check current allocations
-eia port list --service web
+amia port list --service web
 ```
 
 **Solution:**
 
 ```bash
 # Compact existing allocations first
-eia port compact
+amia port compact
 
 # Then expand range
-eia port config --web-range 8080-8199
+amia port config --web-range 8080-8199
 ```
 
 ### Problem: Port Check Shows Wrong Status
@@ -315,7 +315,7 @@ eia port config --web-range 8080-8199
 **Symptom:**
 
 ```bash
-$ eia port check 8082
+$ amia port check 8082
 Status: AVAILABLE
 # But it's actually in use!
 ```
@@ -332,7 +332,7 @@ netstat -an | grep 8082
 
 ```bash
 # Rebuild registry from actual port usage
-eia port scan-rebuild
+amia port scan-rebuild
 
 # This will update registry to match reality
 ```
@@ -345,28 +345,28 @@ eia port scan-rebuild
 
 ```bash
 # Allocate ports for new worktree
-eia worktree create <name>  # Auto-allocates
+amia worktree create <name>  # Auto-allocates
 
 # List all ports
-eia port list
+amia port list
 
 # Check specific port
-eia port check <port>
+amia port check <port>
 
 # Show ports for worktree
-eia port show <worktree>
+amia port show <worktree>
 
 # Release ports
-eia port release <worktree>
+amia port release <worktree>
 
 # Clean up stale allocations
-eia port cleanup
+amia port cleanup
 
 # Rebuild registry
-eia port scan-rebuild
+amia port scan-rebuild
 
 # Check port conflicts
-eia port check-conflicts
+amia port check-conflicts
 ```
 
 ### Port Ranges Reference

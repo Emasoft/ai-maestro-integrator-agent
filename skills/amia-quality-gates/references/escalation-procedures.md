@@ -87,7 +87,7 @@ Please provide status update or address failures.
 
 ### Level 3: Orchestrator Escalation
 
-**Action**: Notify AMOA (Emasoft Orchestrator Agent)
+**Action**: Notify AMOA (AI Maestro Orchestration Agent)
 **Timeline**: 48 hours after Level 2 (configurable)
 **Responsible**: AMIA Integrator Agent
 
@@ -96,7 +96,7 @@ Please provide status update or address failures.
 **Notification**:
 
 ```
-@eoa - Pre-review gate escalation
+@amoa - Pre-review gate escalation
 
 PR #${PR_NUMBER} blocked for 72+ hours due to failing automated checks.
 
@@ -192,7 +192,7 @@ Please address feedback or discuss if clarification needed.
 **Notification**:
 
 ```
-@eoa - Review gate escalation
+@amoa - Review gate escalation
 
 PR #${PR_NUMBER} blocked for 1+ week due to unresolved review issues.
 
@@ -299,7 +299,7 @@ Please [specific action - rebase, fix CI, etc.].
 **Notification**:
 
 ```
-@eoa - Pre-merge gate CI infrastructure issue
+@amoa - Pre-merge gate CI infrastructure issue
 
 PR #${PR_NUMBER} blocked by CI failures that appear infrastructure-related.
 
@@ -334,7 +334,7 @@ Main branch health check failed after merging PR #${PR_NUMBER}.
 **Issue**: [Specific failure - CI, regression, deployment]
 **Impact**: [Production impact if any]
 
-@author @reviewer @eoa - Immediate attention required.
+@author @reviewer @amoa - Immediate attention required.
 
 **Next Steps**: Evaluating revert vs hotfix (decision within 30 minutes)
 ```

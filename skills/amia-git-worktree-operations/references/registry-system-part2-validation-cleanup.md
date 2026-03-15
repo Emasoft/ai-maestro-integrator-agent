@@ -201,7 +201,7 @@ def detect_stale_entries(registry):
 **Automatic cleanup runs:**
 
 - On every worktree create/remove operation (cleanup others)
-- On demand via `eia cleanup-worktrees` command
+- On demand via `amia cleanup-worktrees` command
 - Daily via cron/scheduled task (optional)
 
 **Cleanup steps:**
@@ -227,7 +227,7 @@ Stale worktree cleanup:
 Users can force cleanup of specific entries:
 
 ```bash
-eia remove-worktree review-GH-42 --force
+amia remove-worktree review-GH-42 --force
 ```
 
 This bypasses the 7-day pending-removal period and removes immediately.
@@ -246,7 +246,7 @@ This bypasses the 7-day pending-removal period and removes immediately.
 2. If no backup, rebuild registry:
 
    ```bash
-   eia rebuild-registry --scan-worktrees
+   amia rebuild-registry --scan-worktrees
    ```
 
    This scans filesystem and rebuilds registry from actual worktrees
@@ -262,7 +262,7 @@ This bypasses the 7-day pending-removal period and removes immediately.
 3. If port used by unregistered worktree, register it:
 
    ```bash
-   eia register-existing ../path/to/worktree
+   amia register-existing ../path/to/worktree
    ```
 
 ### Duplicate IDs After Manual Edit
@@ -274,7 +274,7 @@ This bypasses the 7-day pending-removal period and removes immediately.
 1. Open `design/worktrees/registry.json` in editor
 2. Find duplicate `id` values
 3. Rename one of them to make unique (follow naming convention)
-4. Validate: `eia validate-registry`
+4. Validate: `amia validate-registry`
 
 ### Worktree Exists but Not in Registry
 
@@ -283,7 +283,7 @@ This bypasses the 7-day pending-removal period and removes immediately.
 **Solution:**
 
 ```bash
-eia register-existing ../path/to/worktree --purpose review --issue GH-42
+amia register-existing ../path/to/worktree --purpose review --issue GH-42
 ```
 
 This adds existing worktree to registry without recreating it.

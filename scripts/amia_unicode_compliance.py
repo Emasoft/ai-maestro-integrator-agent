@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """AMIA Unicode Compliance Checker.
 
-Part of the amia-quality-gates skill in the Emasoft Integrator Agent plugin.
+Part of the amia-quality-gates skill in the AI Maestro Integrator Agent plugin.
 
 Checks files for Unicode compliance issues:
 1. BOM (Byte Order Mark) detection — files should NOT have BOM

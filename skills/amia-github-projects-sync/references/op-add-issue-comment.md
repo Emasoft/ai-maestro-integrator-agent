@@ -75,7 +75,7 @@ Work in progress. Estimated completion: 2 hours."
 
 ## Command: With Marker (Idempotent)
 
-Using the eia script for idempotent comments:
+Using the amia script for idempotent comments:
 
 ```bash
 ./scripts/amia_post_issue_comment.py \

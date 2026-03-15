@@ -153,7 +153,7 @@ gh pr merge 123 --squash
 - CI has not run for 4 hours across all PRs
 - No code-related CI failures
 
-**Approved by**: @eoa (Emasoft Orchestrator Agent)
+**Approved by**: @amoa (AI Maestro Orchestration Agent)
 
 **Risk Mitigation**:
 - Manual testing completed locally:
@@ -317,7 +317,7 @@ Per quality gate policy:
 - Re-submit as new PR when fixed
 - Investigate why pre-merge gate didn't catch this
 
-**Responsible**: @eoa
+**Responsible**: @amoa
 
 **Resolution Time**: 12 minutes (detection to revert completion)
 
