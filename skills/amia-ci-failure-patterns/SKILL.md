@@ -31,7 +31,7 @@ Diagnose and fix CI/CD failures by recognizing common failure patterns and apply
 1. Collect the CI failure log from the GitHub Actions run
 2. Run diagnostic: `python scripts/amia_diagnose_ci_failure.py --log-file ci.log`
 3. If a pattern is identified, read the corresponding reference document for the fix
-4. If not, follow the decision tree in [detailed-guide](references/detailed-guide.md)
+4. If not, follow the decision tree in the detailed guide (see Resources)
 5. Apply the fix, verify locally, push and confirm CI passes
 
 ### Checklist
@@ -56,13 +56,9 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
-## Reference Documents
-
-See `references/` directory for all reference documents. Full index in [detailed-guide](references/detailed-guide.md).
-
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for common error scenarios.
 
 ## Examples
 
@@ -77,4 +73,12 @@ python scripts/amia_diagnose_ci_failure.py --log-file ci.log
 
 ## Resources
 
-See `references/` directory — 27 documents covering patterns, operations, and CI best practices.
+See `references/` directory — 27 documents. Full guide: [detailed-guide](references/detailed-guide.md):
+  - Failure Pattern Categories
+  - Diagnosis Decision Tree
+  - Quick Reference: Most Common Patterns
+  - Diagnostic Scripts
+  - Workflow: Diagnosing a CI Failure
+  - Error Handling
+  - Examples
+  - Reference Document TOCs

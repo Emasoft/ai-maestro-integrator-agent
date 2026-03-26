@@ -61,17 +61,21 @@ Exit codes: 0=success, 1=invalid params, 2=not found, 3=API error, 4=auth, 5=alr
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
-## Reference Documents
-
-See `references/` directory for all reference documents (merge state verification, strategies, auto-merge, operation guides, rollback). Full details in [detailed-guide](references/detailed-guide.md).
-
 ## Error Handling
 
-On failure, check exit code and stderr. Exit 1 = invalid params; Exit 2-4 = API errors. See [detailed-guide](references/detailed-guide.md).
+On failure, check exit code and stderr. Exit 1 = invalid params; Exit 2-4 = API errors. See the detailed guide in Resources.
 
 ## Resources
 
-See `references/` directory.
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - Decision Tree
+  - GraphQL Source of Truth
+  - Script Usage Details
+  - Common Workflows
+  - Exit Codes Reference
+  - Error Handling
+  - Safety Warning
+  - Script Locations
 
 ## Examples
 

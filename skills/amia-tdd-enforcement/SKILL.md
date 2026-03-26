@@ -59,13 +59,9 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
-## Reference Documents
-
-See `references/` directory for all reference documents. Full index in [detailed-guide](references/detailed-guide.md).
-
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for common error scenarios.
 
 ## Examples
 
@@ -85,8 +81,17 @@ python -m pytest tests/ -x
 # Output: PASSED (12 passed)
 ```
 
-See [detailed-guide](references/detailed-guide.md) for extended examples.
+See the detailed guide in Resources for extended examples.
 
 ## Resources
 
-See `references/` directory for all reference documents.
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - Coordinator Role
+  - TDD Cycle Details
+  - Core Principles Navigation
+  - Implementation Guidance Navigation
+  - Rules and Enforcement Navigation
+  - Problem Solving Navigation
+  - Progressive Learning Path
+  - RULE 14 Requirement Compliance
+  - Error Handling

@@ -61,7 +61,14 @@ See `references/` directory for all reference documents.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. See [error-handling](references/error-handling.md) for details.
+Script failures return non-zero exit codes. See [error-handling](references/error-handling.md) for details:
+  - When encountering GitHub API errors
+  - When hitting rate limits
+  - When project or item is not found
+  - When item updates fail
+  - When authentication fails
+  - When webhook delivery fails
+  - When implementing retry logic
 
 ## Examples
 

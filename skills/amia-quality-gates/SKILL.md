@@ -56,15 +56,9 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`. With flag: JSON to file, summary to stderr. Without: JSON to stdout.
 
-## Reference Documents
-
-See `references/` directory for all reference documents. Key files: [gate-pipeline](references/gate-pipeline.md) (pipeline flow), [escalation-paths](references/escalation-paths.md) (escalation), [override-policies](references/override-policies.md) (overrides), [detailed-guide](references/detailed-guide.md) (full guide).
-
-**Related skills:** amia-label-taxonomy, amia-code-review-patterns, amia-github-pr-workflow, amia-tdd-enforcement, amia-ci-failure-patterns
-
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for common error scenarios.
 
 ## Examples
 
@@ -73,8 +67,42 @@ python scripts/amia_quality_gate_check.py --repo owner/repo --pr 42
 # Output: {"gate_status": "pass", "gate": "pre-review", "checks_passed": 5, "checks_failed": 0}
 ```
 
-See [detailed-guide](references/detailed-guide.md) for more examples.
-
 ## Resources
 
-See `references/` directory for all reference documents.
+**Related skills:** amia-label-taxonomy, amia-code-review-patterns, amia-github-pr-workflow, amia-tdd-enforcement, amia-ci-failure-patterns
+
+[gate-pipeline](references/gate-pipeline.md) — Pipeline flow:
+  - Overview
+  - Pipeline Diagram
+  - Gate Transitions
+  - Transition: Pre-Review -> Review
+  - Transition: Review -> Pre-Merge
+  - Transition: Pre-Merge -> Merge
+  - Transition: Merge -> Post-Merge
+  - Transition: Post-Merge -> Complete
+  - Failure Handling
+  - Parallel Gates
+  - Gate Bypass
+
+[escalation-paths](references/escalation-paths.md) — Escalation:
+  - Escalation Path A: Pre-Review Gate Failure
+  - Escalation Path B: Review Gate Failure
+  - Escalation Path C: Pre-Merge Gate Failure
+  - Escalation Path D: Post-Merge Gate Failure
+
+[override-policies](references/override-policies.md) — Overrides:
+  - Overrides Are Exceptions
+  - Override Authority Matrix
+  - Override Procedure
+
+[detailed-guide](references/detailed-guide.md) — Full guide:
+  - Purpose and Principles
+  - Gate Types and Pipeline Position
+  - Error Handling
+  - Output Discipline
+  - Design Document Scripts
+  - Encoding Compliance Scripts
+  - Unicode Enforcement Scripts
+  - PR Gate Scripts
+  - Script Locations
+  - Integration with Other Skills

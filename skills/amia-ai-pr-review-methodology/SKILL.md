@@ -65,17 +65,13 @@ Copy this checklist and track your progress:
 | Recommendation | APPROVE / REQUEST CHANGES / COMMENT |
 | Confidence | High / Medium / Low |
 
-Template: [review-output-template](references/review-output-template.md)
+See the review output template and detailed guide in Resources for template details.
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
-## Reference Documents
-
-See `references/` directory for all reference documents. Full index in [detailed-guide](references/detailed-guide.md).
-
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for error scenarios.
 
 ## Examples
 
@@ -86,4 +82,22 @@ python scripts/amia_pr_review.py --repo owner/repo --pr 42
 
 ## Resources
 
-See [detailed-guide](references/detailed-guide.md) for extended examples, troubleshooting, and related skills.
+[review-output-template](references/review-output-template.md):
+  - T.1 When to generate the review output
+  - T.2 The complete review output template (copy-paste ready)
+  - T.3 How to fill each section of the template
+  - T.4 Choosing the final recommendation: APPROVE, REQUEST CHANGES, or COMMENT
+  - T.5 Setting the confidence level: High, Medium, or Low
+  - T.6 Writing the author note
+  - T.7 Example: A completed review output
+
+[detailed-guide](references/detailed-guide.md):
+  - 4 Phases Overview
+  - 5 Analysis Dimensions
+  - Key Principle
+  - Evidence Requirements
+  - Scenario-Specific Protocols
+  - Troubleshooting
+  - Error Handling
+  - Extended Examples
+  - Related Skills

@@ -53,10 +53,6 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`. Use it in automated workflows to minimize token consumption.
 
-## Reference Documents
-
-See `references/` directory for all reference documents. Full index in [detailed-guide](references/detailed-guide.md).
-
 ## Error Handling
 
 Script failures return non-zero exit codes. Check stderr for details.
@@ -70,4 +66,19 @@ python scripts/review_report_generator.py --repo owner/repo --pr 42
 
 ## Resources
 
-See [detailed-guide](references/detailed-guide.md) for scoring details and examples.
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - Core Methodology: Two-Stage Review Process
+  - Key Concepts
+  - Confidence Scoring System
+  - Multi-Dimensional Analysis
+  - Quick Reference Tables
+  - Confidence Score Ranges
+  - Dimension Weight Summary
+  - Scripts Available
+  - AI Maestro Communication Templates
+  - Template 1: Receiving PR Review Request
+  - Template 2: Reporting Review Completion
+  - Template 3: Requesting Clarification from Author
+  - Template 4: Escalating Quality Gate Failure
+  - Error Handling
+  - Reference Document TOCs

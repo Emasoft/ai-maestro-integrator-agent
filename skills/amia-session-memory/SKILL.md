@@ -67,7 +67,7 @@ See `references/` directory for remaining documents.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for common error scenarios.
 
 ## Examples
 
@@ -84,4 +84,15 @@ gh pr view 42 --comments --json comments \
 
 ## Resources
 
-See `references/` directory for all reference documents and templates.
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - Error Handling
+  - Examples
+  - Memory Architecture
+  - What to Remember
+  - Memory Retrieval
+  - Memory Updates
+  - Handoff Documents
+  - Integration with Other Skills
+  - Troubleshooting
+  - Quick Reference Commands
+  - State Markers

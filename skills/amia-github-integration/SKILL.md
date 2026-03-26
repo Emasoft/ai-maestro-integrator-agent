@@ -35,7 +35,7 @@ Routes GitHub integration tasks to specialized skills (PRs, Projects V2, Kanban,
    - **Multi-user** --> [multi-user-workflow](references/multi-user-workflow.md)
 3. Batch ops: preview first (`gh issue list --label X --state open`), then execute.
 4. Verify result: `gh issue view <N>` or `gh pr status`.
-5. On errors: see [detailed-guide](references/detailed-guide.md).
+5. On errors: see the detailed guide in Resources.
 
 ### Checklist
 
@@ -59,13 +59,9 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`. Use it in automated workflows to minimize token consumption.
 
-## Reference Documents
-
-See `references/` directory for all reference documents. Index in [detailed-guide](references/detailed-guide.md).
-
 ## Error Handling
 
-Non-zero exit codes on failure; check stderr and [detailed-guide](references/detailed-guide.md).
+Non-zero exit codes on failure; check stderr and the detailed guide in Resources.
 
 ## Examples
 
@@ -90,4 +86,18 @@ gh issue view 15 --json labels --jq '.labels[].name'
 
 ## Resources
 
-See `references/` directory (40+ documents).
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - Decision Tree: Which Skill to Use?
+  - Pull Requests
+  - Projects V2 Sync
+  - Kanban Board Operations
+  - Git Worktrees
+  - GitHub API Operations
+  - Multiple GitHub Identities
+  - Batch Operations
+  - Batch Label Operations
+  - Automation Scripts
+  - Error Handling
+  - Extended Examples
+  - First-Time Setup
+  - Changelog

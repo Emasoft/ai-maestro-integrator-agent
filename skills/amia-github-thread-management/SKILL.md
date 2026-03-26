@@ -66,11 +66,17 @@ See `references/` directory for all reference documents: protocols, conversation
 
 ## Error Handling
 
-Check exit code and stderr on failure. Exit 1: bad params. Exit 2-4: API errors. See [detailed-guide](references/detailed-guide.md).
+Check exit code and stderr on failure. Exit 1: bad params. Exit 2-4: API errors. See the detailed guide in Resources.
 
 ## Resources
 
-See `references/` directory.
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - Decision Tree for Thread Operations
+  - Key Concepts
+  - Common Workflows
+  - Script Usage Details
+  - Exit Codes
+  - Error Handling
 
 ## Examples
 

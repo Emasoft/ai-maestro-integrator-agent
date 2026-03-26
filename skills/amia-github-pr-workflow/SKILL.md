@@ -61,13 +61,9 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`. Use it to minimize token consumption.
 
-## Reference Documents
-
-See `references/` directory for all reference documents. Full index in [detailed-guide](references/detailed-guide.md).
-
 ## Error Handling
 
-Script failures return non-zero exit codes. See [detailed-guide](references/detailed-guide.md) for details.
+Script failures return non-zero exit codes. See the detailed guide in Resources for details.
 
 ## Examples
 
@@ -79,4 +75,9 @@ python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 
 ## Resources
 
-See [detailed-guide](references/detailed-guide.md) for decision tree, scripts, and extended examples.
+Full index, decision tree, scripts, and extended examples in [detailed-guide](references/detailed-guide.md):
+  - Decision Tree
+  - Scripts Reference
+  - Section Index
+  - Error Handling
+  - Extended Examples

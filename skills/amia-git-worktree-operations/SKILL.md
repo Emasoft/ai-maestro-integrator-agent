@@ -63,7 +63,7 @@ See `references/` directory for all reference documents.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for common error scenarios.
 
 ## Examples
 
@@ -81,4 +81,13 @@ python scripts/amia_cleanup_worktree.py --worktree-path /tmp/worktrees/pr-101
 
 ## Resources
 
-See `references/` directory — 107 reference documents covering all worktree operations.
+See `references/` directory — 107 reference documents. Full guide: [detailed-guide](references/detailed-guide.md):
+  - When to Use Worktrees
+  - When NOT to Use Worktrees
+  - Critical Constraints
+  - Decision Tree
+  - Script Usage Examples
+  - Error Handling
+  - Safety Warning: Destructive Operations
+  - Emergency Recovery
+  - Quick Reference Card

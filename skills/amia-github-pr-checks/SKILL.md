@@ -83,11 +83,17 @@ If a script fails, check the exit code and stderr output. Common issues:
 - **Exit 1**: Invalid parameters or missing arguments
 - **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
 
-See [detailed-guide](references/detailed-guide.md) for detailed error scenarios.
+See the detailed guide in Resources for detailed error scenarios.
 
 ## Resources
 
-See `references/` directory for all reference documents.
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - Decision Tree
+  - Check Status Quick Reference
+  - Scripts Reference
+  - Error Handling
+  - Exit Codes
+  - Debugging Commands
 
 ## Examples
 

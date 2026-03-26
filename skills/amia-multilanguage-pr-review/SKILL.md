@@ -57,13 +57,9 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
-## Reference Documents
-
-See `references/` directory for all reference documents. Key files: [detailed-guide](references/detailed-guide.md) (workflows, decision trees, error handling), language-specific review patterns, and operation guides.
-
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr and [detailed-guide](references/detailed-guide.md) for details.
+Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources.
 
 ## Examples
 
@@ -81,4 +77,12 @@ eslint src/typescript/
 
 ## Resources
 
-See `references/` directory for all reference documents.
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - Challenges of Multilanguage Repositories
+  - When to Use This Skill
+  - Decision Tree: PR Review Approach
+  - Included Scripts
+  - Workflow Example
+  - Common Pitfalls
+  - Error Handling
+  - Language-Specific Quick References

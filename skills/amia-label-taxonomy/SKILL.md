@@ -67,7 +67,15 @@ Copy this checklist and track your progress:
 
 **Guides:**
 
-- [detailed-guide](references/detailed-guide.md) — Full label tables, error handling, kanban columns, commands, examples
+See [detailed-guide](references/detailed-guide.md) for full reference:
+  - Error Handling
+  - Review Labels Detail
+  - Kanban Columns
+  - Status Labels AMIA Updates
+  - Labels AMIA Reads
+  - AMIA Label Commands
+  - Extended Examples
+  - Quick Reference Tables
 
 ### Labels AMIA Manages
 
@@ -92,15 +100,11 @@ If a script fails, check the exit code and stderr output. Common issues:
 - **Exit 1**: Invalid parameters or missing arguments
 - **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
 
-See [detailed-guide](references/detailed-guide.md) for detailed error scenarios.
+See the detailed guide above for detailed error scenarios.
 
 ## Resources
 
-- [detailed-guide](references/detailed-guide.md)
-- [op-approve-and-merge](references/op-approve-and-merge.md)
-- [op-mark-blocked-pr](references/op-mark-blocked-pr.md)
-- [op-request-changes](references/op-request-changes.md)
-- [op-start-pr-review](references/op-start-pr-review.md)
+See `references/` directory for all operation guides and label documentation.
 
 ## Examples
 

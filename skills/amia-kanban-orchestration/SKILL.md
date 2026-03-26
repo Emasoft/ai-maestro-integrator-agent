@@ -59,11 +59,20 @@ See `references/` directory for all reference documents.
 
 ## Error Handling
 
-Check exit code and stderr: 1=invalid params, 2-4=GitHub API errors. See [detailed-guide](references/detailed-guide.md).
+Check exit code and stderr: 1=invalid params, 2-4=GitHub API errors. See the detailed guide in Resources.
 
 ## Resources
 
-See `references/` directory (30+ documents covering all workflows and operations).
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - The Iron Rule
+  - Board Columns Quick Reference
+  - Command Integration: /create-issue-tasks
+  - Python Scripts Detailed Usage
+  - Error Handling
+  - Integration Points Summary
+  - Proactive Kanban Monitoring Summary
+  - Skill File Structure
+  - Related Skills
 
 ## Examples
 

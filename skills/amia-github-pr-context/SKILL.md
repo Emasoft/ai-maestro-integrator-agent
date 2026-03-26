@@ -74,7 +74,13 @@ Copy this checklist and track your progress:
 
 **Extended Guide:**
 
-- [detailed-guide](references/detailed-guide.md) — Decision trees, exit codes, error handling, integration workflow, detailed examples
+See [detailed-guide](references/detailed-guide.md) for full reference:
+  - When to Use This Skill
+  - Decision Tree: Which Script to Use
+  - Exit Codes
+  - Error Handling
+  - Integration with Integrator Agent
+  - Detailed Examples
 
 ## Error Handling
 
@@ -83,17 +89,11 @@ If a script fails, check the exit code and stderr output. Common issues:
 - **Exit 1**: Invalid parameters or missing arguments
 - **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
 
-See [detailed-guide](references/detailed-guide.md) for detailed error scenarios.
+See the detailed guide above for detailed error scenarios.
 
 ## Resources
 
-- [detailed-guide](references/detailed-guide.md)
-- [diff-analysis](references/diff-analysis.md)
-- [op-analyze-pr-complexity](references/op-analyze-pr-complexity.md)
-- [op-get-pr-context](references/op-get-pr-context.md)
-- [op-get-pr-diff](references/op-get-pr-diff.md)
-- [op-get-pr-files](references/op-get-pr-files.md)
-- [pr-metadata](references/pr-metadata.md)
+See `references/` directory for all reference documents.
 
 ## Examples
 
