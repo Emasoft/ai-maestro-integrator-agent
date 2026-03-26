@@ -7,7 +7,7 @@ workflow-instruction: support
 
 # Operation: Batch Label Add
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

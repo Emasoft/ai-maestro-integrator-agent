@@ -1,6 +1,6 @@
 # Memory File Templates
 
-## Contents
+## Table of Contents
 
 - [PR State Comment Template](#pr-state-comment-template)
 - [Current Work Handoff Template](#current-work-handoff-template)

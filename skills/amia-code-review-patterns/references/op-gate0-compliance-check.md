@@ -1,6 +1,6 @@
 # Operation: Gate 0 Compliance Check
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

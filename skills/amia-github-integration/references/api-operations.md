@@ -1,6 +1,6 @@
 # GitHub API Operations Reference
 
-## Contents
+## Table of Contents
 
 - 1.1 [Executing GitHub Issue Operations](#11-executing-github-issue-operations)
   - 1.1.1 Creating issues with labels, milestones, and assignees

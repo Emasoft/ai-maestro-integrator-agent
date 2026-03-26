@@ -82,7 +82,21 @@ Full reference: [detailed-guide](references/detailed-guide.md):
   - When to Use This Skill
   - Decision Tree: PR Review Approach
   - Included Scripts
+    - amia_detect_pr_languages.py
+    - amia_get_language_linters.py
   - Workflow Example
+    - Cross-Language API Review
   - Common Pitfalls
   - Error Handling
+    - Problem: Language detection returns unexpected results
+    - Problem: Linter fails to run
+    - Problem: Too many linting errors
+    - Problem: Cross-platform test failures
   - Language-Specific Quick References
+    - Python Reviews
+    - JavaScript/TypeScript Reviews
+    - Rust Reviews
+    - Go Reviews
+    - Shell Script Reviews
+    - Cross-Platform Testing
+  - Full Reference Document Index

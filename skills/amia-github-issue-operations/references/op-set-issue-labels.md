@@ -1,6 +1,6 @@
 # Operation: Set Issue Labels
 
-## Contents
+## Table of Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

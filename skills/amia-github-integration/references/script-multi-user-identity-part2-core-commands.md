@@ -2,7 +2,7 @@
 
 **Parent document:** [script-multi-user-identity.md](script-multi-user-identity.md)
 
-## Contents
+## Table of Contents
 
 - [Setup Command](#setup-command) - Generate SSH keys for an identity
 - [Test Command](#test-command) - Test SSH connections

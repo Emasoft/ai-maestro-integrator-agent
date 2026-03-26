@@ -1,6 +1,6 @@
 # GitHub Projects V2 Operations
 
-## Contents
+## Table of Contents
 
 - [Creating Projects V2 Board](#creating-projects-v2-board)
   - [Create New Project](#create-new-project)

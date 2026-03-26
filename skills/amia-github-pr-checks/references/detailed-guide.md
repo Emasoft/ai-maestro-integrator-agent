@@ -1,6 +1,6 @@
 # GitHub PR Checks Skill — Detailed Guide
 
-## Contents
+## Table of Contents
 
 - [Decision Tree](#decision-tree-which-script-do-i-need)
 - [Check Status Quick Reference](#check-status-quick-reference)

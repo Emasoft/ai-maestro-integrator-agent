@@ -1,6 +1,6 @@
 # GraphQL Queries Index
 
-## Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Query Categories](#query-categories)

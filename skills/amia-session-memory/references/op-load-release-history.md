@@ -7,7 +7,7 @@ workflow-instruction: support
 
 # Operation: Load Release History
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

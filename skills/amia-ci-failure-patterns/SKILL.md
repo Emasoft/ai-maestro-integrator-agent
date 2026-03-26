@@ -78,7 +78,21 @@ See `references/` directory — 27 documents. Full guide: [detailed-guide](refer
   - Diagnosis Decision Tree
   - Quick Reference: Most Common Patterns
   - Diagnostic Scripts
+    - amia_diagnose_ci_failure.py
+    - amia_detect_platform_issue.py
   - Workflow: Diagnosing a CI Failure
   - Error Handling
+    - The diagnostic script doesn't identify my failure
+    - My fix works locally but still fails in CI
+    - CI passes sometimes but fails randomly
   - Examples
+    - Example 1: Diagnosing a Cross-Platform Path Failure
+    - Example 2: Fixing a Heredoc Syntax Error
   - Reference Document TOCs
+    - cross-platform-patterns.md
+    - exit-code-patterns.md
+    - syntax-patterns.md
+    - dependency-patterns.md
+    - github-infrastructure-patterns.md
+    - language-specific-patterns.md
+  - Full Reference Document Index

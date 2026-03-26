@@ -1,6 +1,6 @@
 # Operation: Apply Pattern Fix
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [Prerequisites](#prerequisites)

@@ -1,6 +1,6 @@
 # Operation: Validate Changelog Gate
 
-## Contents
+## Table of Contents
 
 - 1. When to enforce changelog validation as a release gate
 - 1. How to extract a version section from CHANGELOG.md using AWK

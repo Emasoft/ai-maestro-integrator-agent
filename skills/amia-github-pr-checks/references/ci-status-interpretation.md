@@ -1,6 +1,6 @@
 # CI Status Interpretation Guide
 
-## Contents
+## Table of Contents
 
 - 1. Understanding GitHub Check Conclusions
   - 1.1 Complete list of conclusion values

@@ -2,7 +2,7 @@
 
 **Parent document:** [script-multi-user-identity.md](script-multi-user-identity.md)
 
-## Contents
+## Table of Contents
 
 - [Troubleshooting](#troubleshooting)
   - [SSH Key Not Found](#ssh-key-not-found)

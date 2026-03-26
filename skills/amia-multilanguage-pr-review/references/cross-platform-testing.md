@@ -1,6 +1,6 @@
 # Cross-Platform Testing Reference
 
-## Contents
+## Table of Contents
 
 ### Part 1: Testing on Multiple Operating Systems
 

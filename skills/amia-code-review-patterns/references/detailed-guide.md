@@ -1,6 +1,6 @@
 # Code Review Patterns — Detailed Guide
 
-## Contents
+## Table of Contents
 
 - [Core Methodology: Two-Stage Review Process](#core-methodology-two-stage-review-process)
 - [Key Concepts](#key-concepts)

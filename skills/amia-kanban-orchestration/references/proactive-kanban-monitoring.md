@@ -1,6 +1,6 @@
 # Proactive Kanban Monitoring
 
-## Contents
+## Table of Contents
 
 - [M.1 Overview of proactive monitoring](#m1-overview)
 - [M.2 Polling configuration and frequency](#m2-polling-configuration)

@@ -1,6 +1,6 @@
 # Progress Report Template
 
-## Contents
+## Table of Contents
 
 - [Template](#template)
 - [Executive Summary](#executive-summary)

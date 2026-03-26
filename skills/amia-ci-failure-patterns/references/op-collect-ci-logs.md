@@ -1,6 +1,6 @@
 # Operation: Collect CI Failure Logs
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [Prerequisites](#prerequisites)

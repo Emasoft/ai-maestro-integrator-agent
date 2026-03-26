@@ -1,6 +1,6 @@
 # Operation: Get Issue Context
 
-## Contents
+## Table of Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

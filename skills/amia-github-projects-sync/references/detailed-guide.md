@@ -1,6 +1,6 @@
 # GitHub Projects Sync — Detailed Guide
 
-## Contents
+## Table of Contents
 
 - [Critical Distinction](#critical-distinction)
 - [When to Invoke](#when-to-invoke)

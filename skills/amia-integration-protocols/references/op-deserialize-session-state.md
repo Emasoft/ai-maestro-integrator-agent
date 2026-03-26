@@ -1,6 +1,6 @@
 # Operation: Deserialize Session State
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

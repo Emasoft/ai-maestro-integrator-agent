@@ -89,9 +89,22 @@ Full reference: [detailed-guide](references/detailed-guide.md):
   - Coordinator Role
   - TDD Cycle Details
   - Core Principles Navigation
+    - The Iron Law
   - Implementation Guidance Navigation
+    - Step-by-Step Implementation
+    - Common Patterns
   - Rules and Enforcement Navigation
+    - Strict Rules
   - Problem Solving Navigation
+    - Troubleshooting
   - Progressive Learning Path
   - RULE 14 Requirement Compliance
+    - TDD and Requirement Compliance
+    - Test-Requirement Traceability
+    - When Tests Reveal Requirement Issues
+    - TDD Phase Requirement Checks
   - Error Handling
+    - Issue: Test passes on first run (RED phase failed)
+    - Issue: Production code written without failing test
+    - Issue: Refactoring breaks tests
+  - Complete Reference Document Index

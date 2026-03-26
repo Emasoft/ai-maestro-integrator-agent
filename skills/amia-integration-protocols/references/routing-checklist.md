@@ -1,6 +1,6 @@
 # AMIA Sub-Agent Routing and Delegation Checklist
 
-## Contents
+## Table of Contents
 
 - [Sub-Agent Routing Table](#sub-agent-routing-table)
 - [Routing Decision Guidelines](#routing-decision-guidelines)

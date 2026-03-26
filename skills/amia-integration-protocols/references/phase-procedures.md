@@ -1,6 +1,6 @@
 # Integration Phase Procedures
 
-## Contents
+## Table of Contents
 
 - [Phase 1: Request Reception](#phase-1-request-reception)
   - [1. Check AI Maestro Inbox](#1-check-ai-maestro-inbox)

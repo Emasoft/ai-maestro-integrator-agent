@@ -1,6 +1,6 @@
 # Commit Conventions Reference
 
-## Contents
+## Table of Contents
 
 - 1.1 Writing descriptive commit messages with WHAT and WHY sections
   - 1.1.1 Commit message structure and required sections

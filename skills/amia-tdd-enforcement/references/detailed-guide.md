@@ -1,6 +1,6 @@
 # TDD Enforcement Skill — Detailed Guide
 
-## Contents
+## Table of Contents
 
 - [Coordinator Role](#coordinator-role)
 - [TDD Cycle Details](#tdd-cycle-details)

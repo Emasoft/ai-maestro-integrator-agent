@@ -67,26 +67,19 @@ See `references/` directory for remaining documents.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for common error scenarios.
-
-## Examples
-
-### Example: Resume PR Review
-
-```bash
-# Load PR state
-gh pr view 42 --comments --json comments \
-  | jq -r '.comments[] | select(.body | contains("AMIA-SESSION-STATE"))'
-# If state found: load review context and continue
-# If not found: start fresh review
-# Verify PR unchanged since last review (check commit SHAs)
-```
+Non-zero exit codes on failure. See detailed guide in Resources.
 
 ## Resources
 
 Full reference: [detailed-guide](references/detailed-guide.md):
   - Error Handling
+    - Missing Memory
+    - Stale Memory
+    - Write Failures
   - Examples
+    - Example 1: Resume PR Review
+    - Example 2: Handoff Integration Work
+    - Example 3: Log Release Decision
   - Memory Architecture
   - What to Remember
   - Memory Retrieval
@@ -94,5 +87,11 @@ Full reference: [detailed-guide](references/detailed-guide.md):
   - Handoff Documents
   - Integration with Other Skills
   - Troubleshooting
+    - Memory Not Found
+    - Stale Memory
+    - Memory Conflicts
   - Quick Reference Commands
+    - Load Memory Commands
+    - Save Memory Commands
   - State Markers
+  - Full Reference Document Listing

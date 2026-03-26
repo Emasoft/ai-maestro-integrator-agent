@@ -1,6 +1,6 @@
 # Operation: Execute PR Merge
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

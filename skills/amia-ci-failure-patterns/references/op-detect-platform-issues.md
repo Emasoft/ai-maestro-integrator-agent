@@ -1,6 +1,6 @@
 # Operation: Detect Platform Issues
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [Prerequisites](#prerequisites)

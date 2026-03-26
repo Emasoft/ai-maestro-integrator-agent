@@ -1,6 +1,6 @@
 # AMIA Label Taxonomy — Detailed Guide
 
-## Contents
+## Table of Contents
 
 - [Error Handling](#error-handling)
 - [Review Labels Detail](#review-labels-detail)

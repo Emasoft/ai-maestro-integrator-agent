@@ -1,6 +1,6 @@
 # GitHub Projects V2 GraphQL Queries - Mutations & Utilities
 
-## Contents
+## Table of Contents
 
 ### Section 1: Item Mutations
 

@@ -1,6 +1,6 @@
 # Encoding Compliance Checker
 
-## Contents
+## Table of Contents
 
 - When to run the encoding compliance checker
 - How to run amia_check_encoding.py on specific files

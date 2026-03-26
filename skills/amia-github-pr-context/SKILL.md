@@ -93,7 +93,17 @@ See the detailed guide above for detailed error scenarios.
 
 ## Resources
 
-See `references/` directory for all reference documents.
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - When to Use This Skill
+  - Decision Tree: Which Script to Use
+  - Exit Codes
+  - Error Handling
+  - Integration with Integrator Agent
+  - Detailed Examples
+    - Get Full PR Context
+    - List Changed Files
+    - Get Diff
+    - Extracting Specific Information
 
 ## Examples
 

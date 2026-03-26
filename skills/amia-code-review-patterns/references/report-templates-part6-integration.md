@@ -1,6 +1,6 @@
 # Integration Report Template
 
-## Contents
+## Table of Contents
 
 - [Template](#template)
 - [Integration Status: 🟢 HEALTHY / 🟡 ISSUES / 🔴 BROKEN](#integration-status-healthy-issues-broken)

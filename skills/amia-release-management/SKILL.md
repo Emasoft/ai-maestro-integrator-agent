@@ -85,4 +85,12 @@ Full reference: [detailed-guide](references/detailed-guide.md):
   - Error Handling
   - AI Maestro Communication
   - Examples
+    - Standard Patch Release
+    - Rollback After Failed Release
   - Reference Documentation Details
+    - Release Management Responsibilities
+    - Pre-Release Verification
+    - Post-Release Verification
+    - Rollback Procedures
+    - CI/CD Integration
+  - Full Reference Document Index

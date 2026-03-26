@@ -1,6 +1,6 @@
 # GitHub PR Context Skill — Detailed Guide
 
-## Contents
+## Table of Contents
 
 - [When to Use This Skill](#when-to-use-this-skill)
 - [Decision Tree: Which Script to Use](#decision-tree-which-script-to-use)

@@ -1,6 +1,6 @@
 # Record-Keeping for Integration Agent
 
-## Contents
+## Table of Contents
 
 - 1. Routing Log Format
 - 1. Integration Status Files

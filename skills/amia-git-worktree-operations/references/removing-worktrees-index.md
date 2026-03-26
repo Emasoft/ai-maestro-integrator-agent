@@ -1,6 +1,6 @@
 # Removing Worktrees Index
 
-## Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Removal Documentation Sections](#removal-documentation-sections)

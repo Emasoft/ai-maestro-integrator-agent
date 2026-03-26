@@ -1,6 +1,6 @@
 # Operation: Update README Badges
 
-## Contents
+## Table of Contents
 
 - 1. When to update README badges as part of a release
 - 1. How to define marker-delimited sections in README

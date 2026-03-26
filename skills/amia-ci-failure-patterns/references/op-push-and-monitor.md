@@ -1,6 +1,6 @@
 # Operation: Push and Monitor
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [Prerequisites](#prerequisites)

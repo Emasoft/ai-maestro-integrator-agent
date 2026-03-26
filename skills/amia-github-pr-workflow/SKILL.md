@@ -75,9 +75,27 @@ python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 
 ## Resources
 
-Full index, decision tree, scripts, and extended examples in [detailed-guide](references/detailed-guide.md):
+Full index in [detailed-guide](references/detailed-guide.md):
   - Decision Tree
   - Scripts Reference
+    - amia_orchestrator_pr_poll.py
+    - amia_verify_pr_completion.py
   - Section Index
+    - 1. Orchestrator Responsibilities
+    - 2. Delegation Rules
+    - 3. Verification Workflow
+    - 4. Worktree Coordination
+    - 5. Human vs AI PR Assignment
+    - 6. Completion Criteria
+    - 7. Polling Schedule
+    - 8. Merge Failure Recovery
   - Error Handling
+    - Subagent not returning results
+    - PR status appears stale
+    - Completion verification fails intermittently
+    - Multiple subagents conflicting
+    - User not receiving status updates
   - Extended Examples
+    - Example 1: Standard PR Review Coordination
+    - Example 2: Verify PR is Ready to Merge
+  - Full Reference Documents Index

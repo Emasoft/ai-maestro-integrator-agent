@@ -88,16 +88,20 @@ gh issue view 15 --json labels --jq '.labels[].name'
 
 Full reference: [detailed-guide](references/detailed-guide.md):
   - Decision Tree: Which Skill to Use?
-  - Pull Requests
-  - Projects V2 Sync
-  - Kanban Board Operations
-  - Git Worktrees
-  - GitHub API Operations
-  - Multiple GitHub Identities
+    - Pull Requests
+    - Projects V2 Sync
+    - Kanban Board Operations
+    - Git Worktrees
+    - GitHub API Operations
+    - Multiple GitHub Identities
   - Batch Operations
-  - Batch Label Operations
-  - Automation Scripts
+    - Batch Label Operations
+    - Automation Scripts
   - Error Handling
   - Extended Examples
+    - Route to PR skill
+    - Bulk add label to bug issues
+    - Projects V2 sync
   - First-Time Setup
   - Changelog
+  - Reference Documents Index

@@ -1,6 +1,6 @@
 # RULE 14: User Requirements Are Immutable
 
-## Contents
+## Table of Contents
 
 - 1.1 When handling user requirements in any workflow
 - 1.2 When detecting potential requirement deviations

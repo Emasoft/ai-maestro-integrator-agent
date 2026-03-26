@@ -1,6 +1,6 @@
 # JavaScript/TypeScript Review Patterns Reference
 
-## Contents
+## Table of Contents
 
 ### Part 1: Style, Types, and Modules
 

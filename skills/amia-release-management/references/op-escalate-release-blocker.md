@@ -1,6 +1,6 @@
 # Operation: Escalate Release Blocker
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

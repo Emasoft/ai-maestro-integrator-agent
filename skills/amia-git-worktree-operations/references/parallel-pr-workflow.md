@@ -1,6 +1,6 @@
 # Parallel PR Workflow with Git Worktrees
 
-## Contents
+## Table of Contents
 
 ### Part 1: Creating Worktrees and Isolation
 

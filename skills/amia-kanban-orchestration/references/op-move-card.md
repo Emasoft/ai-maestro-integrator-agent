@@ -1,6 +1,6 @@
 # Operation: Move Card Between Columns
 
-## Contents
+## Table of Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

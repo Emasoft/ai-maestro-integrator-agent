@@ -1,6 +1,6 @@
 # Removing Worktrees - Complete Index
 
-## Contents
+## Table of Contents
 
 - [Quick Navigation](#quick-navigation)
 - [Part 1: Preparation and Basic Commands](#part-1-preparation-and-basic-commands)

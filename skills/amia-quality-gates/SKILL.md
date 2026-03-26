@@ -58,14 +58,7 @@ Copy this checklist and track your progress:
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for common error scenarios.
-
-## Examples
-
-```bash
-python scripts/amia_quality_gate_check.py --repo owner/repo --pr 42
-# Output: {"gate_status": "pass", "gate": "pre-review", "checks_passed": 5, "checks_failed": 0}
-```
+Non-zero exit codes on failure. See detailed guide in Resources.
 
 ## Resources
 
@@ -75,11 +68,11 @@ python scripts/amia_quality_gate_check.py --repo owner/repo --pr 42
   - Overview
   - Pipeline Diagram
   - Gate Transitions
-  - Transition: Pre-Review -> Review
-  - Transition: Review -> Pre-Merge
-  - Transition: Pre-Merge -> Merge
-  - Transition: Merge -> Post-Merge
-  - Transition: Post-Merge -> Complete
+    - Transition: Pre-Review -> Review
+    - Transition: Review -> Pre-Merge
+    - Transition: Pre-Merge -> Merge
+    - Transition: Merge -> Post-Merge
+    - Transition: Post-Merge -> Complete
   - Failure Handling
   - Parallel Gates
   - Gate Bypass
@@ -99,6 +92,11 @@ python scripts/amia_quality_gate_check.py --repo owner/repo --pr 42
   - Purpose and Principles
   - Gate Types and Pipeline Position
   - Error Handling
+    - CI Pipeline Not Running
+    - Labels Not Applying
+    - Escalation Notification Failure
+    - Gate Stuck in Pending State
+    - Override Authority Unavailable
   - Output Discipline
   - Design Document Scripts
   - Encoding Compliance Scripts
@@ -106,3 +104,5 @@ python scripts/amia_quality_gate_check.py --repo owner/repo --pr 42
   - PR Gate Scripts
   - Script Locations
   - Integration with Other Skills
+    - Dependency on Label Taxonomy
+    - Related Skills

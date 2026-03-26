@@ -1,6 +1,6 @@
 # Single-Account GitHub Workflow
 
-## Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Setup](#setup)

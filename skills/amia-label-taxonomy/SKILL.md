@@ -77,34 +77,28 @@ See [detailed-guide](references/detailed-guide.md) for full reference:
   - Extended Examples
   - Quick Reference Tables
 
-### Labels AMIA Manages
-
-**Review labels** (`review:*`): `needed`, `in-progress`, `changes-requested`, `approved`, `blocked`
-
-**Status labels** (`status:*`): `ai-review`, `human-review`, `merge-release`, `blocked`, `done`
-
-### Labels AMIA Reads (set by others)
-
-- `assign:*` — Assignment (set by AMOA)
-- `priority:*` — critical, high, normal, low
-- `type:*` — security, refactor, docs, feature
-
-### Labels AMIA Never Sets
-
-`assign:*`, `type:*`, `effort:*`, `component:*`
-
 ## Error Handling
 
-If a script fails, check the exit code and stderr output. Common issues:
-
-- **Exit 1**: Invalid parameters or missing arguments
-- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
-
-See the detailed guide above for detailed error scenarios.
+Exit 1: invalid params. Exit 2-4: GitHub API errors. See the detailed guide in Resources.
 
 ## Resources
 
-See `references/` directory for all operation guides and label documentation.
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - Error Handling
+  - Review Labels Detail
+  - Kanban Columns
+  - Status Labels AMIA Updates
+  - Labels AMIA Reads
+    - Assignment Labels
+    - Priority Labels
+    - Type Labels
+  - AMIA Label Commands
+    - When Starting Review
+    - When Review Complete (Approved)
+    - When Changes Requested
+    - When PR Merged
+  - Extended Examples
+  - Quick Reference Tables
 
 ## Examples
 

@@ -1,6 +1,6 @@
 # Operation: Validate Release Tags
 
-## Contents
+## Table of Contents
 
 - 1. When to validate release tags before creating them
 - 1. How to compare version numbers against existing tags using semantic versioning

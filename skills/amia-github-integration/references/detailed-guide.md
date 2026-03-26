@@ -1,6 +1,6 @@
 # GitHub Integration Dispatcher -- Detailed Guide
 
-## Contents
+## Table of Contents
 
 - [Decision Tree: Which Skill to Use?](#decision-tree-which-skill-to-use)
 - [Pull Requests](#pull-requests)

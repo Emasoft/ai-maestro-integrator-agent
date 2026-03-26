@@ -1,6 +1,6 @@
 # Operation: GitHub CLI Prerequisites Check
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

@@ -1,6 +1,6 @@
 # Issue Templates Part 1: Bug Report Templates
 
-## Contents
+## Table of Contents
 
 - 2.1.1 Required sections (description, steps, expected/actual behavior)
 - 2.1.2 Environment information (web, CLI, mobile formats)

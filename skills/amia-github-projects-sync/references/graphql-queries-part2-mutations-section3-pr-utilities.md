@@ -1,6 +1,6 @@
 # PR Operations, Utilities & Helpers for GitHub Projects V2
 
-## Contents
+## Table of Contents
 
 - 3.1 [Get PR Node ID](#get-pr-node-id)
 - 3.2 [Link PR to Issue via Project](#link-pr-to-issue-via-project)

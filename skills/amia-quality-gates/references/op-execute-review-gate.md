@@ -1,6 +1,6 @@
 # Operation: Execute Review Gate
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

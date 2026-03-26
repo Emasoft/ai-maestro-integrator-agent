@@ -1,6 +1,6 @@
 # Worktree Automation Scripts Guide - Part 5: Troubleshooting
 
-## Contents
+## Table of Contents
 
 - [Troubleshooting](#troubleshooting)
   - [Problem: Script says "worktree already exists" but directory is empty](#problem-script-says-worktree-already-exists-but-directory-is-empty)

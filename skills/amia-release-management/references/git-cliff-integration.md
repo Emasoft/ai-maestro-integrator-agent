@@ -1,6 +1,6 @@
 # git-cliff Integration
 
-## Contents
+## Table of Contents
 
 - 1. What git-cliff is and when to use it
 - 1. How to install git-cliff

@@ -69,16 +69,24 @@ python scripts/review_report_generator.py --repo owner/repo --pr 42
 Full reference: [detailed-guide](references/detailed-guide.md):
   - Core Methodology: Two-Stage Review Process
   - Key Concepts
-  - Confidence Scoring System
-  - Multi-Dimensional Analysis
+    - Confidence Scoring System
+    - Multi-Dimensional Analysis
   - Quick Reference Tables
-  - Confidence Score Ranges
-  - Dimension Weight Summary
+    - Confidence Score Ranges
+    - Dimension Weight Summary
   - Scripts Available
   - AI Maestro Communication Templates
-  - Template 1: Receiving PR Review Request
-  - Template 2: Reporting Review Completion
-  - Template 3: Requesting Clarification from Author
-  - Template 4: Escalating Quality Gate Failure
+    - Template 1: Receiving PR Review Request
+    - Template 2: Reporting Review Completion
+    - Template 3: Requesting Clarification from Author
+    - Template 4: Escalating Quality Gate Failure
   - Error Handling
   - Reference Document TOCs
+    - Gate 0: Requirement Compliance
+    - Stage One: Quick Scan
+    - Stage Two: Deep Dive
+    - Workflow and Decision Tree
+    - Implementation Checklist
+    - Review Workflow
+    - Commit Conventions
+  - Reference Documents Index

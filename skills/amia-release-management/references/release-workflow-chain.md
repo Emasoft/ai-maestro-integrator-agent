@@ -1,6 +1,6 @@
 # Release Workflow Chain
 
-## Contents
+## Table of Contents
 
 - 1. Why release automation uses two separate workflows instead of one
 - 1. How the prepare-release workflow works

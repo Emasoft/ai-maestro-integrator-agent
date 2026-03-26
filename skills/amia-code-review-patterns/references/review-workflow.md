@@ -1,6 +1,6 @@
 # Code Review Workflow Reference
 
-## Contents
+## Table of Contents
 
 - 1. When starting a code review task
   - 1.1 Receiving and parsing review requests

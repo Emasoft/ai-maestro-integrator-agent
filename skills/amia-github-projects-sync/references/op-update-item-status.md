@@ -1,6 +1,6 @@
 # Operation: Update Project Item Status
 
-## Contents
+## Table of Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

@@ -1,6 +1,6 @@
 # Operation: Write Failing Test (RED Phase)
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

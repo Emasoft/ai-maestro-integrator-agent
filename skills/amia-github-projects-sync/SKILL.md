@@ -88,4 +88,13 @@ gh api graphql -f query='
 
 ## Resources
 
-See `references/` directory for all reference documents.
+Full reference: [detailed-guide](references/detailed-guide.md):
+  - Critical Distinction
+  - When to Invoke
+  - Iron Rules Compliance
+  - Issue Lifecycle Policy
+  - AI Maestro Integration
+  - Threshold Configuration
+  - Error Handling Details
+  - Status Columns
+  - Reference File Contents Index

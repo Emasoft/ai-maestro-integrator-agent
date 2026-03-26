@@ -2,7 +2,7 @@
 
 [Back to Troubleshooting Index](troubleshooting.md)
 
-## Contents
+## Table of Contents
 
 - GitHub CLI Issues
   - Problem: "gh: command not found"

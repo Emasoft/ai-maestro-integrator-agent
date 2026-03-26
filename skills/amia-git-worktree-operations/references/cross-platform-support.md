@@ -1,6 +1,6 @@
 # Cross-Platform Support
 
-## Contents
+## Table of Contents
 
 - [Overview](#overview) - When you need to understand cross-platform compatibility
 - [Platform Detection](#platform-detection) - If you need to know how platforms are detected

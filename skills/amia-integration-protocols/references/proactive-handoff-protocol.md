@@ -1,6 +1,6 @@
 # Proactive Handoff Protocol
 
-## Contents
+## Table of Contents
 
 - [Standard Handoff Format](#standard-handoff-format)
 - [Automatic Handoff Triggers](#automatic-handoff-triggers)

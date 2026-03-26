@@ -1,6 +1,6 @@
 # Operation: Set Issue Milestone
 
-## Contents
+## Table of Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

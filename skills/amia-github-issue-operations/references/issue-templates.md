@@ -1,6 +1,6 @@
 # Issue Templates Reference
 
-## Contents
+## Table of Contents
 
 ### Part 1: Bug Report Templates
 

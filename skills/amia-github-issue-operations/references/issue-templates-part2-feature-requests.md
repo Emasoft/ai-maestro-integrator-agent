@@ -1,6 +1,6 @@
 # Issue Templates Part 2: Feature Request Templates
 
-## Contents
+## Table of Contents
 
 - 2.2.1 Problem statement (pain point description, current workaround)
 - 2.2.2 Proposed solution (ideal solution, alternatives considered)

@@ -1,6 +1,6 @@
 # Operation: Load Handoff Documents
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

@@ -1,6 +1,6 @@
 # Shell Script Review Patterns Reference
 
-## Contents
+## Table of Contents
 
 ### Part 1: Bash/Shell Script Review Checklist
 

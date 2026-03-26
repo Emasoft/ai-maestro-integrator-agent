@@ -1,6 +1,6 @@
 # Item Mutations for GitHub Projects V2
 
-## Contents
+## Table of Contents
 
 - 1.1 [Add Issue to Project](#add-issue-to-project)
 - 1.2 [Update Item Status](#update-item-status)

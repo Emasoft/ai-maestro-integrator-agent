@@ -2,7 +2,7 @@
 
 **Parent document:** [script-multi-user-identity.md](script-multi-user-identity.md)
 
-## Contents
+## Table of Contents
 
 - [Status Command](#status-command) - Check current identity status
 - [Add Command](#add-command) - Add a new identity interactively

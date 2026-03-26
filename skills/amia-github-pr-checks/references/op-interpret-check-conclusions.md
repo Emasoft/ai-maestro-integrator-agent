@@ -1,6 +1,6 @@
 # Operation: Interpret Check Conclusions
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

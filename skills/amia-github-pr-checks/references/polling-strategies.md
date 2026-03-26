@@ -1,6 +1,6 @@
 # Polling Strategies for GitHub PR Checks
 
-## Contents
+## Table of Contents
 
 - 1. When to Poll for Check Completion
   - 1.1 Scenarios requiring polling

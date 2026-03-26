@@ -1,6 +1,6 @@
 # Documentation Analysis Review
 
-## Contents
+## Table of Contents
 
 ### When to Use This Document
 

@@ -7,7 +7,7 @@ workflow-instruction: support
 
 # Operation: Batch Dry Run
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

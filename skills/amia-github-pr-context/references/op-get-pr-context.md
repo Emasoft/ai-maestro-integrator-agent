@@ -1,6 +1,6 @@
 # Operation: Get PR Context
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

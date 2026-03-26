@@ -2,7 +2,7 @@
 
 [Back to Troubleshooting Index](troubleshooting.md)
 
-## Contents
+## Table of Contents
 
 - Problem: "Not authenticated" or "Permission denied"
 - Problem: "HTTP 401: Bad credentials" (Persistent)

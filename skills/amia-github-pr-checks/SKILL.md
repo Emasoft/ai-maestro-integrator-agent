@@ -58,41 +58,22 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`. Use it in automated workflows to minimize token consumption.
 
-## Reference Documents
-
-**CI/CD Interpretation:**
-
-- [ci-status-interpretation](references/ci-status-interpretation.md) — Check conclusions, required vs optional checks, check runs vs suites
-- [detailed-guide](references/detailed-guide.md) — Decision tree, status quick reference, full script usage, error handling, exit codes
-
-**Polling & Waiting:**
-
-- [polling-strategies](references/polling-strategies.md) — Backoff strategies, timeout handling, partial success scenarios
-
-**Script Operations:**
-
-- [op-get-pr-check-status](references/op-get-pr-check-status.md) — amia_get_pr_checks.py operation details
-- [op-wait-for-checks](references/op-wait-for-checks.md) — amia_wait_for_checks.py operation details
-- [op-get-check-details](references/op-get-check-details.md) — amia_get_check_details.py operation details
-- [op-interpret-check-conclusions](references/op-interpret-check-conclusions.md) — Conclusion value interpretation
-
 ## Error Handling
 
-If a script fails, check the exit code and stderr output. Common issues:
-
-- **Exit 1**: Invalid parameters or missing arguments
-- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
-
-See the detailed guide in Resources for detailed error scenarios.
+Exit 1: bad params. Exit 2-4: API errors. See detailed guide in Resources.
 
 ## Resources
 
 Full reference: [detailed-guide](references/detailed-guide.md):
-  - Decision Tree
+  - Decision Tree: Which Script Do I Need?
   - Check Status Quick Reference
   - Scripts Reference
+    - 1. amia_get_pr_checks.py
+    - 2. amia_wait_for_checks.py
+    - 3. amia_get_check_details.py
   - Error Handling
-  - Exit Codes
+    - Common Issues
+  - Exit Codes (Standardized)
   - Debugging Commands
 
 ## Examples

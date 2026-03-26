@@ -2,7 +2,7 @@
 
 **Parent document:** [script-multi-user-identity.md](script-multi-user-identity.md)
 
-## Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Installation and Setup](#installation-and-setup)

@@ -1,6 +1,6 @@
 # Implementation Guide Part 3: Advanced Implementation Topics
 
-## Contents
+## Table of Contents
 
 - [Multi-Repository Projects](#multi-repository-projects)
 - [Custom GitHub Actions Workflows](#custom-github-actions-workflows)

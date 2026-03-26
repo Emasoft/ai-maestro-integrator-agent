@@ -1,6 +1,6 @@
 # Memory Updates
 
-## Contents
+## Table of Contents
 
 - [State-Based Update Triggers](#state-based-update-triggers)
 - [Update Decision Tree](#update-decision-tree)

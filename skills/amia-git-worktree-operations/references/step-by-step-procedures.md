@@ -1,6 +1,6 @@
 # Step-by-Step Procedures
 
-## Contents
+## Table of Contents
 
 - [Phase 1: Understanding Prerequisites](#phase-1-understanding-worktree-prerequisites) - Before creating worktrees
 - [Phase 2: Create a Worktree](#phase-2-create-a-worktree) - Creating new worktrees

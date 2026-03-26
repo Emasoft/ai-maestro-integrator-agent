@@ -1,6 +1,6 @@
 # Operation: Poll Kanban Board for Changes
 
-## Contents
+## Table of Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

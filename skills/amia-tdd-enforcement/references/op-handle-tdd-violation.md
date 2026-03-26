@@ -1,6 +1,6 @@
 # Operation: Handle TDD Violation
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

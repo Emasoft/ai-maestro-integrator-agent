@@ -61,24 +61,13 @@ Copy this checklist and track your progress:
 |---------|---------|
 | Summary | PR overview and overall assessment |
 | Findings | Strengths, questions, blocking red flags |
-| Evidence | Required evidence checklist for author |
 | Recommendation | APPROVE / REQUEST CHANGES / COMMENT |
-| Confidence | High / Medium / Low |
-
-See the review output template and detailed guide in Resources for template details.
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for error scenarios.
-
-## Examples
-
-```bash
-python scripts/amia_pr_review.py --repo owner/repo --pr 42
-# Output: {"verdict": "request_changes", "score": 65, "findings": 4, "false_positives": 1}
-```
+Non-zero exit codes on failure. See detailed guide in Resources.
 
 ## Resources
 
@@ -86,6 +75,14 @@ python scripts/amia_pr_review.py --repo owner/repo --pr 42
   - T.1 When to generate the review output
   - T.2 The complete review output template (copy-paste ready)
   - T.3 How to fill each section of the template
+    - Summary
+    - Strengths
+    - Questions and Concerns
+    - Red Flags
+    - Required Evidence
+    - Suggestions
+    - Testing Feedback
+    - Documentation
   - T.4 Choosing the final recommendation: APPROVE, REQUEST CHANGES, or COMMENT
   - T.5 Setting the confidence level: High, Medium, or Low
   - T.6 Writing the author note
@@ -100,4 +97,5 @@ python scripts/amia_pr_review.py --repo owner/repo --pr 42
   - Troubleshooting
   - Error Handling
   - Extended Examples
+  - Reference Documents Index
   - Related Skills

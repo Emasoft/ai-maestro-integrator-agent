@@ -1,6 +1,6 @@
 # Implementation Procedure Part 3: Complete Example
 
-## Contents
+## Table of Contents
 
 - [Use-Case TOC](#use-case-toc)
 - [Complete Procedure Example](#complete-procedure-example)

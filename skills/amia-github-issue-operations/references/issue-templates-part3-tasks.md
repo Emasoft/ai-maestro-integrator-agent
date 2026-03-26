@@ -1,6 +1,6 @@
 # Issue Templates Part 3: Task Templates
 
-## Contents
+## Table of Contents
 
 - 2.3.1 Task description format (summary, details, definition of done)
 - 2.3.2 Checklist syntax (basic, nested, with assignees)

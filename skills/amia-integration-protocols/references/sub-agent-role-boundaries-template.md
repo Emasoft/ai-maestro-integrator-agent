@@ -1,6 +1,6 @@
 # Sub-Agent Role Boundaries Template
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [Core Identity: Worker Agent (Not Orchestrator)](#core-identity-worker-agent-not-orchestrator)

@@ -1,6 +1,6 @@
 # Core Concepts
 
-## Contents
+## Table of Contents
 
 - [What is GitHub Projects V2](#what-is-github-projects-v2)
   - [Projects V2 vs Legacy Projects](#projects-v2-vs-legacy-projects)

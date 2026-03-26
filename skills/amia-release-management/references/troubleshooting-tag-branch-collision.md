@@ -1,6 +1,6 @@
 # Troubleshooting: Tag-Branch Name Collision
 
-## Contents
+## Table of Contents
 
 - What is a tag-branch name collision
 - How collisions cause HTTP 300 errors

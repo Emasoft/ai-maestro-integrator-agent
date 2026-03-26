@@ -1,6 +1,6 @@
 # Operation: Verify PR Completion Criteria
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

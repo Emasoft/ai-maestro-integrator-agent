@@ -1,6 +1,6 @@
 # Operation: Check Concurrent Git Operations
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

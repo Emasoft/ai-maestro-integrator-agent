@@ -74,9 +74,16 @@ All resources are in the `references/` directory. Full guide: [detailed-guide](r
   - Decision Tree
   - Script Reference Table
   - Examples
+    - Get Issue Context
+    - Create Issue
+    - Manage Labels
+    - Assign Milestone
+    - Post Idempotent Comment
   - Error Handling
+    - Troubleshooting
   - Exit Codes
   - Integration with Integrator Agent
+  - Reference Document Listings
 
 ## Examples
 

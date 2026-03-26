@@ -1,6 +1,6 @@
 # Retrieval Patterns
 
-## Contents
+## Table of Contents
 
 - [Pattern 1: PR Review Continuation](#pattern-1-pr-review-continuation)
 - [Pattern 2: Integration Work Continuation](#pattern-2-integration-work-continuation)

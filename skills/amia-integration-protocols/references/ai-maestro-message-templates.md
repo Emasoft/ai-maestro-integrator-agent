@@ -1,6 +1,6 @@
 # AI Maestro Message Templates for AMIA
 
-## Contents
+## Table of Contents
 
 - 1.0 Standard AI Maestro Messaging Approach
 - 2.0 Receiving Messages from Orchestrator (AMOA)

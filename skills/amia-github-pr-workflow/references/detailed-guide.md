@@ -1,6 +1,6 @@
 # Orchestrator PR Workflow -- Detailed Guide
 
-## Contents
+## Table of Contents
 
 - [Decision Tree](#decision-tree)
 - [Scripts Reference](#scripts-reference)

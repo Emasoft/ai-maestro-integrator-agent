@@ -1,6 +1,6 @@
 # Update Patterns
 
-## Contents
+## Table of Contents
 
 - [Pattern 1: Immediate PR State Update](#pattern-1-immediate-pr-state-update)
 - [Pattern 2: Append to Patterns Learned](#pattern-2-append-to-patterns-learned)

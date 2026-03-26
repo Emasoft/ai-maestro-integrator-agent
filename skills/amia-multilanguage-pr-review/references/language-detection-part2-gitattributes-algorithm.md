@@ -1,6 +1,6 @@
 # Language Detection Part 2: Gitattributes and GitHub Algorithm
 
-## Contents
+## Table of Contents
 
 - [1.3 Using .gitattributes Linguist Hints](#13-using-gitattributes-linguist-hints)
   - [What is .gitattributes?](#what-is-gitattributes)

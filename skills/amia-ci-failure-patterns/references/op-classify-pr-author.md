@@ -1,6 +1,6 @@
 # Operation: Classify PR Author
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [Prerequisites](#prerequisites)

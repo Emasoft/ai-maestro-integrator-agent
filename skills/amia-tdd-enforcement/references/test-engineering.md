@@ -1,6 +1,6 @@
 # Test Engineering Procedures
 
-## Contents
+## Table of Contents
 
 - 1.1 When verifying TDD cycle compliance (RED-GREEN-REFACTOR pattern)
   - 1.1.1 RED Phase verification checklist

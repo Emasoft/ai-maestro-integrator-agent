@@ -88,6 +88,13 @@ See `references/` directory — 107 reference documents. Full guide: [detailed-g
   - Decision Tree
   - Script Usage Examples
   - Error Handling
+    - Problem: "fatal: branch is already checked out"
+    - Problem: "worktree is dirty, cannot remove"
+    - Problem: Files appearing in main repo after worktree work
+    - Problem: "fatal: unable to create new worktree"
+    - Problem: Git operations hanging or failing
   - Safety Warning: Destructive Operations
+    - Before Any Destructive Operation
+    - Safe Worktree Removal Checklist
   - Emergency Recovery
   - Quick Reference Card

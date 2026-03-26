@@ -1,6 +1,6 @@
 # Operation: Create Review Report
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

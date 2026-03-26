@@ -1,6 +1,6 @@
 # Milestone Tracking Reference
 
-## Contents
+## Table of Contents
 
 ### Part 1: Creating Milestones
 

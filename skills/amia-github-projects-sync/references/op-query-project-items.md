@@ -1,6 +1,6 @@
 # Operation: Query Project Items
 
-## Contents
+## Table of Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

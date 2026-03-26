@@ -1,6 +1,6 @@
 # Operation: Analyze PR Complexity
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

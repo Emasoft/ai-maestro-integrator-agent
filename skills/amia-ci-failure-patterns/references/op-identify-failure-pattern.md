@@ -1,6 +1,6 @@
 # Operation: Identify Failure Pattern
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [Prerequisites](#prerequisites)

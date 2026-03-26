@@ -1,6 +1,6 @@
 # Operation: Delegate to Subagent
 
-## Contents
+## Table of Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

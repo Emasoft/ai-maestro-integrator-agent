@@ -1,6 +1,6 @@
 # AMIA Quality Gates -- Detailed Guide
 
-## Contents
+## Table of Contents
 
 - [Purpose and Principles](#purpose-and-principles)
 - [Gate Types and Pipeline Position](#gate-types-and-pipeline-position)

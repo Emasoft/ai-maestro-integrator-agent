@@ -1,6 +1,6 @@
 # Go Review Patterns Reference
 
-## Contents
+## Table of Contents
 
 - [5.1 Go Code Style and Idioms](#51-go-code-style-and-idioms)
 - [5.2 Error Handling Patterns](#52-error-handling-patterns)

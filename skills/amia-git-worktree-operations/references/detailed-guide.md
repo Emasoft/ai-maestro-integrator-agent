@@ -1,6 +1,6 @@
 # Git Worktree Operations — Detailed Guide
 
-## Contents
+## Table of Contents
 
 - [When to Use Worktrees](#when-to-use-worktrees)
 - [When NOT to Use Worktrees](#when-not-to-use-worktrees)
