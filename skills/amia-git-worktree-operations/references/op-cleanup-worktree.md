@@ -1,8 +1,7 @@
 ---
 name: op-cleanup-worktree
-description: "Safely remove a git worktree after PR completion"
+description: "Remove git worktree after PR completion"
 procedure: support-skill
-workflow-instruction: support
 ---
 
 # Operation: Cleanup Worktree

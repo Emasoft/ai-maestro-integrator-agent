@@ -1,8 +1,7 @@
 ---
 name: op-create-release-tag
-description: "Create an annotated git tag for the release"
+description: "Create annotated git tag for release"
 procedure: support-skill
-workflow-instruction: support
 ---
 
 # Operation: Create Release Tag

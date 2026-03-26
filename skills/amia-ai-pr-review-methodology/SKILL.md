@@ -1,8 +1,8 @@
 ---
 name: amia-ai-pr-review-methodology
-description: "Trigger with /amia-ai-pr-review. Use when performing deep evidence-based PR reviews, investigating false-positive fixes, or validating integration changes."
+description: "Use when performing PR reviews. Trigger with /amia-ai-pr-review."
 license: Apache-2.0
-compatibility: Requires intermediate software development experience, code review basics, and access to the full codebase for running verification commands.
+compatibility: Requires code review experience and codebase access.
 metadata:
   author: Emasoft
   version: 1.0.0
@@ -71,46 +71,28 @@ Non-zero exit codes on failure. See detailed guide in Resources.
 
 ## Resources
 
-[review-output-template](references/review-output-template.md):
+- [review-output-template](references/review-output-template.md) — Review output format
   - T.1 When to generate the review output
-  - T.2 The complete review output template (copy-paste ready)
-  - T.3 How to fill each section of the template
-    - Summary
-    - Strengths
-    - Questions and Concerns
-    - Red Flags
-    - Required Evidence
-    - Suggestions
-    - Testing Feedback
-    - Documentation
-  - T.4 Choosing the final recommendation: APPROVE, REQUEST CHANGES, or COMMENT
-  - T.5 Setting the confidence level: High, Medium, or Low
+  - T.2 The complete review output template
+  - T.3 How to fill each section
+  - T.4 Choosing the final recommendation
+  - T.5 Setting the confidence level
   - T.6 Writing the author note
   - T.7 Example: A completed review output
 
-[detailed-guide](references/detailed-guide.md):
+- [detailed-guide](references/detailed-guide.md) — Full methodology reference
   - 4 Phases Overview
   - 5 Analysis Dimensions
-  - Key Principle
   - Evidence Requirements
   - Scenario-Specific Protocols
-  - Troubleshooting
   - Error Handling
-  - Extended Examples
   - Reference Documents Index
-  - Related Skills
 
 ## Examples
 
 ```bash
-# Run a full PR review on PR #42
 gh pr diff 42 > /tmp/pr42.diff
-# Phase 1: Context gathering
 gh pr view 42 --json title,body,files
-# Phase 2: Apply D1-D5 dimensions
-# Phase 3: Compile evidence
-# Phase 4: Generate review
-gh pr review 42 --body "## Summary\n\nReviewed with AI PR methodology.\n\n### Findings\n- D1: Problem verified via test reproduction\n- D2: No redundant code found\n- D3: Integration points checked\n\n### Recommendation: APPROVE"
+# Apply D1-D5 dimensions, compile evidence, generate review
+gh pr review 42 --body "## Summary\nReviewed with AI PR methodology.\n### Recommendation: APPROVE"
 ```
-
-**Expected result:** A structured review comment posted on the PR with findings from all 5 analysis dimensions and a clear APPROVE/REQUEST CHANGES/COMMENT recommendation.

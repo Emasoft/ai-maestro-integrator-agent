@@ -43,15 +43,50 @@ Prefer these over reading large files into your context:
 **Before any diagnosis, read:**
 
 - [SKILL](../skills/amia-ci-failure-patterns/SKILL.md) - Full diagnostic methodology and decision tree
-- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) - Pattern matching workflow
+- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Pattern matching workflow
+  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
+  - 1.2 When identifying which failure pattern category applies
+  - 1.3 When performing deep root cause analysis by category
+  - 1.4 When documenting diagnostic evidence
+  - 1.5 When delegating fixes to remote agents
+  - 1.6 When escalating unknown or complex failures
+  - 1.7 When using diagnostic scripts and tools
+  - 1.8 When troubleshooting common diagnostic challenges
 
-> For detailed debug procedures, see [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md)
+- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Detailed debug procedures
+  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
+  - 1.2 When identifying which failure pattern category applies
+  - 1.3 When performing deep root cause analysis by category
+  - 1.4 When documenting diagnostic evidence
+  - 1.5 When delegating fixes to remote agents
+  - 1.6 When escalating unknown or complex failures
+  - 1.7 When using diagnostic scripts and tools
+  - 1.8 When troubleshooting common diagnostic challenges
 
-> For sub-agent role boundaries with orchestrator, see [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
+- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries with orchestrator
+  - Purpose
+  - Core Identity: Worker Agent (Not Orchestrator)
+  - Standard Output Format
+  - Communication Rules
+  - Tool Restrictions
+  - Common Constraints Template
+  - IRON RULES
+  - Success/Completion Conditions
+  - Anti-Patterns to Avoid
+  - Template Usage
+  - References
 
-> For escalation protocols, see [SKILL](../skills/amia-ci-failure-patterns/SKILL.md)
+For escalation protocols, see [SKILL](../skills/amia-ci-failure-patterns/SKILL.md)
 
-> For diagnostic script usage, see [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md)
+- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Diagnostic script usage
+  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
+  - 1.2 When identifying which failure pattern category applies
+  - 1.3 When performing deep root cause analysis by category
+  - 1.4 When documenting diagnostic evidence
+  - 1.5 When delegating fixes to remote agents
+  - 1.6 When escalating unknown or complex failures
+  - 1.7 When using diagnostic scripts and tools
+  - 1.8 When troubleshooting common diagnostic challenges
 
 ## Diagnostic Workflow (Summary)
 
@@ -61,7 +96,15 @@ Prefer these over reading large files into your context:
 4. **Document findings** - Write report to [CI-DEBUG-{timestamp}](docs_dev/ci-debug/CI-DEBUG-{timestamp}.md)
 5. **Delegate fix** - Send specification to appropriate agent via AI Maestro
 
-> For full step-by-step verification checklists, see [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md)
+- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Full step-by-step verification checklists
+  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
+  - 1.2 When identifying which failure pattern category applies
+  - 1.3 When performing deep root cause analysis by category
+  - 1.4 When documenting diagnostic evidence
+  - 1.5 When delegating fixes to remote agents
+  - 1.6 When escalating unknown or complex failures
+  - 1.7 When using diagnostic scripts and tools
+  - 1.8 When troubleshooting common diagnostic challenges
 
 ## Pattern Categories (Quick Reference)
 

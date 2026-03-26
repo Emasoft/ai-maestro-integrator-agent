@@ -42,19 +42,39 @@ Prefer these over reading large files into your context:
 
 ## Required Reading
 
-> **All test engineering procedures are in the amia-tdd-enforcement skill**
->
-> Start with: [SKILL](../skills/amia-tdd-enforcement/SKILL.md)
->
-> Key references:
->
-> - [test-engineering](../skills/amia-tdd-enforcement/references/test-engineering.md) - Full test procedures, coverage analysis, quality review, RED-GREEN-REFACTOR verification steps
-> - [SKILL](../skills/amia-quality-gates/SKILL.md) - Three-gate system implementation
-> - [SKILL](../skills/amia-tdd-enforcement/SKILL.md) - RULE 14 compliance (USER_REQUIREMENTS.md)
->
-> For sub-agent role boundaries and orchestrator interaction patterns:
->
-> - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
+**All test engineering procedures are in the amia-tdd-enforcement skill**
+
+Start with: [SKILL](../skills/amia-tdd-enforcement/SKILL.md)
+
+Key references:
+
+- [test-engineering](../skills/amia-tdd-enforcement/references/test-engineering.md) — Full test procedures, coverage analysis, quality review, RED-GREEN-REFACTOR verification steps
+  - 1.1 When verifying TDD cycle compliance (RED-GREEN-REFACTOR pattern)
+  - 1.2 When validating test coverage meets requirements
+  - 1.3 When reviewing test quality beyond coverage metrics
+  - 1.4 When enforcing quality gates before code review
+  - 1.5 When executing the complete TDD workflow enforcement
+  - 1.6 When determining rejection criteria for code changes
+  - 1.7 When verifying tests match user requirements
+  - 1.8 When using tools for test enforcement
+  - 1.9 When troubleshooting common test enforcement issues
+- [SKILL](../skills/amia-quality-gates/SKILL.md) - Three-gate system implementation
+- [SKILL](../skills/amia-tdd-enforcement/SKILL.md) - RULE 14 compliance (USER_REQUIREMENTS.md)
+
+For sub-agent role boundaries and orchestrator interaction patterns:
+
+- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
+  - Purpose
+  - Core Identity: Worker Agent (Not Orchestrator)
+  - Standard Output Format
+  - Communication Rules
+  - Tool Restrictions
+  - Common Constraints Template
+  - IRON RULES
+  - Success/Completion Conditions
+  - Anti-Patterns to Avoid
+  - Template Usage
+  - References
 
 ## Output Format
 

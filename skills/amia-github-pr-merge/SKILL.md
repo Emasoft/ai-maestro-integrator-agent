@@ -67,30 +67,14 @@ On failure, check exit code and stderr. Exit 1 = invalid params; Exit 2-4 = API 
 
 ## Resources
 
-Full reference: [detailed-guide](references/detailed-guide.md):
+- [detailed-guide](references/detailed-guide.md) — Full reference
   - GraphQL is the Source of Truth
   - Decision Tree for PR Merge Operations
   - Script Usage Details
-    - amia_test_pr_merged.py
-    - amia_test_pr_merge_ready.py
-    - amia_merge_pr.py
-    - amia_set_auto_merge.py
   - Common Workflows
-    - Workflow 1: Standard PR Merge
-    - Workflow 2: Auto-Merge Setup
-    - Workflow 3: Emergency Merge (Skip CI)
   - Exit Codes Reference
-    - Per-Script Exit Code Details
   - Error Handling
-    - PR shows as not merged but merge failed
-    - Auto-merge not triggering
-    - Merge state showing UNKNOWN
-    - Protected branch preventing merge
   - Safety Warning: Destructive Operations
-    - Irreversible Operations
-    - Before Any Destructive Operation
-    - Safe Merge Checklist
-    - Rollback After Bad Merge
   - Script Locations
   - Reference Documents Index
 

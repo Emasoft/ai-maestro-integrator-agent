@@ -39,20 +39,63 @@ Prefer these over reading large files into your context:
 
 ## Required Reading
 
-> **Before starting any sync operation, read:**
->
-> - [SKILL](../skills/amia-github-projects-sync/SKILL.md) - Complete GitHub Projects V2 synchronization procedures
+**Before starting any sync operation, read:**
 
-> **For detailed sync procedures, see:**
->
-> - [github-sync-procedure](../skills/amia-github-projects-sync/references/github-sync-procedure.md) - Step-by-step sync workflow
-> - [graphql-queries](../skills/amia-github-projects-sync/references/graphql-queries.md) - GraphQL query library
-> - [status-management](../skills/amia-github-projects-sync/references/status-management.md) - Issue lifecycle and NO STALE policy
-> - [label-taxonomy](../skills/amia-github-projects-sync/references/label-taxonomy.md) - 9-label classification system
+- [SKILL](../skills/amia-github-projects-sync/SKILL.md) - Complete GitHub Projects V2 synchronization procedures
 
-> **For role boundaries with orchestrator, see:**
->
-> - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
+**For detailed sync procedures, see:**
+
+- [github-sync-procedure](../skills/amia-github-projects-sync/references/github-sync-procedure.md) — Step-by-step sync workflow
+  - 1.1 Authenticating and verifying GitHub CLI access
+  - 1.2 Configuring GitHub Projects V2 environment variables
+  - 1.3 Fetching project board data via GraphQL API
+  - 1.4 Synchronizing GitHub issues to local task state
+  - 1.5 Synchronizing local changes back to GitHub
+  - 1.6 Managing GitHub issue labels across priority, status, and type dimensions
+  - 1.7 Syncing Project V2 custom fields bidirectionally
+  - 1.8 Integrating Claude Tasks with GitHub issue checklists
+  - 1.9 Handling sync errors and conflicts
+  - 1.10 Generating sync reports and logs
+  - 1.11 Troubleshooting API rate limits, label conflicts, and task parse errors
+- [graphql-queries](../skills/amia-github-projects-sync/references/graphql-queries.md) — GraphQL query library
+  - GraphQL Queries for GitHub Projects
+  - Overview
+  - List Projects
+  - Get Items
+  - Update Status
+  - Create Issues
+  - Custom Fields
+  - Detailed Query References
+- [status-management](../skills/amia-github-projects-sync/references/status-management.md) — Issue lifecycle and NO STALE policy
+  - Part Files
+  - Overview
+  - Status Definitions
+  - Issue Lifecycle Policy (NO STALE)
+  - Related References
+- [label-taxonomy](../skills/amia-github-projects-sync/references/label-taxonomy.md) — 9-label classification system
+  - Overview
+  - Label Categories
+  - Label Management
+  - Label Application Rules
+  - Label-Based Queries
+  - Label Statistics
+  - Best Practices
+  - Label Colors Reference
+
+**For role boundaries with orchestrator, see:**
+
+- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
+  - Purpose
+  - Core Identity: Worker Agent (Not Orchestrator)
+  - Standard Output Format
+  - Communication Rules
+  - Tool Restrictions
+  - Common Constraints Template
+  - IRON RULES
+  - Success/Completion Conditions
+  - Anti-Patterns to Avoid
+  - Template Usage
+  - References
 
 ## Output Format
 

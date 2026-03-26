@@ -1,8 +1,7 @@
 ---
 name: op-create-worktree
-description: "Create a git worktree for parallel PR processing"
+description: "Create git worktree for parallel PR work"
 procedure: support-skill
-workflow-instruction: support
 ---
 
 # Operation: Create Worktree

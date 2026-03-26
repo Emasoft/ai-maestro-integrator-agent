@@ -1,9 +1,9 @@
 ---
 name: amia-session-memory
-description: "Session memory for PR reviews and integration work. Use when resuming reviews, tracking releases, or persisting context across sessions. Trigger with session resumption."
+description: "Use when resuming sessions. Trigger with session resumption."
 license: Apache-2.0
 version: 1.0.0
-compatibility: Requires familiarity with AMIA role responsibilities (code review, integration, releases). Designed for maintaining context across Claude Code session boundaries. Requires AI Maestro installed.
+compatibility: Requires AMIA role knowledge. Requires AI Maestro installed.
 metadata:
   author: Emasoft
   version: 1.0.0
@@ -71,15 +71,9 @@ Non-zero exit codes on failure. See detailed guide in Resources.
 
 ## Resources
 
-Full reference: [detailed-guide](references/detailed-guide.md):
+- [detailed-guide](references/detailed-guide.md) — Full reference
   - Error Handling
-    - Missing Memory
-    - Stale Memory
-    - Write Failures
   - Examples
-    - Example 1: Resume PR Review
-    - Example 2: Handoff Integration Work
-    - Example 3: Log Release Decision
   - Memory Architecture
   - What to Remember
   - Memory Retrieval
@@ -87,12 +81,7 @@ Full reference: [detailed-guide](references/detailed-guide.md):
   - Handoff Documents
   - Integration with Other Skills
   - Troubleshooting
-    - Memory Not Found
-    - Stale Memory
-    - Memory Conflicts
   - Quick Reference Commands
-    - Load Memory Commands
-    - Save Memory Commands
   - State Markers
   - Full Reference Document Listing
 

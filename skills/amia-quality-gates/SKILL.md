@@ -1,9 +1,9 @@
 ---
 name: amia-quality-gates
-description: "Quality gate enforcement for PR integration. Use when verifying code through pre-review, review, pre-merge, or post-merge checkpoints. Trigger with /amia-enforce-gates."
+description: "Use when enforcing quality gates. Trigger with /amia-enforce-gates."
 version: 1.0.0
 license: Apache-2.0
-compatibility: Requires familiarity with CI/CD pipelines, code review processes, and GitHub workflows. Designed for the Integrator Agent role enforcing quality standards. Requires AI Maestro installed.
+compatibility: Requires CI/CD and GitHub workflow experience. Requires AI Maestro installed.
 metadata:
   author: Emasoft
   version: 1.0.0
@@ -92,11 +92,6 @@ Non-zero exit codes on failure. See detailed guide in Resources.
   - Purpose and Principles
   - Gate Types and Pipeline Position
   - Error Handling
-    - CI Pipeline Not Running
-    - Labels Not Applying
-    - Escalation Notification Failure
-    - Gate Stuck in Pending State
-    - Override Authority Unavailable
   - Output Discipline
   - Design Document Scripts
   - Encoding Compliance Scripts
@@ -104,8 +99,6 @@ Non-zero exit codes on failure. See detailed guide in Resources.
   - PR Gate Scripts
   - Script Locations
   - Integration with Other Skills
-    - Dependency on Label Taxonomy
-    - Related Skills
 
 ## Examples
 

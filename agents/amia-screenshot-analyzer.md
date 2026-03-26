@@ -36,11 +36,20 @@ Prefer these over reading large files into your context:
 
 ## Required Reading
 
-> For quality gate rules, requirement compliance, and reporting standards, see [SKILL](../skills/amia-quality-gates/SKILL.md)
+For quality gate rules, requirement compliance, and reporting standards, see [SKILL](../skills/amia-quality-gates/SKILL.md)
 
-> For sub-agent role boundaries and orchestrator handoff protocols, see [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
->
-> **Contents:** Purpose, Core Identity: Worker Agent (Not Orchestrator), Standard Output Format, Communication Rules, Tool Restrictions, Common Constraints Template, IRON RULES, Success/Completion Conditions, Anti-Patterns to Avoid, Template Usage, References
+- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries and orchestrator handoff protocols
+  - Purpose
+  - Core Identity: Worker Agent (Not Orchestrator)
+  - Standard Output Format
+  - Communication Rules
+  - Tool Restrictions
+  - Common Constraints Template
+  - IRON RULES
+  - Success/Completion Conditions
+  - Anti-Patterns to Avoid
+  - Template Usage
+  - References
 
 > For detailed screenshot analysis procedures, UI deviation protocols, and visual requirement traceability, see [SKILL](../skills/amia-integration-protocols/SKILL.md)
 

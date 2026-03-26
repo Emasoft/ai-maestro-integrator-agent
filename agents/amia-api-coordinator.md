@@ -51,13 +51,33 @@ Prefer these over reading large files into your context:
 
 - [SKILL](../skills/amia-github-integration/SKILL.md) - Complete GitHub integration protocols
 
-> For detailed API operations (issue/PR/project CRUD), see [api-operations](../skills/amia-github-integration/references/api-operations.md)
+- [api-operations](../skills/amia-github-integration/references/api-operations.md) — Detailed API operations (issue/PR/project CRUD)
+  - 1.1 Executing GitHub Issue Operations
+  - 1.2 Executing GitHub Pull Request Operations
+  - 1.3 Executing GitHub Projects V2 Operations
+  - 1.4 Managing Conversation Threads on Issues and PRs
+  - 1.5 Handling GitHub API Rate Limits
+  - 1.6 Running Quality Gates Before API Operations
+  - 1.7 Coordinating API Operations via AI Maestro
+  - 1.8 Step-by-Step API Operation Workflow
+  - 1.9 Using GitHub CLI and GraphQL Tools
 
-> For rate limit handling procedures, see [SKILL](../skills/amia-github-integration/SKILL.md)
+For rate limit handling procedures, see [SKILL](../skills/amia-github-integration/SKILL.md)
 
-> For quality gate specifications, see [SKILL](../skills/amia-quality-gates/SKILL.md)
+For quality gate specifications, see [SKILL](../skills/amia-quality-gates/SKILL.md)
 
-> For sub-agent role boundaries and orchestrator coordination, see [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
+- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries and orchestrator coordination
+  - Purpose
+  - Core Identity: Worker Agent (Not Orchestrator)
+  - Standard Output Format
+  - Communication Rules
+  - Tool Restrictions
+  - Common Constraints Template
+  - IRON RULES
+  - Success/Completion Conditions
+  - Anti-Patterns to Avoid
+  - Template Usage
+  - References
 
 ## Core Operations (Reference Only)
 

@@ -1,8 +1,7 @@
 ---
 name: op-batch-label-add
-description: "Bulk add labels to multiple GitHub issues at once"
+description: "Bulk add labels to GitHub issues"
 procedure: support-skill
-workflow-instruction: support
 ---
 
 # Operation: Batch Label Add

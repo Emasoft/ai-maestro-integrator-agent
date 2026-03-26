@@ -41,15 +41,36 @@ Prefer these over reading large files into your context:
 
 ## Required Reading
 
-> **For integration verification procedures, see:**
->
-> - `amia-quality-gates` skill SKILL.md (integration verification workflow)
-> - [integration-verification](../skills/amia-quality-gates/references/integration-verification.md) (detailed procedures)
-> - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) (role boundaries with orchestrator)
+**For integration verification procedures, see:**
 
-> **For RULE 14 requirement compliance verification, see:**
->
-> - [integration-verification](../skills/amia-quality-gates/references/integration-verification.md)
+- `amia-quality-gates` skill SKILL.md (integration verification workflow)
+- [integration-verification](../skills/amia-quality-gates/references/integration-verification.md) — Detailed procedures
+  - 1. Verifying Component Integration Readiness
+  - 2. Checking Merge Readiness with Exit Code Evidence
+  - 3. Verifying User Requirements Compliance Before Integration
+  - 4. Resolving Integration Conflicts and Failures
+  - 5. Validating Deployment Configurations
+- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries with orchestrator
+  - Purpose
+  - Core Identity: Worker Agent (Not Orchestrator)
+  - Standard Output Format
+  - Communication Rules
+  - Tool Restrictions
+  - Common Constraints Template
+  - IRON RULES
+  - Success/Completion Conditions
+  - Anti-Patterns to Avoid
+  - Template Usage
+  - References
+
+**For RULE 14 requirement compliance verification, see:**
+
+- [integration-verification](../skills/amia-quality-gates/references/integration-verification.md)
+  - 1. Verifying Component Integration Readiness
+  - 2. Checking Merge Readiness with Exit Code Evidence
+  - 3. Verifying User Requirements Compliance Before Integration
+  - 4. Resolving Integration Conflicts and Failures
+  - 5. Validating Deployment Configurations
 
 ## When Invoked
 
