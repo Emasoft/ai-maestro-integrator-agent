@@ -94,3 +94,18 @@ Validate handoff payloads before sending. Required fields: `handoff_type`, `from
   - Phase 3: Delegation
   - Phase 4: Monitor Completion
   - Phase 5: Report to AMOA
+
+## Examples
+
+```bash
+# Send a handoff payload from integrator to orchestrator
+amp-send.sh amoa-main "Integration Complete" '{
+  "handoff_type": "task_completion",
+  "from_agent": "amia-main",
+  "to_agent": "amoa-main",
+  "context": {"pr": 42, "status": "merged", "branch": "feature/auth"},
+  "timestamp": "2026-03-26T12:00:00Z"
+}'
+```
+
+**Expected result:** The orchestrator receives a structured handoff payload with all required fields (`handoff_type`, `from_agent`, `to_agent`, `context`) and can update its task tracking accordingly.

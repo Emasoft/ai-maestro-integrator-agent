@@ -95,3 +95,15 @@ Full reference: [detailed-guide](references/detailed-guide.md):
     - Save Memory Commands
   - State Markers
   - Full Reference Document Listing
+
+## Examples
+
+```bash
+# Resume a PR review from a previous session
+gh pr view 42 --json comments --jq '.comments[] | select(.body | contains("AMIA-STATE"))' > /tmp/pr42-state.json
+# Load the state marker and continue review from where you left off
+# Save updated state when done
+gh pr comment 42 --body "<!-- AMIA-STATE: {\"phase\": 3, \"dimensions_completed\": [1,2,3], \"timestamp\": \"2026-03-26T12:00:00Z\"} -->"
+```
+
+**Expected result:** The session state is loaded from the PR comment containing the `AMIA-STATE` marker. After completing remaining work, an updated state marker is posted so the next session can resume seamlessly.

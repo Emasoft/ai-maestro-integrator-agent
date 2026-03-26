@@ -99,3 +99,18 @@ Non-zero exit codes on failure. See detailed guide in Resources.
   - Extended Examples
   - Reference Documents Index
   - Related Skills
+
+## Examples
+
+```bash
+# Run a full PR review on PR #42
+gh pr diff 42 > /tmp/pr42.diff
+# Phase 1: Context gathering
+gh pr view 42 --json title,body,files
+# Phase 2: Apply D1-D5 dimensions
+# Phase 3: Compile evidence
+# Phase 4: Generate review
+gh pr review 42 --body "## Summary\n\nReviewed with AI PR methodology.\n\n### Findings\n- D1: Problem verified via test reproduction\n- D2: No redundant code found\n- D3: Integration points checked\n\n### Recommendation: APPROVE"
+```
+
+**Expected result:** A structured review comment posted on the PR with findings from all 5 analysis dimensions and a clear APPROVE/REQUEST CHANGES/COMMENT recommendation.

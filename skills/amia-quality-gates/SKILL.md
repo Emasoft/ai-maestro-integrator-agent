@@ -106,3 +106,18 @@ Non-zero exit codes on failure. See detailed guide in Resources.
   - Integration with Other Skills
     - Dependency on Label Taxonomy
     - Related Skills
+
+## Examples
+
+```bash
+# Check Pre-Review gate for PR #42
+gh pr view 42 --json labels,statusCheckRollup
+# Verify tests pass
+gh pr checks 42 --required
+# Apply gate label
+gh pr edit 42 --add-label "gate:pre-review-passed"
+# Advance to Review gate
+gh pr edit 42 --add-label "gate:review"
+```
+
+**Expected result:** PR #42 transitions from Pre-Review to Review gate with labels `gate:pre-review-passed` and `gate:review` applied, CI checks confirmed green.
