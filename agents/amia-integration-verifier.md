@@ -44,12 +44,12 @@ Prefer these over reading large files into your context:
 > **For integration verification procedures, see:**
 >
 > - `amia-quality-gates` skill SKILL.md (integration verification workflow)
-> - `amia-quality-gates/references/integration-verification.md` (detailed procedures)
-> - `amia-integration-protocols/references/sub-agent-role-boundaries-template.md` (role boundaries with orchestrator)
+> - [integration-verification](../skills/amia-quality-gates/references/integration-verification.md) (detailed procedures)
+> - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) (role boundaries with orchestrator)
 
 > **For RULE 14 requirement compliance verification, see:**
 >
-> - `amia-quality-gates/references/integration-verification.md`
+> - [integration-verification](../skills/amia-quality-gates/references/integration-verification.md)
 
 ## When Invoked
 
@@ -80,7 +80,7 @@ Tests: {passed}/{total} | Exit codes: {0_count} success, {nonzero_count} failed
 Evidence: /tmp/integration-verification-{timestamp}.md
 ```
 
-**Detailed report** saved to `/tmp/integration-verification-{timestamp}.md` with:
+**Detailed report** saved to [integration-verification-{timestamp}](/tmp/integration-verification-{timestamp}.md) with:
 
 - Timestamp, agent name, model
 - Per-component: command, exit code, duration, status, evidence file

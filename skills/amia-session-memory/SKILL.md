@@ -57,17 +57,17 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-- `references/memory-architecture.md` — Storage locations and persistence patterns
-- `references/memory-retrieval.md` — Triggers and retrieval commands
-- `references/memory-updates.md` — Update triggers and commands
-- `references/handoff-documents.md` — Handoff format and checklist
-- `references/detailed-guide.md` — Error handling, examples, troubleshooting
+- [memory-architecture](references/memory-architecture.md) — Storage locations and persistence patterns
+- [memory-retrieval](references/memory-retrieval.md) — Triggers and retrieval commands
+- [memory-updates](references/memory-updates.md) — Update triggers and commands
+- [handoff-documents](references/handoff-documents.md) — Handoff format and checklist
+- [detailed-guide](references/detailed-guide.md) — Error handling, examples, troubleshooting
 
 See `references/` directory for remaining documents.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for common error scenarios.
 
 ## Examples
 

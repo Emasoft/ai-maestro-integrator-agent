@@ -63,11 +63,11 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
+See `references/` directory for all reference documents. Full index in [detailed-guide](references/detailed-guide.md).
 
 ## Error Handling
 
-Script failures return non-zero exit codes. See `references/detailed-guide.md` for details.
+Script failures return non-zero exit codes. See [detailed-guide](references/detailed-guide.md) for details.
 
 ## Examples
 
@@ -79,4 +79,4 @@ python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 
 ## Resources
 
-See `references/detailed-guide.md` for decision tree, scripts, and extended examples.
+See [detailed-guide](references/detailed-guide.md) for decision tree, scripts, and extended examples.

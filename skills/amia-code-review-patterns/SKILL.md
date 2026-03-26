@@ -25,7 +25,7 @@ Two-stage PR review: Quick Scan (70% threshold) then 8-dimension Deep Dive (80% 
 
 ## Instructions
 
-1. **Gate 0 compliance** - Verify requirements per `references/requirement-compliance.md`
+1. **Gate 0 compliance** - Verify requirements per [requirement-compliance](references/requirement-compliance.md)
 2. **Stage 1: Quick Scan** - Assess structure, diff, issues; Go/No-Go at 70%+
 3. **Stage 2: Deep Dive** - Score 8 dimensions; approve at 80%+
 4. **Run quality gates and create report** via `scripts/review_report_generator.py`
@@ -55,7 +55,7 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
+See `references/` directory for all reference documents. Full index in [detailed-guide](references/detailed-guide.md).
 
 ## Error Handling
 
@@ -70,4 +70,4 @@ python scripts/review_report_generator.py --repo owner/repo --pr 42
 
 ## Resources
 
-See `references/detailed-guide.md` for scoring details and examples.
+See [detailed-guide](references/detailed-guide.md) for scoring details and examples.

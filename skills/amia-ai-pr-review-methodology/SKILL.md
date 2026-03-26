@@ -24,15 +24,24 @@ Evidence-based PR review using 4 phases and 5 analysis dimensions to catch false
 
 ## Instructions
 
-1. **Gather Context (Phase 1):** Read `references/phase-1-context-gathering.md`. Read complete files (not just diffs), search for duplicates, understand root cause, verify all claims.
+1. **Gather Context (Phase 1):** Read [phase-1-context-gathering](references/phase-1-context-gathering.md). Read complete files (not just diffs), search for duplicates, understand root cause, verify all claims.
 
-2. **Structured Analysis (Phase 2):** Read `references/phase-2-structured-analysis.md`, then apply dimensions D1-D5 in order (see `references/dimension-*.md`).
+2. **Structured Analysis (Phase 2):** Read [phase-2-structured-analysis](references/phase-2-structured-analysis.md), then apply dimensions D1-D5 in order:
+   - [dimension-1-problem-verification](references/dimension-1-problem-verification.md)
+   - [dimension-2-redundancy-check](references/dimension-2-redundancy-check.md)
+   - [dimension-3-system-integration](references/dimension-3-system-integration.md)
+   - [dimension-4-senior-review](references/dimension-4-senior-review.md)
+   - [dimension-5-false-positive-detection](references/dimension-5-false-positive-detection.md)
 
 3. **Evidence Requirements (Phase 3):** Compile missing evidence: Problem Demonstration, Solution Validation, Assumption Verification, Cross-Platform Testing.
 
-4. **Scenario Protocol (if applicable):** Match PR type to `references/scenario-*.md`.
+4. **Scenario Protocol (if applicable):** Match PR type to the appropriate scenario:
+   - [scenario-bug-fixes](references/scenario-bug-fixes.md)
+   - [scenario-dependency-updates](references/scenario-dependency-updates.md)
+   - [scenario-path-changes](references/scenario-path-changes.md)
+   - [scenario-performance](references/scenario-performance.md)
 
-5. **Generate Review (Phase 4):** Use `references/review-output-template.md` and run `references/quick-reference-checklist.md` before submitting.
+5. **Generate Review (Phase 4):** Use [review-output-template](references/review-output-template.md) and run [quick-reference-checklist](references/quick-reference-checklist.md) before submitting.
 
 ### Checklist
 
@@ -56,17 +65,17 @@ Copy this checklist and track your progress:
 | Recommendation | APPROVE / REQUEST CHANGES / COMMENT |
 | Confidence | High / Medium / Low |
 
-Template: `references/review-output-template.md`
+Template: [review-output-template](references/review-output-template.md)
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
 ## Reference Documents
 
-See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
+See `references/` directory for all reference documents. Full index in [detailed-guide](references/detailed-guide.md).
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for error scenarios.
 
 ## Examples
 
@@ -77,4 +86,4 @@ python scripts/amia_pr_review.py --repo owner/repo --pr 42
 
 ## Resources
 
-See `references/detailed-guide.md` for extended examples, troubleshooting, and related skills.
+See [detailed-guide](references/detailed-guide.md) for extended examples, troubleshooting, and related skills.

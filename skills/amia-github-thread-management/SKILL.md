@@ -66,7 +66,7 @@ See `references/` directory for all reference documents: protocols, conversation
 
 ## Error Handling
 
-Check exit code and stderr on failure. Exit 1: bad params. Exit 2-4: API errors. See `references/detailed-guide.md`.
+Check exit code and stderr on failure. Exit 1: bad params. Exit 2-4: API errors. See [detailed-guide](references/detailed-guide.md).
 
 ## Resources
 

@@ -63,11 +63,11 @@ Exit codes: 0=success, 1=invalid params, 2=not found, 3=API error, 4=auth, 5=alr
 
 ## Reference Documents
 
-See `references/` directory for all reference documents (merge state verification, strategies, auto-merge, operation guides, rollback). Full details in `references/detailed-guide.md`.
+See `references/` directory for all reference documents (merge state verification, strategies, auto-merge, operation guides, rollback). Full details in [detailed-guide](references/detailed-guide.md).
 
 ## Error Handling
 
-On failure, check exit code and stderr. Exit 1 = invalid params; Exit 2-4 = API errors. See `references/detailed-guide.md`.
+On failure, check exit code and stderr. Exit 1 = invalid params; Exit 2-4 = API errors. See [detailed-guide](references/detailed-guide.md).
 
 ## Resources
 

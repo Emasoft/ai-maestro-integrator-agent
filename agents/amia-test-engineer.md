@@ -44,17 +44,17 @@ Prefer these over reading large files into your context:
 
 > **All test engineering procedures are in the amia-tdd-enforcement skill**
 >
-> Start with: `amia-tdd-enforcement/SKILL.md`
+> Start with: [SKILL](../skills/amia-tdd-enforcement/SKILL.md)
 >
 > Key references:
 >
-> - `amia-tdd-enforcement/references/test-engineering.md` - Full test procedures, coverage analysis, quality review, RED-GREEN-REFACTOR verification steps
-> - `amia-quality-gates/SKILL.md` - Three-gate system implementation
-> - `amia-tdd-enforcement/SKILL.md` - RULE 14 compliance (USER_REQUIREMENTS.md)
+> - [test-engineering](../skills/amia-tdd-enforcement/references/test-engineering.md) - Full test procedures, coverage analysis, quality review, RED-GREEN-REFACTOR verification steps
+> - [SKILL](../skills/amia-quality-gates/SKILL.md) - Three-gate system implementation
+> - [SKILL](../skills/amia-tdd-enforcement/SKILL.md) - RULE 14 compliance (USER_REQUIREMENTS.md)
 >
 > For sub-agent role boundaries and orchestrator interaction patterns:
 >
-> - `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`
+> - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
 
 ## Output Format
 

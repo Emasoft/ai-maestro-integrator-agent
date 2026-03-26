@@ -41,18 +41,18 @@ Prefer these over reading large files into your context:
 
 > **Before starting any sync operation, read:**
 >
-> - `../skills/amia-github-projects-sync/SKILL.md` - Complete GitHub Projects V2 synchronization procedures
+> - [SKILL](../skills/amia-github-projects-sync/SKILL.md) - Complete GitHub Projects V2 synchronization procedures
 
 > **For detailed sync procedures, see:**
 >
-> - `../skills/amia-github-projects-sync/references/github-sync-procedure.md` - Step-by-step sync workflow
-> - `../skills/amia-github-projects-sync/references/graphql-queries.md` - GraphQL query library
-> - `../skills/amia-github-projects-sync/references/status-management.md` - Issue lifecycle and NO STALE policy
-> - `../skills/amia-github-projects-sync/references/label-taxonomy.md` - 9-label classification system
+> - [github-sync-procedure](../skills/amia-github-projects-sync/references/github-sync-procedure.md) - Step-by-step sync workflow
+> - [graphql-queries](../skills/amia-github-projects-sync/references/graphql-queries.md) - GraphQL query library
+> - [status-management](../skills/amia-github-projects-sync/references/status-management.md) - Issue lifecycle and NO STALE policy
+> - [label-taxonomy](../skills/amia-github-projects-sync/references/label-taxonomy.md) - 9-label classification system
 
 > **For role boundaries with orchestrator, see:**
 >
-> - `../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md`
+> - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
 
 ## Output Format
 

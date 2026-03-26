@@ -147,7 +147,7 @@ Key topics:
 5. **Verify TDD compliance** - Check git history for RED→GREEN commit sequence.
 6. **Verify requirement compliance** - Compare PR scope against USER_REQUIREMENTS.md.
 7. **Collect results** - Parse outputs, extract metrics, identify failure patterns.
-8. **Generate reports** - Write `pr-evaluation-report-${PR_NUMBER}.md` and `pr-evaluation-${PR_NUMBER}.json`.
+8. **Generate reports** - Write [pr-evaluation-report-${PR_NUMBER}](pr-evaluation-report-${PR_NUMBER}.md) and `pr-evaluation-${PR_NUMBER}.json`.
 9. **Cleanup environment** - Remove worktree/container.
 10. **Report to orchestrator** - Return verdict with key findings and report paths.
 

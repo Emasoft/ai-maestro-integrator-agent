@@ -61,7 +61,7 @@ See `references/` directory for all reference documents.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. See `references/error-handling.md` for details.
+Script failures return non-zero exit codes. See [error-handling](references/error-handling.md) for details.
 
 ## Examples
 

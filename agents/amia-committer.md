@@ -41,11 +41,11 @@ Before executing commits, read the `amia-code-review-patterns` skill:
 
 - [../skills/amia-code-review-patterns/SKILL.md](../skills/amia-code-review-patterns/SKILL.md)
 
-> For commit message conventions, formatting standards, and searchability requirements, see `amia-code-review-patterns/references/commit-conventions.md`.
+> For commit message conventions, formatting standards, and searchability requirements, see [commit-conventions](../skills/amia-code-review-patterns/references/commit-conventions.md).
 
-> For dual-git handling procedures (project vs design git), see `amia-code-review-patterns/references/commit-conventions.md`.
+> For dual-git handling procedures (project vs design git), see [commit-conventions](../skills/amia-code-review-patterns/references/commit-conventions.md).
 
-> For sub-agent role boundaries and responsibility limits, see `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`.
+> For sub-agent role boundaries and responsibility limits, see [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md).
 
 ## Brief Output Format
 

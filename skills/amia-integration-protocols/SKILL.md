@@ -14,11 +14,11 @@ user-invocable: false
 
 ## Overview
 
-This skill provides shared reference documents that are used across multiple Integrator Agent skills. It contains common patterns, protocols, and utilities that enable consistent behavior across the skill set.
+Shared reference documents used across Integrator Agent skills. Contains common patterns, protocols, and utilities for consistent behavior.
 
 ## Prerequisites
 
-None required. This is a reference skill with no external dependencies.
+No external dependencies required.
 
 ## Instructions
 
@@ -51,7 +51,7 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-### Handoff Protocols (`references/handoff-protocols.md`)
+### Handoff Protocols ([handoff-protocols](references/handoff-protocols.md))
 
 Standard protocols for handing off work between agents:
 
@@ -116,9 +116,9 @@ Standard protocols for handing off work between agents:
 
 ## Resources
 
-- `references/handoff-protocols.md` — Complete handoff protocol reference
-- `references/ai-maestro-message-templates.md` — AI Maestro message format templates (use via `agent-messaging` skill)
-- `references/sub-agent-role-boundaries-template.md` — Worker agent role boundary template
-- `references/routing-checklist.md` — Task routing checklist for agent coordination
-- `references/record-keeping.md` — Session record-keeping formats and state management
-- `references/phase-procedures.md` — Integration phase procedures and workflow steps
+- [handoff-protocols](references/handoff-protocols.md) — Complete handoff protocol reference
+- [ai-maestro-message-templates](references/ai-maestro-message-templates.md) — AI Maestro message format templates (use via `agent-messaging` skill)
+- [sub-agent-role-boundaries-template](references/sub-agent-role-boundaries-template.md) — Worker agent role boundary template
+- [routing-checklist](references/routing-checklist.md) — Task routing checklist for agent coordination
+- [record-keeping](references/record-keeping.md) — Session record-keeping formats and state management
+- [phase-procedures](references/phase-procedures.md) — Integration phase procedures and workflow steps

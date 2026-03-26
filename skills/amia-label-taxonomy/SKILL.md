@@ -60,14 +60,14 @@ Copy this checklist and track your progress:
 
 **Operations:**
 
-- `references/op-start-pr-review.md` — Procedure for starting a PR review
-- `references/op-request-changes.md` — Procedure for requesting changes
-- `references/op-approve-and-merge.md` — Procedure for approving and merging
-- `references/op-mark-blocked-pr.md` — Procedure for marking a PR blocked
+- [op-start-pr-review](references/op-start-pr-review.md) — Procedure for starting a PR review
+- [op-request-changes](references/op-request-changes.md) — Procedure for requesting changes
+- [op-approve-and-merge](references/op-approve-and-merge.md) — Procedure for approving and merging
+- [op-mark-blocked-pr](references/op-mark-blocked-pr.md) — Procedure for marking a PR blocked
 
 **Guides:**
 
-- `references/detailed-guide.md` — Full label tables, error handling, kanban columns, commands, examples
+- [detailed-guide](references/detailed-guide.md) — Full label tables, error handling, kanban columns, commands, examples
 
 ### Labels AMIA Manages
 
@@ -92,15 +92,15 @@ If a script fails, check the exit code and stderr output. Common issues:
 - **Exit 1**: Invalid parameters or missing arguments
 - **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
 
-See `references/detailed-guide.md` for detailed error scenarios.
+See [detailed-guide](references/detailed-guide.md) for detailed error scenarios.
 
 ## Resources
 
-- `references/detailed-guide.md`
-- `references/op-approve-and-merge.md`
-- `references/op-mark-blocked-pr.md`
-- `references/op-request-changes.md`
-- `references/op-start-pr-review.md`
+- [detailed-guide](references/detailed-guide.md)
+- [op-approve-and-merge](references/op-approve-and-merge.md)
+- [op-mark-blocked-pr](references/op-mark-blocked-pr.md)
+- [op-request-changes](references/op-request-changes.md)
+- [op-start-pr-review](references/op-start-pr-review.md)
 
 ## Examples
 

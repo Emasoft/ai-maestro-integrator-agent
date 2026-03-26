@@ -59,11 +59,11 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-See `references/` directory for all reference documents. Key files: `references/detailed-guide.md` (workflows, decision trees, error handling), language-specific review patterns, and operation guides.
+See `references/` directory for all reference documents. Key files: [detailed-guide](references/detailed-guide.md) (workflows, decision trees, error handling), language-specific review patterns, and operation guides.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr and `references/detailed-guide.md` for details.
+Script failures return non-zero exit codes. Check stderr and [detailed-guide](references/detailed-guide.md) for details.
 
 ## Examples
 

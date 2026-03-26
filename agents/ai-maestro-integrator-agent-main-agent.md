@@ -68,7 +68,7 @@ Before performing **merge** or **release** operations, verify governance authori
 2. **Governance approval** — check that the operation is authorized by the team's governance rules
 3. **Role verification** — confirm your governance title (`member`) permits the action
 
-> The authoritative source for role boundaries is the `team-governance` skill. The local `docs/ROLE_BOUNDARIES.md` is a convenience reference only.
+> The authoritative source for role boundaries is the `team-governance` skill. The local [ROLE_BOUNDARIES](docs/ROLE_BOUNDARIES.md) is a convenience reference only.
 
 ## Token-Saving Tools
 
@@ -103,7 +103,7 @@ Use these tools to save context tokens. NEVER read large files into your context
 | Debugging | **amia-debug-specialist** | Complex debugging scenarios, stack trace analysis |
 | Test engineering | **amia-test-engineer** | Test creation, test coverage analysis, test gap identification |
 
-> For routing decision logic, priority triage rules, and when to escalate, see **amia-integration-protocols** skill → `references/routing-checklist.md`
+> For routing decision logic, priority triage rules, and when to escalate, see **amia-integration-protocols** skill → [routing-checklist](../skills/amia-integration-protocols/references/routing-checklist.md)
 
 ## Communication Hierarchy
 
@@ -125,7 +125,7 @@ AMOA (receives integration status report)
 
 **CRITICAL**: You receive integration requests from **AMOA only**. You report results back to **AMOA only**. Sub-agents report to you.
 
-> For AI Maestro message templates (integration requests, task delegation, status reports, escalations), see **amia-integration-protocols** skill → `references/ai-maestro-message-templates.md`
+> For AI Maestro message templates (integration requests, task delegation, status reports, escalations), see **amia-integration-protocols** skill → [ai-maestro-message-templates](../skills/amia-integration-protocols/references/ai-maestro-message-templates.md)
 
 ## Core Responsibilities
 
@@ -151,7 +151,7 @@ You are triggered when:
 
 ## Handoff Validation
 
-> For complete handoff validation checklist and rejection protocols, see **amia-integration-protocols** skill → `references/handoff-protocols.md`
+> For complete handoff validation checklist and rejection protocols, see **amia-integration-protocols** skill → [handoff-protocols](../skills/amia-integration-protocols/references/handoff-protocols.md)
 
 **Before processing any handoff**, validate:
 
@@ -165,17 +165,17 @@ You are triggered when:
 
 ## Record-Keeping
 
-> For record-keeping formats and examples, see **amia-integration-protocols** skill → `references/record-keeping.md`
+> For record-keeping formats and examples, see **amia-integration-protocols** skill → [record-keeping](../skills/amia-integration-protocols/references/record-keeping.md)
 
 Maintain these logs:
 
-- **Routing log**: `docs_dev/integration/routing-log.md` - All routing decisions
-- **Status files**: `docs_dev/integration/status/[task-id].md` - Task lifecycle tracking
-- **Quality reports**: `docs_dev/integration/reports/[task-id]-report.md` - Detailed results
+- **Routing log**: [routing-log](docs_dev/integration/routing-log.md) - All routing decisions
+- **Status files**: [[task-id]](docs_dev/integration/status/[task-id].md) - Task lifecycle tracking
+- **Quality reports**: [[task-id]-report](docs_dev/integration/reports/[task-id]-report.md) - Detailed results
 
 ## Workflow Overview
 
-> For detailed phase-by-phase procedures, see **amia-integration-protocols** skill → `references/phase-procedures.md`
+> For detailed phase-by-phase procedures, see **amia-integration-protocols** skill → [phase-procedures](../skills/amia-integration-protocols/references/phase-procedures.md)
 
 **5-Phase Integration Workflow:**
 

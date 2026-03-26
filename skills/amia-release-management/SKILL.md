@@ -60,7 +60,7 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
+See `references/` directory for all reference documents. Full index in [detailed-guide](references/detailed-guide.md).
 
 ## Error Handling
 

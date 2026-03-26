@@ -63,7 +63,7 @@ See `references/` directory for all reference documents.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for common error scenarios.
 
 ## Examples
 

@@ -59,7 +59,7 @@ See `references/` directory for all reference documents.
 
 ## Error Handling
 
-Check exit code and stderr: 1=invalid params, 2-4=GitHub API errors. See `references/detailed-guide.md`.
+Check exit code and stderr: 1=invalid params, 2-4=GitHub API errors. See [detailed-guide](references/detailed-guide.md).
 
 ## Resources
 

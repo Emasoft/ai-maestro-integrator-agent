@@ -36,13 +36,13 @@ Prefer these over reading large files into your context:
 
 ## Required Reading
 
-> For quality gate rules, requirement compliance, and reporting standards, see `amia-quality-gates/SKILL.md`
+> For quality gate rules, requirement compliance, and reporting standards, see [SKILL](../skills/amia-quality-gates/SKILL.md)
 
-> For sub-agent role boundaries and orchestrator handoff protocols, see `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`
+> For sub-agent role boundaries and orchestrator handoff protocols, see [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
 >
 > **Contents:** Purpose, Core Identity: Worker Agent (Not Orchestrator), Standard Output Format, Communication Rules, Tool Restrictions, Common Constraints Template, IRON RULES, Success/Completion Conditions, Anti-Patterns to Avoid, Template Usage, References
 
-> For detailed screenshot analysis procedures, UI deviation protocols, and visual requirement traceability, see `amia-integration-protocols/SKILL.md`
+> For detailed screenshot analysis procedures, UI deviation protocols, and visual requirement traceability, see [SKILL](../skills/amia-integration-protocols/SKILL.md)
 
 ## Workflow Summary
 
@@ -51,7 +51,7 @@ Prefer these over reading large files into your context:
 3. **Extract** all visible text, error messages, UI elements
 4. **Compare** against USER_REQUIREMENTS.md (for UI screenshots)
 5. **Generate** minimal report (≤5 lines)
-6. **Write** details to `docs_dev/image-analysis-[timestamp].md` if complex
+6. **Write** details to [image-analysis-[timestamp]](docs_dev/image-analysis-[timestamp].md) if complex
 7. **Return** to orchestrator
 
 ## Output Format
@@ -64,7 +64,7 @@ KEY CONTENT: [extracted text/main elements]
 ACTIONABLE: [what orchestrator should do, if anything]
 ```
 
-For complex images, write details to `docs_dev/image-analysis-[timestamp].md` and mention filename.
+For complex images, write details to [image-analysis-[timestamp]](docs_dev/image-analysis-[timestamp].md) and mention filename.
 
 **Requirement Compliance** (for UI screenshots):
 

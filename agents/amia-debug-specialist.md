@@ -42,26 +42,26 @@ Prefer these over reading large files into your context:
 
 **Before any diagnosis, read:**
 
-- `amia-ci-failure-patterns/SKILL.md` - Full diagnostic methodology and decision tree
-- `amia-ci-failure-patterns/references/debug-procedures.md` - Pattern matching workflow
+- [SKILL](../skills/amia-ci-failure-patterns/SKILL.md) - Full diagnostic methodology and decision tree
+- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) - Pattern matching workflow
 
-> For detailed debug procedures, see `amia-ci-failure-patterns/references/debug-procedures.md`
+> For detailed debug procedures, see [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md)
 
-> For sub-agent role boundaries with orchestrator, see `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`
+> For sub-agent role boundaries with orchestrator, see [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
 
-> For escalation protocols, see `amia-ci-failure-patterns/SKILL.md`
+> For escalation protocols, see [SKILL](../skills/amia-ci-failure-patterns/SKILL.md)
 
-> For diagnostic script usage, see `amia-ci-failure-patterns/references/debug-procedures.md`
+> For diagnostic script usage, see [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md)
 
 ## Diagnostic Workflow (Summary)
 
 1. **Collect logs** - Fetch CI failure logs via `gh run view <run-id> --log-failed`
 2. **Identify pattern** - Match against 6 categories using decision tree (Cross-Platform, Exit Codes, Syntax, Dependencies, Infrastructure, Language-Specific)
 3. **Analyze root cause** - Deep dive into identified category with evidence
-4. **Document findings** - Write report to `docs_dev/ci-debug/CI-DEBUG-{timestamp}.md`
+4. **Document findings** - Write report to [CI-DEBUG-{timestamp}](docs_dev/ci-debug/CI-DEBUG-{timestamp}.md)
 5. **Delegate fix** - Send specification to appropriate agent via AI Maestro
 
-> For full step-by-step verification checklists, see `amia-ci-failure-patterns/references/debug-procedures.md`
+> For full step-by-step verification checklists, see [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md)
 
 ## Pattern Categories (Quick Reference)
 

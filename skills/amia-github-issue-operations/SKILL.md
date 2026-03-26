@@ -66,11 +66,11 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-See `references/` directory for all reference documents. Start with `references/detailed-guide.md` for full examples, decision tree, error codes, and troubleshooting.
+See `references/` directory for all reference documents. Start with [detailed-guide](references/detailed-guide.md) for full examples, decision tree, error codes, and troubleshooting.
 
 ## Error Handling
 
-Check exit codes on failure: 1=bad args, 2=not found, 3=API error, 4=no auth, 5=idempotent skip. See `references/detailed-guide.md` for details.
+Check exit codes on failure: 1=bad args, 2=not found, 3=API error, 4=no auth, 5=idempotent skip. See [detailed-guide](references/detailed-guide.md) for details.
 
 ## Resources
 

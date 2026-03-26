@@ -49,15 +49,15 @@ Prefer these over reading large files into your context:
 
 **Before performing any GitHub API operations, read:**
 
-- `../skills/amia-github-integration/SKILL.md` - Complete GitHub integration protocols
+- [SKILL](../skills/amia-github-integration/SKILL.md) - Complete GitHub integration protocols
 
-> For detailed API operations (issue/PR/project CRUD), see `amia-github-integration/references/api-operations.md`
+> For detailed API operations (issue/PR/project CRUD), see [api-operations](../skills/amia-github-integration/references/api-operations.md)
 
-> For rate limit handling procedures, see `amia-github-integration/SKILL.md`
+> For rate limit handling procedures, see [SKILL](../skills/amia-github-integration/SKILL.md)
 
-> For quality gate specifications, see `amia-quality-gates/SKILL.md`
+> For quality gate specifications, see [SKILL](../skills/amia-quality-gates/SKILL.md)
 
-> For sub-agent role boundaries and orchestrator coordination, see `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`
+> For sub-agent role boundaries and orchestrator coordination, see [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
 
 ## Core Operations (Reference Only)
 
@@ -140,7 +140,7 @@ Details: logs/api-operations-20250131.log
 
 ## See Also
 
-- **Issue Operations**: `../skills/amia-github-issue-operations/SKILL.md`
-- **PR Workflow**: `../skills/amia-github-pr-workflow/SKILL.md`
-- **Projects Sync**: `../skills/amia-github-projects-sync/SKILL.md`
-- **Thread Management**: `../skills/amia-github-thread-management/SKILL.md`
+- **Issue Operations**: [SKILL](../skills/amia-github-issue-operations/SKILL.md)
+- **PR Workflow**: [SKILL](../skills/amia-github-pr-workflow/SKILL.md)
+- **Projects Sync**: [SKILL](../skills/amia-github-projects-sync/SKILL.md)
+- **Thread Management**: [SKILL](../skills/amia-github-thread-management/SKILL.md)

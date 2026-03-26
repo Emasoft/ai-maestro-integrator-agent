@@ -21,7 +21,7 @@ Routes GitHub integration tasks to specialized skills (PRs, Projects V2, Kanban,
 
 - GitHub CLI 2.14+ authenticated (`gh auth status`)
 - Write permissions on target repository
-- Setup details: `references/prerequisites-and-setup.md`
+- Setup details: [prerequisites-and-setup](references/prerequisites-and-setup.md)
 
 ## Instructions
 
@@ -31,11 +31,11 @@ Routes GitHub integration tasks to specialized skills (PRs, Projects V2, Kanban,
    - **Projects V2** --> `amia-github-projects-sync`
    - **Kanban** --> `amia-kanban-orchestration`
    - **Worktrees** --> `amia-git-worktree-operations`
-   - **API ops** --> `references/api-operations.md`
-   - **Multi-user** --> `references/multi-user-workflow.md`
+   - **API ops** --> [api-operations](references/api-operations.md)
+   - **Multi-user** --> [multi-user-workflow](references/multi-user-workflow.md)
 3. Batch ops: preview first (`gh issue list --label X --state open`), then execute.
 4. Verify result: `gh issue view <N>` or `gh pr status`.
-5. On errors: see `references/detailed-guide.md`.
+5. On errors: see [detailed-guide](references/detailed-guide.md).
 
 ### Checklist
 
@@ -61,11 +61,11 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-See `references/` directory for all reference documents. Index in `references/detailed-guide.md`.
+See `references/` directory for all reference documents. Index in [detailed-guide](references/detailed-guide.md).
 
 ## Error Handling
 
-Non-zero exit codes on failure; check stderr and `references/detailed-guide.md`.
+Non-zero exit codes on failure; check stderr and [detailed-guide](references/detailed-guide.md).
 
 ## Examples
 

@@ -61,11 +61,11 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
+See `references/` directory for all reference documents. Full index in [detailed-guide](references/detailed-guide.md).
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for common error scenarios.
 
 ## Examples
 
@@ -85,7 +85,7 @@ python -m pytest tests/ -x
 # Output: PASSED (12 passed)
 ```
 
-See `references/detailed-guide.md` for extended examples.
+See [detailed-guide](references/detailed-guide.md) for extended examples.
 
 ## Resources
 

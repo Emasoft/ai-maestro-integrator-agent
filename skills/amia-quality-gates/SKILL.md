@@ -58,13 +58,13 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-See `references/` directory for all reference documents. Key files: `references/gate-pipeline.md` (pipeline flow), `references/escalation-paths.md` (escalation), `references/override-policies.md` (overrides), `references/detailed-guide.md` (full guide).
+See `references/` directory for all reference documents. Key files: [gate-pipeline](references/gate-pipeline.md) (pipeline flow), [escalation-paths](references/escalation-paths.md) (escalation), [override-policies](references/override-policies.md) (overrides), [detailed-guide](references/detailed-guide.md) (full guide).
 
 **Related skills:** amia-label-taxonomy, amia-code-review-patterns, amia-github-pr-workflow, amia-tdd-enforcement, amia-ci-failure-patterns
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See [detailed-guide](references/detailed-guide.md) for common error scenarios.
 
 ## Examples
 
@@ -73,7 +73,7 @@ python scripts/amia_quality_gate_check.py --repo owner/repo --pr 42
 # Output: {"gate_status": "pass", "gate": "pre-review", "checks_passed": 5, "checks_failed": 0}
 ```
 
-See `references/detailed-guide.md` for more examples.
+See [detailed-guide](references/detailed-guide.md) for more examples.
 
 ## Resources
 

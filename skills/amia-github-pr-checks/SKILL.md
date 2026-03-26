@@ -62,19 +62,19 @@ Copy this checklist and track your progress:
 
 **CI/CD Interpretation:**
 
-- `references/ci-status-interpretation.md` — Check conclusions, required vs optional checks, check runs vs suites
-- `references/detailed-guide.md` — Decision tree, status quick reference, full script usage, error handling, exit codes
+- [ci-status-interpretation](references/ci-status-interpretation.md) — Check conclusions, required vs optional checks, check runs vs suites
+- [detailed-guide](references/detailed-guide.md) — Decision tree, status quick reference, full script usage, error handling, exit codes
 
 **Polling & Waiting:**
 
-- `references/polling-strategies.md` — Backoff strategies, timeout handling, partial success scenarios
+- [polling-strategies](references/polling-strategies.md) — Backoff strategies, timeout handling, partial success scenarios
 
 **Script Operations:**
 
-- `references/op-get-pr-check-status.md` — amia_get_pr_checks.py operation details
-- `references/op-wait-for-checks.md` — amia_wait_for_checks.py operation details
-- `references/op-get-check-details.md` — amia_get_check_details.py operation details
-- `references/op-interpret-check-conclusions.md` — Conclusion value interpretation
+- [op-get-pr-check-status](references/op-get-pr-check-status.md) — amia_get_pr_checks.py operation details
+- [op-wait-for-checks](references/op-wait-for-checks.md) — amia_wait_for_checks.py operation details
+- [op-get-check-details](references/op-get-check-details.md) — amia_get_check_details.py operation details
+- [op-interpret-check-conclusions](references/op-interpret-check-conclusions.md) — Conclusion value interpretation
 
 ## Error Handling
 
@@ -83,7 +83,7 @@ If a script fails, check the exit code and stderr output. Common issues:
 - **Exit 1**: Invalid parameters or missing arguments
 - **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
 
-See `references/detailed-guide.md` for detailed error scenarios.
+See [detailed-guide](references/detailed-guide.md) for detailed error scenarios.
 
 ## Resources
 
