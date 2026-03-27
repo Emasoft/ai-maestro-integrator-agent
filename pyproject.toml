@@ -1,0 +1,11 @@
+[project]
+name = "ai-maestro-integrator-agent"
+version = "1.2.6"
+description = "AI Maestro Integrator Agent - Code review, CI/CD integration, GitHub operations, and quality assurance"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/Emasoft/ai-maestro-integrator-agent"
+Repository = "https://github.com/Emasoft/ai-maestro-integrator-agent"
