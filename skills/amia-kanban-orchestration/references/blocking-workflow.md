@@ -148,7 +148,7 @@ gh issue comment 42 --body "$(cat <<'EOF'
 **Impact:** Cannot test data layer implementation
 **Discovered:** 2024-01-15 15:00 UTC
 
-@orchestrator-master Please escalate to DBA team.
+@amcos-main Please escalate to DBA team (forward to Orchestrator).
 EOF
 )"
 ```
@@ -195,7 +195,7 @@ gh issue comment 42 --body "Blocked by #$BLOCKER_ISSUE"
 
 Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `orchestrator-master`
+- **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
 - **Subject**: `Issue #42 Blocked`
 - **Priority**: `high`
 - **Content**: `{"type": "blocker", "message": "Issue #42 is blocked. Blocker issue #BLOCKER_ISSUE created. Need DBA action.", "data": {"issue_number": 42, "blocker_issue_number": "BLOCKER_ISSUE", "blocker_type": "access", "what_needed": "DBA to provide credentials"}}`
@@ -358,9 +358,9 @@ gh issue edit 42 --remove-label "blocked"
 # IMPORTANT: Read the "Previous Status" from the blocker comment to determine target column
 # [GraphQL mutation to set status - use PREVIOUS_STATUS from blocker comment, not hardcoded "In Progress"]
 
-# Notify agent using the agent-messaging skill:
-#   Recipient: agent-1
-#   Subject: Issue #42 Unblocked
+# Notify COS to forward to agent (COS will forward to agent-1):
+#   Recipient: amcos-main (COS will forward to agent-1)
+#   Subject: Issue #42 Unblocked - notify agent-1
 #   Priority: high
 #   Content: {"type": "unblocked", "message": "Issue #42 is unblocked. Credentials are now in vault. Please resume work.", "data": {"issue_number": 42, "returned_to_column": "In Progress"}}
 #   Verify: Confirm delivery via the agent-messaging skill send confirmation.

@@ -118,7 +118,7 @@ When receiving a PR review request from AMOA or another agent, check your inbox 
 
 After completing a code review, notify the requesting agent. Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `orchestrator-amoa`
+- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `Code Review Complete: PR #123`
 - **Priority**: `normal`
 - **Content**: `{"type": "review-complete", "message": "PR #123 review completed. Confidence: 85%. Decision: APPROVED. Details: docs_dev/integration/reports/pr-123-review.md"}`
@@ -128,7 +128,7 @@ After completing a code review, notify the requesting agent. Send a message usin
 
 When review requires author input, send a message using the `agent-messaging` skill with:
 
-- **Recipient**: The PR author agent name
+- **Recipient**: `amcos-main` (COS will forward to the PR author)
 - **Subject**: `Review Question: PR #123`
 - **Priority**: `normal`
 - **Content**: `{"type": "clarification-request", "message": "During review of PR #123, need clarification on: [SPECIFIC QUESTION]. Please respond with context."}`
@@ -137,7 +137,7 @@ When review requires author input, send a message using the `agent-messaging` sk
 
 When a critical quality gate fails, send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `orchestrator-amoa`
+- **Recipient**: `amcos-main` (COS will escalate to Orchestrator)
 - **Subject**: `[QUALITY GATE FAILED] PR #123`
 - **Priority**: `urgent`
 - **Content**: `{"type": "quality-gate-failure", "message": "PR #123 failed quality gate: SECURITY. Issue: SQL injection in auth.py:42. Action required: reject and request fix."}`

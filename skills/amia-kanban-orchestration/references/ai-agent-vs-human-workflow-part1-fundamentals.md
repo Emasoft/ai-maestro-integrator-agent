@@ -162,10 +162,10 @@ gh issue edit 42 --add-assignee $AGENT
 # 3. Update board status to Todo (if not already)
 # [GraphQL mutation]
 
-# 4. Notify agent via AI Maestro
+# 4. Notify agent via COS (COS will forward to implementer-1)
 # Send a message using the agent-messaging skill with:
-#   Recipient: implementer-1
-#   Subject: Assignment: Issue #42
+#   Recipient: amcos-main (COS will forward to implementer-1)
+#   Subject: Assignment for implementer-1: Issue #42
 #   Priority: high
 #   Content: {"type": "assignment", "message": "You are assigned to issue #42: [MODULE] auth-core. Move to In Progress when starting.", "data": {"issue_number": 42, "issue_url": "https://github.com/owner/repo/issues/42", "priority": "high", "estimated_hours": 4}}
 #   Verify: Confirm delivery via the agent-messaging skill send confirmation.

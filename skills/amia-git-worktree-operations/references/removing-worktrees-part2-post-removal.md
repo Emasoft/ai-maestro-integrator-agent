@@ -163,14 +163,14 @@ The record of which AI agent was working in this worktree.
 
 **How to update:**
 
-**Option A - AI Maestro messaging:**
+**Option A - AI Maestro messaging (via COS):**
 
 Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `code-reviewer-1`
-- **Subject**: `Worktree review-GH-42 removed`
+- **Recipient**: `amcos-main` (COS will forward to the affected agent)
+- **Subject**: `Worktree review-GH-42 removed - notify code-reviewer-1`
 - **Priority**: `normal`
-- **Content**: `{"type": "notification", "message": "Worktree review-GH-42 has been removed. You are now available for new assignments."}`
+- **Content**: `{"type": "notification", "message": "Please forward to code-reviewer-1: Worktree review-GH-42 has been removed. You are now available for new assignments."}`
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 **Option B - Update agent registry:**

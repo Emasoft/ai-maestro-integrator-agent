@@ -41,7 +41,7 @@ This document defines standardized protocols for handling edge cases and failure
 
 ### 1.1 Detection Methods
 
-The Integrator uses AI Maestro to communicate with Orchestrator and Assistant Manager. Detect unavailability through:
+The Integrator uses AI Maestro to communicate with the COS (Chief of Staff), who routes messages to the Orchestrator and Assistant Manager. Detect unavailability through:
 
 | Check | Method | Failure Indicator |
 |-------|--------|-------------------|
@@ -79,7 +79,7 @@ When AI Maestro is unavailable:
 3. **Display warning**:
 
    ```
-   WARNING: AI Maestro is unavailable. Cannot notify Orchestrator/Assistant Manager.
+   WARNING: AI Maestro is unavailable. Cannot notify COS (for routing to Orchestrator/Assistant Manager).
    Queued: N messages
    Review results will be stored locally and sent when service recovers.
    ```
@@ -629,7 +629,7 @@ If multiple edge cases compound:
    - Issue states
    - Queue contents
 3. **Create recovery checkpoint**
-4. **Notify Orchestrator and User**
+4. **Notify COS (who will forward to Orchestrator and User)**
 5. **Wait for guidance**
 
 Recovery checkpoint: `.claude/recovery/integrator-checkpoint-{timestamp}.json`

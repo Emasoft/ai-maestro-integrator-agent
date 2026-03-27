@@ -196,7 +196,7 @@ gh pr close <NUMBER>
 
 Send a notification using the `agent-messaging` skill with:
 
-- **Recipient**: `orchestrator-amoa`
+- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `PR #<NUMBER> Review Complete: <DECISION>`
 - **Priority**: `normal`
 - **Content**: `{"type": "review-complete", "message": "PR #<NUMBER> review completed. Decision: <DECISION>. Confidence: XX%. Report: <PATH>"}`

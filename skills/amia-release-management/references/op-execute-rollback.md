@@ -185,7 +185,7 @@ echo "Rollback issue created"
 
 Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `orchestrator-amoa`
+- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `[ROLLBACK COMPLETE] v<ROLLBACK_FROM> -> v<ROLLBACK_TO>`
 - **Priority**: `urgent`
 - **Content**: `{"type": "rollback-complete", "message": "Rollback from v<ROLLBACK_FROM> to v<ROLLBACK_TO> completed. Reason: <REASON>"}`

@@ -60,7 +60,7 @@ For all inter-agent messaging, refer to the official AI Maestro skill:
 
 Use the `agent-messaging` skill to send notifications. For example, to notify the orchestrator, send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `orchestrator-master`
+- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: Your notification subject
 - **Content**: `{"type": "TYPE", "message": "MSG"}`
 - **Priority**: The appropriate priority level

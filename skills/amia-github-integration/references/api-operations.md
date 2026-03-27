@@ -751,7 +751,7 @@ gh api rate_limit | jq '.resources.core'
 | < 10 | Red | STOP all operations, wait for reset |
 
 1. **If in Yellow or Orange zone**, send warning to orchestrator using the `agent-messaging` skill with:
-   - **Recipient**: `orchestrator-master`
+   - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
    - **Subject**: `GitHub Rate Limit Warning`
    - **Priority**: `high`
    - **Content**: `{"type": "warning", "message": "GitHub API rate limit in YELLOW zone: <REMAINING> remaining"}`

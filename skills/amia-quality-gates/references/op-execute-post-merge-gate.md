@@ -195,7 +195,7 @@ git push origin main
 
 Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `orchestrator-amoa`
+- **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
 - **Subject**: `[CRITICAL] Main Branch Broken - PR #<NUMBER>`
 - **Priority**: `urgent`
 - **Content**: `{"type": "post-merge-failure", "message": "PR #<NUMBER> broke main branch. CI failing. Revert recommended."}`

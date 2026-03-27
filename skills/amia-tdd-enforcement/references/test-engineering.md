@@ -1116,7 +1116,7 @@ Apply consistent rejection criteria to determine if code can proceed to merge.
    - Provide recommendation
 
 2. **Notify user via AI Maestro:** Send a message using the `agent-messaging` skill with:
-   - **Recipient**: `orchestrator-master`
+   - **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
    - **Subject**: `ESCALATION: Test enforcement decision required`
    - **Priority**: `urgent`
    - **Content**: `{"type": "escalation", "message": "User decision required for PR #<PR>. See: reports/escalations/escalation-<timestamp>.md"}`
@@ -1574,7 +1574,7 @@ echo "Report generated: $REPORT_FILE"
 # Step 5: Send AI Maestro message
 echo "Step 5: Sending notification..."
 # Send a message using the `agent-messaging` skill with:
-# - Recipient: `orchestrator-master`
+# - Recipient: `amcos-main` (COS will forward to Orchestrator)
 # - Subject: `TDD Report for PR #$PR_NUMBER`
 # - Priority: `high`
 # - Content: `{"type": "test_report", "message": "G1:$TDD_STATUS G2:$COV_STATUS | Coverage: $LINE_COV% | Report: $REPORT_FILE"}`

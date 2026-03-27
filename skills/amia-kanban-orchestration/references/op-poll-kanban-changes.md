@@ -120,7 +120,7 @@ Send a message using the `agent-messaging` skill with:
 
 Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `orchestrator-amoa`
+- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `Kanban Update: Issue #123 moved to AI Review`
 - **Priority**: `normal`
 - **Content**: `{"type": "kanban-status-change", "message": "Issue #123 moved from In Progress to AI Review by agent-name. PR likely created."}`
