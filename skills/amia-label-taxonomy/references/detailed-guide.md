@@ -1,6 +1,8 @@
 # AMIA Label Taxonomy — Detailed Guide
 
-## Table of Contents
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
+
+## Contents
 
 - [Error Handling](#error-handling)
 - [Review Labels Detail](#review-labels-detail)

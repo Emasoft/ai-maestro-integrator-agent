@@ -1,6 +1,6 @@
 # Issue Operations for GitHub Projects V2
 
-## Table of Contents
+## Contents
 
 - 2.1 [Get Issue Node ID](#get-issue-node-id)
 - 2.2 [Create Issue](#create-issue)

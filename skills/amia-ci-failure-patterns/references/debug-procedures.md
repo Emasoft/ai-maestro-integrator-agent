@@ -1,5 +1,7 @@
 # Debug Procedures for CI Failure Analysis
 
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` and all `git` commands MUST use `git -C "$REPO_PATH"` since the integrator works across multiple repos.
+
 ## Table of Contents
 
 - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis

@@ -1,6 +1,6 @@
 # Handoff Documents
 
-## Table of Contents
+## Contents
 
 - [When to Create Handoff Documents](#when-to-create-handoff-documents)
 - [Handoff Document Format](#handoff-document-format)

@@ -1,6 +1,6 @@
 # Release Management Skill — Detailed Guide
 
-## Table of Contents
+## Contents
 
 - [Decision Tree](#decision-tree)
 - [Semantic Versioning Quick Reference](#semantic-versioning-quick-reference)

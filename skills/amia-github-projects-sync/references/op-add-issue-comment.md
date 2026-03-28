@@ -1,6 +1,6 @@
 # Operation: Add Issue Comment
 
-## Table of Contents
+## Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

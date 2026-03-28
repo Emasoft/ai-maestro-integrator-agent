@@ -1,6 +1,6 @@
 # Proactive Kanban Monitoring
 
-## Table of Contents
+## Contents
 
 - [M.1 Overview of proactive monitoring](#m1-overview)
 - [M.2 Polling configuration and frequency](#m2-polling-configuration)
@@ -76,7 +76,7 @@ When changes are detected, notify relevant agents using the `agent-messaging` sk
 
 **Status change notification:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Kanban Update: Issue #123 moved to AI Review`
 - **Priority**: `normal`
 - **Content**: `{"type": "kanban-status-change", "message": "Issue #123 moved from In Progress to AI Review by agent-name. PR likely created."}`

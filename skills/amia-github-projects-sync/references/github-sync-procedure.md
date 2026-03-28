@@ -1,6 +1,6 @@
 # GitHub Sync Procedure
 
-## Table of Contents
+## Contents
 
 - 1.1 Authenticating and verifying GitHub CLI access
 - 1.2 Configuring GitHub Projects V2 environment variables

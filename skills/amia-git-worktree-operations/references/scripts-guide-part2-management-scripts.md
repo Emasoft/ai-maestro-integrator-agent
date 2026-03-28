@@ -1,6 +1,6 @@
 # Worktree Automation Scripts Guide - Part 2: Management Scripts
 
-## Table of Contents
+## Contents
 
 - [Script Reference: Management Scripts](#script-reference-management-scripts)
   - [worktree_remove.py](#worktree_removepy)

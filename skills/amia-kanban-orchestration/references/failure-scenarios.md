@@ -281,8 +281,8 @@ Before approving re-integration:
 
 ```json
 {
-  "to": "amcos-main",
-  "subject": "FAILED: GH-42 - Authentication Module (please forward to Orchestrator)",
+  "to": "orchestrator-master",
+  "subject": "FAILED: GH-42 - Authentication Module",
   "priority": "high",
   "content": {
     "type": "failure_report",
@@ -354,11 +354,11 @@ gh issue comment 42 --body "Task failed: OAuth library incompatible. Creating re
 gh issue edit 43 --add-label "blocked"
 gh issue comment 43 --body "Blocked by GH-42 failure. Awaiting recovery."
 
-# Step 3: Notify COS to forward blocker notice to agent-2 using the agent-messaging skill:
-#   Recipient: amcos-main (COS will forward to agent-2)
-#   Subject: GH-43 Blocked - notify agent-2
+# Step 3: Notify agent on GH-43 using the agent-messaging skill:
+#   Recipient: agent-2
+#   Subject: GH-43 Blocked
 #   Priority: high
-#   Content: {"type": "blocker", "message": "GH-43 is blocked due to GH-42 failure. Please forward to agent-2: Pause work until unblocked."}
+#   Content: {"type": "blocker", "message": "GH-43 is blocked due to GH-42 failure. Pause work until unblocked."}
 #   Verify: Confirm delivery via the agent-messaging skill send confirmation.
 
 # Step 4: Create recovery task
@@ -381,11 +381,11 @@ gh issue create --title "Resolve merge conflicts for feature X integration" \
 # Step 3: Assign to conflict resolver
 gh issue edit 51 --add-assignee conflict-resolver-agent
 
-# Step 4: Notify COS to forward assignment to resolver using the agent-messaging skill:
-#   Recipient: amcos-main (COS will forward to conflict-resolver-agent)
-#   Subject: ASSIGNMENT: Resolve conflicts for GH-50 - assign to conflict-resolver-agent
+# Step 4: Notify resolver using the agent-messaging skill:
+#   Recipient: conflict-resolver-agent
+#   Subject: ASSIGNMENT: Resolve conflicts for GH-50
 #   Priority: high
-#   Content: {"type": "assignment", "message": "Please forward to conflict-resolver-agent: Resolve merge conflicts following strategy in GH-51."}
+#   Content: {"type": "assignment", "message": "Resolve merge conflicts following strategy in GH-51."}
 #   Verify: Confirm delivery via the agent-messaging skill send confirmation.
 ```
 

@@ -1,6 +1,6 @@
 # TDD Rules and Constraints
 
-## Table of Contents
+## Contents
 
 - [The Iron Law (Absolute)](#the-iron-law-absolute)
   - [Rule 1: No Code Without a Failing Test](#rule-1-no-code-without-a-failing-test)

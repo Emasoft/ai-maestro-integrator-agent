@@ -1,6 +1,6 @@
 # Thread Conversation Tracking
 
-## Table of Contents
+## Contents
 
 - 2.1 Getting thread history via GraphQL
   - 2.1.1 Query structure for review threads

@@ -1,6 +1,6 @@
 # AI Maestro Message Response Decision Tree
 
-## Table of Contents
+## Contents
 
 - [Step 1: Priority Triage](#step-1-priority-triage)
 - [Step 2: Message Type Routing](#step-2-message-type-routing)

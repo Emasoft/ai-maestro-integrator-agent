@@ -1,6 +1,6 @@
 # Rust Clippy Lints Reference
 
-## Table of Contents
+## Contents
 
 - [4.4 Clippy Lints and Configuration](#44-clippy-lints-and-configuration)
   - [Clippy Configuration](#clippy-configuration)

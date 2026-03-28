@@ -1,6 +1,6 @@
 # Worktree Operations: Syncing with Main Branch
 
-## Table of Contents
+## Contents
 
 1. [Why Sync Regularly](#why-sync-regularly)
 2. [Phase 1: Fetch Latest Main](#phase-1-fetch-latest-main)

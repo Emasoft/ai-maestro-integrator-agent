@@ -57,9 +57,13 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
+## Reference Documents
+
+See `references/` directory for all reference documents. Key files: `references/detailed-guide.md` (workflows, decision trees, error handling), language-specific review patterns, and operation guides.
+
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources.
+Script failures return non-zero exit codes. Check stderr and `references/detailed-guide.md` for details.
 
 ## Examples
 
@@ -77,26 +81,4 @@ eslint src/typescript/
 
 ## Resources
 
-Full reference: [detailed-guide](references/detailed-guide.md):
-  - Challenges of Multilanguage Repositories
-  - When to Use This Skill
-  - Decision Tree: PR Review Approach
-  - Included Scripts
-    - amia_detect_pr_languages.py
-    - amia_get_language_linters.py
-  - Workflow Example
-    - Cross-Language API Review
-  - Common Pitfalls
-  - Error Handling
-    - Problem: Language detection returns unexpected results
-    - Problem: Linter fails to run
-    - Problem: Too many linting errors
-    - Problem: Cross-platform test failures
-  - Language-Specific Quick References
-    - Python Reviews
-    - JavaScript/TypeScript Reviews
-    - Rust Reviews
-    - Go Reviews
-    - Shell Script Reviews
-    - Cross-Platform Testing
-  - Full Reference Document Index
+See `references/` directory for all reference documents.

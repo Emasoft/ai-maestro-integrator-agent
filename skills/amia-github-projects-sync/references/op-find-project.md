@@ -1,6 +1,6 @@
 # Operation: Find GitHub Project
 
-## Table of Contents
+## Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

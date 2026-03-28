@@ -1,6 +1,6 @@
 # GitHub Issue Operations — Detailed Guide
 
-## Table of Contents
+## Contents
 
 - [Decision Tree](#decision-tree)
 - [Script Reference Table](#script-reference-table)

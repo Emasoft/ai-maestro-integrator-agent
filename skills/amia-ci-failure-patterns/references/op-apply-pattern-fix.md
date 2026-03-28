@@ -1,6 +1,6 @@
 # Operation: Apply Pattern Fix
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [Prerequisites](#prerequisites)
@@ -148,26 +148,27 @@ from mypackage.utils import helper
 For missing labels:
 
 ```bash
-# Create label before workflow runs
-gh label create "ai-review" --color "0E8A16" --description "PR needs AI review"
+# Create label before workflow runs — MUST specify --repo for multi-repo agents
+gh label create "ai-review" --repo "$OWNER/$REPO" --color "0E8A16" --description "PR needs AI review"
 ```
 
 ### Step 4: Validate the Fix Syntax
 
-After making changes, validate syntax:
+After making changes, validate syntax (run from inside the target repo directory `$AGENT_DIR/repos/<repo-name>`):
 
 ```bash
+# All validation commands must target the correct repo path
 # Python files
-python3 -m py_compile modified_file.py
+python3 -m py_compile "$REPO_PATH/modified_file.py"
 
 # JavaScript files
-node --check modified_file.js
+node --check "$REPO_PATH/modified_file.js"
 
 # YAML files
-python3 -c "import yaml; yaml.safe_load(open('workflow.yml'))"
+python3 -c "import yaml; yaml.safe_load(open('$REPO_PATH/workflow.yml'))"
 
 # Shell scripts
-shellcheck modified_script.sh
+shellcheck "$REPO_PATH/modified_script.sh"
 ```
 
 ### Step 5: Document the Change
@@ -209,8 +210,8 @@ After applying fixes:
 3. **Dry Run**: If possible, run the CI workflow locally
 
 ```bash
-# For GitHub Actions, use act (if installed)
-act -j build --dry-run
+# For GitHub Actions, use act (if installed) — run from inside the target repo
+cd "$REPO_PATH" && act -j build --dry-run
 ```
 
 ## Error Handling
@@ -219,7 +220,7 @@ act -j build --dry-run
 
 If the fix introduces new issues:
 
-1. Revert the change: `git checkout -- <file>`
+1. Revert the change: `git -C "$REPO_PATH" checkout -- <file>`
 2. Re-read the reference document for alternative approaches
 3. Check if there are platform-specific variations
 

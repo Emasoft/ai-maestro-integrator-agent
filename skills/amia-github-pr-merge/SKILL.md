@@ -17,7 +17,7 @@ user-invocable: false
 
 ## Overview
 
-Merge pull requests, check merge status, verify readiness, and configure auto-merge via the GitHub GraphQL API. Always use GraphQL (not `gh pr view --json state`) as the authoritative merge state source.
+Merge pull requests, check merge status, verify readiness, and configure auto-merge via the GitHub GraphQL API. Always use GraphQL (not `gh pr view --repo "$OWNER/$REPO" --json state`) as the authoritative merge state source. All gh commands MUST specify `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
 
 ## Prerequisites
 
@@ -61,22 +61,17 @@ Exit codes: 0=success, 1=invalid params, 2=not found, 3=API error, 4=auth, 5=alr
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
+## Reference Documents
+
+See `references/` directory for all reference documents (merge state verification, strategies, auto-merge, operation guides, rollback). Full details in `references/detailed-guide.md`.
+
 ## Error Handling
 
-On failure, check exit code and stderr. Exit 1 = invalid params; Exit 2-4 = API errors. See the detailed guide in Resources.
+On failure, check exit code and stderr. Exit 1 = invalid params; Exit 2-4 = API errors. See `references/detailed-guide.md`.
 
 ## Resources
 
-- [detailed-guide](references/detailed-guide.md) — Full reference
-  - GraphQL is the Source of Truth
-  - Decision Tree for PR Merge Operations
-  - Script Usage Details
-  - Common Workflows
-  - Exit Codes Reference
-  - Error Handling
-  - Safety Warning: Destructive Operations
-  - Script Locations
-  - Reference Documents Index
+See `references/` directory.
 
 ## Examples
 

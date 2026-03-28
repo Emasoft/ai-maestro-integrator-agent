@@ -1,6 +1,6 @@
 # Operation: Get PR Check Status
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

@@ -1,6 +1,6 @@
 # Quick Reference
 
-## Table of Contents
+## Contents
 
 - [Essential Git Commands](#essential-git-commands) - Core worktree commands
 - [Registry Commands](#registry-commands) - Registry access and validation

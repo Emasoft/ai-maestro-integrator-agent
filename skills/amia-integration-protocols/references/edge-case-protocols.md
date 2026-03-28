@@ -1,5 +1,7 @@
 # Edge Case Protocols for Integrator Agent
 
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` and all `git` commands MUST use `git -C "$REPO_PATH"` since the integrator works across multiple repos. NEVER write files to `/tmp/` or outside `$AGENT_DIR` (`~/agents/<persona-name>/`).
+
 This document defines standardized protocols for handling edge cases and failure scenarios in the Integrator Agent (amia-) plugin.
 
 ## Table of Contents
@@ -41,7 +43,7 @@ This document defines standardized protocols for handling edge cases and failure
 
 ### 1.1 Detection Methods
 
-The Integrator uses AI Maestro to communicate with the COS (Chief of Staff), who routes messages to the Orchestrator and Assistant Manager. Detect unavailability through:
+The Integrator uses AI Maestro to communicate with Orchestrator and Assistant Manager. Detect unavailability through:
 
 | Check | Method | Failure Indicator |
 |-------|--------|-------------------|
@@ -79,7 +81,7 @@ When AI Maestro is unavailable:
 3. **Display warning**:
 
    ```
-   WARNING: AI Maestro is unavailable. Cannot notify COS (for routing to Orchestrator/Assistant Manager).
+   WARNING: AI Maestro is unavailable. Cannot notify Orchestrator/Assistant Manager.
    Queued: N messages
    Review results will be stored locally and sent when service recovers.
    ```
@@ -629,7 +631,7 @@ If multiple edge cases compound:
    - Issue states
    - Queue contents
 3. **Create recovery checkpoint**
-4. **Notify COS (who will forward to Orchestrator and User)**
+4. **Notify Orchestrator and User**
 5. **Wait for guidance**
 
 Recovery checkpoint: `.claude/recovery/integrator-checkpoint-{timestamp}.json`

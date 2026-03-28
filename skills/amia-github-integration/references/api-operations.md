@@ -1,6 +1,6 @@
 # GitHub API Operations Reference
 
-## Table of Contents
+## Contents
 
 - 1.1 [Executing GitHub Issue Operations](#11-executing-github-issue-operations)
   - 1.1.1 Creating issues with labels, milestones, and assignees
@@ -751,7 +751,7 @@ gh api rate_limit | jq '.resources.core'
 | < 10 | Red | STOP all operations, wait for reset |
 
 1. **If in Yellow or Orange zone**, send warning to orchestrator using the `agent-messaging` skill with:
-   - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+   - **Recipient**: `orchestrator-master`
    - **Subject**: `GitHub Rate Limit Warning`
    - **Priority**: `high`
    - **Content**: `{"type": "warning", "message": "GitHub API rate limit in YELLOW zone: <REMAINING> remaining"}`

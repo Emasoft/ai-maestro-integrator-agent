@@ -1,6 +1,6 @@
 # Python Review Patterns Reference
 
-## Table of Contents
+## Contents
 
 ### Part 1: Style, Types, and Documentation
 

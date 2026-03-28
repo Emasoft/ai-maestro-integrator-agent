@@ -1,6 +1,6 @@
 # GitHub Thread Management -- Detailed Guide
 
-## Table of Contents
+## Contents
 
 - [Decision Tree for Thread Operations](#decision-tree-for-thread-operations)
 - [Key Concepts](#key-concepts)

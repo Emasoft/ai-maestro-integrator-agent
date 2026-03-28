@@ -1,9 +1,9 @@
 ---
 name: amia-quality-gates
-description: "Use when enforcing quality gates. Trigger with /amia-enforce-gates."
+description: "Quality gate enforcement for PR integration. Use when verifying code through pre-review, review, pre-merge, or post-merge checkpoints. Trigger with /amia-enforce-gates."
 version: 1.0.0
 license: Apache-2.0
-compatibility: Requires CI/CD and GitHub workflow experience. Requires AI Maestro installed.
+compatibility: Requires familiarity with CI/CD pipelines, code review processes, and GitHub workflows. Designed for the Integrator Agent role enforcing quality standards. Requires AI Maestro installed.
 metadata:
   author: Emasoft
   version: 1.0.0
@@ -56,61 +56,25 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`. With flag: JSON to file, summary to stderr. Without: JSON to stdout.
 
-## Error Handling
+## Reference Documents
 
-Non-zero exit codes on failure. See detailed guide in Resources.
-
-## Resources
+See `references/` directory for all reference documents. Key files: `references/gate-pipeline.md` (pipeline flow), `references/escalation-paths.md` (escalation), `references/override-policies.md` (overrides), `references/detailed-guide.md` (full guide).
 
 **Related skills:** amia-label-taxonomy, amia-code-review-patterns, amia-github-pr-workflow, amia-tdd-enforcement, amia-ci-failure-patterns
 
-[gate-pipeline](references/gate-pipeline.md) — Pipeline flow:
-  - Overview
-  - Pipeline Diagram
-  - Gate Transitions
-    - Transition: Pre-Review -> Review
-    - Transition: Review -> Pre-Merge
-    - Transition: Pre-Merge -> Merge
-    - Transition: Merge -> Post-Merge
-    - Transition: Post-Merge -> Complete
-  - Failure Handling
-  - Parallel Gates
-  - Gate Bypass
+## Error Handling
 
-[escalation-paths](references/escalation-paths.md) — Escalation:
-  - Escalation Path A: Pre-Review Gate Failure
-  - Escalation Path B: Review Gate Failure
-  - Escalation Path C: Pre-Merge Gate Failure
-  - Escalation Path D: Post-Merge Gate Failure
-
-[override-policies](references/override-policies.md) — Overrides:
-  - Overrides Are Exceptions
-  - Override Authority Matrix
-  - Override Procedure
-
-[detailed-guide](references/detailed-guide.md) — Full guide:
-  - Purpose and Principles
-  - Gate Types and Pipeline Position
-  - Error Handling
-  - Output Discipline
-  - Design Document Scripts
-  - Encoding Compliance Scripts
-  - Unicode Enforcement Scripts
-  - PR Gate Scripts
-  - Script Locations
-  - Integration with Other Skills
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
 
 ## Examples
 
 ```bash
-# Check Pre-Review gate for PR #42
-gh pr view 42 --json labels,statusCheckRollup
-# Verify tests pass
-gh pr checks 42 --required
-# Apply gate label
-gh pr edit 42 --add-label "gate:pre-review-passed"
-# Advance to Review gate
-gh pr edit 42 --add-label "gate:review"
+python scripts/amia_quality_gate_check.py --repo owner/repo --pr 42
+# Output: {"gate_status": "pass", "gate": "pre-review", "checks_passed": 5, "checks_failed": 0}
 ```
 
-**Expected result:** PR #42 transitions from Pre-Review to Review gate with labels `gate:pre-review-passed` and `gate:review` applied, CI checks confirmed green.
+See `references/detailed-guide.md` for more examples.
+
+## Resources
+
+See `references/` directory for all reference documents.

@@ -259,7 +259,7 @@ For complete messaging documentation, see the official AI Maestro skill:
 
 Send notifications using the `agent-messaging` skill. For example, to send a task blocked notification:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-master`
 - **Subject**: `Task Blocked: #42`
 - **Priority**: `high`
 - **Content**: `{"type": "task_blocked", "issue": 42, "reason": "Waiting for API spec"}`

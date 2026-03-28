@@ -23,9 +23,10 @@ This document covers:
 Run the isolation verification script:
 
 ```bash
+# All paths MUST be inside the agent folder: $AGENT_DIR = ~/agents/<persona-name>
 python scripts/amia_verify_worktree_isolation.py \
-    --worktree-path /tmp/worktrees/pr-123 \
-    --main-repo /path/to/main-repo \
+    --worktree-path "$AGENT_DIR/worktrees/pr-123" \
+    --main-repo "$AGENT_DIR/repos/<repo-name>" \
     --check-git-status
 ```
 
@@ -36,38 +37,37 @@ If files were accidentally written to the main repo:
 **Step 1: Identify contaminated files**
 
 ```bash
-cd /path/to/main-repo
-git status
+# Use git -C to target the specific repo inside the agent folder
+git -C "$AGENT_DIR/repos/<repo-name>" status
 # Shows unexpected changes
 ```
 
 **Step 2: Determine if changes should be kept**
 
 ```bash
-git diff <file>
+git -C "$AGENT_DIR/repos/<repo-name>" diff <file>
 # Review the changes
 ```
 
 **Step 3a: Discard contaminating changes**
 
 ```bash
-git checkout -- <file>
+git -C "$AGENT_DIR/repos/<repo-name>" checkout -- <file>
 # Or for all changes:
-git checkout -- .
+git -C "$AGENT_DIR/repos/<repo-name>" checkout -- .
 ```
 
 **Step 3b: Move changes to correct worktree**
 
 ```bash
-# Save the diff
-git diff <file> > /tmp/changes.patch
+# Save the diff — NEVER write to /tmp, use $AGENT_DIR/tmp/ instead
+git -C "$AGENT_DIR/repos/<repo-name>" diff <file> > "$AGENT_DIR/tmp/changes.patch"
 
 # Discard in main repo
-git checkout -- <file>
+git -C "$AGENT_DIR/repos/<repo-name>" checkout -- <file>
 
 # Apply in correct worktree
-cd /tmp/worktrees/pr-123
-git apply /tmp/changes.patch
+git -C "$AGENT_DIR/worktrees/pr-123" apply "$AGENT_DIR/tmp/changes.patch"
 ```
 
 ### Recovery Procedure for Cross-Worktree Contamination
@@ -77,8 +77,8 @@ If Agent A accidentally modified Agent B's worktree:
 **Step 1: Identify which worktree was contaminated**
 
 ```bash
-# Check each worktree
-for wt in /tmp/worktrees/pr-*/; do
+# Check each worktree — all worktrees are inside $AGENT_DIR/worktrees/
+for wt in "$AGENT_DIR"/worktrees/pr-*/; do
     echo "=== $wt ==="
     git -C "$wt" status
 done
@@ -92,9 +92,9 @@ done
 **Step 3: Reset contaminated worktree**
 
 ```bash
-cd /tmp/worktrees/pr-456  # Contaminated worktree
-git status
-git checkout -- <accidentally_modified_files>
+# Target the contaminated worktree inside agent folder
+git -C "$AGENT_DIR/worktrees/pr-456" status
+git -C "$AGENT_DIR/worktrees/pr-456" checkout -- <accidentally_modified_files>
 ```
 
 **Step 4: Re-apply changes in correct worktree**

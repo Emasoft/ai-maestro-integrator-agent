@@ -1,6 +1,6 @@
 # Merge State Verification
 
-## Table of Contents
+## Contents
 
 - 1.1 Why `gh pr view --json state` can be stale
   - 1.1.1 REST API caching behavior

@@ -1,6 +1,6 @@
 # Go Code Style and Idioms Reference
 
-## Table of Contents
+## Contents
 
 - [5.1 Go Code Style and Idioms Checklist](#51-go-code-style-and-idioms-checklist)
   - [Essential Style Rules](#essential-style-rules)

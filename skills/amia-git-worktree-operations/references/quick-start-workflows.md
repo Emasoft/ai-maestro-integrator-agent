@@ -1,6 +1,6 @@
 # Quick Start Workflows
 
-## Table of Contents
+## Contents
 
 - [Workflow 1: Create Feature Worktree](#workflow-1-create-feature-worktree) - When you need to start a new feature
 - [Workflow 2: Parallel Bug Fix](#workflow-2-parallel-bug-fix) - If you need to fix a bug while working on another task

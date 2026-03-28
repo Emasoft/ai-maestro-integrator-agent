@@ -1,6 +1,6 @@
 # Operation: Approve and Merge
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)
@@ -20,6 +20,8 @@
 - [Notes](#notes)
 
 ## Purpose
+
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
 
 After successful review, approve the PR, update labels, and either merge or prepare for merge.
 
@@ -41,22 +43,22 @@ After successful review, approve the PR, update labels, and either merge or prep
 ### Step 1: Verify All Checks Pass
 
 ```bash
-gh pr checks $PR_NUMBER
+gh pr checks $PR_NUMBER --repo "$OWNER/$REPO"
 # All checks should show ✓
 ```
 
 ### Step 2: Update Review Label to Approved
 
 ```bash
-gh pr edit $PR_NUMBER --remove-label "review:in-progress" --add-label "review:approved"
+gh pr edit $PR_NUMBER --repo "$OWNER/$REPO" --remove-label "review:in-progress" --add-label "review:approved"
 # Also remove changes-requested if present
-gh pr edit $PR_NUMBER --remove-label "review:changes-requested" 2>/dev/null || true
+gh pr edit $PR_NUMBER --repo "$OWNER/$REPO" --remove-label "review:changes-requested" 2>/dev/null || true
 ```
 
 ### Step 3: Submit Approval Review
 
 ```bash
-gh pr review $PR_NUMBER --approve --body "## Approved
+gh pr review $PR_NUMBER --repo "$OWNER/$REPO" --approve --body "## Approved
 
 Review complete. All criteria met:
 - [x] Code quality acceptable
@@ -71,7 +73,7 @@ Ready to merge."
 
 ```bash
 # Find linked issue from PR body
-LINKED_ISSUE=$(gh pr view $PR_NUMBER --json body --jq '.body' | grep -oE "(closes|fixes|resolves) #[0-9]+" | grep -oE "[0-9]+")
+LINKED_ISSUE=$(gh pr view $PR_NUMBER --repo "$OWNER/$REPO" --json body --jq '.body' | grep -oE "(closes|fixes|resolves) #[0-9]+" | grep -oE "[0-9]+")
 echo "Linked issue: #$LINKED_ISSUE"
 ```
 
@@ -79,22 +81,22 @@ echo "Linked issue: #$LINKED_ISSUE"
 
 ```bash
 # Squash merge (preferred)
-gh pr merge $PR_NUMBER --squash --delete-branch
+gh pr merge $PR_NUMBER --repo "$OWNER/$REPO" --squash --delete-branch
 
 # Or standard merge
-gh pr merge $PR_NUMBER --merge --delete-branch
+gh pr merge $PR_NUMBER --repo "$OWNER/$REPO" --merge --delete-branch
 ```
 
 ### Step 6: Update Linked Issue Status
 
 ```bash
 if [ -n "$LINKED_ISSUE" ]; then
-  gh issue edit $LINKED_ISSUE --remove-label "status:ai-review" --add-label "status:done"
+  gh issue edit $LINKED_ISSUE --repo "$OWNER/$REPO" --remove-label "status:ai-review" --add-label "status:done"
 
   # Remove assignment if issue is complete
-  ASSIGN_LABEL=$(gh issue view $LINKED_ISSUE --json labels --jq '.labels[].name | select(startswith("assign:"))')
+  ASSIGN_LABEL=$(gh issue view $LINKED_ISSUE --repo "$OWNER/$REPO" --json labels --jq '.labels[].name | select(startswith("assign:"))')
   if [ -n "$ASSIGN_LABEL" ]; then
-    gh issue edit $LINKED_ISSUE --remove-label "$ASSIGN_LABEL"
+    gh issue edit $LINKED_ISSUE --repo "$OWNER/$REPO" --remove-label "$ASSIGN_LABEL"
   fi
 fi
 ```
@@ -102,7 +104,7 @@ fi
 ### Step 7: Verify Merge
 
 ```bash
-gh pr view $PR_NUMBER --json state --jq '.state'
+gh pr view $PR_NUMBER --repo "$OWNER/$REPO" --json state --jq '.state'
 # Expected: MERGED
 ```
 
@@ -112,14 +114,14 @@ gh pr view $PR_NUMBER --json state --jq '.state'
 
 ```bash
 # Step 1: Verify checks
-gh pr checks 45
+gh pr checks 45 --repo "$OWNER/$REPO"
 # All ✓
 
 # Step 2: Update label
-gh pr edit 45 --remove-label "review:in-progress" --add-label "review:approved"
+gh pr edit 45 --repo "$OWNER/$REPO" --remove-label "review:in-progress" --add-label "review:approved"
 
 # Step 3: Submit approval
-gh pr review 45 --approve --body "## Approved
+gh pr review 45 --repo "$OWNER/$REPO" --approve --body "## Approved
 
 Review complete. All criteria met:
 - [x] Code quality acceptable
@@ -130,14 +132,14 @@ Review complete. All criteria met:
 Ready to merge."
 
 # Step 4: Merge
-gh pr merge 45 --squash --delete-branch
+gh pr merge 45 --repo "$OWNER/$REPO" --squash --delete-branch
 
 # Step 5: Update linked issue
-gh issue edit 78 --remove-label "status:ai-review" --add-label "status:done"
-gh issue edit 78 --remove-label "assign:implementer-1"
+gh issue edit 78 --repo "$OWNER/$REPO" --remove-label "status:ai-review" --add-label "status:done"
+gh issue edit 78 --repo "$OWNER/$REPO" --remove-label "assign:implementer-1"
 
 # Step 6: Verify
-gh pr view 45 --json state
+gh pr view 45 --repo "$OWNER/$REPO" --json state
 # Output: "MERGED"
 ```
 

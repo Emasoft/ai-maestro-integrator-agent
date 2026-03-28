@@ -1,6 +1,8 @@
 # Operation: Execute Rollback
 
-## Table of Contents
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` and all `git` commands MUST use `git -C "$REPO_PATH"` since the integrator works across multiple repos.
+
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)
@@ -185,7 +187,7 @@ echo "Rollback issue created"
 
 Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[ROLLBACK COMPLETE] v<ROLLBACK_FROM> -> v<ROLLBACK_TO>`
 - **Priority**: `urgent`
 - **Content**: `{"type": "rollback-complete", "message": "Rollback from v<ROLLBACK_FROM> to v<ROLLBACK_TO> completed. Reason: <REASON>"}`

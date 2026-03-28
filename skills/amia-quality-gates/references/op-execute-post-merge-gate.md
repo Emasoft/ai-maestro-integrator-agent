@@ -1,6 +1,8 @@
 # Operation: Execute Post-Merge Gate
 
-## Table of Contents
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
+
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)
@@ -195,7 +197,7 @@ git push origin main
 
 Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[CRITICAL] Main Branch Broken - PR #<NUMBER>`
 - **Priority**: `urgent`
 - **Content**: `{"type": "post-merge-failure", "message": "PR #<NUMBER> broke main branch. CI failing. Revert recommended."}`

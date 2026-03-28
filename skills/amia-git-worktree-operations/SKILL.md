@@ -28,7 +28,7 @@ Manage git worktrees for parallel PR processing with isolated branch directories
 ## Instructions
 
 1. Verify no other git operations are running
-2. Fetch and create worktree: `python scripts/amia_create_worktree.py --pr <number> --base-path /tmp/worktrees`
+2. Fetch and create worktree: `python scripts/amia_create_worktree.py --pr <number> --base-path $AGENT_DIR/worktrees`
 3. Work ONLY within the worktree directory (absolute isolation)
 4. Commit and push: `python scripts/amia_worktree_commit_push.py --worktree-path <path> --message "<msg>"`
 5. Remove worktree: `python scripts/amia_cleanup_worktree.py --worktree-path <path>`
@@ -63,38 +63,23 @@ See `references/` directory for all reference documents.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
 
 ## Examples
 
 ### Process Three PRs in Parallel
 
 ```bash
+# AGENT_DIR = ~/agents/<persona-name> — all worktrees MUST be inside the agent folder
 # Create worktrees
-python scripts/amia_create_worktree.py --pr 101 --base-path /tmp/worktrees
-python scripts/amia_create_worktree.py --pr 102 --base-path /tmp/worktrees
-python scripts/amia_create_worktree.py --pr 103 --base-path /tmp/worktrees
+python scripts/amia_create_worktree.py --pr 101 --base-path $AGENT_DIR/worktrees
+python scripts/amia_create_worktree.py --pr 102 --base-path $AGENT_DIR/worktrees
+python scripts/amia_create_worktree.py --pr 103 --base-path $AGENT_DIR/worktrees
 
 # Assign each to a subagent, work in isolation, then cleanup
-python scripts/amia_cleanup_worktree.py --worktree-path /tmp/worktrees/pr-101
+python scripts/amia_cleanup_worktree.py --worktree-path $AGENT_DIR/worktrees/pr-101
 ```
 
 ## Resources
 
-See `references/` directory — 107 reference documents. Full guide: [detailed-guide](references/detailed-guide.md):
-  - When to Use Worktrees
-  - When NOT to Use Worktrees
-  - Critical Constraints
-  - Decision Tree
-  - Script Usage Examples
-  - Error Handling
-    - Problem: "fatal: branch is already checked out"
-    - Problem: "worktree is dirty, cannot remove"
-    - Problem: Files appearing in main repo after worktree work
-    - Problem: "fatal: unable to create new worktree"
-    - Problem: Git operations hanging or failing
-  - Safety Warning: Destructive Operations
-    - Before Any Destructive Operation
-    - Safe Worktree Removal Checklist
-  - Emergency Recovery
-  - Quick Reference Card
+See `references/` directory — 107 reference documents covering all worktree operations.

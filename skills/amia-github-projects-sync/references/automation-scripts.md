@@ -1,5 +1,7 @@
 # Automation Scripts
 
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos. NEVER write temp files to `/tmp/`; use `$AGENT_DIR/tmp/` instead.
+
 ## Table of Contents
 
 1. [When using skill automation scripts](#overview)

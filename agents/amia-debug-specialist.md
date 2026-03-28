@@ -42,69 +42,26 @@ Prefer these over reading large files into your context:
 
 **Before any diagnosis, read:**
 
-- [SKILL](../skills/amia-ci-failure-patterns/SKILL.md) - Full diagnostic methodology and decision tree
-- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Pattern matching workflow
-  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
-  - 1.2 When identifying which failure pattern category applies
-  - 1.3 When performing deep root cause analysis by category
-  - 1.4 When documenting diagnostic evidence
-  - 1.5 When delegating fixes to remote agents
-  - 1.6 When escalating unknown or complex failures
-  - 1.7 When using diagnostic scripts and tools
-  - 1.8 When troubleshooting common diagnostic challenges
+- `amia-ci-failure-patterns/SKILL.md` - Full diagnostic methodology and decision tree
+- `amia-ci-failure-patterns/references/debug-procedures.md` - Pattern matching workflow
 
-- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Detailed debug procedures
-  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
-  - 1.2 When identifying which failure pattern category applies
-  - 1.3 When performing deep root cause analysis by category
-  - 1.4 When documenting diagnostic evidence
-  - 1.5 When delegating fixes to remote agents
-  - 1.6 When escalating unknown or complex failures
-  - 1.7 When using diagnostic scripts and tools
-  - 1.8 When troubleshooting common diagnostic challenges
+> For detailed debug procedures, see `amia-ci-failure-patterns/references/debug-procedures.md`
 
-- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries with orchestrator
-  - Purpose
-  - Core Identity: Worker Agent (Not Orchestrator)
-  - Standard Output Format
-  - Communication Rules
-  - Tool Restrictions
-  - Common Constraints Template
-  - IRON RULES
-  - Success/Completion Conditions
-  - Anti-Patterns to Avoid
-  - Template Usage
-  - References
+> For sub-agent role boundaries with orchestrator, see `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`
 
-For escalation protocols, see [SKILL](../skills/amia-ci-failure-patterns/SKILL.md)
+> For escalation protocols, see `amia-ci-failure-patterns/SKILL.md`
 
-- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Diagnostic script usage
-  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
-  - 1.2 When identifying which failure pattern category applies
-  - 1.3 When performing deep root cause analysis by category
-  - 1.4 When documenting diagnostic evidence
-  - 1.5 When delegating fixes to remote agents
-  - 1.6 When escalating unknown or complex failures
-  - 1.7 When using diagnostic scripts and tools
-  - 1.8 When troubleshooting common diagnostic challenges
+> For diagnostic script usage, see `amia-ci-failure-patterns/references/debug-procedures.md`
 
 ## Diagnostic Workflow (Summary)
 
 1. **Collect logs** - Fetch CI failure logs via `gh run view <run-id> --log-failed`
 2. **Identify pattern** - Match against 6 categories using decision tree (Cross-Platform, Exit Codes, Syntax, Dependencies, Infrastructure, Language-Specific)
 3. **Analyze root cause** - Deep dive into identified category with evidence
-4. **Document findings** - Write report to [CI-DEBUG-{timestamp}](docs_dev/ci-debug/CI-DEBUG-{timestamp}.md)
+4. **Document findings** - Write report to `docs_dev/ci-debug/CI-DEBUG-{timestamp}.md`
 5. **Delegate fix** - Send specification to appropriate agent via AI Maestro
 
-- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Full step-by-step verification checklists
-  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
-  - 1.2 When identifying which failure pattern category applies
-  - 1.3 When performing deep root cause analysis by category
-  - 1.4 When documenting diagnostic evidence
-  - 1.5 When delegating fixes to remote agents
-  - 1.6 When escalating unknown or complex failures
-  - 1.7 When using diagnostic scripts and tools
-  - 1.8 When troubleshooting common diagnostic challenges
+> For full step-by-step verification checklists, see `amia-ci-failure-patterns/references/debug-procedures.md`
 
 ## Pattern Categories (Quick Reference)
 

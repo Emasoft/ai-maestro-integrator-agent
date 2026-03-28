@@ -56,9 +56,3 @@ node_modules/
 *.externbak
 .DS_Store
 .claude/
-
-# LLM Externalizer output
-llm_externalizer_output/
-
-# TLDR cache
-.tldr/

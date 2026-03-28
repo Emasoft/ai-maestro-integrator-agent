@@ -22,6 +22,8 @@
 
 ## Purpose
 
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
+
 The Review Gate ensures code quality through systematic human review. It evaluates code across 8 dimensions and calculates a confidence score.
 
 ## Required Checks

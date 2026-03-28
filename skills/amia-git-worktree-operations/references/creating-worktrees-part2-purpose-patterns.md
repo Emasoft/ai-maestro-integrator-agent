@@ -1,6 +1,6 @@
 # Creating Worktrees: Purpose-Specific Patterns
 
-## Table of Contents
+## Contents
 
 1. [Review Worktrees](#review-worktrees) - For reviewing Pull Requests
 2. [Feature Worktrees](#feature-worktrees) - For developing new features

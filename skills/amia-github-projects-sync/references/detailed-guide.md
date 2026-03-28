@@ -1,6 +1,6 @@
 # GitHub Projects Sync — Detailed Guide
 
-## Table of Contents
+## Contents
 
 - [Critical Distinction](#critical-distinction)
 - [When to Invoke](#when-to-invoke)
@@ -60,7 +60,7 @@ For all inter-agent messaging, refer to the official AI Maestro skill:
 
 Use the `agent-messaging` skill to send notifications. For example, to notify the orchestrator, send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-master`
 - **Subject**: Your notification subject
 - **Content**: `{"type": "TYPE", "message": "MSG"}`
 - **Priority**: The appropriate priority level

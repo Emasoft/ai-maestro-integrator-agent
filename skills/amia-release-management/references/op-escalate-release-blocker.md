@@ -1,6 +1,6 @@
 # Operation: Escalate Release Blocker
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)
@@ -157,7 +157,7 @@ fi
 
 Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[RELEASE BLOCKED] v<VERSION>`
 - **Priority**: `urgent`
 - **Content**: `{"type": "release-blocked", "message": "Release v<VERSION> is blocked. Type: <BLOCKER_TYPE>. Severity: <SEVERITY>. Issue: #<ISSUE_NUM>. Decision required."}`
@@ -309,7 +309,7 @@ ISSUE=$(gh issue create \
 echo "Created issue #$ISSUE"
 
 # Notify using the agent-messaging skill:
-#   Recipient: amcos-main (COS will escalate to Orchestrator/Manager)
+#   Recipient: orchestrator-amoa
 #   Subject: [BLOCKED] v$VERSION
 #   Priority: urgent
 #   Content: {"type": "release-blocked", "message": "v$VERSION blocked. $BLOCKER_TYPE: $DESCRIPTION. Issue #$ISSUE"}

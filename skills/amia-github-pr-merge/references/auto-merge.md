@@ -1,6 +1,6 @@
 # Auto-Merge Configuration
 
-## Table of Contents
+## Contents
 
 - 3.1 Setting up auto-merge via GraphQL API
   - 3.1.1 EnablePullRequestAutoMerge mutation

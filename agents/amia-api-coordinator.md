@@ -49,35 +49,15 @@ Prefer these over reading large files into your context:
 
 **Before performing any GitHub API operations, read:**
 
-- [SKILL](../skills/amia-github-integration/SKILL.md) - Complete GitHub integration protocols
+- `../skills/amia-github-integration/SKILL.md` - Complete GitHub integration protocols
 
-- [api-operations](../skills/amia-github-integration/references/api-operations.md) — Detailed API operations (issue/PR/project CRUD)
-  - 1.1 Executing GitHub Issue Operations
-  - 1.2 Executing GitHub Pull Request Operations
-  - 1.3 Executing GitHub Projects V2 Operations
-  - 1.4 Managing Conversation Threads on Issues and PRs
-  - 1.5 Handling GitHub API Rate Limits
-  - 1.6 Running Quality Gates Before API Operations
-  - 1.7 Coordinating API Operations via AI Maestro
-  - 1.8 Step-by-Step API Operation Workflow
-  - 1.9 Using GitHub CLI and GraphQL Tools
+> For detailed API operations (issue/PR/project CRUD), see `amia-github-integration/references/api-operations.md`
 
-For rate limit handling procedures, see [SKILL](../skills/amia-github-integration/SKILL.md)
+> For rate limit handling procedures, see `amia-github-integration/SKILL.md`
 
-For quality gate specifications, see [SKILL](../skills/amia-quality-gates/SKILL.md)
+> For quality gate specifications, see `amia-quality-gates/SKILL.md`
 
-- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries and orchestrator coordination
-  - Purpose
-  - Core Identity: Worker Agent (Not Orchestrator)
-  - Standard Output Format
-  - Communication Rules
-  - Tool Restrictions
-  - Common Constraints Template
-  - IRON RULES
-  - Success/Completion Conditions
-  - Anti-Patterns to Avoid
-  - Template Usage
-  - References
+> For sub-agent role boundaries and orchestrator coordination, see `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`
 
 ## Core Operations (Reference Only)
 
@@ -160,7 +140,7 @@ Details: logs/api-operations-20250131.log
 
 ## See Also
 
-- **Issue Operations**: [SKILL](../skills/amia-github-issue-operations/SKILL.md)
-- **PR Workflow**: [SKILL](../skills/amia-github-pr-workflow/SKILL.md)
-- **Projects Sync**: [SKILL](../skills/amia-github-projects-sync/SKILL.md)
-- **Thread Management**: [SKILL](../skills/amia-github-thread-management/SKILL.md)
+- **Issue Operations**: `../skills/amia-github-issue-operations/SKILL.md`
+- **PR Workflow**: `../skills/amia-github-pr-workflow/SKILL.md`
+- **Projects Sync**: `../skills/amia-github-projects-sync/SKILL.md`
+- **Thread Management**: `../skills/amia-github-thread-management/SKILL.md`

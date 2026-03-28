@@ -78,22 +78,23 @@ When the Orchestrator assigns a PR review task, follow this sequence:
    ```
 3. **Fetch the PR branch** for local review:
    ```bash
-   cd <repo-path>
-   git fetch origin pull/<N>/head:pr-<N>
-   git checkout pr-<N>
+   # Target repo must be inside $AGENT_DIR/repos/<repo-name>
+   git -C "$AGENT_DIR/repos/<repo-name>" fetch origin pull/<N>/head:pr-<N>
+   git -C "$AGENT_DIR/repos/<repo-name>" checkout pr-<N>
    ```
 4. **Review code changes** — read diffs, check patterns, verify against specs.
 5. **Run tests** on the PR branch to confirm nothing is broken.
 6. **Submit the review** via GitHub CLI:
    ```bash
+   # All gh commands MUST specify --repo since the integrator works across multiple repos
    # Approve
-   gh pr review <N> --approve --body "LGTM — tests pass, code reviewed."
+   gh pr review <N> --repo "$OWNER/$REPO" --approve --body "LGTM — tests pass, code reviewed."
    # Or request changes
-   gh pr review <N> --request-changes --body "See inline comments for required fixes."
+   gh pr review <N> --repo "$OWNER/$REPO" --request-changes --body "See inline comments for required fixes."
    ```
 7. **Merge if approved** (only when authorized by the team governance rules):
    ```bash
-   gh pr merge <N> --squash
+   gh pr merge <N> --repo "$OWNER/$REPO" --squash
    ```
 8. **Report completion** to the Orchestrator:
    ```bash

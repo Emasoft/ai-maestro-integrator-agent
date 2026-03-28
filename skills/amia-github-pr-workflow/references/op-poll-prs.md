@@ -1,6 +1,6 @@
 # Operation: Poll for PRs Requiring Attention
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

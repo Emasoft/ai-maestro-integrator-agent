@@ -2,7 +2,7 @@
 
 [Back to Troubleshooting Index](troubleshooting.md)
 
-## Table of Contents
+## Contents
 
 - Problem: Issues created in agent system don't appear in GitHub
 - Problem: GitHub changes don't sync back to agent

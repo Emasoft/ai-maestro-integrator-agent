@@ -107,11 +107,9 @@ Actions that MUST happen AFTER a transition:
 
 ### Key Rules
 
-> **Note:** The Integrator's kanban movement permissions described below are delegated by COS/MANAGER as part of the INTEGRATOR's assigned role.
-
 1. **Only orchestrator moves from Backlog** - Prioritization control
 2. **Assigned agent moves In Progress → AI Review** - Author submits for review
-3. **Integrator moves from AI Review** - Integrator decides routing (Human Review for big, Merge/Release for small), as delegated by COS/MANAGER
+3. **Only Integrator moves from AI Review** - Integrator decides routing (Human Review for big, Merge/Release for small)
 4. **Only Human/User moves from Human Review** - User has final say on big tasks
 5. **Anyone can block** - Safety first
 6. **Done is automatic** - PR merge triggers
@@ -274,7 +272,7 @@ This transition applies ONLY to big tasks. Small tasks skip Human Review and go 
 
 ### Who Can Move
 
-The **Integrator agent (AMIA)** moves cards from AI Review to Human Review. These permissions are delegated by the COS/MANAGER as part of the INTEGRATOR's assigned role.
+Only the **Integrator agent (AMIA)** can move cards from AI Review to Human Review. No other agent or automation has this permission.
 
 ### Postconditions
 
@@ -314,7 +312,7 @@ This is the fast path for small tasks that do not need human approval.
 
 ### Who Can Move
 
-The **Integrator agent (AMIA)** moves cards from AI Review to Merge/Release. These permissions are delegated by the COS/MANAGER as part of the INTEGRATOR's assigned role.
+Only the **Integrator agent (AMIA)** can move cards from AI Review to Merge/Release. No other agent or automation has this permission.
 
 ### Postconditions
 

@@ -1,6 +1,6 @@
 # Port Management
 
-## Table of Contents
+## Contents
 
 - [Parts Overview](#parts-overview)
 - [Quick Navigation by Topic](#quick-navigation-by-topic)

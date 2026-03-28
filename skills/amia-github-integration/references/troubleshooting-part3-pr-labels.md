@@ -2,7 +2,7 @@
 
 [Back to Troubleshooting Index](troubleshooting.md)
 
-## Table of Contents
+## Contents
 
 - Pull Request Linking Issues
   - Problem: Pull request doesn't link to issue

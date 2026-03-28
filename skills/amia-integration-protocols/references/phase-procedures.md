@@ -1,6 +1,6 @@
 # Integration Phase Procedures
 
-## Table of Contents
+## Contents
 
 - [Phase 1: Request Reception](#phase-1-request-reception)
   - [1. Check AI Maestro Inbox](#1-check-ai-maestro-inbox)
@@ -142,7 +142,7 @@ This document provides step-by-step procedures for each integration phase. Follo
 
 ### 2. Send to AMOA
 
-- Send message to `amcos-main` (COS will forward to Orchestrator) using the `agent-messaging` skill
+- Send message to orchestrator-amoa using the `agent-messaging` skill
 - Include link to detailed report file
 - **Verification**: Message sent
 

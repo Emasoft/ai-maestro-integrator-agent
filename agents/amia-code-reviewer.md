@@ -43,7 +43,7 @@ Prefer these over reading large files into your context:
 
 **Before performing any review, read the amia-code-review-patterns skill:**
 
-📖 **[SKILL](../skills/amia-code-review-patterns/SKILL.md)**
+📖 **`amia-code-review-patterns/SKILL.md`**
 
 This skill contains:
 
@@ -59,164 +59,89 @@ This skill contains:
 
 ## Procedural Details (See Skill)
 
-- [review-workflow](../skills/amia-code-review-patterns/references/review-workflow.md) — Review workflow
-  - 1. When Starting a Code Review Task
-  - 2. When Gathering Context Before Review
-  - 3. When Executing Gate 1: Specification Compliance
-  - 4. When Executing Gate 2: Code Quality Evaluation
-  - 5. When Generating Review Reports
-  - 6. When Creating Fix Instructions for Developers
-  - 7. When Communicating Findings via AI Maestro
-  - 8. When Updating GitHub Projects Tracking
-  - 9. When Archiving Review Artifacts
+> **For review workflow**, see `amia-code-review-patterns/references/review-workflow.md`
+>
+> **Contents:** When starting a code review task, When gathering context before review, When executing Gate 1: Specification Compliance, When executing Gate 2: Code Quality Evaluation, When generating review reports, When creating fix instructions for developers, When communicating findings via AI Maestro, When updating GitHub Projects tracking, When archiving review artifacts
 
-- [evaluation-criteria](../skills/amia-code-review-patterns/references/evaluation-criteria.md) — Evaluation criteria
-  - 1. Code Quality
-  - 2. Code Style
-  - 3. Security
-  - 4. Performance
-  - 5. Testing
-  - 6. Architecture & Design
-  - 7. Evaluation Scoring
-  - 8. Review Checklist
+> **For evaluation criteria**, see `amia-code-review-patterns/references/evaluation-criteria.md`
 
-- [report-templates](../skills/amia-code-review-patterns/references/report-templates.md) — Report templates overview
-  - Report ID Conventions
-  - Common Data Sources
+> **For report templates**, see `amia-code-review-patterns/references/report-templates.md`
+>   <!-- TOC: report-templates.md -->
+> ### Progress Tracking Reports
+>
+> - `report-templates-part1-progress.md`
+>   - Executive Summary format
+>   - Metrics Overview section
+>   - Task Status tables (Completed, In Progress, Pending, Blocked)
+>   - Milestones tracking table
+>   - Recommendations and Next Actions
+>
+> ### Code Quality Reports
+>
+> - `report-templates-part2-quality.md`
+>   - Quality Score breakdown (100-point scale)
+>   - Test Coverage analysis with module-level detail
+>   - Code Quality metrics (linting, type coverage)
+>   - Documentation completeness tracking
+>   - Security scan results
+>   - Performance benchmarks
+>   - Technical debt tracking
+>
+> ### Test Execution Reports
+>
+> - `report-templates-part3-test.md`
+>   - Executive Summary with pass/fail/skip counts
+>   - Test Results table with duration
+>   - Failed Tests detailed analysis
+>   - Error descriptions and recommendations
+>   - Skipped Tests rationale
+>   - Slow Tests identification (with snail emoji for CI-skipped tests)
+>   - Coverage Impact metrics
+>
+> ### Task Completion Reports
+>
+> - `report-templates-part4-completion.md`
+>   - Task Objective documentation
+>   - Completion Checklist (Implementation, Testing, Documentation, Code Quality, Integration)
+>   - Verification Evidence (Test Results, Code Review, Performance Metrics)
+>   - Known Limitations
+>   - Future Enhancements
+>   - Sign-Off status and rationale
+>
+> ### Summary and Integration Reports
+>
+> - `report-templates-part5-summary.md`
+>   - Project Health indicator
+>   - Key Metrics Dashboard
+>   - Recent Achievements
+>   - Current Focus Areas
+>   - Upcoming Milestones
+>   - Risk Factors analysis
+>
+> - `report-templates-part6-integration.md`
+>   - Integration Status indicator
+>   - Component Interaction Map
+>   - API Contract Verification
+>   - Integration Test Results
+>   - Issues Detected with resolution recommendations
+>   <!-- /TOC -->
 
-### Progress Tracking Reports
+> **For communication guidelines**, see `amia-code-review-patterns/references/communication-guidelines.md`
 
-- [report-templates-part1-progress](../skills/amia-code-review-patterns/references/report-templates-part1-progress.md)
-  - Template
-  - Executive Summary
-  - Metrics Overview
-  - Task Status
-  - Milestones
-  - Recommendations
-  - Next Actions
-  - Field Definitions
-  - Status Icons
+> **For error handling**, see `amia-code-review-patterns/references/error-handling.md`
 
-### Code Quality Reports
-
-- [report-templates-part2-quality](../skills/amia-code-review-patterns/references/report-templates-part2-quality.md)
-  - Template
-  - Executive Summary
-  - Quality Score: XX/100
-  - Test Coverage
-  - Code Quality
-  - Documentation
-  - Security
-  - Performance
-  - Technical Debt
-  - Recommendations
-  - Quality Score Calculation
-  - Trend Indicators
-
-### Test Execution Reports
-
-- [report-templates-part3-test](../skills/amia-code-review-patterns/references/report-templates-part3-test.md)
-  - Template
-  - Executive Summary
-  - Test Results
-  - Failed Tests
-  - Skipped Tests
-  - Slow Tests (>1s)
-  - Coverage Impact
-  - Next Actions
-  - Test Status Icons
-  - Result Summary Types
-
-### Task Completion Reports
-
-- [report-templates-part4-completion](../skills/amia-code-review-patterns/references/report-templates-part4-completion.md)
-  - Template
-  - Task Objective
-  - Completion Checklist
-  - Verification Evidence
-  - Known Limitations
-  - Future Enhancements
-  - Sign-Off
-  - Sign-Off Status Types
-  - Checklist Categories
-
-### Summary and Integration Reports
-
-- [report-templates-part5-summary](../skills/amia-code-review-patterns/references/report-templates-part5-summary.md)
-  - Template
-  - Key Metrics Dashboard
-  - Recent Achievements (Last 7 Days)
-  - Current Focus Areas
-  - Upcoming Milestones
-  - Risk Factors
-  - Recommendations
-  - Project Health Indicators
-  - Risk Levels
-
-- [report-templates-part6-integration](../skills/amia-code-review-patterns/references/report-templates-part6-integration.md)
-  - Template
-  - Component Interaction Map
-  - API Contract Verification
-  - Integration Test Results
-  - Issues Detected
-  - Integration Status Types
-  - Component Status Icons
-  - Common Interface Types
-
-- [communication-guidelines](../skills/amia-code-review-patterns/references/communication-guidelines.md) — Communication guidelines
-  - Core Principles
-  - The Language of Review
-  - Comment Structure
-  - Giving Feedback by Issue Type
-  - Positive Feedback
-  - Handling Disagreements
-  - Responding to Feedback (Author Perspective)
-  - Review Response Templates
-  - Cultural Considerations
-  - Anti-Patterns to Avoid
-
-- [error-handling](../skills/amia-code-review-patterns/references/error-handling.md) — Error handling
-  - Core Principles
-  - Common Error Handling Patterns
-  - Anti-Patterns to Flag
-  - Language-Specific Patterns
-  - Review Checklist
-  - Common Scenarios
-  - Error Logging Best Practices
-  - Testing Error Handling
-  - Summary
-
-- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries
-  - Purpose
-  - Core Identity: Worker Agent (Not Orchestrator)
-  - Standard Output Format
-  - Communication Rules
-  - Tool Restrictions
-  - Common Constraints Template
-  - IRON RULES
-  - Success/Completion Conditions
-  - Anti-Patterns to Avoid
-  - Template Usage
-  - References
+> **For role boundaries**, see `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`
 
 ## RULE 14 (User Requirements Compliance)
 
 **CODE REVIEWS MUST VERIFY REQUIREMENT COMPLIANCE**
 
-1. Load [USER_REQUIREMENTS](docs_dev/requirements/USER_REQUIREMENTS.md) before review
+1. Load `docs_dev/requirements/USER_REQUIREMENTS.md` before review
 2. Verify technology/scope/features match user specification
 3. Block PRs with requirement violations (technology changes, scope reduction, feature omissions)
 4. Escalate deviations to user for approval
 
-- [evaluation-criteria](../skills/amia-code-review-patterns/references/evaluation-criteria.md) — Full RULE 14 details, section 1
-  - 1. Code Quality
-  - 2. Code Style
-  - 3. Security
-  - 4. Performance
-  - 5. Testing
-  - 6. Architecture & Design
-  - 7. Evaluation Scoring
-  - 8. Review Checklist
+> **Full RULE 14 details**, see `amia-code-review-patterns/references/evaluation-criteria.md` section 1.
 
 ## Output Format
 

@@ -1,6 +1,8 @@
 # Parallel PR Workflow with Git Worktrees
 
-## Table of Contents
+> **MULTI-REPO & PATH RULE:** All worktree paths MUST be inside `$AGENT_DIR/worktrees/` (NOT `/tmp/worktrees/`). All `git` commands MUST use `git -C "$REPO_PATH"`. NEVER write files outside `$AGENT_DIR` (`~/agents/<persona-name>/`).
+
+## Contents
 
 ### Part 1: Creating Worktrees and Isolation
 

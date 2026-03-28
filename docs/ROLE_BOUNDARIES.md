@@ -27,8 +27,8 @@
 ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
 │      AMCOS       │ │      AMOA        │ │      AMIA        │
 │ Chief of Staff  │ │  Orchestrator   │ │   Integrator    │
-│ Title: CHIEF-   │ │ Title: MEMBER   │ │ Title: MEMBER   │
-│ OF-STAFF        │ │                 │ │                 │
+│ Title: CHIEF-   │ │ Title: ORCH-    │ │ Title: MEMBER   │
+│ OF-STAFF        │ │ ESTRATOR        │ │                 │
 │ TEAM-SCOPED     │ │ PROJECT-        │ │ PROJECT-        │
 │ (one per team)  │ │ LINKED          │ │ LINKED          │
 │                 │ │ (one per proj)  │ │ (one per proj)  │
@@ -36,13 +36,16 @@
 ```
 
 
-### Governance Titles
+### Governance Titles (v3 — 4 titles)
 
 | Title | Role | Scope | Authority |
 |-------|------|-------|-----------|
-| **manager** | AMAMA | Organization-wide | Final approval, user communication |
-| **chief-of-staff** | AMCOS | Team-scoped (one per team) | Agent lifecycle, configuration |
-| **member** | AMOA, AMIA, AMAA | Project-linked | Task execution within role boundaries |
+| **MANAGER** | AMAMA | Organization-wide | Final approval, user communication |
+| **CHIEF-OF-STAFF** | AMCOS | Team-scoped (one per team) | Agent lifecycle, configuration |
+| **ORCHESTRATOR** | AMOA | Project-linked (one per project) | Primary kanban manager, task distribution, direct MANAGER communication |
+| **MEMBER** | AMIA, AMAA | Project-linked | Task execution within role boundaries |
+
+> **Note:** All teams are closed. Each agent belongs to at most one team. ORCHESTRATOR is the primary kanban manager; COS and MANAGER are secondary.
 
 ---
 

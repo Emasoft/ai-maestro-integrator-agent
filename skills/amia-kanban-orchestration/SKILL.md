@@ -59,25 +59,11 @@ See `references/` directory for all reference documents.
 
 ## Error Handling
 
-Check exit code and stderr: 1=invalid params, 2-4=GitHub API errors. See the detailed guide in Resources.
+Check exit code and stderr: 1=invalid params, 2-4=GitHub API errors. See `references/detailed-guide.md`.
 
 ## Resources
 
-Full reference: [detailed-guide](references/detailed-guide.md):
-  - The Iron Rule
-  - Board Columns Quick Reference
-  - Command Integration: /create-issue-tasks
-    - Quick Usage
-  - Python Scripts Detailed Usage
-    - Get Board State (scripts/amia_kanban_get_board_state.py)
-    - Move Card (scripts/amia_kanban_move_card.py)
-    - Check Completion (scripts/amia_kanban_check_completion.py)
-  - Error Handling
-  - Integration Points Summary
-  - Proactive Kanban Monitoring Summary
-  - Skill File Structure
-  - Related Skills
-  - When to Use This Skill
+See `references/` directory (30+ documents covering all workflows and operations).
 
 ## Examples
 

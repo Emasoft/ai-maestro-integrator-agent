@@ -1,6 +1,6 @@
 # Operation: Add Issue to Project Board
 
-## Table of Contents
+## Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

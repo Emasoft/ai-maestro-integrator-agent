@@ -1,6 +1,6 @@
 # Examples and Inline Troubleshooting
 
-## Table of Contents
+## Contents
 
 - [E.1 Example 1: Find and Query a Project](#e1-example-1-find-and-query-a-project)
 - [E.2 Example 2: Update Issue Status](#e2-example-2-update-issue-status)

@@ -1,6 +1,6 @@
 # Parallel PR Workflow - Part 3: Concurrent Operations and Example Workflow
 
-## Table of Contents
+## Contents
 
 - [2.5 Handling Concurrent Git Operation Limitations](#25-handling-concurrent-git-operation-limitations)
   - [The Concurrency Problem](#the-concurrency-problem)

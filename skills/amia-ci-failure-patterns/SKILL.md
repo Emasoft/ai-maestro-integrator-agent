@@ -31,7 +31,7 @@ Diagnose and fix CI/CD failures by recognizing common failure patterns and apply
 1. Collect the CI failure log from the GitHub Actions run
 2. Run diagnostic: `python scripts/amia_diagnose_ci_failure.py --log-file ci.log`
 3. If a pattern is identified, read the corresponding reference document for the fix
-4. If not, follow the decision tree in the detailed guide (see Resources)
+4. If not, follow the decision tree in `references/detailed-guide.md`
 5. Apply the fix, verify locally, push and confirm CI passes
 
 ### Checklist
@@ -56,9 +56,13 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
+## Reference Documents
+
+See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
+
 ## Error Handling
 
-Script failures return non-zero exit codes. Check stderr for details. See the detailed guide in Resources for common error scenarios.
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
 
 ## Examples
 
@@ -73,26 +77,4 @@ python scripts/amia_diagnose_ci_failure.py --log-file ci.log
 
 ## Resources
 
-See `references/` directory — 27 documents. Full guide: [detailed-guide](references/detailed-guide.md):
-  - Failure Pattern Categories
-  - Diagnosis Decision Tree
-  - Quick Reference: Most Common Patterns
-  - Diagnostic Scripts
-    - amia_diagnose_ci_failure.py
-    - amia_detect_platform_issue.py
-  - Workflow: Diagnosing a CI Failure
-  - Error Handling
-    - The diagnostic script doesn't identify my failure
-    - My fix works locally but still fails in CI
-    - CI passes sometimes but fails randomly
-  - Examples
-    - Example 1: Diagnosing a Cross-Platform Path Failure
-    - Example 2: Fixing a Heredoc Syntax Error
-  - Reference Document TOCs
-    - cross-platform-patterns.md
-    - exit-code-patterns.md
-    - syntax-patterns.md
-    - dependency-patterns.md
-    - github-infrastructure-patterns.md
-    - language-specific-patterns.md
-  - Full Reference Document Index
+See `references/` directory — 27 documents covering patterns, operations, and CI best practices.

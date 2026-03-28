@@ -1,6 +1,6 @@
 # Worktree Automation Scripts Guide
 
-## Table of Contents
+## Contents
 
 1. [Overview](#overview)
 2. [Prerequisites](#prerequisites)

@@ -1,6 +1,6 @@
 # CI Failure Patterns — Detailed Guide
 
-## Table of Contents
+## Contents
 
 - [Failure Pattern Categories](#failure-pattern-categories)
 - [Diagnosis Decision Tree](#diagnosis-decision-tree)

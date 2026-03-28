@@ -1,6 +1,6 @@
 # Registry System - Part 3: Validation Rules
 
-## Table of Contents
+## Contents
 
 - [Validation Rules](#validation-rules)
   - [1. Unique IDs](#1-unique-ids)

@@ -1,6 +1,6 @@
 # Worktree Automation Scripts Guide - Part 1: Core Scripts
 
-## Table of Contents
+## Contents
 
 - [Script Reference: Core Scripts](#script-reference-core-scripts)
   - [worktree_create.py](#worktree_createpy)

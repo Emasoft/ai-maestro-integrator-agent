@@ -1,6 +1,6 @@
 # Operation: Deep Dive Analysis (Stage 2)
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

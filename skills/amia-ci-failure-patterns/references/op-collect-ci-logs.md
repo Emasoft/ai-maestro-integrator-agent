@@ -1,6 +1,8 @@
 # Operation: Collect CI Failure Logs
 
-## Table of Contents
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
+
+## Contents
 
 - [Purpose](#purpose)
 - [Prerequisites](#prerequisites)

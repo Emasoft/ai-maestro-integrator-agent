@@ -1,6 +1,6 @@
 # Memory Types
 
-## Table of Contents
+## Contents
 
 - [PR Review States](#pr-review-states)
 - [Code Patterns Observed](#code-patterns-observed)

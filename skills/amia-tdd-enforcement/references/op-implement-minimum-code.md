@@ -1,6 +1,6 @@
 # Operation: Implement Minimum Code (GREEN Phase)
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

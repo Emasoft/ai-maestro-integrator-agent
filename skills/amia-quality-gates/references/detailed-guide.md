@@ -1,6 +1,8 @@
 # AMIA Quality Gates -- Detailed Guide
 
-## Table of Contents
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
+
+## Contents
 
 - [Purpose and Principles](#purpose-and-principles)
 - [Gate Types and Pipeline Position](#gate-types-and-pipeline-position)

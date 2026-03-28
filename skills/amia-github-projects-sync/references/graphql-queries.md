@@ -1,6 +1,6 @@
 # GraphQL Queries Reference
 
-## Table of Contents
+## Contents
 
 1. [When listing projects](#list-projects)
 2. [When getting project items](#get-items)

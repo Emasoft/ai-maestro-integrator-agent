@@ -1,6 +1,6 @@
 # Integration Points
 
-## Table of Contents
+## Contents
 
 - [IP.1 Planning Phase workflow](#ip1-planning-phase)
 - [IP.2 Orchestration Phase workflow](#ip2-orchestration-phase)

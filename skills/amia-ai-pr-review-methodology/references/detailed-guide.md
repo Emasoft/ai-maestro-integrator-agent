@@ -1,6 +1,6 @@
 # AI PR Review Methodology -- Detailed Guide
 
-## Table of Contents
+## Contents
 
 - [4 Phases Overview](#4-phases-overview)
 - [5 Analysis Dimensions](#5-analysis-dimensions)

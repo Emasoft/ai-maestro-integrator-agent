@@ -1,6 +1,6 @@
 # Operation: Verify Fix Locally
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [Prerequisites](#prerequisites)

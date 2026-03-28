@@ -1,6 +1,6 @@
 # Operation: Mark Blocked PR
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)
@@ -24,6 +24,8 @@
 - [Notes](#notes)
 
 ## Purpose
+
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
 
 Mark a PR as blocked when review cannot proceed due to merge conflicts, CI failures, missing dependencies, or other blockers.
 

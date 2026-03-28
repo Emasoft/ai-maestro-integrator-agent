@@ -1,6 +1,6 @@
 # PR Evaluator Checklist
 
-## Table of Contents
+## Contents
 
 - [Pre-Evaluation Setup](#pre-evaluation-setup)
 - [Environment Setup](#environment-setup)

@@ -60,37 +60,17 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`. With flag: JSON to file, summary to stderr. Without: JSON to stdout.
 
+## Reference Documents
+
+See `references/` directory for all reference documents: protocols, conversation tracking, and detailed guide with decision tree, scripts, exit codes, and workflows.
+
 ## Error Handling
 
-Exit 1: bad params. Exit 2-4: API errors. See detailed guide in Resources.
+Check exit code and stderr on failure. Exit 1: bad params. Exit 2-4: API errors. See `references/detailed-guide.md`.
 
 ## Resources
 
-Full reference: [detailed-guide](references/detailed-guide.md):
-  - Decision Tree for Thread Operations
-  - Key Concepts
-    - Thread vs Comment
-    - Thread States
-    - The Reply-Resolve Separation
-  - Common Workflows
-    - Workflow 1: Address All Unresolved Threads
-    - Workflow 2: Reply and Resolve in One Command
-    - Workflow 3: Batch Resolve After Large Refactor
-    - Workflow 4: Find What Still Needs Attention
-  - Script Usage Details
-    - amia_get_review_threads.py
-    - amia_resolve_thread.py
-    - amia_resolve_threads_batch.py
-    - amia_reply_to_thread.py
-    - amia_get_unaddressed_comments.py
-  - Exit Codes
-  - Error Handling
-    - "Thread not found" Error
-    - Resolution Appears to Fail Silently
-    - Cannot Resolve Thread - Permission Denied
-    - Reply Added But Thread Still Unresolved
-    - GraphQL Rate Limiting
-  - Available Scripts (Quick Reference)
+See `references/` directory.
 
 ## Examples
 

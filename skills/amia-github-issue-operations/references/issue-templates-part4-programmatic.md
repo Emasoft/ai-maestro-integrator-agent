@@ -1,6 +1,6 @@
 # Issue Templates Part 4: Programmatic Template Population
 
-## Table of Contents
+## Contents
 
 - 2.4.1 Variable substitution (placeholder syntax, Python substitution)
 - 2.4.2 Dynamic content injection (system info, git info)

@@ -1,6 +1,6 @@
 # Go Linting Tools Reference
 
-## Table of Contents
+## Contents
 
 - [5.5 Linting with golint, go vet, and staticcheck](#55-linting-with-golint-go-vet-and-staticcheck)
   - [go vet (Built-in)](#go-vet-built-in)

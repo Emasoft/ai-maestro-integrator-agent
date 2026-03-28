@@ -164,9 +164,8 @@ gh issue edit 42 --remove-assignee implementer-1
 # 3. Assign new agent
 gh issue edit 42 --add-assignee implementer-2
 
-# 4. Notify COS to forward assignment to new agent using the agent-messaging skill
-# Send a message with Recipient: amcos-main, Subject: Assignment handoff for implementer-2, Priority: high
-# (COS will forward to the new assignee)
+# 4. Notify new agent using the agent-messaging skill
+# Send a message with Recipient: implementer-2, Subject: Assignment handoff, Priority: high
 ```
 
 ### AI to Human Handoff
@@ -306,9 +305,9 @@ When AI agents cannot proceed.
 
 ### Escalation Process
 
-**Step 1: AI agent reports blocker via COS.** Send a message using the `agent-messaging` skill with:
+**Step 1: AI agent reports blocker.** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
+- **Recipient**: `orchestrator-master`
 - **Subject**: `Escalation: Issue #42 Blocked`
 - **Priority**: `urgent`
 - **Content**: `{"type": "escalation", "message": "Cannot proceed on #42. Need human decision.", "data": {"issue_number": 42, "blocker": "Design ambiguity in API spec", "question": "Should auth tokens be stateless or server-validated?", "impact": "Cannot proceed with implementation", "options": ["Stateless JWT", "Server-side session", "Hybrid"]}}`

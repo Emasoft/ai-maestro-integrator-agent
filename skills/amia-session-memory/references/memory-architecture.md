@@ -1,6 +1,6 @@
 # Memory Architecture
 
-## Table of Contents
+## Contents
 
 - [Storage Locations](#storage-locations)
   - [PR Comments](#pr-comments)

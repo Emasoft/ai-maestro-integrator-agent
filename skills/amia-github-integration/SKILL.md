@@ -21,7 +21,7 @@ Routes GitHub integration tasks to specialized skills (PRs, Projects V2, Kanban,
 
 - GitHub CLI 2.14+ authenticated (`gh auth status`)
 - Write permissions on target repository
-- Setup details: [prerequisites-and-setup](references/prerequisites-and-setup.md)
+- Setup details: `references/prerequisites-and-setup.md`
 
 ## Instructions
 
@@ -31,11 +31,11 @@ Routes GitHub integration tasks to specialized skills (PRs, Projects V2, Kanban,
    - **Projects V2** --> `amia-github-projects-sync`
    - **Kanban** --> `amia-kanban-orchestration`
    - **Worktrees** --> `amia-git-worktree-operations`
-   - **API ops** --> [api-operations](references/api-operations.md)
-   - **Multi-user** --> [multi-user-workflow](references/multi-user-workflow.md)
-3. Batch ops: preview first (`gh issue list --label X --state open`), then execute.
-4. Verify result: `gh issue view <N>` or `gh pr status`.
-5. On errors: see the detailed guide in Resources.
+   - **API ops** --> `references/api-operations.md`
+   - **Multi-user** --> `references/multi-user-workflow.md`
+3. Batch ops: preview first (`gh issue list --repo "$OWNER/$REPO" --label X --state open`), then execute.
+4. Verify result: `gh issue view <N> --repo "$OWNER/$REPO"` or `gh pr status --repo "$OWNER/$REPO"`.
+5. On errors: see `references/detailed-guide.md`.
 
 ### Checklist
 
@@ -59,25 +59,30 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`. Use it in automated workflows to minimize token consumption.
 
+## Reference Documents
+
+See `references/` directory for all reference documents. Index in `references/detailed-guide.md`.
+
 ## Error Handling
 
-Non-zero exit codes on failure; check stderr and the detailed guide in Resources.
+Non-zero exit codes on failure; check stderr and `references/detailed-guide.md`.
 
 ## Examples
 
 ### Example: Bulk add label to open bug issues
 
 ```bash
+# All gh commands MUST specify --repo since the integrator works across multiple repos
 # Preview affected issues
-gh issue list --label "bug" --state open --json number,title \
+gh issue list --repo "$OWNER/$REPO" --label "bug" --state open --json number,title \
   --jq '.[] | "\(.number): \(.title)"'
 
 # Apply label
-gh issue list --label "bug" --state open --json number \
-  --jq '.[].number' | xargs -I {} gh issue edit {} --add-label "priority:critical"
+gh issue list --repo "$OWNER/$REPO" --label "bug" --state open --json number \
+  --jq '.[].number' | xargs -I {} gh issue edit {} --repo "$OWNER/$REPO" --add-label "priority:critical"
 
 # Verify
-gh issue view 15 --json labels --jq '.labels[].name'
+gh issue view 15 --repo "$OWNER/$REPO" --json labels --jq '.labels[].name'
 ```
 
 ---
@@ -86,22 +91,4 @@ gh issue view 15 --json labels --jq '.labels[].name'
 
 ## Resources
 
-Full reference: [detailed-guide](references/detailed-guide.md):
-  - Decision Tree: Which Skill to Use?
-    - Pull Requests
-    - Projects V2 Sync
-    - Kanban Board Operations
-    - Git Worktrees
-    - GitHub API Operations
-    - Multiple GitHub Identities
-  - Batch Operations
-    - Batch Label Operations
-    - Automation Scripts
-  - Error Handling
-  - Extended Examples
-    - Route to PR skill
-    - Bulk add label to bug issues
-    - Projects V2 sync
-  - First-Time Setup
-  - Changelog
-  - Reference Documents Index
+See `references/` directory (40+ documents).

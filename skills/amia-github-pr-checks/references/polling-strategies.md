@@ -1,6 +1,8 @@
 # Polling Strategies for GitHub PR Checks
 
-## Table of Contents
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
+
+## Contents
 
 - 1. When to Poll for Check Completion
   - 1.1 Scenarios requiring polling

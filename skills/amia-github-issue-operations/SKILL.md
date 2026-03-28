@@ -64,26 +64,17 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
+## Reference Documents
+
+See `references/` directory for all reference documents. Start with `references/detailed-guide.md` for full examples, decision tree, error codes, and troubleshooting.
+
 ## Error Handling
 
-Check exit codes on failure: 1=bad args, 2=not found, 3=API error, 4=no auth, 5=idempotent skip. See the detailed guide in Resources for details.
+Check exit codes on failure: 1=bad args, 2=not found, 3=API error, 4=no auth, 5=idempotent skip. See `references/detailed-guide.md` for details.
 
 ## Resources
 
-All resources are in the `references/` directory. Full guide: [detailed-guide](references/detailed-guide.md):
-  - Decision Tree
-  - Script Reference Table
-  - Examples
-    - Get Issue Context
-    - Create Issue
-    - Manage Labels
-    - Assign Milestone
-    - Post Idempotent Comment
-  - Error Handling
-    - Troubleshooting
-  - Exit Codes
-  - Integration with Integrator Agent
-  - Reference Document Listings
+All resources are in the `references/` directory.
 
 ## Examples
 

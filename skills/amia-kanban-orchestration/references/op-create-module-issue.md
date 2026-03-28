@@ -1,6 +1,6 @@
 # Operation: Create Module Issue
 
-## Table of Contents
+## Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

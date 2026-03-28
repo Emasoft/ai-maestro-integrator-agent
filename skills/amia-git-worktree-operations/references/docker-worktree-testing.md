@@ -1,6 +1,6 @@
 # Docker Worktree Testing - Index
 
-## Table of Contents
+## Contents
 
 - [Document Parts](#document-parts)
   - [[Part 1: Setup & Configuration](docker-worktree-testing-part1-setup.md)](#part-1-setup-configurationdocker-worktree-testing-part1-setupmd)

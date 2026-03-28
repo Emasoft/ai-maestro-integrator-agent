@@ -1,12 +1,13 @@
 ---
 name: op-load-release-history
-description: "Load release history from handoffs"
+description: "Load release history from handoff documents"
 procedure: support-skill
+workflow-instruction: support
 ---
 
 # Operation: Load Release History
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

@@ -50,66 +50,69 @@ Copy this checklist and track your progress:
 
 | Output Type | Format | Example |
 |-------------|--------|---------|
-| Label update | CLI stdout | `gh pr edit $PR --remove-label X --add-label Y` |
-| Current labels | JSON | `gh pr view $PR --json labels` |
+| Label update | CLI stdout | `gh pr edit $PR --repo "$OWNER/$REPO" --remove-label X --add-label Y` |
+| Current labels | JSON | `gh pr view $PR --repo "$OWNER/$REPO" --json labels` |
 | Label history | GitHub timeline | View in PR web interface |
 
-> **Output discipline:** Use `gh pr edit` and `gh issue edit` for all label operations.
+> **Output discipline:** Use `gh pr edit --repo "$OWNER/$REPO"` and `gh issue edit --repo "$OWNER/$REPO"` for all label operations. All gh commands MUST specify `--repo` since the integrator works across multiple repos.
 
 ## Reference Documents
 
 **Operations:**
 
-- [op-start-pr-review](references/op-start-pr-review.md) — Procedure for starting a PR review
-- [op-request-changes](references/op-request-changes.md) — Procedure for requesting changes
-- [op-approve-and-merge](references/op-approve-and-merge.md) — Procedure for approving and merging
-- [op-mark-blocked-pr](references/op-mark-blocked-pr.md) — Procedure for marking a PR blocked
+- `references/op-start-pr-review.md` — Procedure for starting a PR review
+- `references/op-request-changes.md` — Procedure for requesting changes
+- `references/op-approve-and-merge.md` — Procedure for approving and merging
+- `references/op-mark-blocked-pr.md` — Procedure for marking a PR blocked
 
 **Guides:**
 
-See [detailed-guide](references/detailed-guide.md) for full reference:
-  - Error Handling
-  - Review Labels Detail
-  - Kanban Columns
-  - Status Labels AMIA Updates
-  - Labels AMIA Reads
-  - AMIA Label Commands
-  - Extended Examples
-  - Quick Reference Tables
+- `references/detailed-guide.md` — Full label tables, error handling, kanban columns, commands, examples
+
+### Labels AMIA Manages
+
+**Review labels** (`review:*`): `needed`, `in-progress`, `changes-requested`, `approved`, `blocked`
+
+**Status labels** (`status:*`): `ai-review`, `human-review`, `merge-release`, `blocked`, `done`
+
+### Labels AMIA Reads (set by others)
+
+- `assign:*` — Assignment (set by AMOA)
+- `priority:*` — critical, high, normal, low
+- `type:*` — security, refactor, docs, feature
+
+### Labels AMIA Never Sets
+
+`assign:*`, `type:*`, `effort:*`, `component:*`
 
 ## Error Handling
 
-Exit 1: invalid params. Exit 2-4: GitHub API errors. See the detailed guide in Resources.
+If a script fails, check the exit code and stderr output. Common issues:
+
+- **Exit 1**: Invalid parameters or missing arguments
+- **Exit 2-4**: GitHub API errors (auth, not found, rate limit)
+
+See `references/detailed-guide.md` for detailed error scenarios.
 
 ## Resources
 
-Full reference: [detailed-guide](references/detailed-guide.md):
-  - Error Handling
-  - Review Labels Detail
-  - Kanban Columns
-  - Status Labels AMIA Updates
-  - Labels AMIA Reads
-    - Assignment Labels
-    - Priority Labels
-    - Type Labels
-  - AMIA Label Commands
-    - When Starting Review
-    - When Review Complete (Approved)
-    - When Changes Requested
-    - When PR Merged
-  - Extended Examples
-  - Quick Reference Tables
+- `references/detailed-guide.md`
+- `references/op-approve-and-merge.md`
+- `references/op-mark-blocked-pr.md`
+- `references/op-request-changes.md`
+- `references/op-start-pr-review.md`
 
 ## Examples
 
 ### Example 1: Full Review Cycle
 
 ```bash
+# All gh commands MUST specify --repo since the integrator works across multiple repos
 # Start review
-gh pr edit 45 --remove-label "review:needed" --add-label "review:in-progress"
+gh pr edit 45 --repo "$OWNER/$REPO" --remove-label "review:needed" --add-label "review:in-progress"
 # Approve after review
-gh pr edit 45 --remove-label "review:in-progress" --add-label "review:approved"
-gh pr review 45 --approve
+gh pr edit 45 --repo "$OWNER/$REPO" --remove-label "review:in-progress" --add-label "review:approved"
+gh pr review 45 --repo "$OWNER/$REPO" --approve
 # After merge: update parent issue
-gh issue edit 78 --remove-label "status:ai-review" --add-label "status:done"
+gh issue edit 78 --repo "$OWNER/$REPO" --remove-label "status:ai-review" --add-label "status:done"
 ```

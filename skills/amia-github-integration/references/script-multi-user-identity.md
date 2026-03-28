@@ -1,6 +1,6 @@
 # Multi-User Identity Script Reference
 
-## Table of Contents
+## Contents
 
 - [Use-Case TOC](#use-case-toc)
   - [Part 1: Installation and Overview](#part-1-installation-and-overview)

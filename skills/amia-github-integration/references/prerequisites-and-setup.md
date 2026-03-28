@@ -1,6 +1,6 @@
 # Prerequisites and Setup
 
-## Table of Contents
+## Contents
 
 - [Initial Setup Requirements](#initial-setup-requirements)
   - [Installing GitHub CLI](#installing-github-cli)

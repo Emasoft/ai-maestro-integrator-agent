@@ -1,6 +1,6 @@
 # Unicode Enforcement Hook
 
-## Table of Contents
+## Contents
 
 - When the Unicode enforcement hook runs
 - What the hook checks (4 checks)

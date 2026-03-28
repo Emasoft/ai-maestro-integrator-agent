@@ -7,7 +7,7 @@ workflow-instruction: support
 
 # Operation: List Worktrees
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

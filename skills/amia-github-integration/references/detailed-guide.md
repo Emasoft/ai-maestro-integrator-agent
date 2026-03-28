@@ -1,6 +1,8 @@
 # GitHub Integration Dispatcher -- Detailed Guide
 
-## Table of Contents
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
+
+## Contents
 
 - [Decision Tree: Which Skill to Use?](#decision-tree-which-skill-to-use)
 - [Pull Requests](#pull-requests)

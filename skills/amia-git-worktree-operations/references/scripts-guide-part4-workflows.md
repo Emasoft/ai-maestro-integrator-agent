@@ -1,6 +1,6 @@
 # Worktree Automation Scripts Guide - Part 4: Common Workflows
 
-## Table of Contents
+## Contents
 
 - [Common Workflows](#common-workflows)
   - [Workflow 1: Code Review Setup](#workflow-1-code-review-setup)

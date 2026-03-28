@@ -1,6 +1,6 @@
 # Operation: Quick Scan (Stage 1)
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

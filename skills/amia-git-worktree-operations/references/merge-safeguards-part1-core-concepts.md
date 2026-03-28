@@ -1,6 +1,6 @@
 # Merge Safeguards - Part 1: Core Concepts
 
-## Table of Contents
+## Contents
 
 - [Overview](#overview)
 - [Core Concepts](#core-concepts)

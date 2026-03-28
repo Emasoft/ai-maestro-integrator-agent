@@ -1,6 +1,6 @@
 # Operation: Handle PR Workflow Failures
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

@@ -1,6 +1,6 @@
 # Integration Verification Procedures
 
-## Table of Contents
+## Contents
 
 - [1. Verifying Component Integration Readiness](#1-verifying-component-integration-readiness)
   - [1.1 Environment baseline verification](#11-environment-baseline-verification)

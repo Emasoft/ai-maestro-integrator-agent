@@ -58,6 +58,10 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`.
 
+## Reference Documents
+
+See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
+
 ## Error Handling
 
 Script failures return non-zero exit codes with details on stderr.
@@ -75,22 +79,4 @@ python scripts/amia_create_release.py --repo owner/repo --version 1.2.4 --notes 
 
 ## Resources
 
-Full reference: [detailed-guide](references/detailed-guide.md):
-  - Decision Tree
-  - Semantic Versioning Quick Reference
-  - State-Based Verification Model
-  - Escalation Order
-  - Scripts Reference
-  - Critical Rules
-  - Error Handling
-  - AI Maestro Communication
-  - Examples
-    - Standard Patch Release
-    - Rollback After Failed Release
-  - Reference Documentation Details
-    - Release Management Responsibilities
-    - Pre-Release Verification
-    - Post-Release Verification
-    - Rollback Procedures
-    - CI/CD Integration
-  - Full Reference Document Index
+See `references/` directory for all reference documents.

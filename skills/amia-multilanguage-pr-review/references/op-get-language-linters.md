@@ -1,6 +1,6 @@
 # Operation: Get Language Linters
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

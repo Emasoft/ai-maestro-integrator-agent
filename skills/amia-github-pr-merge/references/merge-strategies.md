@@ -1,6 +1,6 @@
 # Merge Strategies
 
-## Table of Contents
+## Contents
 
 - 2.1 Merge commit strategy
   - 2.1.1 When to use merge commits

@@ -52,6 +52,8 @@ For detailed procedures, see the **amia-integration-protocols** skill:
 | Constraint | Explanation |
 |------------|-------------|
 | **SHARED AGENT** | Can be shared across multiple projects (unlike AMOA/AMAA) |
+| **MULTI-REPO** | You work across MULTIPLE repos. ALL `gh` commands MUST use `--repo "$OWNER/$REPO"`. ALL `git` commands MUST use `git -C "$REPO_PATH"`. NEVER assume a single working directory. |
+| **AGENT FOLDER** | All files (repos, worktrees, reports, tmp) MUST be inside `$AGENT_DIR` (`~/agents/<persona-name>/`). NEVER write to `/tmp/`, `~/.aimaestro/`, or paths outside the agent folder. |
 | **QUALITY GATEKEEPER** | REVIEW PRs, enforce quality standards - never bypass gates |
 | **MERGE AUTHORITY** | MERGE or REJECT PRs based on quality gates - never skip verification |
 | **NO TASK ASSIGNMENT** | Do NOT assign tasks - that's AMOA's job |
@@ -62,13 +64,15 @@ For detailed procedures, see the **amia-integration-protocols** skill:
 
 ## Governance Integration
 
+AI Maestro uses 4 governance titles: **MANAGER**, **CHIEF-OF-STAFF**, **ORCHESTRATOR**, **MEMBER**. All teams are closed (no "open" teams). Each agent belongs to at most one team. ORCHESTRATOR is the primary kanban manager; COS and MANAGER are secondary.
+
 Before performing **merge** or **release** operations, verify governance authorization using the `team-governance` skill:
 
-1. **Team membership** — confirm the requesting agent (AMOA) is in the same team
+1. **Team membership** — confirm the requesting agent (AMOA/ORCHESTRATOR) is in the same team
 2. **Governance approval** — check that the operation is authorized by the team's governance rules
-3. **Role verification** — confirm your governance title (`member`) permits the action
+3. **Title verification** — confirm your governance title (`MEMBER`) permits the action
 
-> The authoritative source for role boundaries is the `team-governance` skill. The local [ROLE_BOUNDARIES](docs/ROLE_BOUNDARIES.md) is a convenience reference only.
+> The authoritative source for governance rules is the `team-governance` skill. The local `docs/ROLE_BOUNDARIES.md` is a convenience reference only.
 
 ## Token-Saving Tools
 
@@ -103,30 +107,7 @@ Use these tools to save context tokens. NEVER read large files into your context
 | Debugging | **amia-debug-specialist** | Complex debugging scenarios, stack trace analysis |
 | Test engineering | **amia-test-engineer** | Test creation, test coverage analysis, test gap identification |
 
-- [routing-checklist](../skills/amia-integration-protocols/references/routing-checklist.md) — Routing decisions, priority triage, escalation
-  - Sub-Agent Routing Table
-  - Routing Decision Guidelines
-    - Route to code-reviewer when
-    - Route to bug-investigator when
-    - Handle PR directly when
-    - Spawn verifier when
-    - Escalate to orchestrator when
-  - Priority Triage
-  - Success Criteria Checklist
-    - Integration Request Received
-    - Routing Decision Made
-    - Sub-Agent Completed
-    - Quality Verified
-  - Routing Decision Checklist
-    - Step 1: Identify Request Type
-    - Step 2: Check Request Completeness
-    - Step 3: Select Appropriate Sub-Agent
-    - Step 4: Prepare Handoff Context
-    - Step 5: Draft Delegation Message
-    - Step 6: Log Routing Decision
-    - Step 7: Execute Delegation
-    - Step 8: Monitor Completion
-    - Step 9: Report to AMOA
+> For routing decision logic, priority triage rules, and when to escalate, see **amia-integration-protocols** skill → `references/routing-checklist.md`
 
 ## Communication Hierarchy
 
@@ -148,25 +129,7 @@ AMOA (receives integration status report)
 
 **CRITICAL**: You receive integration requests from **AMOA only**. You report results back to **AMOA only**. Sub-agents report to you.
 
-- [ai-maestro-message-templates](../skills/amia-integration-protocols/references/ai-maestro-message-templates.md) — Message templates for integration
-  - 1.0 Standard AI Maestro Messaging Approach
-  - 2.0 Receiving Messages from Orchestrator (AMOA)
-    - 2.1 Integration Request from AMOA
-    - 2.2 Handoff Document Rejection
-  - 3.0 Sending Messages to Sub-Agents
-    - 3.1 Task Delegation to Sub-Agent
-  - 4.0 Reporting Results to Orchestrator (AMOA)
-    - 4.1 Integration Status Report (Success)
-    - 4.2 Integration Status Report (In Progress)
-    - 4.3 Integration Status Report (Failed)
-    - 4.4 Blocker Escalation (Critical Issues)
-  - 5.0 Quality Gate Communication
-    - 5.1 PR Review Complete (All Gates Passed)
-    - 5.2 PR Review Complete (Tests Failed)
-    - 5.3 Merge Approved
-    - 5.4 Merge Rejected
-    - 5.5 Release Ready Notification
-  - Notes
+> For AI Maestro message templates (integration requests, task delegation, status reports, escalations), see **amia-integration-protocols** skill → `references/ai-maestro-message-templates.md`
 
 ## Core Responsibilities
 
@@ -192,15 +155,7 @@ You are triggered when:
 
 ## Handoff Validation
 
-For complete handoff validation checklist and rejection protocols, see **amia-integration-protocols** skill → [handoff-protocols](../skills/amia-integration-protocols/references/handoff-protocols.md)
-  - Purpose
-  - Document Delivery Protocol
-  - Task Delegation Protocol
-  - Acknowledgment Protocol
-  - Completion Reporting Protocol
-  - Blocker Escalation Protocol
-  - Integration with Other Protocols
-  - Troubleshooting
+> For complete handoff validation checklist and rejection protocols, see **amia-integration-protocols** skill → `references/handoff-protocols.md`
 
 **Before processing any handoff**, validate:
 
@@ -214,45 +169,17 @@ For complete handoff validation checklist and rejection protocols, see **amia-in
 
 ## Record-Keeping
 
-For record-keeping formats and examples, see **amia-integration-protocols** skill → [record-keeping](../skills/amia-integration-protocols/references/record-keeping.md)
-  - 1. Routing Log Format
-  - 2. Integration Status Files
-  - 3. Quality Reports
-  - 4. Session State Structure
+> For record-keeping formats and examples, see **amia-integration-protocols** skill → `references/record-keeping.md`
 
 Maintain these logs:
 
-- **Routing log**: [routing-log](docs_dev/integration/routing-log.md) - All routing decisions
-- **Status files**: [[task-id]](docs_dev/integration/status/[task-id].md) - Task lifecycle tracking
-- **Quality reports**: [[task-id]-report](docs_dev/integration/reports/[task-id]-report.md) - Detailed results
+- **Routing log**: `docs_dev/integration/routing-log.md` - All routing decisions
+- **Status files**: `docs_dev/integration/status/[task-id].md` - Task lifecycle tracking
+- **Quality reports**: `docs_dev/integration/reports/[task-id]-report.md` - Detailed results
 
 ## Workflow Overview
 
-- [phase-procedures](../skills/amia-integration-protocols/references/phase-procedures.md) — Phase-by-phase procedures
-  - Phase 1: Request Reception
-    - 1. Check AI Maestro Inbox
-    - 2. Extract Request Details
-    - 3. Log Request
-  - Phase 2: Routing Decision
-    - 1. Analyze Request Type
-    - 2. Check Sub-Agent Availability
-    - 3. Prepare Context Package
-    - 4. Create Status Tracking File
-  - Phase 3: Delegation
-    - 1. Draft Delegation Message
-    - 2. Send to Sub-Agent
-    - 3. Log Delegation
-  - Phase 4: Monitor Completion
-    - 1. Wait for Sub-Agent Response
-    - 2. Validate Response Format
-    - 3. Read Result Details
-    - 4. Update Status File
-  - Phase 5: Report to AMOA
-    - 1. Prepare Status Report
-    - 2. Send to AMOA
-    - 3. Handle Blockers (If Any)
-    - 4. Final Logging
-  - Verification Summary
+> For detailed phase-by-phase procedures, see **amia-integration-protocols** skill → `references/phase-procedures.md`
 
 **5-Phase Integration Workflow:**
 

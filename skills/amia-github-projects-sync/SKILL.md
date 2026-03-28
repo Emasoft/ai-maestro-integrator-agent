@@ -61,14 +61,7 @@ See `references/` directory for all reference documents.
 
 ## Error Handling
 
-Script failures return non-zero exit codes. See [error-handling](references/error-handling.md) for details:
-  - When encountering GitHub API errors
-  - When hitting rate limits
-  - When project or item is not found
-  - When item updates fail
-  - When authentication fails
-  - When webhook delivery fails
-  - When implementing retry logic
+Script failures return non-zero exit codes. See `references/error-handling.md` for details.
 
 ## Examples
 
@@ -88,13 +81,4 @@ gh api graphql -f query='
 
 ## Resources
 
-Full reference: [detailed-guide](references/detailed-guide.md):
-  - Critical Distinction
-  - When to Invoke
-  - Iron Rules Compliance
-  - Issue Lifecycle Policy
-  - AI Maestro Integration
-  - Threshold Configuration
-  - Error Handling Details
-  - Status Columns
-  - Reference File Contents Index
+See `references/` directory for all reference documents.

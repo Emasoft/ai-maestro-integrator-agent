@@ -1,5 +1,7 @@
 # Verification Workflow
 
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
+
 ## Table of Contents
 
 - 3.1 Pre-review verification checklist

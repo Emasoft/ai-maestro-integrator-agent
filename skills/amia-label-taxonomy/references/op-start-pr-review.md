@@ -1,6 +1,6 @@
 # Operation: Start PR Review
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)
@@ -17,6 +17,8 @@
 - [Notes](#notes)
 
 ## Purpose
+
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
 
 Mark a pull request as under active review by updating the review label from `review:needed` to `review:in-progress`.
 

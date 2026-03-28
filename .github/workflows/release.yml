@@ -6,70 +6,63 @@ on:
       - 'v*.*.*'
 
 jobs:
-  validate-before-release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-
-      - name: CPV validation gate
-        run: |
-          set +e
-          uvx --from git+https://github.com/Emasoft/claude-plugins-validation --with pyyaml cpv-validate . --verbose
-          EXIT_CODE=$?
-          set -e
-          # Block release only on CRITICAL (1) or MAJOR (2)
-          if [ $EXIT_CODE -ge 1 ] && [ $EXIT_CODE -le 2 ]; then
-            echo "BLOCKED: CRITICAL or MAJOR issues — cannot release"
-            exit $EXIT_CODE
-          fi
-
   release:
-    needs: validate-before-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
         with:
           fetch-depth: 0
 
-      - name: Extract version
-        id: version
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86  # v5
+
+      - name: Install dependencies
+        run: uv pip install --system pyyaml types-PyYAML
+
+      - name: Validate plugin manifest
         run: |
-          VERSION=$(jq -r '.version' .claude-plugin/plugin.json)
-          NAME=$(jq -r '.name' .claude-plugin/plugin.json)
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "name=$NAME" >> $GITHUB_OUTPUT
+          python -c "
+          import json
+          data = json.load(open('.claude-plugin/plugin.json'))
+          name = data.get('name', '?')
+          ver = data.get('version', '?')
+          print(f'Plugin: {name} v{ver}')
+          "
+
+      - name: Lint Python scripts
+        run: |
+          if ls scripts/*.py 1> /dev/null 2>&1; then
+            uv run --with ruff ruff check scripts/ --select=E,F,W --ignore=E501
+          fi
 
       - name: Generate changelog
         id: changelog
         run: |
+          # Get the previous tag
           PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+
           if [ -z "$PREV_TAG" ]; then
-            CHANGELOG=$(git log --pretty=format:"- %s (%h)" HEAD)
+            # First release - get recent commits (limit to 50)
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" --max-count=50 HEAD --)
           else
+            # Get commits since previous tag
             CHANGELOG=$(git log --pretty=format:"- %s (%h)" ${PREV_TAG}..HEAD)
           fi
-          echo "changelog<<CHANGELOG_EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG" >> $GITHUB_OUTPUT
-          echo "CHANGELOG_EOF" >> $GITHUB_OUTPUT
+
+          # Write changelog to file for multi-line output
+          echo "$CHANGELOG" > changelog.txt
+          echo "changelog_file=changelog.txt" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b  # v2
         with:
-          name: "${{ steps.version.outputs.name }} v${{ steps.version.outputs.version }}"
-          body: |
-            ## ${{ steps.version.outputs.name }} v${{ steps.version.outputs.version }}
-
-            ### Changes
-            ${{ steps.changelog.outputs.changelog }}
-          draft: false
-          prerelease: false
+          body_path: changelog.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

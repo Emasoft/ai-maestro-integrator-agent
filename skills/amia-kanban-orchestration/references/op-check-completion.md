@@ -1,6 +1,6 @@
 # Operation: Check Board Completion
 
-## Table of Contents
+## Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

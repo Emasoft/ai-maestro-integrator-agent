@@ -1,6 +1,6 @@
 # PR Evaluation Methodology
 
-## Table of Contents
+## Contents
 
 - 1.0 When to evaluate a PR for merge readiness
 - 2.0 Evaluation gates that must pass before approval

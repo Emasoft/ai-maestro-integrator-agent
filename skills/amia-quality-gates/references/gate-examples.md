@@ -1,5 +1,7 @@
 # Quality Gate Examples
 
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
+
 ## Table of Contents
 
 - [Example 1: Pre-Review Gate Success](#example-1-pre-review-gate-success)

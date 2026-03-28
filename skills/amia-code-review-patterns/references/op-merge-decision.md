@@ -1,6 +1,6 @@
 # Operation: Merge Decision Execution
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)
@@ -196,7 +196,7 @@ gh pr close <NUMBER>
 
 Send a notification using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `PR #<NUMBER> Review Complete: <DECISION>`
 - **Priority**: `normal`
 - **Content**: `{"type": "review-complete", "message": "PR #<NUMBER> review completed. Decision: <DECISION>. Confidence: XX%. Report: <PATH>"}`

@@ -339,12 +339,12 @@ gh issue edit 42 --add-assignee agent-1 --add-assignee agent-2
 
 ### AI Maestro Notification on Assignment
 
-When assigning an issue, notify the agent via COS. Send a message using the `agent-messaging` skill with:
+When assigning an issue, notify the agent via AI Maestro. Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to the assigned agent)
-- **Subject**: `Assignment Notification for implementer-1: Issue #42`
+- **Recipient**: `implementer-1`
+- **Subject**: `New Assignment: Issue #42`
 - **Priority**: `high`
-- **Content**: `{"type": "assignment", "message": "Please forward to implementer-1: You have been assigned to issue #42: [MODULE] auth-core. Please move to In Progress when you start work."}`
+- **Content**: `{"type": "assignment", "message": "You have been assigned to issue #42: [MODULE] auth-core. Please move to In Progress when you start work."}`
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ### Notification Template
@@ -364,10 +364,18 @@ When assigning an issue, notify the agent via COS. Send a message using the `age
 
 ### Reassignment Notification
 
-**Notify COS of reassignment (COS will forward to both agents):** Send a message using the `agent-messaging` skill with:
+**Notify old assignee:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will notify both the old and new assignees)
-- **Subject**: `Reassignment: Issue #42 from agent-1 to agent-2`
+- **Recipient**: `agent-1` (the old assignee)
+- **Subject**: `Issue #42 Reassigned`
+- **Priority**: `normal`
+- **Content**: `{"type": "reassignment", "message": "Issue #42 has been reassigned from you to agent-2. Please hand off any work in progress."}`
+- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+
+**Notify new assignee:** Send a message using the `agent-messaging` skill with:
+
+- **Recipient**: `agent-2` (the new assignee)
+- **Subject**: `New Assignment: Issue #42 (Reassigned)`
 - **Priority**: `high`
-- **Content**: `{"type": "reassignment", "message": "Issue #42 has been reassigned from agent-1 to agent-2. Please notify agent-1 to hand off work and agent-2 to continue. Context: [context]."}`
+- **Content**: `{"type": "assignment", "message": "Issue #42 has been reassigned to you from agent-1. Context: [context]. Please continue work."}`
 - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.

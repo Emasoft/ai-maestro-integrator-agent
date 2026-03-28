@@ -27,6 +27,8 @@
 
 ## Overview
 
+> **MULTI-REPO NOTE:** All `gh pr`, `gh issue`, and `gh run` commands in this document MUST include `--repo "$OWNER/$REPO"` when used by the integrator agent, since it works across multiple repos. The examples below show the command patterns; always add `--repo` when executing.
+
 This document describes how to handle Pull Requests using Claude Code Action (`anthropics/claude-code-action@v1`). Claude Code Action is a GitHub Action that provides AI-powered code review, implementation, and PR management capabilities.
 
 ## When to Use This Workflow
@@ -97,7 +99,7 @@ Identify PRs that need Claude's attention:
 
 ```bash
 # List all open PRs needing review
-gh pr list --state open --json number,title,reviewDecision --jq '.[] | select(.reviewDecision != "APPROVED") | "\(.number)\t\(.title)"'
+gh pr list --repo "$OWNER/$REPO" --state open --json number,title,reviewDecision --jq '.[] | select(.reviewDecision != "APPROVED") | "\(.number)\t\(.title)"'
 
 # Check specific PR status
 gh pr view {number} --json reviewDecision --jq '.reviewDecision'

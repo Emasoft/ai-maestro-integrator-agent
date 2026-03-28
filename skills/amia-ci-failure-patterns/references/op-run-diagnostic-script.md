@@ -1,6 +1,6 @@
 # Operation: Run Diagnostic Script
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [Prerequisites](#prerequisites)

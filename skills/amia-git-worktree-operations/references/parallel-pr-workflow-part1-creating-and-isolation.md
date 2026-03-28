@@ -1,6 +1,6 @@
 # Parallel PR Workflow - Part 1: Creating Worktrees and Isolation
 
-## Table of Contents
+## Contents
 
 - [2.1 Creating Worktrees for Multiple Simultaneous PRs](#21-creating-worktrees-for-multiple-simultaneous-prs)
   - [Standard Worktree Creation Process](#standard-worktree-creation-process)

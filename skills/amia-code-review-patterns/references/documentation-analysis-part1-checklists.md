@@ -1,6 +1,6 @@
 # Documentation Analysis: Verification Checklists
 
-## Table of Contents
+## Contents
 
 - [Verification Checklist](#verification-checklist)
   - [Code Documentation](#code-documentation)

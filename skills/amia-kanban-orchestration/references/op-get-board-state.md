@@ -1,6 +1,6 @@
 # Operation: Get Board State
 
-## Table of Contents
+## Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

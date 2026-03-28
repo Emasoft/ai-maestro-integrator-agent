@@ -1,6 +1,6 @@
 # Implementation Guide Part 2: Advanced Topics
 
-## Table of Contents
+## Contents
 
 - [Team Onboarding](#team-onboarding)
   - [Onboarding New Team Members](#onboarding-new-team-members)

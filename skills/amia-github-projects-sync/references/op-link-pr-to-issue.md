@@ -1,6 +1,6 @@
 # Operation: Link PR to Issue
 
-## Table of Contents
+## Contents
 
 - [Metadata](#metadata)
 - [Purpose](#purpose)

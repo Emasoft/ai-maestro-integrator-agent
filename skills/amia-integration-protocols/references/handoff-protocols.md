@@ -1,6 +1,6 @@
 # Handoff Protocols Reference
 
-## Table of Contents
+## Contents
 
 - [Document Delivery Protocol](#document-delivery-protocol)
 - [Task Delegation Protocol](#task-delegation-protocol)

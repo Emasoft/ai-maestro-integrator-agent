@@ -14,11 +14,11 @@ user-invocable: false
 
 ## Overview
 
-Shared reference documents used across Integrator Agent skills. Contains common patterns, protocols, and utilities for consistent behavior.
+This skill provides shared reference documents that are used across multiple Integrator Agent skills. It contains common patterns, protocols, and utilities that enable consistent behavior across the skill set.
 
 ## Prerequisites
 
-No external dependencies required.
+None required. This is a reference skill with no external dependencies.
 
 ## Instructions
 
@@ -49,63 +49,76 @@ Copy this checklist and track your progress:
 | Session State | JSON | Current session state snapshot for continuity |
 | Coordination Protocol | JSON | Multi-agent workflow coordination structure |
 
-## Error Handling
+## Reference Documents
 
-Validate handoff payloads before sending. Required fields: `handoff_type`, `from_agent`, `to_agent`, `context`. All datetime fields must use ISO 8601 format.
+### Handoff Protocols (`references/handoff-protocols.md`)
 
-## Resources
+Standard protocols for handing off work between agents:
 
-- [handoff-protocols](references/handoff-protocols.md) — Handoff protocol reference:
-  - Document Delivery Protocol
-  - Task Delegation Protocol
-  - Acknowledgment Protocol
-  - Completion Reporting Protocol
-  - Blocker Escalation Protocol
-  - Troubleshooting
-- [ai-maestro-message-templates](references/ai-maestro-message-templates.md) — Message templates:
-  - 1.0 Standard AI Maestro Messaging Approach
-  - 2.0 Receiving Messages from Orchestrator (AMOA)
-  - 3.0 Sending Messages to Sub-Agents
-  - 4.0 Reporting Results to Orchestrator (AMOA)
-  - 5.0 Quality Gate Communication
-- [sub-agent-role-boundaries-template](references/sub-agent-role-boundaries-template.md) — Role boundaries:
-  - Core Identity: Worker Agent (Not Orchestrator)
-  - Standard Output Format
-  - Communication Rules
-  - Tool Restrictions
-  - Common Constraints Template
-  - Success/Completion Conditions
-  - Anti-Patterns to Avoid
-- [routing-checklist](references/routing-checklist.md) — Routing checklist:
-  - Sub-Agent Routing Table
-  - Routing Decision Guidelines
-  - Priority Triage
-  - Success Criteria Checklist
-  - Routing Decision Checklist
-- [record-keeping](references/record-keeping.md) — Record-keeping:
-  - 1. Routing Log Format
-  - 2. Integration Status Files
-  - 3. Quality Reports
-  - 4. Session State Structure
-  - Best Practices
-- [phase-procedures](references/phase-procedures.md) — Phase procedures:
-  - Phase 1: Request Reception
-  - Phase 2: Routing Decision
-  - Phase 3: Delegation
-  - Phase 4: Monitor Completion
-  - Phase 5: Report to AMOA
+- When you need to transfer context between agents → Handoff Format
+- If you need to document session state → Session State Schema
+- When coordinating multi-agent workflows → Coordination Patterns
+
+**Contents:**
+
+- Document Delivery Protocol
+- Task Delegation Protocol
+- Acknowledgment Protocol
+- Completion Reporting Protocol
+- Blocker Escalation Protocol
 
 ## Examples
 
-```bash
-# Send a handoff payload from integrator to orchestrator
-amp-send.sh amoa-main "Integration Complete" '{
-  "handoff_type": "task_completion",
-  "from_agent": "amia-main",
-  "to_agent": "amoa-main",
-  "context": {"pr": 42, "status": "merged", "branch": "feature/auth"},
-  "timestamp": "2026-03-26T12:00:00Z"
-}'
+### Example 1: Agent Handoff Format
+
+```json
+{
+  "handoff_type": "task_delegation",
+  "from_agent": "orchestrator",
+  "to_agent": "code-reviewer",
+  "context": {
+    "pr_number": 123,
+    "repository": "owner/repo",
+    "task": "Review code changes"
+  },
+  "session_state": {
+    "files_reviewed": [],
+    "comments_made": []
+  }
+}
 ```
 
-**Expected result:** The orchestrator receives a structured handoff payload with all required fields (`handoff_type`, `from_agent`, `to_agent`, `context`) and can update its task tracking accordingly.
+### Example 2: Session State Schema
+
+```json
+{
+  "session_id": "sess_abc123",
+  "started_at": "2025-01-30T10:00:00Z",
+  "current_phase": "review",
+  "completed_tasks": ["fetch_pr", "analyze_diff"],
+  "pending_tasks": ["post_review"]
+}
+```
+
+## Error Handling
+
+### Issue: Handoff context incomplete
+
+**Cause**: Required fields missing from handoff payload.
+
+**Solution**: Validate handoff against schema before sending. Required fields: `handoff_type`, `from_agent`, `to_agent`, `context`.
+
+### Issue: Session state deserialization fails
+
+**Cause**: Invalid JSON or schema mismatch.
+
+**Solution**: Validate JSON structure and ensure all datetime fields use ISO 8601 format.
+
+## Resources
+
+- `references/handoff-protocols.md` — Complete handoff protocol reference
+- `references/ai-maestro-message-templates.md` — AI Maestro message format templates (use via `agent-messaging` skill)
+- `references/sub-agent-role-boundaries-template.md` — Worker agent role boundary template
+- `references/routing-checklist.md` — Task routing checklist for agent coordination
+- `references/record-keeping.md` — Session record-keeping formats and state management
+- `references/phase-procedures.md` — Integration phase procedures and workflow steps

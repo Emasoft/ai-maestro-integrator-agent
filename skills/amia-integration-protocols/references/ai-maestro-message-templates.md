@@ -1,6 +1,6 @@
 # AI Maestro Message Templates for AMIA
 
-## Table of Contents
+## Contents
 
 - 1.0 Standard AI Maestro Messaging Approach
 - 2.0 Receiving Messages from Orchestrator (AMOA)
@@ -39,19 +39,19 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 ---
 
-## 2.0 Receiving Messages (via COS)
+## 2.0 Receiving Messages from Orchestrator (AMOA)
 
-### 2.1 Integration Request
+### 2.1 Integration Request from AMOA
 
-**Scenario**: COS forwards a PR review request, CI fix task, or integration verification task (originally from AMOA or another team agent).
+**Scenario**: AMOA sends a PR review request, CI fix task, or integration verification task.
 
 **To check for incoming messages:** Check your inbox using the `agent-messaging` skill. Filter for messages with `content.type == "integration-request"`.
 
-**Expected Message Format (forwarded by COS):**
+**Expected Message Format from AMOA:**
 
 ```json
 {
-  "from": "amcos-main",
+  "from": "orchestrator-amoa",
   "to": "ai-maestro-integrator",
   "subject": "Integration Request: <brief description>",
   "priority": "urgent|high|normal|low",
@@ -77,7 +77,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to the originating agent)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[HANDOFF REJECTED] Invalid handoff document`
 - **Priority**: `high`
 - **Content**:
@@ -98,15 +98,15 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 ---
 
-## 3.0 Delegating Tasks to Team Agents (via COS)
+## 3.0 Sending Messages to Sub-Agents
 
-### 3.1 Task Delegation Request
+### 3.1 Task Delegation to Sub-Agent
 
-**Scenario**: Requesting COS to route a task (PR review, bug investigation, code review) to a specialized team agent.
+**Scenario**: Routing a task (PR review, bug investigation, code review) to a specialized sub-agent.
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will delegate to the appropriate team agent)
+- **Recipient**: The appropriate sub-agent (e.g., `amia-code-reviewer`)
 - **Subject**: `Review PR #456: Add auth module`
 - **Priority**: `high`
 - **Content**:
@@ -145,7 +145,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 ---
 
-## 4.0 Reporting Results (via COS)
+## 4.0 Reporting Results to Orchestrator (AMOA)
 
 ### 4.1 Integration Status Report (Success)
 
@@ -153,7 +153,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456 - COMPLETED`
 - **Priority**: `normal`
 - **Content**:
@@ -181,7 +181,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456 - IN PROGRESS`
 - **Priority**: `normal`
 - **Content**:
@@ -209,7 +209,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Integration Status: PR #456 - FAILED`
 - **Priority**: `high`
 - **Content**:
@@ -238,7 +238,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `[BLOCKER] PR #456 Security Issue`
 - **Priority**: `urgent`
 - **Content**:
@@ -277,7 +277,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `PR Review Complete: PR #456 - ALL GATES PASSED`
 - **Priority**: `normal`
 - **Content**:
@@ -311,7 +311,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `PR Review Complete: PR #456 - TESTS FAILED`
 - **Priority**: `high`
 - **Content**:
@@ -349,7 +349,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Merge Approved: PR #456`
 - **Priority**: `normal`
 - **Content**:
@@ -376,7 +376,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Merge Rejected: PR #456`
 - **Priority**: `high`
 - **Content**:
@@ -413,7 +413,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Action:** Send a message using the `agent-messaging` skill with:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
+- **Recipient**: `orchestrator-amoa`
 - **Subject**: `Release Ready: v1.2.0`
 - **Priority**: `high`
 - **Content**:

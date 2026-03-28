@@ -1,6 +1,6 @@
 # Worktree Verification - Part 4: Reporting Violations
 
-## Table of Contents
+## Contents
 
 - [4.7 Reporting Isolation Violations](#47-reporting-isolation-violations)
   - [Violation Report Format](#violation-report-format)

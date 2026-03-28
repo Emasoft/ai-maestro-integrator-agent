@@ -41,36 +41,11 @@ Before executing commits, read the `amia-code-review-patterns` skill:
 
 - [../skills/amia-code-review-patterns/SKILL.md](../skills/amia-code-review-patterns/SKILL.md)
 
-- [commit-conventions](../skills/amia-code-review-patterns/references/commit-conventions.md) — Commit message conventions and searchability
-  - 1.1 Writing Descriptive Commit Messages with WHAT and WHY Sections
-  - 1.2 Choosing the Correct Commit Category Prefix
-  - 1.3 Making Commits Searchable for Future Decision Archaeology
-  - 1.4 Managing Dual-Git Repositories (Project vs Design)
-  - 1.5 Documenting Removals and Renames with Supersedes Information
-  - IRON RULES for Commit Conventions
-  - Example Commit Messages
+> For commit message conventions, formatting standards, and searchability requirements, see `amia-code-review-patterns/references/commit-conventions.md`.
 
-- [commit-conventions](../skills/amia-code-review-patterns/references/commit-conventions.md) — Dual-git handling procedures
-  - 1.1 Writing Descriptive Commit Messages with WHAT and WHY Sections
-  - 1.2 Choosing the Correct Commit Category Prefix
-  - 1.3 Making Commits Searchable for Future Decision Archaeology
-  - 1.4 Managing Dual-Git Repositories (Project vs Design)
-  - 1.5 Documenting Removals and Renames with Supersedes Information
-  - IRON RULES for Commit Conventions
-  - Example Commit Messages
+> For dual-git handling procedures (project vs design git), see `amia-code-review-patterns/references/commit-conventions.md`.
 
-- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries and responsibility limits
-  - Purpose
-  - Core Identity: Worker Agent (Not Orchestrator)
-  - Standard Output Format
-  - Communication Rules
-  - Tool Restrictions
-  - Common Constraints Template
-  - IRON RULES
-  - Success/Completion Conditions
-  - Anti-Patterns to Avoid
-  - Template Usage
-  - References
+> For sub-agent role boundaries and responsibility limits, see `amia-integration-protocols/references/sub-agent-role-boundaries-template.md`.
 
 ## Brief Output Format
 

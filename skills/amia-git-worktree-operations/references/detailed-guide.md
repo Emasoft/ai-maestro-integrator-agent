@@ -1,6 +1,8 @@
 # Git Worktree Operations — Detailed Guide
 
-## Table of Contents
+> **MULTI-REPO & PATH RULE:** All worktree paths MUST be inside `$AGENT_DIR/worktrees/` (NOT `/tmp/worktrees/`). All `git` commands MUST use `git -C "$REPO_PATH"`. NEVER write files outside `$AGENT_DIR` (`~/agents/<persona-name>/`).
+
+## Contents
 
 - [When to Use Worktrees](#when-to-use-worktrees)
 - [When NOT to Use Worktrees](#when-not-to-use-worktrees)

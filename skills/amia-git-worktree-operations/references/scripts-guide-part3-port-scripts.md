@@ -1,6 +1,6 @@
 # Worktree Automation Scripts Guide - Part 3: Port Scripts
 
-## Table of Contents
+## Contents
 
 - [Script Reference: Port Scripts](#script-reference-port-scripts)
   - [port_allocate.py](#port_allocatepy)

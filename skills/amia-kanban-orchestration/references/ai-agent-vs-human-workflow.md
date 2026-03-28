@@ -2,7 +2,7 @@
 
 This document covers the differences between AI agent and human developer workflows in GitHub Kanban management.
 
-## Table of Contents
+## Contents
 
 ### Part 1: Fundamentals and Communication
 

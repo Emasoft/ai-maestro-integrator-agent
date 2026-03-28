@@ -1,6 +1,6 @@
 # Operation: Refactor Code (REFACTOR Phase)
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

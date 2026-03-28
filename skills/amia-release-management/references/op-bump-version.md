@@ -7,7 +7,7 @@ workflow-instruction: support
 
 # Operation: Bump Version
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

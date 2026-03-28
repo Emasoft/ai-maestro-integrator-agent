@@ -2,7 +2,7 @@
 #
 # SETUP:
 # 1. Add a `MARKETPLACE_DISPATCH_TOKEN` secret to this repo:
-#    - Create a GitHub PAT (classic) with `repo` scope for Emasoft/ai-maestro-plugins
+#    - Create a GitHub PAT (classic) with `repo` scope for 23blocks-OS/ai-maestro-plugins
 #    - Go to Settings → Secrets and variables → Actions → New repository secret
 #    - Name: MARKETPLACE_DISPATCH_TOKEN
 #    - Value: paste the PAT
@@ -36,6 +36,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.MARKETPLACE_DISPATCH_TOKEN }}
-          repository: Emasoft/ai-maestro-plugins
+          repository: 23blocks-OS/ai-maestro-plugins
           event-type: plugin-version-update
           client-payload: '{"plugin_name": "${{ steps.version.outputs.name }}", "version": "${{ steps.version.outputs.version }}"}'

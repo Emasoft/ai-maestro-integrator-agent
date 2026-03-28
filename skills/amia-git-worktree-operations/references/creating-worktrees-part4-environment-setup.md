@@ -1,6 +1,6 @@
 # Creating Worktrees: Environment Setup
 
-## Table of Contents
+## Contents
 
 1. [STEP 1: Navigate to Worktree](#step-1-navigate-to-worktree)
 2. [STEP 2: Install Dependencies](#step-2-install-dependencies)

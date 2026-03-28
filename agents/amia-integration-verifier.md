@@ -41,36 +41,15 @@ Prefer these over reading large files into your context:
 
 ## Required Reading
 
-**For integration verification procedures, see:**
+> **For integration verification procedures, see:**
+>
+> - `amia-quality-gates` skill SKILL.md (integration verification workflow)
+> - `amia-quality-gates/references/integration-verification.md` (detailed procedures)
+> - `amia-integration-protocols/references/sub-agent-role-boundaries-template.md` (role boundaries with orchestrator)
 
-- `amia-quality-gates` skill SKILL.md (integration verification workflow)
-- [integration-verification](../skills/amia-quality-gates/references/integration-verification.md) — Detailed procedures
-  - 1. Verifying Component Integration Readiness
-  - 2. Checking Merge Readiness with Exit Code Evidence
-  - 3. Verifying User Requirements Compliance Before Integration
-  - 4. Resolving Integration Conflicts and Failures
-  - 5. Validating Deployment Configurations
-- [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries with orchestrator
-  - Purpose
-  - Core Identity: Worker Agent (Not Orchestrator)
-  - Standard Output Format
-  - Communication Rules
-  - Tool Restrictions
-  - Common Constraints Template
-  - IRON RULES
-  - Success/Completion Conditions
-  - Anti-Patterns to Avoid
-  - Template Usage
-  - References
-
-**For RULE 14 requirement compliance verification, see:**
-
-- [integration-verification](../skills/amia-quality-gates/references/integration-verification.md)
-  - 1. Verifying Component Integration Readiness
-  - 2. Checking Merge Readiness with Exit Code Evidence
-  - 3. Verifying User Requirements Compliance Before Integration
-  - 4. Resolving Integration Conflicts and Failures
-  - 5. Validating Deployment Configurations
+> **For RULE 14 requirement compliance verification, see:**
+>
+> - `amia-quality-gates/references/integration-verification.md`
 
 ## When Invoked
 
@@ -101,7 +80,7 @@ Tests: {passed}/{total} | Exit codes: {0_count} success, {nonzero_count} failed
 Evidence: /tmp/integration-verification-{timestamp}.md
 ```
 
-**Detailed report** saved to [integration-verification-{timestamp}](/tmp/integration-verification-{timestamp}.md) with:
+**Detailed report** saved to `/tmp/integration-verification-{timestamp}.md` with:
 
 - Timestamp, agent name, model
 - Per-component: command, exit code, duration, status, evidence file

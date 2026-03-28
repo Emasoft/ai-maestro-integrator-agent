@@ -1,6 +1,6 @@
 # Operation: Report PR Status to User
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

@@ -1,6 +1,6 @@
 # GitHub PR Merge Operations -- Detailed Guide
 
-## Table of Contents
+## Contents
 
 - [Decision Tree](#decision-tree-for-pr-merge-operations)
 - [GraphQL Source of Truth](#graphql-is-the-source-of-truth)

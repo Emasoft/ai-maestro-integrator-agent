@@ -1,6 +1,6 @@
 # GitHub Kanban Core -- Detailed Guide
 
-## Table of Contents
+## Contents
 
 - [The Iron Rule](#the-iron-rule)
 - [Board Columns Quick Reference](#board-columns-quick-reference)

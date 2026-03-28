@@ -1,6 +1,6 @@
 # Operation: Detect State Triggers
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

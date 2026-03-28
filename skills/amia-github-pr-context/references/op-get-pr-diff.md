@@ -7,7 +7,7 @@ workflow-instruction: Step 21 - PR Evaluation
 
 # Operation: Get PR Diff
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

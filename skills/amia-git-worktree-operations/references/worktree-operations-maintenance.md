@@ -1,6 +1,6 @@
 # Worktree Operations: Maintenance
 
-## Table of Contents
+## Contents
 
 - [Quick Reference](#quick-reference)
 - [Part 1: Syncing with Main Branch](#part-1-syncing-with-main-branch)

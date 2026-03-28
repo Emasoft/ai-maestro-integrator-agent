@@ -1,6 +1,6 @@
 # Multi-User GitHub Workflow
 
-## Table of Contents
+## Contents
 
 - [Use-Case TOC](#use-case-toc)
   - [Part 1: Setup and Configuration](#part-1-setup-and-configuration)

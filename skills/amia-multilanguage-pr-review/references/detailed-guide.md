@@ -1,6 +1,6 @@
 # Multilanguage PR Review — Detailed Guide
 
-## Table of Contents
+## Contents
 
 - [Challenges of Multilanguage Repositories](#challenges-of-multilanguage-repositories)
 - [When to Use This Skill](#when-to-use-this-skill)

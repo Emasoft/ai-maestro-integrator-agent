@@ -1,9 +1,9 @@
 ---
 name: amia-session-memory
-description: "Use when resuming sessions. Trigger with session resumption."
+description: "Session memory for PR reviews and integration work. Use when resuming reviews, tracking releases, or persisting context across sessions. Trigger with session resumption."
 license: Apache-2.0
 version: 1.0.0
-compatibility: Requires AMIA role knowledge. Requires AI Maestro installed.
+compatibility: Requires familiarity with AMIA role responsibilities (code review, integration, releases). Designed for maintaining context across Claude Code session boundaries. Requires AI Maestro installed.
 metadata:
   author: Emasoft
   version: 1.0.0
@@ -57,42 +57,32 @@ Copy this checklist and track your progress:
 
 ## Reference Documents
 
-- [memory-architecture](references/memory-architecture.md) — Storage locations and persistence patterns
-- [memory-retrieval](references/memory-retrieval.md) — Triggers and retrieval commands
-- [memory-updates](references/memory-updates.md) — Update triggers and commands
-- [handoff-documents](references/handoff-documents.md) — Handoff format and checklist
-- [detailed-guide](references/detailed-guide.md) — Error handling, examples, troubleshooting
+- `references/memory-architecture.md` — Storage locations and persistence patterns
+- `references/memory-retrieval.md` — Triggers and retrieval commands
+- `references/memory-updates.md` — Update triggers and commands
+- `references/handoff-documents.md` — Handoff format and checklist
+- `references/detailed-guide.md` — Error handling, examples, troubleshooting
 
 See `references/` directory for remaining documents.
 
 ## Error Handling
 
-Non-zero exit codes on failure. See detailed guide in Resources.
-
-## Resources
-
-- [detailed-guide](references/detailed-guide.md) — Full reference
-  - Error Handling
-  - Examples
-  - Memory Architecture
-  - What to Remember
-  - Memory Retrieval
-  - Memory Updates
-  - Handoff Documents
-  - Integration with Other Skills
-  - Troubleshooting
-  - Quick Reference Commands
-  - State Markers
-  - Full Reference Document Listing
+Script failures return non-zero exit codes. Check stderr for details. See `references/detailed-guide.md` for common error scenarios.
 
 ## Examples
 
+### Example: Resume PR Review
+
 ```bash
-# Resume a PR review from a previous session
-gh pr view 42 --json comments --jq '.comments[] | select(.body | contains("AMIA-STATE"))' > /tmp/pr42-state.json
-# Load the state marker and continue review from where you left off
-# Save updated state when done
-gh pr comment 42 --body "<!-- AMIA-STATE: {\"phase\": 3, \"dimensions_completed\": [1,2,3], \"timestamp\": \"2026-03-26T12:00:00Z\"} -->"
+# All gh commands MUST specify --repo since the integrator works across multiple repos
+# Load PR state
+gh pr view 42 --repo "$OWNER/$REPO" --comments --json comments \
+  | jq -r '.comments[] | select(.body | contains("AMIA-SESSION-STATE"))'
+# If state found: load review context and continue
+# If not found: start fresh review
+# Verify PR unchanged since last review (check commit SHAs)
 ```
 
-**Expected result:** The session state is loaded from the PR comment containing the `AMIA-STATE` marker. After completing remaining work, an updated state marker is posted so the next session can resume seamlessly.
+## Resources
+
+See `references/` directory for all reference documents and templates.

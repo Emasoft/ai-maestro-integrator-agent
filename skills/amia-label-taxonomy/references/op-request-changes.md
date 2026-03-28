@@ -1,6 +1,6 @@
 # Operation: Request Changes
 
-## Table of Contents
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)
@@ -24,6 +24,8 @@
 - [Notes](#notes)
 
 ## Purpose
+
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
 
 After finding issues during PR review, formally request changes by updating labels and leaving a review with specific feedback.
 

@@ -1,6 +1,8 @@
 # Operation: Document Gate Failure
 
-## Table of Contents
+> **MULTI-REPO RULE:** All `gh` commands MUST include `--repo "$OWNER/$REPO"` since the integrator works across multiple repos.
+
+## Contents
 
 - [Purpose](#purpose)
 - [When to Use](#when-to-use)

@@ -1,6 +1,6 @@
 # AMIA Session Memory — Detailed Guide
 
-## Table of Contents
+## Contents
 
 - [Error Handling](#error-handling)
 - [Examples](#examples)
