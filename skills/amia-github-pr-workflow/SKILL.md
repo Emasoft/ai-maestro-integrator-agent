@@ -1,6 +1,6 @@
 ---
 name: amia-github-pr-workflow
-description: Use when coordinating PR review work as orchestrator. Defines delegation rules, verification, and completion criteria. Trigger with /start-pr-review [PR_NUMBER].
+description: Use when coordinating PR review work as orchestrator. Defines delegation rules, verification, and completion criteria. Includes AI Maestro AMP project scripts for repo management, PR review, and task reporting. Trigger with /start-pr-review [PR_NUMBER].
 license: Apache-2.0
 compatibility: Requires AI Maestro installed.
 metadata:
@@ -61,9 +61,86 @@ Copy this checklist and track your progress:
 
 > **Output discipline:** All scripts support `--output-file <path>`. Use it to minimize token consumption.
 
+## AI Maestro Project Scripts — PR Lifecycle
+
+The following AMP project scripts (from AI Maestro `scripts/` directory, installed to `~/.local/bin/`) provide end-to-end PR lifecycle automation.
+
+### Full PR Review Workflow
+
+When the Orchestrator assigns a PR review task, follow this sequence:
+
+1. **Receive PR notification** from Orchestrator (via AMP message or task assignment).
+2. **Clone the repo** if not already local:
+   ```bash
+   amp-clone-repo.sh <repo-url>
+   # or with a custom local name:
+   amp-clone-repo.sh <repo-url> <local-name>
+   ```
+3. **Fetch the PR branch** for local review:
+   ```bash
+   cd <repo-path>
+   git fetch origin pull/<N>/head:pr-<N>
+   git checkout pr-<N>
+   ```
+4. **Review code changes** — read diffs, check patterns, verify against specs.
+5. **Run tests** on the PR branch to confirm nothing is broken.
+6. **Submit the review** via GitHub CLI:
+   ```bash
+   # Approve
+   gh pr review <N> --approve --body "LGTM — tests pass, code reviewed."
+   # Or request changes
+   gh pr review <N> --request-changes --body "See inline comments for required fixes."
+   ```
+7. **Merge if approved** (only when authorized by the team governance rules):
+   ```bash
+   gh pr merge <N> --squash
+   ```
+8. **Report completion** to the Orchestrator:
+   ```bash
+   amp-task-done.sh "PR #<N> merged in <repo>"
+   ```
+
+If blocked at any step, report immediately:
+```bash
+amp-task-blocked.sh "PR #<N>: tests fail on pr-<N> branch — see log"
+```
+
+### Repo & Branch Management Scripts
+
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `amp-clone-repo.sh` | Clone a repo to the agent's work directory | `amp-clone-repo.sh <url> [<localName>]` |
+| `amp-create-repo.sh` | Create a new GitHub repo (optionally register with team) | `amp-create-repo.sh <name> [--org <org>] [--private] [--description "..."] [--team <team-id>]` |
+| `amp-create-branch.sh` | Create and push a new branch | `amp-create-branch.sh <repo-path> <branch-name>` |
+| `amp-submit-pr.sh` | Push branch and create a pull request | `amp-submit-pr.sh <repo-path> <title> [--body "..."] [--base main]` |
+| `amp-list-local-repos.sh` | List git repos in the agent's work directory (JSON output) | `amp-list-local-repos.sh` |
+| `amp-project-info.sh` | Get project/repo metadata | `amp-project-info.sh` |
+| `amp-project-repos.sh` | List team project repos | `amp-project-repos.sh` |
+
+### Task Reporting Scripts
+
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `amp-task-done.sh` | Report task completion to the Orchestrator | `amp-task-done.sh "<message>"` |
+| `amp-task-blocked.sh` | Report a blocking issue (high priority) | `amp-task-blocked.sh "<reason>"` |
+
+### When to Create a New Repo
+
+If the PR review workflow requires setting up a new repository (e.g., extracting a module, creating a fork for patches):
+
+```bash
+amp-create-repo.sh my-new-repo --org myorg --private --description "Extracted auth module"
+# Then clone it locally:
+amp-clone-repo.sh https://github.com/myorg/my-new-repo.git
+```
+
+## Reference Documents
+
+See `references/` directory for all reference documents. Full index in `references/detailed-guide.md`.
+
 ## Error Handling
 
-Script failures return non-zero exit codes. See the detailed guide in Resources for details.
+Script failures return non-zero exit codes. See `references/detailed-guide.md` for details.
 
 ## Examples
 
@@ -75,27 +152,4 @@ python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 
 ## Resources
 
-Full index in [detailed-guide](references/detailed-guide.md):
-  - Decision Tree
-  - Scripts Reference
-    - amia_orchestrator_pr_poll.py
-    - amia_verify_pr_completion.py
-  - Section Index
-    - 1. Orchestrator Responsibilities
-    - 2. Delegation Rules
-    - 3. Verification Workflow
-    - 4. Worktree Coordination
-    - 5. Human vs AI PR Assignment
-    - 6. Completion Criteria
-    - 7. Polling Schedule
-    - 8. Merge Failure Recovery
-  - Error Handling
-    - Subagent not returning results
-    - PR status appears stale
-    - Completion verification fails intermittently
-    - Multiple subagents conflicting
-    - User not receiving status updates
-  - Extended Examples
-    - Example 1: Standard PR Review Coordination
-    - Example 2: Verify PR is Ready to Merge
-  - Full Reference Documents Index
+See `references/detailed-guide.md` for decision tree, scripts, and extended examples.
