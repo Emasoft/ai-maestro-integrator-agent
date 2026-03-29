@@ -5,6 +5,8 @@
 name = "ai-maestro-integrator-agent"
 source = "plugin:ai-maestro-integrator-agent"
 path = "agents/ai-maestro-integrator-agent-main-agent.md"
+compatible-titles = ["INTEGRATOR"]
+compatible-clients = ["claude-code"]
 
 [requirements]
 project_type = "library"
