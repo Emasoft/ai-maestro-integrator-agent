@@ -27,8 +27,8 @@
 ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
 │      AMCOS       │ │      AMOA        │ │      AMIA        │
 │ Chief of Staff  │ │  Orchestrator   │ │   Integrator    │
-│ Title: CHIEF-   │ │ Title: MEMBER   │ │ Title: MEMBER   │
-│ OF-STAFF        │ │                 │ │                 │
+│ Title: CHIEF-   │ │ Title: ORCH-    │ │ Title: INTEG-   │
+│ OF-STAFF        │ │ ESTRATOR        │ │ RATOR           │
 │ TEAM-SCOPED     │ │ PROJECT-        │ │ PROJECT-        │
 │ (one per team)  │ │ LINKED          │ │ LINKED          │
 │                 │ │ (one per proj)  │ │ (one per proj)  │
@@ -42,7 +42,10 @@
 |-------|------|-------|-----------|
 | **manager** | AMAMA | Organization-wide | Final approval, user communication |
 | **chief-of-staff** | AMCOS | Team-scoped (one per team) | Agent lifecycle, configuration |
-| **member** | AMOA, AMIA, AMAA | Project-linked | Task execution within role boundaries |
+| **orchestrator** | AMOA | Project-linked | Task distribution, kanban, coordination |
+| **integrator** | AMIA | Project-linked | Code review, quality gates, merging |
+| **architect** | AMAA | Project-linked | Architecture, design decisions |
+| **member** | AMPA | Project-linked | Task execution within role boundaries |
 
 ---
 
@@ -211,7 +214,7 @@ AMOA: Sends handoff to agent-456
 | Code review | ❌ | ❌ | ❌ | ✅ | ❌ |
 | Architecture | ❌ | ❌ | ❌ | ❌ | ✅ |
 | Talk to user | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Governance title | manager | chief-of-staff | member | member | member |
+| Governance title | manager | chief-of-staff | orchestrator | integrator | architect |
 
 ---
 
@@ -219,6 +222,6 @@ AMOA: Sends handoff to agent-456
 
 ---
 
-**Document Version**: 1.1.18
+**Document Version**: 1.1.19
 **Last Updated**: 2026-03-13
 **Author**: AMCOS Plugin Development
