@@ -1,6 +1,6 @@
 ---
 name: amia-quality-gates
-description: "Use when enforcing quality gates. Trigger with /amia-enforce-gates."
+description: "Use when enforcing quality gates. Trigger with /amia-enforce-gates. Loaded by ai-maestro-integrator-agent-main-agent."
 version: 1.0.0
 license: Apache-2.0
 compatibility: Requires CI/CD and GitHub workflow experience. Requires AI Maestro installed.

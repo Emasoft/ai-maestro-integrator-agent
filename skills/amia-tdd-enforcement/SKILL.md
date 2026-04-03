@@ -1,6 +1,6 @@
 ---
 name: amia-tdd-enforcement
-description: "Use when enforcing TDD via RED-GREEN-REFACTOR. No production code without a failing test first. Trigger with /enforce-tdd."
+description: "Use when enforcing TDD via RED-GREEN-REFACTOR. No production code without a failing test first. Trigger with /enforce-tdd. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires understanding of TDD principles, RED-GREEN-REFACTOR cycle, test frameworks, and version control. Works with any programming language that supports automated testing. Requires AI Maestro installed.
 metadata:

@@ -1,6 +1,6 @@
 ---
 name: amia-integration-protocols
-description: "Use when accessing shared utilities and protocols. Trigger with cross-skill reference requests."
+description: "Use when accessing shared utilities and protocols. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires AI Maestro installed.
 metadata:

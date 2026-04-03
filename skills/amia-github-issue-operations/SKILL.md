@@ -1,6 +1,6 @@
 ---
 name: amia-github-issue-operations
-description: Use when managing GitHub Issues including creation, labels, milestones, assignees, and comments using gh CLI. Trigger with create issue, set labels, assign milestone.
+description: Use when managing GitHub Issues including creation, labels, milestones, assignees, and comments using gh CLI. Trigger with create issue, set labels, assign milestone. Loaded by ai-maestro-integrator-agent-main-agent.
 license: Apache-2.0
 compatibility: Requires AI Maestro installed.
 metadata:

@@ -1,6 +1,6 @@
 ---
 name: amia-code-review-patterns
-description: "Use when reviewing pull requests. Trigger with PR review or code quality requests."
+description: "Use when reviewing pull requests. Trigger with PR review or code quality requests. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires intermediate software development experience and familiarity with code review basics. Designed for reviewers analyzing pull requests with 1-30+ file changes using an 8-dimensional evaluation framework. Requires AI Maestro installed.
 metadata:

@@ -1,6 +1,6 @@
 ---
 name: amia-ai-pr-review-methodology
-description: "Use when performing PR reviews. Trigger with /amia-ai-pr-review."
+description: "Use when performing PR reviews. Trigger with /amia-ai-pr-review. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires code review experience and codebase access.
 metadata:

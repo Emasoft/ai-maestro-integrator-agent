@@ -1,6 +1,6 @@
 ---
 name: amia-github-integration
-description: "Use when integrating GitHub Projects. Trigger with GitHub sync, label setup, or PR workflow requests."
+description: "Use when integrating GitHub Projects. Trigger with GitHub sync, label setup, or PR workflow requests. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires GitHub CLI version 2.14 or higher, GitHub account with write permissions to target repositories, and basic Git knowledge. Requires AI Maestro installed.
 metadata:

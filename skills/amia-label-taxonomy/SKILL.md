@@ -1,6 +1,6 @@
 ---
 name: amia-label-taxonomy
-description: GitHub label taxonomy reference for the Integrator Agent. Use when managing PR reviews, updating PR status, or applying review labels. Trigger with review label requests.
+description: GitHub label taxonomy reference for the Integrator Agent. Use when managing PR reviews, updating PR status, or applying review labels. Trigger with review label requests. Loaded by ai-maestro-integrator-agent-main-agent.
 compatibility: Requires AI Maestro installed.
 metadata:
   author: Emasoft

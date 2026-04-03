@@ -1,6 +1,6 @@
 ---
 name: amia-kanban-orchestration
-description: "Use when managing GitHub Kanban boards. Trigger with board state, card move, or completion requests."
+description: "Use when managing GitHub Kanban boards. Trigger with board state, card move, or completion requests. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: "Requires GitHub CLI authentication, GitHub Projects V2 enabled repository, GraphQL API access, Python 3.8+. Requires AI Maestro installed."
 metadata:

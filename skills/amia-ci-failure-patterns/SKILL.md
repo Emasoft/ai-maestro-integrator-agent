@@ -1,6 +1,6 @@
 ---
 name: amia-ci-failure-patterns
-description: "Use when diagnosing CI/CD failures. Trigger with CI failure logs or pipeline errors."
+description: "Use when diagnosing CI/CD failures. Trigger with CI failure logs or pipeline errors. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires AI Maestro installed.
 metadata:

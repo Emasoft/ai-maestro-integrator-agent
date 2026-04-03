@@ -1,6 +1,6 @@
 ---
 name: amia-session-memory
-description: "Use when resuming sessions. Trigger with session resumption."
+description: "Use when resuming sessions. Trigger with session resumption. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 version: 1.0.0
 compatibility: Requires AMIA role knowledge. Requires AI Maestro installed.

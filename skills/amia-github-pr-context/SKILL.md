@@ -1,6 +1,6 @@
 ---
 name: amia-github-pr-context
-description: Use when retrieving PR context including metadata, diff, and changed files for code review planning. Trigger with /review-pr [PR_NUMBER].
+description: Use when retrieving PR context including metadata, diff, and changed files for code review planning. Trigger with /review-pr [PR_NUMBER]. Loaded by ai-maestro-integrator-agent-main-agent.
 license: Apache-2.0
 compatibility: Requires AI Maestro installed.
 metadata:
