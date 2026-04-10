@@ -1,6 +1,6 @@
 {
   "name": "ai-maestro-integrator-agent",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "Quality gates, testing, merging, release candidates - ensures code quality. Requires AI Maestro for inter-agent messaging.",
   "author": {
     "name": "Emasoft",
