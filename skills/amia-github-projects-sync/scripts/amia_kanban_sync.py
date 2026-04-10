@@ -11,6 +11,8 @@ Integrates with AI Maestro for orchestrator notifications.
 """
 
 import os
+import shutil
+import subprocess
 import sys
 import json
 from pathlib import Path
@@ -31,9 +33,6 @@ except ImportError:
         "ERROR: shared/cross_platform.py not found. "
         "This module is planned but not yet implemented."
     )
-
-import shutil
-import subprocess
 
 # Resolve amp-send.sh path once at module load
 AMP_SEND_BIN = shutil.which("amp-send.sh") or os.path.expanduser("~/.local/bin/amp-send.sh")
