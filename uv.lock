@@ -1,0 +1,8 @@
+version = 1
+revision = 3
+requires-python = ">=3.10"
+
+[[package]]
+name = "ai-maestro-integrator-agent"
+version = "1.2.8"
+source = { virtual = "." }
