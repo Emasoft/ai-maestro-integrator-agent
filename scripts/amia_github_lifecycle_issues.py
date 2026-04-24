@@ -20,11 +20,11 @@ from typing import Optional
 from amia_github_lifecycle_core import (
     DesignDocument,
     IssueMetadata,
-    run_gh_command,
     parse_design_document,
+    run_gh_command,
     sanitize_content,
-    validate_frontmatter,
     validate_documents,
+    validate_frontmatter,
 )
 
 __all__ = [

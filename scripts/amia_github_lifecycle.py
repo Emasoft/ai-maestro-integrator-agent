@@ -62,9 +62,9 @@ from amia_github_lifecycle_core import check_gh_auth, validate_frontmatter
 
 # Import issue operations
 from amia_github_lifecycle_issues import (
-    create_issue_from_spec,
     attach_document_to_issue,
     attach_multiple_documents,
+    create_issue_from_spec,
     get_issue_info,
     search_issues,
     verify_closure_requirements,
@@ -73,8 +73,8 @@ from amia_github_lifecycle_issues import (
 # Import project operations
 from amia_github_lifecycle_projects import (
     link_pr_to_issue,
-    move_issue_in_project,
     list_project_statuses,
+    move_issue_in_project,
 )
 
 __all__ = [

@@ -19,11 +19,11 @@ Exit Codes:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from collections import Counter
 from datetime import datetime, timedelta, timezone
-import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
 from shared.thresholds import write_output

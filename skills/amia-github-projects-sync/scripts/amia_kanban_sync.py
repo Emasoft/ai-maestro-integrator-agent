@@ -10,14 +10,14 @@ Automatically updates issue/PR status based on:
 Integrates with AI Maestro for orchestrator notifications.
 """
 
+import json
 import os
 import shutil
 import subprocess
 import sys
-import json
-from pathlib import Path
-from typing import Any, Optional, Literal
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Literal, Optional
 
 # Allow imports from the plugin root shared/ directory (depth=3: scripts -> skill -> skills -> root)
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
@@ -27,7 +27,7 @@ PLUGIN_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(PLUGIN_ROOT / "shared"))
 
 try:
-    from cross_platform import run_command, atomic_write_json  # noqa: E402
+    from cross_platform import atomic_write_json, run_command  # noqa: E402
 except ImportError:
     raise SystemExit(
         "ERROR: shared/cross_platform.py not found. "

@@ -4,17 +4,17 @@ GitHub Task Synchronisation Script
 Syncs task lists with GitHub Projects using the gh CLI
 """
 
-import sys
-import json
-import subprocess
 import argparse
+import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
 # Import thresholds from shared module (canonical source of truth)
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
-from shared.thresholds import TechnicalTimeouts, GitHubThresholds, write_output
+from shared.thresholds import GitHubThresholds, TechnicalTimeouts, write_output
 
 TIMEOUTS = TechnicalTimeouts()
 GH_THRESHOLDS = GitHubThresholds()

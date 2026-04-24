@@ -54,7 +54,6 @@ from typing import Any
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from shared.thresholds import write_output
 
-
 VALID_STATUSES = {"DRAFT", "REVIEW", "APPROVED", "IMPLEMENTED", "ARCHIVED", "DEPRECATED", "REJECTED"}
 UUID_PATTERN = re.compile(r"^GUUID-\d{8}-\d{4}$")
 REQUIRED_FIELDS = {"type", "status"}

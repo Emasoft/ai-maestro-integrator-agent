@@ -14,12 +14,12 @@ Usage:
 # without quotes, improving type hint readability and Python 3.10+ compatibility
 from __future__ import annotations
 
-import sys
-import json
 import argparse
+import json
+import sys
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List
-from dataclasses import dataclass, field
 
 # WHY: 20 minute timeout matches CLAUDE.md specification for long-running operations
 COMMAND_TIMEOUT = 1200  # seconds

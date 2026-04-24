@@ -10,12 +10,12 @@ Usage:
     python review-report-generator.py --template --output review-template.md
 """
 
-import sys
 import argparse
-from pathlib import Path
-from datetime import datetime
-from typing import Optional, List
+import sys
 from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import List, Optional
 
 # Timeout for command execution (20 minutes as per CLAUDE.md)
 COMMAND_TIMEOUT = 1200  # seconds

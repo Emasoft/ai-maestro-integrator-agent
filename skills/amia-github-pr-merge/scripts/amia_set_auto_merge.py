@@ -24,6 +24,7 @@ from typing import Any
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
 from shared.thresholds import write_output
 
+
 def run_gql(query: str, variables: dict[str, Any]) -> dict[str, Any]:
     cmd = ["gh", "api", "graphql", "-f", f"query={query}"]
     for k, v in variables.items():

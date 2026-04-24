@@ -43,7 +43,6 @@ from typing import Any
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
 from shared.thresholds import write_output
 
-
 # Default configurations for common labels
 DEFAULT_LABEL_CONFIGS: dict[str, dict[str, str]] = {
     "P0": {"color": "b60205", "description": "Critical priority"},

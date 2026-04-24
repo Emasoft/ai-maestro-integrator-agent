@@ -22,9 +22,9 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-from shared.thresholds import write_output
-
 from cpv_validation_common import get_plugin_root
+
+from shared.thresholds import write_output
 
 
 def calculate_directory_checksum(dir_path: Path, exclude_patterns: list[str] | None = None) -> str:

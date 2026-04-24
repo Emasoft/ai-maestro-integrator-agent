@@ -35,7 +35,6 @@ from typing import Any
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
 from shared.thresholds import write_output  # noqa: E402
 
-
 # Valid status transitions
 VALID_TRANSITIONS: dict[str, list[str]] = {
     "Backlog": ["Todo"],

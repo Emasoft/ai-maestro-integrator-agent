@@ -17,8 +17,8 @@ import sys
 from typing import Optional
 
 from amia_github_lifecycle_core import (
-    run_gh_command,
     get_repo_info,
+    run_gh_command,
 )
 
 __all__ = [

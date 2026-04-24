@@ -13,11 +13,11 @@ Usage:
 # WHY: Future annotations enable PEP 604 style unions (X | None) and forward references
 from __future__ import annotations
 
-import sys
 import argparse
+import sys
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
-from dataclasses import dataclass
 
 # WHY: 20-minute timeout prevents hung processes during long scans while allowing large PRs
 COMMAND_TIMEOUT = 1200  # seconds

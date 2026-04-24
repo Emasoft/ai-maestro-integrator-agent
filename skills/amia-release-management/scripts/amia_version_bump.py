@@ -45,7 +45,6 @@ from typing import Any
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
 from shared.thresholds import write_output
 
-
 SEMVER_PATTERN = re.compile(r"(\d+)\.(\d+)\.(\d+)")
 
 # Map of filename to regex patterns that capture the version string in context

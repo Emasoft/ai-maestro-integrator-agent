@@ -45,7 +45,6 @@ from typing import Any
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
 from shared.thresholds import write_output
 
-
 # Default configuration
 # NOTE: Maintainers list should be populated with actual repo maintainers
 # AI agents list contains Claude-based agents only (generic, IDE-independent)
