@@ -1,6 +1,6 @@
 [project]
 name = "ai-maestro-integrator-agent"
-version = "1.2.11"
+version = "1.2.12"
 description = "AI Maestro Integrator Agent - Code review, CI/CD integration, GitHub operations, and quality assurance"
 readme = "README.md"
 license = "Apache-2.0"
