@@ -579,5 +579,9 @@ Safe to close the issue:
     return 0
 
 
-if __name__ == "__main__":
+def _cli_entry() -> None:
     sys.exit(main())
+
+
+if __name__ == "__main__":
+    _cli_entry()
