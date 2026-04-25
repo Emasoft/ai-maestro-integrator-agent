@@ -1413,6 +1413,7 @@ Examples:
     for name in (
         ".claude-plugin/plugin.json",
         "pyproject.toml",
+        "uv.lock",
         "package.json",
         "Cargo.toml",
         "CHANGELOG.md",
