@@ -5,6 +5,14 @@ description = "AI Maestro Integrator Agent - Code review, CI/CD integration, Git
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.10"
+dependencies = [
+    # PyYAML is imported at the top of every validate_*.py and a few skill
+    # scripts. It used to be supplied via 'uv run --with pyyaml ...' invocation,
+    # but that didn't reflect in the manifest — making pyright/IDE tooling
+    # complain about an unresolved import. Declaring it here is the source of
+    # truth and keeps the runtime contract honest.
+    "pyyaml>=6.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/Emasoft/ai-maestro-integrator-agent"

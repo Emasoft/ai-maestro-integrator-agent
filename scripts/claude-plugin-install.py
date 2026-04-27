@@ -67,7 +67,10 @@ def _enable_ansi_windows():
     try:
         import ctypes
 
-        kernel32 = ctypes.windll.kernel32
+        # ctypes.windll only exists on Windows; the IS_WINDOWS guard above
+        # ensures we never reach this on macOS/Linux. The pyright suppression
+        # is required because pyright analyzes against POSIX ctypes stubs.
+        kernel32 = ctypes.windll.kernel32  # type: ignore[attr-defined]
         handle = kernel32.GetStdHandle(-11)  # STD_OUTPUT_HANDLE
         mode = ctypes.c_ulong()
         kernel32.GetConsoleMode(handle, ctypes.byref(mode))
