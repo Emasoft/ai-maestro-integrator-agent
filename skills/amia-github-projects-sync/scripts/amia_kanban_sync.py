@@ -29,7 +29,10 @@ sys.path.insert(0, str(PLUGIN_ROOT / "shared"))
 try:
     # Resolved at runtime via the sys.path.insert above; pyright cannot
     # follow dynamic path manipulation, hence the import-not-found suppression.
-    from cross_platform import atomic_write_json, run_command  # type: ignore[import-not-found]  # noqa: E402
+    from cross_platform import (  # type: ignore[import-not-found]  # noqa: E402, I001
+        atomic_write_json,
+        run_command,
+    )
 except ImportError:
     raise SystemExit(
         "ERROR: shared/cross_platform.py not found. "
