@@ -4,7 +4,7 @@ requires-python = ">=3.10"
 
 [[package]]
 name = "ai-maestro-integrator-agent"
-version = "1.2.13"
+version = "1.2.14"
 source = { virtual = "." }
 dependencies = [
     { name = "pyyaml" },
