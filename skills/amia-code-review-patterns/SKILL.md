@@ -25,7 +25,17 @@ Two-stage PR review: Quick Scan (70% threshold) then 8-dimension Deep Dive (80% 
 
 ## Instructions
 
-1. **Gate 0 compliance** - Verify requirements per [requirement-compliance](references/requirement-compliance.md)
+1. **Gate 0 compliance** - Verify requirements per [requirement-compliance](references/requirement-compliance.md):
+    - Table of Contents
+    - 5.1 Gate 0: Requirement Compliance Overview
+    - 5.2 Gate 0 Checklist Template
+    - Gate 0: Requirement Compliance
+    - 5.3 Review Checklist Additions
+      - 5.3.1 Requirement Traceability
+      - 5.3.2 Technology Compliance
+      - 5.3.3 Scope Compliance
+    - 5.4 Forbidden Review Approvals
+    - 5.5 Correct Review Approach
 2. **Stage 1: Quick Scan** - Assess structure, diff, issues; Go/No-Go at 70%+
 3. **Stage 2: Deep Dive** - Score 8 dimensions; approve at 80%+
 4. **Run quality gates and create report** via `scripts/review_report_generator.py`

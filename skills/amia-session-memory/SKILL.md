@@ -58,9 +58,72 @@ Copy this checklist and track your progress:
 ## Reference Documents
 
 - [memory-architecture](references/memory-architecture.md) — Storage locations and persistence patterns
+  - Table of Contents
+  - Storage Locations
+    - PR Comments
+    - Issue Comments
+    - Handoff Documents
+  - Memory File Structure
+  - Current State
+  - Context
+  - Next Steps
+  - Data Persistence Patterns
+    - Write-Through
+    - Read-On-Demand
+  - Retention Policy
 - [memory-retrieval](references/memory-retrieval.md) — Triggers and retrieval commands
+  - Table of Contents
+  - State-Based Triggers
+  - Retrieval Decision Tree
+  - Memory Retrieval Commands
+    - Load PR State
+    - Load Handoff Documents
+    - Verify Memory Freshness
+  - Handling Missing Memory
+  - Memory Freshness Checks
 - [memory-updates](references/memory-updates.md) — Update triggers and commands
+  - Table of Contents
+  - State-Based Update Triggers
+  - Update Decision Tree
+  - Memory Update Commands
+    - Update PR State Comment
+  - AMIA Review - Round 2
+    - Append to Patterns Learned
+  - Pattern Name - YYYY-MM-DD
+    - Update Release History
+    - Update CI States
+  - Latest Workflow Run
+    - Write Handoff Document
+  - Current Task
+  - Progress
+  - Blockers
+  - Next Steps
+  - Context
+  - Links
+  - Update Patterns
+    - Write-Through (Immediate)
+    - Append (Accumulate)
+    - Overwrite (Latest State)
+  - Verification
+  - Error Handling
 - [handoff-documents](references/handoff-documents.md) — Handoff format and checklist
+  - Table of Contents
+  - When to Create Handoff Documents
+  - Handoff Document Format
+  - Current Task
+  - Progress
+  - Context
+    - Key Decisions Made
+    - Patterns Observed
+  - Blockers
+  - Next Steps
+  - Links
+  - Notes
+  - Handoff Checklist
+  - Handoff File Locations
+  - Cross-Agent Handoff
+  - Reading Handoffs (Next Session)
+  - Archiving Completed Handoffs
 - [detailed-guide](references/detailed-guide.md) — Error handling, examples, troubleshooting
 
 See `references/` directory for remaining documents.

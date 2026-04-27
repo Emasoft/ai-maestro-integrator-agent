@@ -68,6 +68,7 @@ On failure, check exit code and stderr. Exit 1 = invalid params; Exit 2-4 = API 
 ## Resources
 
 - [detailed-guide](references/detailed-guide.md) — Full reference
+  - Table of Contents
   - GraphQL is the Source of Truth
   - Decision Tree for PR Merge Operations
   - Script Usage Details

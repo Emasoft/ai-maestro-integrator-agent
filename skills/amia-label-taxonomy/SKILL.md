@@ -61,9 +61,82 @@ Copy this checklist and track your progress:
 **Operations:**
 
 - [op-start-pr-review](references/op-start-pr-review.md) — Procedure for starting a PR review
+  - Table of Contents
+  - Purpose
+  - When to Use
+  - Prerequisites
+  - Procedure
+    - Step 1: Verify PR Exists and Status
+    - Step 2: Check Priority and Type
+    - Step 3: Update Review Label
+    - Step 4: Comment on PR (Optional)
+    - Step 5: Verify Label Update
+  - Example
+  - Review Depth by Type
+  - Error Handling
+  - Notes
 - [op-request-changes](references/op-request-changes.md) — Procedure for requesting changes
+  - Table of Contents
+  - Purpose
+  - When to Use
+  - Prerequisites
+  - Procedure
+    - Step 1: Update Review Label
+    - Step 2: Submit Review with Changes Requested
+    - Issues Found
+    - Before Re-review
+    - Step 3: Notify Author (via AI Maestro if agent)
+    - Step 4: Verify Label Update
+  - Example
+    - Issues Found
+    - Before Re-review
+  - Review Comment Templates
+    - Missing Tests
+  - Changes Requested: Missing Test Coverage
+    - Code Quality Issues
+  - Changes Requested: Code Quality
+  - Error Handling
+  - Notes
 - [op-approve-and-merge](references/op-approve-and-merge.md) — Procedure for approving and merging
+  - Table of Contents
+  - Purpose
+  - When to Use
+  - Prerequisites
+  - Procedure
+    - Step 1: Verify All Checks Pass
+    - Step 2: Update Review Label to Approved
+    - Step 3: Submit Approval Review
+    - Step 4: Get Linked Issue Number
+    - Step 5: Merge PR (if authorized)
+    - Step 6: Update Linked Issue Status
+    - Step 7: Verify Merge
+  - Example
+  - Merge Strategies
+  - Post-Merge Checklist
+  - Error Handling
+  - Notes
 - [op-mark-blocked-pr](references/op-mark-blocked-pr.md) — Procedure for marking a PR blocked
+  - Table of Contents
+  - Purpose
+  - When to Use
+  - Prerequisites
+  - Procedure
+    - Step 1: Identify Blocker Type
+    - Step 2: Add Blocked Label
+    - Step 3: Comment with Blocker Details
+    - Step 4: Notify Author (if agent)
+    - Step 5: Verify Label Update
+  - Example
+  - Blocker Templates
+    - Merge Conflicts
+  - Review Blocked: Merge Conflicts
+    - CI Failing
+  - Review Blocked: CI Failures
+    - Dependent PR
+  - Review Blocked: Dependency
+  - Unblocking a PR
+  - Error Handling
+  - Notes
 
 **Guides:**
 
