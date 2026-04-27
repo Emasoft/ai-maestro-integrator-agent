@@ -62,27 +62,120 @@ This skill contains:
 ## Procedural Details (See Skill)
 
 - [review-workflow](../skills/amia-code-review-patterns/references/review-workflow.md) — Review workflow
-  - 1. When Starting a Code Review Task
-  - 2. When Gathering Context Before Review
-  - 3. When Executing Gate 1: Specification Compliance
-  - 4. When Executing Gate 2: Code Quality Evaluation
-  - 5. When Generating Review Reports
-  - 6. When Creating Fix Instructions for Developers
-  - 7. When Communicating Findings via AI Maestro
-  - 8. When Updating GitHub Projects Tracking
-  - 9. When Archiving Review Artifacts
+  - 1. When starting a code review task
+    - 1.1 Receiving and parsing review requests
+    - 1.2 Extracting PR metadata and specifications
+  - 2. When gathering context before review
+    - 2.1 Loading specification documents
+    - 2.2 Reading changed files and test files
+    - 2.3 Collecting previous review comments
+  - 3. When executing Gate 1: Specification Compliance
+    - 3.1 Verifying user requirements compliance
+    - 3.2 Checking functional requirements match
+    - 3.3 Validating architectural compliance
+    - 3.4 Assessing interface contracts
+    - 3.5 Determining Gate 1 outcome (PASS/FAIL/BLOCKED)
+  - 4. When executing Gate 2: Code Quality Evaluation
+    - 4.1 Evaluating correctness and security
+    - 4.2 Assessing performance and maintainability
+    - 4.3 Checking reliability and style compliance
+    - 4.4 Running automated analysis tools
+    - 4.5 Determining Gate 2 outcome (PASS/FAIL/CONDITIONAL)
+  - 5. When generating review reports
+    - 5.1 Creating structured review reports
+    - 5.2 Documenting findings with 80%+ confidence
+    - 5.3 Saving reports to correct locations
+  - 6. When creating fix instructions for developers
+    - 6.1 Writing WHAT/WHY/WHERE descriptions
+    - 6.2 Specifying verification criteria
+    - 6.3 Avoiding code examples and implementations
+  - 7. When communicating findings via AI Maestro
+    - 7.1 Formatting AI Maestro messages
+    - 7.2 Including report file references
+  - 8. When updating GitHub Projects tracking
+    - 8.1 Adding PR labels
+    - 8.2 Updating project board status
+    - 8.3 Posting PR summary comments
+  - 9. When archiving review artifacts
+    - 9.1 Saving review reports and fix instructions
+    - 9.2 Creating JSON log entries
+    - 9.3 Preparing minimal orchestrator output
 
 - [evaluation-criteria](../skills/amia-code-review-patterns/references/evaluation-criteria.md) — Evaluation criteria
   - 1. Code Quality
+    - 1.1 Readability
+    - 1.2 Maintainability
+    - 1.3 Correctness
   - 2. Code Style
+    - 2.1 Language Conventions
+    - 2.2 Project Standards
+    - 2.3 Documentation Style
   - 3. Security
+    - 3.1 Input Validation
+    - 3.2 Authentication & Authorization
+    - 3.3 Data Protection
+    - 3.4 Common Vulnerabilities
   - 4. Performance
+    - 4.1 Algorithmic Efficiency
+    - 4.2 Resource Management
+    - 4.3 Scalability
+    - 4.4 Optimization Level
   - 5. Testing
+    - 5.1 Test Coverage
+    - 5.2 Test Quality
+    - 5.3 Test Maintainability
   - 6. Architecture & Design
+    - 6.1 Design Patterns
+    - 6.2 Dependencies
+    - 6.3 API Design
   - 7. Evaluation Scoring
+    - Priority Levels
+    - Review Decision Matrix
   - 8. Review Checklist
 
 - [report-templates](../skills/amia-code-review-patterns/references/report-templates.md) — Report templates overview
+  - Progress Report Template
+    - Executive Summary format
+    - Metrics Overview section
+    - Task Status tables (Completed, In Progress, Pending, Blocked)
+    - Milestones tracking table
+    - Recommendations and Next Actions
+  - Quality Report Template
+    - Quality Score breakdown (100-point scale)
+    - Test Coverage analysis with module-level detail
+    - Code Quality metrics (linting, type coverage)
+    - Documentation completeness tracking
+    - Security scan results
+    - Performance benchmarks
+    - Technical debt tracking
+  - Test Report Template
+    - Executive Summary with pass/fail/skip counts
+    - Test Results table with duration
+    - Failed Tests detailed analysis
+    - Error descriptions and recommendations
+    - Skipped Tests rationale
+    - Slow Tests identification (with snail emoji for CI-skipped tests)
+    - Coverage Impact metrics
+  - Completion Report Template
+    - Task Objective documentation
+    - Completion Checklist (Implementation, Testing, Documentation, Code Quality, Integration)
+    - Verification Evidence (Test Results, Code Review, Performance Metrics)
+    - Known Limitations
+    - Future Enhancements
+    - Sign-Off status and rationale
+  - Summary Report Template
+    - Project Health indicator
+    - Key Metrics Dashboard
+    - Recent Achievements
+    - Current Focus Areas
+    - Upcoming Milestones
+    - Risk Factors analysis
+  - Integration Report Template
+    - Integration Status indicator
+    - Component Interaction Map
+    - API Contract Verification
+    - Integration Test Results
+    - Issues Detected with resolution recommendations
   - Report ID Conventions
   - Common Data Sources
 
@@ -93,6 +186,10 @@ This skill contains:
   - Executive Summary
   - Metrics Overview
   - Task Status
+    - Completed (X)
+    - In Progress (Y)
+    - Pending (Z)
+    - Blocked (W)
   - Milestones
   - Recommendations
   - Next Actions
@@ -103,15 +200,14 @@ This skill contains:
 
 - [report-templates-part2-quality](../skills/amia-code-review-patterns/references/report-templates-part2-quality.md)
   - Template
-  - Executive Summary
-  - Quality Score: XX/100
-  - Test Coverage
-  - Code Quality
-  - Documentation
-  - Security
-  - Performance
-  - Technical Debt
-  - Recommendations
+    - Scoring Breakdown
+    - Test Coverage
+    - Code Quality
+    - Documentation
+    - Security
+    - Performance
+    - Technical Debt
+    - Recommendations
   - Quality Score Calculation
   - Trend Indicators
 
@@ -157,6 +253,7 @@ This skill contains:
 
 - [report-templates-part6-integration](../skills/amia-code-review-patterns/references/report-templates-part6-integration.md)
   - Template
+  - Integration Status: 🟢 HEALTHY / 🟡 ISSUES / 🔴 BROKEN
   - Component Interaction Map
   - API Contract Verification
   - Integration Test Results
@@ -168,36 +265,100 @@ This skill contains:
 - [communication-guidelines](../skills/amia-code-review-patterns/references/communication-guidelines.md) — Communication guidelines
   - Core Principles
   - The Language of Review
+    - Tone Modifiers
+    - Framing Techniques
   - Comment Structure
+    - The PIER Model
+    - Short Comment Template
+    - Long Comment Template
   - Giving Feedback by Issue Type
+    - Security Issues
+    - Performance Issues
+    - Logic Errors
+    - Style/Readability Issues
+    - Architecture/Design Issues
   - Positive Feedback
+    - Why It Matters
+    - When to Give Positive Feedback
+    - Examples
   - Handling Disagreements
+    - When Author Pushes Back
+    - When You're Uncertain
+    - When to Escalate
   - Responding to Feedback (Author Perspective)
+    - Receiving Feedback
+    - Resolving Comments
   - Review Response Templates
+    - Approval
+    - Approve with Comments
+    - Request Changes
   - Cultural Considerations
+    - Remote/Distributed Teams
+    - Junior Developers
+    - Senior Developers
   - Anti-Patterns to Avoid
+  - Communication Checklist
+  - Summary
 
 - [error-handling](../skills/amia-code-review-patterns/references/error-handling.md) — Error handling
   - Core Principles
   - Common Error Handling Patterns
+    - 1. Try-Catch-Finally (Exception-Based)
+    - 2. Context Managers (Resource Management)
+    - 3. Result Types (Functional Approach)
+    - 4. Error Codes (Legacy/C-Style)
   - Anti-Patterns to Flag
   - Language-Specific Patterns
+    - Python
+    - JavaScript/TypeScript
+    - Go
   - Review Checklist
+    - Error Detection
+    - Error Handling
+    - Resource Management
+    - Error Communication
+    - Security
   - Common Scenarios
+    - Scenario 1: Database Operations
+    - Scenario 2: External API Calls
+    - Scenario 3: File Operations
+    - Scenario 4: User Input Validation
   - Error Logging Best Practices
+    - What to Log
+    - What NOT to Log
   - Testing Error Handling
+    - Reviewers Should Verify Tests Exist
   - Summary
 
 - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries
+  - Table of Contents
   - Purpose
   - Core Identity: Worker Agent (Not Orchestrator)
+    - What Worker Agents Are
+    - What Worker Agents Are NOT
   - Standard Output Format
+    - Minimal Report to Orchestrator
+    - Detailed Reports in Files
   - Communication Rules
+    - Report to Main Agent Only
+    - AI Maestro Messaging Protocol
+    - GitHub Projects Integration
   - Tool Restrictions
+    - Standard Permissions Table
+    - Exceptions by Agent Type
   - Common Constraints Template
+    - Agent Specifications Table
+    - IRON RULES Section Template
   - IRON RULES
+    - What This Agent DOES
+    - What This Agent NEVER DOES
   - Success/Completion Conditions
+    - Task Completion Criteria
+    - Reporting Completion
   - Anti-Patterns to Avoid
+    - DO NOT: Verbose Context Pollution
+    - DO NOT: Decision Making
+    - DO NOT: Autonomous Task Selection
   - Template Usage
   - References
 
@@ -212,12 +373,34 @@ This skill contains:
 
 - [evaluation-criteria](../skills/amia-code-review-patterns/references/evaluation-criteria.md) — Full RULE 14 details, section 1
   - 1. Code Quality
+    - 1.1 Readability
+    - 1.2 Maintainability
+    - 1.3 Correctness
   - 2. Code Style
+    - 2.1 Language Conventions
+    - 2.2 Project Standards
+    - 2.3 Documentation Style
   - 3. Security
+    - 3.1 Input Validation
+    - 3.2 Authentication & Authorization
+    - 3.3 Data Protection
+    - 3.4 Common Vulnerabilities
   - 4. Performance
+    - 4.1 Algorithmic Efficiency
+    - 4.2 Resource Management
+    - 4.3 Scalability
+    - 4.4 Optimization Level
   - 5. Testing
+    - 5.1 Test Coverage
+    - 5.2 Test Quality
+    - 5.3 Test Maintainability
   - 6. Architecture & Design
+    - 6.1 Design Patterns
+    - 6.2 Dependencies
+    - 6.3 API Design
   - 7. Evaluation Scoring
+    - Priority Levels
+    - Review Decision Matrix
   - 8. Review Checklist
 
 ## Output Format

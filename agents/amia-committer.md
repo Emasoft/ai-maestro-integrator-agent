@@ -43,34 +43,56 @@ Before executing commits, read the `amia-code-review-patterns` skill:
 
 - [../skills/amia-code-review-patterns/SKILL.md](../skills/amia-code-review-patterns/SKILL.md)
 
-- [commit-conventions](../skills/amia-code-review-patterns/references/commit-conventions.md) — Commit message conventions and searchability
-  - 1.1 Writing Descriptive Commit Messages with WHAT and WHY Sections
-  - 1.2 Choosing the Correct Commit Category Prefix
-  - 1.3 Making Commits Searchable for Future Decision Archaeology
-  - 1.4 Managing Dual-Git Repositories (Project vs Design)
-  - 1.5 Documenting Removals and Renames with Supersedes Information
-  - IRON RULES for Commit Conventions
-  - Example Commit Messages
-
-- [commit-conventions](../skills/amia-code-review-patterns/references/commit-conventions.md) — Dual-git handling procedures
-  - 1.1 Writing Descriptive Commit Messages with WHAT and WHY Sections
-  - 1.2 Choosing the Correct Commit Category Prefix
-  - 1.3 Making Commits Searchable for Future Decision Archaeology
-  - 1.4 Managing Dual-Git Repositories (Project vs Design)
-  - 1.5 Documenting Removals and Renames with Supersedes Information
-  - IRON RULES for Commit Conventions
-  - Example Commit Messages
+- [commit-conventions](../skills/amia-code-review-patterns/references/commit-conventions.md) — Commit message conventions, searchability, and dual-git handling procedures
+  - 1.1 Writing descriptive commit messages with WHAT and WHY sections
+    - 1.1.1 Commit message structure and required sections
+    - 1.1.2 Documenting file changes (ADDED, MODIFIED, REMOVED, RENAMED)
+    - 1.1.3 Documenting symbol changes (functions, classes, variables)
+    - 1.1.4 Documenting configuration changes
+  - 1.2 Choosing the correct commit category prefix
+    - 1.2.1 Category prefix reference table
+    - 1.2.2 When to use each category
+  - 1.3 Making commits searchable for future decision archaeology
+    - 1.3.1 Search scenarios and requirements
+    - 1.3.2 Indexing best practices
+  - 1.4 Managing dual-git repositories (project vs design)
+    - 1.4.1 When to commit to project git
+    - 1.4.2 When to commit to design git
+    - 1.4.3 Setting up dual-git configuration
+  - 1.5 Documenting removals and renames with supersedes information
+    - 1.5.1 Supersedes section format
+    - 1.5.2 Migration instructions
+    - 1.5.3 Breaking change indicators
 
 - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries and responsibility limits
+  - Table of Contents
   - Purpose
   - Core Identity: Worker Agent (Not Orchestrator)
+    - What Worker Agents Are
+    - What Worker Agents Are NOT
   - Standard Output Format
+    - Minimal Report to Orchestrator
+    - Detailed Reports in Files
   - Communication Rules
+    - Report to Main Agent Only
+    - AI Maestro Messaging Protocol
+    - GitHub Projects Integration
   - Tool Restrictions
+    - Standard Permissions Table
+    - Exceptions by Agent Type
   - Common Constraints Template
+    - Agent Specifications Table
+    - IRON RULES Section Template
   - IRON RULES
+    - What This Agent DOES
+    - What This Agent NEVER DOES
   - Success/Completion Conditions
+    - Task Completion Criteria
+    - Reporting Completion
   - Anti-Patterns to Avoid
+    - DO NOT: Verbose Context Pollution
+    - DO NOT: Decision Making
+    - DO NOT: Autonomous Task Selection
   - Template Usage
   - References
 

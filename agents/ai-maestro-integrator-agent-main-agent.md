@@ -106,11 +106,11 @@ Use these tools to save context tokens. NEVER read large files into your context
 - [routing-checklist](../skills/amia-integration-protocols/references/routing-checklist.md) — Routing decisions, priority triage, escalation
   - Sub-Agent Routing Table
   - Routing Decision Guidelines
-    - Route to code-reviewer when
-    - Route to bug-investigator when
-    - Handle PR directly when
-    - Spawn verifier when
-    - Escalate to orchestrator when
+    - Route to code-reviewer when:
+    - Route to bug-investigator when:
+    - Handle PR directly when:
+    - Spawn verifier when:
+    - Escalate to orchestrator when:
   - Priority Triage
   - Success Criteria Checklist
     - Integration Request Received

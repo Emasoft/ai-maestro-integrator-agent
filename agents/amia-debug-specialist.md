@@ -45,50 +45,78 @@ Prefer these over reading large files into your context:
 **Before any diagnosis, read:**
 
 - [SKILL](../skills/amia-ci-failure-patterns/SKILL.md) - Full diagnostic methodology and decision tree
-- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Pattern matching workflow
+- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Pattern matching workflow, detailed debug procedures, diagnostic script usage, and step-by-step verification checklists
+  - Table of Contents
   - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
+    - 1.1.1 Log collection and initial triage procedures
+    - 1.1.2 Verification steps for complete data collection
   - 1.2 When identifying which failure pattern category applies
+    - 1.2.1 Using the diagnosis decision tree
+    - 1.2.2 Pattern category reference mapping
   - 1.3 When performing deep root cause analysis by category
+    - 1.3.1 Cross-platform issue analysis procedures
+    - 1.3.2 Exit code issue analysis procedures
+    - 1.3.3 Syntax issue analysis procedures
+    - 1.3.4 Dependency issue analysis procedures
+    - 1.3.5 Infrastructure issue analysis procedures
+    - 1.3.6 Language-specific issue analysis procedures
   - 1.4 When documenting diagnostic evidence
+    - 1.4.1 Diagnostic report structure
+    - 1.4.2 Evidence documentation requirements
+    - 1.4.3 Fix specification format
   - 1.5 When delegating fixes to remote agents
+    - 1.5.1 Delegation protocol (RULE 0 compliant)
+    - 1.5.2 AI Maestro message format
+    - 1.5.3 GitHub issue update procedures
   - 1.6 When escalating unknown or complex failures
+    - 1.6.1 Escalation trigger conditions
+    - 1.6.2 Escalation message format
+    - 1.6.3 Recommendation documentation
   - 1.7 When using diagnostic scripts and tools
+    - 1.7.1 CI log analysis scripts
+    - 1.7.2 Platform issue detection scripts
+    - 1.7.3 JSON output for structured analysis
   - 1.8 When troubleshooting common diagnostic challenges
-
-- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Detailed debug procedures
-  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
-  - 1.2 When identifying which failure pattern category applies
-  - 1.3 When performing deep root cause analysis by category
-  - 1.4 When documenting diagnostic evidence
-  - 1.5 When delegating fixes to remote agents
-  - 1.6 When escalating unknown or complex failures
-  - 1.7 When using diagnostic scripts and tools
-  - 1.8 When troubleshooting common diagnostic challenges
+    - 1.8.1 Handling large log files
+    - 1.8.2 Managing unknown patterns
+    - 1.8.3 Diagnosing multiple simultaneous failures
+    - 1.8.4 Detecting flaky tests
+    - 1.8.5 Analyzing platform matrix complexity
+  - Summary
 
 - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries with orchestrator
+  - Table of Contents
   - Purpose
   - Core Identity: Worker Agent (Not Orchestrator)
+    - What Worker Agents Are
+    - What Worker Agents Are NOT
   - Standard Output Format
+    - Minimal Report to Orchestrator
+    - Detailed Reports in Files
   - Communication Rules
+    - Report to Main Agent Only
+    - AI Maestro Messaging Protocol
+    - GitHub Projects Integration
   - Tool Restrictions
+    - Standard Permissions Table
+    - Exceptions by Agent Type
   - Common Constraints Template
+    - Agent Specifications Table
+    - IRON RULES Section Template
   - IRON RULES
+    - What This Agent DOES
+    - What This Agent NEVER DOES
   - Success/Completion Conditions
+    - Task Completion Criteria
+    - Reporting Completion
   - Anti-Patterns to Avoid
+    - DO NOT: Verbose Context Pollution
+    - DO NOT: Decision Making
+    - DO NOT: Autonomous Task Selection
   - Template Usage
   - References
 
-For escalation protocols, see [SKILL](../skills/amia-ci-failure-patterns/SKILL.md)
-
-- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Diagnostic script usage
-  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
-  - 1.2 When identifying which failure pattern category applies
-  - 1.3 When performing deep root cause analysis by category
-  - 1.4 When documenting diagnostic evidence
-  - 1.5 When delegating fixes to remote agents
-  - 1.6 When escalating unknown or complex failures
-  - 1.7 When using diagnostic scripts and tools
-  - 1.8 When troubleshooting common diagnostic challenges
+For escalation protocols, see [SKILL](../skills/amia-ci-failure-patterns/SKILL.md). Diagnostic script usage is covered under section 1.7 of `debug-procedures` above.
 
 ## Diagnostic Workflow (Summary)
 
@@ -98,15 +126,7 @@ For escalation protocols, see [SKILL](../skills/amia-ci-failure-patterns/SKILL.m
 4. **Document findings** - Write report to [CI-DEBUG-{timestamp}](docs_dev/ci-debug/CI-DEBUG-{timestamp}.md)
 5. **Delegate fix** - Send specification to appropriate agent via AI Maestro
 
-- [debug-procedures](../skills/amia-ci-failure-patterns/references/debug-procedures.md) — Full step-by-step verification checklists
-  - 1.1 When a CI/CD pipeline fails and needs systematic diagnosis
-  - 1.2 When identifying which failure pattern category applies
-  - 1.3 When performing deep root cause analysis by category
-  - 1.4 When documenting diagnostic evidence
-  - 1.5 When delegating fixes to remote agents
-  - 1.6 When escalating unknown or complex failures
-  - 1.7 When using diagnostic scripts and tools
-  - 1.8 When troubleshooting common diagnostic challenges
+Full step-by-step verification checklists are documented in `debug-procedures` (sections 1.4-1.8 above).
 
 ## Pattern Categories (Quick Reference)
 

@@ -41,15 +41,34 @@ Prefer these over reading large files into your context:
 For quality gate rules, requirement compliance, and reporting standards, see [SKILL](../skills/amia-quality-gates/SKILL.md)
 
 - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries and orchestrator handoff protocols
+  - Table of Contents
   - Purpose
   - Core Identity: Worker Agent (Not Orchestrator)
+    - What Worker Agents Are
+    - What Worker Agents Are NOT
   - Standard Output Format
+    - Minimal Report to Orchestrator
+    - Detailed Reports in Files
   - Communication Rules
+    - Report to Main Agent Only
+    - AI Maestro Messaging Protocol
+    - GitHub Projects Integration
   - Tool Restrictions
+    - Standard Permissions Table
+    - Exceptions by Agent Type
   - Common Constraints Template
+    - Agent Specifications Table
+    - IRON RULES Section Template
   - IRON RULES
+    - What This Agent DOES
+    - What This Agent NEVER DOES
   - Success/Completion Conditions
+    - Task Completion Criteria
+    - Reporting Completion
   - Anti-Patterns to Avoid
+    - DO NOT: Verbose Context Pollution
+    - DO NOT: Decision Making
+    - DO NOT: Autonomous Task Selection
   - Template Usage
   - References
 

@@ -48,20 +48,54 @@ Prefer these over reading large files into your context:
 - `amia-quality-gates` skill SKILL.md (integration verification workflow)
 - [integration-verification](../skills/amia-quality-gates/references/integration-verification.md) — Detailed procedures
   - 1. Verifying Component Integration Readiness
+    - 1.1 Environment baseline verification
+    - 1.2 Service connectivity testing
+    - 1.3 Configuration validation
   - 2. Checking Merge Readiness with Exit Code Evidence
+    - 2.1 Functional verification with complete test suite
+    - 2.2 Evidence documentation requirements
+    - 2.3 Merge readiness criteria checklist
   - 3. Verifying User Requirements Compliance Before Integration
+    - 3.1 Loading and parsing USER_REQUIREMENTS.md
+    - 3.2 Creating verification checklist from requirements
+    - 3.3 Handling requirement violations during integration
   - 4. Resolving Integration Conflicts and Failures
+    - 4.1 Interpreting exit codes and failure modes
+    - 4.2 Troubleshooting common integration issues
+    - 4.3 Documenting and reporting verification failures
   - 5. Validating Deployment Configurations
+    - 5.1 Container image verification
+    - 5.2 Runtime environment validation
+    - 5.3 Security and resource compliance checks
 - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries with orchestrator
+  - Table of Contents
   - Purpose
   - Core Identity: Worker Agent (Not Orchestrator)
+    - What Worker Agents Are
+    - What Worker Agents Are NOT
   - Standard Output Format
+    - Minimal Report to Orchestrator
+    - Detailed Reports in Files
   - Communication Rules
+    - Report to Main Agent Only
+    - AI Maestro Messaging Protocol
+    - GitHub Projects Integration
   - Tool Restrictions
+    - Standard Permissions Table
+    - Exceptions by Agent Type
   - Common Constraints Template
+    - Agent Specifications Table
+    - IRON RULES Section Template
   - IRON RULES
+    - What This Agent DOES
+    - What This Agent NEVER DOES
   - Success/Completion Conditions
+    - Task Completion Criteria
+    - Reporting Completion
   - Anti-Patterns to Avoid
+    - DO NOT: Verbose Context Pollution
+    - DO NOT: Decision Making
+    - DO NOT: Autonomous Task Selection
   - Template Usage
   - References
 
@@ -69,10 +103,25 @@ Prefer these over reading large files into your context:
 
 - [integration-verification](../skills/amia-quality-gates/references/integration-verification.md)
   - 1. Verifying Component Integration Readiness
+    - 1.1 Environment baseline verification
+    - 1.2 Service connectivity testing
+    - 1.3 Configuration validation
   - 2. Checking Merge Readiness with Exit Code Evidence
+    - 2.1 Functional verification with complete test suite
+    - 2.2 Evidence documentation requirements
+    - 2.3 Merge readiness criteria checklist
   - 3. Verifying User Requirements Compliance Before Integration
+    - 3.1 Loading and parsing USER_REQUIREMENTS.md
+    - 3.2 Creating verification checklist from requirements
+    - 3.3 Handling requirement violations during integration
   - 4. Resolving Integration Conflicts and Failures
+    - 4.1 Interpreting exit codes and failure modes
+    - 4.2 Troubleshooting common integration issues
+    - 4.3 Documenting and reporting verification failures
   - 5. Validating Deployment Configurations
+    - 5.1 Container image verification
+    - 5.2 Runtime environment validation
+    - 5.3 Security and resource compliance checks
 
 ## When Invoked
 

@@ -52,7 +52,16 @@ Prefer these over reading large files into your context:
   - 1.2 Configuring GitHub Projects V2 environment variables
   - 1.3 Fetching project board data via GraphQL API
   - 1.4 Synchronizing GitHub issues to local task state
+    - 1.4.1 Querying project issues with GraphQL
+    - 1.4.2 Extracting labels and custom fields from issues
+    - 1.4.3 Parsing task checklists from issue bodies using TaskList API
+    - 1.4.4 Updating orchestrator's internal task tracking
   - 1.5 Synchronizing local changes back to GitHub
+    - 1.5.1 Reading orchestrator's task modifications
+    - 1.5.2 Converting task state to GitHub issue updates
+    - 1.5.3 Applying label changes via gh CLI
+    - 1.5.4 Updating issue bodies with Claude Tasks state
+    - 1.5.5 Moving issues on Project V2 board using GraphQL mutations
   - 1.6 Managing GitHub issue labels across priority, status, and type dimensions
   - 1.7 Syncing Project V2 custom fields bidirectionally
   - 1.8 Integrating Claude Tasks with GitHub issue checklists
@@ -60,42 +69,64 @@ Prefer these over reading large files into your context:
   - 1.10 Generating sync reports and logs
   - 1.11 Troubleshooting API rate limits, label conflicts, and task parse errors
 - [graphql-queries](../skills/amia-github-projects-sync/references/graphql-queries.md) — GraphQL query library
-  - GraphQL Queries for GitHub Projects
-  - Overview
-  - List Projects
-  - Get Items
-  - Update Status
-  - Create Issues
-  - Custom Fields
+  - When listing projects
+  - When getting project items
+  - When updating item status
+  - When creating issues via GraphQL
+  - When working with custom fields
   - Detailed Query References
 - [status-management](../skills/amia-github-projects-sync/references/status-management.md) — Issue lifecycle and NO STALE policy
-  - Part Files
-  - Overview
-  - Status Definitions
-  - Issue Lifecycle Policy (NO STALE)
-  - Related References
+  - When starting with status management
+  - When you need to understand status meanings and metadata
+  - When moving issues between statuses
+  - When syncing GitHub state with project board
+  - When updating status via API or scripts
+  - When generating status reports or summaries
+  - When issues need attention or escalation
+  - When deciding whether to close inactive issues
+  - When following status management best practices
+  - When referencing related workflow documentation
 - [label-taxonomy](../skills/amia-github-projects-sync/references/label-taxonomy.md) — 9-label classification system
-  - Overview
-  - Label Categories
-  - Label Management
-  - Label Application Rules
-  - Label-Based Queries
-  - Label Statistics
-  - Best Practices
-  - Label Colors Reference
+  - When starting with the label system
+  - When you need to know available label categories
+  - When creating or managing labels via CLI
+  - When applying labels automatically or manually
+  - When searching or filtering issues by labels
+  - When generating label statistics and counts
+  - When following label usage best practices
+  - When choosing label colors
 
 **For role boundaries with orchestrator, see:**
 
 - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md)
+  - Table of Contents
   - Purpose
   - Core Identity: Worker Agent (Not Orchestrator)
+    - What Worker Agents Are
+    - What Worker Agents Are NOT
   - Standard Output Format
+    - Minimal Report to Orchestrator
+    - Detailed Reports in Files
   - Communication Rules
+    - Report to Main Agent Only
+    - AI Maestro Messaging Protocol
+    - GitHub Projects Integration
   - Tool Restrictions
+    - Standard Permissions Table
+    - Exceptions by Agent Type
   - Common Constraints Template
+    - Agent Specifications Table
+    - IRON RULES Section Template
   - IRON RULES
+    - What This Agent DOES
+    - What This Agent NEVER DOES
   - Success/Completion Conditions
+    - Task Completion Criteria
+    - Reporting Completion
   - Anti-Patterns to Avoid
+    - DO NOT: Verbose Context Pollution
+    - DO NOT: Decision Making
+    - DO NOT: Autonomous Task Selection
   - Template Usage
   - References
 
