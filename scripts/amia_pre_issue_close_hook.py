@@ -507,6 +507,14 @@ Review and fix issues before closing the issue.
 
     # CHECK 5: TDD commit sequence
     print("Checking TDD commit sequence in merged PR...")
+    # Defaults so the post-check tdd_status formatter (line 556) sees defined
+    # names even when we skipped verification (error fetching commits, or
+    # short-circuited via the if-branch below). Without these, pyright flags
+    # `is_valid`/`red_count`/`green_count` as possibly-unbound — and a hostile
+    # input (error set, commits non-empty) would actually trigger UnboundLocalError.
+    is_valid = False
+    red_count = 0
+    green_count = 0
     commits, error = get_pr_commits(merged_pr)
 
     if error or not commits:
