@@ -3,11 +3,11 @@ name: amia-github-pr-merge
 description: "Use when merging pull requests, checking merge status, or configuring auto-merge. Trigger with merge, auto-merge, or readiness verification requests. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires AI Maestro installed.
+tags: "github, pull-request, merge, graphql, automation"
 metadata:
   version: "1.0.0"
   author: Emasoft
   category: github-workflow
-  tags: "github, pull-request, merge, graphql, automation"
 agent: api-coordinator
 context: fork
 user-invocable: false

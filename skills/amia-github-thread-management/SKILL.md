@@ -3,10 +3,10 @@ name: amia-github-thread-management
 description: "Use when managing PR review threads. Reply does NOT auto-resolve threads. Trigger with /manage-threads. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires AI Maestro installed.
+tags: "github, pull-request, code-review, thread-management"
 metadata:
   version: "1.0.0"
   author: Emasoft
-  tags: "github, pull-request, code-review, thread-management"
   triggers: "resolve review thread, unresolve thread, reply to comment, track review comments, unaddressed comments, batch resolve threads"
 agent: api-coordinator
 context: fork

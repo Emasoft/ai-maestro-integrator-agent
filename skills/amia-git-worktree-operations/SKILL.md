@@ -3,11 +3,11 @@ name: amia-git-worktree-operations
 description: "Use when processing parallel PRs. Trigger with git worktree or parallel development requests. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires AI Maestro installed.
+agent: amia-main
+tags: "git, worktree, parallel-development, pr-workflow, isolation"
 metadata:
   version: 1.0.0
   author: Emasoft
-  agent: amia-main
-  tags: "git, worktree, parallel-development, pr-workflow, isolation"
   requires: "git >= 2.15, python >= 3.9"
 context: fork
 user-invocable: false

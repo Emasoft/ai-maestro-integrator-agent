@@ -1,6 +1,5 @@
 {
-  "description": "Integrator Agent hooks - branch protection, quality gates, issue closure enforcement",
-  "_note": "Hook data is passed via stdin as JSON. Scripts read from stdin, not env vars.",
+  "description": "Integrator Agent hooks - branch protection, quality gates, issue closure enforcement. Hook data is passed via stdin as JSON; scripts read from stdin, not env vars.",
   "hooks": {
     "PreToolUse": [
       {
@@ -11,7 +10,7 @@
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_pre_push_hook.py",
-            "timeout": 30000
+            "timeout": 30
           }
         ]
       },
@@ -23,7 +22,7 @@
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_pre_issue_close_hook.py",
-            "timeout": 60000
+            "timeout": 60
           }
         ]
       }
@@ -36,7 +35,7 @@
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_stop_hook.py",
-            "timeout": 60000
+            "timeout": 60
           }
         ]
       }

@@ -113,9 +113,9 @@ Alternative options for the URL depending on your community setup:
 
 | Community Platform | URL Pattern |
 |-------------------|-------------|
-| GitHub Discussions | `https://github.com/ORG/REPO/discussions/categories/q-a` |
-| Stack Overflow | `https://stackoverflow.com/questions/tagged/your-project` |
-| Forum (Discourse) | `https://forum.yourproject.dev` |
+| GitHub Discussions | `github.com/<ORG>/<REPO>/discussions/categories/q-a` (prepend `https://`) |
+| Stack Overflow | `stackoverflow.com/questions/tagged/<your-project>` (prepend `https://`) |
+| Forum (Discourse) | `forum.<your-project-domain>` (prepend `https://`) |
 | Chat (Matrix) | `https://matrix.to/#/#your-project:matrix.org` |
 
 ### 3.3 Adding custom external links

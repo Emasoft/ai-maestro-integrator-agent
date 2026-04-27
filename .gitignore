@@ -38,8 +38,11 @@ env/
 
 # Dev folders (NEVER PUBLISH - development artifacts only)
 # Wildcard pattern catches all: docs_dev, scripts_dev, tests_dev, samples_dev,
-# examples_dev, downloads_dev, libs_dev, builds_dev, etc.
+# examples_dev, downloads_dev, libs_dev, builds_dev, reports_dev, etc.
+# Explicit reports_dev line is required so CPV's literal-pattern checker
+# recognizes the rule — it doesn't expand wildcards.
 *_dev/
+reports_dev/
 
 # Testing
 .coverage

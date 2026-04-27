@@ -3,10 +3,10 @@ name: amia-github-pr-checks
 description: "Use when monitoring PR checks. Trigger with CI status, check verification, or PR readiness requests. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires AI Maestro installed.
+tags: "github, ci-cd, pull-requests, checks, automation"
 metadata:
   version: 1.0.0
   author: Emasoft
-  tags: "github, ci-cd, pull-requests, checks, automation"
 agent: api-coordinator
 context: fork
 user-invocable: false

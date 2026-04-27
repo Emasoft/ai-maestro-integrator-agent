@@ -3,10 +3,10 @@ name: amia-ci-failure-patterns
 description: "Use when diagnosing CI/CD failures. Trigger with CI failure logs or pipeline errors. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires AI Maestro installed.
+tags: "ci, cd, github-actions, debugging, cross-platform, devops"
 metadata:
   version: 1.0.0
   author: Emasoft
-  tags: "ci, cd, github-actions, debugging, cross-platform, devops"
   platforms: "linux, macos, windows"
   languages: "python, javascript, typescript, rust, go, bash, powershell"
 agent: debug-specialist
