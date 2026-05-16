@@ -1,28 +1,28 @@
 {
-  "description": "Integrator Agent hooks - branch protection, quality gates, issue closure enforcement. Hook data is passed via stdin as JSON; scripts read from stdin, not env vars.",
+  "description": "Integrator Agent hooks - branch protection, quality gates, issue closure enforcement. Hook data is passed via stdin as JSON; scripts read from stdin, not env vars. Scripts honor Claude Code 2.1.132+ env vars ($CLAUDE_CODE_SESSION_ID for log correlation, $CLAUDE_EFFORT for effort tier) and the 2.1.143 Stop-hook consecutive-block cap ($CLAUDE_CODE_STOP_HOOK_BLOCK_CAP, default 8).",
   "hooks": {
     "PreToolUse": [
       {
         "_id": "amia-branch-protection",
-        "_description": "Blocks direct push to main/master branches",
+        "_description": "Blocks direct push to main/master branches. Diagnostic prints go to stderr (captured by Claude Code since 2.1.139 — hooks no longer have terminal access).",
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_pre_push_hook.py",
-            "timeout": 30
+            "timeout": 30000
           }
         ]
       },
       {
         "_id": "amia-issue-closure-gate",
-        "_description": "Blocks premature issue closure - requires merged PR, checkboxes, evidence, TDD",
+        "_description": "Blocks premature issue closure - requires merged PR, checkboxes, evidence, TDD. All progress prints route to stderr to keep stdout reserved for future JSON response payloads.",
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_pre_issue_close_hook.py",
-            "timeout": 60
+            "timeout": 60000
           }
         ]
       }
@@ -30,12 +30,12 @@
     "Stop": [
       {
         "_id": "amia-stop-check",
-        "_description": "Blocks exit until all integration work is complete",
+        "_description": "Blocks exit until all integration work is complete. Tracks consecutive blocks per session_id; at 5 blocks (62.5% of the 8 default cap enforced by Claude Code 2.1.143+) the response includes a friendly heads-up about the imminent auto-release.",
         "hooks": [
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_stop_hook.py",
-            "timeout": 60
+            "timeout": 60000
           }
         ]
       }

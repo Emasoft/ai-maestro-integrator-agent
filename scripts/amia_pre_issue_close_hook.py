@@ -12,11 +12,16 @@ Prevents premature GitHub issue closure by verifying:
 IMPORTANT: This is a PreToolUse(Bash) hook. It receives tool_input via stdin as JSON.
 The script parses the command and ONLY triggers on `gh issue close` commands.
 
+Hooks now run without terminal access (Claude Code 2.1.139) — diagnostic
+prints go to stderr (captured by Claude Code), never the user's prompt.
+Stdout is reserved for any future hook JSON response payloads so it must
+not be mixed with informational text.
+
 NO external dependencies - Python 3.8+ stdlib only.
 
 Usage:
     # As PreToolUse hook (stdin JSON):
-    echo '{"tool_input":{"command":"gh issue close 42"}}' | python3 amia_pre_issue_close_hook.py
+    echo '{"tool_input":{"command":"gh issue close 42"},"session_id":"abc"}' | python3 amia_pre_issue_close_hook.py
 
     # Direct invocation (for testing):
     python3 amia_pre_issue_close_hook.py <issue_number>
@@ -25,6 +30,13 @@ Usage:
 Exit codes:
     0 - All checks passed (or non-matching command - allow)
     2 - Block issue closure (checks failed)
+
+Environment variables (precedence order):
+    CLAUDE_PROJECT_DIR     - Project root directory (Claude Code standard, preferred)
+    CLAUDE_PROJECT_ROOT    - Project root directory (legacy fallback)
+    CLAUDE_CODE_SESSION_ID - Current session ID (2.1.132+, used for log correlation)
+    CLAUDE_EFFORT          - Active effort level (2.1.133+)
+    ORCHESTRATOR_DEBUG     - Enable debug logging (1=enabled, 0=disabled)
 """
 
 import argparse
@@ -36,6 +48,30 @@ import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+
+
+def _say(*args: Any, **kwargs: Any) -> None:
+    """Write human-readable progress text to stderr.
+
+    Stdout is reserved for any future JSON response payload Claude Code might
+    parse. This helper exists so progress prints can never collide with that.
+    """
+    print(*args, file=sys.stderr, **kwargs)
+
+
+def _project_root() -> Path:
+    """Resolve project root: $CLAUDE_PROJECT_DIR -> $CLAUDE_PROJECT_ROOT -> cwd."""
+    return Path(
+        os.environ.get("CLAUDE_PROJECT_DIR")
+        or os.environ.get("CLAUDE_PROJECT_ROOT")
+        or os.getcwd()
+    )
+
+
+def _session_tag() -> str:
+    """Return a `session=<id>` tag for log lines."""
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+    return f"session={sid}" if sid else "session=unknown"
 
 
 def log_message(level: str, message: str, log_file: Path) -> None:
@@ -249,7 +285,13 @@ def parse_stdin_json() -> tuple[str | None, str | None]:
     """Parse command from PreToolUse stdin JSON.
 
     PreToolUse hooks receive tool_input via stdin in JSON format:
-    {"tool_input": {"command": "gh issue close 42"}}
+        {"tool_input": {"command": "gh issue close 42"},
+         "session_id": "...",
+         "effort": {"level": "..."}}
+
+    Side effect: when stdin carries session_id or effort.level, we export
+    them as $CLAUDE_CODE_SESSION_ID (2.1.132+) and $CLAUDE_EFFORT (2.1.133+)
+    for the rest of this process so log entries consistently include them.
 
     Returns:
         Tuple of (command, issue_number) or (None, None) if not applicable
@@ -263,6 +305,15 @@ def parse_stdin_json() -> tuple[str | None, str | None]:
             return None, None
 
         data = json.loads(stdin_data)
+        # Promote session_id and effort.level into env vars (single source of truth).
+        sid = data.get("session_id")
+        if isinstance(sid, str) and sid and not os.environ.get("CLAUDE_CODE_SESSION_ID"):
+            os.environ["CLAUDE_CODE_SESSION_ID"] = sid
+        effort = data.get("effort")
+        if isinstance(effort, dict):
+            level = effort.get("level")
+            if isinstance(level, str) and level and not os.environ.get("CLAUDE_EFFORT"):
+                os.environ["CLAUDE_EFFORT"] = level
         tool_input = data.get("tool_input", {})
         command = tool_input.get("command", "")
 
@@ -291,8 +342,8 @@ def main() -> int:
     Returns:
         Exit code: 0 for success/allow, 2 for block
     """
-    # Setup logging first
-    project_root = Path(os.environ.get("CLAUDE_PROJECT_ROOT", os.getcwd()))
+    # Setup logging first (use the shared helper, not raw env lookup).
+    project_root = _project_root()
     log_file = project_root / ".claude" / "orchestrator-hook.log"
 
     # Try PreToolUse stdin JSON mode first
@@ -301,7 +352,9 @@ def main() -> int:
     if command is not None:
         # We received stdin - we're running as a hook
         log_message(
-            "FIRED", f"PreToolUse(Bash) - command: {command[:100]}...", log_file
+            "FIRED",
+            f"PreToolUse(Bash) ({_session_tag()}) - command: {command[:100]}...",
+            log_file,
         )
 
         if stdin_issue is None:
@@ -345,7 +398,7 @@ Examples:
         return 1
 
     # CHECK 1: PR exists and linked
-    print("Checking for linked PRs...")
+    _say("Checking for linked PRs...")
     prs, error = get_linked_prs(issue_number)
     if error or not prs:
         log_message(
@@ -374,7 +427,7 @@ To create a linked PR:
         return 2  # Exit code 2 = block for PreToolUse hooks
 
     pr_numbers = [pr["number"] for pr in prs]
-    print(f"  Found linked PRs: {' '.join(map(str, pr_numbers))}")
+    _say(f"  Found linked PRs: {' '.join(map(str, pr_numbers))}")
 
     # CHECK 2: PR is merged
     merged_pr = get_merged_pr(prs)
@@ -405,10 +458,10 @@ Then try closing the issue again.
         )
         return 2  # Exit code 2 = block for PreToolUse hooks
 
-    print(f"  PR #{merged_pr} is merged")
+    _say(f"  PR #{merged_pr} is merged")
 
     # CHECK 3: Issue checkboxes complete
-    print("Checking issue checkboxes...")
+    _say("Checking issue checkboxes...")
     body, error = get_issue_body(issue_number)
     if not error and body:
         unchecked, total = count_checkboxes(body)
@@ -440,12 +493,12 @@ To update the issue:
             )
             return 2  # Exit code 2 = block for PreToolUse hooks
 
-        print(f"  All {total} checkboxes complete")
+        _say(f"  All {total} checkboxes complete")
     else:
-        print("  No checkboxes found in issue body")
+        _say("  No checkboxes found in issue body")
 
     # CHECK 4: Evidence file exists (optional)
-    print("Checking for evidence file...")
+    _say("Checking for evidence file...")
     evidence_dir = project_root / "evidence"
     evidence_file = evidence_dir / f"{issue_number}.json"
 
@@ -477,11 +530,11 @@ Proceeding anyway (evidence is recommended but not required)...
             file=sys.stderr,
         )
     else:
-        print(f"  Evidence file found: {evidence_file}")
+        _say(f"  Evidence file found: {evidence_file}")
         try:
             evidence_data = json.loads(evidence_file.read_text(encoding="utf-8"))
             status = evidence_data.get("status", "unknown")
-            print(f"  Evidence status: {status}")
+            _say(f"  Evidence status: {status}")
 
             if status != "passed":
                 log_message(
@@ -506,7 +559,7 @@ Review and fix issues before closing the issue.
             print("  WARNING: Evidence file is not valid JSON", file=sys.stderr)
 
     # CHECK 5: TDD commit sequence
-    print("Checking TDD commit sequence in merged PR...")
+    _say("Checking TDD commit sequence in merged PR...")
     # Defaults so the post-check tdd_status formatter (line 556) sees defined
     # names even when we skipped verification (error fetching commits, or
     # short-circuited via the if-branch below). Without these, pyright flags
@@ -552,8 +605,8 @@ Your PR commits (newest first):
             )
             return 2  # Exit code 2 = block for PreToolUse hooks
 
-        print(f"  TDD commits found: {red_count} RED, {green_count} GREEN")
-        print("  TDD sequence verified: RED → GREEN")
+        _say(f"  TDD commits found: {red_count} RED, {green_count} GREEN")
+        _say("  TDD sequence verified: RED → GREEN")
 
     # ALL CHECKS PASSED
     log_message(
@@ -567,7 +620,7 @@ Your PR commits (newest first):
         else "Not checked"
     )
 
-    print(f"""
+    _say(f"""
 {"=" * 80}
 All closure checks PASSED for issue #{issue_number}
 {"=" * 80}

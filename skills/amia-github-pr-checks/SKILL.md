@@ -7,7 +7,7 @@ tags: "github, ci-cd, pull-requests, checks, automation"
 metadata:
   version: 1.0.0
   author: Emasoft
-agent: api-coordinator
+agent: amia-api-coordinator
 context: fork
 user-invocable: false
 ---

@@ -8,7 +8,7 @@ metadata:
   version: 1.0.0
   author: Emasoft
   category: github
-agent: api-coordinator
+agent: amia-api-coordinator
 context: fork
 user-invocable: false
 ---

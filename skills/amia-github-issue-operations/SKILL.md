@@ -9,7 +9,7 @@ metadata:
   author: Emasoft
   category: github
   requires_tools: "gh, jq"
-agent: api-coordinator
+agent: amia-api-coordinator
 context: fork
 user-invocable: false
 ---

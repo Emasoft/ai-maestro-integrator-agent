@@ -6,7 +6,7 @@ compatibility: Requires intermediate software development experience and familia
 metadata:
   author: Emasoft
   version: 1.0.0
-agent: amia-main
+agent: ai-maestro-integrator-agent-main-agent
 context: fork
 user-invocable: false
 ---

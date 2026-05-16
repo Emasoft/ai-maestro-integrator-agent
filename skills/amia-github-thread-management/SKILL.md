@@ -8,7 +8,7 @@ metadata:
   version: "1.0.0"
   author: Emasoft
   triggers: "resolve review thread, unresolve thread, reply to comment, track review comments, unaddressed comments, batch resolve threads"
-agent: api-coordinator
+agent: amia-api-coordinator
 context: fork
 user-invocable: false
 ---

@@ -5,7 +5,7 @@ compatibility: Requires AI Maestro installed.
 metadata:
   author: Emasoft
   version: 1.0.0
-agent: amia-main
+agent: ai-maestro-integrator-agent-main-agent
 context: fork
 user-invocable: false
 license: Apache-2.0

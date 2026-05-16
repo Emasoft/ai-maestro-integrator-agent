@@ -8,12 +8,16 @@ Validates branch naming conventions and provides guidance for proper git workflo
 IMPORTANT: This is a PreToolUse(Bash) hook. It receives tool_input via stdin as JSON.
 The script parses the command and ONLY triggers on git push commands.
 
+Hooks now run without terminal access (Claude Code 2.1.139) — writes to stderr
+go to a captured stream, never to the user's prompt, so verbose multi-line
+warnings cannot corrupt UI state.
+
 NO shell wrappers - runs via 'python3 script.py' directly.
 NO external dependencies - Python 3.8+ stdlib only.
 
 Usage:
     # As PreToolUse hook (stdin JSON):
-    echo '{"tool_input":{"command":"git push"}}' | python3 amia_pre_push_hook.py
+    echo '{"tool_input":{"command":"git push"},"session_id":"abc"}' | python3 amia_pre_push_hook.py
 
     # Direct invocation (for testing):
     python3 amia_pre_push_hook.py --command "git push origin main"
@@ -22,9 +26,12 @@ Exit codes:
     0 - Allow (non-push command OR valid feature branch)
     2 - Block push (main/master branch protection)
 
-Environment variables:
-    CLAUDE_PROJECT_ROOT - Project root directory (defaults to current directory)
-    ORCHESTRATOR_DEBUG - Enable debug logging (1=enabled, 0=disabled)
+Environment variables (precedence order):
+    CLAUDE_PROJECT_DIR     - Project root directory (Claude Code standard, preferred)
+    CLAUDE_PROJECT_ROOT    - Project root directory (legacy fallback)
+    CLAUDE_CODE_SESSION_ID - Current session ID (2.1.132+, used for log correlation)
+    CLAUDE_EFFORT          - Active effort level (2.1.133+)
+    ORCHESTRATOR_DEBUG     - Enable debug logging (1=enabled, 0=disabled)
 """
 
 import json
@@ -36,14 +43,34 @@ from datetime import datetime
 from pathlib import Path
 
 
+def get_project_root() -> Path:
+    """Resolve the project root directory.
+
+    Precedence (matches Claude Code 2.1.139+ conventions):
+      1. $CLAUDE_PROJECT_DIR (standard env var set by the harness)
+      2. $CLAUDE_PROJECT_ROOT (legacy)
+      3. cwd
+    """
+    return Path(
+        os.environ.get("CLAUDE_PROJECT_DIR")
+        or os.environ.get("CLAUDE_PROJECT_ROOT")
+        or os.getcwd()
+    )
+
+
 def get_log_file() -> Path:
     """Get log file path from environment or default location.
 
     Returns:
         Path to the orchestrator hook log file
     """
-    project_root = os.environ.get("CLAUDE_PROJECT_ROOT", os.getcwd())
-    return Path(project_root) / ".claude" / "orchestrator-hook.log"
+    return get_project_root() / ".claude" / "orchestrator-hook.log"
+
+
+def _session_tag() -> str:
+    """Return a `session=<id>` tag for log lines (empty when unset)."""
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+    return f"session={sid}" if sid else "session=unknown"
 
 
 def ensure_log_dir(log_file: Path) -> None:
@@ -197,7 +224,14 @@ def parse_stdin_json() -> str | None:
     """Parse command from PreToolUse stdin JSON.
 
     PreToolUse hooks receive tool_input via stdin in JSON format:
-    {"tool_input": {"command": "git push origin main"}}
+        {"tool_input": {"command": "git push origin main"},
+         "session_id": "...",
+         "effort": {"level": "..."}}
+
+    Side effect: when stdin carries a `session_id`, we export it as
+    `CLAUDE_CODE_SESSION_ID` for the rest of this process so log entries
+    consistently include the session tag (matches Claude Code 2.1.132+
+    convention for Bash subprocesses).
 
     Returns:
         The bash command string or None if parsing fails
@@ -211,6 +245,16 @@ def parse_stdin_json() -> str | None:
             return None
 
         data: dict[str, object] = json.loads(stdin_data)
+        # Promote session_id and effort.level into env vars so the rest of
+        # the process (and any debug helpers) sees a single source of truth.
+        sid = data.get("session_id")
+        if isinstance(sid, str) and sid and not os.environ.get("CLAUDE_CODE_SESSION_ID"):
+            os.environ["CLAUDE_CODE_SESSION_ID"] = sid
+        effort = data.get("effort")
+        if isinstance(effort, dict):
+            level = effort.get("level")
+            if isinstance(level, str) and level and not os.environ.get("CLAUDE_EFFORT"):
+                os.environ["CLAUDE_EFFORT"] = level
         tool_input = data.get("tool_input", {})
         if not isinstance(tool_input, dict):
             return None
@@ -276,8 +320,12 @@ def main() -> int:
         debug("No command received - allowing", log_file)
         return 0
 
-    # Log hook fired
-    log("FIRED", f"PreToolUse(Bash) - command: {command[:100]}{'...' if len(command) > 100 else ''}", log_file)
+    # Log hook fired (include session tag for cross-hook correlation; see 2.1.132).
+    log(
+        "FIRED",
+        f"PreToolUse(Bash) ({_session_tag()}) - command: {command[:100]}{'...' if len(command) > 100 else ''}",
+        log_file,
+    )
 
     # Check if this is a git push command
     if not is_git_push_command(command):

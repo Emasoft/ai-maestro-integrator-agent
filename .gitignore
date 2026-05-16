@@ -77,3 +77,6 @@ llm_externalizer_output/
 # Rechecker plugin runtime artifacts (worktree mgmt + merge-pending notifications)
 .rechecker/
 rck-*-merge-pending.md
+
+# Agent reports (private)
+/reports/

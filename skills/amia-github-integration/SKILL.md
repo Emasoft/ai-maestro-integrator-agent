@@ -6,7 +6,7 @@ compatibility: Requires GitHub CLI version 2.14 or higher, GitHub account with w
 metadata:
   author: Emasoft
   version: 1.0.0
-agent: api-coordinator
+agent: amia-api-coordinator
 context: fork
 user-invocable: false
 ---

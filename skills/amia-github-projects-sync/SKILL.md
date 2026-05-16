@@ -6,7 +6,7 @@ compatibility: "Requires GitHub CLI authentication, GitHub Projects V2 enabled r
 metadata:
   author: Emasoft
   version: 1.0.0
-agent: api-coordinator
+agent: amia-api-coordinator
 context: fork
 user-invocable: false
 ---

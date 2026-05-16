@@ -1,12 +1,12 @@
 ---
 name: amia-ai-pr-review-methodology
-description: "Use when performing PR reviews. Trigger with /amia-ai-pr-review. Loaded by ai-maestro-integrator-agent-main-agent."
+description: "Use when performing structured AI-driven PR reviews — 8-dimensional rubric (correctness, security, performance, test coverage, maintainability, docs, style, dependencies) with verdict ladder (approve/request-changes/comment) and severity classification. Trigger with /amia-ai-pr-review, 'review this PR', or any PR-evaluation request. Loaded by ai-maestro-integrator-agent-main-agent."
 license: Apache-2.0
 compatibility: Requires code review experience and codebase access.
 metadata:
   author: Emasoft
   version: 1.0.0
-agent: amia-main
+agent: ai-maestro-integrator-agent-main-agent
 context: fork
 user-invocable: false
 ---

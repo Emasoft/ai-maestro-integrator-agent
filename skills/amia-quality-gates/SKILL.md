@@ -1,13 +1,13 @@
 ---
 name: amia-quality-gates
-description: "Use when enforcing quality gates. Trigger with /amia-enforce-gates. Loaded by ai-maestro-integrator-agent-main-agent."
+description: "Use when verifying pre-merge quality gates — CI green, branch protection compliant, required reviews approved, no unresolved review threads, evidence file present, TDD commit sequence valid, no merge conflicts. Trigger with /amia-enforce-gates, 'check quality gates', or any pre-merge / pre-release readiness request. Loaded by ai-maestro-integrator-agent-main-agent."
 version: 1.0.0
 license: Apache-2.0
 compatibility: Requires CI/CD and GitHub workflow experience. Requires AI Maestro installed.
 metadata:
   author: Emasoft
   version: 1.0.0
-agent: amia-main
+agent: ai-maestro-integrator-agent-main-agent
 context: fork
 user-invocable: false
 ---

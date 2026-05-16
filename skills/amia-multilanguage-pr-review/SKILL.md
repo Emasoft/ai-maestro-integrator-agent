@@ -10,7 +10,7 @@ metadata:
   complexity: advanced
   requires_tools: "gh, git"
   supported_languages: "python, javascript, typescript, rust, go, bash, shell"
-agent: code-reviewer
+agent: amia-code-reviewer
 context: fork
 user-invocable: false
 ---

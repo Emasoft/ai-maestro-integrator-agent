@@ -11,12 +11,22 @@ Blocks the integrator agent from exiting with incomplete work. Checks:
 IMPORTANT: This is a Stop hook. It receives hook data via stdin as JSON.
 The script checks for incomplete work and blocks exit if found.
 
+Claude Code 2.1.143 caps consecutive Stop-hook blocks at 8 (override via
+`CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`). Once the cap is hit, Claude Code ends
+the turn anyway. This hook tracks the consecutive block count per session
+and, at 5 blocks, includes a friendly heads-up in the response so the user
+knows the auto-release is imminent.
+
+Hooks now run without terminal access (2.1.139) — writes to stdout/stderr
+go to a captured stream, never directly to the user's terminal, so they
+cannot corrupt the prompt.
+
 NO shell wrappers - runs via 'python3 script.py' directly.
 NO external dependencies - Python 3.8+ stdlib only (except gh CLI).
 
 Usage:
     # As Stop hook (stdin JSON):
-    echo '{}' | python3 amia_stop_hook.py
+    echo '{"session_id":"abc123"}' | python3 amia_stop_hook.py
 
     # Direct invocation (for testing):
     python3 amia_stop_hook.py --check
@@ -25,10 +35,14 @@ Exit codes:
     0 - Allow exit (no incomplete work)
     2 - Block exit (incomplete work detected)
 
-Environment variables:
-    CLAUDE_PROJECT_ROOT - Project root directory (defaults to current directory)
-    ORCHESTRATOR_DEBUG - Enable debug logging (1=enabled, 0=disabled)
-    AMIA_PROJECT_NUMBER - GitHub Projects number to check (optional)
+Environment variables (precedence order):
+    CLAUDE_PROJECT_DIR     - Project root directory (Claude Code standard, preferred)
+    CLAUDE_PROJECT_ROOT    - Project root directory (legacy fallback)
+    CLAUDE_CODE_SESSION_ID - Current session ID (2.1.132+, fallback if stdin lacks it)
+    CLAUDE_EFFORT          - Active effort level (2.1.133+) - low|medium|high|max|xhigh
+    CLAUDE_CODE_STOP_HOOK_BLOCK_CAP - Max consecutive blocks before auto-release (default 8, set by Claude Code, 2.1.143)
+    ORCHESTRATOR_DEBUG     - Enable debug logging (1=enabled, 0=disabled)
+    AMIA_PROJECT_NUMBER    - GitHub Projects number to check (optional)
 """
 
 import json
@@ -39,6 +53,27 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
 
+# Default consecutive-block cap that Claude Code 2.1.143+ enforces.
+# We use the same default so our soft warning kicks in at 5/8 (62.5%).
+_CLAUDE_CODE_DEFAULT_STOP_HOOK_BLOCK_CAP = 8
+_SOFT_WARN_AT_FRACTION = 5 / 8  # warn the user at 5 consecutive blocks (when cap is 8)
+
+
+def get_project_root() -> Path:
+    """Resolve the project root directory.
+
+    Precedence (matches Claude Code 2.1.139+ conventions):
+      1. $CLAUDE_PROJECT_DIR (Claude Code standard env var; set by the harness
+         for both hooks and MCP stdio servers as of 2.1.139)
+      2. $CLAUDE_PROJECT_ROOT (legacy fallback; still set in older sessions)
+      3. cwd
+    """
+    return Path(
+        os.environ.get("CLAUDE_PROJECT_DIR")
+        or os.environ.get("CLAUDE_PROJECT_ROOT")
+        or os.getcwd()
+    )
+
 
 def get_log_file() -> Path:
     """Get log file path from environment or default location.
@@ -46,8 +81,111 @@ def get_log_file() -> Path:
     Returns:
         Path to the orchestrator hook log file
     """
-    project_root = os.environ.get("CLAUDE_PROJECT_ROOT", os.getcwd())
-    return Path(project_root) / ".claude" / "orchestrator-hook.log"
+    return get_project_root() / ".claude" / "orchestrator-hook.log"
+
+
+def get_block_tracking_dir() -> Path:
+    """Directory holding per-session consecutive-block counter files.
+
+    One file per session_id, contents = decimal integer (block count).
+    Cleaned on every ALLOWED return so files don't accumulate.
+    """
+    return get_project_root() / ".claude" / ".stop-hook-blocks"
+
+
+def get_block_cap() -> int:
+    """Read the Claude Code 2.1.143+ Stop-hook consecutive-block cap.
+
+    The cap is set by the user via $CLAUDE_CODE_STOP_HOOK_BLOCK_CAP and read
+    by Claude Code itself; we read the same value so our soft-warn threshold
+    tracks any user override. Defaults to 8 (matches Claude Code default).
+    """
+    raw = os.environ.get("CLAUDE_CODE_STOP_HOOK_BLOCK_CAP", "").strip()
+    if not raw:
+        return _CLAUDE_CODE_DEFAULT_STOP_HOOK_BLOCK_CAP
+    try:
+        value = int(raw)
+    except ValueError:
+        return _CLAUDE_CODE_DEFAULT_STOP_HOOK_BLOCK_CAP
+    # Clamp to a sane range: at least 1, at most 100 (paranoia bound).
+    return max(1, min(100, value))
+
+
+def get_consecutive_block_count(session_id: str, log_file: Path) -> int:
+    """Read the current consecutive-block count for a session.
+
+    Returns 0 if the session has never been blocked (or the tracking file
+    is missing/corrupt).
+    """
+    if not session_id:
+        return 0
+    tracking_dir = get_block_tracking_dir()
+    counter = tracking_dir / f"{_sanitize_session_id(session_id)}.count"
+    try:
+        text = counter.read_text(encoding="utf-8").strip()
+        return max(0, int(text))
+    except (OSError, ValueError) as exc:
+        debug(f"counter read failed for {session_id}: {exc}", log_file)
+        return 0
+
+
+def increment_block_count(session_id: str, log_file: Path) -> int:
+    """Increment and persist the consecutive-block count for a session.
+
+    Returns the new count (>=1). Silent no-op (returns 0) if session_id is
+    empty or the tracking directory can't be created.
+    """
+    if not session_id:
+        return 0
+    tracking_dir = get_block_tracking_dir()
+    try:
+        tracking_dir.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        debug(f"tracking dir mkdir failed: {exc}", log_file)
+        return 0
+    counter = tracking_dir / f"{_sanitize_session_id(session_id)}.count"
+    current = get_consecutive_block_count(session_id, log_file)
+    new_value = current + 1
+    try:
+        # Atomic write — tmp + rename — so a crash mid-write leaves the prior
+        # value intact instead of zeroing the counter.
+        tmp = counter.with_suffix(counter.suffix + f".tmp.{os.getpid()}")
+        tmp.write_text(str(new_value), encoding="utf-8")
+        tmp.replace(counter)
+    except OSError as exc:
+        debug(f"counter write failed for {session_id}: {exc}", log_file)
+        return 0
+    debug(f"block counter for {session_id}: {current} -> {new_value}", log_file)
+    return new_value
+
+
+def reset_block_count(session_id: str, log_file: Path) -> None:
+    """Delete the consecutive-block counter file for a session.
+
+    Called when we ALLOW the turn to end — the next block will start fresh.
+    """
+    if not session_id:
+        return
+    tracking_dir = get_block_tracking_dir()
+    counter = tracking_dir / f"{_sanitize_session_id(session_id)}.count"
+    try:
+        counter.unlink()
+        debug(f"block counter for {session_id} cleared", log_file)
+    except FileNotFoundError:
+        # Normal — no prior block in this session, nothing to clear.
+        pass
+    except OSError as exc:
+        debug(f"counter unlink failed for {session_id}: {exc}", log_file)
+
+
+def _sanitize_session_id(session_id: str) -> str:
+    """Sanitize session_id for use as a filename component.
+
+    Strips path separators and other filesystem-unsafe characters so a
+    crafted session_id can't escape the tracking directory.
+    """
+    safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in session_id)
+    return safe[:128] or "unknown"
 
 
 def ensure_log_dir(log_file: Path) -> None:
@@ -366,7 +504,12 @@ def check_quality_gates(log_file: Path) -> list[str]:
 def parse_stdin_json() -> dict:
     """Parse hook input from stdin JSON.
 
-    Stop hooks receive data via stdin in JSON format.
+    Stop hooks receive data via stdin in JSON format. The payload commonly
+    includes (depending on Claude Code version):
+      - session_id        (str)   — stable per-session identifier
+      - effort            (dict)  — {"level": "low"|"medium"|"high"|"max"|"xhigh"} (2.1.133+)
+      - hook_event_name   (str)   — "Stop"
+      - transcript_path   (str)   — path to current session transcript
 
     Returns:
         Parsed JSON dict or empty dict if parsing fails
@@ -385,22 +528,76 @@ def parse_stdin_json() -> dict:
         return {}
 
 
-def output_block_decision(reason: str, details: dict) -> None:
+def extract_session_id(stdin_payload: dict) -> str:
+    """Resolve session_id from stdin payload then env var fallback.
+
+    Claude Code's stdin payload carries `session_id` directly. As a fallback,
+    `$CLAUDE_CODE_SESSION_ID` (added in 2.1.132 for Bash subprocesses) is
+    also exposed to hook subprocesses.
+    """
+    stdin_value = stdin_payload.get("session_id")
+    if isinstance(stdin_value, str) and stdin_value:
+        return stdin_value
+    return os.environ.get("CLAUDE_CODE_SESSION_ID", "")
+
+
+def extract_effort_level(stdin_payload: dict) -> str:
+    """Resolve effort level from stdin payload then env var fallback.
+
+    Added by Claude Code 2.1.133. Hooks receive the active effort level via
+    the `effort.level` JSON input field and the `$CLAUDE_EFFORT` env var.
+    Returns "" when unknown so callers can branch.
+    """
+    effort = stdin_payload.get("effort")
+    if isinstance(effort, dict):
+        level = effort.get("level")
+        if isinstance(level, str) and level:
+            return level
+    return os.environ.get("CLAUDE_EFFORT", "")
+
+
+def output_block_decision(
+    reason: str,
+    details: dict,
+    block_count: int,
+    block_cap: int,
+) -> None:
     """Output JSON response to block exit.
 
     Args:
         reason: Human-readable reason for blocking
         details: Additional details about incomplete work
+        block_count: This block's position in the consecutive-block sequence
+                     (1 = first block of this session, 2 = second, ...)
+        block_cap: Effective $CLAUDE_CODE_STOP_HOOK_BLOCK_CAP (default 8)
     """
+    # Claude Code 2.1.143 auto-releases the turn after `block_cap` consecutive
+    # blocks. Include a friendly heads-up in the response once we're past 5/8
+    # so the user knows the auto-release is imminent and can either complete
+    # the work or set $CLAUDE_CODE_STOP_HOOK_BLOCK_CAP=1 to skip the gate.
+    soft_warn_threshold = max(1, int(block_cap * _SOFT_WARN_AT_FRACTION))
+    annotated_reason = reason
+    if block_count >= soft_warn_threshold:
+        remaining = max(0, block_cap - block_count)
+        annotated_reason = (
+            f"{reason} "
+            f"(Stop-hook block {block_count}/{block_cap} — "
+            f"Claude Code will auto-release the turn after {remaining} more "
+            f"block{'s' if remaining != 1 else ''}; set "
+            f"$CLAUDE_CODE_STOP_HOOK_BLOCK_CAP=1 to skip this gate immediately)"
+        )
+
     response = {
         "decision": "block",
-        "reason": reason,
+        "reason": annotated_reason,
         "continue": True,
         "hookSpecificOutput": {
             "hookEventName": "Stop",
             "permissionDecision": "deny",
             "permissionDecisionReason": "Incomplete work detected",
             "incompleteWork": details,
+            "blockCount": block_count,
+            "blockCap": block_cap,
         },
     }
     print(json.dumps(response, indent=2))
@@ -409,7 +606,9 @@ def output_block_decision(reason: str, details: dict) -> None:
 def main() -> int:
     """Main entry point for stop hook.
 
-    Checks for incomplete work and blocks exit if found.
+    Checks for incomplete work and blocks exit if found. Tracks consecutive
+    block count per session (Claude Code 2.1.143 caps at 8 — we annotate the
+    response once past 5/8 so the user knows the auto-release is imminent).
 
     Returns:
         Exit code: 0 to allow exit, 2 to block exit
@@ -417,18 +616,23 @@ def main() -> int:
     log_file = get_log_file()
     ensure_log_dir(log_file)
 
-    # Parse stdin (may be empty for Stop hooks)
-    _ = parse_stdin_json()
+    # Parse stdin payload. session_id + effort.level are useful even when
+    # most fields are empty for direct-invocation testing.
+    payload = parse_stdin_json()
+    session_id = extract_session_id(payload)
+    effort_level = extract_effort_level(payload)
 
     # Support direct invocation for testing
     if len(sys.argv) > 1 and sys.argv[1] == "--check":
         log("INFO", "Running in test mode", log_file)
 
-    log("FIRED", "Stop hook triggered - checking for incomplete work", log_file)
+    session_tag = f"session={session_id or 'unknown'}"
+    effort_tag = f"effort={effort_level or 'unknown'}"
+    log("FIRED", f"Stop hook triggered ({session_tag}, {effort_tag}) - checking for incomplete work", log_file)
 
     # Collect all incomplete work
     issues: list[str] = []
-    details: dict[str, list[dict[str, Any]] | list[str]] = {}
+    details: dict[str, Any] = {}
 
     # Check 1: Pending PRs awaiting review
     pending_prs = get_pending_prs(log_file)
@@ -461,10 +665,20 @@ def main() -> int:
 
     # Decision
     if issues:
+        # Increment consecutive-block counter for this session (no-op when
+        # session_id is empty, e.g. --check mode).
+        block_count = increment_block_count(session_id, log_file)
+        block_cap = get_block_cap()
         reason = "Cannot exit: " + ", ".join(issues)
-        log("BLOCKED", reason, log_file)
+        log(
+            "BLOCKED",
+            f"{reason} ({session_tag}, consecutive={block_count}/{block_cap})",
+            log_file,
+        )
 
-        # Print human-readable message to stderr
+        # Hooks now run without terminal access (Claude Code 2.1.139) — stderr
+        # is captured, never directly written to the user's prompt. Safe to
+        # emit a verbose, scannable block message.
         print(f"""
 ================================================================================
 BLOCKED: Integration work is incomplete.
@@ -486,6 +700,14 @@ Details:
                 if len(items) > 5:
                     print(f"  ... and {len(items) - 5} more", file=sys.stderr)
 
+        soft_warn_threshold = max(1, int(block_cap * _SOFT_WARN_AT_FRACTION))
+        if block_count >= soft_warn_threshold and block_count > 0:
+            remaining = max(0, block_cap - block_count)
+            print(f"""
+[ Stop-hook block {block_count}/{block_cap}. Claude Code will auto-release the turn
+  after {remaining} more block(s); set $CLAUDE_CODE_STOP_HOOK_BLOCK_CAP=1 to skip. ]
+""", file=sys.stderr)
+
         print("""
 ================================================================================
 Complete the above work before exiting.
@@ -493,11 +715,17 @@ Complete the above work before exiting.
 """, file=sys.stderr)
 
         # Output JSON response
-        output_block_decision(reason, details)
+        output_block_decision(reason, details, block_count, block_cap)
         return 2  # Exit code 2 = BLOCKING
 
-    # Allow exit
-    log("ALLOWED", "No incomplete work detected - allowing exit", log_file)
+    # Allow exit — reset the consecutive-block counter so the next blocking
+    # event for this session starts fresh.
+    reset_block_count(session_id, log_file)
+    log(
+        "ALLOWED",
+        f"No incomplete work detected - allowing exit ({session_tag}, {effort_tag})",
+        log_file,
+    )
     return 0
 
 

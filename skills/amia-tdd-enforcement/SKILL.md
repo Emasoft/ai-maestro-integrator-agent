@@ -6,7 +6,7 @@ compatibility: Requires understanding of TDD principles, RED-GREEN-REFACTOR cycl
 metadata:
   author: Emasoft
   version: 2.0.0
-agent: test-engineer
+agent: amia-test-engineer
 context: fork
 user-invocable: false
 ---

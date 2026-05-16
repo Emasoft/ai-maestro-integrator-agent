@@ -9,7 +9,7 @@ metadata:
   author: Emasoft
   platforms: "linux, macos, windows"
   languages: "python, javascript, typescript, rust, go, bash, powershell"
-agent: debug-specialist
+agent: amia-debug-specialist
 context: fork
 user-invocable: false
 ---

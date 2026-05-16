@@ -1,6 +1,6 @@
 # Integrator Agent (amia-)
 
-**Version**: 1.2.0
+**Version**: 1.2.15
 
 ## Overview
 
@@ -90,6 +90,13 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 - **`gh` CLI** installed and authenticated (`gh auth login`)
 - **`uv`** for running Python scripts (`pip install uv`)
 - **AI Maestro** installed and running (for inter-agent messaging)
+- **Claude Code 2.1.132+** recommended. Hooks read `$CLAUDE_CODE_SESSION_ID`
+  (added in 2.1.132) and `$CLAUDE_EFFORT` (2.1.133) for cross-hook log
+  correlation, run without terminal access since 2.1.139 (so stderr is
+  captured safely), and honor the `$CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`
+  consecutive-block cap added in 2.1.143 (default 8). Older Claude Code
+  versions still work — the env vars are simply absent and `$CLAUDE_PROJECT_ROOT`
+  is the legacy fallback for `$CLAUDE_PROJECT_DIR`.
 
 ## Installation
 

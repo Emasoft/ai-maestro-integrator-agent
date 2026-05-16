@@ -8,7 +8,7 @@ metadata:
   author: Emasoft
   version: 1.0.0
   category: release-management
-agent: amia-main
+agent: ai-maestro-integrator-agent-main-agent
 context: fork
 user-invocable: false
 ---
