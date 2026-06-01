@@ -21,6 +21,7 @@ auto_skills:
   - amia-session-memory
   - amia-label-taxonomy
   - amia-integration-protocols
+  - amia-prrd-trdd-kanban
 ---
 
 # Integrator Main Agent
