@@ -15,9 +15,8 @@ Kanban model. For universal mechanics, see `prrd-trdd-kanban` in
 
 ## Approval discipline — INT triggers many non-exempt transitions
 
-Check
-[references/exempt-operations.md](references/exempt-operations.md)
-in the universal skill BEFORE triggering any transition. INT's
+Check the **prrd-trdd-kanban** universal skill's `exempt-operations.md`
+reference (bundled in ai-maestro-plugin) BEFORE triggering any transition. INT's
 **exempt** operations: launching ai_review on a PR (review request
 only, NOT merge), running the AI code-reviewer subagent, collecting
 audit-evidence in `live_auditing` (entry-mode investigation), CI run
