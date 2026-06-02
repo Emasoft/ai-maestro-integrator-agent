@@ -13,6 +13,22 @@ This is the INTEGRATOR's role-specific layer of the PRRD / TRDD /
 Kanban model. For universal mechanics, see `prrd-trdd-kanban` in
 `ai-maestro-plugin`.
 
+## Approval discipline — INT triggers many non-exempt transitions
+
+Check
+[references/exempt-operations.md](references/exempt-operations.md)
+in the universal skill BEFORE triggering any transition. INT's
+**exempt** operations: launching ai_review on a PR (review request
+only, NOT merge), running the AI code-reviewer subagent, collecting
+audit-evidence in `live_auditing` (entry-mode investigation), CI run
+invocations. INT's **non-exempt** (MUST request MANAGER approval
+via COS): `complete → publish`, `complete → deploy`, `publish →
+published` (after RELEASER success), `deploy → live` (after
+DEPLOYER success), `ai_review → human_review` (escalation), merging
+ANY PR, `live_auditing (entry) → dev` (audit-confirmed issue
+requires alignment), force-`failed`. INT is the role that most often
+needs MANAGER approval — almost every shipping decision is gated.
+
 INTEGRATOR owns the **ship and operate** stages. It also spawns two
 specialised subagents:
 
