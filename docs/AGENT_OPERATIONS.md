@@ -195,7 +195,7 @@ PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT}"
 SKILL_DIR="${CLAUDE_PLUGIN_ROOT}/skills/amia-code-review-patterns"
 
 # Access script
-SCRIPT_PATH="${CLAUDE_PLUGIN_ROOT}/scripts/validate_plugin.py"
+SCRIPT_PATH="${CLAUDE_PLUGIN_ROOT}/scripts/amia_unicode_compliance.py"
 ```
 
 #### From Agent Definitions
@@ -1127,7 +1127,7 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 | Script | Purpose |
 |--------|---------|
 | `scripts/amia_pre_push_hook.py` | Pre-push validation (manifest, hooks, lint, Unicode compliance) |
-| `scripts/validate_plugin.py` | Plugin structure validation |
+| `.github/workflows/validate.yml` | Plugin structure validation via CPV remote validation (`uvx --from git+https://github.com/Emasoft/claude-plugins-validation cpv-remote-validate plugin . --strict`) |
 | `scripts/amia_download.py` | Plugin download utility |
 | `scripts/amia_unicode_compliance.py` | Unicode compliance checker (BOM, line endings, encoding, non-ASCII) |
 | `skills/amia-quality-gates/scripts/amia_check_encoding.py` | Python file encoding parameter checker |

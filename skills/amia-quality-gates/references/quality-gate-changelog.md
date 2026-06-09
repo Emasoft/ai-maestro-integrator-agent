@@ -196,7 +196,7 @@ gh pr edit $PR_NUMBER --add-label "amia/changelog-passed"
 
 ### 5.2 Automated enforcement reference
 
-For automated CI enforcement, see the `amia-release-management` skill's `references/op-validate-changelog-gate.md`, which describes the changelog validation procedure. For plugin-level validation (including changelog checks), use the CPV plugin validator: `uv run --with pyyaml python scripts/validate_plugin.py . --verbose`.
+For automated CI enforcement, see the `amia-release-management` skill's `references/op-validate-changelog-gate.md`, which describes the changelog validation procedure. For plugin-level validation (including changelog checks), use the CPV remote validator: `uvx --from git+https://github.com/Emasoft/claude-plugins-validation cpv-remote-validate plugin . --strict --verbose`.
 
 ---
 

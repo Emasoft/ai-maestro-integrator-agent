@@ -434,7 +434,10 @@ def check_claude_tasks(log_file: Path) -> list[dict]:
     """
     debug("Checking Claude Tasks...", log_file)
 
-    project_root = Path(os.environ.get("CLAUDE_PROJECT_ROOT", os.getcwd()))
+    # Must go through get_project_root() so $CLAUDE_PROJECT_DIR (the Claude Code
+    # standard var) wins over the legacy $CLAUDE_PROJECT_ROOT — a bare legacy
+    # lookup here would resolve to cwd in 2.1.139+ sessions and miss the tasks.
+    project_root = get_project_root()
     tasks_dir = project_root / ".claude" / "tasks"
 
     if not tasks_dir.exists():
@@ -479,7 +482,9 @@ def check_quality_gates(log_file: Path) -> list[str]:
     """
     debug("Checking quality gates...", log_file)
 
-    project_root = Path(os.environ.get("CLAUDE_PROJECT_ROOT", os.getcwd()))
+    # Same as check_claude_tasks(): the unified helper prefers $CLAUDE_PROJECT_DIR
+    # and falls back to the legacy $CLAUDE_PROJECT_ROOT, then cwd.
+    project_root = get_project_root()
     gates_file = project_root / ".claude" / "quality-gates.json"
 
     if not gates_file.exists():

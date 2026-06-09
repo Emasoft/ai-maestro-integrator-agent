@@ -8,7 +8,7 @@ metadata:
 agent: ai-maestro-integrator-agent-main-agent
 context: fork
 user-invocable: false
-license: Apache-2.0
+license: MIT
 ---
 
 # AMIA Label Taxonomy

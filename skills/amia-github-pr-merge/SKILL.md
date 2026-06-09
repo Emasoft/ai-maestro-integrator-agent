@@ -1,7 +1,7 @@
 ---
 name: amia-github-pr-merge
 description: "Use when merging pull requests, checking merge status, or configuring auto-merge. Trigger with merge, auto-merge, or readiness verification requests. Loaded by ai-maestro-integrator-agent-main-agent."
-license: Apache-2.0
+license: MIT
 compatibility: Requires AI Maestro installed.
 tags: "github, pull-request, merge, graphql, automation"
 metadata:

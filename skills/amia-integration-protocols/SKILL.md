@@ -1,7 +1,7 @@
 ---
 name: amia-integration-protocols
 description: "Use when composing inter-agent handoff payloads, session state snapshots, multi-agent coordination protocols, or referencing shared message templates / record-keeping formats. Trigger with handoff, delegation, acknowledgment, completion report, blocker escalation, or routing decision requests. Loaded by ai-maestro-integrator-agent-main-agent."
-license: Apache-2.0
+license: MIT
 compatibility: Requires AI Maestro installed.
 metadata:
   author: Emasoft

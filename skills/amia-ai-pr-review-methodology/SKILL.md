@@ -1,7 +1,7 @@
 ---
 name: amia-ai-pr-review-methodology
 description: "Use when performing structured AI-driven PR reviews — 8-dimensional rubric (correctness, security, performance, test coverage, maintainability, docs, style, dependencies) with verdict ladder (approve/request-changes/comment) and severity classification. Trigger with /amia-ai-pr-review, 'review this PR', or any PR-evaluation request. Loaded by ai-maestro-integrator-agent-main-agent."
-license: Apache-2.0
+license: MIT
 compatibility: Requires code review experience and codebase access.
 metadata:
   author: Emasoft

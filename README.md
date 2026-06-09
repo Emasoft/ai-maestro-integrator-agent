@@ -1,6 +1,6 @@
 # Integrator Agent (amia-)
 
-**Version**: 1.2.15
+**Version**: 1.2.16
 
 ## Overview
 
@@ -120,7 +120,7 @@ claude --agent ai-maestro-integrator-agent-main-agent --plugin-dir ./ai-maestro-
 | Directory | Purpose |
 |-----------|---------|
 | `shared/` | Shared Python modules (thresholds, constants) used by multiple plugin scripts across skills and hooks |
-| `git-hooks/` | Git hook scripts (e.g., `pre-push`) for local repository protection; installed via `cp git-hooks/pre-push .git/hooks/pre-push` |
+| `git-hooks/` | Optional pre-push validation hook (runs CPV remote validation via `uvx`); installed via `cp git-hooks/pre-push .git/hooks/pre-push`. Note: this repo's own checkout uses `core.hooksPath=.githooks` (the publish.py ancestry gate), which takes precedence over `.git/hooks/` |
 
 ## Platform Requirements
 
@@ -134,7 +134,11 @@ Skills use a **progressive discovery** pattern: each `SKILL.md` is a compact ind
 
 ```bash
 cd ai-maestro-integrator-agent
-uv run --with pyyaml python scripts/validate_plugin.py . --verbose
+uvx --from git+https://github.com/Emasoft/claude-plugins-validation \
+    cpv-remote-validate plugin . --strict --verbose
 ```
+
+(The same command CI runs in `.github/workflows/validate.yml` — the local
+`scripts/validate_plugin.py` was retired in favor of CPV remote validation.)
 
 Current status: **0 CRITICAL, 0 MAJOR, 0 MINOR, 0 NIT** issues.

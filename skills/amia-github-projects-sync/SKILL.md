@@ -1,7 +1,7 @@
 ---
 name: amia-github-projects-sync
 description: Use when managing team tasks through GitHub Projects V2 or synchronizing project state via GraphQL API. Trigger with /sync-projects or when updating project items. Loaded by ai-maestro-integrator-agent-main-agent.
-license: Apache-2.0
+license: MIT
 compatibility: "Requires GitHub CLI authentication, GitHub Projects V2 enabled repository, GraphQL API access, Python 3.8+, and AI Maestro integration for notifications. Requires AI Maestro installed."
 metadata:
   author: Emasoft

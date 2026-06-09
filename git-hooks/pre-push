@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # pre-push hook - Validate plugin before allowing push
 #
-# Auto-syncs validation scripts from claude-plugins-validation (CPV) repo,
-# then runs validate_plugin.py. CRITICAL and MAJOR issues block the push.
+# Runs CPV remote validation via uvx (fetched from the claude-plugins-validation
+# repo) — the local scripts/validate_plugin.py was retired in commit 6058ebc
+# ("ci: replace local validators with CPV uvx remote validation"), so this hook
+# uses the same command as .github/workflows/validate.yml.
 #
-# Exit codes from validate_plugin.py:
+# Exit codes from cpv-remote-validate:
 #   0 - All checks passed
 #   1 - CRITICAL issues found (blocks push)
 #   2 - MAJOR issues found (blocks push)
@@ -86,29 +88,18 @@ echo ""
 
 cd "$REPO_ROOT"
 
-# --- CPV Script Sync DISABLED (SC-P2-002: supply-chain integrity) ---
-# Previously, this hook downloaded 22+ scripts from Emasoft/claude-plugins-validation
-# on every push and executed them without integrity checks. This was a supply-chain
-# vulnerability (CWE-494). The scripts are now vendored locally in scripts/ and must
-# be updated manually via: scripts/sync_cpv.sh (or by copying from the CPV repo).
-echo -e "${BLUE}Using local validation scripts (CPV auto-sync disabled for security).${NC}"
-echo ""
-
-# Check that the validator script exists
-if [ ! -f "scripts/validate_plugin.py" ]; then
-    echo -e "${RED}ERROR: scripts/validate_plugin.py not found${NC}"
+# CPV remote validation via uvx — pinned to the same source and flags as
+# .github/workflows/validate.yml so local pushes and CI agree on the verdict.
+# (The pre-6058ebc local-script path was removed together with the script.)
+if ! command -v uvx &> /dev/null; then
+    echo -e "${RED}ERROR: uvx not found (install uv: https://docs.astral.sh/uv/)${NC}"
     echo -e "${RED}Cannot validate plugin. Push blocked.${NC}"
     exit 1
 fi
 
-# Use uv with --with pyyaml (needed since most plugins lack pyproject.toml)
-# Falls back to python3 if uv is not available
 set +e
-if command -v uv &> /dev/null; then
-    uv run --with pyyaml python scripts/validate_plugin.py . --verbose 2>&1
-else
-    python3 scripts/validate_plugin.py . --verbose 2>&1
-fi
+uvx --from git+https://github.com/Emasoft/claude-plugins-validation \
+    cpv-remote-validate plugin . --strict --verbose 2>&1
 VALIDATION_EXIT_CODE=$?
 set -e
 

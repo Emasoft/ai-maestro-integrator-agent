@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.16] - 2026-06-09
+
+### Bug Fixes
+
+- **`git-hooks/pre-push`:** The distributable pre-push hook hard-failed with
+  "validate_plugin.py not found" (blocking every push for anyone who installed
+  it per the README) because the local validator script was retired in commit
+  `6058ebc`. It now runs the same CPV remote validation as CI
+  (`uvx --from git+https://github.com/Emasoft/claude-plugins-validation
+  cpv-remote-validate plugin . --strict --verbose`).
+- **Stale validator references:** `README.md`, `docs/AGENT_OPERATIONS.md`, and
+  3 skill reference docs (`amia-quality-gates/references/quality-gate-changelog.md`,
+  `amia-release-management/references/release-workflow-chain.md`,
+  `amia-release-management/references/op-validate-changelog-gate.md`) still
+  instructed running the removed `scripts/validate_plugin.py`. All now point
+  at the CPV remote validation command used by `.github/workflows/validate.yml`.
+- **`amia_stop_hook.py`:** Two leftover bare
+  `os.environ.get("CLAUDE_PROJECT_ROOT", ...)` lookups (in
+  `check_claude_tasks()` and `check_quality_gates()`) bypassed the unified
+  `get_project_root()` helper, so they ignored the Claude Code-standard
+  `$CLAUDE_PROJECT_DIR` env var and would resolve to cwd in 2.1.139+ sessions.
+  Both now use the helper.
+- **License metadata:** `pyproject.toml` and all 20 SKILL.md files declared
+  `Apache-2.0` while the repository's `LICENSE` file and `plugin.json` say MIT.
+  Aligned all 21 metadata declarations to MIT (the committed LICENSE text is
+  the operative artifact and was left untouched).
+
+### Documentation
+
+- **README:** Clarify that `git-hooks/pre-push` is optional and that this
+  repo's own checkout uses `core.hooksPath=.githooks` (the publish.py
+  process-ancestry gate), which takes precedence over `.git/hooks/`.
+
 ## [1.2.15] - 2026-05-16
 
 ### Bug Fixes

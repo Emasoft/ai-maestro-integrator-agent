@@ -1,7 +1,7 @@
 ---
 name: amia-github-pr-workflow
 description: Use when coordinating PR review work as orchestrator. Defines delegation rules, verification, and completion criteria. Trigger with /start-pr-review [PR_NUMBER]. Loaded by ai-maestro-integrator-agent-main-agent.
-license: Apache-2.0
+license: MIT
 compatibility: Requires AI Maestro installed.
 tags: "pr-review, orchestration, delegation, verification, github"
 metadata:

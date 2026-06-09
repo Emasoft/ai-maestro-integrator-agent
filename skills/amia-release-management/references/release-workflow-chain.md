@@ -125,10 +125,10 @@ Before creating the tag, validate that CHANGELOG.md contains an entry for the ve
   if: steps.check.outputs.should_release == 'true'
   run: |
     VERSION="${{ steps.version.outputs.version }}"
-    # Changelog validation is handled by the CPV plugin validator.
-    # Use: uv run --with pyyaml python scripts/validate_plugin.py . --verbose
+    # Changelog validation is handled by the CPV remote validator (uvx).
     # For inline changelog extraction, see the AWK command in op-validate-changelog-gate.md section 2.
-    uv run --with pyyaml python scripts/validate_plugin.py . --verbose
+    uvx --from git+https://github.com/Emasoft/claude-plugins-validation \
+        cpv-remote-validate plugin . --strict --verbose
 ```
 
 ### 2.4. Tag Creation to Trigger the Downstream Workflow

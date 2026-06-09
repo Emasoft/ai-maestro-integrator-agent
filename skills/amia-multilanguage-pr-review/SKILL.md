@@ -1,7 +1,7 @@
 ---
 name: amia-multilanguage-pr-review
 description: Use when reviewing PRs in multilanguage repositories. Routes reviews to appropriate language checkers. Trigger with /review-multilang [PR_NUMBER]. Loaded by ai-maestro-integrator-agent-main-agent.
-license: Apache-2.0
+license: MIT
 compatibility: Requires AI Maestro installed.
 metadata:
   author: Emasoft

@@ -187,10 +187,11 @@ Step 4: If changelog valid, create annotated git tag
 Step 5: Tag push triggers downstream release workflow
 ```
 
-Changelog validation is handled by the CPV plugin validator. Run it from the plugin root:
+Changelog validation is handled by the CPV remote validator. Run it from the plugin root:
 
 ```bash
-uv run --with pyyaml python scripts/validate_plugin.py . --verbose
+uvx --from git+https://github.com/Emasoft/claude-plugins-validation \
+    cpv-remote-validate plugin . --strict --verbose
 ```
 
 For standalone changelog extraction in a CI/CD pipeline, use the AWK command from section 2 above. Exit code 0 means the changelog is valid. Exit code 1 means the changelog entry is missing.
@@ -219,4 +220,4 @@ For standalone changelog extraction in a CI/CD pipeline, use the AWK command fro
 
 **Cause**: Minimal container images may not include AWK.
 
-**Solution**: Use the CPV plugin validator (`uv run --with pyyaml python scripts/validate_plugin.py . --verbose`) or install `gawk` or `mawk` in your container.
+**Solution**: Use the CPV remote validator (`uvx --from git+https://github.com/Emasoft/claude-plugins-validation cpv-remote-validate plugin . --strict --verbose`) or install `gawk` or `mawk` in your container.
