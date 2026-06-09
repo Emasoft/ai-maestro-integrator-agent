@@ -1,6 +1,6 @@
 # Integrator Agent (amia-)
 
-**Version**: 1.2.16
+**Version**: 1.3.0
 
 ## Overview
 
@@ -56,6 +56,9 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 | `amia-ai-pr-review-methodology` | Evidence-based PR review (4 phases, 5 dimensions) |
 | `amia-label-taxonomy` | GitHub label taxonomy for PR/issue management |
 | `amia-session-memory` | Session state persistence for PR reviews |
+| `amia-prrd-trdd-kanban` | INTEGRATOR's role in the PRRD/TRDD/Kanban workflow (ai_review, publish, deploy, live_auditing columns) |
+| `integrator-memory-recall` | Symptom-based recall over the project's markdown memory notes (memgrep, degrades to grep) |
+| `integrator-memory-write` | Capture durable facts as symptom-indexed memory notes with schema validation |
 
 ### Hooks
 
@@ -120,6 +123,8 @@ claude --agent ai-maestro-integrator-agent-main-agent --plugin-dir ./ai-maestro-
 | Directory | Purpose |
 |-----------|---------|
 | `shared/` | Shared Python modules (thresholds, constants) used by multiple plugin scripts across skills and hooks |
+| `rules/` | Plugin rules (e.g. `memory-protocol.md` — the INTEGRATOR's markdown-memory recall/write protocol) |
+| `tests/` | Plugin test suites (e.g. `test_memory_skills.py`); run with `uv run python tests/<file>.py` |
 | `git-hooks/` | Optional pre-push validation hook (runs CPV remote validation via `uvx`); installed via `cp git-hooks/pre-push .git/hooks/pre-push`. Note: this repo's own checkout uses `core.hooksPath=.githooks` (the publish.py ancestry gate), which takes precedence over `.git/hooks/` |
 
 ## Platform Requirements

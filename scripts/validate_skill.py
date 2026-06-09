@@ -436,6 +436,13 @@ def validate_supporting_files(skill_path: Path, report: ValidationReport) -> Non
 
     content = skill_md.read_text(encoding="utf-8")
 
+    # Strip fenced code blocks and inline code spans before link extraction —
+    # a template like `- [<Title>](<slug>.md)` inside a fence documents a
+    # FORMAT, it does not reference a file, and existence-checking it is a
+    # guaranteed false positive.
+    content = re.sub(r"```.*?```", "", content, flags=re.DOTALL)
+    content = re.sub(r"`[^`\n]*`", "", content)
+
     # Find markdown links to local files
     local_refs = re.findall(r"\[([^\]]+)\]\(([^)]+)\)", content)
 
@@ -446,6 +453,10 @@ def validate_supporting_files(skill_path: Path, report: ValidationReport) -> Non
 
         # Skip anchors
         if link_target.startswith("#"):
+            continue
+
+        # Skip placeholder targets (angle brackets never appear in real paths)
+        if "<" in link_target:
             continue
 
         # Check if referenced file exists

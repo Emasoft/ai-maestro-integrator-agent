@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2026-06-09
+
+### Features
+
+- **Markdown memory system (issue #12):** adopt the AI-Maestro memory
+  protocol for the INTEGRATOR role — new `rules/memory-protocol.md`
+  (recall-before-acting, symptom-indexed notes, the correction protocol),
+  new `integrator-memory-recall` skill (symptom → ranked notes via memgrep,
+  degrading to a pure-Python grep fallback when the binary is absent) with a
+  cross-platform `memory_recall.py` script, new `integrator-memory-write`
+  skill with a `validate_memory_note.py` schema validator, INTEGRATOR
+  workflow wiring in the main persona (recall before debugging a failing
+  gate; bug-autopsy note after a non-trivial fix), and a 7-test suite
+  (`tests/test_memory_skills.py`) covering recall, the forced-fallback path,
+  and validator accept/reject cases. The optional auto-recall hook was
+  deliberately NOT added (opt-in per the issue; can land later).
+- **Approval tiers in the persona (issue #11):** new
+  `## Approval Tiers, the proposal→planned Lifecycle, and Baseline Governance`
+  section in the main-agent persona (verbatim from the MANAGER-authored
+  TRDD-495a928e), placing the INTEGRATOR's two Tier-2 gates — the release
+  gate and the baseline-deviation gate — on the Tier 0 → COS → MANAGER → USER
+  ladder, documenting the `design/proposals/`↔`design/tasks/` lifecycle and
+  the ratified baseline ruleset pair. The existing `## Governance Integration`
+  merge/release step now cross-references the Tier-2 release gate.
+
+### Bug Fixes
+
+- **R6 communication graph v2 sync (issue #9):** the persona's
+  `## Communication Permissions` section now mirrors the server-enforced
+  2026-04-22 v2 graph — HUMAN as a reply-only (`1`) recipient for team
+  titles (requires `options.inReplyToMessageId`), explicit forbidden rows
+  for team peers (ORCHESTRATOR routes) and the governance layer
+  (MAINTAINER/AUTONOMOUS — MANAGER routes), and every cross-layer advisory
+  refreshed from "route via COS" to "route via COS → MANAGER". Previously
+  the persona authorized edges the server rejects with HTTP 403.
+- **`validate_skill.py`:** strip fenced code blocks / inline code spans
+  before markdown-link extraction and skip `<placeholder>` targets — a
+  format template like `- [<Title>](<slug>.md)` inside a code fence was
+  flagged as a missing referenced file (guaranteed false positive).
+- **`publish.py`:** document WHY `uv.lock` must stay in the Step 11 staged
+  tuple (issue #10 — the entry itself landed earlier in 72facc7; the
+  explanatory comment from ai-maestro-autonomous-agent is now carried here
+  too so it is not "simplified away" later).
+
+### Documentation
+
+- README: add the `amia-prrd-trdd-kanban`, `integrator-memory-recall`, and
+  `integrator-memory-write` skills to the components table (the first was
+  shipped earlier without a README row), and document the `rules/` and
+  `tests/` directories.
+
 ## [1.2.16] - 2026-06-09
 
 ### Bug Fixes
