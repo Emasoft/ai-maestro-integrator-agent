@@ -169,10 +169,12 @@ Follow the same steps as initial authentication.
 
 **Cause:** GitHub CLI is not installed or not in your PATH.
 
-**Solution:** Install GitHub CLI following the installation steps above, or add it to your PATH:
+**Solution:** Install GitHub CLI following the installation steps above, or
+append its install dir to your PATH for the current shell (persist the same
+line via your shell profile):
 
 ```bash
-export PATH="$PATH:/path/to/gh"
+PATH="$PATH:/path/to/gh"
 ```
 
 ### Problem: "Not logged into any GitHub hosts"

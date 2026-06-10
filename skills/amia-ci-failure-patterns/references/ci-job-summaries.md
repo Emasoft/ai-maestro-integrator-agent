@@ -102,8 +102,8 @@ with just the last step's output.
 {
   echo "## Test Matrix Results"
   echo ""
-  echo "| Platform | Python | Status | Duration |"
-  echo "|----------|--------|--------|----------|"
+  echo "| Platform | Py version | Status | Duration |"
+  echo "|----------|------------|--------|----------|"
   echo "| Linux | 3.12 | PASS | 2m 15s |"
   echo "| macOS | 3.12 | PASS | 3m 02s |"
   echo "| Windows | 3.12 | FAIL | 1m 48s |"

@@ -232,9 +232,9 @@ For record-keeping formats and examples, see **amia-integration-protocols** skil
 
 Maintain these logs:
 
-- **Routing log**: [routing-log](docs_dev/integration/routing-log.md) - All routing decisions
-- **Status files**: [[task-id]](docs_dev/integration/status/[task-id].md) - Task lifecycle tracking
-- **Quality reports**: [[task-id]-report](docs_dev/integration/reports/[task-id]-report.md) - Detailed results
+- **Routing log**: `docs_dev/integration/routing-log.md` - All routing decisions (session-local, gitignored)
+- **Status files**: `docs_dev/integration/status/<task-id>.md` - Task lifecycle tracking
+- **Quality reports**: `docs_dev/integration/reports/<task-id>-report.md` - Detailed results
 
 ## Memory Protocol
 

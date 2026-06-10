@@ -85,7 +85,7 @@ cat ~/design/worktree-registry.json
 ### Pretty Print Registry
 
 ```bash
-cat ~/design/worktree-registry.json | python -m json.tool
+python -m json.tool ~/design/worktree-registry.json
 ```
 
 ### Validate Registry

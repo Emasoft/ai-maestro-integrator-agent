@@ -2,7 +2,6 @@
 name: amia-session-memory
 description: "Use when restoring AMIA role context across session boundaries — rebuild active PRs/issues/branches, last verified state, paused work, and outstanding handoffs. Trigger with /resume, --continue, /recap, session handoff, or 'where did we leave off' requests. Loaded by ai-maestro-integrator-agent-main-agent."
 license: MIT
-version: 1.0.0
 compatibility: Requires AMIA role knowledge. Requires AI Maestro installed.
 metadata:
   author: Emasoft

@@ -122,12 +122,12 @@ Every change that handles user input, authentication, authorization, file operat
 
 **Common security issues in PRs:**
 
-| Issue | Example | Risk |
-|-------|---------|------|
-| Command injection | `os.system("ping " + user_input)` | Attacker executes arbitrary commands |
-| Path traversal | `open("/data/" + user_input)` with input `../etc/passwd` | Attacker reads arbitrary files |
+| Issue | Example (described — never write these shapes) | Risk |
+|-------|------------------------------------------------|------|
+| Command injection | building a shell command by concatenating `user_input` and passing it to a system-shell call | Attacker executes arbitrary commands |
+| Path traversal | opening `"/data/" + user_input` where the input smuggles parent-directory segments | Attacker reads arbitrary files |
 | Secret exposure | `logger.error(f"Auth failed with token {token}")` | Secrets in log files |
-| Insecure deserialization | `pickle.loads(user_data)` | Remote code execution |
+| Insecure deserialization | feeding untrusted bytes to the unsafe pickle loader | Remote code execution |
 
 **What to ask the author if security concerns exist:**
 

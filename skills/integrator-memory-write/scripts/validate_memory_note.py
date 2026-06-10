@@ -78,7 +78,9 @@ def validate_note(path: Path) -> list[str]:
     index = path.parent / "MEMORY.md"
     if index.exists():
         if f"({path.name})" not in index.read_text(encoding="utf-8"):
-            errors.append(f"{path}: MEMORY.md has no index line linking ({path.name})")
+            # Read-only check: this validator never writes the index file;
+            # the message names it via index.name.
+            errors.append(f"{path}: {index.name} has no index line linking ({path.name})")
     else:
         # The index is the human-loaded surface, not a recall dependency —
         # its absence is survivable, so warn instead of failing.

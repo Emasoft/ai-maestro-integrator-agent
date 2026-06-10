@@ -143,7 +143,7 @@ uvx --from git+https://github.com/Emasoft/claude-plugins-validation \
     cpv-remote-validate plugin . --strict --verbose
 ```
 
-(The same command CI runs in `.github/workflows/validate.yml` — the local
-`scripts/validate_plugin.py` was retired in favor of CPV remote validation.)
+(The same command CI runs in `.github/workflows/validate.yml` — the legacy
+in-repo validator script was retired in favor of CPV remote validation.)
 
 Current status: **0 CRITICAL, 0 MAJOR, 0 MINOR, 0 NIT** issues.

@@ -68,9 +68,16 @@ def _project_root() -> Path:
     )
 
 
+# Session id parsed from the hook's stdin payload (Claude Code < 2.1.132
+# doesn't set $CLAUDE_CODE_SESSION_ID itself). Module global — never
+# written back into os.environ (env mutation from payload data is the
+# env-injection shape scanners rightly keep visible).
+_PAYLOAD_SESSION_ID = ""
+
+
 def _session_tag() -> str:
     """Return a `session=<id>` tag for log lines."""
-    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip() or _PAYLOAD_SESSION_ID
     return f"session={sid}" if sid else "session=unknown"
 
 
@@ -289,9 +296,10 @@ def parse_stdin_json() -> tuple[str | None, str | None]:
          "session_id": "...",
          "effort": {"level": "..."}}
 
-    Side effect: when stdin carries session_id or effort.level, we export
-    them as $CLAUDE_CODE_SESSION_ID (2.1.132+) and $CLAUDE_EFFORT (2.1.133+)
-    for the rest of this process so log entries consistently include them.
+    Side effect: when stdin carries a session_id, it is stored in the
+    module-level `_PAYLOAD_SESSION_ID` (UUID-shape validated) so log lines
+    carry the session tag on Claude Code versions older than 2.1.132. The
+    process environment is never mutated.
 
     Returns:
         Tuple of (command, issue_number) or (None, None) if not applicable
@@ -305,15 +313,14 @@ def parse_stdin_json() -> tuple[str | None, str | None]:
             return None, None
 
         data = json.loads(stdin_data)
-        # Promote session_id and effort.level into env vars (single source of truth).
+        # Remember the payload's session_id (UUID-shape validated) in a
+        # module global for the log session tag. Deliberately NOT written
+        # into os.environ — the hook must never mutate the process
+        # environment from payload data.
+        global _PAYLOAD_SESSION_ID
         sid = data.get("session_id")
-        if isinstance(sid, str) and sid and not os.environ.get("CLAUDE_CODE_SESSION_ID"):
-            os.environ["CLAUDE_CODE_SESSION_ID"] = sid
-        effort = data.get("effort")
-        if isinstance(effort, dict):
-            level = effort.get("level")
-            if isinstance(level, str) and level and not os.environ.get("CLAUDE_EFFORT"):
-                os.environ["CLAUDE_EFFORT"] = level
+        if isinstance(sid, str) and re.fullmatch(r"[A-Za-z0-9-]{8,64}", sid):
+            _PAYLOAD_SESSION_ID = sid
         tool_input = data.get("tool_input", {})
         command = tool_input.get("command", "")
 

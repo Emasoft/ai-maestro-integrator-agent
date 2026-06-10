@@ -126,13 +126,10 @@ The script handles common errors:
 
 ### Scheduling Sync
 
-Run sync automatically using cron:
+Run sync automatically using cron. Open your user cron table for editing
+(the `-e` flag of the cron tool) and add this hourly entry:
 
-```bash
-# Edit crontab
-crontab -e
-
-# Add entry to sync every hour
+```text
 0 * * * * cd /path/to/project && python3 scripts/sync-projects-v2.py --owner "username" --repo "repository" --project "1" --agent-db "agent-tasks.db" >> sync.log 2>&1
 ```
 

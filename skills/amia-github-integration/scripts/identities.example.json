@@ -8,7 +8,7 @@
       "github_username": "your-primary-username",
       "git_name": "Your Name",
       "git_email": "12345678+your-primary-username@users.noreply.github.com",
-      "ssh_key_path": "~/.ssh/id_ed25519",
+      "ssh_key_path": "<TILDE-OR-ABSOLUTE-PATH-TO-YOUR-PRIMARY-SSH-PRIVATE-KEY>",
       "ssh_host_alias": "github.com"
     },
     "secondary": {
@@ -16,7 +16,7 @@
       "github_username": "your-secondary-username",
       "git_name": "Secondary User",
       "git_email": "87654321+your-secondary-username@users.noreply.github.com",
-      "ssh_key_path": "~/.ssh/id_ed25519_secondary",
+      "ssh_key_path": "<TILDE-OR-ABSOLUTE-PATH-TO-YOUR-SECONDARY-SSH-PRIVATE-KEY>",
       "ssh_host_alias": "github-secondary"
     }
   },

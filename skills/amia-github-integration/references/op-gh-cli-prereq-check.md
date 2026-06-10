@@ -157,11 +157,17 @@ sudo port install gh
 
 ### Linux (apt)
 
+Download the keyring and the source list first, review them, then install
+each (download → review → install; nothing is piped into a privileged
+command). The two `install` commands write into system locations, so run
+them with root privileges:
+
 ```bash
 type -p curl >/dev/null || sudo apt install curl -y
-curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+curl -fsSLo /tmp/githubcli-archive-keyring.gpg https://cli.github.com/packages/githubcli-archive-keyring.gpg
+install -o root -g root -m 0644 /tmp/githubcli-archive-keyring.gpg /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" > /tmp/github-cli.list
+install -o root -g root -m 0644 /tmp/github-cli.list /etc/apt/sources.list.d/github-cli.list
 sudo apt update
 sudo apt install gh -y
 ```
@@ -212,8 +218,9 @@ find /usr -name "gh" 2>/dev/null
 # or
 brew --prefix gh
 
-# Add to PATH in ~/.zshrc or ~/.bashrc
-export PATH="/path/to/gh/bin:$PATH"
+# Prepend the gh install dir for the current shell (persist the same
+# line via your shell profile to make it permanent)
+PATH="/path/to/gh/bin:$PATH"
 ```
 
 ## Verification Script

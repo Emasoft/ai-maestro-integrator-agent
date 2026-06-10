@@ -2,7 +2,7 @@
 # pre-push hook - Validate plugin before allowing push
 #
 # Runs CPV remote validation via uvx (fetched from the claude-plugins-validation
-# repo) — the local scripts/validate_plugin.py was retired in commit 6058ebc
+# repo) — the legacy in-repo validator script was retired in commit 6058ebc
 # ("ci: replace local validators with CPV uvx remote validation"), so this hook
 # uses the same command as .github/workflows/validate.yml.
 #

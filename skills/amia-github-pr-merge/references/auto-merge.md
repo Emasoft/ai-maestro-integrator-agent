@@ -65,10 +65,12 @@ PR_ID=$(gh api graphql -f query='
 # Then enable auto-merge
 gh api graphql -f query='
   mutation($prId: ID!, $method: PullRequestMergeMethod!) {
-    enablePullRequestAutoMerge(input: {
-      pullRequestId: $prId
-      mergeMethod: $method
-    }) {
+    enablePullRequestAutoMerge(
+      input: {
+        pullRequestId: $prId
+        mergeMethod: $method
+      }
+    ) {
       pullRequest {
         autoMergeRequest {
           enabledAt
@@ -296,9 +298,11 @@ PR_ID=$(gh api graphql -f query='
 # Disable auto-merge
 gh api graphql -f query='
   mutation($prId: ID!) {
-    disablePullRequestAutoMerge(input: {
-      pullRequestId: $prId
-    }) {
+    disablePullRequestAutoMerge(
+      input: {
+        pullRequestId: $prId
+      }
+    ) {
       pullRequest {
         autoMergeRequest {
           enabledAt

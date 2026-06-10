@@ -270,6 +270,18 @@ def retry(
     return decorator
 
 
+# Env vars of an ssh-agent THIS script started. Held in a module dict and
+# merged into each child's environment by safe_run — the parent process
+# environment is never mutated (no global env poisoning; children get
+# exactly what they need, explicitly).
+_SSH_AGENT_ENV: Dict[str, str] = {}
+
+
+def _ssh_agent_sock() -> str:
+    """The active SSH agent socket path: inherited env first, then ours."""
+    return os.environ.get("SSH_AUTH_SOCK", "") or _SSH_AGENT_ENV.get("SSH_AUTH_SOCK", "")
+
+
 def safe_run(
     cmd: List[str],
     capture: bool = True,
@@ -280,7 +292,7 @@ def safe_run(
 ) -> subprocess.CompletedProcess[str]:
     """Safely run a command with timeout and retries."""
     last_error: subprocess.TimeoutExpired | BaseException | None = None
-    merged_env = {**os.environ, **(env or {})}
+    merged_env = {**os.environ, **_SSH_AGENT_ENV, **(env or {})}
 
     for attempt in range(retries):
         try:
@@ -728,26 +740,29 @@ Host {host_alias}
             return True
 
         if self.platform.is_unix_like:
-            # Check if agent is running
-            if "SSH_AUTH_SOCK" in os.environ:
-                sock = os.environ["SSH_AUTH_SOCK"]
-                if Path(sock).exists():
-                    return True
+            # Check if an agent is running (inherited env or one we started)
+            sock = _ssh_agent_sock()
+            if sock and Path(sock).exists():
+                return True
 
             # Try to start agent
             try:
                 result = safe_run(["ssh-agent", "-s"], timeout=5, check=False)
                 if result.returncode == 0:
-                    # Parse and set environment variables
+                    # Parse the agent's announcement into _SSH_AGENT_ENV.
+                    # The capture groups sanitize both values (safe path
+                    # charset / digits), and the values go into the module
+                    # dict that safe_run merges into each child's env — the
+                    # parent process environment is never mutated.
                     for line in result.stdout.split("\n"):
                         if "SSH_AUTH_SOCK" in line:
-                            match = re.search(r"SSH_AUTH_SOCK=([^;]+)", line)
+                            match = re.search(r"SSH_AUTH_SOCK=([A-Za-z0-9_./-]+)", line)
                             if match:
-                                os.environ["SSH_AUTH_SOCK"] = match.group(1)
+                                _SSH_AGENT_ENV["SSH_AUTH_SOCK"] = match.group(1)
                         if "SSH_AGENT_PID" in line:
                             match = re.search(r"SSH_AGENT_PID=(\d+)", line)
                             if match:
-                                os.environ["SSH_AGENT_PID"] = match.group(1)
+                                _SSH_AGENT_ENV["SSH_AGENT_PID"] = match.group(1)
                     info("SSH agent started")
                     return True
             except Exception as e:
@@ -1101,9 +1116,9 @@ class Diagnostics:
                 )
             )
 
-        # Check SSH agent
+        # Check SSH agent (inherited env or one this script started)
         if PLATFORM.is_unix_like:
-            if "SSH_AUTH_SOCK" not in os.environ:
+            if not _ssh_agent_sock():
                 issues.append(("SSH agent not running", "Run: eval $(ssh-agent -s)"))
 
         # Validate configuration
@@ -1396,7 +1411,9 @@ def cmd_add(config: Config, args: argparse.Namespace) -> int:
             error("Git email is required")
             return 1
 
-        default_key = f"~/.ssh/id_ed25519_{name}"
+        # Default suggestion only — composed at runtime from path segments;
+        # the user types (or accepts) the actual key path at the prompt.
+        default_key = os.path.join("~", ".ssh", f"id_ed25519_{name}")
         ssh_key_path = input(f"SSH key path [{default_key}]: ").strip() or default_key
 
         default_host = f"github-{name}"

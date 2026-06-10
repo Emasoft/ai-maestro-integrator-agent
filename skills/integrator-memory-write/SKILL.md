@@ -1,6 +1,6 @@
 ---
 name: integrator-memory-write
-description: Capture a durable, reusable fact as a markdown memory note so a future session recalls it from the SYMPTOM. Use after solving a non-trivial integration/merge/CI bug (a bug-autopsy gotcha), learning a project constraint not derivable from code, a confirmed user preference about reviews/merges/releases, or any "we should remember this" moment — or when the user says "remember this", "save a memory", "capture this gotcha", "note that for next time". Writes a schema-valid note (name/description/metadata + body) with the description indexed by question/symptom vocabulary, and appends the MEMORY.md index line. The INTEGRATOR implementation of the AI-Maestro memory-write protocol (see rules/memory-protocol.md).
+description: Capture a durable, reusable fact as a markdown memory note so a future session recalls it from the SYMPTOM. Use after solving a non-trivial integration/merge/CI bug, learning a project constraint not derivable from code, or a confirmed user preference — or when the user says "remember this" / "capture this gotcha". Writes a schema-valid note whose description carries question/symptom vocabulary, appends the MEMORY.md index line, and verifies with the bundled validator. The INTEGRATOR write side of the AI-Maestro memory protocol (see rules/memory-protocol.md).
 license: MIT
 compatibility: Requires Python 3.10+ with PyYAML for the bundled note validator.
 metadata:
@@ -53,12 +53,10 @@ matters to the current conversation.
    Link related notes with [[their-name]].>
    ```
 
-5. Append a one-line pointer to `"$MEMDIR/MEMORY.md"` (create if missing), in
-   the form: dash, bracketed title, parenthesized note filename, em-dash, hook —
-
-   ```text
-   - [<Title>](<slug>.md) — <one-line hook>.
-   ```
+5. Append a one-line pointer to `"$MEMDIR/MEMORY.md"` (create the file if
+   missing). The line is a markdown list item: the note's Title in square
+   brackets immediately followed by the note's filename in parentheses (a
+   standard markdown link), then an em-dash and a one-line hook.
 
 6. Validate the result with the bundled validator (fail-fast on schema drift):
 

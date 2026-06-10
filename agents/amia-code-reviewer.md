@@ -366,7 +366,7 @@ This skill contains:
 
 **CODE REVIEWS MUST VERIFY REQUIREMENT COMPLIANCE**
 
-1. Load [USER_REQUIREMENTS](docs_dev/requirements/USER_REQUIREMENTS.md) before review
+1. Load the requirements file at `docs_dev/requirements/USER_REQUIREMENTS.md` (session-local, gitignored) before review
 2. Verify technology/scope/features match user specification
 3. Block PRs with requirement violations (technology changes, scope reduction, feature omissions)
 4. Escalate deviations to user for approval

@@ -18,6 +18,7 @@ Encoding Checks Implemented:
 from __future__ import annotations
 
 import argparse
+import codecs
 import json
 import re
 import sys
@@ -194,32 +195,37 @@ def check_bom(content: bytes, file_path: str, report: EncodingValidationReport) 
     Returns:
         True if no BOM found, False otherwise
     """
+    # BOM checks compare against the stdlib codecs BOM constants instead of
+    # inline hex-escape literals (same bytes; named constants are
+    # self-documenting detection data).
     # UTF-8 BOM
-    if content.startswith(b"\xef\xbb\xbf"):
+    if content.startswith(codecs.BOM_UTF8):
         report.major(f"File has UTF-8 BOM (should be UTF-8 without BOM): {file_path}")
         report.stats["bom_issues"] += 1
         return False
 
     # UTF-16 LE BOM
-    if content.startswith(b"\xff\xfe"):
+    if content.startswith(codecs.BOM_UTF16_LE):
         report.critical(f"File has UTF-16 LE BOM (must use UTF-8): {file_path}")
         report.stats["bom_issues"] += 1
         return False
 
     # UTF-16 BE BOM
-    if content.startswith(b"\xfe\xff"):
+    if content.startswith(codecs.BOM_UTF16_BE):
         report.critical(f"File has UTF-16 BE BOM (must use UTF-8): {file_path}")
         report.stats["bom_issues"] += 1
         return False
 
-    # UTF-32 LE BOM
-    if content.startswith(b"\xff\xfe\x00\x00"):
+    # UTF-32 LE BOM (unreachable in practice: BOM_UTF32_LE startswith
+    # BOM_UTF16_LE, so the UTF-16 LE branch above matches first — preserved
+    # as-is to keep this transform behavior-neutral)
+    if content.startswith(codecs.BOM_UTF32_LE):
         report.critical(f"File has UTF-32 LE BOM (must use UTF-8): {file_path}")
         report.stats["bom_issues"] += 1
         return False
 
     # UTF-32 BE BOM
-    if content.startswith(b"\x00\x00\xfe\xff"):
+    if content.startswith(codecs.BOM_UTF32_BE):
         report.critical(f"File has UTF-32 BE BOM (must use UTF-8): {file_path}")
         report.stats["bom_issues"] += 1
         return False

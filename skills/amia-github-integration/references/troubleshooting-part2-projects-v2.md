@@ -104,8 +104,8 @@ gh api repos/owner/repo/hooks
 **For polling-based sync:**
 Ensure sync runs frequently (hourly):
 
-```bash
-# Add to crontab
+```text
+# Hourly entry for the user cron table:
 0 * * * * cd /path/to/project && python3 scripts/sync-projects-v2.py ...
 ```
 

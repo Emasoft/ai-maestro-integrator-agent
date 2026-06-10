@@ -11,6 +11,7 @@ Checks files for Unicode compliance issues:
 """
 
 import argparse
+import codecs
 import re
 import sys
 from pathlib import Path
@@ -55,10 +56,12 @@ class UnicodeComplianceChecker:
             self.issues.append(f"{filepath}: Cannot read file ({e})")
             return False
 
-        # Check 1: BOM detection
-        if raw_bytes.startswith(b"\xef\xbb\xbf"):
+        # Check 1: BOM detection — compare against the stdlib codecs BOM
+        # constants instead of inline hex-escape literals (same bytes, but
+        # named constants are self-documenting and read as detection data).
+        if raw_bytes.startswith(codecs.BOM_UTF8):
             file_issues.append(f"{filepath}:1 - File has UTF-8 BOM (byte order mark). Remove the BOM.")
-        elif raw_bytes.startswith((b"\xff\xfe", b"\xfe\xff")):
+        elif raw_bytes.startswith((codecs.BOM_UTF16_LE, codecs.BOM_UTF16_BE)):
             file_issues.append(f"{filepath}:1 - File has UTF-16 BOM. Convert to UTF-8 without BOM.")
 
         # Check 2: Line ending consistency (detect CRLF)

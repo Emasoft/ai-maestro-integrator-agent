@@ -31,11 +31,16 @@
 brew install gh
 ```
 
-**Linux (Debian/Ubuntu):**
+**Linux (Debian/Ubuntu):** download the keyring and source list, review
+them, then install each (no pipe into a privileged command). The two
+`install` commands write into system locations, so run them with root
+privileges:
 
 ```bash
-curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+curl -fsSLo /tmp/githubcli-archive-keyring.gpg https://cli.github.com/packages/githubcli-archive-keyring.gpg
+install -o root -g root -m 0644 /tmp/githubcli-archive-keyring.gpg /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" > /tmp/github-cli.list
+install -o root -g root -m 0644 /tmp/github-cli.list /etc/apt/sources.list.d/github-cli.list
 sudo apt update
 sudo apt install gh
 ```
@@ -58,7 +63,8 @@ Add GitHub CLI to script PATH:
 
 ```bash
 #!/bin/bash
-export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
+# PATH is already exported in any POSIX shell; assigning it is enough.
+PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
 
 gh issue list
 ```

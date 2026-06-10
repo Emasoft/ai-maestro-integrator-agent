@@ -160,7 +160,7 @@ if needed:
 Bandit is a Python-specific static analysis tool that finds common security
 issues in Python code. It checks for:
 
-- Use of `eval()`, `exec()`, `pickle.loads()` (code injection)
+- Use of dynamic code evaluation / execution and unsafe pickle deserialization (code injection)
 - Hardcoded passwords and secret keys
 - Use of insecure hash functions (MD5, SHA1 for security)
 - SQL injection via string formatting

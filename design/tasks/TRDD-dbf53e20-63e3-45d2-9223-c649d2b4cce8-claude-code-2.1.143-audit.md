@@ -19,16 +19,15 @@ User answers from `AskUserQuestion`:
 
 ## Scope
 
-Audit and update `ai-maestro-integrator-agent` (working directory:
-`/Users/emanuelesabetta/Code/EMASOFT-INTEGRATOR-AGENT/ai-maestro-integrator-agent`)
-against the changelog from **v2.1.101 (April 10, 2026)** through
-**v2.1.143 (May 15, 2026)**.
+Audit and update `ai-maestro-integrator-agent` (working directory: the
+plugin repo root) against the changelog from **v2.1.101 (April 10, 2026)**
+through **v2.1.143 (May 15, 2026)**.
 
 The changelog source was fetched from
 <https://code.claude.com/docs/en/changelog.md>; the published doc starts at
 v2.1.101, so v2.1.80–v2.1.100 are not directly auditable from that page (they
-fall through). The cached fetch is at:
-`~/.claude/projects/-Users-emanuelesabetta-Code-EMASOFT-INTEGRATOR-AGENT/3ddfc74a-f5fb-4bb3-a43b-7204f521c9d6/tool-results/toolu_01XFeg95GoyznJpDkmFCrXMR.txt`
+fall through). The fetch was cached in the authoring session's tool-results
+directory (ephemeral; re-fetch the URL if needed).
 
 ## Plugin inventory (snapshot)
 

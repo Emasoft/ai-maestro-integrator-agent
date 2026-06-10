@@ -141,6 +141,6 @@ structured result and INTEGRATOR handles the broadcast.
 
 ## Resources
 
-- INTEGRATOR persona: `ai-maestro-integrator-agent-main-agent.md`
+- INTEGRATOR persona: [ai-maestro-integrator-agent-main-agent](ai-maestro-integrator-agent-main-agent.md)
 - Universal kanban skill: `prrd-trdd-kanban` in `ai-maestro-plugin`
-- Companion subagent: `deployer.md`
+- Companion subagent: [deployer](deployer.md)

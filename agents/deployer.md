@@ -35,10 +35,11 @@ all EHTs terminal BEFORE spawning DEPLOYER.
 
 ## Workflow
 
-1. **Locate the deploy pipeline.** Inspect the repo for a deploy
-   script, terraform module, helm chart, or CI workflow that handles
-   deploys to the requested target. Typical locations:
-   - `scripts/deploy.sh`
+1. **Locate the deploy pipeline.** Inspect the TARGET repo (the project
+   being deployed, not this plugin) for a deploy script, terraform
+   module, helm chart, or CI workflow that handles deploys to the
+   requested target. Typical locations in the target repo:
+   - a deploy shell script under its scripts dir
    - `.github/workflows/deploy.yml`
    - `infra/terraform/`
    - `Makefile` with a `deploy` target
@@ -118,6 +119,6 @@ structured result and INTEGRATOR handles the broadcast.
 
 ## Resources
 
-- INTEGRATOR persona: `ai-maestro-integrator-agent-main-agent.md`
+- INTEGRATOR persona: [ai-maestro-integrator-agent-main-agent](ai-maestro-integrator-agent-main-agent.md)
 - Universal kanban skill: `prrd-trdd-kanban` in `ai-maestro-plugin`
-- Companion subagent: `releaser.md`
+- Companion subagent: [releaser](releaser.md)

@@ -88,8 +88,8 @@ Analyzes CI failure logs to identify patterns and suggest fixes.
 # Analyze a log file
 python scripts/amia_diagnose_ci_failure.py --log-file /path/to/ci.log
 
-# Analyze from stdin
-cat ci.log | python scripts/amia_diagnose_ci_failure.py --stdin
+# Analyze from stdin (redirect — no pipeline needed)
+python scripts/amia_diagnose_ci_failure.py --stdin < ci.log
 
 # Output as JSON
 python scripts/amia_diagnose_ci_failure.py --log-file ci.log --json

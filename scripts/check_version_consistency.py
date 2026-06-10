@@ -297,8 +297,9 @@ Exit codes:
             print("[ERROR] Version mismatch detected!")
             print(f"  Found {len(unique)} different versions: {', '.join(sorted(unique))}")
             print()
-            print("To fix, run:")
-            print("  python scripts/bump_version.py --set <version>")
+            print("To fix, align the files by hand or run the publish")
+            print("pipeline, which owns version bumping:")
+            print("  uv run --with pyyaml python scripts/publish.py --patch")
 
     return 0 if is_consistent else 1
 

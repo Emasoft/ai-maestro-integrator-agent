@@ -67,9 +67,17 @@ def get_log_file() -> Path:
     return get_project_root() / ".claude" / "orchestrator-hook.log"
 
 
+# Session id parsed from the hook's stdin payload (Claude Code < 2.1.132
+# doesn't set $CLAUDE_CODE_SESSION_ID itself). Kept as a module global —
+# never written back into os.environ: a hook mutating the process
+# environment from payload data is exactly the env-injection shape
+# security scanners (rightly) keep visible.
+_PAYLOAD_SESSION_ID = ""
+
+
 def _session_tag() -> str:
     """Return a `session=<id>` tag for log lines (empty when unset)."""
-    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip() or _PAYLOAD_SESSION_ID
     return f"session={sid}" if sid else "session=unknown"
 
 
@@ -228,10 +236,11 @@ def parse_stdin_json() -> str | None:
          "session_id": "...",
          "effort": {"level": "..."}}
 
-    Side effect: when stdin carries a `session_id`, we export it as
-    `CLAUDE_CODE_SESSION_ID` for the rest of this process so log entries
-    consistently include the session tag (matches Claude Code 2.1.132+
-    convention for Bash subprocesses).
+    Side effect: when stdin carries a `session_id`, it is stored in the
+    module-level `_PAYLOAD_SESSION_ID` (after UUID-shape validation) so log
+    entries consistently include the session tag on Claude Code versions
+    older than 2.1.132, which don't set $CLAUDE_CODE_SESSION_ID themselves.
+    The process environment is never mutated.
 
     Returns:
         The bash command string or None if parsing fails
@@ -245,16 +254,14 @@ def parse_stdin_json() -> str | None:
             return None
 
         data: dict[str, object] = json.loads(stdin_data)
-        # Promote session_id and effort.level into env vars so the rest of
-        # the process (and any debug helpers) sees a single source of truth.
+        # Remember the payload's session_id (UUID-shape validated) in a
+        # module global for the log session tag. Deliberately NOT written
+        # into os.environ — the hook must never mutate the process
+        # environment from payload data.
+        global _PAYLOAD_SESSION_ID
         sid = data.get("session_id")
-        if isinstance(sid, str) and sid and not os.environ.get("CLAUDE_CODE_SESSION_ID"):
-            os.environ["CLAUDE_CODE_SESSION_ID"] = sid
-        effort = data.get("effort")
-        if isinstance(effort, dict):
-            level = effort.get("level")
-            if isinstance(level, str) and level and not os.environ.get("CLAUDE_EFFORT"):
-                os.environ["CLAUDE_EFFORT"] = level
+        if isinstance(sid, str) and re.fullmatch(r"[A-Za-z0-9-]{8,64}", sid):
+            _PAYLOAD_SESSION_ID = sid
         tool_input = data.get("tool_input", {})
         if not isinstance(tool_input, dict):
             return None

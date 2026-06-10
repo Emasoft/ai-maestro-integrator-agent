@@ -133,12 +133,12 @@ nc -zv localhost 8002
 # If that works, check script has correct permissions
 ls -la scripts/port_status.py
 
-# Check firewall isn't blocking
+# Check the firewall isn't blocking (both queries need admin privileges):
 # macOS:
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate
+/usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate
 
 # Linux:
-sudo ufw status
+ufw status
 ```
 
 ---

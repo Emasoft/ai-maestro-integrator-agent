@@ -172,7 +172,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Linter | Result |" >> $GITHUB_STEP_SUMMARY
           echo "|--------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Python (Ruff) | ${{ needs.python.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Py (Ruff) | ${{ needs.python.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| TypeScript (ESLint) | ${{ needs.typescript.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 

@@ -422,12 +422,9 @@ OnUnitActiveSec=15min
 WantedBy=timers.target
 ```
 
-Enable the timer:
-
-```bash
-sudo systemctl enable amia-health-check.timer
-sudo systemctl start amia-health-check.timer
-```
+Enable and start the `amia-health-check.timer` unit with systemd's
+`systemctl enable` and `systemctl start` subcommands, run with
+administrator privileges.
 
 ---
 

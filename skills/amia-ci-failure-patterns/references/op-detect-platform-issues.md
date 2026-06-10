@@ -232,9 +232,12 @@ If scanner cannot access files:
 # Check file permissions
 ls -la <path>
 
-# Run with appropriate permissions
-sudo python3 scripts/amia_detect_platform_issue.py --path .
+# Fix the unreadable files' permissions (preferred) and re-run normally
+python3 scripts/amia_detect_platform_issue.py --path .
 ```
+
+Avoid running the scanner with elevated privileges; grant your own user
+read access to the affected paths instead.
 
 ### Unsupported file type
 

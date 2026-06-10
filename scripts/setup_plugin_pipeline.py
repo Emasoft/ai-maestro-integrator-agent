@@ -16,8 +16,9 @@ PIPELINE COMPONENTS:
    - post-rewrite: Changelog after rebase/amend (fires ONCE)
    - post-merge: Changelog after merge
 
-2. Validation Scripts
-   - validate_plugin.py, validate_skill.py, validate_hook.py, etc.
+2. Validation
+   - per-component scripts (validate_skill.py, validate_hook.py, etc.);
+     whole-plugin validation runs via CPV remote validation (uvx)
 
 3. CI/CD Templates
    - GitHub Actions workflow for validation on PR/push
@@ -253,8 +254,8 @@ if __name__ == "__main__":
 PRE_PUSH_HOOK = '''#!/usr/bin/env python3
 """pre-push hook: Lint and validate before pushing.
 
-Thin wrapper that delegates to scripts/lint_files.py and
-scripts/validate_plugin.py — the single source of truth.
+Thin wrapper that delegates to scripts/lint_files.py and the CPV remote
+validator (uvx cpv-remote-validate) — the single source of truth.
 """
 
 import os
@@ -538,36 +539,13 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install ruff mypy pyyaml types-PyYAML
 
-      - name: Find validator
-        id: find-validator
-        run: |
-          if [ -f "scripts/validate_plugin.py" ]; then
-            echo "validator=scripts/validate_plugin.py" >> $GITHUB_OUTPUT
-          elif [ -f "claude-plugins-validation/scripts/validate_plugin.py" ]; then
-            echo "validator=claude-plugins-validation/scripts/validate_plugin.py" >> $GITHUB_OUTPUT
-          else
-            echo "validator=" >> $GITHUB_OUTPUT
-          fi
-
       - name: Lint all source files (read-only)
         run: python3 scripts/lint_files.py .
 
-      - name: Validate plugin(s)
-        if: steps.find-validator.outputs.validator != ''
+      - name: Validate plugin (CPV remote validation)
         run: |
-          set +e
-          python3 ${{ steps.find-validator.outputs.validator }} . --verbose
-          exit_code=$?
-          set -e
-          # Exit codes: 0=pass, 1=critical, 2=major, 3=minor
-          # Strict mode: ALL non-zero exit codes block the pipeline
-          if [ $exit_code -eq 0 ]; then
-            echo "✓ Validation passed"
-            exit 0
-          else
-            echo "✘ Validation failed (exit code: $exit_code)"
-            exit $exit_code
-          fi
+          uvx --from git+https://github.com/Emasoft/claude-plugins-validation \\
+              --with pyyaml cpv-remote-validate plugin . --strict --verbose
 """
 
 GITIGNORE_ADDITIONS = """

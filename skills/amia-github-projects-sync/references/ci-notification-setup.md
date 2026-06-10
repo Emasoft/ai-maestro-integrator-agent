@@ -31,18 +31,13 @@ python ci_webhook_handler.py --port 9000
 # In another terminal, expose with ngrok
 ngrok http 9000
 
-# Note the ngrok URL (e.g., https://abc123.ngrok.io)
+# Note the public forwarding URL that ngrok prints
 ```
 
-**Production (on server):**
-
-```bash
-# Run as systemd service
-sudo systemctl start github-webhook-handler
-
-# Or use PM2
-pm2 start ci_webhook_handler.py --name github-webhook -- --port 9000
-```
+**Production (on server):** run the handler under your process manager —
+start the `github-webhook-handler` systemd unit with administrator
+privileges, or register `ci_webhook_handler.py` (name it
+`github-webhook`, port 9000) with PM2.
 
 ### 2. Generate Webhook Secret
 
