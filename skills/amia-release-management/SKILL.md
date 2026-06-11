@@ -30,20 +30,25 @@ Coordinates software releases: version bumping, changelog, tagging, CI/CD, and r
 1. **Receive request** with target type (patch/minor/major)
 2. **Determine version** using semver rules and **verify readiness** (tests pass, no critical bugs)
 3. **Generate changelog** from commits and **bump version** in all required files
-4. **Create tag and trigger CI/CD** release pipeline
-5. **Verify deployment**; rollback if failed; report completion
+4. **Obtain the Tier-2 MANAGER approval** — entering the release pipeline is NON-EXEMPT;
+   confirm it is recorded in the approving TRDD's `## Approval log`
+5. **Run the project-type pipeline** (library / app / service / Claude-Code-plugin —
+   see detailed-guide), passing `--approval-trdd <TRDD>` to the release script
+6. **Verify deployment**; INTEGRATOR flips the column to published/live only after
+   validating the artifact satisfies the TRDD; rollback if failed; report completion
 
 ### Checklist
 
 Copy this checklist and track your progress:
 
-- [ ] Verify governance authorization via `team-governance` skill
+- [ ] Obtain + record the **Tier-2 MANAGER approval** (the `## Approval log` entry) — team membership is NOT approval
 - [ ] Receive release request with target type
 - [ ] Determine version and verify readiness
 - [ ] Generate changelog from commit history
 - [ ] Bump version and create annotated git tag
-- [ ] Trigger CI/CD and verify deployment
-- [ ] Rollback if needed; report completion
+- [ ] Select the **project-type pipeline** (CPV `publish.py` is plugins-only) and run it, passing `--approval-trdd`
+- [ ] Verify deployment; INTEGRATOR validates the artifact, then flips the column
+- [ ] Rollback if needed (`--execute` is also Tier-2 gated); report completion
 
 ## Output
 
@@ -70,7 +75,9 @@ Script failures return non-zero exit codes with details on stderr.
 python scripts/amia_release_verify.py --repo owner/repo --version 1.2.4
 python scripts/amia_changelog_generate.py --repo owner/repo --from v1.2.3 --to HEAD
 python scripts/amia_version_bump.py --repo owner/repo --type patch
-python scripts/amia_create_release.py --repo owner/repo --version 1.2.4 --notes release_notes.md
+# Tier-2 gate: amia_create_release.py exits 7 without a recorded MANAGER approval.
+python scripts/amia_create_release.py --repo owner/repo --version 1.2.4 --notes release_notes.md \
+    --approval-trdd design/tasks/TRDD-<id>-...md
 ```
 
 ## Resources
@@ -82,6 +89,7 @@ Full reference: [detailed-guide](references/detailed-guide.md):
   - Escalation Order
   - Scripts Reference
   - Critical Rules
+  - Release Pipeline Design by Project Type
   - Error Handling
   - AI Maestro Communication
   - Examples

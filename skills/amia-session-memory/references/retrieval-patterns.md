@@ -59,7 +59,7 @@ fi
 
 ```bash
 # Step 1: Check for current handoff
-HANDOFF_DIR="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
+HANDOFF_DIR="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
 
 if [ -f "$HANDOFF_DIR/current.md" ]; then
   echo "Found handoff document"
@@ -94,7 +94,7 @@ fi
 
 ```bash
 # Step 1: Load patterns file
-PATTERNS_FILE="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/patterns-learned.md"
+PATTERNS_FILE="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/patterns-learned.md"
 
 if [ -f "$PATTERNS_FILE" ]; then
   # Step 2: Search for pattern by keyword
@@ -113,7 +113,7 @@ fi
 
 ```bash
 # Step 1: Load release history
-RELEASE_FILE="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/release-history.md"
+RELEASE_FILE="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/release-history.md"
 
 if [ -f "$RELEASE_FILE" ]; then
   # Step 2: If specific version requested, grep it
@@ -137,7 +137,7 @@ fi
 
 ```bash
 # Step 1: Load CI state file
-CI_FILE="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/ci-states.md"
+CI_FILE="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/ci-states.md"
 
 if [ -f "$CI_FILE" ]; then
   # Step 2: Check freshness (CI state should be recent)
@@ -169,7 +169,7 @@ Sometimes multiple memory sources are needed:
 gh pr view 42 --comments --json comments | jq -r '.comments[] | select(.body | contains("AMIA-SESSION-STATE"))'
 
 # Load patterns learned
-cat "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/patterns-learned.md"
+cat "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/patterns-learned.md"
 
 # Load related issues (if linked in PR)
 gh pr view 42 --json closingIssuesReferences -q '.closingIssuesReferences[] | .number' \

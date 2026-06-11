@@ -26,7 +26,7 @@ Persist and retrieve session context across session boundaries using PR comments
 ## Instructions
 
 1. **Detect triggers** — Check for PR numbers, GitHub URLs, or issue refs in user prompt
-2. **Load memory** — PR-related: load PR comment state; integration: load handoff docs from `$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/`; release: load release history
+2. **Load memory** — PR-related: load PR comment state; integration: load handoff docs from `$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/`; release: load release history
 3. **Verify freshness** — Compare timestamps in memory against actual GitHub state (PR status, CI runs, tags)
 4. **Execute task** — Use loaded memory to inform decisions; update memory as work progresses
 5. **Persist state** — Update PR comments with state markers; write handoff docs if work incomplete

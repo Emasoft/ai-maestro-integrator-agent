@@ -48,7 +48,7 @@ Move outdated or no-longer-relevant memory state to an archive location, prevent
 ### Step 1: Identify stale memory sources
 
 ```bash
-HANDOFF_DIR="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
+HANDOFF_DIR="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
 ARCHIVE_DIR="$HANDOFF_DIR/archive"
 STALE_THRESHOLD_DAYS=7
 
@@ -163,7 +163,7 @@ fi
     "session_state_20250205_143000.json"
   ],
   "reason": "PR #123 merged",
-  "archive_location": "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/archive/"
+  "archive_location": "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/archive/"
 }
 ```
 
@@ -245,7 +245,7 @@ $HANDOFF_DIR/archive/
 #!/bin/bash
 # archive_stale_memory.sh
 
-HANDOFF_DIR="${1:-$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration}"
+HANDOFF_DIR="${1:-$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs}"
 THRESHOLD_DAYS="${2:-7}"
 DRY_RUN="${3:-false}"
 

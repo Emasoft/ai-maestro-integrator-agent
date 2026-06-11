@@ -30,7 +30,7 @@
 
 ### Write Failures
 
-**If PR comment fails:** Fallback to handoff document in `thoughts/shared/handoffs/amia-integration/`.
+**If PR comment fails:** Fallback to handoff document in `docs_dev/integration/handoffs/`.
 
 **If handoff write fails:** Check directory exists and is writable. Create if needed.
 
@@ -56,7 +56,7 @@
 **Actions**:
 
 1. Identify incomplete work (e.g., CI failure diagnosis in progress)
-2. Create handoff document at `$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md`
+2. Create handoff document at `$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md`
 3. Include:
    - Current task description
    - Progress made
@@ -71,7 +71,7 @@
 
 **Actions**:
 
-1. Load release history: `cat $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/release-history.md`
+1. Load release history: `cat $CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/release-history.md`
 2. Append new entry with:
    - Version number
    - Release date
@@ -140,7 +140,7 @@ See `references/handoff-documents.md` for:
 
 **Diagnosis**:
 
-1. Check if handoff directory exists: `ls -la $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/`
+1. Check if handoff directory exists: `ls -la $CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/`
 2. Check PR comments for state block: `gh pr view <PR> --comments`
 3. Verify file permissions
 
@@ -187,7 +187,7 @@ See `references/handoff-documents.md` for:
 
 ```bash
 # Load all AMIA memory
-HANDOFF_DIR="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
+HANDOFF_DIR="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
 cat "$HANDOFF_DIR/current.md"
 cat "$HANDOFF_DIR/patterns-learned.md"
 cat "$HANDOFF_DIR/release-history.md"
@@ -201,8 +201,8 @@ gh pr view <PR_NUMBER> --comments --json comments \
 
 ```bash
 # Save session state
-mkdir -p "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
-cat > "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md" << 'HANDOFF'
+mkdir -p "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
+cat > "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md" << 'HANDOFF'
 [Content here]
 HANDOFF
 

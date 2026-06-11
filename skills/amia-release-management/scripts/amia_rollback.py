@@ -6,9 +6,17 @@ Deletes the problematic release and creates a rollback marker release
 pointing to the previous version. Print-only by default; use --execute
 to actually perform the rollback.
 
+Printing the plan is read-only and ungated. Executing the rollback deletes a
+public release — a NON-EXEMPT release-pipeline action — so --execute REFUSES to
+run without proof of a recorded MANAGER approval: pass --approval-trdd (a TRDD
+whose "## Approval log" records an APPROVED entry) or --solo-user-approval
+"<reason>" when the owner is acting as MANAGER. See
+~/.claude/rules/trdd-approval-tiers.md (Tier 2).
+
 Usage:
     amia_rollback.py --repo owner/repo --from v1.2.3 --to v1.2.2 --reason "critical bug"
-    amia_rollback.py --repo owner/repo --from v1.2.3 --to v1.2.2 --reason "regression" --execute
+    amia_rollback.py --repo owner/repo --from v1.2.3 --to v1.2.2 --reason "regression" \
+        --execute --approval-trdd design/tasks/TRDD-<id>-...md
 
 Output:
     JSON object with rollback plan or execution results to stdout.
@@ -39,6 +47,7 @@ Exit codes (standardized):
     4 - Not authenticated (gh CLI not logged in)
     5 - Not applicable
     6 - Not applicable
+    7 - Governance block (--execute without a recorded MANAGER approval)
 """
 
 import argparse
@@ -48,6 +57,7 @@ import sys
 from typing import Any
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.release_governance import governance_block_message, verify_release_approval
 from shared.thresholds import write_output
 
 
@@ -139,6 +149,14 @@ def main() -> None:
     parser.add_argument("--to", dest="to_version", required=True, help="Version to rollback to")
     parser.add_argument("--reason", required=True, help="Reason for the rollback")
     parser.add_argument("--execute", action="store_true", help="Actually execute the rollback (default: print plan only)")
+    parser.add_argument(
+        "--approval-trdd",
+        help="Path to the approving TRDD whose '## Approval log' records the MANAGER rollback approval (required with --execute)",
+    )
+    parser.add_argument(
+        "--solo-user-approval",
+        help="Project owner acting as MANAGER on a solo/autonomous project: one-line rationale (logged; allowed with --execute)",
+    )
     parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
@@ -147,6 +165,35 @@ def main() -> None:
         write_output({"error": True, "message": "Repository must be in owner/repo format"}, "amia_rollback", args.output_file)
         sys.exit(1)
 
+    # Printing the plan is read-only and ungated. Actually executing the
+    # rollback deletes a public release and is a NON-EXEMPT release-pipeline
+    # action: refuse without proof of a recorded MANAGER approval.
+    approval_evidence = "plan-only (no execution)"
+    if args.execute:
+        if args.approval_trdd:
+            verdict = verify_release_approval(args.approval_trdd)
+            if not verdict.approved:
+                write_output(
+                    {
+                        "error": True,
+                        "message": verdict.detail + "\n\n" + governance_block_message(args.repo, args.from_version),
+                        "code": "GOVERNANCE_BLOCK",
+                    },
+                    "amia_rollback",
+                    args.output_file,
+                )
+                sys.exit(7)
+            approval_evidence = f"MANAGER approval (TRDD): {verdict.evidence_line}"
+        elif args.solo_user_approval and args.solo_user_approval.strip():
+            approval_evidence = f"solo USER-as-MANAGER approval: {args.solo_user_approval.strip()}"
+        else:
+            write_output(
+                {"error": True, "message": governance_block_message(args.repo, args.from_version), "code": "GOVERNANCE_BLOCK"},
+                "amia_rollback",
+                args.output_file,
+            )
+            sys.exit(7)
+
     result = rollback_release(
         repo=args.repo,
         from_version=args.from_version,
@@ -154,6 +201,7 @@ def main() -> None:
         reason=args.reason,
         execute=args.execute,
     )
+    result["approval"] = approval_evidence
     write_output(result, "amia_rollback", args.output_file)
 
     if result.get("error"):

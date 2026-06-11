@@ -54,7 +54,7 @@ Record a release decision (approval, deployment, rollback) in the release histor
 ### Step 1: Locate release history file
 
 ```bash
-HANDOFF_DIR="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
+HANDOFF_DIR="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
 RELEASE_HISTORY="$HANDOFF_DIR/release-history.md"
 ```
 
@@ -189,7 +189,7 @@ fi
   "success": true,
   "version": "1.2.4",
   "entry_type": "release",
-  "history_path": "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/release-history.md"
+  "history_path": "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/release-history.md"
 }
 ```
 
@@ -252,7 +252,7 @@ TYPE="$2"      # patch, minor, major
 DEPLOYED="$3"  # staging, production
 NOTES="$4"
 
-HANDOFF_DIR="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
+HANDOFF_DIR="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
 RELEASE_HISTORY="$HANDOFF_DIR/release-history.md"
 DATE=$(date +%Y-%m-%d)
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")

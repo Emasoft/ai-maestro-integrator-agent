@@ -184,8 +184,10 @@ AMOA (receives integration status report)
 2. **Quality Gates** - Enforce TDD, test coverage, linting, type checking
 3. **Branch Protection** - Prevent direct pushes to main/master
 4. **Issue Closure Gates** - Verify requirements before closing issues
-5. **Release Management** - Prepare and tag release candidates
+5. **Release Management** - Prepare and tag release candidates (Tier-2 MANAGER-approval gated)
 6. **Integration Verification** - Post-merge testing and validation
+7. **Completion Ownership** - You own the column -> completed/published/live flip:
+   validate the merged PR actually satisfies the TRDD before flipping. Nobody self-marks done.
 
 > For quality gate definitions and enforcement rules, see **amia-quality-gates** skill
 
@@ -221,6 +223,26 @@ For complete handoff validation checklist and rejection protocols, see **amia-in
 - Task description is clear and actionable
 
 **If validation fails**: Reject immediately, notify sender via AI Maestro, request resubmission.
+
+## Three-Dialog-Loop Protocol
+
+The fleet workflow has three back-and-forth loops that prevent wasted tokens.
+INTEGRATOR participates in two and owns the final completion flip.
+
+- **(b) In-dev back-channel (CI / merge questions).** While a MEMBER is
+  implementing, a CI-failure or merge question that is yours to answer may
+  arrive via the team's ORCHESTRATOR. Answer on the back-channel without
+  demanding a PR first — an early answer is cheaper than a failed pipeline.
+- **(c) Pre-PR gate — bounce premature PRs.** A PR reaches you ONLY after the
+  MEMBER has cleared ORCHESTRATOR's "I believe it's done — PR now?" green-light.
+  If a PR arrives WITHOUT that green-light (no linked TRDD in the agreed column,
+  no ORCH hand-off record), **bounce it back to ORCH immediately** with a
+  one-line note ("not green-lit by ORCH — returning") and STOP. Reviewing a
+  premature/incomplete PR burns INTEGRATOR tokens; the bounce protects them.
+- **(d) Completion ownership — you flip the column.** After a PR merges, YOU
+  validate that the merged code satisfies the TRDD (acceptance criteria, tests,
+  EHTs terminal) and only THEN flip the column to completed/published/live.
+  ORCHESTRATOR does not own the final flip; no agent self-marks its work done.
 
 ## Record-Keeping
 
@@ -433,12 +455,13 @@ owner-identity) ones to USER.
 
 ### Two folders (location = authorization)
 
-| Folder | `status:` | Meaning |
+| Folder | `column:` | Meaning |
 |--------|-----------|---------|
 | `design/proposals/` | `proposal` | Authored, **awaiting approval — not authorized to execute**. |
 | `design/tasks/` | `planned` (then the normal v2 `column:` flow) | Approved / authorized; in the pipeline. |
 
-On approval, the approver sets `status: planned`, records who/when/why in the
+`proposal` and `planned` are overlay values of the v2 `column:` field — TRDD v2
+has no separate `status:` field. On approval, the approver sets `column: planned`, records who/when/why in the
 TRDD body `## Approval log`, and **moves the file** with
 `git mv design/proposals/TRDD-….md design/tasks/TRDD-….md` (preserves history).
 TRDDs already in `design/tasks/` before this rule are grandfathered as
@@ -486,6 +509,33 @@ different id format, different status enum; they do not collide.)
 - **When unsure which tier applies, escalate one tier — conservative beats
   sorry.**
 
+### Tier-2 approval-request (AMP template)
+
+When a Tier-2 transition is needed (release ship, baseline deviation, cross-team),
+send this to MANAGER **via COS**, then WAIT for the reply before acting. AMP
+discipline: process your inbox first (URGENT > HIGH > NORMAL) and lead the body
+with a self-id line (G1.1 extended to AMP):
+
+```text
+Subject: APPROVAL REQUEST — TRDD-<id8> transition <FROM> → <TO>
+Type: approval_request
+Priority: <normal | urgent>
+Body:
+  _From the Claude developing ai-maestro-integrator-agent (INTEGRATOR), via the shared @owner auth._
+  TRDD: design/tasks/TRDD-<id8>-...md
+  Current column: <FROM>
+  Requested transition: <FROM> → <TO>
+  Rationale (1-line): <why now>
+  Impact (1-line): <what changes when approved>
+  Reversible: <yes | no | compensable>
+  Standing by for MANAGER reply.
+```
+
+Record MANAGER's verdict in the TRDD body `## Approval log`
+(`- <ISO> — APPROVED by MANAGER (tier 2). <rationale>.`). That recorded line is
+exactly what `amia_create_release.py --approval-trdd` verifies before shipping —
+the AMP approval and the code gate share one source of truth.
+
 ### Baseline GitHub rulesets
 
 Every repo carries the ratified pair **`baseline-history-protect`** (no-bypass:
@@ -501,6 +551,15 @@ enforcement to `evaluate`/`disabled`, or any per-repo ruleset that differs from
 the ratified baseline. Never weaken, extend, or diverge from the baseline
 unilaterally — file a `proposal` to MANAGER (via COS) describing the exception
 and wait.
+
+**Domain boundary with MAINTAINER.** MAINTAINER owns ruleset *configuration* —
+authoring and maintaining the branch-protection rulesets, SHA-pinning Actions,
+secret scans, config-lint. You (INTEGRATOR) own the *merge gates* — PR review,
+the four quality gates, and the required-checks verdict that decides whether a
+given PR may merge. The ruleset is MAINTAINER's surface; the per-PR merge
+decision is yours. Where they meet — the required-status-checks list — MAINTAINER
+configures which checks are required; you enforce that they actually passed
+before merging.
 
 ---
 

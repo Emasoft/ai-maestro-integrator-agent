@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [Decision Tree](#decision-tree-for-pr-merge-operations)
-- [GraphQL Source of Truth](#graphql-is-the-source-of-truth)
+- [GraphQL is the Source of Truth](#graphql-is-the-source-of-truth)
 - [Script Usage Details](#script-usage-details)
 - [Common Workflows](#common-workflows)
 - [Exit Codes Reference](#exit-codes-reference)

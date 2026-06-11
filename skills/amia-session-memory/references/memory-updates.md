@@ -69,7 +69,7 @@ EOF
 
 ```bash
 # Append new pattern
-cat >> "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/patterns-learned.md" <<'EOF'
+cat >> "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/patterns-learned.md" <<'EOF'
 
 ## [Pattern Name] - $(date +%Y-%m-%d)
 
@@ -85,7 +85,7 @@ EOF
 
 ```bash
 # Append release entry
-cat >> "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/release-history.md" <<'EOF'
+cat >> "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/release-history.md" <<'EOF'
 
 | v1.2.3 | 2025-02-04 | production | deployed | Approved after successful staging run |
 
@@ -96,7 +96,7 @@ EOF
 
 ```bash
 # Overwrite with latest state
-cat > "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/ci-states.md" <<'EOF'
+cat > "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/ci-states.md" <<'EOF'
 # CI/CD States
 
 **Last Updated**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
@@ -115,7 +115,7 @@ EOF
 
 ```bash
 # Create/overwrite current work state
-cat > "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md" <<'EOF'
+cat > "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md" <<'EOF'
 # AMIA Integration Handoff
 
 **Last Updated**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
@@ -185,19 +185,19 @@ After writing memory, **verify persistence**:
 gh pr view <PR_NUMBER> --comments | grep "AMIA-SESSION-STATE"
 
 # Verify file written
-test -f "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md" && echo "OK"
+test -f "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md" && echo "OK"
 
 # Verify file readable
-cat "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md" | head -5
+cat "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md" | head -5
 ```
 
 ## Error Handling
 
 **If PR comment fails:**
 
-- Fallback to handoff document: `$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/pr-<PR_NUMBER>-state.md`
+- Fallback to handoff document: `$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/pr-<PR_NUMBER>-state.md`
 
 **If file write fails:**
 
-- Check directory exists: `mkdir -p $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/`
-- Check permissions: `ls -ld $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/`
+- Check directory exists: `mkdir -p $CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/`
+- Check permissions: `ls -ld $CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/`

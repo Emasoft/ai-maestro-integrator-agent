@@ -65,7 +65,7 @@ Create a structured handoff document that captures the current state of work, en
 ### Step 1: Create handoff directory
 
 ```bash
-HANDOFF_DIR="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
+HANDOFF_DIR="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
 mkdir -p "$HANDOFF_DIR"
 ```
 
@@ -197,7 +197,7 @@ fi
 ```json
 {
   "success": true,
-  "path": "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md",
+  "path": "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md",
   "archived_previous": true,
   "timestamp": "2025-02-05T14:30:00Z"
 }
@@ -278,7 +278,7 @@ TASK="$1"
 NEXT_STEPS="$2"
 PR_URL="$3"
 
-HANDOFF_DIR="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
+HANDOFF_DIR="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
 CURRENT="$HANDOFF_DIR/current.md"
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 

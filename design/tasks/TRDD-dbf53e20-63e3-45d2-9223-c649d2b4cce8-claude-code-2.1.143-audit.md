@@ -1,10 +1,22 @@
+---
+trdd-id: dbf53e20-63e3-45d2-9223-c649d2b4cce8
+title: Claude Code 2.1.101 to 2.1.143 compatibility audit and update
+column: dev
+created: 2026-05-16T00:00:00+0200
+updated: 2026-06-11T11:25:03+0200
+current-owner: ai-maestro-integrator-agent
+task-type: audit
+release-via: publish
+test-requirements: [lint, typecheck]
+relevant-rules: []
+---
+
 # TRDD-dbf53e20 — Claude Code 2.1.101 → 2.1.143 compatibility audit and update
 
-**TRDD ID:** `dbf53e20-63e3-45d2-9223-c649d2b4cce8`
 **Filename:** `design/tasks/TRDD-dbf53e20-63e3-45d2-9223-c649d2b4cce8-claude-code-2.1.143-audit.md`
 **Tracked in:** this repo (design/tasks/ is git-tracked)
-**Status:** In progress
-**Created:** 2026-05-16
+
+> Migrated from v1 (`**Status:** In progress`) to v2 `column:` frontmatter on 2026-06-11 (issue #13, M3).
 
 ## User request (verbatim)
 

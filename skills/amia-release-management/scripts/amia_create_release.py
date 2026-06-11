@@ -5,13 +5,25 @@ amia_create_release.py - Create a GitHub release with tag.
 Creates a new GitHub release using the gh CLI, tagging the current HEAD
 with the specified version and attaching release notes.
 
+Creating a release enters the release pipeline (complete -> publish), a
+NON-EXEMPT Tier-2 governance action. This script REFUSES to run until it can
+prove a recorded MANAGER approval. Pass --approval-trdd pointing at the
+approving TRDD (whose "## Approval log" records an APPROVED release entry), or
+--solo-user-approval "<reason>" when the project owner is acting as MANAGER on a
+solo / autonomous project. See ~/.claude/rules/trdd-approval-tiers.md (Tier 2).
+
 Usage:
-    amia_create_release.py --repo owner/repo --version 1.2.3 --notes release_notes.md
-    amia_create_release.py --repo owner/repo --version 1.2.3 --notes notes.md --prerelease
-    amia_create_release.py --repo owner/repo --version 1.2.3 --notes notes.md --draft
+    amia_create_release.py --repo owner/repo --version 1.2.3 --notes notes.md \
+        --approval-trdd design/tasks/TRDD-<id>-...md
+    amia_create_release.py --repo owner/repo --version 1.2.3 --notes notes.md \
+        --solo-user-approval "owner approves the 1.2.3 patch release"
+    amia_create_release.py --repo owner/repo --version 1.2.3 --notes notes.md \
+        --approval-trdd <trdd> --prerelease
+    amia_create_release.py --repo owner/repo --version 1.2.3 --notes notes.md \
+        --approval-trdd <trdd> --draft
 
 Output:
-    JSON object with release details to stdout.
+    JSON object with release details (incl. the approval evidence) to stdout.
 
 Example output:
     {
@@ -31,6 +43,7 @@ Exit codes (standardized):
     4 - Not authenticated (gh CLI not logged in)
     5 - Not applicable
     6 - Not applicable
+    7 - Governance block (no recorded MANAGER approval for the release)
 """
 
 import argparse
@@ -41,6 +54,7 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.release_governance import governance_block_message, verify_release_approval
 from shared.thresholds import write_output
 
 
@@ -109,6 +123,14 @@ def main() -> None:
     parser.add_argument("--notes", required=True, help="Path to release notes markdown file")
     parser.add_argument("--prerelease", action="store_true", help="Mark as pre-release")
     parser.add_argument("--draft", action="store_true", help="Create as draft release")
+    parser.add_argument(
+        "--approval-trdd",
+        help="Path to the approving TRDD whose '## Approval log' records the MANAGER release approval",
+    )
+    parser.add_argument(
+        "--solo-user-approval",
+        help="Project owner acting as MANAGER on a solo/autonomous project: one-line rationale (logged)",
+    )
     parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
 
     args = parser.parse_args()
@@ -117,6 +139,33 @@ def main() -> None:
         write_output({"error": True, "message": "Repository must be in owner/repo format"}, "amia_create_release", args.output_file)
         sys.exit(1)
 
+    # Tier-2 governance gate: creating a release is a NON-EXEMPT release-pipeline
+    # action. Refuse to touch the public release surface without proof of a
+    # recorded MANAGER approval (or an explicit solo USER-as-MANAGER assertion).
+    if args.approval_trdd:
+        verdict = verify_release_approval(args.approval_trdd)
+        if not verdict.approved:
+            write_output(
+                {
+                    "error": True,
+                    "message": verdict.detail + "\n\n" + governance_block_message(args.repo, args.version),
+                    "code": "GOVERNANCE_BLOCK",
+                },
+                "amia_create_release",
+                args.output_file,
+            )
+            sys.exit(7)
+        approval_evidence = f"MANAGER approval (TRDD): {verdict.evidence_line}"
+    elif args.solo_user_approval and args.solo_user_approval.strip():
+        approval_evidence = f"solo USER-as-MANAGER approval: {args.solo_user_approval.strip()}"
+    else:
+        write_output(
+            {"error": True, "message": governance_block_message(args.repo, args.version), "code": "GOVERNANCE_BLOCK"},
+            "amia_create_release",
+            args.output_file,
+        )
+        sys.exit(7)
+
     result = create_release(
         repo=args.repo,
         version=args.version,
@@ -124,6 +173,8 @@ def main() -> None:
         prerelease=args.prerelease,
         draft=args.draft,
     )
+    if not result.get("error"):
+        result["approval"] = approval_evidence
     write_output(result, "amia_create_release", args.output_file)
 
     if result.get("error"):

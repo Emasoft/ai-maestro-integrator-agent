@@ -44,7 +44,7 @@ AMIA session memory is stored in **three persistent locations**:
 
 ### Handoff Documents
 
-- Stored in `$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/`
+- Stored in `$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/`
 - Persist across sessions
 - Multiple files for different memory types
 
@@ -112,5 +112,5 @@ Memory is **read only when needed**:
 Clean up old handoffs with:
 
 ```bash
-find $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/ -name "*.md" -mtime +30 -delete
+find $CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/ -name "*.md" -mtime +30 -delete
 ```

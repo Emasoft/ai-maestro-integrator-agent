@@ -101,7 +101,7 @@ echo "Detected trigger type: $TRIGGER_TYPE"
 ### Step 4: Check for existing memory
 
 ```bash
-HANDOFF_DIR="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
+HANDOFF_DIR="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
 
 # Check for session state
 if [ -f "$HANDOFF_DIR/current.md" ]; then

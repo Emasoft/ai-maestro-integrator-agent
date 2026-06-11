@@ -43,7 +43,7 @@
 - Good patterns worth reusing (e.g., clean interface design)
 - Anti-patterns to flag in future reviews
 
-**Storage**: `$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/patterns-learned.md`
+**Storage**: `$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/patterns-learned.md`
 
 **Format**: Markdown table with pattern name, description, example, frequency
 
@@ -68,7 +68,7 @@
 - Rollback decisions (why, when, how)
 - Post-release issues
 
-**Storage**: `$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/release-history.md`
+**Storage**: `$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/release-history.md`
 
 **Format**: Markdown table with columns: Version | Date | Target | Status | Notes
 

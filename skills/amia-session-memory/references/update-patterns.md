@@ -60,7 +60,7 @@ gh pr view $PR_NUM --comments | grep "AMIA-SESSION-STATE" && echo "State saved s
 
 ```bash
 # Step 1: Ensure file exists
-PATTERNS_FILE="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/patterns-learned.md"
+PATTERNS_FILE="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/patterns-learned.md"
 mkdir -p "$(dirname "$PATTERNS_FILE")"
 touch "$PATTERNS_FILE"
 
@@ -95,7 +95,7 @@ tail -10 "$PATTERNS_FILE"
 
 ```bash
 # Step 1: Ensure file exists with header
-RELEASE_FILE="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/release-history.md"
+RELEASE_FILE="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/release-history.md"
 mkdir -p "$(dirname "$RELEASE_FILE")"
 
 if [ ! -f "$RELEASE_FILE" ]; then
@@ -129,7 +129,7 @@ tail -5 "$RELEASE_FILE"
 
 ```bash
 # Step 1: Overwrite CI state file (not append, overwrite)
-CI_FILE="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/ci-states.md"
+CI_FILE="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/ci-states.md"
 mkdir -p "$(dirname "$CI_FILE")"
 
 cat > "$CI_FILE" <<EOF
@@ -165,7 +165,7 @@ cat "$CI_FILE"
 
 ```bash
 # Step 1: Overwrite current.md (not append)
-HANDOFF_FILE="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md"
+HANDOFF_FILE="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md"
 mkdir -p "$(dirname "$HANDOFF_FILE")"
 
 cat > "$HANDOFF_FILE" <<EOF
@@ -202,7 +202,7 @@ test -f "$HANDOFF_FILE" && echo "Handoff saved successfully"
 
 # Step 3: If urgent, post issue comment with link
 if [ -n "$RELATED_ISSUE" ]; then
-  gh issue comment $RELATED_ISSUE --body "AMIA handoff created: \`thoughts/shared/handoffs/amia-integration/current.md\`"
+  gh issue comment $RELATED_ISSUE --body "AMIA handoff created: \`docs_dev/integration/handoffs/current.md\`"
 fi
 ```
 

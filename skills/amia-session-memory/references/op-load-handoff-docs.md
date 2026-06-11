@@ -50,7 +50,7 @@ Load handoff documents from the standard AMIA integration directory to restore s
 ### Step 1: Define handoff directory
 
 ```bash
-HANDOFF_DIR="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
+HANDOFF_DIR="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
 ```
 
 ### Step 2: Check directory exists
@@ -161,7 +161,7 @@ fi
 ## Handoff Directory Structure
 
 ```
-$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/
+$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/
   current.md           - Current task handoff
   patterns-learned.md  - Patterns observed across sessions
   session_state.json   - Structured session state
@@ -238,7 +238,7 @@ None currently.
 #!/bin/bash
 # load_handoff_docs.sh
 
-HANDOFF_DIR="${1:-$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration}"
+HANDOFF_DIR="${1:-$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs}"
 
 echo "=== Loading AMIA Handoff Documents ==="
 

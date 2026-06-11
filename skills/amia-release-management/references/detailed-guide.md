@@ -8,12 +8,17 @@
 - [Escalation Order](#escalation-order)
 - [Scripts Reference](#scripts-reference)
 - [Critical Rules](#critical-rules)
+- [Release Pipeline Design by Project Type](#release-pipeline-design-by-project-type)
 - [Error Handling](#error-handling)
 - [AI Maestro Communication](#ai-maestro-communication)
 - [Examples](#examples)
 - [Reference Documentation Details](#reference-documentation-details)
 
 ## Decision Tree
+
+The success path runs THROUGH the MANAGER-approval gate — never around it.
+Entering the release pipeline (`complete -> publish` / `complete -> deploy`)
+is a NON-EXEMPT **Tier-2** action.
 
 ```
 Release Request Received
@@ -24,12 +29,20 @@ Release Request Received
 |    +--> MAJOR: X+1.0.0 (breaking changes, migration guide required)
 |
 +--> Pre-release verification passes?
-|    +--> YES --> Proceed to release
-|    +--> NO --> Critical: STOP, escalate | Non-critical: Document and proceed (with approval)
+|    +--> NO  --> Critical: STOP, escalate | Non-critical: document, then seek approval
+|    +--> YES --> continue
+|
++--> TIER-2 GATE: is a MANAGER approval RECORDED in the TRDD's "## Approval log"?
+|    +--> NO  --> Send the Tier-2 approval request (AMP template, see persona);
+|    |            WAIT. Do NOT release. (Solo/autonomous project: the project
+|    |            owner-as-MANAGER records the approval, or use --solo-user-approval.)
+|    +--> YES --> Pass --approval-trdd <TRDD> to amia_create_release.py
+|                 (the script hard-refuses with exit 7 if the evidence is absent)
 |
 +--> Release deployed successfully?
-     +--> YES --> Create release notes, notify stakeholders
-     +--> NO --> Initiate rollback (see references/rollback-procedures.md)
+     +--> YES --> Create release notes; notify stakeholders; INTEGRATOR validates the
+     |            artifact satisfies the TRDD, then flips the column -> published/live
+     +--> NO --> Initiate rollback (also Tier-2 gated on --execute; see references/rollback-procedures.md)
 ```
 
 ## Semantic Versioning Quick Reference
@@ -70,17 +83,54 @@ UNVERIFIED --> VERIFICATION_IN_PROGRESS
 | `amia_release_verify.py` | Pre-release verification | `python scripts/amia_release_verify.py --repo owner/repo --version 1.2.3` |
 | `amia_changelog_generate.py` | Generate changelog | `python scripts/amia_changelog_generate.py --repo owner/repo --from v1.2.2 --to HEAD` |
 | `amia_version_bump.py` | Bump version | `python scripts/amia_version_bump.py --repo owner/repo --type patch\|minor\|major` |
-| `amia_create_release.py` | Create GitHub release | `python scripts/amia_create_release.py --repo owner/repo --version 1.2.3 --notes release_notes.md` |
-| `amia_rollback.py` | Rollback release | `python scripts/amia_rollback.py --repo owner/repo --from v1.2.3 --to v1.2.2 --reason "reason"` |
+| `amia_create_release.py` | Create GitHub release (Tier-2 gated) | `python scripts/amia_create_release.py --repo owner/repo --version 1.2.3 --notes release_notes.md --approval-trdd design/tasks/TRDD-<id>-...md` |
+| `amia_rollback.py` | Rollback release (`--execute` is Tier-2 gated) | `python scripts/amia_rollback.py --repo owner/repo --from v1.2.3 --to v1.2.2 --reason "reason" --execute --approval-trdd <trdd>` |
+
+`amia_create_release.py` and `amia_rollback.py --execute` REFUSE to run (exit 7,
+`GOVERNANCE_BLOCK`) unless a recorded MANAGER approval is supplied via
+`--approval-trdd <TRDD>` (whose `## Approval log` carries an `APPROVED` release
+entry) or, on a solo/autonomous project, `--solo-user-approval "<rationale>"`.
 | `amia_cleanup_version_branches.py` | Detect tag/branch collisions | `uv run scripts/amia_cleanup_version_branches.py` |
 
 ## Critical Rules
 
-1. **Never Release Without Approval** - Always present verification results and await explicit user decision.
+1. **Never Release Without a RECORDED MANAGER Approval (Tier-2 gate)** — entering
+   the release pipeline is NON-EXEMPT. A recorded approval lives in the approving
+   TRDD's `## Approval log` (an `APPROVED` release entry) and is passed to the
+   release script via `--approval-trdd`. Team membership is NOT approval. The
+   release scripts enforce this in code (exit 7 without it); the human must not
+   route around the gate. On a solo/autonomous project the owner IS the MANAGER
+   and records the approval (or uses `--solo-user-approval "<rationale>"`).
 2. **Verify Before and After** - Run pre-release and post-release verification for every release.
 3. **Document Everything** - Every release needs updated changelog, release notes, version bump, and annotated git tag.
-4. **Be Ready to Rollback** - Always have a rollback plan before releasing.
+4. **Be Ready to Rollback** - Always have a rollback plan before releasing; `--execute` is itself Tier-2 gated.
 5. **Follow Semantic Versioning** - Version numbers communicate meaning; never use incorrect increments.
+6. **INTEGRATOR owns the column -> completed/published/live flip** — validate that
+   the shipped artifact actually satisfies the TRDD before flipping; nobody self-marks done.
+
+## Release Pipeline Design by Project Type
+
+The release pipeline is **INTEGRATOR-designed per project** — there is no single
+universal pipeline. INTEGRATOR selects (and the USER may override) the pipeline
+that matches the project type, then records the chosen pipeline in the project's
+PRRD / TRDD. Every pipeline, regardless of type, passes the Tier-2 approval gate
+before its publish/deploy step executes.
+
+| Project type | Pipeline shape (INT designs the concrete steps) |
+|---|---|
+| **Library / package** (PyPI, npm, crate, gem, …) | verify -> changelog -> version bump -> build artifact -> **publish to the package registry** -> tag + GitHub release |
+| **Application** (desktop / mobile / CLI binary) | verify -> build -> **sign / notarize** (codesign, notarytool, APK/AAB signing) -> package installers -> attach binaries to a **GitHub release** -> optional store / marketplace submission |
+| **Service** (web API, worker, site) | verify -> build -> **containerize** (image build) -> push to image registry -> **deploy** staging -> smoke test -> deploy production -> soak / monitor |
+| **Claude Code plugin** | the CPV canonical `publish.py` (validate -> test -> lint -> bump -> commit -> push -> marketplace) |
+
+**CPV `publish.py` is Claude-Code-plugins-only.** It is a *recommendation* for the
+plugin project type — NOT a universal release tool. Do not invoke it for libraries,
+applications, or services; design the matching pipeline above instead.
+
+**USER override.** The USER may mandate ANY custom pipeline (a private registry, a
+specific signing identity, a bespoke deploy target, an extra manual gate, a
+different sequence). A USER-specified pipeline overrides the type defaults above;
+INTEGRATOR implements it as specified and records it in the PRRD / TRDD.
 
 ## Error Handling
 
@@ -114,13 +164,17 @@ Always verify message delivery via the skill's send confirmation.
 python scripts/amia_release_verify.py --repo owner/repo --version 1.2.4
 python scripts/amia_changelog_generate.py --repo owner/repo --from v1.2.3 --to HEAD
 python scripts/amia_version_bump.py --repo owner/repo --type patch
-python scripts/amia_create_release.py --repo owner/repo --version 1.2.4 --notes release_notes.md
+# Tier-2 gate: --approval-trdd points at the TRDD whose ## Approval log records the MANAGER APPROVED entry.
+python scripts/amia_create_release.py --repo owner/repo --version 1.2.4 --notes release_notes.md \
+    --approval-trdd design/tasks/TRDD-<id>-...md
 ```
 
 ### Rollback After Failed Release
 
 ```bash
-python scripts/amia_rollback.py --repo owner/repo --from v1.2.4 --to v1.2.3 --reason "Critical regression"
+# --execute is Tier-2 gated; without --approval-trdd / --solo-user-approval it exits 7.
+python scripts/amia_rollback.py --repo owner/repo --from v1.2.4 --to v1.2.3 --reason "Critical regression" \
+    --execute --approval-trdd design/tasks/TRDD-<id>-...md
 python scripts/amia_release_verify.py --repo owner/repo --version 1.2.3 --mode verify-deployed
 ```
 

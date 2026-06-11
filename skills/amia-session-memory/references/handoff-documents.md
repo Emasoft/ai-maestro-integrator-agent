@@ -106,7 +106,7 @@ Before ending session, verify:
 | `release-history.md` | Release log | 1 year |
 | `ci-states.md` | CI/CD states | Until resolved |
 
-**Base Path**: `$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/`
+**Base Path**: `$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/`
 
 ## Cross-Agent Handoff
 
@@ -120,7 +120,7 @@ When handing off to another agent (e.g., Orchestrator, Architect):
 
    **Task**: [One-line task description]
    **Status**: [Progress percentage]
-   **Handoff**: `thoughts/shared/handoffs/amia-integration/current.md`
+   **Handoff**: `docs_dev/integration/handoffs/current.md`
    **Blockers**: [List blockers]
 
    Please continue from where I left off. All context is in the handoff document.
@@ -130,7 +130,7 @@ When handing off to another agent (e.g., Orchestrator, Architect):
    - **Recipient**: `target-agent-session`
    - **Subject**: `AMIA Integration Handoff`
    - **Priority**: `high`
-   - **Content**: `{"type": "handoff", "message": "Integration work requires continuation. Handoff at thoughts/shared/handoffs/amia-integration/current.md"}`
+   - **Content**: `{"type": "handoff", "message": "Integration work requires continuation. Handoff at docs_dev/integration/handoffs/current.md"}`
    - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
 ## Reading Handoffs (Next Session)
@@ -140,13 +140,13 @@ When you receive a handoff:
 1. Load handoff document:
 
    ```bash
-   cat "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md"
+   cat "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md"
    ```
 
 2. Verify freshness:
 
    ```bash
-   stat -f "%Sm" "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md"
+   stat -f "%Sm" "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md"
    ```
 
 3. Check if links still valid:
@@ -166,9 +166,9 @@ When work is complete, archive the handoff:
 
 ```bash
 # Move to archive subdirectory
-mkdir -p "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/archive"
-mv "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md" \
-   "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/archive/$(date +%Y-%m-%d)-[task-name].md"
+mkdir -p "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/archive"
+mv "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md" \
+   "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/archive/$(date +%Y-%m-%d)-[task-name].md"
 ```
 
 **Retention**: Archive files are kept for 90 days, then deleted.

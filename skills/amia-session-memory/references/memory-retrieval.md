@@ -18,10 +18,10 @@ Memory retrieval is **triggered by user prompts** that indicate continuation of 
 | Trigger Phrase | Memory to Load | Command |
 |----------------|---------------|---------|
 | "Continue PR review #N" | PR comment state | `gh pr view N --comments` |
-| "Resume integration work" | Current handoff | `cat $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md` |
-| "What patterns have we seen?" | Patterns learned | `cat $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/patterns-learned.md` |
-| "Last release info" | Release history | `cat $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/release-history.md` |
-| "CI failure history" | CI states | `cat $CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/ci-states.md` |
+| "Resume integration work" | Current handoff | `cat $CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md` |
+| "What patterns have we seen?" | Patterns learned | `cat $CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/patterns-learned.md` |
+| "Last release info" | Release history | `cat $CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/release-history.md` |
+| "CI failure history" | CI states | `cat $CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/ci-states.md` |
 
 ## Retrieval Decision Tree
 
@@ -58,23 +58,23 @@ gh pr view <PR_NUMBER> --comments --json comments \
 
 ```bash
 # Load current work state
-cat "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md"
+cat "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md"
 
 # Load patterns learned
-cat "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/patterns-learned.md"
+cat "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/patterns-learned.md"
 
 # Load release history
-cat "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/release-history.md"
+cat "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/release-history.md"
 
 # Load CI states
-cat "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/ci-states.md"
+cat "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/ci-states.md"
 ```
 
 ### Verify Memory Freshness
 
 ```bash
 # Check file timestamps
-stat -f "%Sm" "$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration/current.md"
+stat -f "%Sm" "$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs/current.md"
 
 # Compare with PR last updated
 gh pr view <PR_NUMBER> --json updatedAt -q .updatedAt

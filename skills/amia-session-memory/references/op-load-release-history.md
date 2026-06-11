@@ -56,7 +56,7 @@ Load the release history document to understand past releases, version progressi
 ### Step 1: Locate release history file
 
 ```bash
-HANDOFF_DIR="$CLAUDE_PROJECT_DIR/thoughts/shared/handoffs/amia-integration"
+HANDOFF_DIR="$CLAUDE_PROJECT_DIR/docs_dev/integration/handoffs"
 RELEASE_HISTORY="$HANDOFF_DIR/release-history.md"
 ```
 
