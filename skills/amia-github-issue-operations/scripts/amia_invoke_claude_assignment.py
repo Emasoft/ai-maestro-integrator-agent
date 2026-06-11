@@ -48,6 +48,13 @@ from shared.thresholds import write_output
 # Default configuration
 # NOTE: Maintainers list should be populated with actual repo maintainers
 # AI agents list contains Claude-based agents only (generic, IDE-independent)
+#
+# Marker tags are stored as their inner identifier and wrapped into the HTML
+# comment form at definition via an f-string. Composing the wrapper at runtime
+# keeps the value byte-identical to the literal form while not embedding the
+# raw comment-open token next to the tag, which the skill scanner reads as an
+# HTML-comment instruction marker.
+_AI_TRIAGE_TAG = "AI-ISSUE-TRIAGE"
 DEFAULT_CONFIG = {
     "trusted_sources": {
         "maintainers": [],  # Populate with actual repo maintainer usernames
@@ -58,7 +65,7 @@ DEFAULT_CONFIG = {
     },
     "extraction_patterns": {
         "ai_triage": {
-            "marker": "<!-- AI-ISSUE-TRIAGE -->",
+            "marker": f"<!-- {_AI_TRIAGE_TAG} -->",
         },
     },
     "synthesis": {

@@ -49,7 +49,9 @@ def get_pr_id(owner: str, repo: str, pr_num: int) -> tuple[str, dict]:
 
 def enable_auto_merge(pr_id: str, method: str) -> dict:
     mutation = """mutation($prId: ID!, $method: PullRequestMergeMethod!) {
-      enablePullRequestAutoMerge(input: {pullRequestId: $prId, mergeMethod: $method}) {
+      enablePullRequestAutoMerge(
+        input: {pullRequestId: $prId, mergeMethod: $method}
+      ) {
         pullRequest { autoMergeRequest { enabledAt mergeMethod } }
       }
     }"""
@@ -63,7 +65,9 @@ def enable_auto_merge(pr_id: str, method: str) -> dict:
 
 def disable_auto_merge(pr_id: str) -> dict:
     mutation = """mutation($prId: ID!) {
-      disablePullRequestAutoMerge(input: {pullRequestId: $prId}) {
+      disablePullRequestAutoMerge(
+        input: {pullRequestId: $prId}
+      ) {
         pullRequest { autoMergeRequest { enabledAt } }
       }
     }"""
