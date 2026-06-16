@@ -1,0 +1,154 @@
+name: CI
+
+# Job display names below MUST stay exactly Lint / Validate / Test —
+# cpv-setup-branch-rules reads them verbatim when wiring the branch
+# ruleset (TRDD-bbff5bc5).
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+  merge_group:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Cheap-fail-first: workflow-syntax errors before mega-linter.
+      - name: Lint workflow YAML (actionlint)
+        uses: rhysd/actionlint@914e7df21a07ef503a81201c76d2b11c789d3fca # v1.7.12
+
+      - name: Mega-Linter
+        uses: oxsecurity/megalinter@e08c2b05e3dbc40af4c23f41172ef1e068a7d651 # v8
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false
+
+      - name: Upload Mega-Linter reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mega-linter-reports
+          path: |
+            megalinter-reports/
+            mega-linter.log
+
+  commitlint:
+    name: Commitlint
+    runs-on: ubuntu-latest
+    # PRs only — push events on main don't need conventional-commit
+    # enforcement (the commits are already merged).
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Conventional-commits gate
+        uses: wagoid/commitlint-github-action@6cf16efdf4da5277c791d335142c03a0bdf1766e # v6.2.1
+
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      # Plain checkout — scaffolded plugins ship NO submodules; asking the
+      # checkout action to recurse occasionally flakes with "could not read
+      # Username" auth errors against non-existent submodule URLs, taking
+      # the Validate job down with a misleading 'process git failed exit
+      # code 128'. Drop the recurse to remove the moot enumeration step.
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@e4db8464a088ece1b920f60402e813ea4de65b8f # v4
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      # Cross-run CPV scan-cache (optional, big win for fix loops).
+      # The cache key includes the hash of .cpv-self-hashes.json so any
+      # change to the validator's own source busts the cache automatically;
+      # the restore-keys fallback still hits a same-OS warm cache on the
+      # first run after a CPV bump so we don't pay the full cold-scan cost.
+      # actions/cache@v4.3.0 is the latest v4.x SHA at scaffold time —
+      # pinact-compatible (the `# v4.3.0` comment is kept in sync on `uv
+      # lock`). gh-actions.md §"Pin third-party actions to a full commit SHA".
+      - name: Restore CPV scan-cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/.cache/cpv
+          key: cpv-scan-cache-${{ runner.os }}-${{ hashFiles('**/.cpv-self-hashes.json') }}
+          restore-keys: |
+            cpv-scan-cache-${{ runner.os }}-
+
+      - name: Run plugin validation (remote CPV, --strict)
+        # Fetches CPV from GitHub via uvx so downstream plugins do not need to
+        # vendor scripts/validate_plugin.py. Matches publish.py's local gate
+        # so CI and local gate agree. Issue #11: do NOT call local
+        # scripts/validate_plugin.py — it does not exist in scaffolded plugins.
+        run: |
+          set +e
+          uvx --from git+https://github.com/Emasoft/claude-plugins-validation \
+              --with pyyaml \
+              cpv-remote-validate plugin . --strict
+          exit_code=$?
+          set -e
+          if [ $exit_code -eq 0 ]; then
+            echo "Validation passed"
+            exit 0
+          elif [ $exit_code -ge 5 ]; then
+            echo "Only WARNING-level findings (exit $exit_code) — advisory, not blocking"
+            exit 0
+          else
+            echo "::error::Validation failed (exit $exit_code: CRITICAL/MAJOR/MINOR/NIT)"
+            exit $exit_code
+          fi
+
+  test:
+    name: Test
+    # macOS matrix added v2.86.0 (issue #22) — catches darwin-specific
+    # regressions that ubuntu-only runs miss (pathlib casing, mtime
+    # resolution, BSD `ps` vs procps-ng output). fail-fast: false so
+    # each OS reports its own failure.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@e4db8464a088ece1b920f60402e813ea4de65b8f # v4
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Run tests
+        run: |
+          if [ -d "tests" ] && ls tests/test_*.py 1>/dev/null 2>&1; then
+            uv run pytest tests/ -v
+          else
+            echo "No test files found, skipping"
+          fi
