@@ -11,7 +11,8 @@ triggers:
   - Any image or screenshot needs interpretation
   - Orchestrator needs to delegate image analysis to protect context memory
 auto_skills:
-  - amia-session-memory
+  - integrator-memory-recall
+  - integrator-memory-write
 memory_requirements: low
 ---
 

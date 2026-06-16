@@ -5,7 +5,8 @@ model: opus
 description: Evaluates pull requests for merge readiness and quality standards. Requires AI Maestro installed.
 type: evaluator
 auto_skills:
-  - amia-session-memory
+  - integrator-memory-recall
+  - integrator-memory-write
   - amia-code-review-patterns
   - amia-github-integration
 memory_requirements: medium

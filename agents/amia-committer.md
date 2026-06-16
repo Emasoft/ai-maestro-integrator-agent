@@ -9,7 +9,8 @@ triggers:
   - Dual-git handling between public and private repos
   - Decision archaeology support for commit history
 auto_skills:
-  - amia-session-memory
+  - integrator-memory-recall
+  - integrator-memory-write
 memory_requirements: low
 ---
 

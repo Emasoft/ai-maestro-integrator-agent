@@ -55,7 +55,6 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 | `amia-release-management` | Version bumping, changelogs, release coordination |
 | `amia-ai-pr-review-methodology` | Evidence-based PR review (4 phases, 5 dimensions) |
 | `amia-label-taxonomy` | GitHub label taxonomy for PR/issue management |
-| `amia-session-memory` | Session state persistence for PR reviews |
 | `amia-prrd-trdd-kanban` | INTEGRATOR's role in the PRRD/TRDD/Kanban workflow (ai_review, publish, deploy, live_auditing columns) |
 | `integrator-memory-recall` | Symptom-based recall over the project's markdown memory notes (memgrep, degrades to grep) |
 | `integrator-memory-write` | Capture durable facts as symptom-indexed memory notes with schema validation |

@@ -18,7 +18,8 @@ auto_skills:
   - amia-ci-failure-patterns
   - amia-release-management
   - amia-github-integration
-  - amia-session-memory
+  - integrator-memory-recall
+  - integrator-memory-write
   - amia-label-taxonomy
   - amia-integration-protocols
   - amia-prrd-trdd-kanban

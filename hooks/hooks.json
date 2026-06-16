@@ -10,7 +10,7 @@
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_pre_push_hook.py",
-            "timeout": 30000
+            "timeout": 60
           }
         ]
       },
@@ -22,7 +22,7 @@
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_pre_issue_close_hook.py",
-            "timeout": 60000
+            "timeout": 60
           }
         ]
       }
@@ -35,7 +35,7 @@
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/amia_stop_hook.py",
-            "timeout": 60000
+            "timeout": 120
           }
         ]
       }

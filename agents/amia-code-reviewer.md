@@ -9,7 +9,8 @@ triggers:
   - PR quality assessment required
   - orchestrator assigns code review task
 auto_skills:
-  - amia-session-memory
+  - integrator-memory-recall
+  - integrator-memory-write
   - amia-code-review-patterns
   - amia-tdd-enforcement
 memory_requirements: medium

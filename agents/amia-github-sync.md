@@ -5,7 +5,8 @@ model: sonnet
 description: Synchronizes GitHub issues, PRs, and project boards. Requires AI Maestro installed.
 type: local-helper
 auto_skills:
-  - amia-session-memory
+  - integrator-memory-recall
+  - integrator-memory-write
   - amia-github-integration
   - amia-github-projects-sync
 memory_requirements: medium

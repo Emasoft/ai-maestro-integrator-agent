@@ -11,7 +11,8 @@ triggers:
   - Reproduction of reported bug needs verification
   - Root cause analysis needed before implementing solution
 auto_skills:
-  - amia-session-memory
+  - integrator-memory-recall
+  - integrator-memory-write
   - amia-tdd-enforcement
 memory_requirements: medium
 ---

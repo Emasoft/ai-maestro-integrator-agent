@@ -550,7 +550,8 @@ The Integrator Agent (AMIA) has 20 skills covering code review, quality gates, G
 - **amia-git-worktree-operations**: Parallel PR processing with git worktrees
 - **amia-integration-protocols**: Shared utilities and cross-skill protocols
 - **amia-label-taxonomy**: GitHub label taxonomy for PR/issue management
-- **amia-session-memory**: Session state persistence for PR reviews
+- **integrator-memory-recall**: Symptom-indexed recall of prior session / PR-review memory
+- **integrator-memory-write**: Write/update session + PR-review memory notes
 
 All skills use progressive discovery (compact SKILL.md under 4000 chars + `references/` for details).
 

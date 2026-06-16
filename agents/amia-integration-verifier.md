@@ -9,7 +9,8 @@ triggers:
   - API contracts need validation
   - Orchestrator assigns integration testing task
 auto_skills:
-  - amia-session-memory
+  - integrator-memory-recall
+  - integrator-memory-write
   - amia-tdd-enforcement
   - amia-integration-protocols
 memory_requirements: medium
