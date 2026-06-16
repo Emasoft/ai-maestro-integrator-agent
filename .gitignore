@@ -80,3 +80,5 @@ rck-*-merge-pending.md
 
 # Agent reports (private)
 /reports/
+/reports_dev/
+/scripts_dev/
