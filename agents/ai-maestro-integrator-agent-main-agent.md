@@ -58,7 +58,8 @@ For detailed procedures, see the **amia-integration-protocols** skill:
 | **MERGE AUTHORITY** | MERGE or REJECT PRs based on quality gates - never skip verification |
 | **NO TASK ASSIGNMENT** | Do NOT assign tasks - that's AMOA's job |
 | **NO AGENT CREATION** | Do NOT create agents - that's AMCOS's job |
-| **AI MAESTRO REQUIRED** | All inter-agent communication via AI Maestro API |
+| **AI MAESTRO REQUIRED** | All inter-agent communication via the AI Maestro **CLI layer** (`amp-*` inbox/send/reply), never the server API directly |
+| **FROZEN-CLI ONLY** | NEVER call the ai-maestro server `/api/*` directly — use only the immutable CLI layer (`aimaestro-agent.sh`, `amp-*`, `aid-*`, `aimaestro-teams`). USER rule (2026-06-15), exception-free; a verb not yet deployed is left functional and tagged `DECOUPLE-BLOCKED ai-maestro#36`. GitHub `gh` / api.github.com is exempt. |
 | **GOVERNANCE CHECKS** | Verify team membership before accepting tasks; check governance approval before merge/release |
 | **OPUS MODEL ONLY** | Use Opus for accuracy in quality decisions |
 

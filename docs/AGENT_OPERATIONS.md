@@ -1105,7 +1105,9 @@ GitHub Projects V2 may use additional columns for visual workflow management. Th
 
 ### AI Maestro Task API Integration
 
-AMIA SHOULD report integration results to AI Maestro's task system (`/api/teams/{id}/tasks`) in addition to file-based tracking. When a PR is merged, CI passes, or a release is tagged, update the corresponding task status via the `agent-messaging` skill.
+AMIA SHOULD report integration results to AI Maestro's task system **via the frozen CLI layer** (the `aimaestro-teams` kanban/task verb), never the server API directly, in addition to file-based tracking. When a PR is merged, CI passes, or a release is tagged, update the corresponding task status via the `agent-messaging` skill.
+<!-- DECOUPLE-BLOCKED ai-maestro#36 — the kanban/status-set verb lands with ai-maestro#36; until it deploys, status updates route through the agent-messaging skill, never the server API. Frozen-CLI rule (USER 2026-06-15): no ai-maestro plugin calls the server API directly. -->
+
 
 ---
 
