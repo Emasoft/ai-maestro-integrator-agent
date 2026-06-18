@@ -178,7 +178,7 @@ Team names must be **globally unique** across all projects managed by AMCOS. AMC
 | `project.github_project` | string | No | GitHub Projects board URL |
 | `project.created_by` | string | Yes | Agent that created the project |
 | `project.created_at` | ISO8601 | Yes | Project creation timestamp |
-| `created_by` | string | Yes | Agent that created the team (always AMCOS) |
+| `created_by` | string | Yes | Agent that created the team (the MANAGER; the COS records build-out under its mandate) |
 | `created_at` | ISO8601 | Yes | Team creation timestamp |
 
 ### Agent Entry

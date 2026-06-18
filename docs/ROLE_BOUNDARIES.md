@@ -1,4 +1,4 @@
-# AMCOS Role Boundaries
+# AI Maestro Role Boundaries
 
 **CRITICAL: This document defines the strict boundaries between agent roles. Violating these boundaries breaks the system architecture.**
 
@@ -17,7 +17,7 @@
 │              Title: MANAGER                                      │
 │              - User's sole interlocutor                          │
 │              - Creates projects                                  │
-│              - Approves AMCOS requests                            │
+│              - Creates teams/COS/base + AUTONOMOUS/MAINTAINER     │
 │              - Supervises all operations                         │
 └──────────────────────────┬──────────────────────────────────────┘
                            │
@@ -53,14 +53,14 @@
 
 ### AMCOS CAN
 
-- ✅ Create agents (with AMAMA approval)
-- ✅ Terminate agents (with AMAMA approval)
-- ✅ Hibernate/wake agents (with AMAMA approval)
+- ✅ Create extra member agents under the MANAGER's team-build-out mandate (R30.1) — the 5-member base is auto-created with the team
+- ✅ Terminate own-team agents under its mandate (R30)
+- ✅ Hibernate/wake own-team agents
 - ✅ Configure agents with skills and plugins
 - ✅ Assign agents to project teams
 - ✅ Handle handoff protocols between agents
 - ✅ Monitor agent health and availability
-- ✅ Replace failed agents (with AMAMA approval)
+- ✅ Replace failed own-team agents under its mandate (R30)
 - ✅ Report agent performance to AMAMA
 
 ### AMCOS CANNOT
@@ -112,7 +112,9 @@
 ### AMAMA CAN
 
 - ✅ Create projects
-- ✅ Approve/reject AMCOS requests (agent create/terminate/etc.)
+- ✅ Create & delete teams on own authority — auto-creates the COS + 5-member base (R29.1)
+- ✅ Create & delete AUTONOMOUS and MAINTAINER agents on own authority (R29.3)
+- ✅ Grant the COS its team-build-out mandate (R30)
 - ✅ Communicate with user
 - ✅ Set strategic direction
 - ✅ Override any agent decision
@@ -120,7 +122,7 @@
 
 ### AMAMA CANNOT
 
-- ❌ Create agents directly (delegates to AMCOS)
+- ❌ Hand-create or configure individual member agents (the COS builds out the team under its mandate)
 - ❌ Assign tasks directly (delegates to AMOA)
 
 ### AMAMA Scope
@@ -142,13 +144,10 @@ AMOA: "I need a frontend developer agent for Project X"
 AMCOS: Receives request, prepares agent specification
   │
   ▼
-AMCOS → AMAMA: "Request approval to spawn frontend-dev for Project X"
-  │
+AMCOS: Spawns frontend-dev under its standing MANAGER mandate (R30)
+  │    (no per-agent approval — the mandate was granted at team creation)
   ▼
-AMAMA: Approves (or rejects with reason)
-  │
-  ▼
-AMCOS: Creates agent, configures skills, assigns to Project X team
+AMCOS: Configures skills, assigns frontend-dev to the Project X team
   │
   ▼
 AMCOS → AMOA: "Agent frontend-dev ready, assigned to your project"
@@ -181,13 +180,10 @@ Agent: Receives task, begins work
 AMCOS: Detects agent-123 is unresponsive (terminal failure)
   │
   ▼
-AMCOS → AMAMA: "Request approval to replace agent-123"
-  │
+AMCOS: Replaces agent-123 with agent-456 under its mandate (R30)
+  │    (own-team replacement — no per-replacement approval)
   ▼
-AMAMA: Approves
-  │
-  ▼
-AMCOS: Creates replacement agent-456, configures it
+AMCOS: Configures replacement agent-456
   │
   ▼
 AMCOS → AMOA: "agent-123 replaced by agent-456, generate handoff"
@@ -206,7 +202,9 @@ AMOA: Sends handoff to agent-456
 | Responsibility | AMAMA | AMCOS | AMOA | AMIA | AMAA |
 |----------------|------|------|-----|-----|-----|
 | Create projects | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Create agents | Approves | ✅ | Requests | ❌ | ❌ |
+| Create teams (auto-creates COS + 5-base) | ✅ (R29.1) | ❌ | ❌ | ❌ | ❌ |
+| Create AUTONOMOUS / MAINTAINER | ✅ (R29.3) | ❌ | ❌ | ❌ | ❌ |
+| Create extra member agents | grants mandate (R30) | ✅ under mandate | Requests | ❌ | ❌ |
 | Configure agents | ❌ | ✅ | ❌ | ❌ | ❌ |
 | Assign agents to teams | ❌ | ✅ | ❌ | ❌ | ❌ |
 | Assign tasks | ❌ | ❌ | ✅ | ❌ | ❌ |
@@ -222,6 +220,6 @@ AMOA: Sends handoff to agent-456
 
 ---
 
-**Document Version**: 1.1.19
-**Last Updated**: 2026-03-13
-**Author**: AMCOS Plugin Development
+**Document Version**: 1.3.0
+**Last Updated**: 2026-06-19
+**Author**: ai-maestro-integrator-agent (INTEGRATOR)
