@@ -71,9 +71,9 @@ UNVERIFIED --> VERIFICATION_IN_PROGRESS
 | Order | Condition | Action |
 |-------|-----------|--------|
 | 1 | Test failure | Delegate fix to implementation agent, await resolution |
-| 2 | Critical bug open | Escalate to user for release decision |
+| 2 | Critical bug open | Escalate up the chain (to the MANAGER / MAESTRO) for release decision |
 | 3 | Missing documentation | Delegate documentation task, await completion |
-| 4 | Dependency vulnerability | Escalate to user with severity assessment |
+| 4 | Dependency vulnerability | Escalate up the chain (to the MANAGER / MAESTRO) with severity assessment |
 | 5 | CI/CD failure | Investigate cause, escalate if infrastructure issue |
 
 ## Scripts Reference

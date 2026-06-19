@@ -24,7 +24,7 @@ A requirement deviation occurs when:
 
 - An implementation does not match the requirement specification
 - A workaround is applied that changes the expected behavior
-- A requirement is marked as "out of scope" without user approval
+- A requirement is marked as "out of scope" without MANAGER approval (via the chain)
 - A requirement is reinterpreted to mean something different
 - A partial implementation is accepted as "complete"
 
@@ -32,8 +32,8 @@ A requirement deviation occurs when:
 
 1. STOP the current task
 2. Document the deviation in a Requirement Issue Report
-3. Escalate to AMCOS (or directly to the user if AMCOS is unavailable)
-4. BLOCK progress on the affected requirement until user decides
+3. Escalate to AMCOS (or further up the chain — to the MANAGER, ultimately the MAESTRO — if AMCOS is unavailable)
+4. BLOCK progress on the affected requirement until the MANAGER (via the chain) decides
 
 ## 1.3 When Technical Constraints Conflict
 
@@ -42,7 +42,7 @@ If a technical constraint makes a requirement infeasible:
 1. Document the constraint clearly (what, why, evidence)
 2. Propose alternatives that satisfy the requirement intent
 3. Send escalation to AMCOS with `priority: "urgent"`
-4. Wait for user decision — do NOT proceed with a workaround
+4. Wait for the MANAGER's decision (via the chain) — do NOT proceed with a workaround
 
 **Forbidden actions:**
 
@@ -58,7 +58,7 @@ Every workflow output MUST include requirement compliance status:
 ## Requirement Compliance
 - Requirements addressed: X/Y
 - Deviations: [list or NONE]
-- Pending user decisions: [list or NONE]
+- Pending decisions from the chain (MANAGER / MAESTRO): [list or NONE]
 ```
 
 ## Quick Reference
@@ -68,5 +68,5 @@ Every workflow output MUST include requirement compliance status:
 | Requirement clear and feasible | Implement as specified |
 | Requirement ambiguous | Escalate for clarification, BLOCK until resolved |
 | Requirement infeasible | Document constraint, propose alternatives, escalate |
-| Requirement conflicts with another | Escalate both, let user prioritize |
+| Requirement conflicts with another | Escalate both, let the MANAGER (via the chain) prioritize |
 | Implementation deviates | Stop, document, escalate |

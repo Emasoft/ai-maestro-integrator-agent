@@ -47,7 +47,7 @@ Gate 0 Verdict: [PASS/FAIL]
 
 1. STOP review immediately
 2. Generate Requirement Issue Report
-3. PR cannot proceed until user decides
+3. PR cannot proceed until the MANAGER (via the chain) decides
 
 ---
 

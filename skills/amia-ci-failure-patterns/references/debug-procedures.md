@@ -620,12 +620,12 @@ EOF
 
 4. **Permission Required**
    - Fix requires elevated permissions (repo admin, org owner)
-   - Fix requires user approval (architectural change)
+   - Fix requires MANAGER approval (via the chain; architectural change)
    - Fix affects other repositories or services
 
 5. **Human Decision**
    - Fix has architectural implications (design choice)
-   - Fix involves trade-offs that need user input
+   - Fix involves trade-offs that need a decision from the MANAGER (via the chain)
    - Multiple fix approaches with no clear winner
 
 ### 1.6.2 Escalation message format
@@ -665,7 +665,7 @@ See: docs_dev/ci-debug/CI-DEBUG-{timestamp}.md
 {Suggested next step for orchestrator}
 
 Example recommendations:
-- "Require user input on which fix approach to use"
+- "Require a decision from the MANAGER (via the chain) on which fix approach to use"
 - "Contact GitHub support for runner availability"
 - "Request repository admin permissions for workflow changes"
 ```

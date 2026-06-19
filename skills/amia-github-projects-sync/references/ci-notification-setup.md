@@ -319,6 +319,6 @@ The webhook handler integrates with the project sync workflow:
 
 1. **CI failure** → Orchestrator notified → Auto-creates issue with CI logs
 2. **PR merged** → Orchestrator updates task status → Closes related issues
-3. **Task blocked** → Orchestrator escalates → Sends summary to user
+3. **Task blocked** → Orchestrator escalates → Surfaces summary up the chain (to the MANAGER / MAESTRO)
 
 See `references/status-management.md` for full workflow details.

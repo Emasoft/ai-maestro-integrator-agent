@@ -75,7 +75,7 @@ The `../shared/thresholds.py` module defines automation thresholds:
 | MAX_CONSECUTIVE_FAILURES | 3 | CI failures before escalation |
 | INACTIVE_HOURS | 24 | Hours before flagging inactive items |
 | LONG_REVIEW_HOURS | 48 | Hours before review escalation |
-| BLOCKED_ESCALATION_HOURS | 72 | Hours before user escalation |
+| BLOCKED_ESCALATION_HOURS | 72 | Hours before escalation up the chain (to the MANAGER / MAESTRO) |
 
 See `references/automation-scripts.md` for usage.
 

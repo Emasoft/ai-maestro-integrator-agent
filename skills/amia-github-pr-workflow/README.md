@@ -18,7 +18,7 @@ The orchestrator **NEVER** does direct work on PRs. It orchestrates, delegates, 
 
 | Decision | Action |
 |----------|--------|
-| Human PR | Escalate to user for guidance |
+| Human PR | Escalate up the chain (to the MANAGER / MAESTRO) for guidance |
 | AI/Bot PR | Direct delegation allowed |
 | Code review needed | Delegate to review subagent |
 | Code changes needed | Delegate to implementation subagent |
@@ -30,7 +30,7 @@ The orchestrator **NEVER** does direct work on PRs. It orchestrates, delegates, 
 
 1. **Never Block** - All long-running tasks must be delegated or backgrounded
 2. **Never Write Code** - Code writing is ALWAYS delegated to subagents
-3. **Never Merge Without User** - Always require explicit user approval
+3. **Never Merge Without Approval** - Always require explicit MANAGER approval (via the chain)
 4. **Always Verify Before Reporting** - Run verification scripts before status reports
 5. **Human PRs Require Escalation** - Different handling for human contributors
 

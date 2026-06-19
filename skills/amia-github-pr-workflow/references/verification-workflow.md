@@ -117,7 +117,7 @@ gh pr checks <pr_number> --required
 
 1. Check immediately after commit push
 2. If pending, poll frequently until CI completes
-3. If CI appears stuck, escalate to user
+3. If CI appears stuck, escalate up the chain (to the MANAGER / MAESTRO)
 4. No fixed time limits - wait until CI completes or fails
 
 ---
@@ -256,7 +256,7 @@ The protocol consists of 4 verification passes with specific timing.
 - New activity detected during quiet period
 - Maximum loop iterations exceeded (5 iterations)
 
-**Escalation exit** (report to user):
+**Escalation exit** (surface status up the chain):
 
 - Maximum iterations exceeded
 - Unresolvable blocker detected
@@ -264,7 +264,7 @@ The protocol consists of 4 verification passes with specific timing.
 
 ### 3.6.3 Escalation triggers
 
-Escalate to user immediately when:
+Escalate up the chain (to the MANAGER / MAESTRO) immediately when:
 
 | Trigger | Example | Escalation Message |
 |---------|---------|-------------------|

@@ -380,15 +380,15 @@ Model: Claude Opus 4.5
    - Alternative technology chosen by developer
    - Technology constraint violated (e.g., "must use PostgreSQL" but using SQLite)
 
-3. **Scope was reduced without user approval**:
+3. **Scope was reduced without MANAGER approval (via the chain)**:
    - Fewer features than specified
    - Partial implementation of requirements
-   - Requirements marked "deferred" without user consent
+   - Requirements marked "deferred" without the MANAGER's consent (via the chain)
 
 4. **Any requirement marked IMMUTABLE was violated**:
    - These are non-negotiable constraints
    - Security requirements, compliance requirements
-   - Cannot proceed without explicit user approval
+   - Cannot proceed without explicit MANAGER approval (via the chain)
 
 **Violation handling procedure**:
 
@@ -405,17 +405,17 @@ Model: Claude Opus 4.5
      - Exit code evidence of failure
      - Impact analysis (what breaks, what's missing)
 
-3. **Block merge until user reviews deviation**:
+3. **Block merge until the MANAGER (via the chain) reviews the deviation**:
    - Integration verification MUST return FAILED status
    - Merge request CANNOT be approved
    - Flag in GitHub issue or pull request
 
-4. **Only proceed after explicit user approval**:
-   - User must review violation report
-   - User must either:
+4. **Only proceed after explicit MANAGER approval (via the chain)**:
+   - The MANAGER (ultimately the MAESTRO) must review the violation report
+   - The MANAGER must either:
      - Approve deviation and update requirements
      - Reject and request re-implementation
-   - Document user decision with timestamp and rationale
+   - Document the decision with timestamp and rationale
 
 **Minimal output format for requirement violation**:
 

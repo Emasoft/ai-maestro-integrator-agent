@@ -210,7 +210,7 @@ def detect_stale_entries(registry):
 2. For each stale entry:
    - Log reason for staleness
    - If `directory_missing`, remove registry entry immediately
-   - If other reason, mark as `pending-removal` and notify user
+   - If other reason, mark as `pending-removal` and surface it up the chain (to the MANAGER / MAESTRO)
 3. After 7 days in `pending-removal`, force remove
 
 **Example output:**

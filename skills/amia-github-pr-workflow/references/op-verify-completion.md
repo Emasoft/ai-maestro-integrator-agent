@@ -69,7 +69,7 @@ Verify all completion criteria for a PR before reporting it as ready to merge.
    }
    ```
 
-3. **If complete: true** - Report to user, await merge decision
+3. **If complete: true** - Surface status up the chain, await merge decision
 
 4. **If complete: false** - Identify failing criteria and delegate fixes
 
@@ -98,9 +98,9 @@ Verify all completion criteria for a PR before reporting it as ready to merge.
 
 | Value | Meaning | Action |
 |-------|---------|--------|
-| ready_to_merge | All criteria pass | Report to user |
+| ready_to_merge | All criteria pass | Surface status up the chain |
 | needs_work | Fixable issues | Delegate fixes |
-| blocked | Unfixable without user | Escalate |
+| blocked | Unfixable without the MANAGER (via the chain) | Escalate |
 
 ## Error Handling
 

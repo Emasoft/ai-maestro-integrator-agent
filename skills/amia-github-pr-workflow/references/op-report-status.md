@@ -39,7 +39,7 @@ Provide clear, actionable status update to user about PR readiness and await the
 - After verification passes (ready to merge)
 - When user requests status update
 - When significant progress made
-- When blocked and need user decision
+- When blocked and a decision from the MANAGER (via the chain) is needed
 
 ## Prerequisites
 
@@ -107,7 +107,7 @@ Provide clear, actionable status update to user about PR readiness and await the
    ### Blocking Issues
    - <issue>: <details>
 
-   ### User Decision Required
+   ### Decision Required (escalated via the chain to the MANAGER)
    <specific question or options>
    ```
 
@@ -115,7 +115,7 @@ Provide clear, actionable status update to user about PR readiness and await the
 
 4. **Log report** in orchestration log
 
-5. **Await user decision** (for ready/blocked PRs)
+5. **Await the MANAGER's decision** (via the chain; for ready/blocked PRs)
 
 ## Output
 
@@ -190,4 +190,4 @@ Delegating fixes to implementation subagent...
 
 ## Critical Rule
 
-**Never merge without user approval.** Report and wait. The merge decision belongs to the user.
+**Never merge without MANAGER approval (via the chain).** Report and wait. The merge decision belongs to the MAESTRO, reached via the chain.

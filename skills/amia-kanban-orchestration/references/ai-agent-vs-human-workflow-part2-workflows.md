@@ -61,7 +61,7 @@ gh pr review 123 --comment --body "$(cat <<'EOF'
 **Standards Compliance:** Pass
 
 **Decision:** Approved (AI Review complete)
-**Routing:** Human Review (big task, requires user approval)
+**Routing:** Human Review (big task, requires MANAGER approval via the chain)
 
 @user This is a big task requiring your review. Please review the PR.
 EOF

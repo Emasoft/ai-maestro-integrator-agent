@@ -50,7 +50,7 @@ python scripts/amia_orchestrator_pr_poll.py --repo owner/repo
 |--------|---------|--------|
 | `needs_review` | PR awaiting review | Delegate review to subagent |
 | `needs_changes` | Review requested changes | Delegate implementation work |
-| `ready` | All criteria met | Verify completion, report to user |
+| `ready` | All criteria met | Verify completion, surface status up the chain |
 | `blocked` | Cannot proceed | Identify blocker, escalate |
 
 ### 1.1.2 Delegate review work to subagents
@@ -221,19 +221,19 @@ continue_with_other_tasks()
 
 ### 1.2.3 Make unilateral merge decisions
 
-**The rule**: The orchestrator NEVER merges a PR without explicit user approval.
+**The rule**: The orchestrator NEVER merges a PR without explicit MANAGER approval (via the chain).
 
 **Why**:
 
 - Merging is an irreversible action
-- The user is accountable for repository state
+- The MAESTRO is accountable for repository state
 - There may be context the orchestrator lacks
 
 **The correct workflow**:
 
 1. Verify all completion criteria are met
-2. Report to user: "PR #X is ready to merge"
-3. Wait for user's explicit instruction: "merge it" or similar
+2. Surface up the chain: "PR #X is ready to merge"
+3. Wait for the MANAGER's explicit instruction (via the chain): "merge it" or similar
 4. ONLY THEN delegate the merge operation
 
 **What "ready to merge" means**:
@@ -260,6 +260,6 @@ continue_with_other_tasks()
 | Review code | NO | Review subagent |
 | Wait for CI | NO | CI monitor subagent |
 | Verify completion | YES | Orchestrator via script |
-| Report to user | YES | Orchestrator directly |
-| Decide to merge | NO | User decides |
-| Execute merge | NO | Only after user approval |
+| Surface status up the chain | YES | Orchestrator directly |
+| Decide to merge | NO | MAESTRO decides (via the chain) |
+| Execute merge | NO | Only after MANAGER approval (via the chain) |

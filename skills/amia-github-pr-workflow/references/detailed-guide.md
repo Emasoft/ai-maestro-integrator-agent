@@ -14,7 +14,7 @@
 PR Review Request Received
 |
 +---> Is PR from human or AI agent?
-|   +---> Human PR -> Escalate to user for guidance
+|   +---> Human PR -> Escalate up the chain (to the MANAGER / MAESTRO) for guidance
 |   +---> AI/Bot PR -> Direct delegation allowed
 |
 +---> What type of work is needed?
@@ -28,7 +28,7 @@ PR Review Request Received
 |
 +---> Is PR ready to merge?
     +---> Run completion verification script
-    +---> All criteria pass -> Report to user, await merge decision
+    +---> All criteria pass -> Surface up the chain (to the MANAGER / MAESTRO), await merge decision
     +---> Criteria fail -> Identify gaps, delegate fixes
 ```
 
@@ -205,7 +205,7 @@ python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
 
 ```bash
 python scripts/amia_verify_pr_completion.py --repo owner/repo --pr 123
-# If complete: true, report to user for merge decision
+# If complete: true, surface up the chain (to the MANAGER / MAESTRO) for merge decision
 # If complete: false, identify failing_criteria and delegate fixes
 ```
 

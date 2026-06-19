@@ -478,7 +478,7 @@ fi
 3. **Add audit logging** - Record all changes with timestamps
 4. **Rate limit** - Add `sleep 1` between operations to avoid API limits
 5. **Verify filters** - Double-check filter results match expectations
-6. **Use confirmation prompts** - Require explicit user confirmation
+6. **Use confirmation prompts** - Require explicit MANAGER confirmation (via the chain)
 7. **Implement rollback** - Provide way to undo batch operations
 8. **Monitor failures** - Track and report which operations failed
 9. **Start small** - Test with small batches before full execution

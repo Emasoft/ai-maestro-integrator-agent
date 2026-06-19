@@ -210,7 +210,7 @@ Check:
 | Merge without PR | Bypasses review process | ALWAYS use PR workflow |
 | Squash merge | Original commits lost from branch | Acceptable if WIP; verify first |
 | Delete branch after merge | Cannot recover branch pointer | Commits still exist; can recreate |
-| Force merge ignoring CI | May introduce broken code | Only with explicit user approval |
+| Force merge ignoring CI | May introduce broken code | Only with explicit MANAGER approval (via the chain) |
 
 ### Before Any Destructive Operation
 

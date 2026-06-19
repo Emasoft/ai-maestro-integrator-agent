@@ -260,7 +260,7 @@ echo "Do NOT proceed with release until blocker is resolved"
 
 **Cause**: No response to escalation.
 
-**Solution**: Escalate to user directly.
+**Solution**: Escalate further up the chain (to the MANAGER, ultimately the MAESTRO) directly.
 
 ## Complete Escalation Script
 

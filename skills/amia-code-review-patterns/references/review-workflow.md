@@ -148,7 +148,7 @@ User Requirement: [exact quote]
 Code Implementation: [what was actually done]
 Violation Type: [Technology Change / Scope Reduction / Feature Omission]
 
-This PR cannot be approved until user reviews the deviation.
+This PR cannot be approved until the MANAGER (via the chain) reviews the deviation.
 See: docs_dev/requirement-issues/{timestamp}-violation.md
 ```
 
@@ -643,7 +643,7 @@ Before returning to orchestrator, verify ALL items complete:
 - Omit user-requested features
 - Implement "simpler alternatives" without user approval
 
-**These MUST be escalated to user for decision.**
+**These MUST be escalated up the chain (to the MANAGER, ultimately the MAESTRO) for decision.**
 
 **Code-reviewer CAN approve PRs when:**
 

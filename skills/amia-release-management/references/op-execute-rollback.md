@@ -47,7 +47,7 @@ Revert to a previous stable version when a release causes critical issues, inclu
 1. GitHub CLI authenticated with release permissions
 2. Knowledge of which version to roll back to
 3. Understanding of rollback impact
-4. USER APPROVAL (required before execution)
+4. MANAGER APPROVAL via the chain (required before execution)
 
 ## Procedure
 
@@ -241,7 +241,7 @@ echo "Latest stable release: $LATEST_STABLE"
 
 ## CRITICAL: User Approval Required
 
-**NEVER execute rollback without explicit user approval.**
+**NEVER execute rollback without explicit MANAGER approval (via the chain).**
 
 Before rollback, present:
 
@@ -250,7 +250,7 @@ Before rollback, present:
 3. Impact assessment
 4. Actions that will be taken
 
-Wait for user confirmation before proceeding.
+Wait for the MANAGER's confirmation (via the chain) before proceeding.
 
 ## Error Handling
 

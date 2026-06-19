@@ -24,7 +24,7 @@ A task is BLOCKED when an agent cannot continue working on it and must wait for 
 | **Task Dependency** | Waiting for another task to complete before this one can proceed | Feature B depends on Feature A's API; test suite needs database schema from migration task |
 | **Problem Resolution** | Waiting for a solution to a technical or design problem from the architect (AMAA) or the user | Architecture decision needed; design conflict to resolve; user requirement clarification |
 | **Missing Resource** | Lacking a resource that must be provided or set up before work can continue | Library to install; server to set up; API key or password to configure on GitHub or a service; Docker container to build; certificate to provision; database to create |
-| **Missing Approval** | Waiting for user or manager approval before proceeding | Deployment approval; budget approval; scope change approval; third-party service subscription |
+| **Missing Approval** | Waiting for MANAGER approval (ultimately the MAESTRO, via the chain) before proceeding | Deployment approval; budget approval; scope change approval; third-party service subscription |
 | **External Dependency** | Waiting for an external party, service, or system outside the agent team | Third-party API not yet available; upstream service outage; external team deliverable |
 | **Access or Credentials** | Lacking credentials, tokens, or permissions required to proceed | GitHub secret not configured; API token expired; SSH key not provisioned; environment variable not set |
 
@@ -243,7 +243,7 @@ Every blocker MUST have this information documented:
 
 ## 6.4 Escalation rules — IMMEDIATE notification required
 
-**CRITICAL RULE**: When a task becomes blocked, the user MUST be informed immediately through the escalation chain. There is NO waiting period before notifying the user.
+**CRITICAL RULE**: When a task becomes blocked, the MAESTRO MUST be informed immediately through the escalation chain (member → COS → ORCHESTRATOR → MANAGER → MAESTRO). There is NO waiting period before surfacing it up the chain.
 
 ### Escalation flow (happens within minutes, not hours)
 
@@ -260,7 +260,7 @@ Every blocker MUST have this information documented:
    → Updates Kanban board if agent hasn't already
 
 3. AMAMA receives blocker escalation
-   → IMMEDIATELY communicates the blocker to the user
+   → IMMEDIATELY communicates the blocker to the MAESTRO
    → Includes: what's blocked, why, what's needed, impact, options
 ```
 
@@ -272,21 +272,21 @@ While the escalation chain runs, agents MAY attempt to resolve the blocker thems
 - Search for alternative resources or approaches
 - Consult with other agents via AI Maestro
 
-If the agent resolves the blocker before the user responds:
+If the agent resolves the blocker before the MAESTRO responds:
 
 1. Remove status:blocked label
 2. Move task back to its ORIGINAL column (the column it was in before being blocked)
 3. Notify AMOA that the blocker was self-resolved
-4. AMOA notifies AMAMA to update the user
+4. AMOA notifies AMAMA to update the MAESTRO
 
-### User response timeout (after user has been notified)
+### MAESTRO response timeout (after the MAESTRO has been notified via the chain)
 
 | Duration | Action |
 |----------|--------|
-| 0-4 hours | Wait for user response, agents work on other unblocked tasks |
-| 4-8 hours | AMAMA sends reminder to user |
+| 0-4 hours | Wait for the MAESTRO's response, agents work on other unblocked tasks |
+| 4-8 hours | AMAMA sends reminder up the chain |
 | 8-24 hours | AMAMA sends urgent reminder with impact assessment |
-| >24 hours | AMAMA marks the blocker as "awaiting user" in next status report |
+| >24 hours | AMAMA marks the blocker as "awaiting MAESTRO" in next status report |
 
 ---
 
@@ -317,7 +317,7 @@ When a blocker is resolved:
    - When the blocker was detected
    - What the blocker was
    - How it was resolved
-   - Who resolved it (user decision, agent self-resolution, resource provision)
+   - Who resolved it (MANAGER/MAESTRO decision via the chain, agent self-resolution, resource provision)
 4. Notify the assigned agent via AI Maestro that the blocker is resolved
 5. Update the `previous_column` tracking (used by the Kanban manager to know where to return the task)
 

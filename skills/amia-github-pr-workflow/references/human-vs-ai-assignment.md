@@ -184,7 +184,7 @@ After changes, re-request review.
 
 **Core principle**: Human PRs require human-to-human communication for important decisions. The orchestrator facilitates but does not replace human judgment.
 
-### Always escalate to user
+### Always escalate up the chain (to the MANAGER / MAESTRO)
 
 | Situation | Escalation Message |
 |-----------|-------------------|
@@ -202,17 +202,17 @@ The orchestrator MUST NOT:
 - Request changes on human PRs
 - Close human PRs
 - Merge human PRs
-- Post review comments as if from the user
+- Post review comments as if from the MAESTRO
 
 ### Delegation for human PRs
 
-When user approves delegation:
+When the MANAGER (via the chain) approves delegation:
 
 1. Subagent performs technical work (analysis, testing)
 2. Subagent prepares feedback draft
-3. Orchestrator presents draft to user
-4. User approves/modifies before posting
-5. Orchestrator posts on behalf of user (or user posts directly)
+3. Orchestrator surfaces the draft up the chain
+4. The MANAGER approves/modifies before posting
+5. Orchestrator posts on behalf of the MAESTRO (or the MAESTRO posts directly)
 
 ---
 
@@ -220,7 +220,7 @@ When user approves delegation:
 
 **Core principle**: For AI/bot PRs, the orchestrator can act more autonomously since the PR author is also automated.
 
-### Actions allowed without user approval
+### Actions allowed without MANAGER approval
 
 | Action | Conditions |
 |--------|------------|
@@ -229,7 +229,7 @@ When user approves delegation:
 | Post technical comments | If minor feedback |
 | Trigger bot commands | If standard commands (@dependabot rebase) |
 
-### Actions requiring user approval
+### Actions requiring MANAGER approval (via the chain)
 
 | Action | Why Approval Needed |
 |--------|---------------------|
@@ -281,7 +281,7 @@ Bot updates PR (if capable)
 Orchestrator runs verification
     │
     ▼
-If all pass → Report to user for merge decision
+If all pass → Surface up the chain (to the MANAGER / MAESTRO) for merge decision
 ```
 
 ---
@@ -325,8 +325,8 @@ def get_author_type(pr_data):
 
 | Author Type | Review Delegation | Direct Comments | Autonomous Approval | Merge Decision |
 |-------------|------------------|-----------------|--------------------|--------------:|
-| Human | Requires user approval | Never | Never | User decides |
-| Agent-bot | Allowed | Allowed | User approval | User decides |
-| Mention-bot | Allowed | Via triggers | User approval | User decides |
+| Human | Requires MANAGER approval | Never | Never | MAESTRO decides (via the chain) |
+| Agent-bot | Allowed | Allowed | MANAGER approval | MAESTRO decides (via the chain) |
+| Mention-bot | Allowed | Via triggers | MANAGER approval | MAESTRO decides (via the chain) |
 | Review-bot | N/A (they review) | N/A | N/A | N/A |
-| Update-bot | Allowed | Via triggers | User approval | User decides |
+| Update-bot | Allowed | Via triggers | MANAGER approval | MAESTRO decides (via the chain) |

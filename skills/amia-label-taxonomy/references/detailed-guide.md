@@ -67,7 +67,7 @@ The full workflow uses these 8 status columns:
 | Label | When AMIA Sets It |
 |-------|------------------|
 | `status:ai-review` | When task/PR is ready for AI review |
-| `status:human-review` | When significant task needs user review (escalates via AMAMA) |
+| `status:human-review` | When significant task needs human review (escalates via AMAMA up the chain to the MAESTRO) |
 | `status:merge-release` | When AI review passes and task is ready to merge |
 | `status:blocked` | When PR has conflicts or CI failures |
 | `status:done` | After PR merged and verified |

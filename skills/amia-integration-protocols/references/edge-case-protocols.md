@@ -142,7 +142,7 @@ When AI Maestro is down, report via:
 
 2. **Queue all GitHub operations** (see 2.3, 2.4)
 
-3. **Notify user**:
+3. **Surface the status up the chain (to the MANAGER / MAESTRO)**:
 
    ```
    WARNING: GitHub is unavailable.

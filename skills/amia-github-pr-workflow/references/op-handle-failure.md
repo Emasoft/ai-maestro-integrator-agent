@@ -67,7 +67,7 @@ Handle failures in PR workflow by identifying the issue, determining recovery ap
    | Failing test | Fixable | Delegate to implementation subagent |
    | Unresolved thread | Fixable | Delegate response/resolution |
    | Merge conflict | Fixable | Delegate rebase/conflict resolution |
-   | Permission denied | Blocked | Escalate to user |
+   | Permission denied | Blocked | Escalate up the chain (to the MANAGER / MAESTRO) |
    | Repeated failure | Blocked | Escalate with details |
 
 3. **If fixable**: Delegate repair work
@@ -86,10 +86,10 @@ Handle failures in PR workflow by identifying the issue, determining recovery ap
    - Verification script returns complete: true
    ```
 
-4. **If blocked**: Escalate to user
+4. **If blocked**: Escalate up the chain (to the MANAGER / MAESTRO)
 
    ```
-   ## PR #<number> Blocked - User Decision Required
+   ## PR #<number> Blocked - Decision Required (escalated via the chain to the MANAGER)
 
    ### Issue
    <failure description>
@@ -147,7 +147,7 @@ Handle failures in PR workflow by identifying the issue, determining recovery ap
 | failure_type | string | Category of failure |
 | recovery_approach | string | fix, escalate, or retry |
 | delegated_to | string | Subagent handling fix (if applicable) |
-| escalation_reason | string | Why user input needed (if blocked) |
+| escalation_reason | string | Why a decision from the MANAGER (via the chain) is needed (if blocked) |
 
 ## Error Handling
 
@@ -175,9 +175,9 @@ Check authentication setup in test fixtures. Success criteria: all tests pass."
 ### Next Steps
 1. Subagent fixes test
 2. Re-run verification
-3. Report to user when complete
+3. Surface status up the chain when complete
 ```
 
 ## Critical Rule
 
-**Maximum 3 fix attempts** before escalating. If the same failure persists after 3 delegated fixes, escalate to user with full context.
+**Maximum 3 fix attempts** before escalating. If the same failure persists after 3 delegated fixes, escalate up the chain (to the MANAGER / MAESTRO) with full context.

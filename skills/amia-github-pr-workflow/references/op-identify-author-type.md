@@ -81,7 +81,7 @@ Determine if a PR is from a human contributor or an AI/bot, as this affects hand
 
 ### Human PRs
 
-- **Escalate to user** for guidance on communication
+- **Escalate up the chain (to the MANAGER / MAESTRO)** for guidance on communication
 - **Never** modify without explicit approval
 - **Polite, formal** communication style
 - **Wait** for human response before proceeding

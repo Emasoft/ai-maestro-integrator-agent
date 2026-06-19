@@ -118,7 +118,7 @@ else:
 If completion check fails:
 
 1. **Items in progress** - Wait for completion or reassign
-2. **Items blocked** - Resolve blockers or escalate to user
+2. **Items blocked** - Resolve blockers or escalate up the chain (to the MANAGER / MAESTRO)
 3. **Items in AI review or human review** - Complete reviews or merge PRs
 4. **Items in merge/release** - Merge PRs promptly
 5. **Items deferred** - Explicitly mark as deferred with reason

@@ -192,7 +192,7 @@ def should_poll_frequently(pr_status, recent_activity):
 
 ## 7.4 Notification triggers
 
-The orchestrator should notify the user when significant events occur.
+The orchestrator should surface significant events up the chain (to the MANAGER / MAESTRO) when they occur.
 
 ### Immediate notification triggers
 

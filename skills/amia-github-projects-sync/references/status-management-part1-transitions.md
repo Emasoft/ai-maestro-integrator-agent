@@ -98,7 +98,7 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 
 - Remove "ai-review" label
 - Add "human-review" label
-- Notify user/human reviewer
+- Surface up the chain (to the MANAGER / MAESTRO) for human review
 
 #### AI Review → Merge/Release
 
@@ -187,7 +187,7 @@ cancelled         |    ✓    |  ✗   |      ✗      |     ✗     |      ✗ 
 
 **Preconditions**:
 
-- User approval required
+- MANAGER approval required (via the chain)
 - Reason documented
 
 **Actions**:

@@ -123,7 +123,7 @@ fi
    - Error message
    - Timestamp
 
-4. ESCALATE to user:
+4. ESCALATE up the chain (to the MANAGER / MAESTRO):
    - Report project not accessible
    - Request verification
 ```

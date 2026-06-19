@@ -1056,7 +1056,7 @@ Apply consistent rejection criteria to determine if code can proceed to merge.
      - Why 80% cannot be achieved
      - Risk assessment of uncovered code
      - Plan to improve coverage
-   - **Approval:** Requires orchestrator or user approval
+   - **Approval:** Requires orchestrator or MANAGER approval (via the chain)
    - **Message:** "CONDITIONAL: Coverage {XX}% below threshold. Justification required."
 
 2. **Test quality score 60-70%**
@@ -1074,21 +1074,21 @@ Apply consistent rejection criteria to determine if code can proceed to merge.
      - Which edge cases are untested
      - Why these edge cases are not critical
      - Acceptance of risk
-   - **Approval:** Requires user approval
+   - **Approval:** Requires MANAGER approval (via the chain)
    - **Message:** "ADVISORY: Edge cases incomplete. Risk acceptance required."
 
 ### 1.6.3 User escalation scenarios
 
-**The following must be escalated to the user:**
+**The following must be escalated up the chain (to the MANAGER, ultimately the MAESTRO):**
 
 1. **Requirement untested**
    - **Scenario:** USER_REQUIREMENTS.md contains requirement with no corresponding test
-   - **Escalation reason:** Only user can approve requirement gap
+   - **Escalation reason:** Only the MAESTRO (via the chain) can approve a requirement gap
    - **Required info:**
      - Which requirement is untested
      - Impact of not testing
      - Developer's explanation
-   - **Message:** "ESCALATION: Requirement {REQ-XXX} has no tests. User approval needed."
+   - **Message:** "ESCALATION: Requirement {REQ-XXX} has no tests. MANAGER approval needed (via the chain)."
 
 2. **Technology mismatch in tests**
    - **Scenario:** Tests use different framework than specified in requirements
@@ -1097,16 +1097,16 @@ Apply consistent rejection criteria to determine if code can proceed to merge.
      - Expected technology
      - Actual technology used
      - Justification for mismatch
-   - **Message:** "ESCALATION: Tests use {TECH_A} but requirements specify {TECH_B}. User approval needed."
+   - **Message:** "ESCALATION: Tests use {TECH_A} but requirements specify {TECH_B}. MANAGER approval needed (via the chain)."
 
 3. **Scope reduction in testing**
    - **Scenario:** Developer requests to reduce testing scope (lower thresholds, skip requirements)
-   - **Escalation reason:** Only user can approve scope changes
+   - **Escalation reason:** Only the MAESTRO (via the chain) can approve scope changes
    - **Required info:**
      - Original scope
      - Requested reduced scope
      - Business justification
-   - **Message:** "ESCALATION: Request to reduce test scope. User decision required."
+   - **Message:** "ESCALATION: Request to reduce test scope. Decision required from the MANAGER (escalated via the chain)."
 
 **Escalation procedure:**
 
@@ -1115,16 +1115,16 @@ Apply consistent rejection criteria to determine if code can proceed to merge.
    - Include all relevant context
    - Provide recommendation
 
-2. **Notify user via AI Maestro:** Send a message using the `agent-messaging` skill with:
-   - **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
+2. **Surface up the chain via AI Maestro:** Send a message using the `agent-messaging` skill with:
+   - **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager, ultimately the MAESTRO)
    - **Subject**: `ESCALATION: Test enforcement decision required`
    - **Priority**: `urgent`
-   - **Content**: `{"type": "escalation", "message": "User decision required for PR #<PR>. See: reports/escalations/escalation-<timestamp>.md"}`
+   - **Content**: `{"type": "escalation", "message": "Decision required from the MANAGER (via the chain) for PR #<PR>. See: reports/escalations/escalation-<timestamp>.md"}`
    - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
 
-3. **Wait for user response:**
+3. **Wait for the response from the chain:**
    - Do NOT proceed with automated decision
-   - Block PR until user responds
+   - Block PR until the MANAGER (via the chain) responds
    - Mark PR with "needs-user-decision" label
 
 ---
@@ -1241,7 +1241,7 @@ For each test file, verify:
 - [ ] **No unauthorized testing**
   - Tests should only verify specified requirements
   - Flag tests that test undocumented behavior
-  - Escalate to user if feature scope expanded
+  - Escalate up the chain (to the MANAGER / MAESTRO) if feature scope expanded
 
 - [ ] **Technology matches specification**
   - Check test framework matches requirements
@@ -1913,10 +1913,10 @@ Cannot definitively determine if TDD was followed.
    **Recommendation:** Do not proceed until TDD compliance confirmed.
    ```
 
-5. **Escalate to user if evidence lacking:**
+5. **Escalate up the chain (to the MANAGER / MAESTRO) if evidence lacking:**
    - If developer cannot provide TDD evidence
    - Treat as TDD violation
-   - Request explicit approval to proceed
+   - Request explicit approval (from the MANAGER, via the chain) to proceed
 
 ### 1.9.5 Conflicting coverage reports
 

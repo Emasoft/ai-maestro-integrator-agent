@@ -165,7 +165,7 @@ gh pr checks {pr_number} --required
 1. Do not report ready while checks pending
 2. Set up polling to re-check
 3. Wait until CI completes or fails
-4. If CI appears stuck, escalate to user
+4. If CI appears stuck, escalate up the chain (to the MANAGER / MAESTRO)
 
 ### 6.1.5 No unresolved threads
 
@@ -253,7 +253,7 @@ gh pr view {pr_number} --json state,merged
 **If already merged**:
 
 - Stop all work on this PR
-- Report to user: "PR #X was already merged"
+- Surface up the chain: "PR #X was already merged"
 - Clean up: remove worktrees, close tracking issues
 
 ### 6.1.8 Commits pushed
@@ -314,7 +314,7 @@ When a criterion fails, the response depends on the failure type.
 
 1. Identify unanswered comments
 2. If question can be answered by AI, delegate response
-3. If question requires human input, escalate to user
+3. If question requires human input, escalate up the chain (to the MANAGER / MAESTRO)
 
 ### Failure type: New comments detected
 

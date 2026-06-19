@@ -153,8 +153,8 @@ If writing tests reveals a requirement problem:
 1. STOP test writing
 2. Document the issue
 3. Generate Requirement Issue Report
-4. WAIT for user decision
-5. Resume with user's chosen direction
+4. WAIT for the MANAGER's decision (escalated via the chain to the MAESTRO)
+5. Resume with the chosen direction
 
 ### TDD Phase Requirement Checks
 

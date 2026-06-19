@@ -94,7 +94,7 @@ gh pr create --title "Revert PR #<PR_NUMBER>" --body "Reverting due to: [REASON]
 
 ## Procedure: Option 3 - Force Reset (DESTRUCTIVE)
 
-**WARNING**: This requires explicit user approval. It rewrites history and affects all collaborators.
+**WARNING**: This requires explicit MANAGER approval (via the chain). It rewrites history and affects all collaborators.
 
 ```bash
 # Only with explicit approval

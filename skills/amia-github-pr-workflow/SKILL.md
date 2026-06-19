@@ -41,14 +41,14 @@ Copy this checklist and track your progress:
 - [ ] Classify author type and work needed
 - [ ] Delegate to subagent
 - [ ] Monitor and verify using `amia_verify_pr_completion.py`
-- [ ] Report to user, await merge decision
+- [ ] Surface status up the chain, await the MANAGER's merge decision
 - [ ] Handle failures by delegating fixes
 
 ### Critical Rules
 
-- Never block, write code, or merge without user approval
+- Never block, write code, or merge without MANAGER approval (via the chain)
 - Always verify before reporting status
-- Escalate human PRs to user
+- Escalate human PRs up the chain (to the MANAGER / MAESTRO)
 
 ## Output
 

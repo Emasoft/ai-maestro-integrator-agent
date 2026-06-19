@@ -183,7 +183,7 @@ THEN:
 IF item.status == "Blocked"
 AND item.time_in_status > 72 hours
 THEN:
-  - Escalate to user
+  - Escalate up the chain (to the MANAGER / MAESTRO)
   - Consider cancellation or scope change
   - Add to morning report highlight
 ```

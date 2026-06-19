@@ -294,7 +294,7 @@ class GitHubThresholds:
     # Hours before "AI Review" items are escalated
     LONG_REVIEW_HOURS = 48
 
-    # Hours before blocked items are escalated to user
+    # Hours before blocked items are escalated up the chain (to the MANAGER / MAESTRO)
     BLOCKED_ESCALATION_HOURS = 72
 ```
 

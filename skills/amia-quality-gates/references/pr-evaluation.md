@@ -71,7 +71,7 @@ PR evaluation follows a **sequential gate system**. Each gate must pass before p
 ❌ User said "build X" but PR builds "Y" instead
 ❌ User specified technology A but PR uses technology B without approval
 ❌ PR removes/skips features user explicitly requested
-❌ PR implements "simpler alternative" without user approval
+❌ PR implements "simpler alternative" without MANAGER approval (via the chain)
 ❌ PR changes core requirements without documented approval
 
 **Verdict:** `REJECT - Requirement Deviation`
