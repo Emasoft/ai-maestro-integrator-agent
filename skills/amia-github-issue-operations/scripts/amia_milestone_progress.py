@@ -151,6 +151,8 @@ def close_milestone(
         return progress
 
     milestone = get_milestone(repo, title)
+    if milestone is None:
+        return {"error": f"Milestone '{title}' not found"}
     number = milestone["number"]
 
     if progress["open_issues"] > 0:

@@ -36,8 +36,8 @@ if sys.platform == "win32":
 class EncodingChecker:
     """Checks Python files for missing UTF-8 encoding parameters."""
 
-    def __init__(self):
-        self.issues = []
+    def __init__(self) -> None:
+        self.issues: list[str] = []
         self.files_with_issues: set[Path] = set()  # Track unique files that have issues
 
     def check_file(self, filepath: Path) -> bool:
