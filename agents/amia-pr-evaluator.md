@@ -78,7 +78,7 @@ Key topics:
 >   - 5.2 Structured data output format
 > - Summary
 >   <!-- /TOC -->
-
+>
 > For handoff validation protocols, see [amia-quality-gates/references/pr-evaluation.md](../skills/amia-quality-gates/references/pr-evaluation.md).
 >   <!-- TOC: pr-evaluation.md -->
 > - Contents
@@ -102,7 +102,7 @@ Key topics:
 >   - 5.2 Structured data output format
 > - Summary
 >   <!-- /TOC -->
-
+>
 > For sub-agent role boundaries with orchestrator, see [amia-integration-protocols/references/sub-agent-role-boundaries-template.md](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md).
 >   <!-- TOC: sub-agent-role-boundaries-template.md -->
 > - Contents

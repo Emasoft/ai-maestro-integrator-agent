@@ -33,38 +33,7 @@ gh api repos/{owner}/{repo}/issues/123 \
   -F milestone="${milestone_number}"
 ```
 
-**Python implementation:**
-
-```python
-import subprocess
-import json
-
-def assign_issue_to_milestone(repo: str, issue_number: int, milestone_title: str) -> bool:
-    """Assign an issue to a milestone by title."""
-    # Get milestone number from title
-    result = subprocess.run(
-        ["gh", "api", f"repos/{repo}/milestones", "--jq",
-         f'.[] | select(.title=="{milestone_title}") | .number'],
-        capture_output=True,
-        text=True
-    )
-
-    if result.returncode != 0 or not result.stdout.strip():
-        return False
-
-    milestone_number = result.stdout.strip()
-
-    # Assign to issue
-    result = subprocess.run(
-        ["gh", "issue", "edit", str(issue_number),
-         "--repo", repo,
-         "--milestone", milestone_title],
-        capture_output=True,
-        text=True
-    )
-
-    return result.returncode == 0
-```
+**Python implementation:** the helper `assign_issue(repo, issue_number, milestone_title)` in [`scripts/amia_milestone_progress.py`](../scripts/amia_milestone_progress.py) wraps the same two-step logic — resolve the milestone by title, then run `gh issue edit <n> --repo <repo> --milestone <title>` — returning `True` on success. It calls `gh` through a fixed argument vector, so the title is never interpolated into a shell command.
 
 ### 3.2.2 Bulk Assignment
 
@@ -93,25 +62,14 @@ for issue in $issues; do
 done
 ```
 
-**Python bulk assignment:**
+**Python bulk assignment:** run [`scripts/amia_milestone_progress.py`](../scripts/amia_milestone_progress.py) with the `bulk-assign` command:
 
-```python
-def bulk_assign_to_milestone(
-    repo: str,
-    issue_numbers: list[int],
-    milestone_title: str
-) -> dict:
-    """Assign multiple issues to a milestone."""
-    results = {"success": [], "failed": []}
-
-    for issue_num in issue_numbers:
-        if assign_issue_to_milestone(repo, issue_num, milestone_title):
-            results["success"].append(issue_num)
-        else:
-            results["failed"].append(issue_num)
-
-    return results
+```bash
+python3 scripts/amia_milestone_progress.py bulk-assign \
+  --repo owner/repo --milestone "v2.1.0" --issues 1 2 3 4 5
 ```
+
+It assigns each issue in turn and returns a JSON object listing the `success` and `failed` issue numbers, so a partial failure is visible rather than silent.
 
 ### 3.2.3 Moving Between Milestones
 

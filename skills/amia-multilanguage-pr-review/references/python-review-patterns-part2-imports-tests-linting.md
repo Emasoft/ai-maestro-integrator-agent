@@ -283,14 +283,14 @@ skips = ["B101"]  # Skip assert warnings (OK in tests)
 | Code | Issue | Risk |
 |------|-------|------|
 | B101 | Assert used | Assertions disabled in optimization |
-| B102 | exec() used | Code injection risk |
+| B102 | `exec` builtin used | Code injection risk |
 | B103 | set bad file permissions | Security misconfiguration |
 | B104 | Binding to all interfaces | Network exposure |
 | B105 | Hardcoded password | Credential exposure |
 | B106 | Hardcoded password in function arg | Credential exposure |
 | B301 | Pickle usage | Deserialization attack |
 | B303 | MD5/SHA1 for security | Weak cryptography |
-| B307 | eval() used | Code injection risk |
+| B307 | `eval` builtin used | Code injection risk |
 | B324 | Insecure hash function | Weak cryptography |
 | B501 | Request with verify=False | SSL bypass |
 | B506 | Unsafe YAML load | Deserialization attack |

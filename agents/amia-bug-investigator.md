@@ -45,9 +45,9 @@ Prefer these over reading large files into your context:
 ## Workflow Summary
 
 > For detailed investigation procedures, see `amia-ci-failure-patterns` skill, section "Bug Investigation Protocol"
-
+>
 > For sub-agent role boundaries, see `amia-integration-protocols` skill, reference: sub-agent-role-boundaries-template.md
-
+>
 > For RULE 14 (Requirement-Aware Investigation), see `amia-integration-protocols` skill, section "Requirement Compliance"
 
 **Core steps:**

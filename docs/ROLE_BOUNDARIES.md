@@ -35,7 +35,6 @@
 └─────────────────┘ └─────────────────┘ └─────────────────┘
 ```
 
-
 ### Governance Titles
 
 | Title | Role | Scope | Authority |
@@ -156,7 +155,6 @@ AMCOS → AMOA: "Agent frontend-dev ready, assigned to your project"
 AMOA: Assigns tasks from kanban to new agent
 ```
 
-
 ### Task Assignment
 
 ```
@@ -172,7 +170,6 @@ AMOA: Sends AI Maestro notification to assigned agent
   ▼
 Agent: Receives task, begins work
 ```
-
 
 ### Agent Replacement
 
@@ -193,7 +190,6 @@ AMOA: Generates handoff document with task context
 AMOA: Reassigns kanban tasks from agent-123 to agent-456
 AMOA: Sends handoff to agent-456
 ```
-
 
 ---
 

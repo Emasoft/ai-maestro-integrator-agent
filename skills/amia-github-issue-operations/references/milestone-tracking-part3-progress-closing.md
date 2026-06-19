@@ -31,39 +31,13 @@ gh api repos/{owner}/{repo}/milestones \
   }'
 ```
 
-**Python progress calculation:**
+**Python progress calculation:** run [`scripts/amia_milestone_progress.py`](../scripts/amia_milestone_progress.py) with the `progress` command:
 
-```python
-def get_milestone_progress(repo: str, milestone_title: str) -> dict:
-    """Get milestone completion percentage and issue counts."""
-    result = subprocess.run(
-        ["gh", "api", f"repos/{repo}/milestones",
-         "--jq", f'.[] | select(.title=="{milestone_title}")'],
-        capture_output=True,
-        text=True
-    )
-
-    if result.returncode != 0 or not result.stdout.strip():
-        return {"error": "Milestone not found"}
-
-    milestone = json.loads(result.stdout)
-
-    open_count = milestone.get("open_issues", 0)
-    closed_count = milestone.get("closed_issues", 0)
-    total = open_count + closed_count
-
-    percent = (closed_count / total * 100) if total > 0 else 0
-
-    return {
-        "title": milestone["title"],
-        "open_issues": open_count,
-        "closed_issues": closed_count,
-        "total_issues": total,
-        "percent_complete": round(percent, 1),
-        "due_on": milestone.get("due_on"),
-        "state": milestone.get("state")
-    }
+```bash
+python3 scripts/amia_milestone_progress.py progress --repo owner/repo --milestone "v2.1.0"
 ```
+
+Its `get_progress(repo, title)` helper fetches the milestone via `gh api`, then returns a JSON object with `open_issues`, `closed_issues`, `total_issues`, `percent_complete` (closed / total × 100, rounded to one decimal), `due_on`, and `state`. A missing milestone yields `{"error": "Milestone not found"}`.
 
 ### 3.3.2 Open vs Closed Issues Count
 
@@ -109,43 +83,13 @@ gh api repos/{owner}/{repo}/milestones \
   }'
 ```
 
-**Python overdue check:**
+**Python overdue check:** run [`scripts/amia_milestone_progress.py`](../scripts/amia_milestone_progress.py) with the `overdue` command:
 
-```python
-from datetime import datetime
-
-def check_overdue_milestones(repo: str) -> list[dict]:
-    """Find all overdue open milestones."""
-    result = subprocess.run(
-        ["gh", "api", f"repos/{repo}/milestones",
-         "--jq", '[.[] | select(.state=="open" and .due_on != null)]'],
-        capture_output=True,
-        text=True
-    )
-
-    if result.returncode != 0:
-        return []
-
-    milestones = json.loads(result.stdout)
-    now = datetime.utcnow()
-    overdue = []
-
-    for ms in milestones:
-        due_on = datetime.fromisoformat(ms["due_on"].replace("Z", "+00:00"))
-        due_on = due_on.replace(tzinfo=None)  # Remove timezone for comparison
-
-        if due_on < now:
-            days_overdue = (now - due_on).days
-            overdue.append({
-                "title": ms["title"],
-                "due_on": ms["due_on"],
-                "days_overdue": days_overdue,
-                "open_issues": ms["open_issues"],
-                "closed_issues": ms["closed_issues"]
-            })
-
-    return overdue
+```bash
+python3 scripts/amia_milestone_progress.py overdue --repo owner/repo
 ```
+
+Its `get_overdue(repo)` helper keeps only open milestones with a non-null `due_on` that is earlier than the current UTC time, computing `days_overdue` for each. Timezone-aware comparison is used throughout so a milestone is never misjudged across a TZ boundary.
 
 ---
 
@@ -279,59 +223,14 @@ gh api repos/{owner}/{repo}/milestones/{number} \
   -f state="open"
 ```
 
-**Python helper for safe milestone closure:**
+**Python helper for safe milestone closure:** run [`scripts/amia_milestone_progress.py`](../scripts/amia_milestone_progress.py) with the `close` command. To move still-open issues into a successor milestone first:
 
-```python
-def close_milestone(
-    repo: str,
-    milestone_title: str,
-    move_open_to: str | None = None,
-    force: bool = False
-) -> dict:
-    """
-    Close a milestone, optionally moving open issues.
-
-    Args:
-        repo: Repository in owner/repo format
-        milestone_title: Title of milestone to close
-        move_open_to: Title of milestone to move open issues to
-        force: Close even if issues are open (without moving)
-
-    Returns:
-        dict with result status
-    """
-    progress = get_milestone_progress(repo, milestone_title)
-
-    if "error" in progress:
-        return progress
-
-    if progress["open_issues"] > 0:
-        if move_open_to:
-            # Move issues to new milestone
-            issues = get_milestone_issues(repo, milestone_title, state="open")
-            for issue_num in issues:
-                assign_issue_to_milestone(repo, issue_num, move_open_to)
-        elif not force:
-            return {
-                "error": f"Cannot close: {progress['open_issues']} issues still open",
-                "hint": "Use move_open_to or force=True"
-            }
-
-    # Close the milestone
-    milestone_number = get_milestone_number(repo, milestone_title)
-    result = subprocess.run(
-        ["gh", "api", f"repos/{repo}/milestones/{milestone_number}",
-         "--method", "PATCH", "-f", "state=closed"],
-        capture_output=True,
-        text=True
-    )
-
-    return {
-        "success": result.returncode == 0,
-        "milestone": milestone_title,
-        "issues_moved": progress["open_issues"] if move_open_to else 0
-    }
+```bash
+python3 scripts/amia_milestone_progress.py close \
+  --repo owner/repo --milestone "v2.0.0" --move-open-to "v2.1.0"
 ```
+
+To close even though issues remain open, pass `--force` instead of `--move-open-to`. Its `close_milestone(...)` helper guards the operation: if the milestone still has open issues and neither `--move-open-to` nor `--force` is given, it refuses with an `error` plus a `hint` rather than closing silently. When `--move-open-to` is supplied it reassigns each open issue before issuing the `PATCH state=closed` call, and reports how many issues were moved.
 
 ---
 

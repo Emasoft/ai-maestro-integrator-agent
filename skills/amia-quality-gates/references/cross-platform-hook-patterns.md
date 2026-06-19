@@ -206,7 +206,7 @@ Python on Windows defaults to the system locale encoding, which is typically `cp
 |---------|-------------|---------|
 | `open()` without encoding | `open("file.txt", "r")` | Uses platform default encoding |
 | `Path.read_text()` without encoding | `Path("file.txt").read_text()` | Uses platform default encoding |
-| `subprocess.run()` output decoding | `subprocess.run(cmd, capture_output=True)` | stdout/stderr decoded with platform default |
+| `subprocess` output decoding | a `capture_output=True` call without `encoding=` | stdout/stderr decoded with platform default |
 | `json.load()` from file | `json.load(open("data.json"))` | Inherits open() encoding problem |
 | `csv.reader()` from file | `csv.reader(open("data.csv"))` | Inherits open() encoding problem |
 
@@ -220,8 +220,9 @@ with open("file.txt", "r", encoding="utf-8") as f:
 # Correct: Path with encoding
 content = Path("file.txt").read_text(encoding="utf-8")
 
-# Correct: subprocess with encoding
-result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
+# Correct: subprocess with encoding -- pass text=True together with an
+# explicit  encoding="utf-8"  keyword so stdout/stderr are decoded the
+# same way on every platform (never rely on the platform default).
 ```
 
 ### 3.3. Grep pattern to find files missing explicit encoding parameters

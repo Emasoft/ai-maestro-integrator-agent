@@ -70,7 +70,6 @@ AMOA ◄────────────────────────
 AI Maestro's task system uses **5 statuses**. All agents MUST report task progress using these statuses through the **frozen CLI layer** (the `aimaestro-teams` kanban/task verb), never the server API directly:
 <!-- DECOUPLE-BLOCKED ai-maestro#36 — the kanban/status-set verb lands with ai-maestro#36; until it deploys, route status updates through the agent-messaging skill, never the server API. Frozen-CLI rule (USER 2026-06-15): no ai-maestro plugin calls the server API directly. -->
 
-
 | Status | Code | Description |
 |--------|------|-------------|
 | Backlog | `backlog` | Task created, not yet started |

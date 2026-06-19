@@ -334,9 +334,15 @@ jobs:
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
     - name: Check quality gate
+      # Pass secrets through env, never interpolate ${{ secrets.* }} directly
+      # into the run: shell -- direct interpolation is an expression-injection
+      # risk; the $VARS below are read from the environment instead.
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       run: |
-        STATUS=$(curl -s -u ${{ secrets.SONAR_TOKEN }}: \
-          "${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=myapp" \
+        STATUS=$(curl -s -u "$SONAR_TOKEN:" \
+          "$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=myapp" \
           | jq -r '.projectStatus.status')
 
         if [ "$STATUS" != "OK" ]; then

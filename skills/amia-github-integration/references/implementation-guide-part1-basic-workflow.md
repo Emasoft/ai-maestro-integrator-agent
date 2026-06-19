@@ -177,10 +177,10 @@ Use this checklist to systematically implement GitHub integration in your projec
   - [ ] Verify issues synchronized correctly
 
 - [ ] **Schedule Regular Sync**
-  - [ ] Add to crontab: `crontab -e`
-  - [ ] Add hourly sync: `0 * * * * cd /path/to/project && python3 scripts/sync-projects-v2.py`
-  - [ ] Verify cron job runs successfully
-  - [ ] Set up log rotation for sync logs
+  - [ ] Register the sync script with your operating system's task scheduler to run hourly
+  - [ ] Have the scheduled job change into the project directory, then run `python3 scripts/sync-projects-v2.py`
+  - [ ] Verify the scheduled job runs successfully
+  - [ ] Arrange rotation for the sync logs
 
 - [ ] **Test Other Scripts**
   - [ ] Test bulk label assignment script

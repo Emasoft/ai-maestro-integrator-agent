@@ -311,24 +311,7 @@ else
 fi
 ```
 
-**Python implementation:**
-
-```python
-import subprocess
-import json
-
-def label_exists(repo: str, label: str) -> bool:
-    """Check if a label exists in the repository."""
-    result = subprocess.run(
-        ["gh", "label", "list", "--repo", repo, "--json", "name"],
-        capture_output=True,
-        text=True
-    )
-    if result.returncode != 0:
-        return False
-    labels = json.loads(result.stdout)
-    return any(l["name"] == label for l in labels)
-```
+**Python implementation:** the helper `label_exists(repo, label)` in [`scripts/amia_ensure_label.py`](../scripts/amia_ensure_label.py) runs `gh label list --repo <repo> --json name` and returns `True` when any returned name matches. A non-zero exit (e.g. auth failure) is treated as "not present" so callers fall through to creation rather than crashing.
 
 ### 1.5.2 Default Colors and Descriptions
 
@@ -371,27 +354,10 @@ def get_label_config(label_name: str) -> dict:
     }
 ```
 
-**Auto-create function:**
+**Auto-create function:** run [`scripts/amia_ensure_label.py`](../scripts/amia_ensure_label.py), which composes the `label_exists` check above with `get_label_config` to create the label when missing:
 
-```python
-def ensure_label_exists(repo: str, label: str, auto_create: bool = True) -> bool:
-    """Ensure a label exists, optionally creating it."""
-    if label_exists(repo, label):
-        return True
-
-    if not auto_create:
-        return False
-
-    config = get_label_config(label)
-    result = subprocess.run(
-        [
-            "gh", "label", "create", label,
-            "--repo", repo,
-            "--color", config["color"],
-            "--description", config["description"]
-        ],
-        capture_output=True,
-        text=True
-    )
-    return result.returncode == 0
+```bash
+python3 scripts/amia_ensure_label.py --repo owner/repo --label "priority:high"
 ```
+
+Its `ensure_label(repo, label, auto_create=True)` helper returns early when the label already exists, otherwise looks up the default color/description and runs `gh label create <label> --repo <repo> --color <color> --description <desc>`. Pass `--no-create` to only check existence without creating. The result is a JSON object reporting `existed` and `created`.

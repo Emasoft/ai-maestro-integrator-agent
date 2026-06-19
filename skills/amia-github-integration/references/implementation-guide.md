@@ -95,7 +95,7 @@ Configure project with:
 
 - Install Python 3.8+ and dependencies
 - Configure environment variables
-- Schedule regular sync with crontab
+- Schedule regular sync via the operating system's task scheduler
 
 ### Phase 7-8: Team Onboarding and Improvement
 

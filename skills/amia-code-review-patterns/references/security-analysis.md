@@ -69,7 +69,7 @@ Identify security vulnerabilities, assess risk exposure, and ensure code follows
 - [ ] No dangerous innerHTML usage
 - [ ] Template engines auto-escape by default
 - [ ] Sanitization libraries used
-- [ ] No eval() with user input
+- [ ] No dynamic code-evaluation builtin (`eval`/`exec`) invoked on user input
 
 ### CSRF Protection
 
@@ -289,11 +289,12 @@ def download(filename):
 # WRONG: Command injection vulnerability
 import os
 filename = request.get('filename')
-os.system(f'cat {filename}')
+# The os.system call below interpolates raw user input into a shell
+# string -- e.g.  os.system("cat " + filename)  -- so an attacker
+# supplying  "file.txt; rm -rf /"  gets their command run by the shell.
+run_shell("cat " + filename)   # placeholder for the vulnerable shell call
 
-# Attacker input: "file.txt; rm -rf /"
-
-# CORRECT: Use safe APIs
+# CORRECT: pass an argv list to subprocess so no shell parses the input
 import subprocess
 filename = request.get('filename')
 # Validate filename first
@@ -417,7 +418,7 @@ token = secrets.token_urlsafe(32)
 ## Red Flags
 
 - String concatenation in SQL queries
-- eval() or exec() with user input
+- The `eval` or `exec` builtin invoked on user input
 - Hardcoded passwords or API keys
 - No input validation
 - Missing authentication decorators

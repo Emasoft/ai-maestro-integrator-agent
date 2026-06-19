@@ -107,21 +107,22 @@ with open(path, encoding="utf-8") as f:
 
 ## Integrating with Pre-Push Hooks
 
-Add to the plugin's pre-push hook script:
+Wire the checker into the plugin's pre-push hook so a push is rejected when
+any tracked `.py` file is missing an explicit `encoding=`. The hook step
+runs the checker over the `scripts/` directory and gates on its exit code:
 
-```python
-# Run encoding compliance check on all staged .py files
-import subprocess
-result = subprocess.run(
-    ["uv", "run", "python", "scripts/amia_check_encoding.py", "--directory", "scripts/"],
-    capture_output=True,
-    text=True
-)
-if result.returncode != 0:
-    print(result.stdout)
-    print("Encoding compliance check failed. Fix issues before pushing.")
-    sys.exit(1)
+```bash
+# In the pre-push hook: run the encoding compliance check, abort on failure
+uv run python scripts/amia_check_encoding.py --directory scripts/ || {
+  echo "Encoding compliance check failed. Fix issues before pushing." >&2
+  exit 1
+}
 ```
+
+A Python-based hook would invoke the same command with an argv list (never
+a shell string) and check the returncode, printing the checker's captured
+stdout and exiting non-zero when it is non-zero -- the exit code is the
+gate, exactly as the `bash` form above shows.
 
 ---
 

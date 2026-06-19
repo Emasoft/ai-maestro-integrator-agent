@@ -153,22 +153,20 @@ All notable changes to this project will be documented in this file.
   already there). Required by the agent-reports-location rule so
   private agent output never accidentally ships to GitHub.
 
-    ## [1.2.14] - 2026-04-27
+  ## [1.2.14] - 2026-04-27
 
 ### Bug Fixes
 
-- Initialize TDD-check vars to defeat reportPossiblyUnboundVariable    
-- Pyright-clean the project (0 errors, 0 warnings)    
-- Clear all non-TOC warnings (88 → 71)    
-- Defeat ruff I001 false-flag from inline type:ignore comment    
+- Initialize TDD-check vars to defeat reportPossiblyUnboundVariable
+- Pyright-clean the project (0 errors, 0 warnings)
+- Clear all non-TOC warnings (88 → 71)
+- Defeat ruff I001 false-flag from inline type:ignore comment
 
 ### Documentation
 
-- Embed reference TOCs in 8 SKILL.md files (CPV strict 71→38)    
-- Embed full reference TOCs in 9 agent files (CPV strict 69→38)    
+- Embed reference TOCs in 8 SKILL.md files (CPV strict 71→38)
+- Embed full reference TOCs in 9 agent files (CPV strict 69→38)
 
 ### Revert
 
-- Roll back 6 over-budget TOC embeds (CPV strict 5000-char cap)    
-
-
+- Roll back 6 over-budget TOC embeds (CPV strict 5000-char cap)

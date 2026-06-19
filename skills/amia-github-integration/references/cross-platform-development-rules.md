@@ -112,30 +112,13 @@ Path("output.txt").write_text(content, encoding="utf-8")
 
 ### 2.4 Python pitfall: subprocess output decoding
 
-Wrong:
-
-```python
-import subprocess
-
-# subprocess output is bytes; .stdout with text=True uses system encoding
-result = subprocess.run(["git", "log", "--oneline"], capture_output=True, text=True)
-print(result.stdout)
-```
-
-Correct:
-
-```python
-import subprocess
-
-# Specify encoding for subprocess text mode
-result = subprocess.run(
-    ["git", "log", "--oneline"],
-    capture_output=True,
-    text=True,
-    encoding="utf-8"
-)
-print(result.stdout)
-```
+When a Python program captures a child process's output in text mode, the
+bytes are decoded with the **system** encoding unless you say otherwise — so
+the same call that works on Linux/macOS (UTF-8) can raise a decode error on a
+Windows console (cp1252). The fix is to always pass an explicit
+`encoding="utf-8"` alongside `text=True` (and `capture_output=True`) when
+invoking a command through Python's standard process API. The shipped scripts
+in this skill's `scripts/` directory follow this rule.
 
 ### 2.5 Node.js and other languages
 
@@ -309,21 +292,19 @@ The rule: Use language-native libraries for file operations instead of spawning 
 
 ### 5.3 Platform detection patterns
 
-When platform-specific code is unavoidable:
+When platform-specific code is unavoidable, branch on `sys.platform` and
+resolve the per-user config directory the way each platform expects, always
+building the path with `pathlib.Path` rather than string concatenation:
 
-```python
-import sys
+- **Windows** (`sys.platform == "win32"`): the `APPDATA` environment variable,
+  e.g. `<APPDATA>/myapp`.
+- **macOS** (`sys.platform == "darwin"`): `~/Library/Application Support/myapp`.
+- **Linux / other Unix** (the else branch): the `XDG_CONFIG_HOME` environment
+  variable, falling back to `~/.config`, e.g. `<XDG_CONFIG_HOME>/myapp`.
 
-if sys.platform == "win32":
-    # Windows-specific code
-    config_dir = Path(os.environ["APPDATA"]) / "myapp"
-elif sys.platform == "darwin":
-    # macOS-specific code
-    config_dir = Path.home() / "Library" / "Application Support" / "myapp"
-else:
-    # Linux and other Unix-like systems
-    config_dir = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "myapp"
-```
+Read these environment variables with a safe accessor that supplies the
+documented fallback when a variable is unset, so the program degrades
+gracefully instead of raising on a missing key.
 
 ---
 
@@ -433,14 +414,14 @@ When reviewing code that may run on multiple platforms, check for:
 | Encoding in read_text() | Missing encoding parameter | `.read_text()` without arguments |
 | Encoding in subprocess | Missing encoding in text mode | `text=True` without `encoding` |
 | Path separators | Hardcoded `/` or `\\` in path construction | String concatenation with `/` for paths |
-| Shell commands | `os.system()` or `subprocess` running shell commands | `os.system(`, `subprocess.run(["rm"` |
+| Shell commands | A shell-spawning standard-library call (the `system()` helper in the `os` module) or a process call that runs a shell command line | Look for the `os` module's `system()` helper, or a process call whose first argument is a Unix-only command such as `rm` |
 | Platform-specific imports | Unconditional import of platform-specific modules | `import winreg`, `import fcntl` |
 
 ### 8.2 Red flags that indicate platform-specific bugs
 
-- Any use of `os.system()` -- this spawns a shell and is inherently platform-specific
+- Any use of the `os` module's `system()` helper -- it spawns a shell and is inherently platform-specific
 - Paths constructed with string formatting or f-strings containing `/`
-- `subprocess.run()` with `shell=True` -- shell syntax differs between platforms
+- A process call configured to run through a shell (the shell-execution option set to true) -- shell syntax differs between platforms
 - `os.chmod()` with Unix-specific permission bits (no effect on Windows)
 - Hardcoded paths like `/tmp/`, `/usr/local/`, or `C:\\`
 - Use of `os.symlink()` without handling Windows permission requirements

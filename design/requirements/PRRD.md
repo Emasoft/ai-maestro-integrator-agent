@@ -37,4 +37,3 @@ spec: `~/.claude/rules/prrd-design-rules.md`.
 - **S5.1** — The release pipeline is INTEGRATOR-designed per project type (library→registry, app→sign+release, service→containerize+deploy). The CPV canonical `publish.py` applies ONLY to the Claude-Code-plugin project type and only as a recommendation; the USER may mandate any custom pipeline, which overrides the type default.
 - **S6.1** — INTEGRATOR owns the `column → completed/published/live` flip and validates the shipped artifact satisfies the TRDD before flipping. No agent self-marks its own work completed.
 - **S7.1** — Reports, audits, and scan outputs are written under `./reports/<component>/` (gitignored, local-time+offset timestamped) and never committed; both `/reports/` and `/reports_dev/` stay in `.gitignore`.
-

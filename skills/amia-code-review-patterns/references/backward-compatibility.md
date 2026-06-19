@@ -230,7 +230,10 @@ def load_config():
             return json.load(f)
     else:
         with open('config.txt') as f:
-            return eval(f.read())
+            # Parse the legacy text format with a SAFE literal parser
+            # (ast.literal_eval), never the eval builtin -- eval would
+            # execute arbitrary code embedded in the config file.
+            return ast.literal_eval(f.read())
 ```
 
 ### Breaking Behavioral Changes

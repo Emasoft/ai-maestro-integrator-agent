@@ -106,53 +106,9 @@ body = template.render(
 
 Insert computed or fetched content into templates.
 
-**Example: Inject system information:**
+**Example: Inject system information.** The `get_environment_info()` helper in [`scripts/amia_populate_template.py`](../scripts/amia_populate_template.py) collects OS, Python version, and the current git branch and formats them as a `- **key**: value` bullet list ready to drop into an Environment section. It reads the git branch through a fixed argument vector, so no value is interpolated into a shell.
 
-```python
-import platform
-import subprocess
-
-def get_system_info() -> dict:
-    """Collect system information for bug reports."""
-    return {
-        "os": f"{platform.system()} {platform.release()}",
-        "python_version": platform.python_version(),
-        "gh_version": subprocess.run(
-            ["gh", "--version"],
-            capture_output=True,
-            text=True
-        ).stdout.split("\n")[0]
-    }
-
-def inject_environment(template: str, system_info: dict) -> str:
-    """Inject system info into environment section."""
-    env_section = "\n".join([
-        f"- **{key}**: {value}"
-        for key, value in system_info.items()
-    ])
-    return template.replace("{{environment}}", env_section)
-```
-
-**Example: Inject git information:**
-
-```python
-def get_git_info() -> dict:
-    """Get current git state for context."""
-    def run_git(args: list) -> str:
-        result = subprocess.run(
-            ["git"] + args,
-            capture_output=True,
-            text=True,
-            cwd="."
-        )
-        return result.stdout.strip() if result.returncode == 0 else "unknown"
-
-    return {
-        "branch": run_git(["branch", "--show-current"]),
-        "commit": run_git(["rev-parse", "--short", "HEAD"]),
-        "dirty": "yes" if run_git(["status", "--porcelain"]) else "no"
-    }
-```
+**Example: Inject git information.** The `run_git(args)` helper in [`scripts/amia_populate_template.py`](../scripts/amia_populate_template.py) shows the safe pattern for reading git state: it invokes `git` with a fixed argument vector (`["git"] + args`) and falls back to `"unknown"` on a non-zero exit. Compose it for the current branch (`branch --show-current`), short commit (`rev-parse --short HEAD`), and dirty status (`status --porcelain`).
 
 **Example: Inject error logs:**
 
@@ -286,151 +242,29 @@ def create_issue_body(
 
 ## Complete Programmatic Example
 
-```python
-#!/usr/bin/env python3
-"""
-Complete example of programmatic issue creation with templates.
-"""
+The full end-to-end flow — select a template by issue type, inject dynamic
+system/git context, substitute the variables safely, and optionally submit
+the result as a GitHub issue — is shipped as the runnable script
+[`scripts/amia_populate_template.py`](../scripts/amia_populate_template.py).
 
-import subprocess
-import platform
-from datetime import datetime
-from enum import Enum
-from string import Template
+Print a populated bug-report body without creating anything:
 
-
-class IssueType(Enum):
-    BUG = "bug"
-    FEATURE = "feature"
-    TASK = "task"
-
-
-TEMPLATES = {
-    IssueType.BUG: """## Bug Report
-
-**Reporter**: ${reporter}
-**Date**: ${date}
-
-### Description
-${description}
-
-### Steps to Reproduce
-${steps}
-
-### Environment
-${environment}
-
-### Additional Context
-${context}
-""",
-    IssueType.FEATURE: """## Feature Request
-
-**Requested by**: ${reporter}
-**Date**: ${date}
-
-### Problem
-${problem}
-
-### Proposed Solution
-${solution}
-
-### Acceptance Criteria
-${criteria}
-""",
-    IssueType.TASK: """## Task
-
-**Created by**: ${reporter}
-**Date**: ${date}
-
-### Summary
-${summary}
-
-### Checklist
-${checklist}
-"""
-}
-
-
-def get_environment_info() -> str:
-    """Gather system environment information."""
-    info = {
-        "OS": f"{platform.system()} {platform.release()}",
-        "Python": platform.python_version(),
-    }
-
-    # Try to get git info
-    try:
-        branch = subprocess.run(
-            ["git", "branch", "--show-current"],
-            capture_output=True, text=True
-        ).stdout.strip()
-        info["Git Branch"] = branch or "detached"
-    except Exception:
-        pass
-
-    return "\n".join(f"- **{k}**: {v}" for k, v in info.items())
-
-
-def create_bug_report(
-    description: str,
-    steps: list[str],
-    reporter: str = "@me",
-    context: str = ""
-) -> str:
-    """Create a formatted bug report."""
-    template = Template(TEMPLATES[IssueType.BUG])
-
-    steps_formatted = "\n".join(f"{i}. {step}" for i, step in enumerate(steps, 1))
-
-    return template.safe_substitute(
-        reporter=reporter,
-        date=datetime.now().strftime("%Y-%m-%d"),
-        description=description,
-        steps=steps_formatted,
-        environment=get_environment_info(),
-        context=context or "_None provided_"
-    )
-
-
-def create_and_submit_issue(
-    title: str,
-    body: str,
-    labels: list[str],
-    repo: str
-) -> str:
-    """Create issue using gh CLI and return the issue URL."""
-    cmd = [
-        "gh", "issue", "create",
-        "--repo", repo,
-        "--title", title,
-        "--body", body
-    ]
-
-    for label in labels:
-        cmd.extend(["--label", label])
-
-    result = subprocess.run(cmd, capture_output=True, text=True)
-
-    if result.returncode == 0:
-        return result.stdout.strip()
-    else:
-        raise RuntimeError(f"Failed to create issue: {result.stderr}")
-
-
-# Usage example
-if __name__ == "__main__":
-    body = create_bug_report(
-        description="Application crashes when saving large files",
-        steps=[
-            "Open the application",
-            "Create a new document",
-            "Add more than 10MB of content",
-            "Click Save",
-            "Observe crash"
-        ],
-        reporter="@developer",
-        context="Only happens with files > 10MB"
-    )
-
-    print(body)
+```bash
+python3 scripts/amia_populate_template.py --type bug \
+  --title "Crash on save" \
+  --description "Application crashes when saving large files"
 ```
+
+Populate and submit in one step (adds labels, prints the created issue URL):
+
+```bash
+python3 scripts/amia_populate_template.py --type bug \
+  --title "Crash on save" \
+  --description "Application crashes when saving large files" \
+  --repo owner/repo --label bug --submit
+```
+
+The script combines the `string.Template` substitution shown above with the
+`get_environment_info()` helper, then calls `gh issue create` through a fixed
+argument vector. Issue creation failure raises a clear error and exits
+non-zero rather than failing silently.
