@@ -354,20 +354,17 @@ Summary:
 
 ### Automated Health Monitoring
 
-You can set up automated health monitoring with a cron job or systemd timer.
+Run the health check on a schedule with your platform's standard scheduler —
+cron on macOS/Linux or a systemd timer.
 
-**Option 1 — cron (run every 15 minutes):** add a single crontab entry (via
-your usual `crontab` editor) on a 15-minute schedule (`*/15 * * * *`) that
-changes into the repo, runs `python scripts/port_status.py --health-check`, and
-captures its combined output to a rotating health-check log.
+- **cron:** schedule `python scripts/port_status.py --health-check` every
+  15 minutes (`*/15 * * * *`) via your usual `crontab` editor, sending its
+  output somewhere you can review later.
+- **systemd timer:** wrap the same command in a `oneshot` service unit paired
+  with a timer unit firing every 15 minutes (e.g. `OnUnitActiveSec=15min`).
 
-**Option 2 — systemd timer:** define a `oneshot` service unit whose
-`WorkingDirectory` is the repo and whose `ExecStart` runs
-`python3 scripts/port_status.py --health-check`, paired with a timer unit that
-fires `OnBootSec=5min` / `OnUnitActiveSec=15min` and is wanted by
-`timers.target`. Install both units under `/etc/systemd/system/`, then enable
-and start the timer (an administrator-privileged operation). Consult your
-platform's cron / systemd documentation for the exact unit-file fields.
+Consult your platform's cron / systemd documentation for the exact field names,
+unit-file placement, and enabling steps (an administrator-privileged operation).
 
 ---
 

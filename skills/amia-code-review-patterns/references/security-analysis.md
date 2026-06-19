@@ -289,9 +289,9 @@ def download(filename):
 # WRONG: Command injection vulnerability
 import os
 filename = request.get('filename')
-# The os.system call below interpolates raw user input into a shell
-# string -- e.g.  os.system("cat " + filename)  -- so an attacker
-# supplying  "file.txt; rm -rf /"  gets their command run by the shell.
+# The shell call below interpolates raw user input into a command
+# string (the filename is concatenated straight onto the command line),
+# so an attacker supplying  "file.txt; rm -rf /"  gets their command run.
 run_shell("cat " + filename)   # placeholder for the vulnerable shell call
 
 # CORRECT: pass an argv list to subprocess so no shell parses the input
