@@ -263,10 +263,10 @@ Maintain these logs:
 This plugin uses the **GLOBAL janitor-hosted memory system** (governance R24) —
 the user-level `ai-maestro-janitor` plugin provides `/janitor-memory-recall`,
 `/janitor-memory-write`, and `/janitor-memory-update`; the protocol + recall law
-live in `~/.claude/rules/markdown-memory-recall.md`, and this project's
-PROACTIVE-USE contract is in [`CLAUDE.md`](../CLAUDE.md). The INTEGRATOR ships
-**no per-plugin memory skills** — memory is the global janitor system, not a
-plugin reimplementation. (Distinct from `amia-session-memory`, which restores
+live in `~/.claude/rules/markdown-memory-recall.md`, which also carries the
+PROACTIVE-USE contract (recall-before-acting / write-after-learning). The
+INTEGRATOR ships **no per-plugin memory skills** — memory is the global janitor
+system, not a plugin reimplementation. (Distinct from `amia-session-memory`, which restores
 transcript/session context — a different concern, and an allowed per-plugin skill.)
 
 - **Recall before acting.** Before investigating a failing quality gate, a
