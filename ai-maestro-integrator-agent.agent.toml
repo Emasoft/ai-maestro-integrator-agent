@@ -29,8 +29,6 @@ secondary = [
   "amia-github-issue-operations",
   "amia-kanban-orchestration",
   "amia-tdd-enforcement",
-  "integrator-memory-recall",
-  "integrator-memory-write",
   "amia-label-taxonomy",
   "amia-github-projects-sync",
   "amia-github-thread-management",

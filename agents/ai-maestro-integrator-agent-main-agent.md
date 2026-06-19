@@ -18,8 +18,6 @@ auto_skills:
   - amia-ci-failure-patterns
   - amia-release-management
   - amia-github-integration
-  - integrator-memory-recall
-  - integrator-memory-write
   - amia-label-taxonomy
   - amia-integration-protocols
   - amia-prrd-trdd-kanban
@@ -262,23 +260,33 @@ Maintain these logs:
 
 ## Memory Protocol
 
-You participate in the AI Maestro **markdown memory system** — curated,
-symptom-indexed notes in the project's `memory/` dir (distinct from
-chat-transcript search). The protocol lives in `rules/memory-protocol.md`;
-the two skills are **integrator-memory-recall** (symptom → ranked notes)
-and **integrator-memory-write** (capture one durable fact).
+This plugin uses the **GLOBAL janitor-hosted memory system** (governance R24) —
+the user-level `ai-maestro-janitor` plugin provides `/janitor-memory-recall`,
+`/janitor-memory-write`, and `/janitor-memory-update`; the protocol + recall law
+live in `~/.claude/rules/markdown-memory-recall.md`, and this project's
+PROACTIVE-USE contract is in [`CLAUDE.md`](../CLAUDE.md). The INTEGRATOR ships
+**no per-plugin memory skills** — memory is the global janitor system, not a
+plugin reimplementation. (Distinct from `amia-session-memory`, which restores
+transcript/session context — a different concern, and an allowed per-plugin skill.)
 
-Wire it into your workflow at two points:
-
-1. **RECALL before debugging a recurring problem** — before investigating a
-   failing quality gate, a CI failure pattern, or a merge conflict you think
-   you've seen before, run integrator-memory-recall with the SYMPTOM ("have
-   we hit this before?"). The answer may already be written down.
-2. **WRITE after a non-trivial fix** — after resolving a non-obvious
-   integration/merge/CI bug, capture the bug-autopsy as a note via
-   integrator-memory-write so the next session recalls it from the symptom.
-
-Recall degrades to plain grep when `memgrep` is absent — it never blocks.
+- **Recall before acting.** Before investigating a failing quality gate, a
+  familiar CI-failure pattern, or a merge conflict you think you have seen — and
+  before any merge/release decision — run `/janitor-memory-recall` with the
+  SYMPTOM (the user's words / the error text): "have we hit this before? did we
+  already decide this?". The answer may already be written down.
+- **Write what is durable.** After resolving a non-obvious integration / merge /
+  CI bug, or making a release decision that is not derivable from the code,
+  capture the bug-autopsy / decision with `/janitor-memory-write` (type
+  `feedback` for a confirmed preference) — description indexed by the
+  question/symptom.
+- **Propagate to sub-agents.** When you spawn a sub-agent, include this same
+  recall/write directive in its prompt — memory discipline is inherited, not
+  assumed.
+- **The one law:** index notes by the QUESTION/symptom, not the answer's jargon
+  (a note is findable from the problem, not from the fix).
+- **Three scopes:** LOCAL (harness per-project) · PROJECT (`.claude/project/memory/`,
+  in-repo) · USER (the janitor's data dir). Recall degrades to plain `grep` when
+  `memgrep` is absent — it never blocks.
 
 ## Workflow Overview
 
