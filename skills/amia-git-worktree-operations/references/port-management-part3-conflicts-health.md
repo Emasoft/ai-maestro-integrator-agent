@@ -359,7 +359,7 @@ You can set up automated health monitoring with a cron job or systemd timer.
 **Option 1 — cron (run every 15 minutes):** add a single crontab entry (via
 your usual `crontab` editor) on a 15-minute schedule (`*/15 * * * *`) that
 changes into the repo, runs `python scripts/port_status.py --health-check`, and
-appends both stdout and stderr to `logs/health-check.log`.
+captures its combined output to a rotating health-check log.
 
 **Option 2 — systemd timer:** define a `oneshot` service unit whose
 `WorkingDirectory` is the repo and whose `ExecStart` runs
