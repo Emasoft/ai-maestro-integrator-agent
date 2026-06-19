@@ -54,47 +54,47 @@ Prefer these over reading large files into your context:
 - [SKILL](../skills/amia-github-integration/SKILL.md) - Complete GitHub integration protocols
 
 - [api-operations](../skills/amia-github-integration/references/api-operations.md) — Detailed API operations (issue/PR/project CRUD)
-  - 1.1 Executing GitHub Issue Operations
+  - 1.1 [Executing GitHub Issue Operations](#11-executing-github-issue-operations)
     - 1.1.1 Creating issues with labels, milestones, and assignees
     - 1.1.2 Updating issue metadata (title, body, labels)
     - 1.1.3 Managing issue lifecycle (close, reopen, transfer)
-  - 1.2 Executing GitHub Pull Request Operations
+  - 1.2 [Executing GitHub Pull Request Operations](#12-executing-github-pull-request-operations)
     - 1.2.1 Creating PRs from branches
     - 1.2.2 Managing PR reviewers and assignees
     - 1.2.3 Submitting PR reviews (approve, request changes, comment)
     - 1.2.4 Merging PRs with different strategies
-  - 1.3 Executing GitHub Projects V2 Operations
+  - 1.3 [Executing GitHub Projects V2 Operations](#13-executing-github-projects-v2-operations)
     - 1.3.1 Adding items to project boards
     - 1.3.2 Moving items between columns
     - 1.3.3 Updating custom field values via GraphQL
     - 1.3.4 Batch updating project items
-  - 1.4 Managing Conversation Threads on Issues and PRs
+  - 1.4 [Managing Conversation Threads on Issues and PRs](#14-managing-conversation-threads-on-issues-and-prs)
     - 1.4.1 Posting comments and replies
     - 1.4.2 Marking threads as resolved
     - 1.4.3 Locking and unlocking conversations
-  - 1.5 Handling GitHub API Rate Limits
+  - 1.5 [Handling GitHub API Rate Limits](#15-handling-github-api-rate-limits)
     - 1.5.1 Checking rate limit status before operations
     - 1.5.2 Implementing exponential backoff on rate limit errors
     - 1.5.3 Queuing non-urgent operations during limit pressure
     - 1.5.4 Handling GraphQL-specific point-based rate limits
-  - 1.6 Running Quality Gates Before API Operations
+  - 1.6 [Running Quality Gates Before API Operations](#16-running-quality-gates-before-api-operations)
     - 1.6.1 Gate 1: Verifying authentication status
     - 1.6.2 Gate 2: Verifying repository and project permissions
     - 1.6.3 Gate 3: Verifying resource existence (issue, PR, label, milestone)
     - 1.6.4 Gate 4: Validating state before state-changing operations
     - 1.6.5 Gate 5: Pre-flight rate limit check
-  - 1.7 Coordinating API Operations via AI Maestro
+  - 1.7 [Coordinating API Operations via AI Maestro](#17-coordinating-api-operations-via-ai-maestro)
     - 1.7.1 Receiving API operation requests
     - 1.7.2 Sending operation results back to requesting agent
     - 1.7.3 Message format for API requests and responses
-  - 1.8 Step-by-Step API Operation Workflow
+  - 1.8 [Step-by-Step API Operation Workflow](#18-step-by-step-api-operation-workflow)
     - 1.8.1 Receiving and parsing operation request
     - 1.8.2 Running all quality gates in sequence
     - 1.8.3 Preparing and executing API call with retry logic
     - 1.8.4 Processing and validating API response
     - 1.8.5 Logging operation to audit file
     - 1.8.6 Reporting result to orchestrator or callback agent
-  - 1.9 Using GitHub CLI and GraphQL Tools
+  - 1.9 [Using GitHub CLI and GraphQL Tools](#19-using-github-cli-and-graphql-tools)
     - 1.9.1 Common gh CLI commands for issues and PRs
     - 1.9.2 Using gh api for raw REST API calls
     - 1.9.3 Executing GraphQL mutations for Projects V2
@@ -105,7 +105,6 @@ For rate limit handling procedures, see [SKILL](../skills/amia-github-integratio
 For quality gate specifications, see [SKILL](../skills/amia-quality-gates/SKILL.md)
 
 - [sub-agent-role-boundaries-template](../skills/amia-integration-protocols/references/sub-agent-role-boundaries-template.md) — Role boundaries and orchestrator coordination
-  - Table of Contents
   - Purpose
   - Core Identity: Worker Agent (Not Orchestrator)
     - What Worker Agents Are
