@@ -10,9 +10,6 @@ triggers:
   - User shares diagram or architecture image
   - Any image or screenshot needs interpretation
   - Orchestrator needs to delegate image analysis to protect context memory
-auto_skills:
-  - integrator-memory-recall
-  - integrator-memory-write
 memory_requirements: low
 ---
 
@@ -119,3 +116,18 @@ user: Here's the UI mockup - does it match our requirements? [shares design imag
 assistant: Analyzing image at /tmp/ui-mockup.png...
 [Agent reads UI mockup image, compares against USER_REQUIREMENTS.md, identifies that login button is blue instead of green as specified in REQ-021, notices missing "Forgot Password" link required by REQ-023, and returns: "[UI MOCKUP] Login screen design - KEY CONTENT: Button color deviation (blue vs REQ-021 green), missing Forgot Password link (REQ-023) - ACTIONABLE: Fix button color and add missing link - Details: docs_dev/image-analysis-20250131-143000.md"]
 </example>
+
+## Memory Protocol
+
+This plugin uses the **GLOBAL janitor-hosted memory system** (governance R24):
+`/janitor-memory-recall`, `/janitor-memory-write`, `/janitor-memory-update` (from
+the user-level `ai-maestro-janitor` plugin); the recall law lives in
+`~/.claude/rules/markdown-memory-recall.md`. There are **no per-plugin memory skills**.
+
+- **Recall before acting** on a recurring problem — run `/janitor-memory-recall`
+  with the SYMPTOM (the error text / the user's words): "have we hit this before?".
+- **Write after a non-obvious fix** — capture the bug-autopsy with
+  `/janitor-memory-write`, indexed by the question/symptom (not the fix's jargon).
+
+You received this directive from the agent that spawned you (R24.3) — apply it,
+and pass it on verbatim to any sub-agent you spawn.

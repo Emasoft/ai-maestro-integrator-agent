@@ -29,7 +29,7 @@ exits non-zero if any file fails — suitable as a publish gate.
 |---|---|---|
 | `test_release_governance.py` | `shared/release_governance.py` + `amia_create_release.py` + `amia_rollback.py` — the Tier-2 MANAGER-approval gate (issue #13 / M5) | gate-function unit + real CLI subprocess (exit codes), no network |
 | `test_hooks.py` | `scripts/amia_pre_push_hook.py` — branch-protection PreToolUse hook (issue #13 / M12) | real tmp git repos + real stdin-JSON subprocess |
-| `test_memory_skills.py` | `integrator-memory-recall` + `integrator-memory-write` scripts (issue #12) | real fixture memory dir + real subprocess |
+| `test_memory_skills.py` | being REMOVED alongside the per-plugin memory skills (memory is now the global janitor-hosted system per governance R24) | n/a — slated for deletion |
 
 ## Why some scripts are exercised by exit-code paths, not live API calls
 

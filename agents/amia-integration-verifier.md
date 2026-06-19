@@ -9,8 +9,6 @@ triggers:
   - API contracts need validation
   - Orchestrator assigns integration testing task
 auto_skills:
-  - integrator-memory-recall
-  - integrator-memory-write
   - amia-tdd-enforcement
   - amia-integration-protocols
 memory_requirements: medium
@@ -192,3 +190,18 @@ assistant: I'll verify deployment readiness with complete evidence collection.
 Tests: 8/8 | Exit codes: 8 success, 0 failed
 Evidence: /tmp/integration-verification-20250131-150000.md
 </example>
+
+## Memory Protocol
+
+This plugin uses the **GLOBAL janitor-hosted memory system** (governance R24):
+`/janitor-memory-recall`, `/janitor-memory-write`, `/janitor-memory-update` (from
+the user-level `ai-maestro-janitor` plugin); the recall law lives in
+`~/.claude/rules/markdown-memory-recall.md`. There are **no per-plugin memory skills**.
+
+- **Recall before acting** on a recurring problem — run `/janitor-memory-recall`
+  with the SYMPTOM (the error text / the user's words): "have we hit this before?".
+- **Write after a non-obvious fix** — capture the bug-autopsy with
+  `/janitor-memory-write`, indexed by the question/symptom (not the fix's jargon).
+
+You received this directive from the agent that spawned you (R24.3) — apply it,
+and pass it on verbatim to any sub-agent you spawn.

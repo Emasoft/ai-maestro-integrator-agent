@@ -301,6 +301,4 @@ When creating a new AMIA sub-agent:
 ## References
 
 - [amia-integration-protocols/SKILL.md](../SKILL.md) - Main integration protocols
-- [integrator-memory-recall/SKILL.md](../../integrator-memory-recall/SKILL.md) - Memory recall (symptom-indexed)
-- [integrator-memory-write/SKILL.md](../../integrator-memory-write/SKILL.md) - Memory write/update
 - [amia-tdd-enforcement/SKILL.md](../../amia-tdd-enforcement/SKILL.md) - TDD quality gates

@@ -171,9 +171,7 @@ ai-maestro-integrator-agent/
 │   ├── amia-tdd-enforcement/
 │   ├── amia-ai-pr-review-methodology/
 │   ├── amia-integration-protocols/
-│   ├── amia-label-taxonomy/
-│   ├── integrator-memory-recall/
-│   └── integrator-memory-write/
+│   └── amia-label-taxonomy/
 ├── hooks/                        # Hook configurations
 │   └── hooks.json
 ├── scripts/                      # Utility scripts
@@ -299,8 +297,8 @@ Skills are **automatically loaded** from the `skills/` directory. You do NOT nee
 | **amia-ai-pr-review-methodology** | Evidence-based AI PR review methodology |
 | **amia-integration-protocols** | Integration workflow protocols |
 | **amia-label-taxonomy** | GitHub label taxonomy |
-| **integrator-memory-recall** | Symptom-indexed recall of prior session / PR-review memory |
-| **integrator-memory-write** | Write/update session + PR-review memory notes |
+
+Memory is the global janitor memory (`/janitor-memory-recall|write|update`).
 
 ---
 

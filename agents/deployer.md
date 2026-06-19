@@ -122,3 +122,18 @@ structured result and INTEGRATOR handles the broadcast.
 - INTEGRATOR persona: [ai-maestro-integrator-agent-main-agent](ai-maestro-integrator-agent-main-agent.md)
 - Universal kanban skill: `prrd-trdd-kanban` in `ai-maestro-plugin`
 - Companion subagent: [releaser](releaser.md)
+
+## Memory Protocol
+
+This plugin uses the **GLOBAL janitor-hosted memory system** (governance R24):
+`/janitor-memory-recall`, `/janitor-memory-write`, `/janitor-memory-update` (from
+the user-level `ai-maestro-janitor` plugin); the recall law lives in
+`~/.claude/rules/markdown-memory-recall.md`. There are **no per-plugin memory skills**.
+
+- **Recall before acting** on a recurring problem — run `/janitor-memory-recall`
+  with the SYMPTOM (the error text / the user's words): "have we hit this before?".
+- **Write after a non-obvious fix** — capture the bug-autopsy with
+  `/janitor-memory-write`, indexed by the question/symptom (not the fix's jargon).
+
+You received this directive from the agent that spawned you (R24.3) — apply it,
+and pass it on verbatim to any sub-agent you spawn.

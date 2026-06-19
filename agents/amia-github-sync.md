@@ -5,8 +5,6 @@ model: sonnet
 description: Synchronizes GitHub issues, PRs, and project boards. Requires AI Maestro installed.
 type: local-helper
 auto_skills:
-  - integrator-memory-recall
-  - integrator-memory-write
   - amia-github-integration
   - amia-github-projects-sync
 memory_requirements: medium
@@ -179,3 +177,18 @@ assistant: I'll sync local task completions to GitHub Projects V2.
 [DONE] github-sync - synced 7 issues (7→GitHub, 0→Local), 0 conflicts
 Details: docs_dev/github-sync-20250131-150000.log
 </example>
+
+## Memory Protocol
+
+This plugin uses the **GLOBAL janitor-hosted memory system** (governance R24):
+`/janitor-memory-recall`, `/janitor-memory-write`, `/janitor-memory-update` (from
+the user-level `ai-maestro-janitor` plugin); the recall law lives in
+`~/.claude/rules/markdown-memory-recall.md`. There are **no per-plugin memory skills**.
+
+- **Recall before acting** on a recurring problem — run `/janitor-memory-recall`
+  with the SYMPTOM (the error text / the user's words): "have we hit this before?".
+- **Write after a non-obvious fix** — capture the bug-autopsy with
+  `/janitor-memory-write`, indexed by the question/symptom (not the fix's jargon).
+
+You received this directive from the agent that spawned you (R24.3) — apply it,
+and pass it on verbatim to any sub-agent you spawn.

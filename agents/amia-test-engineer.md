@@ -177,3 +177,18 @@ user: Check test coverage for PR #567 - the author says all tests pass.
 assistant: I'll perform comprehensive TDD enforcement verification for PR #567, including coverage analysis and quality assessment.
 [Agent runs pytest with coverage, discovers only 72% line coverage and 68% branch coverage (both below thresholds), checks git history and finds implementation commit before test commit (TDD violation), generates violation report documenting the issues, and returns: "[DONE] test-engineer - PR#567 G1:FAIL G2:FAIL G3:SKIPPED - Coverage: 72%/68%/88% | TDD: violation - implementation before tests - Details: reports/tdd-compliance-PR567-20250131150000.md"]
 </example>
+
+## Memory Protocol
+
+This plugin uses the **GLOBAL janitor-hosted memory system** (governance R24):
+`/janitor-memory-recall`, `/janitor-memory-write`, `/janitor-memory-update` (from
+the user-level `ai-maestro-janitor` plugin); the recall law lives in
+`~/.claude/rules/markdown-memory-recall.md`. There are **no per-plugin memory skills**.
+
+- **Recall before acting** on a recurring problem — run `/janitor-memory-recall`
+  with the SYMPTOM (the error text / the user's words): "have we hit this before?".
+- **Write after a non-obvious fix** — capture the bug-autopsy with
+  `/janitor-memory-write`, indexed by the question/symptom (not the fix's jargon).
+
+You received this directive from the agent that spawned you (R24.3) — apply it,
+and pass it on verbatim to any sub-agent you spawn.
