@@ -42,37 +42,12 @@ API_BASE_URL=http://localhost:${ALLOCATED_API_PORT}
 
 ### Generating Configuration from Template
 
-```python
-def generate_worktree_config(worktree_name, template_path, output_path):
-    """
-    Generate a worktree-specific configuration file from template.
-
-    Args:
-        worktree_name: Name of the worktree
-        template_path: Path to template file
-        output_path: Where to write the generated config
-    """
-    # Get allocated ports for this worktree
-    registry = load_registry()
-    ports = registry["allocated_ports"][worktree_name]
-
-    # Read template
-    with open(template_path, 'r') as f:
-        template = f.read()
-
-    # Replace placeholders
-    config = template.replace('${ALLOCATED_WEB_PORT}', str(ports['web']))
-    config = config.replace('${ALLOCATED_DB_PORT}', str(ports['db']))
-    config = config.replace('${ALLOCATED_TEST_PORT}', str(ports['test']))
-    config = config.replace('${ALLOCATED_DEBUG_PORT}', str(ports['debug']))
-    config = config.replace('${WORKTREE_NAME}', worktree_name)
-
-    # Write output
-    with open(output_path, 'w') as f:
-        f.write(config)
-
-    print(f"Generated config: {output_path}")
-```
+The helper [`scripts/amia_generate_worktree_config.py`](../scripts/amia_generate_worktree_config.py)
+implements `generate_config(worktree_name, template_path, output_path, load_registry)`.
+It looks up the worktree's allocated ports in the registry, reads the template,
+substitutes the `${ALLOCATED_*_PORT}` and `${WORKTREE_NAME}` placeholders, and
+writes the rendered config to `output_path`. The `load_registry` helper is
+passed in from your port-management module.
 
 ### Generated Configuration Example
 

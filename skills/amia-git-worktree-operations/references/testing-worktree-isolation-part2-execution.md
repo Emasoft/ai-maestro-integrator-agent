@@ -296,27 +296,14 @@ def test_database():
 
 1. **Clean database before each test run**:
 
-```python
-# conftest.py
-@pytest.fixture(scope='session', autouse=True)
-def setup_test_database(test_database):
-    """Create fresh test database"""
-
-    # Drop if exists
-    subprocess.run(['dropdb', '--if-exists', test_database])
-
-    # Create fresh
-    subprocess.run(['createdb', test_database], check=True)
-
-    # Run migrations
-    os.environ['DATABASE_URL'] = f'postgresql://localhost/{test_database}'
-    call_command('migrate')
-
-    yield
-
-    # Cleanup after all tests
-    subprocess.run(['dropdb', test_database])
-```
+The copy-paste fixture
+[`scripts/amia_conftest_test_database.py`](../scripts/amia_conftest_test_database.py)
+provides a session-scoped, autouse `setup_test_database(test_database)` fixture
+for a worktree's `conftest.py`. It drops any leftover database
+(`dropdb --if-exists`), creates a fresh one (`createdb`), points `DATABASE_URL`
+at it, runs `migrate`, yields for the test session, then drops the database on
+teardown. Each worktree passes its own `test_database` name (e.g.
+`testdb_pr_123`), so parallel worktrees never share state.
 
 ---
 
@@ -378,32 +365,11 @@ When you run `worktree_remove.py`, it automatically:
 
 **Manual Port Release** (if needed):
 
-```python
-# scripts/release_ports.py
-import json
-
-def release_ports(worktree_id):
-    """Release ports allocated to worktree"""
-
-    with open('worktrees_registry.json', 'r') as f:
-        registry = json.load(f)
-
-    # Get worktree info
-    worktree = registry['worktrees'].get(worktree_id)
-    if not worktree or 'ports' not in worktree:
-        return
-
-    # Remove from allocated ports
-    allocated = registry.get('allocated_ports', [])
-    for port in worktree['ports'].values():
-        if port in allocated:
-            allocated.remove(port)
-
-    registry['allocated_ports'] = allocated
-
-    with open('worktrees_registry.json', 'w') as f:
-        json.dump(registry, f, indent=2)
-```
+The helper [`scripts/amia_release_worktree_ports.py`](../scripts/amia_release_worktree_ports.py)
+provides `release_worktree_ports(registry, worktree_id)`. It removes each of the
+worktree's reserved ports from the registry's `allocated_ports` list and writes
+the updated registry back to `worktrees_registry.json`, making those ports
+available for reuse.
 
 ### Cleaning Test Databases
 
@@ -411,21 +377,10 @@ def release_ports(worktree_id):
 
 **Automated Cleanup**:
 
-```python
-# In worktree_remove.py
-def cleanup_test_database(metadata):
-    """Drop test database for worktree"""
-
-    if 'database' not in metadata:
-        return
-
-    db_name = metadata['database']
-
-    # Drop PostgreSQL database
-    subprocess.run(['dropdb', '--if-exists', db_name])
-
-    print(f"✓ Removed test database: {db_name}")
-```
+The helper [`scripts/amia_cleanup_test_database.py`](../scripts/amia_cleanup_test_database.py)
+provides `cleanup_test_database(metadata)`. It reads the database name from the
+worktree's metadata and drops it with `dropdb --if-exists` (a no-op if the
+database is already gone). Call it from your worktree-removal routine.
 
 **Manual Database Cleanup**:
 

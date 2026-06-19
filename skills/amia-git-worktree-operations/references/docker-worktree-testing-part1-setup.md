@@ -249,21 +249,11 @@ EOF
 
 ### Automated Generation
 
-Add to `worktree_create.py` script:
-
-```python
-def generate_docker_env(worktree_path, worktree_name, ports):
-    """Generate .env.docker file with allocated ports."""
-    env_file = worktree_path / ".env.docker"
-
-    with open(env_file, 'w') as f:
-        f.write(f"WEB_PORT={ports['web']}\n")
-        f.write(f"DB_PORT={ports['db']}\n")
-        f.write(f"REDIS_PORT={ports['redis']}\n")
-        f.write(f"WORKTREE_ID={worktree_name}\n")
-
-    print(f"Generated {env_file}")
-```
+The helper [`scripts/amia_generate_docker_config.py`](../scripts/amia_generate_docker_config.py)
+provides `generate_docker_env(worktree_path, worktree_name, ports)`, which
+writes a `.env.docker` file in the worktree containing `WEB_PORT`, `DB_PORT`,
+`REDIS_PORT`, and `WORKTREE_ID` lines built from the allocated ports. Call it
+from your worktree-creation routine.
 
 ### Port Conflict Avoidance
 

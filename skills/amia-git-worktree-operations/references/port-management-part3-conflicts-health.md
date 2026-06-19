@@ -223,42 +223,14 @@ def check_port_free(port: int) -> bool:
 
 **Method:** Check for active network connections on the port.
 
-**Implementation (macOS/Linux):**
+**Implementation:** The cross-platform helper
+[`scripts/amia_check_port_listening.py`](../scripts/amia_check_port_listening.py)
+provides `check_port_listening(port)`. On macOS/Linux it runs `lsof -i :<port> -t`
+and reports the port as listening when that command returns any PID; on Windows
+it scans `netstat -ano` for `:<port>`. Run it directly to probe a port:
 
-```python
-import subprocess
-
-def check_port_listening(port: int) -> bool:
-    """Check if a process is listening on the port."""
-    try:
-        result = subprocess.run(
-            ['lsof', '-i', f':{port}', '-t'],
-            capture_output=True,
-            text=True,
-            check=False
-        )
-        return bool(result.stdout.strip())
-    except Exception:
-        return False
-```
-
-**Implementation (Windows):**
-
-```python
-import subprocess
-
-def check_port_listening(port: int) -> bool:
-    """Check if a process is listening on the port (Windows)."""
-    try:
-        result = subprocess.run(
-            ['netstat', '-ano'],
-            capture_output=True,
-            text=True,
-            check=False
-        )
-        return f':{port}' in result.stdout
-    except Exception:
-        return False
+```bash
+python scripts/amia_check_port_listening.py --port 8080
 ```
 
 **When to Use:**
@@ -384,47 +356,18 @@ Summary:
 
 You can set up automated health monitoring with a cron job or systemd timer.
 
-**Example cron job (run every 15 minutes):**
+**Option 1 — cron (run every 15 minutes):** add a single crontab entry (via
+your usual `crontab` editor) on a 15-minute schedule (`*/15 * * * *`) that
+changes into the repo, runs `python scripts/port_status.py --health-check`, and
+appends both stdout and stderr to `logs/health-check.log`.
 
-```bash
-# Edit crontab
-crontab -e
-
-# Add this line
-*/15 * * * * cd /path/to/repo && python scripts/port_status.py --health-check >> logs/health-check.log 2>&1
-```
-
-**Example systemd timer:**
-
-Create `/etc/systemd/system/amia-health-check.service`:
-
-```ini
-[Unit]
-Description=AMIA Port Health Check
-
-[Service]
-Type=oneshot
-WorkingDirectory=/path/to/repo
-ExecStart=/usr/bin/python3 scripts/port_status.py --health-check
-```
-
-Create `/etc/systemd/system/amia-health-check.timer`:
-
-```ini
-[Unit]
-Description=Run AMIA Port Health Check every 15 minutes
-
-[Timer]
-OnBootSec=5min
-OnUnitActiveSec=15min
-
-[Install]
-WantedBy=timers.target
-```
-
-Enable and start the `amia-health-check.timer` unit with systemd's
-`systemctl enable` and `systemctl start` subcommands, run with
-administrator privileges.
+**Option 2 — systemd timer:** define a `oneshot` service unit whose
+`WorkingDirectory` is the repo and whose `ExecStart` runs
+`python3 scripts/port_status.py --health-check`, paired with a timer unit that
+fires `OnBootSec=5min` / `OnUnitActiveSec=15min` and is wanted by
+`timers.target`. Install both units under `/etc/systemd/system/`, then enable
+and start the timer (an administrator-privileged operation). Consult your
+platform's cron / systemd documentation for the exact unit-file fields.
 
 ---
 

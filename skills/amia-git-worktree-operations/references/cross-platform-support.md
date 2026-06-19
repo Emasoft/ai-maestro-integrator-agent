@@ -73,22 +73,15 @@ amia_dir = os.path.join(os.environ.get('LOCALAPPDATA', ''), 'design')
 
 ### File Locking
 
-File locking uses `msvcrt.locking()` instead of `fcntl`:
-
-```python
-import msvcrt
-msvcrt.locking(file.fileno(), msvcrt.LK_NBLCK, 1)
-```
+On Windows, file locking uses `msvcrt.locking()` (with the `LK_NBLCK` mode for a
+non-blocking lock on the file's descriptor) instead of the POSIX `fcntl` API.
 
 ### Atomic Renames
 
-Atomic renames require target deletion first on Windows:
-
-```python
-if os.path.exists(target):
-    os.remove(target)
-os.rename(temp_file, target)
-```
+On Windows an atomic rename requires the target to be removed first: check
+whether the target exists, delete it if so, then rename the temp file onto the
+target (`os.rename`). On POSIX the rename alone is atomic and overwrites the
+target.
 
 ### Path Handling
 

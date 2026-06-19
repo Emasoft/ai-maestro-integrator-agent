@@ -262,29 +262,14 @@ pip install -r requirements-test.txt
 
 **Automated Setup Script**:
 
-```python
-# scripts/setup_test_env.py
-import os
-import subprocess
-import sys
+The helper [`scripts/amia_setup_test_env.py`](../scripts/amia_setup_test_env.py)
+implements `setup_test_environment(worktree_path)`: it creates a fresh `.venv`
+inside the worktree (`python -m venv`) and installs both `requirements.txt` and
+`requirements-test.txt` into it via that venv's `pip`, so each worktree's tests
+run against their own isolated interpreter and packages. Run it with:
 
-def setup_test_environment(worktree_path):
-    """Set up test environment in worktree"""
-
-    # Create venv
-    venv_path = os.path.join(worktree_path, '.venv')
-    subprocess.run([sys.executable, '-m', 'venv', venv_path], check=True)
-
-    # Get pip path
-    pip = os.path.join(venv_path, 'bin', 'pip')
-
-    # Install dependencies
-    subprocess.run([pip, 'install', '-r', 'requirements.txt'],
-                   cwd=worktree_path, check=True)
-    subprocess.run([pip, 'install', '-r', 'requirements-test.txt'],
-                   cwd=worktree_path, check=True)
-
-    print(f"✓ Test environment ready: {worktree_path}")
+```bash
+python scripts/amia_setup_test_env.py --worktree-path /tmp/worktrees/pr-123
 ```
 
 ### Database Setup for Tests

@@ -66,32 +66,11 @@ When you run `worktree_remove.py`, it automatically:
 
 **Manual Port Release** (if needed):
 
-```python
-# scripts/release_ports.py
-import json
-
-def release_ports(worktree_id):
-    """Release ports allocated to worktree"""
-
-    with open('worktrees_registry.json', 'r') as f:
-        registry = json.load(f)
-
-    # Get worktree info
-    worktree = registry['worktrees'].get(worktree_id)
-    if not worktree or 'ports' not in worktree:
-        return
-
-    # Remove from allocated ports
-    allocated = registry.get('allocated_ports', [])
-    for port in worktree['ports'].values():
-        if port in allocated:
-            allocated.remove(port)
-
-    registry['allocated_ports'] = allocated
-
-    with open('worktrees_registry.json', 'w') as f:
-        json.dump(registry, f, indent=2)
-```
+The helper [`scripts/amia_release_worktree_ports.py`](../scripts/amia_release_worktree_ports.py)
+provides `release_worktree_ports(registry, worktree_id)`. It removes each of the
+worktree's reserved ports from the registry's `allocated_ports` list and writes
+the updated registry back to `worktrees_registry.json`, making those ports
+available for reuse.
 
 ---
 
@@ -101,21 +80,10 @@ def release_ports(worktree_id):
 
 **Automated Cleanup**:
 
-```python
-# In worktree_remove.py
-def cleanup_test_database(metadata):
-    """Drop test database for worktree"""
-
-    if 'database' not in metadata:
-        return
-
-    db_name = metadata['database']
-
-    # Drop PostgreSQL database
-    subprocess.run(['dropdb', '--if-exists', db_name])
-
-    print(f"✓ Removed test database: {db_name}")
-```
+The helper [`scripts/amia_cleanup_test_database.py`](../scripts/amia_cleanup_test_database.py)
+provides `cleanup_test_database(metadata)`. It reads the database name from the
+worktree's metadata and drops it with `dropdb --if-exists` (a no-op if the
+database is already gone). Call it from your worktree-removal routine.
 
 **Manual Database Cleanup**:
 

@@ -58,13 +58,11 @@ These operations are generally safe to run in parallel:
 
 **Strategy 1: Orchestrator-Controlled Git Operations**
 
-Only the orchestrator runs git operations, one at a time:
-
-```python
-async def safe_git_operation(worktree: str, operation: list[str]):
-    async with git_lock:  # Global lock
-        subprocess.run(["git", "-C", worktree] + operation)
-```
+Only the orchestrator runs git operations, one at a time. The helper
+[`scripts/amia_serialize_git_ops.py`](../scripts/amia_serialize_git_ops.py)
+wraps every git invocation in a single global `asyncio.Lock`, so concurrent
+requests are serialized — one `git -C <worktree> ...` runs while the rest wait
+on the lock.
 
 **Strategy 2: Agent Queuing**
 

@@ -148,27 +148,14 @@ def test_database():
 
 1. **Clean database before each test run**:
 
-```python
-# conftest.py
-@pytest.fixture(scope='session', autouse=True)
-def setup_test_database(test_database):
-    """Create fresh test database"""
-
-    # Drop if exists
-    subprocess.run(['dropdb', '--if-exists', test_database])
-
-    # Create fresh
-    subprocess.run(['createdb', test_database], check=True)
-
-    # Run migrations
-    os.environ['DATABASE_URL'] = f'postgresql://localhost/{test_database}'
-    call_command('migrate')
-
-    yield
-
-    # Cleanup after all tests
-    subprocess.run(['dropdb', test_database])
-```
+The copy-paste fixture
+[`scripts/amia_conftest_test_database.py`](../scripts/amia_conftest_test_database.py)
+provides a session-scoped, autouse `setup_test_database(test_database)` fixture
+for a worktree's `conftest.py`. It drops any leftover database
+(`dropdb --if-exists`), creates a fresh one (`createdb`), points `DATABASE_URL`
+at it, runs `migrate`, yields for the test session, then drops the database on
+teardown. Each worktree passes its own `test_database` name (e.g.
+`testdb_pr_123`), so parallel worktrees never share state.
 
 ---
 

@@ -187,32 +187,12 @@ volumes:
 
 ### Generating Docker Compose File
 
-```python
-def generate_docker_compose(worktree_name):
-    """
-    Generate docker-compose.yml with allocated ports.
-    """
-    registry = load_registry()
-    ports = registry["allocated_ports"][worktree_name]
-
-    # Load template
-    with open('docker-compose.worktree.template.yml', 'r') as f:
-        template = f.read()
-
-    # Replace placeholders
-    compose = template.replace('${ALLOCATED_WEB_PORT}', str(ports['web']))
-    compose = compose.replace('${ALLOCATED_DB_PORT}', str(ports['db']))
-    compose = compose.replace('${ALLOCATED_TEST_PORT}', str(ports['test']))
-    compose = compose.replace('${WORKTREE_NAME}', worktree_name)
-
-    # Write to worktree directory
-    output_path = f'{worktree_name}/docker-compose.yml'
-    with open(output_path, 'w') as f:
-        f.write(compose)
-
-    print(f"Generated: {output_path}")
-    return output_path
-```
+The helper [`scripts/amia_generate_docker_config.py`](../scripts/amia_generate_docker_config.py)
+provides `generate_docker_compose(worktree_name, load_registry)`. It reads the
+worktree's allocated ports from the registry, loads
+`docker-compose.worktree.template.yml`, substitutes the `${ALLOCATED_*_PORT}`
+and `${WORKTREE_NAME}` placeholders, writes the result to
+`<worktree_name>/docker-compose.yml`, and returns that path.
 
 ### Starting Docker Services
 

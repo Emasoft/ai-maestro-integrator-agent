@@ -100,30 +100,13 @@ docker compose down -v --rmi all
 
 **Automated Cleanup:**
 
-Integrate cleanup into `worktree_remove.py`:
+The ready-made helper [`scripts/amia_docker_cleanup.py`](../scripts/amia_docker_cleanup.py)
+implements this. It lists every container whose name matches the worktree
+(`docker ps -a --filter name=<worktree>`), then stops and removes each one.
+Call it from your worktree-removal routine:
 
-```python
-def cleanup_docker(worktree_name):
-    """Stop and remove Docker containers for worktree."""
-    import subprocess
-
-    # Find containers with worktree name
-    result = subprocess.run(
-        ['docker', 'ps', '-a', '--filter', f'name={worktree_name}', '--format', '{{.Names}}'],
-        capture_output=True,
-        text=True
-    )
-
-    containers = result.stdout.strip().split('\n')
-
-    for container in containers:
-        if container:  # Skip empty lines
-            # Stop container
-            subprocess.run(['docker', 'stop', container])
-            # Remove container
-            subprocess.run(['docker', 'rm', container])
-
-    print(f"Cleaned up containers for: {worktree_name}")
+```bash
+python scripts/amia_docker_cleanup.py --worktree-name pr-123
 ```
 
 ### Data Persistence Strategy
@@ -447,7 +430,7 @@ mkdir: cannot create directory: Permission denied
 
 **Symptoms:**
 
-- `curl localhost:8081` fails
+- An HTTP request to the mapped host port (e.g. localhost:8081) fails
 - Browser can't connect to app
 
 **Solution:**

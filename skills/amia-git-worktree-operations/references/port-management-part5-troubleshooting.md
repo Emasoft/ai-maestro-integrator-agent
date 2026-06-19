@@ -158,16 +158,13 @@ app.run(host='0.0.0.0', port=8080)  # Not host='192.168.1.100'
 
 **Solution 2: Firewall blocking**
 
-```bash
-# macOS: Check firewall settings
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --listapps
+Check whether a host firewall is blocking the port, using each platform's
+firewall tool (the macOS and Linux checks need administrator privileges):
 
-# Linux: Check iptables
-sudo iptables -L -n
-
-# Windows: Check Windows Firewall
-netsh advfirewall firewall show rule name=all
-```
+- macOS: list the application firewall's allowed apps with the
+  `socketfilterfw --listapps` Application-Firewall utility.
+- Linux: list the active packet-filter rules with `iptables -L -n`.
+- Windows: list firewall rules with `netsh advfirewall firewall show rule name=all`.
 
 **Solution 3: Service configuration**
 

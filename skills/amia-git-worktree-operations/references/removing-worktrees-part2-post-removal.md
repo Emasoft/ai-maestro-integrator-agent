@@ -474,11 +474,10 @@ kill <PID>
 
 **Step 2: Check file ownership:**
 
-```bash
-ls -la /path/to/review-GH-42
-# If owned by different user, use sudo or fix ownership
-sudo chown -R $(whoami) /path/to/review-GH-42
-```
+Inspect ownership with `ls -la /path/to/review-GH-42`. If the files are owned by
+a different user, reset ownership to the current user by running a recursive
+`chown` over that path with administrator privileges (the new owner is the
+account returned by `whoami`).
 
 **Step 3: Retry removal:**
 

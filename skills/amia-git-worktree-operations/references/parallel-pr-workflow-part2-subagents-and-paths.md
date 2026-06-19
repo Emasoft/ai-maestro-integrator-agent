@@ -116,16 +116,11 @@ echo "fix" > /tmp/worktrees/pr-123/file.py  # Agent A's worktree
 
 **Violation 1: Hardcoded Main Repo Path**
 
-```python
-# WRONG
-with open("/home/user/project/config.json") as f:
-    config = json.load(f)
-
-# CORRECT
-worktree = os.environ["WORKTREE_ROOT"]
-with open(f"{worktree}/config.json") as f:
-    config = json.load(f)
-```
+WRONG — opening a hardcoded absolute path such as
+`/home/user/project/config.json` ties the code to one checkout and escapes the
+worktree. CORRECT — read the worktree root from the `WORKTREE_ROOT` environment
+variable and open the config relative to it (e.g. `<WORKTREE_ROOT>/config.json`),
+so each agent stays inside its own worktree.
 
 **Violation 2: Relative Path Escape**
 

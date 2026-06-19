@@ -36,38 +36,21 @@ amia worktree remove feature-old
 
 **Implementation:**
 
-```python
-def remove_worktree_with_cleanup(worktree_name):
-    """
-    Remove worktree and clean up all allocated resources.
-    """
-    # 1. Get allocated ports before removal
-    registry = load_registry()
-    ports = registry["allocated_ports"].get(worktree_name, {})
+The helper [`scripts/amia_remove_worktree_with_cleanup.py`](../scripts/amia_remove_worktree_with_cleanup.py)
+implements `remove_worktree_with_cleanup(...)`. Given a worktree path it:
 
-    # 2. Stop all services using these ports
-    for service, port in ports.items():
-        stop_service_on_port(port)
+1. Reads the worktree's allocated ports from the registry.
+2. Stops every service still bound to those ports.
+3. Tears down the worktree's Docker containers and volumes
+   (`docker compose down -v`).
+4. Removes the worktree (`git worktree remove`).
+5. Releases the ports from the registry and saves it.
+6. Deletes the generated `.env.worktree` and `docker-compose.yml` config
+   files (using `Path.unlink(missing_ok=True)`, so a missing file is not an
+   error).
 
-    # 3. Stop and remove Docker containers
-    os.chdir(worktree_name)
-    os.system('docker-compose down -v')
-
-    # 4. Remove worktree
-    os.system(f'git worktree remove {worktree_name}')
-
-    # 5. Release ports from registry
-    if worktree_name in registry["allocated_ports"]:
-        del registry["allocated_ports"][worktree_name]
-        save_registry(registry)
-
-    # 6. Remove configuration files
-    os.remove(f'{worktree_name}/.env.worktree')
-    os.remove(f'{worktree_name}/docker-compose.yml')
-
-    print(f"✓ Removed worktree: {worktree_name}")
-    print(f"✓ Released {len(ports)} ports")
-```
+The registry/service helpers (`load_registry`, `save_registry`,
+`stop_service_on_port`) are passed in from your port-management module.
 
 ### Manual Cleanup Commands
 
