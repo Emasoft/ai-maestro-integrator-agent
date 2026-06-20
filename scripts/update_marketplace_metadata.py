@@ -22,7 +22,12 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-from cpv_validation_common import get_plugin_root
+# isort (ruff I001) verdict on this block is ruff-version-sensitive: CPV's bundled
+# ruff (CI) groups `cpv_validation_common` as third-party and wants a blank line
+# before the first-party `shared` import, while the local ruff treats them as one
+# group and wants none — they cannot both be satisfied. The sys.path bootstrap MUST
+# precede `from cpv_validation_common`, so suppress the isort check on this block.
+from cpv_validation_common import get_plugin_root  # noqa: I001
 from shared.thresholds import write_output
 
 
