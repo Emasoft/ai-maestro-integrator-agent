@@ -20,6 +20,9 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    # Hard cap so the remote CPV validation can't hang the job indefinitely
+    # (the GitHub-integrity urlopen could stall) — matches ci.yml's Validate cap.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -32,6 +35,15 @@ jobs:
         uses: astral-sh/setup-uv@v5
 
       - name: Run CPV validation (--strict via remote launcher)
+        # Skip CPV's GitHub-anchored integrity fetch (a live urlopen to
+        # raw.githubusercontent.com): on a fresh-checkout runner the local
+        # self-hash manifest already matches the code, so it adds no security
+        # but real latency/hang risk — this job hung 30+ min without it.
+        # Do NOT set CLAUDE_PRIVATE_USERNAMES to the repo owner here: it makes
+        # CPV flag the PUBLIC owner as a CRITICAL "private path leaked" finding
+        # (Emasoft/claude-plugins-validation#140).
+        env:
+          PLUGIN_SKIP_GITHUB_INTEGRITY: "1"
         run: |
           echo "=== CPV Plugin Validation (--strict) ==="
           set +e
