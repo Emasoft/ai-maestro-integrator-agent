@@ -1,6 +1,6 @@
 {
   "name": "ai-maestro-integrator-agent",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Quality gates, testing, merging, release candidates - ensures code quality. Requires AI Maestro for inter-agent messaging. Recommended Claude Code v2.1.132+ ($CLAUDE_CODE_SESSION_ID env var for hook log correlation, hooks running without terminal access since 2.1.139, Stop-hook consecutive-block cap enforced since 2.1.143 via $CLAUDE_CODE_STOP_HOOK_BLOCK_CAP).",
   "dependencies": [
     {
