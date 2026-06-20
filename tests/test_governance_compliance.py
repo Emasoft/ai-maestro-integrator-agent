@@ -26,6 +26,8 @@ TEAM_REGISTRY = PLUGIN_ROOT / "docs" / "TEAM_REGISTRY_SPECIFICATION.md"
 DOCS = PLUGIN_ROOT / "docs"
 AGENTS = PLUGIN_ROOT / "agents"
 SKILLS = PLUGIN_ROOT / "skills"
+PERSONA = AGENTS / "ai-maestro-integrator-agent-main-agent.md"
+SCENARIOS = PLUGIN_ROOT / "tests" / "scenarios" / "governance-scenarios.md"
 
 # Pre-R29 per-agent-approval phrasing that R29/R30 superseded.
 OBSOLETE_APPROVAL = re.compile(
@@ -111,6 +113,28 @@ def check_references_escalate_to_maestro_not_user() -> str:
     return "PASS"
 
 
+def check_persona_has_governance_section() -> str:
+    """The main-agent persona carries the R26-R40 governance section naming the MAESTRO apex (R36/R37, #15)."""
+    text = PERSONA.read_text(encoding="utf-8")
+    needed = ["Foundational Governance Rules", "MAESTRO", "R37", "R28", "R32"]
+    missing = [tok for tok in needed if tok not in text]
+    if missing:
+        return f"FAIL: persona governance section missing tokens: {missing}"
+    return "PASS"
+
+
+def check_governance_scenarios_present() -> str:
+    """tests/scenarios/governance-scenarios.md exists and covers the INTEGRATOR R26-R40 behaviors + release gate (#15)."""
+    if not SCENARIOS.is_file():
+        return f"FAIL: SCEN suite not found at tests/scenarios/governance-scenarios.md"
+    text = SCENARIOS.read_text(encoding="utf-8")
+    needed = ["SCEN-G01", "SCEN-G11", "R28", "R32", "R36", "R37", "release"]
+    missing = [tok for tok in needed if tok not in text]
+    if missing:
+        return f"FAIL: SCEN suite missing required coverage tokens: {missing}"
+    return "PASS"
+
+
 CHECKS = [
     "check_role_boundaries_no_obsolete_approval",
     "check_role_boundaries_has_r29_r30",
@@ -120,6 +144,8 @@ CHECKS = [
     "check_all_agents_global_memory",
     "check_no_per_plugin_memory_skill",
     "check_references_escalate_to_maestro_not_user",
+    "check_persona_has_governance_section",
+    "check_governance_scenarios_present",
 ]
 
 
@@ -157,6 +183,14 @@ def test_no_per_plugin_memory_skill() -> None:
 
 def test_references_escalate_to_maestro_not_user() -> None:
     assert check_references_escalate_to_maestro_not_user().startswith("PASS")
+
+
+def test_persona_has_governance_section() -> None:
+    assert check_persona_has_governance_section().startswith("PASS")
+
+
+def test_governance_scenarios_present() -> None:
+    assert check_governance_scenarios_present().startswith("PASS")
 
 
 # ── Standalone runner with the human-readable result table ──
