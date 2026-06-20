@@ -18,7 +18,13 @@ ENABLE_LINTERS:
   - SPELL_CSPELL
   - COPYPASTE_JSCPD
   - REPOSITORY_CHECKOV
-  - REPOSITORY_GITLEAKS
+  # REPOSITORY_GITLEAKS intentionally omitted: gitleaks scans the full git
+  # history and flags EXAMPLE secrets in this plugin's security-teaching
+  # reference docs — including commits where such docs were later renamed or
+  # deleted, so the false positive is unfixable in the working tree. Real
+  # secrets are already covered by TruffleHog in publish.py's secrets gate
+  # (with the public-info allowlist). Filed upstream to drop it from the CPV
+  # scaffold template: Emasoft/claude-plugins-validation#138
   - REPOSITORY_TRIVY
 
 # Exclude paths — single-quoted YAML scalar so regex \. is read literally
