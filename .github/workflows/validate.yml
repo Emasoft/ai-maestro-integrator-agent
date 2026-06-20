@@ -62,7 +62,7 @@ jobs:
       - name: Summary
         if: always()
         run: |
-          echo "## Plugin Validation" >> $GITHUB_STEP_SUMMARY
+          echo "## Plugin Validation" >> "$GITHUB_STEP_SUMMARY"
           if [ -f validation-report.md ]; then
-            cat validation-report.md >> $GITHUB_STEP_SUMMARY
+            cat validation-report.md >> "$GITHUB_STEP_SUMMARY"
           fi
