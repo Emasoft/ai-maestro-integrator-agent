@@ -23,7 +23,6 @@ from typing import Any
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from cpv_validation_common import get_plugin_root
-
 from shared.thresholds import write_output
 
 

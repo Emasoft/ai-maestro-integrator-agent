@@ -126,7 +126,7 @@ def check_persona_has_governance_section() -> str:
 def check_governance_scenarios_present() -> str:
     """tests/scenarios/governance-scenarios.md exists and covers the INTEGRATOR R26-R40 behaviors + release gate (#15)."""
     if not SCENARIOS.is_file():
-        return f"FAIL: SCEN suite not found at tests/scenarios/governance-scenarios.md"
+        return "FAIL: SCEN suite not found at tests/scenarios/governance-scenarios.md"
     text = SCENARIOS.read_text(encoding="utf-8")
     needed = ["SCEN-G01", "SCEN-G11", "R28", "R32", "R36", "R37", "release"]
     missing = [tok for tok in needed if tok not in text]

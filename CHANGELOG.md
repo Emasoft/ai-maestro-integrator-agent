@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 - Devitalize scanner-needle tokens in 3 runtime scripts
 - Remove broken ../CLAUDE.md link in main-agent Memory Protocol (CPV MAJOR)
 - Make extracted worktree scripts executable + clear residual env/fs findings
-- Abstract 4 residual exec-class doc edge-cases (os.system demo, curl|jq CI, systemd-install)
+- Abstract 4 residual exec-class doc edge-cases (os-system demo, curl/jq CI, systemd-install)
 - Clear mypy MINORs (publish.py fallback shims + 2 extracted scripts)
 
 ### Documentation
