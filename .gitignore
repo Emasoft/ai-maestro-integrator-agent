@@ -82,3 +82,6 @@ rck-*-merge-pending.md
 /reports/
 /reports_dev/
 /scripts_dev/
+
+# ai-maestro-janitor runtime state (heartbeat/detector state + logs; regenerated, never published)
+.janitor/
