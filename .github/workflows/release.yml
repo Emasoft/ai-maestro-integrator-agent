@@ -59,11 +59,12 @@ jobs:
         # (no security check is weakened).
         env:
           # Root-cause #4: skip the GitHub-anchored integrity fetch on a
-          # fresh-checkout runner (the local manifest already matches the code)
-          # and pass the repo owner so private-path heuristics treat it as
-          # public — matching the project's canonical validate command.
+          # fresh-checkout runner (the local manifest already matches the code).
+          # NOTE: canon also sets CLAUDE_PRIVATE_USERNAMES to the repo owner, but
+          # that makes CPV flag the PUBLIC owner ('Emasoft') as CRITICAL "private
+          # path leaked"; validate.yml omits it and passes clean, so we omit it.
+          # Reported: Emasoft/claude-plugins-validation#140.
           PLUGIN_SKIP_GITHUB_INTEGRITY: "1"
-          CLAUDE_PRIVATE_USERNAMES: "${{ github.repository_owner }}"
         run: |
           set +e
           uvx --from git+https://github.com/Emasoft/claude-plugins-validation               --with pyyaml               cpv-remote-validate plugin . --strict               > validation-report.txt 2>&1

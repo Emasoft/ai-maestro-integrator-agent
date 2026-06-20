@@ -134,11 +134,13 @@ jobs:
           # Root-cause #4: on a fresh-checkout runner the local self-hash
           # manifest already matches the code, so CPV's GitHub-anchored
           # integrity fetch (a live urlopen to raw.githubusercontent.com) adds
-          # no security but real latency/hang risk. Skip it — and tell CPV the
-          # repo owner so its private-path heuristics treat the org name as
-          # public, matching the project's own canonical validate command.
+          # no security but real latency/hang risk. Skip it.
+          # NOTE: canon also sets CLAUDE_PRIVATE_USERNAMES to the repo owner here,
+          # but that makes CPV flag the PUBLIC owner ('Emasoft') in github URLs /
+          # the git no-reply email as CRITICAL "private path leaked" findings (22
+          # here). The standalone validate.yml omits it and passes clean, so we
+          # omit it too. Reported: Emasoft/claude-plugins-validation#140.
           PLUGIN_SKIP_GITHUB_INTEGRITY: "1"
-          CLAUDE_PRIVATE_USERNAMES: "${{ github.repository_owner }}"
         run: |
           set +e
           uvx --from git+https://github.com/Emasoft/claude-plugins-validation \
