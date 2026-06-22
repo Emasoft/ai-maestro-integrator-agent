@@ -50,10 +50,11 @@ jobs:
         # CI validate job. --strict blocks on CRITICAL/MAJOR/MINOR/NIT (exit
         # codes 1-4); WARNING (exit 5+) is advisory only.
         # Issue #11: removed local scripts/validate_plugin.py invocation.
-        # Root-cause #2: CPV is PINNED to @main (same ref the
-        # CI validate job and publish.py use) so the cold uvx-from-git build is
-        # cached per tag and a stricter future CPV release cannot break the
-        # release gate with no plugin change. Root-cause #5: this re-runs the
+        # CPV is PINNED to the v2.136.1 tag (same ref the CI validate job and
+        # publish.py use) — NOT @main (404s, #139) and NOT bare master, whose
+        # LATEST (v2.137.0) "[REPO LINT]" phase hangs CI ~30 min (v2.136.1 = 18s,
+        # #148). The last-known-good tag shields the gate from a CPV regression.
+        # Root-cause #5: this re-runs the
         # gate publish.py already passed locally — pinning all three callsites
         # to the SAME ref keeps that consistent; the gate itself stays intact
         # (no security check is weakened).
@@ -67,7 +68,7 @@ jobs:
           PLUGIN_SKIP_GITHUB_INTEGRITY: "1"
         run: |
           set +e
-          uvx --from git+https://github.com/Emasoft/claude-plugins-validation               --with pyyaml               cpv-remote-validate plugin . --strict               > validation-report.txt 2>&1
+          uvx --from git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1               --with pyyaml               cpv-remote-validate plugin . --strict               > validation-report.txt 2>&1
           exit_code=$?
           set -e
           cat validation-report.txt

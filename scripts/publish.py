@@ -523,7 +523,7 @@ def install_branch_rules(root: Path) -> int:
             [
                 "uvx",
                 "--from",
-                "git+https://github.com/Emasoft/claude-plugins-validation",
+                "git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1",
                 "--with",
                 "pyyaml",
                 "cpv-setup-branch-rules",
@@ -710,7 +710,7 @@ def run_gate(root: Path) -> int:
         return 1
     ve = subprocess.run(
         ["uvx", "--from",
-         "git+https://github.com/Emasoft/claude-plugins-validation",
+         "git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1",
          "--with", "pyyaml",
          "cpv-remote-validate", "plugin", ".", "--strict"],
         cwd=str(root), timeout=600).returncode
@@ -942,8 +942,8 @@ def stage_validate(root: Path) -> None:
 
     Cornerstone rule: a plugin cannot be pushed unless validation passes
     with 0 issues (WARNING allowed). The validator is ALWAYS fetched from
-    GitHub (git+https://github.com/Emasoft/claude-plugins-validation) via
-    uvx so a local tampered copy cannot weaken the rules. No exceptions.
+    GitHub (git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1)
+    via uvx so a local tampered copy cannot weaken the rules. No exceptions.
 
     Order: runs AFTER lint + tests so behavioral regressions fail fast
     before the structural validator even looks at the manifest.
@@ -955,9 +955,13 @@ def stage_validate(root: Path) -> None:
         sys.exit(1)
     # Fetch CPV from GitHub and run validate_plugin remotely. --strict blocks
     # on CRITICAL(1), MAJOR(2), MINOR(3), NIT(4); WARNING(5+) passes.
+    # CPV is PINNED to the v2.136.1 tag at every callsite: @main 404s (CPV's
+    # default branch is master, #139) and bare master tracks LATEST — v2.137.0's
+    # "[REPO LINT] (15 languages)" phase HANGS ~30 min on CI runners (v2.136.1 =
+    # 18s). v2.136.1 is the last-known-good release. Reported: #148.
     run([
         "uvx", "--from",
-        "git+https://github.com/Emasoft/claude-plugins-validation",
+        "git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1",
         "--with", "pyyaml",
         "cpv-remote-validate", "plugin", ".", "--strict",
     ], cwd=root)

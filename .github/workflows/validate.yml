@@ -38,7 +38,7 @@ jobs:
         # Skip CPV's GitHub-anchored integrity fetch (a live urlopen to
         # raw.githubusercontent.com): on a fresh-checkout runner the local
         # self-hash manifest already matches the code, so it adds no security
-        # but real latency/hang risk — this job hung 30+ min without it.
+        # but real latency — a minor speedup.
         # Do NOT set CLAUDE_PRIVATE_USERNAMES to the repo owner here: it makes
         # CPV flag the PUBLIC owner as a CRITICAL "private path leaked" finding
         # (Emasoft/claude-plugins-validation#140).
@@ -47,7 +47,10 @@ jobs:
         run: |
           echo "=== CPV Plugin Validation (--strict) ==="
           set +e
-          uvx --from git+https://github.com/Emasoft/claude-plugins-validation \
+          # CPV PINNED to v2.136.1: @main 404s (#139); bare master tracks LATEST,
+          # and v2.137.0's "[REPO LINT]" phase HANGS CI ~30 min (v2.136.1 = 18s).
+          # The pin (not the integrity-skip) is what fixes the 30-min hang — #148.
+          uvx --from git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1 \
               --with pyyaml \
               cpv-remote-validate plugin . --strict --verbose --report validation-report.md
           EXIT_CODE=$?
