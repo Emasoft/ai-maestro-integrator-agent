@@ -18,16 +18,37 @@ import json
 import sys
 from pathlib import Path
 
-# ── Per-model pricing (USD per million tokens, as of 2025-12) ──
+# ── Per-model pricing (USD per million tokens; verified 2026-08-07 against the
+#    bundled `claude-api` skill's model table) ──
+#
+# KEY ORDER IS LOAD-BEARING. get_pricing() substring-matches these keys in
+# insertion order, and a shorter key is a substring of a longer one
+# ("claude-opus-4" matches inside "claude-opus-4-8"). A less specific key placed
+# above a more specific one silently captures it and returns the wrong rate, so
+# each family is listed MOST-SPECIFIC FIRST and the bare "claude-opus-4" /
+# "claude-sonnet-4" keys stay last within their family.
+#
+# cache_write = 1.25x input (5-minute TTL); cache_read = 0.10x input.
 MODEL_PRICING: dict[str, dict[str, float]] = {
+    # Current generation (1M context).
+    "claude-fable-5":    {"input": 10.0, "output": 50.0, "cache_write": 12.50, "cache_read": 1.00},
+    "claude-opus-5":     {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
+    "claude-opus-4-8":   {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
+    "claude-opus-4-7":   {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
     "claude-opus-4-6":   {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
     "claude-opus-4-5":   {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
+    # Sonnet 5 carries a $2.00/$10.00 introductory rate through 2026-08-31. We
+    # bill it at the standard $3.00/$15.00 on purpose: an estimate that errs HIGH
+    # is the safe direction for a cost report, and the standard rate needs no
+    # dated maintenance to stay correct once the intro window closes.
+    "claude-sonnet-5":   {"input": 3.0,  "output": 15.0, "cache_write": 3.75,  "cache_read": 0.30},
     "claude-sonnet-4-6": {"input": 3.0,  "output": 15.0, "cache_write": 3.75,  "cache_read": 0.30},
     "claude-sonnet-4-5": {"input": 3.0,  "output": 15.0, "cache_write": 3.75,  "cache_read": 0.30},
     "claude-haiku-4-5":  {"input": 1.0,  "output": 5.0,  "cache_write": 1.25,  "cache_read": 0.10},
+    # Legacy / retired — kept so an archived transcript still costs correctly.
     "claude-sonnet-4":   {"input": 3.0,  "output": 15.0, "cache_write": 3.75,  "cache_read": 0.30},
-    "claude-opus-4":     {"input": 15.0, "output": 75.0, "cache_write": 18.75, "cache_read": 1.50},
     "claude-opus-4-1":   {"input": 15.0, "output": 75.0, "cache_write": 18.75, "cache_read": 1.50},
+    "claude-opus-4":     {"input": 15.0, "output": 75.0, "cache_write": 18.75, "cache_read": 1.50},
     "claude-haiku-3-5":  {"input": 0.80, "output": 4.0,  "cache_write": 1.00,  "cache_read": 0.08},
 }
 DEFAULT_PRICING: dict[str, float] = {"input": 3.0, "output": 15.0, "cache_write": 3.75, "cache_read": 0.30}
@@ -43,16 +64,19 @@ def get_pricing(model_name: str) -> dict[str, float]:
     for key, pricing in MODEL_PRICING.items():
         if key in model_name or model_name.startswith(key):
             return pricing
-    # Fuzzy family match
+    # Fuzzy family match. Only reached when NO key above matched, i.e. an id this
+    # table has never seen — so the right guess is the CURRENT generation of that
+    # family, never a retired one. Every legacy 4.x id has its own explicit key
+    # above and is caught by the substring loop, so aiming this at an old model
+    # buys nothing and costs a lot: pointing "opus" at claude-opus-4-1 is what
+    # silently priced Opus 5 runs at the retired $15/$75 (3x the real rate).
     ml = model_name.lower()
-    if "opus" in ml and ("4-6" in ml or "4.6" in ml):
-        return MODEL_PRICING["claude-opus-4-6"]
-    if "opus" in ml and ("4-5" in ml or "4.5" in ml):
-        return MODEL_PRICING["claude-opus-4-5"]
+    if "fable" in ml:
+        return MODEL_PRICING["claude-fable-5"]
     if "opus" in ml:
-        return MODEL_PRICING["claude-opus-4-1"]
+        return MODEL_PRICING["claude-opus-5"]
     if "sonnet" in ml:
-        return MODEL_PRICING["claude-sonnet-4-6"]
+        return MODEL_PRICING["claude-sonnet-5"]
     if "haiku" in ml:
         return MODEL_PRICING["claude-haiku-4-5"]
     return DEFAULT_PRICING
