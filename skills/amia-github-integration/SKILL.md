@@ -8,6 +8,7 @@ metadata:
   version: 1.0.0
 agent: amia-api-coordinator
 context: fork
+background: false
 user-invocable: false
 ---
 

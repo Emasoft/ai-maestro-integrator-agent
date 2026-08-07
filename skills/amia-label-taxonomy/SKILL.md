@@ -7,6 +7,7 @@ metadata:
   version: 1.0.0
 agent: ai-maestro-integrator-agent-main-agent
 context: fork
+background: false
 user-invocable: false
 license: MIT
 ---

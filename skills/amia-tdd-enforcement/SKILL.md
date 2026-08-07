@@ -8,6 +8,7 @@ metadata:
   version: 2.0.0
 agent: amia-test-engineer
 context: fork
+background: false
 user-invocable: false
 ---
 

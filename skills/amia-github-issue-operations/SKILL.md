@@ -11,6 +11,7 @@ metadata:
   requires_tools: "gh, jq"
 agent: amia-api-coordinator
 context: fork
+background: false
 user-invocable: false
 ---
 

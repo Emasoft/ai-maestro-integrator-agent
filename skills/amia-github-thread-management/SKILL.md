@@ -10,6 +10,7 @@ metadata:
   triggers: "resolve review thread, unresolve thread, reply to comment, track review comments, unaddressed comments, batch resolve threads"
 agent: amia-api-coordinator
 context: fork
+background: false
 user-invocable: false
 ---
 

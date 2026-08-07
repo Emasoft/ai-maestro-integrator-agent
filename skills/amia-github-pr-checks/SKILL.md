@@ -9,6 +9,7 @@ metadata:
   author: Emasoft
 agent: amia-api-coordinator
 context: fork
+background: false
 user-invocable: false
 ---
 

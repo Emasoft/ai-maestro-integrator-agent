@@ -10,6 +10,7 @@ metadata:
   category: github-workflow
 agent: amia-api-coordinator
 context: fork
+background: false
 user-invocable: false
 ---
 

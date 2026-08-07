@@ -10,6 +10,7 @@ metadata:
   author: Emasoft
   requires: "git >= 2.15, python >= 3.9"
 context: fork
+background: false
 user-invocable: false
 ---
 

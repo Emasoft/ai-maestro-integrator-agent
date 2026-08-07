@@ -11,6 +11,7 @@ metadata:
   languages: "python, javascript, typescript, rust, go, bash, powershell"
 agent: amia-debug-specialist
 context: fork
+background: false
 user-invocable: false
 ---
 

@@ -8,6 +8,7 @@ metadata:
   version: 1.0.1
 agent: ai-maestro-integrator-agent-main-agent
 context: fork
+background: false
 user-invocable: false
 ---
 

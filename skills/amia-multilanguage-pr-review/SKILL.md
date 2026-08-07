@@ -12,6 +12,7 @@ metadata:
   supported_languages: "python, javascript, typescript, rust, go, bash, shell"
 agent: amia-code-reviewer
 context: fork
+background: false
 user-invocable: false
 ---
 
