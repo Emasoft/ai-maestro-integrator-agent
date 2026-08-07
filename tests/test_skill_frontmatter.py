@@ -81,12 +81,30 @@ def check_skills_are_discoverable() -> str:
     return "PASS"
 
 
-def check_forked_skills_exist() -> str:
-    """At least one skill declares context fork, so the checks below are not vacuous."""
-    # Without this, deleting every forked skill would make the whole file pass green
-    # while asserting nothing at all.
-    if not _forked():
-        return "FAIL: no skill declares 'context: fork' — the background checks assert nothing"
+# Vacuity floor. Every per-skill check below iterates the forked set, so all of them
+# degrade to ZERO assertions as that set shrinks — green while asserting nothing. This is
+# the one failure a guard cannot report about itself, so it needs a second guard.
+#
+# A bare "at least one" is not enough: a bad merge, or a rename of the `context:` value,
+# that stripped the field from 18 of 19 skills would leave a single passing skill and a
+# silent suite — the exact silent-erosion class this file exists to catch.
+#
+# The floor sits deliberately BELOW the current count (19) rather than equal to it, so a
+# legitimate removal or two does not require a test edit, while mass erosion still fails.
+# Adopted from ai-maestro-chief-of-staff 9bb29e3, which hardened this idea after taking
+# the rest of this file's shape from TRDD-GJF8C8SR.
+FORKED_SKILL_FLOOR = 15
+
+
+def check_forked_skill_count_above_floor() -> str:
+    """The forked-skill count stays above its floor, so the per-skill checks stay meaningful."""
+    n = len(_forked())
+    if n < FORKED_SKILL_FLOOR:
+        return (
+            f"FAIL: only {n} skill(s) declare 'context: fork', below the floor of "
+            f"{FORKED_SKILL_FLOOR} — the per-skill background checks have quietly stopped "
+            "asserting. Either mass erosion happened, or the 'context:' value was renamed."
+        )
     return "PASS"
 
 
@@ -146,7 +164,7 @@ def check_background_only_on_forked_skills() -> str:
 
 CHECKS = [
     "check_skills_are_discoverable",
-    "check_forked_skills_exist",
+    "check_forked_skill_count_above_floor",
     "check_every_forked_skill_declares_background",
     "check_forked_skills_are_not_backgrounded",
     "check_background_value_is_a_bare_bool",
