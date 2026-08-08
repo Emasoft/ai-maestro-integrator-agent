@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.1] — 2026-08-08
+
+### Bug Fixes
+
+- Remove literal @-handles that page real GitHub accounts
+- Two @-handles the sweep classified as keeps but were not
 ## [1.6.0] — 2026-08-08
 
 ### Features
