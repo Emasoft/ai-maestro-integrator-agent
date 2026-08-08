@@ -1,5 +1,14 @@
 # The async-approval model for the INTEGRATOR
 
+## Table of Contents
+
+- [The one thing to get right](#the-one-thing-to-get-right)
+- [Tier 0 is the DEFAULT (self-mandate)](#tier-0-is-the-default-self-mandate)
+- [Escalate only on an objective D3 trigger](#escalate-only-on-an-objective-d3-trigger)
+- [D1 — never block](#d1--never-block)
+- [What stays gated, without exception](#what-stays-gated-without-exception)
+- [Completion gate](#completion-gate)
+
 Implements `TRDD-O16UGID8` (ai-maestro, `governance-rules`). The rule source is
 `rules/aimaestro/aimaestro-trdd-approval.md`; this file is the INTEGRATOR's
 projection of it, and it exists because the INTEGRATOR sits on both sides of the
