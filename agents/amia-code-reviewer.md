@@ -1,6 +1,9 @@
 ---
 name: amia-code-reviewer
 version: 1.0.0
+# model: opus — must weigh 7+ competing quality dimensions (security, performance,
+# architecture, maintainability) against spec compliance simultaneously, then produce
+# WHAT/WHY-only fix instructions that convey the reasoning without ever showing the HOW.
 model: opus
 description: Reviews code changes for quality, security, and best practices. Requires AI Maestro installed.
 type: evaluator
