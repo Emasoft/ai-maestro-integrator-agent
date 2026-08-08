@@ -1724,14 +1724,24 @@ def stage_commit_and_push(root: Path, new_ver: str, dry_run: bool) -> None:
         # ~/.claude/rules/never-git-add-all.md exists for, and this pipeline was
         # violating it at the one moment the result becomes irreversible.
         # (It is also why release notes are written to a temp dir, not the root.)
-        raw = _git_stdout(root, ["git", "diff", "--name-only"])
+        # `-z`: NUL-separated, and crucially git does NOT quote or octal-escape
+        # paths in this mode. Without it, git renders any non-ASCII path as
+        # `"caf\303\251.txt"` — quotes and octal escapes included — and feeding
+        # that back to `git add` dies with `fatal: pathspec ... did not match any
+        # files` (reproduced: exit 128). It fails CLOSED, so nothing wrong is
+        # committed, but a plugin containing a single non-ASCII filename could
+        # never publish at all. Stripping the quotes is NOT the fix — the octal
+        # escapes remain. Do not "simplify" this back to splitlines().
+        raw = _git_stdout(root, ["git", "diff", "--name-only", "-z"])
         if raw is None:
             # Fail closed. The tempting fallback is `git add -A`, which is the
             # very thing being avoided — and it would fire in precisely the
             # situation where nobody can see what is about to be staged.
             cprint(f"  {RED}Could not read the modified-file list — refusing to commit.{NC}")
             sys.exit(1)
-        changed = [p for p in (s.strip() for s in raw.splitlines()) if p]
+        # No .strip(): a filename may legally begin or end with whitespace, and
+        # -z already delimits exactly.
+        changed = [p for p in raw.split("\0") if p]
         if not changed:
             cprint(f"  {RED}Nothing modified to commit, yet HEAD is not the bump commit.{NC}")
             cprint(f"  {YELLOW}Refusing to create an empty release commit — investigate.{NC}")
