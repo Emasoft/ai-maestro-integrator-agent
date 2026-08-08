@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] — 2026-08-08
+
+### Bug Fixes
+
+- Link the async-approval reference so progressive discovery finds it
+- Add the TOC progressive discovery expects on the new reference
+- Embed the reference's COMPLETE TOC verbatim after its link
+
+### Features
+
+- Async-approval model, RP-MODEL-01, RP-SKILL-MENU-01 (TRDD-2MD3YY57)
 ## [1.4.1] — 2026-08-08
 
 ### Bug Fixes
