@@ -490,7 +490,7 @@ def do_bump(root: Path, new_ver: str, dry_run: bool = False) -> bool:
 
 def install_hook(root: Path) -> int:
     """Copy git-hooks/pre-push to .git/hooks/pre-push and set core.hooksPath."""
-    cprint(f"\\n{BOLD}Installing git hooks...{NC}")
+    cprint(f"\n{BOLD}Installing git hooks...{NC}")
     source = root / "git-hooks" / "pre-push"
     if not source.is_file():
         cprint(f"  {RED}git-hooks/pre-push not found{NC}")
@@ -541,23 +541,86 @@ def _get_origin_slug(root: Path) -> str | None:
     return f"{parts[0]}/{parts[1]}"
 
 
+# The two ruleset names that ARE the ratified baseline (manager-approval-defaults
+# §F). Applying this pair as-is is EXEMPT; adding any OTHER ruleset that affects
+# the default branch is NON-EXEMPT and needs MANAGER approval.
+RATIFIED_BASELINE_RULESETS = ("baseline-history-protect", "baseline-pr-and-checks")
+
+
+def _ratified_baseline_present(slug: str) -> bool | None:
+    """Does `slug` already carry a ratified `baseline-*` ruleset?
+
+    Returns True/False on a successful read, and **None when the list could not
+    be read at all**. The distinction is the whole point: a bare `[]` on failure
+    would read as "no baseline here", the caller would step aside, and the
+    destructive command would run against precisely the repo nobody could
+    inspect. Fail CLOSED — see the caller.
+
+    Routed through gh_with_retry so a transient github.com hiccup is not the
+    thing that decides a repo is unbaselined.
+    """
+    try:
+        r = gh_with_retry(
+            ["gh", "api", f"repos/{slug}/rulesets", "--jq", ".[].name"],
+            check=False, capture_output=True,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    if getattr(r, "returncode", 1) != 0:
+        return None
+    names = {ln.strip() for ln in (r.stdout or "").splitlines() if ln.strip()}
+    return any(n in names for n in RATIFIED_BASELINE_RULESETS)
+
+
 def install_branch_rules(root: Path) -> int:
     """Apply the cpv-branch-rules ruleset to the repo's GitHub origin.
 
     Auto-detects the OWNER/REPO slug from `git config remote.origin.url` and
-    shells out to `uvx cpv-setup-branch-rules` so downstream plugins do not
-    need to vendor setup_branch_rules.py locally. This is the server-side
-    gate that enforces CI as a required status check — the local pre-push
-    hook alone is bypassable with `git push --no-verify`, but a ruleset is
-    enforced by GitHub itself.
+    shells out to `uvx cpv-setup-branch-rules`. This is the server-side gate
+    that enforces CI as a required status check — the local pre-push hook alone
+    is bypassable with `git push --no-verify`, but a ruleset is enforced by
+    GitHub itself.
+
+    REFUSES on a repo that already carries the ratified baseline, because
+    `cpv-setup-branch-rules` does NOT bring that baseline to spec — verified in
+    its source at v5.3.0 (claude-plugins-validation#203):
+
+      * `scripts/setup_branch_rules.py:110` — `RULESET_NAME = "cpv-branch-rules"`
+        is hardcoded, and the file contains ZERO occurrences of `baseline-`, so
+        it cannot target the ratified pair even in principle.
+      * `:326 fetch_legacy_protection_rulesets()` classifies as "legacy" any
+        ruleset whose rules intersect {pull_request, required_status_checks,
+        required_signatures, code_quality} — which `baseline-pr-and-checks`
+        always does.
+      * `:694` then prints `gh api --method DELETE …/rulesets/<id>` for each.
+
+    So on a baselined repo the command ADDS a non-ratified ruleset (§F
+    NON-EXEMPT) and advises DELETING the ratified one. Do not remove this guard
+    as over-caution: it was added after the command was actually run here and
+    produced exactly that outcome.
     """
-    cprint(f"\\n{BOLD}Installing branch-protection ruleset...{NC}")
+    cprint(f"\n{BOLD}Installing branch-protection ruleset...{NC}")
     slug = _get_origin_slug(root)
     if slug is None:
         cprint(f"  {RED}Could not read origin remote URL — skipping.{NC}")
         cprint(f"  {YELLOW}Set `git remote add origin <url>` first, then retry.{NC}")
         return 1
     cprint(f"  Target repo: {slug}")
+
+    baselined = _ratified_baseline_present(slug)
+    if baselined is None:
+        cprint(f"  {RED}REFUSED: could not read the ruleset list for {slug}.{NC}")
+        cprint(f"  {YELLOW}Failing closed — an unreadable list is NOT evidence that "
+               f"no ratified baseline exists.{NC}")
+        return 1
+    if baselined:
+        cprint(f"  {RED}REFUSED: {slug} already carries the ratified baseline.{NC}")
+        cprint(f"  {YELLOW}cpv-setup-branch-rules would add a separate 'cpv-branch-rules' "
+               f"ruleset (§F NON-EXEMPT) and advise DELETING baseline-pr-and-checks "
+               f"(claude-plugins-validation#203).{NC}")
+        cprint(f"  {YELLOW}To bring the ratified pair to spec, PUT the baseline-* rulesets "
+               f"directly instead.{NC}")
+        return 1
     try:
         r = subprocess.run(
             [
