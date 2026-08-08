@@ -1,6 +1,12 @@
 # Integrator Agent (amia-)
 
-**Version**: 1.3.0
+![version](https://img.shields.io/badge/version-1.3.9-blue)
+
+<!-- The badge above is rewritten by scripts/publish.py (stage 8) on every release.
+     It replaced a hand-maintained "**Version**: 1.3.0" line that had gone stale by
+     nine patch releases: nothing updated it and nothing checked it, so the README
+     advertised 1.3.0 while 1.3.9 shipped. Keep the `version-X.Y.Z-blue` shape — that
+     is the pattern the release stage matches on. -->
 
 ## Overview
 
