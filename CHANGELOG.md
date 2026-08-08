@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.2] — 2026-08-08
+
+### Bug Fixes
+
+- Read changed paths with -z so a non-ASCII filename can be staged
 ## [1.6.1] — 2026-08-08
 
 ### Bug Fixes
