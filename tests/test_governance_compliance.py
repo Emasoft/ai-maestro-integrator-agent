@@ -219,6 +219,55 @@ def check_governance_stamp_matches_live_spec() -> str:
     return "PASS"
 
 
+def check_main_agent_omits_model_pin() -> str:
+    """The main agent does NOT pin `model:` (RP-MODEL-01, ai-maestro#136)."""
+    for line in PERSONA.read_text(encoding="utf-8").splitlines():
+        if line.startswith("model:"):
+            return f"FAIL: main agent still pins {line.strip()!r} — RP-MODEL-01 says omit it"
+        if line.strip() == "---" and line != PERSONA.read_text(encoding="utf-8").splitlines()[0]:
+            break  # end of frontmatter
+    return "PASS"
+
+
+def check_skill_menu_covers_every_skill() -> str:
+    """The main agent's skill menu lists EVERY shipped skill, and no phantom (RP-SKILL-MENU-01)."""
+    # Drift is checked in BOTH directions on purpose. A missing entry hides a real
+    # capability — a reader takes the menu's silence as "we don't have that". A
+    # phantom entry is worse: it sends the agent to load a skill that isn't there.
+    on_disk = {d.name for d in SKILLS.iterdir() if d.is_dir() and d.name.startswith("amia-")}
+    text = PERSONA.read_text(encoding="utf-8")
+    listed = set(re.findall(r"`(amia-[a-z0-9-]+)`\s*\|", text))
+    missing = sorted(on_disk - listed)
+    phantom = sorted(listed - on_disk)
+    if missing or phantom:
+        return f"FAIL: menu drift — missing {missing}; phantom {phantom}"
+    return "PASS"
+
+
+def check_async_approval_fields_taught() -> str:
+    """TRDD-authoring guidance teaches the async-approval fields, not the deprecated tier."""
+    # TRDD-O16UGID8: an agent whose choice trees predate the async model WAITS
+    # where the model says author-as-planned-and-proceed.
+    hits = [p for p in SKILLS.rglob("*.md")
+            if "min-approval-requirement" in p.read_text(encoding="utf-8")
+            and "mandate:" in p.read_text(encoding="utf-8")]
+    if not hits:
+        return "FAIL: no skill teaches min-approval-requirement + mandate (async model absent)"
+    return "PASS"
+
+
+def check_no_deprecated_approval_tier() -> str:
+    """Nothing uses the deprecated `approval-tier: N` field (superseded by min-approval-requirement)."""
+    bad = []
+    for p in list(PLUGIN_ROOT.glob("design/**/*.md")) + list(SKILLS.rglob("*.md")):
+        for i, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
+            if re.match(r"^approval-tier:\s*\d", line):
+                bad.append(f"{p.relative_to(PLUGIN_ROOT)}:{i}")
+    if bad:
+        return f"FAIL: deprecated approval-tier still used: {bad}"
+    return "PASS"
+
+
 def check_all_agents_global_memory() -> str:
     """Every agent (main + subagents) wires the GLOBAL janitor memory; none the retired per-plugin skill (R24, MAJOR-2)."""
     missing, stale = [], []
@@ -283,6 +332,10 @@ CHECKS = [
     "check_team_registry_created_by",
     "check_no_direct_ai_maestro_api_calls",
     "check_governance_stamp_matches_live_spec",
+    "check_main_agent_omits_model_pin",
+    "check_skill_menu_covers_every_skill",
+    "check_async_approval_fields_taught",
+    "check_no_deprecated_approval_tier",
     "check_all_agents_global_memory",
     "check_no_per_plugin_memory_skill",
     "check_references_escalate_to_maestro_not_user",
@@ -294,6 +347,22 @@ CHECKS = [
 # ── pytest wrappers (the publish pipeline runs `pytest tests/`) ──
 # pytest collects these test_* functions by name; they take no fixtures, so the
 # module needs no `import pytest` (and runs fine standalone without pytest present).
+
+def test_main_agent_omits_model_pin() -> None:
+    assert check_main_agent_omits_model_pin().startswith("PASS")
+
+
+def test_skill_menu_covers_every_skill() -> None:
+    assert check_skill_menu_covers_every_skill().startswith("PASS")
+
+
+def test_async_approval_fields_taught() -> None:
+    assert check_async_approval_fields_taught().startswith("PASS")
+
+
+def test_no_deprecated_approval_tier() -> None:
+    assert check_no_deprecated_approval_tier().startswith("PASS")
+
 
 def test_role_boundaries_no_obsolete_approval() -> None:
     assert check_role_boundaries_no_obsolete_approval().startswith("PASS")

@@ -4,7 +4,7 @@ description: "INTEGRATOR's role in the PRRD / TRDD / Kanban workflow. Use when I
 allowed-tools: "Bash(python3:*), Bash(get-prrd.py:*), Bash(findprrd.py:*), Bash(findtrdd.py:*), Bash(kanban.py:*), Bash(git:*), Bash(gh:*), Read, Edit, Grep, Glob"
 metadata:
   author: "Emasoft"
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 ## Overview
@@ -36,15 +36,18 @@ mechanics see the `prrd-trdd-kanban` skill in `ai-maestro-plugin`.
    `relevant-rules:` (`get-prrd.py --cite <N>`). Approve →
    `column: complete` (or `human_review` if required); reject →
    `column: dev` with findings in the body.
-2. When a TRDD reaches `complete` with `release-via: publish`,
-   request MANAGER approval (via COS), then spawn the RELEASER
+2. When a TRDD reaches `complete` with `release-via: publish`:
+   request MANAGER approval via COS, record the request in the
+   TRDD's `## Approval log`, and **move on to the next card — do NOT
+   wait** (D1 never-block). When approval lands, spawn the RELEASER
    subagent (`subagent_type: releaser`) with the publish target and
    channel; instruct it to run the publish pipeline and verify the
    artifact is installable.
-3. When a TRDD reaches `complete` with `release-via: deploy`,
-   request MANAGER approval, then spawn the DEPLOYER subagent
-   (`subagent_type: deployer`) with the deploy target; instruct it
-   to run the deploy pipeline and verify the service is live.
+3. Same shape for `release-via: deploy`: request approval, log it,
+   **keep working**, and spawn the DEPLOYER subagent
+   (`subagent_type: deployer`) once approved. The gate is real —
+   these are Tier-2 — but a pending approval is never a reason for
+   the board to be idle.
 4. Parse the subagent's structured result. On publish success set
    `column: published`, `published-version:`, `published-at:`; on
    deploy success set `column: live`, `live-since:`.
@@ -68,12 +71,18 @@ mechanics see the `prrd-trdd-kanban` skill in `ai-maestro-plugin`.
 
 - A subagent returning a hard failure → set `column: failed` and
   grow a failure post-mortem in the TRDD body; relay the failure
-  via AMP.
+  via AMP. `failed` stays OPEN and retryable — never archived.
 - NEVER merge a PR or trigger `complete → publish`, `complete →
   deploy`, `publish → published`, `deploy → live`, `ai_review →
   human_review`, or force-`failed` without MANAGER approval — these
   are non-exempt. Launching ai_review on a PR (review request, NOT
   merge), CI runs, and audit-evidence collection are exempt.
+- Equally: do NOT wait for approval on Tier-0 work. In-scope tasks
+  and derived NPT/EHT are authored straight to `column: planned`
+  with `min-approval-requirement: none`, `mandate: true`,
+  `mandated-by: self`, and worked immediately. Over-gating stalls
+  the board just as surely as under-gating ships unreviewed —
+  see `references/async-approval-model.md`.
 - `gh` / `git` auth failure → stop and report; do not retry blindly.
 
 ## Examples
