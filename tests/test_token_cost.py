@@ -34,7 +34,11 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PLUGIN_ROOT / "scripts"))
+sys.path.insert(0, str(PLUGIN_ROOT / "tests"))
 
+from _table_runner import (
+    run_table,  # noqa: E402  # pyright: ignore[reportMissingImports]
+)
 from cpv_token_cost import (  # noqa: E402  # pyright: ignore[reportMissingImports]
     MODEL_PRICING,
     TokenUsage,
@@ -275,32 +279,10 @@ def main() -> int:
         "check_explicit_model_overrides_transcript": check_explicit_model_overrides_transcript,
     }
 
-    results: list[tuple[str, str, str]] = []
-    failures = 0
-    for name in CHECKS:
-        try:
-            outcome = runners[name]()
-        except Exception as exc:  # a crashing check is a failing check
-            outcome = f"ERROR: {exc}"
-        doc = (globals()[name].__doc__ or "").strip().splitlines()[0]
-        status = "PASS" if outcome.startswith("PASS") else ("ERROR" if outcome.startswith("ERROR") else "FAIL")
-        if status != "PASS":
-            failures += 1
-        results.append((name, status, doc if status == "PASS" else f"{doc} — {outcome}"))
-
-    name_w = max(len(r[0]) for r in results) + 1
-    desc_w = max(len(r[2]) for r in results) + 1
-    print(f"┏{'━' * name_w}┳{'━' * 8}┳{'━' * desc_w}┓")
-    print(f"┃{'Test'.ljust(name_w)}┃{' Status '.ljust(8)}┃{'Description'.ljust(desc_w)}┃")
-    print(f"┡{'━' * name_w}╇{'━' * 8}╇{'━' * desc_w}┩")
-    for name, status, desc in results:
-        print(f"│{name.ljust(name_w)}│ {status.ljust(7)}│{desc.ljust(desc_w)}│")
-    print(f"└{'─' * name_w}┴{'─' * 8}┴{'─' * desc_w}┘")
-    passed = len(results) - failures
-    print(f"{passed}/{len(results)} passed.")
-
-    shutil.rmtree(tmp, ignore_errors=True)
-    return 1 if failures else 0
+    try:
+        return run_table(CHECKS, lambda n: runners[n](), lambda n: globals()[n].__doc__)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
 
 
 def _sub(tmp: Path, name: str) -> Path:

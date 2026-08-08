@@ -27,3 +27,16 @@ dev = [
 [project.urls]
 Homepage = "https://github.com/Emasoft/ai-maestro-integrator-agent"
 Repository = "https://github.com/Emasoft/ai-maestro-integrator-agent"
+
+[tool.ruff.lint.per-file-ignores]
+# E402 (import not at top of file) is STRUCTURAL in tests/, not an oversight:
+# every test file must `sys.path.insert` the scripts/ and tests/ dirs before it
+# can import the modules under test, so the imports cannot precede that code.
+#
+# This replaces a per-import `# noqa: E402` on each line. Those worked until
+# `ruff check --fix` reorganised the imports into parenthesized form and carried
+# each noqa INSIDE the parens, where it no longer suppresses the statement —
+# turning 9 auto-fixed I001s into 10 new E402s. A rule that is structural for a
+# whole directory belongs in config, stated once, where a formatter cannot move
+# it off the line it applies to.
+"tests/*.py" = ["E402"]

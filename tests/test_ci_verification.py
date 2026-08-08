@@ -50,8 +50,12 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PLUGIN_ROOT / "scripts"))
+sys.path.insert(0, str(PLUGIN_ROOT / "tests"))
 
 import publish  # noqa: E402  # pyright: ignore[reportMissingImports]
+from _table_runner import (
+    run_table,  # noqa: E402  # pyright: ignore[reportMissingImports]
+)
 
 # The v1.3.9 release commit: pushed, CI completed, known green.
 GREEN_SHA = "8c16c2882bba8774d508a0b397a16954ed915688"
@@ -173,37 +177,7 @@ except ImportError:
 
 
 def main() -> int:
-    results: list[tuple[str, str, str]] = []
-    failures = 0
-    for name in CHECKS:
-        fn = globals()[name]
-        try:
-            outcome = fn()
-        except Exception as exc:
-            outcome = f"ERROR: {exc}"
-        doc = (fn.__doc__ or "").strip().splitlines()[0]
-        if outcome.startswith("PASS"):
-            status = "PASS"
-        elif outcome.startswith("SKIP"):
-            status = "SKIP"
-        elif outcome.startswith("ERROR"):
-            status = "ERROR"
-        else:
-            status = "FAIL"
-        if status in ("FAIL", "ERROR"):
-            failures += 1
-        results.append((name, status, doc if status == "PASS" else f"{doc} — {outcome}"))
-
-    name_w = max(len(r[0]) for r in results) + 1
-    desc_w = max(len(r[2]) for r in results) + 1
-    print(f"┏{'━' * name_w}┳{'━' * 8}┳{'━' * desc_w}┓")
-    print(f"┃{'Test'.ljust(name_w)}┃{' Status '.ljust(8)}┃{'Description'.ljust(desc_w)}┃")
-    print(f"┡{'━' * name_w}╇{'━' * 8}╇{'━' * desc_w}┩")
-    for name, status, desc in results:
-        print(f"│{name.ljust(name_w)}│ {status.ljust(7)}│{desc.ljust(desc_w)}│")
-    print(f"└{'─' * name_w}┴{'─' * 8}┴{'─' * desc_w}┘")
-    print(f"{len(results) - failures}/{len(results)} passed.")
-    return 1 if failures else 0
+    return run_table(CHECKS, lambda n: globals()[n](), lambda n: globals()[n].__doc__)
 
 
 if __name__ == "__main__":

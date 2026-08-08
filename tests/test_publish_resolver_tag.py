@@ -47,7 +47,11 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PLUGIN_ROOT / "scripts"))
+sys.path.insert(0, str(PLUGIN_ROOT / "tests"))
 
+from _table_runner import (
+    run_table,  # noqa: E402  # pyright: ignore[reportMissingImports]
+)
 from publish import (  # noqa: E402  # pyright: ignore[reportMissingImports]
     get_plugin_name,
     resolver_tag,
@@ -186,37 +190,19 @@ except ImportError:
 
 def main() -> int:
     tmp = Path(tempfile.mkdtemp(prefix="amia-rtagtest-"))
-    results: list[tuple[str, str, str]] = []
-    failures = 0
-    for i, name in enumerate(CHECKS):
+
+    def call(name: str) -> str:
         fn = globals()[name]
-        try:
-            if name in _NEEDS_TMP:
-                sub = tmp / f"c{i}"
-                sub.mkdir(parents=True, exist_ok=True)
-                outcome = fn(sub)
-            else:
-                outcome = fn()
-        except Exception as exc:  # a crashing check is a failing check
-            outcome = f"ERROR: {exc}"
-        doc = (fn.__doc__ or "").strip().splitlines()[0]
-        status = "PASS" if outcome.startswith("PASS") else ("ERROR" if outcome.startswith("ERROR") else "FAIL")
-        if status != "PASS":
-            failures += 1
-        results.append((name, status, doc if status == "PASS" else f"{doc} — {outcome}"))
+        if name in _NEEDS_TMP:
+            sub = tmp / f"c{CHECKS.index(name)}"
+            sub.mkdir(parents=True, exist_ok=True)
+            return fn(sub)
+        return fn()
 
-    name_w = max(len(r[0]) for r in results) + 1
-    desc_w = max(len(r[2]) for r in results) + 1
-    print(f"┏{'━' * name_w}┳{'━' * 8}┳{'━' * desc_w}┓")
-    print(f"┃{'Test'.ljust(name_w)}┃{' Status '.ljust(8)}┃{'Description'.ljust(desc_w)}┃")
-    print(f"┡{'━' * name_w}╇{'━' * 8}╇{'━' * desc_w}┩")
-    for name, status, desc in results:
-        print(f"│{name.ljust(name_w)}│ {status.ljust(7)}│{desc.ljust(desc_w)}│")
-    print(f"└{'─' * name_w}┴{'─' * 8}┴{'─' * desc_w}┘")
-    print(f"{len(results) - failures}/{len(results)} passed.")
-
-    shutil.rmtree(tmp, ignore_errors=True)
-    return 1 if failures else 0
+    try:
+        return run_table(CHECKS, call, lambda n: globals()[n].__doc__)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
 
 
 if __name__ == "__main__":

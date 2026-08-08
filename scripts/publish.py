@@ -62,6 +62,7 @@ import shutil
 import stat
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -1594,15 +1595,28 @@ def detect_bump_type(root: Path) -> str:
 
 
 def stage_changelog(root: Path, new_ver: str, dry_run: bool) -> None:
-    """Step 9: Generate CHANGELOG.md with git-cliff using the bumped tag.
+    """Step 9: PREPEND this release's section to CHANGELOG.md with git-cliff.
 
-    Uses the git-cliff pattern recommended for release pipelines:
-        git cliff --bump --unreleased --tag v<NEXT> -o CHANGELOG.md
+        git cliff --bump --unreleased --tag v<NEXT> --prepend CHANGELOG.md
 
     --bump          promote the unreleased section into a dated tag entry
     --unreleased    process only commits since the last tag
     --tag v<NEXT>   label the new entry with the computed version (prefixed v)
-    -o CHANGELOG.md write the regenerated changelog back to disk
+    --prepend       insert that entry ABOVE the existing history, keeping it
+
+    `--prepend`, NOT `-o`. This previously ran `-o CHANGELOG.md`, and `-o` with
+    `--unreleased` writes ONLY the new section over the whole file — so every
+    release silently destroyed its predecessor's entry. Measured on this repo at
+    v1.4.0: after 10+ releases CHANGELOG.md was 23 lines carrying exactly ONE
+    section, under a header promising "all notable changes to this project".
+    Nothing failed, nothing warned; the file simply never accumulated. The lost
+    history was recoverable (`git-cliff` over all tags rebuilt 26 sections) only
+    because the tags survived — the commits, not the file, were the real record.
+
+    Reported by the CORE session, which hit the identical defect in the shared
+    scaffold. Do NOT assume a CPV pin bump delivers this fix: it lives in CPV's
+    canonical emitter, and a drifted publish.py never receives it. Verify the
+    behaviour (`grep -n git-cliff scripts/publish.py`), not the version.
     """
     cprint(f"\n{BOLD}[9/11] Generating changelog (git-cliff)...{NC}")
     if not shutil.which("git-cliff"):
@@ -1614,13 +1628,19 @@ def stage_changelog(root: Path, new_ver: str, dry_run: bool) -> None:
         return
     tag = f"v{new_ver}"
     if dry_run:
-        cprint(f"  Would run: git-cliff --bump --unreleased --tag {tag} -o CHANGELOG.md")
+        cprint(f"  Would run: git-cliff --bump --unreleased --tag {tag} --prepend CHANGELOG.md")
+        return
+    changelog = root / "CHANGELOG.md"
+    if not changelog.is_file():
+        # --prepend requires the file to exist; seed the full history from tags.
+        run(["git-cliff", "--tag", tag, "-o", "CHANGELOG.md"], cwd=root)
+        cprint(f"  {GREEN}CHANGELOG.md created from full tag history ({tag}).{NC}")
         return
     run(
-        ["git-cliff", "--bump", "--unreleased", "--tag", tag, "-o", "CHANGELOG.md"],
+        ["git-cliff", "--bump", "--unreleased", "--tag", tag, "--prepend", "CHANGELOG.md"],
         cwd=root,
     )
-    cprint(f"  {GREEN}CHANGELOG.md updated with {tag}.{NC}")
+    cprint(f"  {GREEN}CHANGELOG.md updated with {tag} (history preserved).{NC}")
 
 def stage_commit_and_push(root: Path, new_ver: str, dry_run: bool) -> None:
     """Step 10: Commit, tag, push. Idempotent on commit + tag.
@@ -1693,6 +1713,28 @@ def stage_commit_and_push(root: Path, new_ver: str, dry_run: bool) -> None:
     )
     cprint(f"  {GREEN}Pushed {tag} + {rtag} atomically.{NC}")
 
+def _changelog_section(changelog: Path, new_ver: str) -> str | None:
+    """The CHANGELOG body for exactly `new_ver`, or None when it is not present.
+
+    Returns None rather than a best-effort slice: the caller falls back to
+    `gh --generate-notes`, and a wrong-but-plausible section would ship the
+    previous release's notes under this release's tag.
+    """
+    try:
+        text = changelog.read_text(encoding="utf-8")
+    except OSError:
+        return None
+    # cliff.toml emits `## [1.4.0] — 2026-08-08`; match the version only, so a
+    # date-format change in cliff.toml cannot silently break the extraction.
+    start = re.search(rf"^## \[{re.escape(new_ver)}\][^\n]*$", text, re.MULTILINE)
+    if not start:
+        return None
+    rest = text[start.end():]
+    nxt = re.search(r"^## \[", rest, re.MULTILINE)
+    body = (rest[: nxt.start()] if nxt else rest).strip()
+    return f"{start.group(0)}\n\n{body}\n" if body else None
+
+
 def stage_gh_release(root: Path, new_ver: str, dry_run: bool) -> None:
     """Step 11: Create GitHub release via gh CLI.
 
@@ -1711,15 +1753,31 @@ def stage_gh_release(root: Path, new_ver: str, dry_run: bool) -> None:
     owner, repo = _resolve_owner_repo(root)
     _ensure_gh_auth(owner, repo)
     changelog_file = root / "CHANGELOG.md"
-    # Use --notes-file when CHANGELOG exists (the git-cliff structured
-    # release notes are the right thing to ship). Fall back to
-    # --generate-notes only when no CHANGELOG is present. Passing both
-    # flags simultaneously produces undefined behavior across gh versions
-    # (some concatenate, some override) — never both.
+    # Ship ONLY this version's section as the release notes.
+    #
+    # This is the derived half of the step-9 `--prepend` fix, and it had to land
+    # in the same change: passing the whole CHANGELOG was harmless only WHILE the
+    # file held a single section. The moment step 9 correctly accumulates, the
+    # same code would publish the project's entire history as the notes for one
+    # release — fixing the truncation bug would have created a worse one.
+    #
+    # Falls back to --generate-notes (never to the whole file) when the section
+    # cannot be found: gh then derives notes from the commit range, which is
+    # accurate-but-terse. Falling back to the full file would silently reinstate
+    # exactly the failure this guards against. Never pass both flags — some gh
+    # versions concatenate and some override.
     args = ["gh", "release", "create", tag, "--title", tag]
-    if changelog_file.is_file():
-        args.extend(["--notes-file", str(changelog_file)])
+    notes = _changelog_section(changelog_file, new_ver) if changelog_file.is_file() else None
+    if notes:
+        # Temp dir, NOT the repo root: a stray .release-notes-*.md in the tree
+        # would leave it dirty and abort the NEXT publish at stage [1/11] — the
+        # same way the stale uv.lock did twice before it was fixed.
+        notes_path = Path(tempfile.mkdtemp(prefix="amia-relnotes-")) / f"{tag}.md"
+        notes_path.write_text(notes, encoding="utf-8")
+        args.extend(["--notes-file", str(notes_path)])
     else:
+        if changelog_file.is_file():
+            cprint(f"  {YELLOW}No CHANGELOG section for {tag} — using gh --generate-notes.{NC}")
         args.append("--generate-notes")
     cprint(f"  {BLUE}$ {' '.join(args)}{NC}")
     result = gh_with_retry(args, cwd=str(root), check=False, capture_output=True)
