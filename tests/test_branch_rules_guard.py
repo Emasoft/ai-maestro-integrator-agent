@@ -128,7 +128,48 @@ def check_unreadable_list_fails_closed() -> str:
     return f"FAIL: unreadable list returned {got!r} instead of None"
 
 
+def check_no_linear_history_requirement() -> str:
+    """No ruleset on this repo requires linear history (USER ruling 2026-08-08)."""
+    # It blocks merge commits, silently constraining merge strategy on a repo that
+    # accepts cross-plugin PRs. This was briefly APPLIED here because the
+    # distributed §F prose listed it while no live repo carried it
+    # (ai-maestro#140) — so the live API is the oracle, not the prose.
+    if not _gh_usable():
+        return f"SKIP: {SKIP_REASON}"
+    r = subprocess.run(
+        ["gh", "api", f"repos/{SLUG}/rulesets", "--jq", ".[].id"],
+        capture_output=True, text=True, check=False,
+    )
+    if r.returncode != 0:
+        return "SKIP: could not read the live ruleset list"
+    offenders = []
+    for rid in (line.strip() for line in r.stdout.splitlines()):
+        if not rid:
+            continue
+        d = subprocess.run(
+            ["gh", "api", f"repos/{SLUG}/rulesets/{rid}", "--jq", '"\\(.name) \\([.rules[].type]|join(","))"'],
+            capture_output=True, text=True, check=False,
+        )
+        if d.returncode == 0 and "linear" in d.stdout:
+            offenders.append(d.stdout.strip())
+    if offenders:
+        return f"FAIL: linear-history requirement present: {offenders} — USER ruled never"
+    return "PASS"
+
+
+def check_persona_forbids_linear_history() -> str:
+    """The persona records the never-require-linear-history ruling for future sessions."""
+    text = (PLUGIN_ROOT / "agents" / "ai-maestro-integrator-agent-main-agent.md").read_text(encoding="utf-8")
+    if "NEVER require linear history" not in text:
+        return "FAIL: persona does not carry the USER ruling against linear history"
+    if "`deletion`, `non_fast_forward`, `required_linear_history`" in text:
+        return "FAIL: persona still lists required_linear_history in the ratified pair"
+    return "PASS"
+
+
 CHECKS = [
+    "check_no_linear_history_requirement",
+    "check_persona_forbids_linear_history",
     "check_ratified_names_are_the_spec_pair",
     "check_repo_really_is_baselined",
     "check_guard_refuses_on_baselined_repo",

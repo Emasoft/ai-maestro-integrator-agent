@@ -695,8 +695,17 @@ the AMP approval and the code gate share one source of truth.
 
 ### Baseline GitHub rulesets
 
+> **NEVER require linear history.** USER ruling, 2026-08-08: no repo this agent
+> handles may carry a `required_linear_history` rule, and no branch ruleset
+> carrying one may be added — ever, on any repo. It blocks merge commits, which
+> silently constrains merge strategy on repos that accept cross-plugin PRs. If
+> you find one, remove it; if a template or upstream canon proposes one, drop
+> that rule and apply the rest. This overrides any baseline prose that still
+> lists it (the distributed §F copy did, which is how it briefly got applied
+> here — see ai-maestro#140).
+
 Every repo carries the ratified pair **`baseline-history-protect`** (no-bypass:
-`deletion`, `non_fast_forward`, `required_linear_history`) +
+`deletion`, `non_fast_forward`) +
 **`baseline-pr-and-checks`** (admin-bypass for `publish.py`: 1-approval
 `pull_request` + `required_status_checks`). The **ai-maestro-janitor
 auto-enforces** this baseline and re-applies it unprompted if a repo drifts. As
