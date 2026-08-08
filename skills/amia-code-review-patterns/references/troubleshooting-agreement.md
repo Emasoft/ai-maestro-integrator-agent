@@ -453,7 +453,7 @@ WHY IT FAILS:
 
 ```markdown
 GOOD:
-"@reviewer_name raised a good point about X. I initially missed that concern. However, I think Y approach might address it while also handling Z. What do you both think?"
+"reviewer_name raised a good point about X. I initially missed that concern. However, I think Y approach might address it while also handling Z. What do you both think?"
 
 WHY IT WORKS:
 - Acknowledges other's contribution

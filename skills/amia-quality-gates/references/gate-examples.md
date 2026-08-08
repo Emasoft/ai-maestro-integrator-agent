@@ -86,7 +86,7 @@ gh pr edit $PR_NUMBER --add-label "gate:post-merge-failed"
 # Immediate escalation
 gh pr comment $PR_NUMBER --body "🚨 **POST-MERGE GATE FAILED**: Main branch CI broken
 
-@author @reviewer @amoa - Immediate attention required.
+author, reviewer, AMOA - Immediate attention required.
 
 Failure: Main branch tests failing in auth module
 
@@ -108,7 +108,7 @@ gh pr comment $PR_NUMBER --body "**GATE OVERRIDE**
 
 Gate: Pre-Merge Gate
 Reason: Critical security hotfix for CVE-2024-XXXX
-Approved by: @maintainer
+Approved by: maintainer
 Risk mitigation:
   - Manual testing completed
   - Hotfix branch will be monitored post-deploy

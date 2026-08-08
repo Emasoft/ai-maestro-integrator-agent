@@ -333,7 +333,7 @@ Paste test output here
 
 ```
 # Default owners for everything
-*       @owner
+*       owner
 
 # Frontend team
 /src/components/**  @frontend-team

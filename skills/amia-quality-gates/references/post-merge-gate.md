@@ -101,7 +101,7 @@ Main branch health check failed after merge.
 
 **Issue**: [Describe failure - CI failure, regression, deployment issue]
 
-@author @reviewer @amoa - Immediate attention required.
+author, reviewer, AMOA - Immediate attention required.
 
 **Recommendation**: Evaluate revert vs hotfix within 30 minutes."
 

@@ -56,7 +56,7 @@ When quality gates fail and issues are not resolved through normal channels, sys
 
 **Re-evaluation**: Gate will re-run on next push.
 
-cc @author
+cc author
 ```
 
 **Success Criteria**: Author acknowledges and begins fixes
@@ -76,7 +76,7 @@ cc @author
 
 PR has been blocked for 24 hours due to failing checks.
 
-**Status**: Awaiting fixes from @author
+**Status**: Awaiting fixes from author
 
 **Impact**: Review process cannot begin until checks pass.
 
@@ -96,11 +96,11 @@ Please provide status update or address failures.
 **Notification**:
 
 ```
-@amoa - Pre-review gate escalation
+AMOA - Pre-review gate escalation
 
 PR #${PR_NUMBER} blocked for 72+ hours due to failing automated checks.
 
-**Author**: @author (unresponsive)
+**Author**: author (unresponsive)
 **Issue**: [Summary of failures]
 **History**: 2 notifications sent, no response
 
@@ -151,7 +151,7 @@ PR #${PR_NUMBER} blocked for 72+ hours due to failing automated checks.
 
 Please address these issues and request re-review when ready.
 
-cc @author
+cc author
 ```
 
 **Success Criteria**: Author addresses issues and requests re-review
@@ -174,7 +174,7 @@ Original review issues remain unresolved.
 **Outstanding Issues**:
 - [Issues not yet addressed]
 
-**Status**: Awaiting changes from @author
+**Status**: Awaiting changes from author
 
 Please address feedback or discuss if clarification needed.
 ```
@@ -192,11 +192,11 @@ Please address feedback or discuss if clarification needed.
 **Notification**:
 
 ```
-@amoa - Review gate escalation
+AMOA - Review gate escalation
 
 PR #${PR_NUMBER} blocked for 1+ week due to unresolved review issues.
 
-**Author**: @author
+**Author**: author
 **Issues**: [Summary of blocking issues]
 **History**: Request changes submitted, one follow-up, minimal progress
 
@@ -260,7 +260,7 @@ Author is welcome to reopen or submit fresh PR if issues are addressed.
 
 Merge will be unblocked when all checks pass.
 
-cc @author
+cc author
 ```
 
 **Success Criteria**: Author resolves issues
@@ -299,7 +299,7 @@ Please [specific action - rebase, fix CI, etc.].
 **Notification**:
 
 ```
-@amoa - Pre-merge gate CI infrastructure issue
+AMOA - Pre-merge gate CI infrastructure issue
 
 PR #${PR_NUMBER} blocked by CI failures that appear infrastructure-related.
 
@@ -334,7 +334,7 @@ Main branch health check failed after merging PR #${PR_NUMBER}.
 **Issue**: [Specific failure - CI, regression, deployment]
 **Impact**: [Production impact if any]
 
-@author @reviewer @amoa - Immediate attention required.
+author, reviewer, AMOA - Immediate attention required.
 
 **Next Steps**: Evaluating revert vs hotfix (decision within 30 minutes)
 ```

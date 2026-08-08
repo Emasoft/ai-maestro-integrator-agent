@@ -208,7 +208,7 @@ Move items back to Todo with deferral comment:
 gh issue comment 42 --body "$(cat <<'EOF'
 ## Deferred
 
-**Deferred by:** @orchestrator-master
+**Deferred by:** orchestrator-master
 **Reason:** Session ending, work not complete
 **State at deferral:** Implementation 60% complete
 **Next steps:** Complete validation logic, write tests
@@ -271,7 +271,7 @@ gh issue comment 42 --body "$(cat <<'EOF'
 
 Session ending with this item blocked.
 Blocker: Missing database credentials
-Acknowledged by: @orchestrator-master
+Acknowledged by: orchestrator-master
 Time: 2024-01-15 17:00 UTC
 
 This blocker will be addressed in next session or escalated.
@@ -355,7 +355,7 @@ In exceptional cases, the stop hook can be overridden.
 ```markdown
 ## Forced Exit Override
 
-**Exit forced by:** @orchestrator-master
+**Exit forced by:** orchestrator-master
 **Reason:** Emergency: critical production issue requires attention
 **Items affected:** #42, #45, #48
 **Time:** 2024-01-15 17:00 UTC

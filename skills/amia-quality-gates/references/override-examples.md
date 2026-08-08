@@ -40,7 +40,7 @@ Gate overrides are **exceptions to normal quality gate enforcement**. This docum
 
 **Urgency**: Production vulnerability being actively exploited
 
-**Approved by**: @maintainer (Alice Johnson)
+**Approved by**: maintainer (Alice Johnson)
 
 **Risk Mitigation**:
 - Manual testing completed for all affected code paths
@@ -50,7 +50,7 @@ Gate overrides are **exceptions to normal quality gate enforcement**. This docum
 
 **Follow-up Actions**:
 - [ ] Issue #457: Add comprehensive tests for auth module (Due: 2024-02-10)
-- [ ] Code review of auth module test suite (Assigned: @security-team)
+- [ ] Code review of auth module test suite (Assigned: security-team)
 
 **Override Label**: `gate:override-applied`
 
@@ -98,7 +98,7 @@ gh pr merge 123 --squash
 - Architecture: 95%
 - Best Practices: 60% ← style issues only
 
-**Approved by**: @senior-reviewer (Bob Smith)
+**Approved by**: senior-reviewer (Bob Smith)
 
 **Justification**:
 - Style issues are cosmetic (inconsistent indentation in comments)
@@ -153,7 +153,7 @@ gh pr merge 123 --squash
 - CI has not run for 4 hours across all PRs
 - No code-related CI failures
 
-**Approved by**: @amoa (AI Maestro Orchestration Agent)
+**Approved by**: AMOA (AI Maestro Orchestration Agent)
 
 **Risk Mitigation**:
 - Manual testing completed locally:
@@ -199,10 +199,10 @@ gh pr merge 123 --squash
 **Gate**: Review Gate
 **Issue**: SQL injection vulnerability in user query handling
 
-**Override Requested by**: @author
+**Override Requested by**: author
 **Reason Given**: "Urgent feature launch deadline"
 
-**REJECTED by**: @senior-reviewer
+**REJECTED by**: senior-reviewer
 
 **Rejection Reason**: **Security vulnerabilities have NO OVERRIDE AUTHORITY**
 
@@ -250,7 +250,7 @@ Per quality gate policy:
 - CHANGELOG.md: Updated version number
 - Total: 15 lines changed, 0 lines of code affected
 
-**Approved by**: @original-reviewer (Carol Lee)
+**Approved by**: original-reviewer (Carol Lee)
 
 **Justification**:
 - Original review covered all functional code
@@ -317,7 +317,7 @@ Per quality gate policy:
 - Re-submit as new PR when fixed
 - Investigate why pre-merge gate didn't catch this
 
-**Responsible**: @amoa
+**Responsible**: AMOA
 
 **Resolution Time**: 12 minutes (detection to revert completion)
 

@@ -678,7 +678,7 @@ Subject: APPROVAL REQUEST — TRDD-<id8> transition <FROM> → <TO>
 Type: approval_request
 Priority: <normal | urgent>
 Body:
-  _From the Claude developing ai-maestro-integrator-agent (INTEGRATOR), via the shared @owner auth._
+  _From the Claude developing ai-maestro-integrator-agent (INTEGRATOR), via the shared owner auth._
   TRDD: design/tasks/TRDD-<id8>-...md
   Current column: <FROM>
   Requested transition: <FROM> → <TO>

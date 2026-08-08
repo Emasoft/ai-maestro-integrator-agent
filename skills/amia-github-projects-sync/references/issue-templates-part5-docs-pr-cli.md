@@ -155,7 +155,7 @@ Place this file in `.github/CODEOWNERS`.
 
 ```
 # Default owners for everything
-*       @owner
+*       owner
 
 # Frontend team
 /src/components/**  @frontend-team
