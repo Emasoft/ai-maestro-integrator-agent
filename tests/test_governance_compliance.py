@@ -17,6 +17,8 @@ Standalone exit: 0 all pass, 1 any failure.
 from __future__ import annotations
 
 import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -70,11 +72,144 @@ def check_team_registry_created_by() -> str:
     return "PASS"
 
 
-def check_no_api_teams_in_docs() -> str:
-    """No doc instructs a direct /api/teams/{id}/tasks call (R23 frozen-CLI, #14)."""
-    bad = [md.name for md in DOCS.glob("*.md") if "/api/teams/" in md.read_text(encoding="utf-8")]
+# ── GOV-VAL-06 / R23.6 — no direct ai-maestro API calls anywhere in the tree ──
+#
+# R23.6 draws the line at "endpoint-syntax + actual calls/instructions, NOT the
+# word 'API'". A guard on the bare string `/api/` therefore fires on the very
+# prose that STATES the prohibition, and gets deleted the first week it cries
+# wolf. This tree proves it: 39 raw `/api/` hits, ZERO of them ai-maestro calls
+# — file paths (`src/api/auth.py`), globs (`**/api/**`), example Flask routes,
+# and `curl https://monitoring.example.com/api/metrics` in teaching references.
+# The predecessor check here was that naive form, narrow enough (docs/*.md, one
+# endpoint) that it had not bitten yet: it failed on a doc correctly PROHIBITING
+# the call, i.e. it punished accurate documentation. Verified, then replaced.
+#
+# So a violation is the CONJUNCTION: runnable AND an HTTP client AND an
+# ai-maestro target. (Definition adopted from the CORE session, which paid four
+# false positives to arrive at it.)
+
+# ai-maestro's own port: server.mjs:101 `parseInt(process.env.PORT || '23000')`;
+# the analytics reverse proxy is port+1. Read 2026-08-08 from blob af507a81b1c3.
+# The authoritative namespace list is security-registry.json — the file GOV-VAL-05
+# itself names — not a guess. Read 2026-08-08 from blob 53c09018590e.
+AI_MAESTRO_NAMESPACES = (
+    "agents", "auth", "governance", "oauth-rotator", "path", "sessions",
+    "settings", "system", "teams", "trdd", "v1",
+)
+
+HTTP_INVOCATION = re.compile(
+    r"""\b(?: curl | wget | http(?:ie)?
+            | fetch\s*\( | axios\s*[.(]
+            | (?:requests|httpx|aiohttp)\s*\.\s*(?:get|post|put|patch|delete|request)\s*\(
+            | urllib | Invoke-WebRequest | XMLHttpRequest )\b""",
+    re.VERBOSE | re.IGNORECASE,
+)
+# An explicit ai-maestro authority: its port, a host naming it, or a base-URL var.
+AI_MAESTRO_HOST = re.compile(
+    r"(?:localhost|127\.0\.0\.1|\[::1\]):2300[01]\b|\bai-?maestro[\w.-]*(?::\d+)?/|\$\{?AI_?MAESTRO",
+    re.IGNORECASE,
+)
+# A host-relative endpoint in one of ai-maestro's OWN namespaces. Delimiter-anchored
+# so `src/api/auth.py` (a file path) cannot match while `"/api/auth"` can.
+AI_MAESTRO_RELATIVE = re.compile(
+    r"""(?<![\w.-])/api/(?:%s)(?:[/"'`\s?]|$)""" % "|".join(AI_MAESTRO_NAMESPACES)
+)
+# GitHub is exempt by the persona's own R23 note ("GitHub gh / api.github.com is exempt").
+GITHUB_EXEMPT = re.compile(r"api\.github\.com|\bgh\s+api\b|github\.com", re.IGNORECASE)
+
+SCANNED_SUFFIXES = {".md", ".py", ".sh", ".bash", ".zsh", ".js", ".mjs", ".ts", ".json", ".yaml", ".yml"}
+# Generated artifacts are not the plugin tree. Caught by the first falsification:
+# .mypy_cache/*.json embeds analysed source as one enormous line and produced four
+# false positives at `:1` — a scanner that reads its own build output reports noise
+# no reader can act on, and a guard nobody can act on gets switched off.
+SKIP_DIRS = {
+    ".git", ".mypy_cache", ".pytest_cache", ".ruff_cache", ".venv", "venv",
+    "node_modules", "__pycache__", ".trashcan", "reports", "reports_dev",
+    "docs_dev", "scripts_dev", "tests_dev", "builds_dev", "downloads_dev",
+}
+
+
+def _runnable_lines(path: Path) -> list[tuple[int, str]]:
+    """Lines that would actually EXECUTE: inside a md fence, or non-comment in a script."""
+    out: list[tuple[int, str]] = []
+    in_fence = False
+    is_md = path.suffix == ".md"
+    for i, line in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+        if is_md and line.lstrip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if is_md and not in_fence:
+            continue  # prose: R23.6 explicitly permits conceptual references
+        if not is_md and line.lstrip().startswith(("#", "//", "*")):
+            continue
+        out.append((i, line))
+    return out
+
+
+def check_no_direct_ai_maestro_api_calls() -> str:
+    """No runnable HTTP call targets the ai-maestro server's /api/* (GOV-VAL-06, R23.6)."""
+    bad: list[str] = []
+    for path in sorted(PLUGIN_ROOT.rglob("*")):
+        if not path.is_file() or path.suffix not in SCANNED_SUFFIXES:
+            continue
+        if SKIP_DIRS.intersection(path.parts) or path.resolve() == Path(__file__).resolve():
+            # Self-exclusion: this file necessarily CONTAINS the endpoint syntax it
+            # bans (the patterns above), so scanning it is the same self-match trap
+            # as `ps aux | grep <pattern>` finding its own shell. The falsification
+            # plants its violation in a DIFFERENT file so this stays a scoping
+            # decision rather than a hole.
+            continue
+        for lineno, line in _runnable_lines(path):
+            if GITHUB_EXEMPT.search(line) or not HTTP_INVOCATION.search(line):
+                continue
+            if AI_MAESTRO_HOST.search(line) or AI_MAESTRO_RELATIVE.search(line):
+                bad.append(f"{path.relative_to(PLUGIN_ROOT)}:{lineno}")
     if bad:
-        return f"FAIL: /api/teams/ endpoint still referenced in docs: {bad}"
+        shown = ", ".join(bad[:6]) + (f" … (+{len(bad) - 6} more)" if len(bad) > 6 else "")
+        return f"FAIL: direct ai-maestro /api/* call(s) ({len(bad)}): {shown} — use the frozen CLI layer"
+    return "PASS"
+
+
+def check_governance_stamp_matches_live_spec() -> str:
+    """The persona's declared governance blobs still match upstream (GOV-VER-02 drift)."""
+    # GOV-VER-02: "a declared version != the live one is a detectable failure". This is
+    # the detector. It reports DILIGENCE, not upstream correctness: a differing blob
+    # means something moved, never what — re-read and re-stamp, do not just bump the
+    # number. Skips honestly offline; a network hiccup must not read as conformance.
+    text = PERSONA.read_text(encoding="utf-8")
+    want = {
+        "design/specs/governance-spec.md": re.search(r"governance-spec\.md`?\s*\*\*v[\d.]+\*\*\s*\(blob `([0-9a-f]+)`\)", text),
+        "docs/GOVERNANCE-RULES.md": re.search(r"GOVERNANCE-RULES\.md`? is \*\*v[\d.]+\*\* \(blob `([0-9a-f]+)`\)", text),
+    }
+    missing = [p for p, m in want.items() if not m]
+    if missing:
+        return f"FAIL: persona carries no GOV-VER-02 blob stamp for {missing}"
+    declared = {p: m.group(1) for p, m in want.items() if m}
+
+    if not shutil.which("gh"):
+        return "SKIP: gh CLI missing — cannot read the live spec blobs"
+    try:
+        r = subprocess.run(
+            ["gh", "api", "repos/Emasoft/ai-maestro/git/trees/governance-rules?recursive=1",
+             "--jq", '.tree[]|select(.path=="design/specs/governance-spec.md" or '
+                     '.path=="docs/GOVERNANCE-RULES.md")|"\\(.path) \\(.sha)"'],
+            capture_output=True, text=True, check=False, timeout=60,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return "SKIP: could not reach github to read the live spec blobs"
+    if r.returncode != 0:
+        return "SKIP: gh could not read the ai-maestro tree (auth or network)"
+
+    live = dict(line.split() for line in r.stdout.strip().splitlines() if " " in line)
+    drifted = [
+        f"{p}: stamped {sha} != live {live[p][:len(sha)]}"
+        for p, sha in declared.items()
+        if p in live and not live[p].startswith(sha)
+    ]
+    if drifted:
+        return (f"FAIL: governance stamp is STALE ({'; '.join(drifted)}). "
+                "This means RE-READ the spec and re-stamp — not that upstream is wrong, "
+                "and not a licence to bump the number without reading.")
     return "PASS"
 
 
@@ -140,7 +275,8 @@ CHECKS = [
     "check_role_boundaries_has_r29_r30",
     "check_role_boundaries_header_localized",
     "check_team_registry_created_by",
-    "check_no_api_teams_in_docs",
+    "check_no_direct_ai_maestro_api_calls",
+    "check_governance_stamp_matches_live_spec",
     "check_all_agents_global_memory",
     "check_no_per_plugin_memory_skill",
     "check_references_escalate_to_maestro_not_user",
@@ -169,8 +305,21 @@ def test_team_registry_created_by() -> None:
     assert check_team_registry_created_by().startswith("PASS")
 
 
-def test_no_api_teams_in_docs() -> None:
-    assert check_no_api_teams_in_docs().startswith("PASS")
+def test_no_direct_ai_maestro_api_calls() -> None:
+    assert check_no_direct_ai_maestro_api_calls().startswith("PASS")
+
+
+def test_governance_stamp_matches_live_spec() -> None:
+    # The only network-dependent check here, so it is the only one that can skip.
+    outcome = check_governance_stamp_matches_live_spec()
+    if outcome.startswith("SKIP:"):
+        try:
+            import pytest  # pyright: ignore[reportMissingImports]
+
+            pytest.skip(outcome[5:].strip())
+        except ImportError:
+            return
+    assert outcome.startswith("PASS"), outcome
 
 
 def test_all_agents_global_memory() -> None:
@@ -205,8 +354,15 @@ def main() -> int:
         except Exception as exc:  # a crashing check is a failing check
             outcome = f"ERROR: {exc}"
         doc = (globals()[name].__doc__ or "").strip().splitlines()[0]
-        status = "PASS" if outcome.startswith("PASS") else ("ERROR" if outcome.startswith("ERROR") else "FAIL")
-        if status != "PASS":
+        if outcome.startswith("PASS"):
+            status = "PASS"
+        elif outcome.startswith("SKIP"):
+            status = "SKIP"  # an honest skip is not a failure — and not a pass either
+        elif outcome.startswith("ERROR"):
+            status = "ERROR"
+        else:
+            status = "FAIL"
+        if status in ("FAIL", "ERROR"):
             failures += 1
         results.append((name, status, doc if status == "PASS" else f"{doc} — {outcome}"))
 

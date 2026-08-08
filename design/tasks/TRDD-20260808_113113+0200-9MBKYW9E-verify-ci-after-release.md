@@ -8,7 +8,7 @@ current-owner: integrator-session
 task-type: infra
 release-via: publish
 external-refs: [claude-plugins-validation v5.1.1 ci-verify, manager-approval-defaults §F]
-implementation-commits: []
+implementation-commits: [5c44695]
 npt: []
 eht: []
 ---
