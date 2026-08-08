@@ -39,7 +39,7 @@ import os
 import re
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -102,7 +102,10 @@ def log(level: str, message: str, log_file: Path) -> None:
         log_file: Path to log file
     """
     try:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # tz-AWARE local time, and the %z offset is not optional: a bare
+        # "YYYY-MM-DD HH:MM:SS" is ambiguous across machines and DST boundaries, so a
+        # log line cannot be correlated with anything. (ruff DTZ005)
+        timestamp = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S%z")
         log_entry = f"[{timestamp}] [{level}] [pre-push-hook] {message}\n"
         with open(log_file, "a", encoding="utf-8") as f:
             f.write(log_entry)

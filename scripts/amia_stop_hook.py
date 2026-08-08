@@ -49,9 +49,9 @@ import json
 import os
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 # Default consecutive-block cap that Claude Code 2.1.143+ enforces.
 # We use the same default so our soft warning kicks in at 5/8 (62.5%).
@@ -209,7 +209,10 @@ def log(level: str, message: str, log_file: Path) -> None:
         log_file: Path to log file
     """
     try:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # tz-AWARE local time, and the %z offset is not optional: a bare
+        # "YYYY-MM-DD HH:MM:SS" is ambiguous across machines and DST boundaries, so a
+        # log line cannot be correlated with anything. (ruff DTZ005)
+        timestamp = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S%z")
         log_entry = f"[{timestamp}] [{level}] [stop-hook] {message}\n"
         with open(log_file, "a", encoding="utf-8") as f:
             f.write(log_entry)
@@ -244,6 +247,12 @@ def run_gh_command(args: list[str], timeout: int = 30) -> subprocess.CompletedPr
             capture_output=True,
             text=True,
             timeout=timeout,
+            # check=False is DELIBERATE, not an oversight (ruff PLW1510). This helper's
+            # contract is to RETURN the CompletedProcess so callers inspect returncode —
+            # the timeout and missing-gh paths below synthesize returncode=1 for exactly
+            # that reason. check=True would raise instead, and a Stop hook that raises
+            # takes down the session it exists to report on.
+            check=False,
         )
         return result
     except subprocess.TimeoutExpired:
@@ -319,7 +328,7 @@ def get_pending_prs(log_file: Path) -> list[dict]:
         return []
 
 
-def get_project_items_in_progress(project_number: Optional[int], log_file: Path) -> list[dict]:
+def get_project_items_in_progress(project_number: int | None, log_file: Path) -> list[dict]:
     """Get GitHub Projects items in "In Progress" or "AI Review" status.
 
     Args:

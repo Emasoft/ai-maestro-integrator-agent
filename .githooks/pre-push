@@ -30,8 +30,13 @@ find_publish_ancestor() {
         # Rejects:   bash -c "touch scripts/publish.py && git push"
         #            git push
         #            any shell where publish.py is not the actual interpreter target
+        # One pattern only: `*python*scripts/publish.py*` already SUBSUMES the
+        # `*python*/scripts/publish.py*` form that used to sit beside it, because the
+        # leading `*python*` absorbs the `/`. The second alternative could therefore
+        # never match (shellcheck SC2221/SC2222) — it was dead, not a second gate.
+        # Behaviour is unchanged: both alternatives returned 0.
         case "${cmd}" in
-            *python*scripts/publish.py*|*python*/scripts/publish.py*)
+            *python*scripts/publish.py*)
                 return 0
                 ;;
         esac

@@ -145,7 +145,12 @@ jobs:
           PLUGIN_SKIP_GITHUB_INTEGRITY: "1"
         run: |
           set +e
-          uvx --from git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1 \
+          # CPV pinned to an immutable tag (never @main — 404s, #139; never bare
+          # master — a moving ref silently imports upstream regressions, which is
+          # how v2.137.0's ~30-min "[REPO LINT]" hang reached CI, #148).
+          # Re-baselined v2.136.1 -> v5.3.0 on 2026-08-08 (#148/#149 fixed in
+          # v2.145.1; tree measures 0/0/0/0 on v5.3.0 in 3m26s cold).
+          uvx --from git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0 \
               --with pyyaml \
               cpv-remote-validate plugin . --strict
           exit_code=$?

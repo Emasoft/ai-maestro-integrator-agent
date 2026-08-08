@@ -523,7 +523,7 @@ def install_branch_rules(root: Path) -> int:
             [
                 "uvx",
                 "--from",
-                "git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1",
+                "git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0",
                 "--with",
                 "pyyaml",
                 "cpv-setup-branch-rules",
@@ -710,7 +710,7 @@ def run_gate(root: Path) -> int:
         return 1
     ve = subprocess.run(
         ["uvx", "--from",
-         "git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1",
+         "git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0",
          "--with", "pyyaml",
          "cpv-remote-validate", "plugin", ".", "--strict"],
         cwd=str(root), timeout=600).returncode
@@ -942,7 +942,7 @@ def stage_validate(root: Path) -> None:
 
     Cornerstone rule: a plugin cannot be pushed unless validation passes
     with 0 issues (WARNING allowed). The validator is ALWAYS fetched from
-    GitHub (git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1)
+    GitHub (git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0)
     via uvx so a local tampered copy cannot weaken the rules. No exceptions.
 
     Order: runs AFTER lint + tests so behavioral regressions fail fast
@@ -955,13 +955,25 @@ def stage_validate(root: Path) -> None:
         sys.exit(1)
     # Fetch CPV from GitHub and run validate_plugin remotely. --strict blocks
     # on CRITICAL(1), MAJOR(2), MINOR(3), NIT(4); WARNING(5+) passes.
-    # CPV is PINNED to the v2.136.1 tag at every callsite: @main 404s (CPV's
-    # default branch is master, #139) and bare master tracks LATEST — v2.137.0's
-    # "[REPO LINT] (15 languages)" phase HANGS ~30 min on CI runners (v2.136.1 =
-    # 18s). v2.136.1 is the last-known-good release. Reported: #148.
+    # CPV is PINNED to an IMMUTABLE TAG at every callsite. Never @main (404s —
+    # CPV's default branch is master, #139) and never bare master: a CI-gating
+    # tool fetched from a moving ref inherits upstream regressions silently, which
+    # is how v2.137.0's 30-min "[REPO LINT]" hang reached CI (#148).
+    #
+    # RE-BASELINED v2.136.1 -> v5.3.0 on 2026-08-08. #148 and #149 were fixed in
+    # v2.145.1, so the old pin's justification had been dead for six weeks — and
+    # its narrower ruleset was HIDING 7 real defects in our own hooks (3x naive
+    # datetime, an implicit subprocess check, a dead glob alternative in the push
+    # gate). Measured on v5.3.0 after fixing them: CRITICAL=0 MAJOR=0 MINOR=0
+    # NIT=0, 3m26s cold — no hang.
+    #
+    # A pin is a baseline to RE-MEASURE, not a workaround to carry forward. When
+    # bumping it, re-run the validate and read the SUMMARY line from a captured
+    # file — uvx caches aggressively, so use --refresh or you will measure the
+    # OLD version and believe it was the new one.
     run([
         "uvx", "--from",
-        "git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1",
+        "git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0",
         "--with", "pyyaml",
         "cpv-remote-validate", "plugin", ".", "--strict",
     ], cwd=root)

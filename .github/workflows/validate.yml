@@ -47,10 +47,11 @@ jobs:
         run: |
           echo "=== CPV Plugin Validation (--strict) ==="
           set +e
-          # CPV PINNED to v2.136.1: @main 404s (#139); bare master tracks LATEST,
-          # and v2.137.0's "[REPO LINT]" phase HANGS CI ~30 min (v2.136.1 = 18s).
-          # The pin (not the integrity-skip) is what fixes the 30-min hang — #148.
-          uvx --from git+https://github.com/Emasoft/claude-plugins-validation@v2.136.1 \
+          # CPV PINNED to an immutable tag: @main 404s (#139), and bare master
+          # tracks LATEST, which is how v2.137.0's ~30-min "[REPO LINT]" hang
+          # reached CI (#148). Re-baselined v2.136.1 -> v5.3.0 on 2026-08-08:
+          # #148/#149 fixed in v2.145.1, tree measures 0/0/0/0 on v5.3.0 in 3m26s.
+          uvx --from git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0 \
               --with pyyaml \
               cpv-remote-validate plugin . --strict --verbose --report validation-report.md
           EXIT_CODE=$?
