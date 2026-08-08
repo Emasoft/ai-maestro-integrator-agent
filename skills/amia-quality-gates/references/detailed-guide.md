@@ -103,7 +103,7 @@ Labels Applied:
 
 Escalation:
   - Commented on PR with test failure details
-  - Notified @author
+  - Notified the author
 
 Next Steps:
   - Author must fix failing tests

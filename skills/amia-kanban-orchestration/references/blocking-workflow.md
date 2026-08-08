@@ -148,7 +148,7 @@ gh issue comment 42 --body "$(cat <<'EOF'
 **Impact:** Cannot test data layer implementation
 **Discovered:** 2024-01-15 15:00 UTC
 
-@amcos-main Please escalate to DBA team (forward to Orchestrator).
+AMCOS-main Please escalate to DBA team (forward to Orchestrator).
 EOF
 )"
 ```
