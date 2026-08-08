@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.1] — 2026-08-08
+
+### Bug Fixes
+
+- Stop CHANGELOG overwriting itself; extract the duplicated test runner
+- Per-stage timeouts, clean timeout reporting, and stop git add -A
 ## [1.4.0] — 2026-08-08
 
 ### Bug Fixes
