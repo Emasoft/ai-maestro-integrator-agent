@@ -62,6 +62,7 @@ import shutil
 import stat
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 # Load gh / git retry wrappers from the sibling module so every push +
@@ -1848,7 +1849,127 @@ def main() -> int:
     stage_gh_release(root, new_ver, args.dry_run)
 
     cprint(f"\n{GREEN}{BOLD}Published {new_ver} successfully!{NC}")
-    return 0
+    return stage_verify_ci(root, new_ver, args.dry_run)
+
+
+CI_VERIFY_TIMEOUT_SEC = 1800
+CI_VERIFY_POLL_SEC = 20
+# Runs only on push, so they can never appear on a PR and must not be waited for
+# as if they were gates.
+CI_VERIFY_IGNORE = {"notify", "release"}
+
+
+def stage_verify_ci(root: Path, new_ver: str, dry_run: bool) -> int:
+    """Post-release: confirm CI actually went GREEN on the released commit.
+
+    This closes a hole the branch ruleset opens by design. `baseline-pr-and-checks`
+    grants an admin bypass so publish.py can push straight to the default branch —
+    which means the required status checks NEVER gate the release push. Without
+    this stage the pipeline reports "Published successfully" from the fact that
+    `git push` and `gh release create` returned 0, having verified nothing about
+    whether the released commit builds. A red CI on a published tag would sit
+    unnoticed until somebody happened to look. (CPV v5.1.1 flags the same gap.)
+
+    Deliberately runs AFTER the release: the commit must be on the remote for CI
+    to start at all, so this can only ever be a detection, never a prevention. It
+    does NOT attempt to unpublish — the release is already public and silently
+    retracting it would be worse than reporting it. It returns non-zero so the
+    failure is visible in the exit status instead of only in scrollback.
+    """
+    cprint(f"\n{BOLD}Verifying CI on the released commit...{NC}")
+    if dry_run:
+        cprint(f"  Would wait up to {CI_VERIFY_TIMEOUT_SEC // 60} min for CI on HEAD")
+        return 0
+    if not shutil.which("gh"):
+        cprint(f"  {YELLOW}gh CLI not installed — cannot verify CI. Check manually.{NC}")
+        return 0
+
+    slug = _get_origin_slug(root)
+    sha = _git_stdout(root, ["git", "rev-parse", "HEAD"])
+    if not slug or not sha:
+        cprint(f"  {YELLOW}Could not resolve repo slug or HEAD sha — check CI manually.{NC}")
+        return 0
+    cprint(f"  {slug}@{sha[:8]} — polling (up to {CI_VERIFY_TIMEOUT_SEC // 60} min)")
+
+    deadline = time.monotonic() + CI_VERIFY_TIMEOUT_SEC
+    unreadable = False
+    while True:
+        runs = _ci_check_runs(slug, sha)
+        if runs is None:
+            # Keep polling rather than returning: right after a push the commit
+            # may not have registered checks yet, and a transient API failure is
+            # not evidence of anything. Crucially this does NOT return 0 — an
+            # unreadable list must never produce a green verdict (same fail-closed
+            # rule as the branch-rules guard). If it is still unreadable at the
+            # deadline the timeout branch reports NOT-verified and exits non-zero.
+            unreadable = True
+            if time.monotonic() >= deadline:
+                cprint(f"  {YELLOW}Could not read check-runs before the deadline. "
+                       f"NOT verified green — check CI manually.{NC}")
+                return 1
+            time.sleep(CI_VERIFY_POLL_SEC)
+            continue
+        unreadable = False
+        gating = [r for r in runs if r.get("name") not in CI_VERIFY_IGNORE]
+        pending = [r for r in gating if r.get("status") != "completed"]
+        # A conclusion of `skipped`/`neutral` is NOT a failure: a conditional job
+        # that correctly did not run must not be read as a red build.
+        failed = [
+            r for r in gating
+            if r.get("status") == "completed"
+            and r.get("conclusion") not in ("success", "skipped", "neutral")
+        ]
+        if failed:
+            names = ", ".join(f"{r['name']}={r.get('conclusion')}" for r in failed)
+            cprint(f"  {RED}CI FAILED on the released commit: {names}{NC}")
+            cprint(f"  {RED}v{new_ver} is already published — fix forward and re-release.{NC}")
+            return 1
+        if gating and not pending:
+            cprint(f"  {GREEN}CI green on {sha[:8]} ({len(gating)} checks).{NC}")
+            return 0
+        if time.monotonic() >= deadline:
+            # Timing out is NOT proof of success — say so rather than implying green.
+            if unreadable:
+                waiting = "check-runs unreadable"
+            else:
+                waiting = ", ".join(r["name"] for r in pending) or "no checks reported yet"
+            cprint(f"  {YELLOW}Timed out waiting for CI ({waiting}). NOT verified green.{NC}")
+            return 1
+        time.sleep(CI_VERIFY_POLL_SEC)
+
+
+def _git_stdout(root: Path, cmd: list[str]) -> str | None:
+    r = subprocess.run(cmd, cwd=str(root), capture_output=True, text=True, check=False)
+    return r.stdout.strip() if r.returncode == 0 else None
+
+
+def _ci_check_runs(slug: str, sha: str) -> list[dict] | None:
+    """Check-runs for `sha`, or None when the list could not be read.
+
+    None (not []) on failure for the same reason as the branch-rules guard: an
+    empty list reads as "nothing failed", which would turn an unreadable API into
+    a green verdict.
+    """
+    try:
+        r = gh_with_retry(
+            ["gh", "api", f"repos/{slug}/commits/{sha}/check-runs",
+             "--jq", ".check_runs[] | {name, status, conclusion}"],
+            check=False, capture_output=True,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    if getattr(r, "returncode", 1) != 0:
+        return None
+    out: list[dict] = []
+    for line in (r.stdout or "").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            out.append(json.loads(line))
+        except json.JSONDecodeError:
+            return None
+    return out
 
 
 if __name__ == "__main__":
