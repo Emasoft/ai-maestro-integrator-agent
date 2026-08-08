@@ -99,9 +99,13 @@ TRDD-9f8e7d6c", prompt giving the deploy target; on success set
 
 ## Resources
 
-- [async-approval-model](references/async-approval-model.md) — Tier-0 default
-  and the field vocabulary, the D3 escalation table, D1 never-block, the
-  completion gate, and exactly which transitions stay gated.
+- [async-approval-model](references/async-approval-model.md)
+  - [The one thing to get right](#the-one-thing-to-get-right)
+  - [Tier 0 is the DEFAULT (self-mandate)](#tier-0-is-the-default-self-mandate)
+  - [Escalate only on an objective D3 trigger](#escalate-only-on-an-objective-d3-trigger)
+  - [D1 — never block](#d1--never-block)
+  - [What stays gated, without exception](#what-stays-gated-without-exception)
+  - [Completion gate](#completion-gate)
 
 For shared column mechanics and the canonical exempt-vs-non-exempt
 rules, consult the universal `prrd-trdd-kanban` skill and its
