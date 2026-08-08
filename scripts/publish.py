@@ -123,11 +123,35 @@ def cprint(msg: str) -> None:
 
 def run(
     cmd: list[str], cwd: Path | None = None, *, check: bool = True, capture: bool = False,
+    timeout: int = 300,
 ) -> subprocess.CompletedProcess[str]:
-    """Run a command, stream output, fail-fast on error."""
+    """Run a command, stream output, fail-fast on error.
+
+    `timeout` is a parameter rather than a hardcoded 300s because the stages do
+    not remotely resemble each other in duration: a `git rev-parse` is
+    milliseconds, while remote CPV validation cold-builds from git and routinely
+    runs 3.5 minutes ALONE. Sharing one ceiling meant the slowest stage on the
+    machine set the limit for everything, and it was set for the fastest.
+
+    Measured 2026-08-08: a v1.4.1 publish died at exactly 300s in stage 4 while
+    two other CPV validations were running concurrently on this host (other
+    plugins publishing). Nothing was wrong with the plugin — the ceiling was
+    simply below the real duration under contention.
+
+    A breach is reported, not raised. Previously TimeoutExpired escaped as a
+    30-line traceback ending in subprocess internals, which reads like a crash in
+    the pipeline rather than "this command ran out of time" — and buries the one
+    fact the operator needs (which command, and how long it was given).
+    """
     cprint(f"  {BLUE}$ {' '.join(cmd)}{NC}")
-    result = subprocess.run(cmd, cwd=str(cwd) if cwd else None, text=True,
-                            capture_output=capture, timeout=300)
+    try:
+        result = subprocess.run(cmd, cwd=str(cwd) if cwd else None, text=True,
+                                capture_output=capture, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        cprint(f"  {RED}TIMED OUT after {timeout}s: {' '.join(cmd[:4])}…{NC}")
+        cprint(f"  {YELLOW}This is a timeout, NOT a validation verdict — nothing was "
+               f"judged. Re-run when the host is quieter, or raise the stage timeout.{NC}")
+        sys.exit(1)
     if check and result.returncode != 0:
         cprint(f"  {RED}Command failed (exit {result.returncode}){NC}")
         sys.exit(result.returncode)
@@ -1076,12 +1100,18 @@ def stage_validate(root: Path) -> None:
     # bumping it, re-run the validate and read the SUMMARY line from a captured
     # file — uvx caches aggressively, so use --refresh or you will measure the
     # OLD version and believe it was the new one.
+    # 20 min, not the 300s default. Measured cold-and-alone: 3m26s. A v1.4.1
+    # publish nonetheless died at exactly 300s here while two OTHER plugins were
+    # running their own CPV validations on this host — the machine, not the
+    # plugin, decides this duration, and several agents publish concurrently.
+    # A timeout here is the worst kind of failure: it judges nothing and looks
+    # like a verdict.
     run([
         "uvx", "--from",
         "git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0",
         "--with", "pyyaml",
         "cpv-remote-validate", "plugin", ".", "--strict",
-    ], cwd=root)
+    ], cwd=root, timeout=1200)
     cprint(f"  {GREEN}Validation passed (0 blocking issues).{NC}")
 
 
@@ -1683,7 +1713,31 @@ def stage_commit_and_push(root: Path, new_ver: str, dry_run: bool) -> None:
         cprint(f"  {YELLOW}HEAD is already '{expected_subject}' and tree is clean — "
                f"skipping commit (interrupted-publish recovery).{NC}")
     else:
-        run(["git", "add", "-A"], cwd=root)
+        # Stage the TRACKED files the bump actually modified, BY NAME — never
+        # `git add -A`.
+        #
+        # -A also stages UNTRACKED files. Stage 1 guarantees a clean tree, but
+        # stages 7-9 run between then and here (bump, badge, changelog, uv lock),
+        # and anything else that appears in the window — a scratch note, a tool's
+        # temp output, a report — would be swept into a PUBLIC release commit
+        # with no one reviewing it. That is the exact hazard
+        # ~/.claude/rules/never-git-add-all.md exists for, and this pipeline was
+        # violating it at the one moment the result becomes irreversible.
+        # (It is also why release notes are written to a temp dir, not the root.)
+        raw = _git_stdout(root, ["git", "diff", "--name-only"])
+        if raw is None:
+            # Fail closed. The tempting fallback is `git add -A`, which is the
+            # very thing being avoided — and it would fire in precisely the
+            # situation where nobody can see what is about to be staged.
+            cprint(f"  {RED}Could not read the modified-file list — refusing to commit.{NC}")
+            sys.exit(1)
+        changed = [p for p in (s.strip() for s in raw.splitlines()) if p]
+        if not changed:
+            cprint(f"  {RED}Nothing modified to commit, yet HEAD is not the bump commit.{NC}")
+            cprint(f"  {YELLOW}Refusing to create an empty release commit — investigate.{NC}")
+            sys.exit(1)
+        cprint(f"  Staging {len(changed)} modified file(s) by name: {', '.join(changed)}")
+        run(["git", "add", "--", *changed], cwd=root)
         run(["git", "commit", "-m", expected_subject], cwd=root)
 
     if tag_exists:
