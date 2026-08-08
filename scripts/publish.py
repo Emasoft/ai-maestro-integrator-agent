@@ -263,6 +263,46 @@ def get_current_version(plugin_root: Path) -> str | None:
     except (json.JSONDecodeError, OSError):
         return None
 
+def get_plugin_name(plugin_root: Path) -> str | None:
+    """Read `name` from .claude-plugin/plugin.json."""
+    pj = plugin_root / ".claude-plugin" / "plugin.json"
+    if not pj.is_file():
+        return None
+    try:
+        data = json.loads(pj.read_text(encoding="utf-8"))
+        name = data.get("name")
+        return str(name) if name else None
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+def resolver_tag(plugin_root: Path, version: str) -> str:
+    """Build the `{plugin-name}--v{version}` tag the Claude Code resolver needs.
+
+    A plain `v{version}` tag is NOT enough. Claude Code resolves a VERSIONED
+    plugin dependency (`{"name": "x", "version": "^2.7.0"}`) only via a
+    `{name}--v{version}` tag; with just `v{version}` the resolver reports
+    "has no git tag satisfying >=..." even though `git ls-remote --tags` clearly
+    lists the versions. That failure grounded the whole fleet for a day
+    (ai-maestro TRDD-JT3U4ZVM, integrator#22), so this tag is load-bearing for
+    every DOWNSTREAM plugin that depends on this one.
+
+    HARD-FAILS on a nameless manifest rather than returning a degraded tag: a
+    silently-wrong tag name is exactly the failure mode being fixed here.
+
+    Do NOT reach for `claude plugin tag <tagname>` instead — that CLI's
+    positional argument is a PATH, not a tag name, so it silently creates
+    nothing and the publish "succeeds" with the tag still missing.
+    """
+    name = get_plugin_name(plugin_root)
+    if not name:
+        raise SystemExit(
+            "BLOCKED: .claude-plugin/plugin.json has no `name` — cannot build the "
+            "{name}--v{version} resolver tag that downstream dependants need."
+        )
+    return f"{name}--v{version}"
+
+
 def update_plugin_json(root: Path, new_ver: str) -> tuple[bool, str]:
     """Write version to .claude-plugin/plugin.json."""
     pj = root / ".claude-plugin" / "plugin.json"
@@ -1353,6 +1393,39 @@ def stage_bump(root: Path, new_ver: str, dry_run: bool) -> None:
         cprint(f"  {RED}Version bump failed.{NC}")
         sys.exit(1)
     cprint(f"  {GREEN}Version bumped to {new_ver}.{NC}")
+    _refresh_uv_lock(root, new_ver, dry_run)
+
+
+def _refresh_uv_lock(root: Path, new_ver: str, dry_run: bool) -> None:
+    """Re-lock so uv.lock carries the just-bumped version (issue #149's shape).
+
+    The bump rewrites pyproject.toml's `version` but uv.lock keeps its own copy
+    of it. Left stale, the very next `uv run` in this repo re-locks as a SIDE
+    EFFECT, dirtying the tree — and the NEXT publish then aborts at [1/11]
+    "Working tree is dirty" for a change nobody made deliberately. Re-locking
+    HERE means the new lock lands in this release's own commit (stage 10 does
+    `git add -A`), which is where it belongs.
+
+    Deliberately non-fatal: `uv` is not a hard dependency of this pipeline, and
+    a lock refresh failing is not a reason to abandon a release that has already
+    passed lint, tests and validation.
+    """
+    lock = root / "uv.lock"
+    if not lock.is_file():
+        return
+    if not shutil.which("uv"):
+        cprint(f"  {YELLOW}uv not on PATH — uv.lock may lag {new_ver}.{NC}")
+        return
+    if dry_run:
+        cprint(f"  Would re-lock uv.lock to {new_ver}")
+        return
+    r = subprocess.run(
+        ["uv", "lock"], cwd=str(root), capture_output=True, text=True, check=False,
+    )
+    if r.returncode == 0:
+        cprint(f"  {GREEN}uv.lock re-locked to {new_ver}.{NC}")
+    else:
+        cprint(f"  {YELLOW}uv lock failed (rc={r.returncode}) — uv.lock may lag.{NC}")
 
 def stage_update_badges(root: Path, old_ver: str, new_ver: str, dry_run: bool) -> None:
     """Step 8: Replace version badge in README.md.
@@ -1499,21 +1572,27 @@ def stage_commit_and_push(root: Path, new_ver: str, dry_run: bool) -> None:
     """
     cprint(f"\n{BOLD}[10/11] Committing and pushing...{NC}")
     tag = f"v{new_ver}"
+    # The resolver tag rides in the SAME atomic push as the release tag. Pushing
+    # it separately would allow a half-published state where the release exists
+    # but no dependant can resolve it — the exact shape of integrator#22.
+    rtag = resolver_tag(root, new_ver)
     expected_subject = f"chore: bump version to {new_ver}"
     head_subject = _head_commit_message(root)
     tree_clean = _git_porcelain_clean(root)
     tag_exists = _local_tag_exists(root, tag)
+    rtag_exists = _local_tag_exists(root, rtag)
 
     if dry_run:
         if head_subject == expected_subject and tree_clean:
             cprint(f"  Would skip commit (HEAD already '{expected_subject}', tree clean)")
         else:
             cprint(f"  Would commit: {expected_subject}")
-        if tag_exists:
-            cprint(f"  Would skip tag (already exists locally): {tag}")
-        else:
-            cprint(f"  Would tag: {tag}")
-        cprint(f"  Would push (atomic): origin HEAD {tag}")
+        for t, exists in ((tag, tag_exists), (rtag, rtag_exists)):
+            if exists:
+                cprint(f"  Would skip tag (already exists locally): {t}")
+            else:
+                cprint(f"  Would tag: {t}")
+        cprint(f"  Would push (atomic): origin HEAD {tag} {rtag}")
         return
 
     if head_subject == expected_subject and tree_clean:
@@ -1528,6 +1607,11 @@ def stage_commit_and_push(root: Path, new_ver: str, dry_run: bool) -> None:
     else:
         run(["git", "tag", "-a", tag, "-m", f"Release {tag}"], cwd=root)
 
+    if rtag_exists:
+        cprint(f"  {YELLOW}Resolver tag {rtag} already exists locally — skipping.{NC}")
+    else:
+        run(["git", "tag", "-a", rtag, "-m", f"Resolver tag for {tag}"], cwd=root)
+
     # gh-auth precheck — fail fast with actionable error if gh missing/unauthed.
     owner, repo = _resolve_owner_repo(root)
     _ensure_gh_auth(owner, repo)
@@ -1538,12 +1622,12 @@ def stage_commit_and_push(root: Path, new_ver: str, dry_run: bool) -> None:
     # transaction in the wire protocol; the server rolls back if any ref
     # update fails. git_with_retry still wraps the call so transient
     # network hiccups (4xx-class permanent errors fall through immediately).
-    cprint(f"  {BLUE}$ git push --atomic origin HEAD {tag}{NC}")
+    cprint(f"  {BLUE}$ git push --atomic origin HEAD {tag} {rtag}{NC}")
     git_with_retry(
-        ["git", "push", "--atomic", "origin", "HEAD", tag],
+        ["git", "push", "--atomic", "origin", "HEAD", tag, rtag],
         cwd=str(root), capture_output=False,
     )
-    cprint(f"  {GREEN}Pushed {tag} atomically.{NC}")
+    cprint(f"  {GREEN}Pushed {tag} + {rtag} atomically.{NC}")
 
 def stage_gh_release(root: Path, new_ver: str, dry_run: bool) -> None:
     """Step 11: Create GitHub release via gh CLI.
