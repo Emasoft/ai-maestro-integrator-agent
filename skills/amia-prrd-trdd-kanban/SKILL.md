@@ -82,7 +82,7 @@ mechanics see the `prrd-trdd-kanban` skill in `ai-maestro-plugin`.
   with `min-approval-requirement: none`, `mandate: true`,
   `mandated-by: self`, and worked immediately. Over-gating stalls
   the board just as surely as under-gating ships unreviewed —
-  see `references/async-approval-model.md`.
+  see [async-approval-model](references/async-approval-model.md).
 - `gh` / `git` auth failure → stop and report; do not retry blindly.
 
 ## Examples
@@ -98,6 +98,10 @@ TRDD-9f8e7d6c", prompt giving the deploy target; on success set
 `column: live` and `live-since`.
 
 ## Resources
+
+- [async-approval-model](references/async-approval-model.md) — Tier-0 default
+  and the field vocabulary, the D3 escalation table, D1 never-block, the
+  completion gate, and exactly which transitions stay gated.
 
 For shared column mechanics and the canonical exempt-vs-non-exempt
 rules, consult the universal `prrd-trdd-kanban` skill and its
