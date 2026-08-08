@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.3] — 2026-08-08
+
+### Bug Fixes
+
+- Never require linear history (USER ruling 2026-08-08)
 ## [1.6.2] — 2026-08-08
 
 ### Bug Fixes
