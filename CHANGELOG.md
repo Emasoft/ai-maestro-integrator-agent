@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] — 2026-08-08
+
+### Features
+
+- Incorporate R41-R52; resolve the two opus subagent pins (TRDD-K4WQ8ZTC)
 ## [1.5.0] — 2026-08-08
 
 ### Bug Fixes
