@@ -6,7 +6,7 @@ created: 2026-08-14T13:16:51+0200
 updated: 2026-08-14T13:16:51+0200
 current-owner: integrator
 task-type: infra
-approval-tier: 0
+min-approval-requirement: none
 scope: project
 relevant-rules: []
 ---
