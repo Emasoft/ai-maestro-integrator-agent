@@ -567,10 +567,23 @@ def _get_origin_slug(root: Path) -> str | None:
     return f"{parts[0]}/{parts[1]}"
 
 
-# The two ruleset names that ARE the ratified baseline (manager-approval-defaults
-# §F). Applying this pair as-is is EXEMPT; adding any OTHER ruleset that affects
+# The three ruleset names that ARE the ratified baseline (manager-approval-defaults
+# §F). Applying this TRIO as-is is EXEMPT; adding any OTHER ruleset that affects
 # the default branch is NON-EXEMPT and needs MANAGER approval.
-RATIFIED_BASELINE_RULESETS = ("baseline-history-protect", "baseline-pr-and-checks")
+#
+# `baseline-tag-protect` (target: tag, refs/tags/v*.*.*, rules deletion+update,
+# bypass nobody) is the third member — ratified Tier-3 on janitor#14 and confirmed
+# there as "RATIFIED and LIVE" with the ruleset applied on the janitor repo itself.
+# It was missing here while the constant said "the two", which made this predicate
+# fail OPEN in one direction: a repo carrying ONLY tag-protect read as unbaselined,
+# so the guard below would step aside and let the destructive command run against
+# a repo that IS in fact baselined. A membership set that is short by one member is
+# not a cosmetic drift — it silently narrows the guard it defines.
+RATIFIED_BASELINE_RULESETS = (
+    "baseline-history-protect",
+    "baseline-pr-and-checks",
+    "baseline-tag-protect",
+)
 
 
 def _ratified_baseline_present(slug: str) -> bool | None:

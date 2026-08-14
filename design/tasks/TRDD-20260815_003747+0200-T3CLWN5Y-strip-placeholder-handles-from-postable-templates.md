@@ -27,9 +27,23 @@ skills/amia-kanban-orchestration/references/ai-agent-vs-human-workflow-part1-fun
 gh issue comment 42 --body "@human-dev Please review the blockers section"
 ```
 
-`@user` and `@username` are plausibly registered accounts. A template is exactly
-the artifact that gets copied verbatim under time pressure, which is why the rule
-is "no `@` at all" rather than "no real handles".
+These are not hypothetical names. Checked with `gh api users/<name>` — **five of
+the six placeholders resolve to real GitHub accounts:**
+
+| Placeholder | `gh api users/<name>` |
+|---|---|
+| `@human-dev` | **HUMAN-DEV — a real Organization** |
+| `@user` | real User |
+| `@tech-lead` | real User (`Tech-lead`) |
+| `@backend-dev` | real User |
+| `@agent-1` | real User |
+| `@username` | 404 — the only safe one |
+
+So the copy-pasteable `gh issue comment` line above pages a real organization, and
+the descriptive-sounding names are the trap: `human-dev` *feels* like an obvious
+placeholder, which is exactly why nobody checks it. A template is the artifact that
+gets copied verbatim under time pressure, which is why the rule is "no `@` at all"
+rather than "no real handles" — you cannot eyeball which names are taken.
 
 ## The classification — 172 raw hits, ~68 are the defect
 
@@ -56,8 +70,13 @@ Per the hub, `@me` / `@copilot` are permitted **only as assignee-flag values**
 2. Fix only what the ported check flags. Placeholders become plain words
    (`the reviewer`, `the backend dev`) or backticked (`` `@username` ``) where the
    text is genuinely *about* a handle.
-3. Leave every KEEP row above untouched, and encode them as explicit allowances in
-   the check so a later sweep cannot "helpfully" break `@claude`.
+3. Leave every KEEP row untouched — but allow them **BY POSITION, NEVER BY NAME**
+   (hub guidance, and it is the load-bearing design choice here). `@claude` is
+   permitted because it sits in *trigger position in an issue body*, the same way
+   `@me` / `@copilot` are permitted only as *assignee-flag values*. A name
+   allowlist would say "the string `@claude` is fine anywhere", which re-opens the
+   hole one rename later and teaches the next author that some handles are
+   intrinsically safe. No handle is intrinsically safe; only positions are.
 
 ## Acceptance criteria
 

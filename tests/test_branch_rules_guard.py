@@ -74,11 +74,17 @@ SKIP_REASON = "gh CLI missing or unauthenticated — cannot read the LIVE rulese
 # ── The checks (shared by pytest wrappers and the standalone runner) ──
 
 
-def check_ratified_names_are_the_spec_pair() -> str:
-    """The guard watches exactly the two ruleset names §F ratifies."""
+def check_ratified_names_are_the_spec_trio() -> str:
+    """The guard watches exactly the three ruleset names §F ratifies."""
+    # Was written as a PAIR and asserted the pair, so it did not merely miss
+    # `baseline-tag-protect` — it pinned the stale spec as the expected answer and
+    # would have failed anyone correcting it. A test that encodes the outdated
+    # membership actively defends the drift. Trio ratified Tier-3 on janitor#14
+    # ("RATIFIED and LIVE", applied there as ruleset 17545495).
     if set(RATIFIED_BASELINE_RULESETS) != {
         "baseline-history-protect",
         "baseline-pr-and-checks",
+        "baseline-tag-protect",
     }:
         return f"FAIL: guard watches {RATIFIED_BASELINE_RULESETS!r}"
     return "PASS"
@@ -170,7 +176,7 @@ def check_persona_forbids_linear_history() -> str:
 CHECKS = [
     "check_no_linear_history_requirement",
     "check_persona_forbids_linear_history",
-    "check_ratified_names_are_the_spec_pair",
+    "check_ratified_names_are_the_spec_trio",
     "check_repo_really_is_baselined",
     "check_guard_refuses_on_baselined_repo",
     "check_unreadable_list_fails_closed",
