@@ -24,7 +24,7 @@ import tarfile
 import tempfile
 import zipfile
 from pathlib import Path
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 IS_WINDOWS = platform.system() == "Windows"
 PYTHON_VERSION = sys.version_info
@@ -710,6 +710,29 @@ def _portable_path(p: Path) -> str:
     """Convert a path to forward slashes for JSON storage.
     Claude Code (Node.js) expects forward slashes even on Windows."""
     return str(p).replace("\\", "/")
+
+
+# Claude Code 2.1.232 accepts "additionalMarketplaces" and "allowedMarketplaces" as
+# friendlier aliases for "extraKnownMarketplaces" / "strictKnownMarketplaces". Reads
+# must honour every spelling or a marketplace registered under an alias looks
+# unregistered — a false "Not in extraKnownMarketplaces" hint that sends the user
+# chasing a registration they already have. Writes stay on the canonical key.
+KNOWN_MARKETPLACES_KEY = "extraKnownMarketplaces"
+KNOWN_MARKETPLACES_ALIASES = (KNOWN_MARKETPLACES_KEY, "additionalMarketplaces")
+
+
+def _known_marketplaces(settings: dict[str, Any]) -> dict[str, Any]:
+    """Merged marketplace registrations across the canonical key and its aliases.
+
+    Later spellings do not clobber earlier ones: the canonical key wins on a
+    duplicate name, which is what Claude Code's own merge does.
+    """
+    merged: dict[str, Any] = {}
+    for key in reversed(KNOWN_MARKETPLACES_ALIASES):
+        entries = settings.get(key)
+        if isinstance(entries, dict):
+            merged.update(entries)
+    return merged
 
 
 # ── Plugin validation ─────────────────────────────────────
@@ -2410,7 +2433,7 @@ def do_doctor(verbose: bool = False):
             try:
                 data = load_jsonc(path)
                 ok(f"{label}: valid")
-                ekm = data.get("extraKnownMarketplaces", {})
+                ekm = _known_marketplaces(data)
                 if ekm:
                     info(f"  {len(ekm)} marketplace(s) registered")
                 ep = data.get("enabledPlugins", {})
@@ -2494,7 +2517,7 @@ def do_doctor(verbose: bool = False):
             elif isinstance(p_src, dict):
                 src_type = p_src.get("source", "")
                 if not src_type:
-                    # Object sources (github, url, npm, pip, git-subdir) require a "source" type field
+                    # Object sources (github, url, npm, git-subdir, archive, command) need a "source" type field
                     warn(f"  marketplace.json: plugin '{p_name_display}' source object missing 'source' type field")
                 issues += 1
             # String sources like "./plugins/name" are valid relative paths per the Anthropic spec
@@ -2502,7 +2525,7 @@ def do_doctor(verbose: bool = False):
         # Check if registered in extraKnownMarketplaces (informational only)
         # Marketplaces can also be loaded via '/plugin marketplace add' which stores them
         # internally — absence from extraKnownMarketplaces is NOT an error
-        ekm = settings.get("extraKnownMarketplaces", {})
+        ekm = _known_marketplaces(settings)
         if mp_name in ekm:
             registered_path = ekm[mp_name].get("source", {}).get("path", "")
             actual_path = _portable_path(mp_dir)
@@ -2611,7 +2634,7 @@ def do_doctor(verbose: bool = False):
                 issues += 1
 
     # 5. Check for orphaned entries in settings
-    ekm = settings.get("extraKnownMarketplaces", {})
+    ekm = _known_marketplaces(settings)
     for mp_name, mp_cfg in ekm.items():
         source = mp_cfg.get("source", {})
         if source.get("source") == "directory":
