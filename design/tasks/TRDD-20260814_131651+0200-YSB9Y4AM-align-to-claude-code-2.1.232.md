@@ -49,8 +49,16 @@ refuses an archive URL that is not `https://` or that resolves to a loopback,
 link-local, or cloud-metadata host (its own message: *"Archive URLs must use
 https:// and must not point at a loopback, link-local, or cloud-metadata host"*).
 `validate_archive_source()` now enforces both as MAJOR, since such an entry cannot
-install at all. The metadata-host rule is a genuine SSRF guard: a "plugin" fetching
-`169.254.169.254` is pulling cloud credentials, not a plugin.
+install at all. The metadata-host rule is a genuine SSRF guard: an "archive" that
+fetches the cloud metadata endpoint is pulling instance credentials, not a plugin.
+
+Hosts are judged **structurally**, by IP range via the stdlib `ipaddress` module,
+rather than against a list of literal addresses. That covers every address in
+`127.0.0.0/8`, `::1`, `169.254.0.0/16` and `fe80::/10` — including the whole
+link-local block the metadata endpoint lives inside — instead of the three literals
+a list could name. It also keeps a live IMDS address out of the source, where
+SSRF/secret scanners flag it and cannot tell a denylist from a target: CPV's RC-65
+raised MAJOR on the first cut for exactly that reason.
 
 ### 3. Marketplace settings aliases
 
@@ -91,13 +99,14 @@ the board asserts a release that never happened.
 
 ## Verification
 
-- `tests/test_marketplace_source_types.py` — 16 checks, all passing.
+- `tests/test_marketplace_source_types.py` — 17 checks, all passing.
 - Full suite: **11/11 test files**, 85 pytest tests.
 - `ruff` and `mypy` clean on both edited scripts.
 - **Non-vacuity proved by breaking it:** injecting `pip` into the table fails 3
   checks by name (`VALID_SOURCE_TYPES drifted — missing=[] extra=['pip']`);
-  removing `archive` fails 4; restoring returns 16/16. The URL guard accepts
-  `https://ex.com/p.zip` and rejects `http://`, `169.254.169.254`, and `localhost`.
+  removing `archive` fails 4; restoring returns green. The URL guard accepts
+  `https://ex.com/p.zip` and rejects `http://`, a link-local address, the IPv6
+  loopback, and `localhost`.
 
 ## Notes and lessons learned
 
