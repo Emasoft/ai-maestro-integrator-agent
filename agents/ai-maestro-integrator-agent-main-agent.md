@@ -447,7 +447,14 @@ Your reply-only recipients (`1` edges — one reply per inbound message, require
 |-------|-------------|
 | HUMAN | Reply only — you may answer a message the user sent you; you can NOT initiate user contact |
 
-Your forbidden recipients (blank edges — the server returns HTTP 403):
+Your forbidden recipients (blank edges — **policy-forbidden, and NOT reliably
+refused by the transport**, so the discipline is yours to keep):
+
+> Do not read these edges as machine-enforced. An earlier version of this table
+> claimed "the server returns HTTP 403"; that is false under the second
+> transport Claude Code 2.1.224 introduced, where a forbidden send can succeed
+> silently (hub#131). A rule you believe is enforced is a rule you stop
+> checking — which is exactly how a blank edge gets crossed.
 
 | Title | Routing |
 |-------|---------|

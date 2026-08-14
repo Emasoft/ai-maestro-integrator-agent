@@ -1,9 +1,10 @@
 ---
 trdd-id: dbf53e20-63e3-45d2-9223-c649d2b4cce8
 title: Claude Code 2.1.101 to 2.1.143 compatibility audit and update
-column: dev
+column: superseded
+superseded-by: [YSB9Y4AM]
 created: 2026-05-16T00:00:00+0200
-updated: 2026-06-11T11:25:03+0200
+updated: 2026-08-15T00:37:12+0200
 current-owner: ai-maestro-integrator-agent
 task-type: audit
 release-via: publish
@@ -164,3 +165,26 @@ directory (ephemeral; re-fetch the URL if needed).
 - **Phase 6:** update README/CHANGELOG; document new Claude Code feature
   dependencies
 - **Phase 7:** run plugin validation (`/cpv-validate-plugin`); ship
+
+## Approval log
+
+- 2026-08-15T00:37:12+0200 — SUPERSEDED by integrator, by TRDD-YSB9Y4AM.
+  This card audits Claude Code **2.1.143**; the platform is past 2.1.232 and the
+  alignment work has since been done against far newer releases, most recently
+  TRDD-YSB9Y4AM (2.1.221→2.1.232, read from the shipped binary rather than the
+  changelog). Left at `column: dev` it asserted that someone was actively working
+  a 2.1.143 audit — untouched since 2026-06-11 — which is the board lying about
+  itself.
+
+  Carried forward so it is not lost with the card:
+
+  - **AC1 / AC7 (Stop-hook block cap) — DONE.** `scripts/amia_stop_hook.py`
+    carries 24 references to the cap; the convergence requirement is implemented.
+  - **AC4 (`$schema` in `plugin.json`) — DROPPED, deliberately.** Measured before
+    superseding: **zero of 40 installed plugins** on this machine carry `$schema`
+    in `plugin.json`, the janitor 3.3.0 manifest included, and CPV validates this
+    plugin clean without it. It was a 2.1.120-era inference the ecosystem never
+    adopted, so it is not an open obligation — recorded here rather than respawned
+    as a task that would never be justified.
+  - **AC2 / AC3 / AC5 / AC6** were subsumed by the later per-release alignment
+    TRDDs, which audit the same surfaces against current versions.
