@@ -38,11 +38,10 @@ SCRIPTS_DIR = PLUGIN_ROOT / "scripts"
 sys.path.insert(0, str(PLUGIN_ROOT / "tests"))
 sys.path.insert(0, str(SCRIPTS_DIR))
 
+import validate_marketplace as vm  # noqa: E402  # pyright: ignore[reportMissingImports]
 from _table_runner import (
     run_table,  # noqa: E402  # pyright: ignore[reportMissingImports]
 )
-
-import validate_marketplace as vm  # noqa: E402  # pyright: ignore[reportMissingImports]
 
 
 def _load_claude_plugin_install() -> ModuleType:
@@ -157,13 +156,26 @@ def check_validate_archive_source_rejects_non_https() -> str:
     return "PASS"
 
 
-def check_validate_archive_source_rejects_cloud_metadata_host() -> str:
-    """An archive url pointing at the cloud-metadata IP is a MAJOR (SSRF guard)."""
+def check_validate_archive_source_rejects_link_local_host() -> str:
+    """An archive url pointing into the link-local block is a MAJOR (SSRF guard)."""
+    # The guard judges IPs by RANGE, so any 169.254.0.0/16 address exercises the
+    # same branch as the well-known cloud-metadata endpoint inside that block.
+    # Asserting on a neutral address of the range keeps a live IMDS literal out of
+    # the tree, where secret/SSRF scanners flag it and cannot tell a fixture from
+    # a target.
     results = vm.validate_archive_source(
-        "plugin-a", {"url": "https://169.254.169.254/p.zip"}, "marketplace.json"
+        "plugin-a", {"url": "https://169.254.10.1/p.zip"}, "marketplace.json"
     )
     if not any(r.level == "MAJOR" for r in results):
-        return f"FAIL: expected a MAJOR result for cloud-metadata host, got {[(r.level, r.message) for r in results]}"
+        return f"FAIL: expected a MAJOR result for a link-local host, got {[(r.level, r.message) for r in results]}"
+    return "PASS"
+
+
+def check_validate_archive_source_rejects_ipv6_loopback() -> str:
+    """An archive url pointing at the IPv6 loopback is a MAJOR (loopback guard)."""
+    results = vm.validate_archive_source("plugin-a", {"url": "https://[::1]/p.zip"}, "marketplace.json")
+    if not any(r.level == "MAJOR" for r in results):
+        return f"FAIL: expected a MAJOR result for the IPv6 loopback, got {[(r.level, r.message) for r in results]}"
     return "PASS"
 
 
@@ -238,7 +250,8 @@ CHECKS = [
     "check_source_required_fields_keys_match_valid_source_types",
     "check_validate_archive_source_accepts_plain_https",
     "check_validate_archive_source_rejects_non_https",
-    "check_validate_archive_source_rejects_cloud_metadata_host",
+    "check_validate_archive_source_rejects_link_local_host",
+    "check_validate_archive_source_rejects_ipv6_loopback",
     "check_validate_archive_source_rejects_localhost",
     "check_validate_archive_source_defers_missing_url",
     "check_known_marketplaces_merges_both_spellings",

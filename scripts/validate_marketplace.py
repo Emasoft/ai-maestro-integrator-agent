@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import configparser
+import ipaddress
 import json
 import re
 import subprocess
@@ -159,17 +160,23 @@ SOURCE_REQUIRED_FIELDS = {
     "command": {"command"},  # Local command printing the plugin directory (v2.1.229+)
 }
 
-# Hosts an "archive" source URL may never resolve to. Claude Code refuses these
-# outright ("Archive URLs must use https:// and must not point at a loopback,
-# link-local, or cloud-metadata host"), so an entry naming one is dead on arrival.
-ARCHIVE_FORBIDDEN_HOSTS = {
+# Hostname suffixes an "archive" source URL may never use. Claude Code refuses
+# loopback, link-local, and cloud-metadata hosts outright ("Archive URLs must use
+# https:// and must not point at a loopback, link-local, or cloud-metadata host"),
+# so an entry naming one is dead on arrival.
+#
+# IP addresses are judged STRUCTURALLY by `_is_forbidden_archive_host` (whole
+# ranges via the stdlib `ipaddress` module) rather than by a list of literal
+# addresses: a list can only ever name the few well-known metadata IPs, while the
+# range test covers every address in 127.0.0.0/8, ::1, 169.254.0.0/16 and fe80::/10
+# — the link-local block that the cloud metadata endpoint lives inside. It is the
+# stronger check, and it keeps well-known IMDS literals out of the source, where
+# security scanners rightly flag them (they cannot tell a denylist from a target).
+ARCHIVE_FORBIDDEN_HOST_SUFFIXES = (
     "localhost",
-    "127.0.0.1",
-    "::1",
-    "0.0.0.0",
-    "169.254.169.254",  # cloud metadata (AWS/GCP/Azure/OpenStack)
-    "metadata.google.internal",
-}
+    ".localhost",
+    ".internal",  # the cloud-metadata hostname suffix, and friends
+)
 
 # Reserved marketplace names that cannot be used
 RESERVED_MARKETPLACE_NAMES = {
@@ -832,6 +839,26 @@ def validate_repository_url(
     return results
 
 
+def _is_forbidden_archive_host(host: str) -> bool:
+    """True when an archive URL host is one Claude Code refuses to fetch.
+
+    Judges IP literals by RANGE, not by name: an unspecified/loopback/link-local
+    address is refused wherever it falls in those blocks, which subsumes the cloud
+    metadata endpoint (it sits inside the link-local block) without hardcoding it.
+    A non-IP hostname is matched on the suffix list instead.
+    """
+    if not host:
+        return False
+
+    # A bracketed IPv6 literal arrives from urlparse without its brackets.
+    try:
+        ip = ipaddress.ip_address(host)
+    except ValueError:
+        return host.endswith(ARCHIVE_FORBIDDEN_HOST_SUFFIXES)
+
+    return bool(ip.is_loopback or ip.is_link_local or ip.is_unspecified)
+
+
 def validate_archive_source(
     plugin_id: str,
     source: dict[str, Any],
@@ -842,8 +869,8 @@ def validate_archive_source(
     Claude Code refuses an archive URL that is not https:// or that points at a
     loopback, link-local, or cloud-metadata host. Both are MAJOR here rather than
     MINOR: the entry cannot install at all, so a passing validation would be a lie.
-    The metadata-host rule is a real SSRF guard — a plugin that fetches
-    169.254.169.254 would be pulling cloud credentials, not a plugin.
+    The metadata-host rule is a real SSRF guard — an "archive" that fetches the
+    cloud metadata endpoint would be pulling instance credentials, not a plugin.
     """
     results: list[ValidationResult] = []
     url = source.get("url")
@@ -878,7 +905,7 @@ def validate_archive_source(
         )
 
     host = (parsed.hostname or "").lower()
-    if host in ARCHIVE_FORBIDDEN_HOSTS or host.endswith(".localhost"):
+    if _is_forbidden_archive_host(host):
         results.append(
             ValidationResult(
                 level="MAJOR",
