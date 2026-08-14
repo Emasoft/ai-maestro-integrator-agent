@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.4] — 2026-08-14
+
+### Bug Fixes
+
+- Align plugin source types to Claude Code 2.1.232 (TRDD-YSB9Y4AM)
+- Read marketplace registrations under the 2.1.232 aliases (TRDD-YSB9Y4AM)
+- Use min-approval-requirement, not the deprecated approval-tier (TRDD-YSB9Y4AM)
+- Judge archive hosts by IP range, not by literal address (TRDD-YSB9Y4AM)
+
+### Documentation
+
+- Releaser/deployer spawns are background by default (TRDD-YSB9Y4AM)
+- Describe the host guard without a live IMDS literal (TRDD-YSB9Y4AM)
 ## [1.6.3] — 2026-08-08
 
 ### Bug Fixes
