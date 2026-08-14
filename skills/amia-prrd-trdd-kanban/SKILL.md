@@ -97,6 +97,15 @@ Agent tool with `subagent_type: deployer`, description "Deploy
 TRDD-9f8e7d6c", prompt giving the deploy target; on success set
 `column: live` and `live-since`.
 
+Both spawns run in the BACKGROUND in an interactive session — Claude Code
+2.1.232 made that the default for non-teammate agent spawns. The Agent call
+returns the agent's name, not the release or deploy result; that arrives later
+as a task notification. So do NOT advance the column on the spawn returning.
+Wait for the notification, read the agent's reported outcome, and only then set
+`column: published` / `column: live`. Treating the spawn's return as success
+would mark a TRDD released while the releaser is still running — and if it
+subsequently fails, the board asserts a release that never happened.
+
 ## Resources
 
 - [async-approval-model](references/async-approval-model.md)
