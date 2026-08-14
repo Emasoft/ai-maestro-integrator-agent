@@ -105,8 +105,18 @@ ValidationReport = MarketplaceValidationReport
 # Constants
 # =============================================================================
 
-# Valid source types for plugins in a marketplace
-VALID_SOURCE_TYPES = {"github", "url", "npm", "pip", "git-subdir"}
+# Valid source types for plugins in a marketplace.
+#
+# This mirrors Claude Code's own set exactly (verified against the 2.1.232 binary:
+# `new Set(["npm","url","github","git-subdir","archive","command","unsupported"])`).
+# A plugin entry whose source kind is outside that set is DROPPED by Claude Code as
+# an unusable entry, so accepting a wider set here would pass a marketplace the
+# platform cannot load. "unsupported" is Claude Code's internal sentinel for exactly
+# that case and is deliberately NOT authorable.
+#
+# "archive" arrived in 2.1.224, "command" in 2.1.229. "pip" was never in Claude
+# Code's set and is not accepted — an entry using it is silently skipped at load.
+VALID_SOURCE_TYPES = {"github", "url", "npm", "git-subdir", "archive", "command"}
 
 # Required fields in marketplace.json
 REQUIRED_MARKETPLACE_FIELDS = {"name", "owner", "plugins"}
@@ -144,8 +154,21 @@ SOURCE_REQUIRED_FIELDS = {
     "github": {"repo"},
     "url": {"url"},
     "npm": {"package"},
-    "pip": {"package"},
     "git-subdir": {"repo", "subdir"},  # Points to a subdirectory within a git repo (v2.1.69+)
+    "archive": {"url"},  # HTTPS zip of the plugin, optional sha256 pin (v2.1.224+)
+    "command": {"command"},  # Local command printing the plugin directory (v2.1.229+)
+}
+
+# Hosts an "archive" source URL may never resolve to. Claude Code refuses these
+# outright ("Archive URLs must use https:// and must not point at a loopback,
+# link-local, or cloud-metadata host"), so an entry naming one is dead on arrival.
+ARCHIVE_FORBIDDEN_HOSTS = {
+    "localhost",
+    "127.0.0.1",
+    "::1",
+    "0.0.0.0",
+    "169.254.169.254",  # cloud metadata (AWS/GCP/Azure/OpenStack)
+    "metadata.google.internal",
 }
 
 # Reserved marketplace names that cannot be used
@@ -617,6 +640,23 @@ def validate_plugin_source(
                     )
                 )
 
+        # An "archive" source pins its zip with sha256 (64 hex, either case) — a
+        # different field and a different width from git's 40-hex "sha".
+        if "sha256" in source:
+            sha256 = source["sha256"]
+            if not isinstance(sha256, str) or not re.match(r"^[0-9a-fA-F]{64}$", sha256):
+                results.append(
+                    ValidationResult(
+                        level="MINOR",
+                        category="source",
+                        message=f"Plugin '{plugin_id}' source 'sha256' must be a 64-character hex digest",
+                        file=json_path,
+                    )
+                )
+
+        if source_type == "archive":
+            results.extend(validate_archive_source(plugin_id, source, json_path))
+
         # Check if using remote source type but plugin exists locally as submodule
         if source_type in ("github", "url"):
             plugin_name = plugin.get("name", plugin_id)
@@ -786,6 +826,69 @@ def validate_repository_url(
                 category="plugin",
                 message=f"Plugin '{plugin_id}' repository URL could not be parsed",
                 file=json_path,
+            )
+        )
+
+    return results
+
+
+def validate_archive_source(
+    plugin_id: str,
+    source: dict[str, Any],
+    json_path: str,
+) -> list[ValidationResult]:
+    """Check an 'archive' plugin source against the constraints Claude Code enforces.
+
+    Claude Code refuses an archive URL that is not https:// or that points at a
+    loopback, link-local, or cloud-metadata host. Both are MAJOR here rather than
+    MINOR: the entry cannot install at all, so a passing validation would be a lie.
+    The metadata-host rule is a real SSRF guard — a plugin that fetches
+    169.254.169.254 would be pulling cloud credentials, not a plugin.
+    """
+    results: list[ValidationResult] = []
+    url = source.get("url")
+    if not isinstance(url, str) or not url:
+        return results  # absence is already reported by the required-fields check
+
+    try:
+        parsed = urlparse(url)
+    except Exception:
+        results.append(
+            ValidationResult(
+                level="MAJOR",
+                category="source",
+                message=f"Plugin '{plugin_id}' archive url could not be parsed: {url}",
+                file=json_path,
+            )
+        )
+        return results
+
+    if parsed.scheme != "https":
+        results.append(
+            ValidationResult(
+                level="MAJOR",
+                category="source",
+                message=(
+                    f"Plugin '{plugin_id}' archive url must use https:// (got "
+                    f"'{parsed.scheme or 'no scheme'}')"
+                ),
+                file=json_path,
+                suggestion="Claude Code refuses non-https archive URLs; the plugin will not install",
+            )
+        )
+
+    host = (parsed.hostname or "").lower()
+    if host in ARCHIVE_FORBIDDEN_HOSTS or host.endswith(".localhost"):
+        results.append(
+            ValidationResult(
+                level="MAJOR",
+                category="source",
+                message=f"Plugin '{plugin_id}' archive url points at a forbidden host: {host}",
+                file=json_path,
+                suggestion=(
+                    "Claude Code refuses loopback, link-local, and cloud-metadata hosts "
+                    "for archive sources"
+                ),
             )
         )
 
