@@ -1,9 +1,9 @@
 ---
 trdd-id: GJF8C8SR
 title: Pin every forked skill to foreground execution after the CC 2.1.218 default flip
-column: complete
+column: completed
 created: 2026-08-07T20:43:23+0200
-updated: 2026-08-07T20:43:23+0200
+updated: 2026-08-15T00:33:41+0200
 current-owner: integrator-session
 task-type: bugfix
 release-via: publish
@@ -96,3 +96,7 @@ in-turn test above, which is this project's own judgement, not a peer's directiv
 | `ruff check --select=E,F,W,I --ignore=E501` | All checks passed |
 | `mypy --ignore-missing-imports` | Success, no issues |
 | forked skills / with `background: false` / missing | 19 / 19 / **0** |
+
+## Approval log
+
+- 2026-08-15T00:33:41+0200 — COMPLETED by integrator. Archived: work finished and shipped.

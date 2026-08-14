@@ -1,9 +1,9 @@
 ---
 trdd-id: 9MBKYW9E
 title: Verify CI actually went green on the released commit instead of inferring it from a clean push
-column: complete
+column: completed
 created: 2026-08-08T11:31:13+0200
-updated: 2026-08-08T11:31:13+0200
+updated: 2026-08-15T00:33:41+0200
 current-owner: integrator-session
 task-type: infra
 release-via: publish
@@ -102,3 +102,7 @@ skip honestly, naming the reason, when `gh` is missing or unauthenticated.
 | green commit `8c16c288` | rc=0, 8 checks, 0.5s |
 | unknown sha | rc=1 after the deadline |
 | `--dry-run` | rc=0, no network |
+
+## Approval log
+
+- 2026-08-15T00:33:41+0200 — COMPLETED by integrator. Archived: work finished and shipped.

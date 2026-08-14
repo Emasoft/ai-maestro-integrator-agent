@@ -1,9 +1,9 @@
 ---
 trdd-id: YSB9Y4AM
 title: Align the plugin to Claude Code 2.1.221 through 2.1.232
-column: complete
+column: completed
 created: 2026-08-14T13:16:51+0200
-updated: 2026-08-14T13:16:51+0200
+updated: 2026-08-15T00:33:41+0200
 current-owner: integrator
 task-type: infra
 min-approval-requirement: none
@@ -116,3 +116,7 @@ the field, and announced `command` without naming its field; both guesses would
 have been wrong in a way tests written from the same guess could never catch. The
 same habit killed a change I was about to make (the 40-char name cap) that would
 have introduced a fresh false failure.
+
+## Approval log
+
+- 2026-08-15T00:33:41+0200 — COMPLETED by integrator. Archived: work finished and shipped.

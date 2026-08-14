@@ -1,9 +1,9 @@
 ---
 trdd-id: 1DG0HQ0H
 title: Push the plugin-name resolver tag on every release so dependants can resolve this plugin
-column: complete
+column: completed
 created: 2026-08-08T10:57:19+0200
-updated: 2026-08-08T10:57:19+0200
+updated: 2026-08-15T00:33:41+0200
 current-owner: integrator-session
 task-type: bugfix
 release-via: publish
@@ -91,3 +91,7 @@ bug returned.
 | `ruff --select=E,F,W,I --ignore=E501` | clean |
 | `mypy --ignore-missing-imports` | clean |
 | resolver tag for this repo | `ai-maestro-integrator-agent--v<version>` |
+
+## Approval log
+
+- 2026-08-15T00:33:41+0200 — COMPLETED by integrator. Archived: work finished and shipped.

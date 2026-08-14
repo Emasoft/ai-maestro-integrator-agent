@@ -1,9 +1,9 @@
 ---
 trdd-id: 8CKKY36P
 title: Align the agent cost reporter to the current Claude model generation
-column: complete
+column: completed
 created: 2026-08-07T19:49:12+0200
-updated: 2026-08-07T19:49:12+0200
+updated: 2026-08-15T00:33:41+0200
 current-owner: integrator-session
 task-type: bugfix
 release-via: publish
@@ -107,3 +107,7 @@ should be falsified the same way before it is trusted.
 | `ruff check --select=E,F,W,I --ignore=E501` | All checks passed |
 | `mypy --ignore-missing-imports` | Success, no issues |
 | Resolver spot-check, 16 real model ids | all correct |
+
+## Approval log
+
+- 2026-08-15T00:33:41+0200 — COMPLETED by integrator. Archived: work finished and shipped.

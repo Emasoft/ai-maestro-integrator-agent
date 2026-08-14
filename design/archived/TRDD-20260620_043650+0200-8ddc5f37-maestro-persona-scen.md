@@ -3,7 +3,7 @@ trdd-id: 8ddc5f37-bbdd-42c9-a09b-82266e47198e
 title: MAESTRO persona section + governance SCEN suite + v1.3.1 release (R26–R40 9/9)
 column: published
 created: 2026-06-20T04:36:50+0200
-updated: 2026-06-20T05:16:27+0200
+updated: 2026-08-15T00:33:41+0200
 current-owner: integrator
 assignee: integrator
 priority: 2
@@ -134,3 +134,4 @@ This TRDD closes the integrator's two remaining gaps to reach fleet **9/9**.
 - 2026-06-20T05:16:27+0200 — **PUBLISHED v1.3.1** via the canonical pipeline
   (`publish.py --patch`; commit 5a5afdc, tag v1.3.1; push used the ratified admin-bypass
   for publish.py). Release: https://github.com/Emasoft/ai-maestro-integrator-agent/releases/tag/v1.3.1
+- 2026-08-15T00:33:41+0200 — PUBLISHED by integrator. Archived as published.

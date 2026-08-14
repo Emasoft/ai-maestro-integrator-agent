@@ -1,9 +1,9 @@
 ---
 trdd-id: 2MD3YY57
 title: Adopt the async-approval model plus RP-MODEL-01 and RP-SKILL-MENU-01
-column: complete
+column: completed
 created: 2026-08-08T12:34:20+0200
-updated: 2026-08-08T12:34:20+0200
+updated: 2026-08-15T00:33:41+0200
 current-owner: integrator-session
 task-type: docs
 release-via: publish
@@ -102,3 +102,7 @@ check that fails when a skill appears without a menu row can keep it.
 | `pytest tests/` | see release commit |
 | ruff + mypy | clean |
 | overlay fields after | `min-approval-requirement` + `mandate:` present; `approval-tier:` **0** |
+
+## Approval log
+
+- 2026-08-15T00:33:41+0200 — COMPLETED by integrator. Archived: work finished and shipped.

@@ -1,9 +1,9 @@
 ---
 trdd-id: RGXRISNX
 title: Refuse --install-branch-rules on a repo already carrying the ratified baseline
-column: complete
+column: completed
 created: 2026-08-08T11:15:17+0200
-updated: 2026-08-08T11:15:17+0200
+updated: 2026-08-15T00:33:41+0200
 current-owner: integrator-session
 task-type: security
 release-via: publish
@@ -102,3 +102,7 @@ falsification output.
 | `ruff --select=E,F,W,I --ignore=E501` | clean |
 | `mypy --ignore-missing-imports` | clean |
 | guard against the live repo | REFUSES, naming `cpv-branch-rules` and #203 |
+
+## Approval log
+
+- 2026-08-15T00:33:41+0200 — COMPLETED by integrator. Archived: work finished and shipped.
