@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.5] — 2026-08-15
+
+### Bug Fixes
+
+- The ratified baseline is a TRIO — add baseline-tag-protect (TRDD-T3CLWN5Y)
+
+### Documentation
+
+- Archive 11 finished TRDDs
+- Correct the false 403 enforcement claim, supersede the stale 2.1.143 audit (TRDD-T3CLWN5Y)
 ## [1.6.4] — 2026-08-14
 
 ### Bug Fixes
