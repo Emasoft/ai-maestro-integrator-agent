@@ -1,14 +1,17 @@
 ---
 trdd-id: T3CLWN5Y
 title: Strip placeholder GitHub handles from postable templates without breaking the real bot triggers
-column: todo
+column: testing
 created: 2026-08-15T00:37:47+0200
-updated: 2026-08-15T00:37:47+0200
+updated: 2026-08-16T17:02:00+0200
 current-owner: integrator
 task-type: security
 min-approval-requirement: none
 scope: project
 relevant-rules: []
+implementation-commits: [44650de]
+last-test-result: pass
+last-test-at: 2026-08-16T17:02:00+0200
 ---
 
 # Strip placeholder GitHub handles from postable templates
@@ -88,9 +91,37 @@ Per the hub, `@me` / `@copilot` are permitted **only as assignee-flag values**
    grep, not by assumption.
 4. The full suite still passes and CPV stays at 0/0/0/0.
 
+## Outcome (commit 44650de)
+
+All four acceptance criteria verified first-hand, not from an agent's report:
+
+| # | Criterion | Evidence |
+|---|---|---|
+| 1 | Test fails on a placeholder, passes on the KEEP set | `tests/test_no_handles_in_postable_bodies.py`, 3/3 checks, exit 0 |
+| 2 | Non-vacuity by injection | `--body "@someone …"` → `['@someone']`; same body without it → `[]` |
+| 3 | `@claude` examples still literal | 37 `@claude` + 3 `--assignee @me`/`@copilot`/`@dependabot` intact, by grep |
+| 4 | Suite green, CPV clean | 12/12 test files; CPV `--strict` CRITICAL=0 MAJOR=0 MINOR=0 NIT=0 |
+
+12 handles stripped across 4 reference docs. The estimate in the classification
+table above said ~68; the real count inside *postable body position* is 12. The
+gap is the whole point of the position-based scope — the other ~56 were prose
+about handles, not text that reaches the GitHub API.
+
 ## Notes and lessons learned
 
 The instinct on receiving "templates carry no `@`" was to sweep all 172 hits. That
 would have silently disabled the `@claude` bot trigger in 27 places — a rule
 applied without classifying its own exceptions causes the damage it was written to
 prevent. Counting the tokens before editing any of them is what surfaced the split.
+
+A doc can *instruct* the hazard even after every literal instance is gone: the
+line `# Or direct mention in issue body` survived the handle sweep and told the
+reader to go do the exact thing the card exists to prevent. Removing the tokens
+is not the same as removing the advice — grep finds the former, reading finds the
+latter.
+
+Two writers nearly collided here. A background agent was mid-edit on these files
+while this session began measuring them; the same file read twice seconds apart
+gave 3 hits then 0. What caught it was re-measuring rather than trusting the
+first read — and the correct response was to stop editing and let the agent
+land, not to merge two diffs by hand.
