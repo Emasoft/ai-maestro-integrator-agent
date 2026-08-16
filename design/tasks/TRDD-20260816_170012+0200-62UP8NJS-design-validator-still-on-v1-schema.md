@@ -31,6 +31,30 @@ So the validator is not finding a defect in the cards — the cards are correct 
 the validator is stale. Found while closing TRDD-T3CLWN5Y; explicitly confirmed
 pre-existing by running it against an archived card that card never touched.
 
+## Root cause — three independent v1 assumptions, all in one block
+
+Located at `scripts/amia_design_validate.py:57-59` (verified by reading the file):
+
+```python
+VALID_STATUSES = {"DRAFT", "REVIEW", "APPROVED", "IMPLEMENTED", "ARCHIVED", "DEPRECATED", "REJECTED"}
+UUID_PATTERN = re.compile(r"^GUUID-\d{8}-\d{4}$")
+REQUIRED_FIELDS = {"type", "status"}
+```
+
+Every one of the three is a v1 artifact, and each would independently fail every
+current card:
+
+| Line | Assumes | v2 reality |
+|---|---|---|
+| 59 | fields `type`, `status` | `task-type:`, `column:` |
+| 57 | a 7-value DRAFT/REVIEW/APPROVED status vocabulary | the ratified 17-column kanban vocabulary |
+| 58 | ids shaped `GUUID-XXXXXXXX-XXXX` | 8-char uppercase base36, e.g. `T3CLWN5Y` |
+
+This matters for the fix's scope: correcting only `REQUIRED_FIELDS` would move the
+failure from "missing field" to "invalid status" and then to "malformed id" — three
+red herrings in sequence, each looking like a fresh bug. All three constants are one
+change, not three.
+
 ## Why this matters more than a stale field list
 
 A validator that fails 100% of its inputs is worse than one that does not exist.
