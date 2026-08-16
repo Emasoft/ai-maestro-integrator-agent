@@ -188,7 +188,7 @@ If AI agent session ends with work incomplete:
 gh issue comment 42 --body "$(cat <<'EOF'
 ## Session Ended
 
-Agent: @implementer-1
+Agent: implementer-1
 Session ended with work incomplete.
 
 **Progress:**
@@ -241,7 +241,7 @@ gh issue edit 42 --add-assignee human-dev
 
 # Comment with context (more detailed for humans)
 gh issue comment 42 --body "$(cat <<'EOF'
-@human-dev This is assigned to you for Sprint 3.
+human-dev: this is assigned to you for Sprint 3.
 
 **Context:**
 - This is part of the auth system epic (#30)
@@ -293,10 +293,9 @@ To AI agents: Send a message using the `agent-messaging` skill with the recipien
 To humans:
 
 ```bash
-# GitHub comment (tagged)
-gh issue comment 42 --body "@human-dev Please review the blockers section"
-
-# Or direct mention in issue body
+# GitHub comment. Name the person in plain words — an `@name` in a posted body
+# pages a real account, and placeholder-looking names are usually taken.
+gh issue comment 42 --body "the reviewer: please review the blockers section"
 ```
 
 ---

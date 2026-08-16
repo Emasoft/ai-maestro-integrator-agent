@@ -63,7 +63,7 @@ gh pr review 123 --comment --body "$(cat <<'EOF'
 **Decision:** Approved (AI Review complete)
 **Routing:** Human Review (big task, requires MANAGER approval via the chain)
 
-@user This is a big task requiring your review. Please review the PR.
+reviewer: this is a big task requiring your review. Please review the PR.
 EOF
 )"
 
@@ -138,7 +138,7 @@ When one AI agent hands off to another:
 gh issue comment 42 --body "$(cat <<'EOF'
 ## Handoff to Next Agent
 
-**Previous Agent:** @implementer-1
+**Previous Agent:** implementer-1
 **Work Done:**
 - Feature branch created: feature/issue-42-auth
 - Core logic implemented (src/auth/jwt.py)
@@ -177,8 +177,8 @@ When AI hands off to human:
 gh issue comment 42 --body "$(cat <<'EOF'
 ## Handoff to Human Developer
 
-**AI Agent:** @implementer-1
-**Human:** @human-dev
+**AI Agent:** implementer-1
+**Human:** human-dev
 
 **What's Done:**
 - Core implementation complete
@@ -203,8 +203,8 @@ When human hands off to AI:
 gh issue comment 42 --body "$(cat <<'EOF'
 ## Handoff to AI Agent
 
-**Human:** @human-dev
-**AI Agent:** @implementer-2
+**Human:** human-dev
+**AI Agent:** implementer-2
 
 **What I've Done:**
 - Architecture design complete
@@ -319,7 +319,7 @@ When AI agents cannot proceed.
 gh issue comment 42 --body "$(cat <<'EOF'
 ## Escalation to Human Lead
 
-@human-lead AI agent needs decision:
+human-lead: AI agent needs decision:
 
 **Question:** Should auth tokens be stateless or server-validated?
 

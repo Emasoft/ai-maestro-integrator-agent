@@ -277,7 +277,7 @@ gh issue view 42 --json assignees --jq '.assignees[].login'
 # Reassign from agent-1 to agent-2
 gh issue edit 42 --remove-assignee agent-1
 gh issue edit 42 --add-assignee agent-2
-gh issue comment 42 --body "Reassigned from @agent-1 to @agent-2. Reason: [reason]"
+gh issue comment 42 --body "Reassigned from agent-1 to agent-2. Reason: [reason]"
 ```
 
 ### Reassignment Comment Template

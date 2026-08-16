@@ -231,8 +231,8 @@ gh pr comment 123 --body "$(cat <<'EOF'
 
 **Gate**: Review Gate
 **Date**: 2025-02-05T15:00:00Z
-**Requested By**: @tech-lead
-**Authorized By**: @tech-lead (self-authorized per matrix)
+**Requested By**: tech-lead
+**Authorized By**: tech-lead (self-authorized per matrix)
 
 ### Justification
 Critical hotfix for production issue affecting 1000+ users.
@@ -271,7 +271,7 @@ gh pr comment 123 --body "$(cat <<'EOF'
 ## Override Request DENIED
 
 **Gate**: Review Gate
-**Requested By**: @developer
+**Requested By**: developer
 
 ### Denial Reason
 Security dimension score (62%) is below the non-overridable threshold of 70%.
