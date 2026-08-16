@@ -48,6 +48,11 @@ because the alarm it would have tripped has already been tuned out.
 3. Do **not** add a back-compat branch that accepts `type`/`status` as aliases —
    no card in the repo uses them, and a dual-schema validator re-opens exactly
    the ambiguity v2 closed.
+4. **Wire it into `tests/run-all-tests.py`.** This half is not optional and not
+   cosmetic: fixing the schema without wiring leaves the validator exactly as
+   unrun as it is today, and the next drift is invisible again. The two halves
+   fail together — a correct checker nobody runs and a broken checker nobody
+   trusts are the same checker.
 
 ## Acceptance criteria
 
@@ -55,7 +60,10 @@ because the alarm it would have tripped has already been tuned out.
 2. Non-vacuity: a card with a bogus `column: banana` FAILS, and passes once
    corrected — proved by injection, not by assumption.
 3. A card missing `task-type:` still fails (the check is not merely disabled).
-4. The full suite stays green.
+4. `tests/run-all-tests.py` invokes the validator, and its file count rises by
+   one. Proved by injection: a deliberately malformed card turns the SUITE red,
+   not merely the standalone script.
+5. The full suite stays green once the injected card is reverted.
 
 ## Notes and lessons learned
 
