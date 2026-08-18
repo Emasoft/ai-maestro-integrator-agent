@@ -2,9 +2,9 @@
 """
 amia_design_validate.py - Validate design document frontmatter.
 
-Scans design documents for valid YAML frontmatter, checking required fields,
-valid status values, GUID format, and UTF-8 encoding. Follows the same
-frontmatter parsing pattern as amia_design_search.py.
+Scans TRDD cards for valid YAML frontmatter, checking the v2 required fields,
+the ratified column vocabulary, the trdd-id format, and UTF-8 encoding.
+Follows the same frontmatter parsing pattern as amia_design_search.py.
 
 Usage:
     amia_design_validate.py --all
@@ -29,7 +29,7 @@ Example output:
             {
                 "file": "design/spec/api-v2.md",
                 "valid": false,
-                "issues": ["Missing required field: status", "Invalid UUID format: BAD-ID"]
+                "issues": ["Missing required field: column", "Invalid trdd-id: BAD-ID"]
             }
         ]
     }
@@ -54,9 +54,52 @@ from typing import Any
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from shared.thresholds import write_output
 
-VALID_STATUSES = {"DRAFT", "REVIEW", "APPROVED", "IMPLEMENTED", "ARCHIVED", "DEPRECATED", "REJECTED"}
-UUID_PATTERN = re.compile(r"^GUUID-\d{8}-\d{4}$")
-REQUIRED_FIELDS = {"type", "status"}
+# TRDD v2 schema (TRDD-62UP8NJS). The previous constants were the v1 schema
+# (type/status, a DRAFT/REVIEW vocabulary, GUUID ids); against a fully-v2
+# corpus they rejected 13/13 cards, so the validator carried no information.
+# `column:` is the state machine — the ratified 17-column kanban vocabulary
+# plus the folder-lifecycle overlay values (proposal/planned/refused/
+# cancelled/completed).
+VALID_COLUMNS = {
+    "backburner",
+    "todo",
+    "design",
+    "dispatch",
+    "dev",
+    "testing",
+    "ai_review",
+    "human_review",
+    "complete",
+    "publish",
+    "published",
+    "deploy",
+    "live",
+    "live_auditing",
+    "blocked",
+    "failed",
+    "superseded",
+    "proposal",
+    "planned",
+    "refused",
+    "cancelled",
+    "completed",
+}
+# Canonical v2 id: 8 uppercase base36 chars. The alternation also accepts a
+# full lowercase UUIDv4 — NOT speculative back-compat: 3 archived v1-era cards
+# carry UUID ids, terminal cards are frozen (no body edits), and a validator
+# that rejects the real corpus teaches everyone to ignore it again.
+TRDD_ID_PATTERN = re.compile(
+    r"^(?:[A-Z0-9]{8}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+)
+REQUIRED_FIELDS = {
+    "trdd-id",
+    "title",
+    "column",
+    "created",
+    "updated",
+    "current-owner",
+    "task-type",
+}
 
 
 def parse_frontmatter(file_path: Path) -> tuple[dict[str, str] | None, str | None]:
@@ -115,38 +158,59 @@ def validate_document(file_path: Path) -> dict[str, Any]:
         if field not in frontmatter:
             issues.append(f"Missing required field: {field}")
 
-    # Validate status value
-    status = frontmatter.get("status", "").upper()
-    if "status" in frontmatter and status not in VALID_STATUSES:
-        issues.append(f"Invalid status: '{frontmatter['status']}'. Valid: {', '.join(sorted(VALID_STATUSES))}")
+    # Validate column against the ratified vocabulary — a typo'd column would
+    # silently drop the card from every grep-based board view.
+    column = frontmatter.get("column", "")
+    if "column" in frontmatter and column not in VALID_COLUMNS:
+        issues.append(
+            f"Invalid column: '{column}'. Valid: {', '.join(sorted(VALID_COLUMNS))}"
+        )
 
-    # Validate UUID format if present
-    uuid_val = frontmatter.get("uuid", "")
-    if uuid_val and not UUID_PATTERN.match(uuid_val):
-        issues.append(f"Invalid UUID format: '{uuid_val}'. Expected: GUUID-YYYYMMDD-NNNN")
+    # Validate the canonical 8-char uppercase base36 id if present
+    tid = frontmatter.get("trdd-id", "")
+    if tid and not TRDD_ID_PATTERN.match(tid):
+        issues.append(
+            f"Invalid trdd-id: '{tid}'. Expected 8 uppercase base36 chars (A-Z0-9)"
+        )
 
     return {"file": relative, "valid": len(issues) == 0, "issues": issues}
 
 
 def find_design_docs(base_path: Path, doc_type: str | None = None) -> list[Path]:
     """Find design documents under the given path."""
+    # Only TRDD cards carry the v2 frontmatter schema; design/ also holds
+    # PRRD.md and folder READMEs, which must not be judged as cards.
     if doc_type:
         search_dir = base_path / doc_type
         if search_dir.is_dir():
-            return sorted(search_dir.glob("**/*.md"))
+            return sorted(search_dir.glob("**/TRDD-*.md"))
         return []
-    return sorted(base_path.glob("**/*.md"))
+    return sorted(base_path.glob("**/TRDD-*.md"))
 
 
 def main() -> None:
     """Main entry point."""
-    parser = argparse.ArgumentParser(description="Validate design document frontmatter.")
-    parser.add_argument("--all", action="store_true", help="Scan all design documents under design/")
+    parser = argparse.ArgumentParser(
+        description="Validate design document frontmatter."
+    )
+    parser.add_argument(
+        "--all", action="store_true", help="Scan all design documents under design/"
+    )
     parser.add_argument("--path", help="Validate a specific file")
-    parser.add_argument("--type", help="Validate documents of a specific type (pdr, spec, etc.)")
-    parser.add_argument("--design-root", default="design", help="Root directory for design docs (default: design)")
-    parser.add_argument("--strict", action="store_true", help="Exit with code 5 if any validation fails")
-    parser.add_argument("--output-file", help="Write full JSON output to this file instead of stdout")
+    parser.add_argument(
+        "--type", help="Validate documents of a specific type (pdr, spec, etc.)"
+    )
+    parser.add_argument(
+        "--design-root",
+        default="design",
+        help="Root directory for design docs (default: design)",
+    )
+    parser.add_argument(
+        "--strict", action="store_true", help="Exit with code 5 if any validation fails"
+    )
+    parser.add_argument(
+        "--output-file", help="Write full JSON output to this file instead of stdout"
+    )
 
     args = parser.parse_args()
 
@@ -157,18 +221,33 @@ def main() -> None:
     if args.path:
         p = Path(args.path)
         if not p.is_file():
-            write_output({"error": True, "message": f"File not found: {args.path}"}, "amia_design_validate", args.output_file)
+            write_output(
+                {"error": True, "message": f"File not found: {args.path}"},
+                "amia_design_validate",
+                args.output_file,
+            )
             sys.exit(2)
         files = [p]
     else:
         design_root = Path(args.design_root)
         if not design_root.is_dir():
-            write_output({"error": True, "message": f"Design root not found: {args.design_root}"}, "amia_design_validate", args.output_file)
+            write_output(
+                {
+                    "error": True,
+                    "message": f"Design root not found: {args.design_root}",
+                },
+                "amia_design_validate",
+                args.output_file,
+            )
             sys.exit(2)
         files = find_design_docs(design_root, doc_type=args.type)
 
     if not files:
-        write_output({"error": True, "message": "No design documents found", "total_scanned": 0}, "amia_design_validate", args.output_file)
+        write_output(
+            {"error": True, "message": "No design documents found", "total_scanned": 0},
+            "amia_design_validate",
+            args.output_file,
+        )
         sys.exit(2)
 
     results = [validate_document(f) for f in files]
