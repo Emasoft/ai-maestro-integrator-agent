@@ -1,9 +1,9 @@
 ---
 trdd-id: 62UP8NJS
 title: amia_design_validate.py rejects every TRDD in the repo because it still requires the v1 schema
-column: todo
+column: complete
 created: 2026-08-16T17:00:12+0200
-updated: 2026-08-16T17:00:12+0200
+updated: 2026-08-18T23:46:08+0200
 current-owner: integrator
 task-type: bugfix
 min-approval-requirement: none
@@ -95,3 +95,13 @@ Nothing in the repo surfaced this: the validator is not wired into
 `tests/run-all-tests.py`, so 12/12 test files passed while a checked-in tool
 rejected every document it exists to check. A check nobody runs and a check that
 always fails are the same check.
+
+## Approval log
+
+- 2026-08-18T23:46:08+0200 — COMPLETED. All 5 acceptance criteria met: 18-card corpus (13 v2 +
+  3 archived UUID-era + 2 later cards) validates clean under --strict;
+  non-vacuity proven at SUITE level (injected banana-column card -> exit 1);
+  missing task-type still fails; malformed id still fails; suite 15/15 and
+  CPV 0/0/0/0. One scope discovery during the work: 3 archived cards carry
+  legitimate UUIDv4 ids from the v1 era — accepted by alternation rather than
+  editing frozen terminal cards. Commit recorded in implementation-commits.
