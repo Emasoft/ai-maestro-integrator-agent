@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0] — 2026-08-18
+
+### Bug Fixes
+
+- Strip placeholder handles from postable bodies (TRDD-T3CLWN5Y)
+- Un-invert the TDD issue-closure gate (TRDD-ONCGHA1Q)
+- Revert the TDD-gate inversion — b201375 inverted a CORRECT gate (TRDD-ONCGHA1Q)
+- Narrow the 5 surviving broad swallows; truth-fix the evidence claim (TRDD-J097QZ54)
+- Migrate amia_design_validate to the v2 TRDD schema and wire it into the suite (TRDD-62UP8NJS)
+
+### Documentation
+
+- TRDD-T3CLWN5Y dev -> testing, record commit 44650de and outcome
+- Add TRDD-62UP8NJS — design validator still on the v1 schema
+- TRDD-62UP8NJS — add the wire-into-runner half (fleet review point)
+- TRDD-62UP8NJS — pin the root cause to amia_design_validate.py:57-59
+- Add TRDD-ONCGHA1Q — the TDD issue-closure gate is inverted (high)
+- TRDD-T3CLWN5Y testing -> ai_review
+- Add TRDD-K3HJQG7U, TRDD-LBAN7T2K, TRDD-J097QZ54 — Phase-2 cards from confirmed audit findings
+- TRDD-ONCGHA1Q dev -> testing, record commit b201375
+- TRDD-ONCGHA1Q testing -> ai_review (mechanical; suite green)
+- Align stale claims with the shipped tree (TRDD-K3HJQG7U)
+- K3HJQG7U, LBAN7T2K, J097QZ54 -> ai_review with implementation commits
+- K3HJQG7U, LBAN7T2K, J097QZ54 -> complete after clean ai_review
+- TRDD-62UP8NJS -> complete (all acceptance criteria proven)
+- TRDD-62UP8NJS record implementation commit 1fa789a
+
+### Refactor
+
+- Remove 24 dead vendored/orphan scripts (TRDD-LBAN7T2K)
 ## [1.6.5] — 2026-08-15
 
 ### Bug Fixes
