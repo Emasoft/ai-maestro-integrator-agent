@@ -1,9 +1,9 @@
 ---
 trdd-id: K3HJQG7U
 title: Align stale documentation claims with the shipped tree (audit axis-1 findings)
-column: ai_review
+column: complete
 created: 2026-08-18T19:58:41+0200
-updated: 2026-08-18T20:45:00+0200
+updated: 2026-08-18T23:38:18+0200
 implementation-commits: [8bb018a]
 current-owner: integrator
 task-type: docs
@@ -51,3 +51,11 @@ separate feature card, not this one.
 3. `grep -n 'amia-session-memory' agents/` returns nothing.
 4. README's `--output-file` sentence is true against a fresh count.
 5. Suite 12/12 + handle guard green; CPV --strict 0/0/0/0.
+
+## Approval log
+
+- 2026-08-18T23:38:18+0200 — COMPLETED after ai_review (second run; the first reviewer froze at
+  report-writing with a stub on disk and was killed per the fleet's movement
+  taxonomy). Review verdict: 0 defects across every listed attack angle, each
+  factual claim re-verified against the live tree. Coordinator spot-checked
+  independently: validate.yml parses, the AST sweep test passes 2/2.

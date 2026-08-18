@@ -1,9 +1,9 @@
 ---
 trdd-id: J097QZ54
 title: Fix the swallowing except handlers and the three unenforced enforcement claims
-column: ai_review
+column: complete
 created: 2026-08-18T19:58:41+0200
-updated: 2026-08-18T20:45:00+0200
+updated: 2026-08-18T23:38:18+0200
 implementation-commits: [83b21e0]
 current-owner: integrator
 task-type: bugfix
@@ -66,3 +66,11 @@ right when the property genuinely must hold mechanically.
 
 blocked-by ordering: work AFTER TRDD-LBAN7T2K lands, since deletion changes Half A's
 site list.
+
+## Approval log
+
+- 2026-08-18T23:38:18+0200 — COMPLETED after ai_review (second run; the first reviewer froze at
+  report-writing with a stub on disk and was killed per the fleet's movement
+  taxonomy). Review verdict: 0 defects across every listed attack angle, each
+  factual claim re-verified against the live tree. Coordinator spot-checked
+  independently: validate.yml parses, the AST sweep test passes 2/2.
