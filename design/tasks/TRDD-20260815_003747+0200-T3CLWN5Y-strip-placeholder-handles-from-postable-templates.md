@@ -1,9 +1,9 @@
 ---
 trdd-id: T3CLWN5Y
 title: Strip placeholder GitHub handles from postable templates without breaking the real bot triggers
-column: testing
+column: ai_review
 created: 2026-08-15T00:37:47+0200
-updated: 2026-08-16T17:02:00+0200
+updated: 2026-08-18T11:19:25+0200
 current-owner: integrator
 task-type: security
 min-approval-requirement: none
@@ -11,7 +11,7 @@ scope: project
 relevant-rules: []
 implementation-commits: [44650de]
 last-test-result: pass
-last-test-at: 2026-08-16T17:02:00+0200
+last-test-at: 2026-08-18T11:19:25+0200
 ---
 
 # Strip placeholder GitHub handles from postable templates
