@@ -4,7 +4,6 @@
 
 - [The Iron Rule](#the-iron-rule)
 - [Board Columns Quick Reference](#board-columns-quick-reference)
-- [Command Integration: /create-issue-tasks](#command-integration-create-issue-tasks)
 - [Python Scripts Detailed Usage](#python-scripts-detailed-usage)
 - [Error Handling](#error-handling)
 - [Integration Points Summary](#integration-points-summary)
@@ -39,27 +38,6 @@ If it's not on the board, it doesn't exist. If the board says "In Progress", it 
 | **Merge/Release** | `merge-release` | Ready to merge | Orchestrator |
 | **Done** | `done` | Completed and merged | Auto (PR merge) |
 | **Blocked** | `blocked` | Cannot proceed | Any (with reason) |
-
----
-
-## Command Integration: /create-issue-tasks
-
-The `/create-issue-tasks` command creates Claude Tasks checklists for handling issues. See the full command documentation at:
-`${CLAUDE_PLUGIN_ROOT}/commands/create-issue-tasks.md`
-
-### Quick Usage
-
-```
-/create-issue-tasks <CATEGORY> <REPORTER> <MODULE> "<TITLE>" ["<DESCRIPTION>"]
-```
-
-**Categories:** BUG, BLOCKER, QUESTION, ENHANCEMENT, CONFIG, INVESTIGATION
-
-**Example:**
-
-```
-/create-issue-tasks BUG implementer-1 auth-core "Login fails with OAuth" "401 error after token expiry"
-```
 
 ---
 

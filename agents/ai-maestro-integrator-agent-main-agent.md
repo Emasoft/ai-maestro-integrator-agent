@@ -296,8 +296,7 @@ the user-level `ai-maestro-janitor` plugin provides `/janitor-memory-recall`,
 live in `~/.claude/rules/markdown-memory-recall.md`, which also carries the
 PROACTIVE-USE contract (recall-before-acting / write-after-learning). The
 INTEGRATOR ships **no per-plugin memory skills** — memory is the global janitor
-system, not a plugin reimplementation. (Distinct from `amia-session-memory`, which restores
-transcript/session context — a different concern, and an allowed per-plugin skill.)
+system, not a plugin reimplementation.
 
 - **Recall before acting.** Before investigating a failing quality gate, a
   familiar CI-failure pattern, or a merge conflict you think you have seen — and

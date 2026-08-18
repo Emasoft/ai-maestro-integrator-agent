@@ -10,7 +10,6 @@ on:
       - 'skills/**'
       - 'hooks/**'
       - 'scripts/**'
-      - 'rules/**'
       - '*.mcp.json'
       - '.lsp.json'
   pull_request:

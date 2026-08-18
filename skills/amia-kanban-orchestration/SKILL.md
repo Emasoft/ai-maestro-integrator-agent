@@ -67,8 +67,6 @@ Check exit code and stderr: 1=invalid params, 2-4=GitHub API errors. See the det
 Full reference: [detailed-guide](references/detailed-guide.md):
   - The Iron Rule
   - Board Columns Quick Reference
-  - Command Integration: /create-issue-tasks
-    - Quick Usage
   - Python Scripts Detailed Usage
     - Get Board State (scripts/amia_kanban_get_board_state.py)
     - Move Card (scripts/amia_kanban_move_card.py)

@@ -134,7 +134,6 @@ claude --agent ai-maestro-integrator-agent-main-agent --plugin-dir ./ai-maestro-
 | Directory | Purpose |
 |-----------|---------|
 | `shared/` | Shared Python modules (thresholds, constants) used by multiple plugin scripts across skills and hooks |
-| `rules/` | Plugin rules |
 | `tests/` | Plugin test suites (e.g. `test_governance_compliance.py`); run with `uv run python tests/<file>.py` |
 | `git-hooks/` | Optional pre-push validation hook (runs CPV remote validation via `uvx`); installed via `cp git-hooks/pre-push .git/hooks/pre-push`. Note: this repo's own checkout uses `core.hooksPath=.githooks` (the publish.py ancestry gate), which takes precedence over `.git/hooks/` |
 
@@ -144,7 +143,7 @@ All plugin scripts are written in Python for cross-platform compatibility (Linux
 
 ## Skill Architecture
 
-Skills use a **progressive discovery** pattern: each `SKILL.md` is a compact index (under 4000 chars) that agents read first, with detailed content in `references/*.md` files discovered on demand. All 60+ scripts support `--output-file <path>` to write full JSON to a file and print only a summary to stdout, minimizing token consumption.
+Skills use a **progressive discovery** pattern: each `SKILL.md` is a compact index (under 4000 chars) that agents read first, with detailed content in `references/*.md` files discovered on demand. Most skill scripts (54 of 70 at last count) support `--output-file <path>` to write full JSON to a file and print only a summary to stdout, minimizing token consumption.
 
 ## Validation
 
