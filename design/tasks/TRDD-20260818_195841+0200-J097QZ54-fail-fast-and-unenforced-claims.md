@@ -1,9 +1,10 @@
 ---
 trdd-id: J097QZ54
 title: Fix the swallowing except handlers and the three unenforced enforcement claims
-column: todo
+column: ai_review
 created: 2026-08-18T19:58:41+0200
-updated: 2026-08-18T19:58:41+0200
+updated: 2026-08-18T20:45:00+0200
+implementation-commits: [83b21e0]
 current-owner: integrator
 task-type: bugfix
 min-approval-requirement: none

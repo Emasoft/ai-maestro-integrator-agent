@@ -1,9 +1,10 @@
 ---
 trdd-id: LBAN7T2K
 title: Remove the 13-file dead vendored CPV validator suite and the 5 unwired orphan scripts
-column: todo
+column: ai_review
 created: 2026-08-18T19:58:41+0200
-updated: 2026-08-18T19:58:41+0200
+updated: 2026-08-18T20:45:00+0200
+implementation-commits: [e227e6e]
 current-owner: integrator
 task-type: refactor
 min-approval-requirement: none

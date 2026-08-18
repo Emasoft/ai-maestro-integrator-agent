@@ -1,9 +1,10 @@
 ---
 trdd-id: K3HJQG7U
 title: Align stale documentation claims with the shipped tree (audit axis-1 findings)
-column: todo
+column: ai_review
 created: 2026-08-18T19:58:41+0200
-updated: 2026-08-18T19:58:41+0200
+updated: 2026-08-18T20:45:00+0200
+implementation-commits: [8bb018a]
 current-owner: integrator
 task-type: docs
 min-approval-requirement: none
