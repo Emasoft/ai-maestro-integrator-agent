@@ -74,8 +74,13 @@ def _enable_ansi_windows():
         handle = kernel32.GetStdHandle(-11)  # STD_OUTPUT_HANDLE
         mode = ctypes.c_ulong()
         kernel32.GetConsoleMode(handle, ctypes.byref(mode))
-        kernel32.SetConsoleMode(handle, mode.value | 0x0004)  # ENABLE_VIRTUAL_TERMINAL_PROCESSING
-    except Exception:
+        kernel32.SetConsoleMode(
+            handle, mode.value | 0x0004
+        )  # ENABLE_VIRTUAL_TERMINAL_PROCESSING
+    except (AttributeError, OSError):
+        # Best-effort by design: failure only means no ANSI colors on this
+        # console. Narrowed from a bare `except Exception` (fail-fast audit,
+        # TRDD-J097QZ54) so a real defect (e.g. NameError) still propagates.
         pass
 
 
@@ -324,9 +329,13 @@ def _extract_tar(archive: Path, dest: Path, mode: str):
                     sys.exit(1)
                 # Block symlinks pointing outside dest
                 if member.issym() or member.islnk():
-                    link_target = os.path.normpath(os.path.join(os.path.dirname(member.name), member.linkname))
+                    link_target = os.path.normpath(
+                        os.path.join(os.path.dirname(member.name), member.linkname)
+                    )
                     if link_target.startswith("..") or os.path.isabs(link_target):
-                        err(f"Refusing to extract symlink escaping archive: {member.name} -> {member.linkname}")
+                        err(
+                            f"Refusing to extract symlink escaping archive: {member.name} -> {member.linkname}"
+                        )
                         sys.exit(1)
                 # Verify resolved path stays within dest
                 target = (dest / member_path).resolve()
@@ -345,7 +354,9 @@ def _parse_gitignore_patterns(gitignore_path: Path) -> List[str]:
     if not gitignore_path.exists():
         return []
     patterns = []
-    for line in gitignore_path.read_text(encoding="utf-8", errors="replace").splitlines():
+    for line in gitignore_path.read_text(
+        encoding="utf-8", errors="replace"
+    ).splitlines():
         line = line.strip()
         # Skip empty lines and comments
         if not line or line.startswith("#"):
@@ -404,7 +415,11 @@ def _gitignore_pattern_to_re(pattern: str) -> Tuple[Optional[re.Pattern], bool]:
                 j += 1
             while j < len(pattern) and pattern[j] != "]":
                 j += 1
-            parts.append(pattern[i : j + 1].replace("!", "^", 1) if "!" in pattern[i : j + 1] else pattern[i : j + 1])
+            parts.append(
+                pattern[i : j + 1].replace("!", "^", 1)
+                if "!" in pattern[i : j + 1]
+                else pattern[i : j + 1]
+            )
             i = j + 1
             continue
         else:
@@ -535,14 +550,22 @@ def _build_gitignore_matcher(plugin_dir: Path) -> Callable[[Path], bool]:
     return _is_ignored_manual
 
 
-def _copy_plugin_from_dir(source_dir: Path, dest: Path, ignore_fn: Optional[Callable[[Path], bool]] = None):
+def _copy_plugin_from_dir(
+    source_dir: Path, dest: Path, ignore_fn: Optional[Callable[[Path], bool]] = None
+):
     """Copy a plugin directory to dest, skipping files matched by ignore_fn.
     The .git directory and git metadata files are always excluded.
     Empty directories (after filtering) are not created."""
     copied_any = False
     for item in sorted(source_dir.iterdir()):
         # Always skip .git directory and git metadata files
-        if item.name in (".git", ".gitignore", ".gitattributes", ".gitmodules", ".gitkeep"):
+        if item.name in (
+            ".git",
+            ".gitignore",
+            ".gitattributes",
+            ".gitmodules",
+            ".gitkeep",
+        ):
             continue
         if ignore_fn and ignore_fn(item):
             continue
@@ -646,7 +669,11 @@ def _detect_plugin_origin_refs(plugin_root: Path) -> List[str]:
             mp_url = mj.get("url", "") or mj.get("repository", "")
             if mp_url:
                 refs.append(f'marketplace.json "url": "{mp_url}"')
-        except Exception:
+        except (OSError, json.JSONDecodeError):
+            # Best-effort display enrichment: an unreadable/invalid bundled
+            # marketplace.json just means fewer reference lines shown.
+            # Narrowed from `except Exception` (TRDD-J097QZ54) so logic
+            # errors still propagate.
             pass
 
     return refs
@@ -760,7 +787,12 @@ VALID_HOOK_EVENTS = {
     "InstructionsLoaded",
 }
 
-TOOL_MATCHER_EVENTS = {"PreToolUse", "PermissionRequest", "PostToolUse", "PostToolUseFailure"}
+TOOL_MATCHER_EVENTS = {
+    "PreToolUse",
+    "PermissionRequest",
+    "PostToolUse",
+    "PostToolUseFailure",
+}
 KNOWN_TOOL_MATCHERS = {
     "Task",
     "Bash",
@@ -790,7 +822,12 @@ KNOWN_TOOL_MATCHERS = {
     "LSP",
     "Agent",
 }
-NOTIFICATION_MATCHERS = {"permission_prompt", "idle_prompt", "auth_success", "elicitation_dialog"}
+NOTIFICATION_MATCHERS = {
+    "permission_prompt",
+    "idle_prompt",
+    "auth_success",
+    "elicitation_dialog",
+}
 SESSION_START_MATCHERS = {"startup", "resume", "clear", "compact"}
 PRECOMPACT_MATCHERS = {"manual", "auto"}
 NO_MATCHER_EVENTS = {
@@ -815,7 +852,13 @@ COMPONENT_PATH_FIELDS = {
 
 
 def _check_type(value, expected_types):
-    type_map = {"string": str, "array": list, "object": dict, "boolean": bool, "number": (int, float)}
+    type_map = {
+        "string": str,
+        "array": list,
+        "object": dict,
+        "boolean": bool,
+        "number": (int, float),
+    }
     for t in expected_types:
         if isinstance(value, type_map.get(t, type(None))):
             return None
@@ -851,7 +894,11 @@ def _validate_matcher(matcher: str, event_name: str, path: str) -> list:
     if event_name in TOOL_MATCHER_EVENTS:
         for part in [p.strip() for p in matcher.split("|")]:
             clean = re.sub(r"[.*+?^$()\\]", "", part)
-            if clean and clean not in KNOWN_TOOL_MATCHERS and not part.startswith("mcp__"):
+            if (
+                clean
+                and clean not in KNOWN_TOOL_MATCHERS
+                and not part.startswith("mcp__")
+            ):
                 close = [t for t in KNOWN_TOOL_MATCHERS if t.lower() == clean.lower()]
                 if close:
                     warnings.append(
@@ -903,7 +950,15 @@ def _validate_bash_command(cmd: str, path: str, plugin_root: Optional[Path] = No
     script_interpreters = {
         ".py": ("python3", "python", "uv run", "uvx"),
         ".js": ("node", "npx", "pnpm dlx", "bunx", "bun"),
-        ".ts": ("ts-node", "tsx", "npx ts-node", "npx tsx", "bunx", "bun", "pnpm dlx tsx"),
+        ".ts": (
+            "ts-node",
+            "tsx",
+            "npx ts-node",
+            "npx tsx",
+            "bunx",
+            "bun",
+            "pnpm dlx tsx",
+        ),
         ".sh": ("bash", "sh", "zsh"),
         ".rb": ("ruby",),
         ".pl": ("perl",),
@@ -994,12 +1049,16 @@ def _validate_bash_command(cmd: str, path: str, plugin_root: Optional[Path] = No
                         break
                 else:
                     rel = script_path
-                errors.append(f"Hook command references '{rel}' but this file does not exist in the plugin")
+                errors.append(
+                    f"Hook command references '{rel}' but this file does not exist in the plugin"
+                )
 
     return errors, warnings
 
 
-def _validate_hooks_structure(hooks_data: dict, source_file: str, plugin_root: Optional[Path] = None):
+def _validate_hooks_structure(
+    hooks_data: dict, source_file: str, plugin_root: Optional[Path] = None
+):
     errors = []
     warnings = []
 
@@ -1010,7 +1069,12 @@ def _validate_hooks_structure(hooks_data: dict, source_file: str, plugin_root: O
 
     for event_name, event_value in hooks_obj.items():
         # Skip known metadata keys and $-prefixed keys like $schema
-        if event_name in ("hooks", "description", "version", "metadata") or event_name.startswith("$"):
+        if event_name in (
+            "hooks",
+            "description",
+            "version",
+            "metadata",
+        ) or event_name.startswith("$"):
             continue
 
         if event_name not in VALID_HOOK_EVENTS:
@@ -1041,7 +1105,9 @@ def _validate_hooks_structure(hooks_data: dict, source_file: str, plugin_root: O
 
             matcher = group.get("matcher")
             if matcher is not None and not isinstance(matcher, str):
-                errors.append(f"{gpath}.matcher: must be a string (regex), got {type(matcher).__name__}")
+                errors.append(
+                    f"{gpath}.matcher: must be a string (regex), got {type(matcher).__name__}"
+                )
             elif isinstance(matcher, str) and event_name in VALID_HOOK_EVENTS:
                 warnings.extend(_validate_matcher(matcher, event_name, gpath))
 
@@ -1062,7 +1128,9 @@ def _validate_hooks_structure(hooks_data: dict, source_file: str, plugin_root: O
                 hpath = f"{gpath}.hooks[{hi}]"
 
                 if not isinstance(handler, dict):
-                    errors.append(f"{hpath}: each hook handler must be an object, got {type(handler).__name__}")
+                    errors.append(
+                        f"{hpath}: each hook handler must be an object, got {type(handler).__name__}"
+                    )
                     continue
 
                 htype = handler.get("type")
@@ -1078,27 +1146,41 @@ def _validate_hooks_structure(hooks_data: dict, source_file: str, plugin_root: O
                     if htype == "command":
                         cmd = handler.get("command")
                         if not cmd:
-                            errors.append(f"{hpath}: type 'command' requires a 'command' field")
+                            errors.append(
+                                f"{hpath}: type 'command' requires a 'command' field"
+                            )
                         elif not isinstance(cmd, str):
-                            errors.append(f"{hpath}.command: must be a string, got {type(cmd).__name__}")
+                            errors.append(
+                                f"{hpath}.command: must be a string, got {type(cmd).__name__}"
+                            )
                         else:
-                            if "${CLAUDE_PLUGIN_ROOT}" not in cmd and "/" in cmd and not cmd.startswith("jq"):
+                            if (
+                                "${CLAUDE_PLUGIN_ROOT}" not in cmd
+                                and "/" in cmd
+                                and not cmd.startswith("jq")
+                            ):
                                 warnings.append(
                                     f"{hpath}.command: uses a path without ${{CLAUDE_PLUGIN_ROOT}} — may not work after installation"
                                 )
-                            cmd_errors, cmd_warnings = _validate_bash_command(cmd, hpath, plugin_root)
+                            cmd_errors, cmd_warnings = _validate_bash_command(
+                                cmd, hpath, plugin_root
+                            )
                             errors.extend(cmd_errors)
                             warnings.extend(cmd_warnings)
                     elif htype == "http":
                         url = handler.get("url")
                         if not url:
-                            errors.append(f"{hpath}: type 'http' requires a 'url' field")
+                            errors.append(
+                                f"{hpath}: type 'http' requires a 'url' field"
+                            )
                         elif not isinstance(url, str):
                             errors.append(f"{hpath}.url: must be a string")
                     elif htype == "prompt":
                         prompt = handler.get("prompt")
                         if not prompt:
-                            errors.append(f"{hpath}: type 'prompt' requires a 'prompt' field")
+                            errors.append(
+                                f"{hpath}: type 'prompt' requires a 'prompt' field"
+                            )
                         elif not isinstance(prompt, str):
                             errors.append(f"{hpath}.prompt: must be a string")
 
@@ -1162,7 +1244,13 @@ AGENT_KNOWN_FIELDS = {
 AGENT_REQUIRED_FIELDS = {"name", "description"}
 AGENT_BOOLEAN_FIELDS = {"background"}
 AGENT_VALID_MODELS = {"haiku", "sonnet", "opus", "inherit"}
-AGENT_VALID_PERMISSION_MODES = {"default", "acceptedits", "dontask", "bypasspermissions", "plan"}
+AGENT_VALID_PERMISSION_MODES = {
+    "default",
+    "acceptedits",
+    "dontask",
+    "bypasspermissions",
+    "plan",
+}
 AGENT_VALID_MEMORY_SCOPES = {"user", "project", "local"}
 AGENT_VALID_ISOLATION = {"worktree"}
 
@@ -1247,7 +1335,9 @@ def _validate_markdown_frontmatter(
         # ── Name validation ──
         agent_name = fm.get("name", "")
         if agent_name and not re.match(r"^[a-z][a-z0-9-]*$", agent_name):
-            warnings.append(f"{label}: name '{agent_name}' should be lowercase letters, numbers, and hyphens only")
+            warnings.append(
+                f"{label}: name '{agent_name}' should be lowercase letters, numbers, and hyphens only"
+            )
 
         # ── Unknown fields ──
         for key in fm:
@@ -1259,14 +1349,18 @@ def _validate_markdown_frontmatter(
         # ── Model validation ──
         model_val = fm.get("model", "").lower()
         if model_val and model_val not in AGENT_VALID_MODELS:
-            warnings.append(f"{label}: model '{fm['model']}' — known values: {', '.join(sorted(AGENT_VALID_MODELS))}")
+            warnings.append(
+                f"{label}: model '{fm['model']}' — known values: {', '.join(sorted(AGENT_VALID_MODELS))}"
+            )
 
         # ── Boolean fields ──
         for bf in AGENT_BOOLEAN_FIELDS:
             if bf in fm:
                 val = fm[bf].lower()
                 if val not in ("true", "false"):
-                    errors.append(f"{label}: '{bf}' must be true or false, got '{fm[bf]}'")
+                    errors.append(
+                        f"{label}: '{bf}' must be true or false, got '{fm[bf]}'"
+                    )
 
         # ── permissionMode ──
         pm = fm.get("permissionmode", "")
@@ -1286,12 +1380,16 @@ def _validate_markdown_frontmatter(
         # ── memory ──
         mem = fm.get("memory", "")
         if mem and mem.lower() not in AGENT_VALID_MEMORY_SCOPES:
-            warnings.append(f"{label}: memory '{mem}' — known scopes: {', '.join(sorted(AGENT_VALID_MEMORY_SCOPES))}")
+            warnings.append(
+                f"{label}: memory '{mem}' — known scopes: {', '.join(sorted(AGENT_VALID_MEMORY_SCOPES))}"
+            )
 
         # ── isolation ──
         iso = fm.get("isolation", "")
         if iso and iso.lower() not in AGENT_VALID_ISOLATION:
-            warnings.append(f"{label}: isolation '{iso}' — only 'worktree' is supported")
+            warnings.append(
+                f"{label}: isolation '{iso}' — only 'worktree' is supported"
+            )
 
     elif component_type == "command":
         # ── Recommended field ──
@@ -1310,7 +1408,9 @@ def _validate_markdown_frontmatter(
         # ── Model validation ──
         model_val = fm.get("model", "").lower()
         if model_val and model_val not in AGENT_VALID_MODELS:
-            warnings.append(f"{label}: model '{fm['model']}' — known values: {', '.join(sorted(AGENT_VALID_MODELS))}")
+            warnings.append(
+                f"{label}: model '{fm['model']}' — known values: {', '.join(sorted(AGENT_VALID_MODELS))}"
+            )
 
     elif component_type == "skill":
         # ── Recommended field ──
@@ -1321,7 +1421,9 @@ def _validate_markdown_frontmatter(
         else:
             desc = fm["description"]
             if desc and len(desc) > 200:
-                warnings.append(f"{label}: description is {len(desc)} chars (max 200 recommended)")
+                warnings.append(
+                    f"{label}: description is {len(desc)} chars (max 200 recommended)"
+                )
 
         # ── Name field validation ──
         skill_name = fm.get("name", "")
@@ -1329,7 +1431,9 @@ def _validate_markdown_frontmatter(
             if len(skill_name) > 64:
                 warnings.append(f"{label}: name is {len(skill_name)} chars (max 64)")
             if not re.match(r"^[a-z0-9][a-z0-9-]*$", skill_name):
-                warnings.append(f"{label}: name '{skill_name}' should be lowercase letters, numbers, and hyphens only")
+                warnings.append(
+                    f"{label}: name '{skill_name}' should be lowercase letters, numbers, and hyphens only"
+                )
 
         # ── Unknown fields ──
         for key in fm:
@@ -1343,16 +1447,22 @@ def _validate_markdown_frontmatter(
             if bf in fm:
                 val = fm[bf].lower()
                 if val not in ("true", "false"):
-                    errors.append(f"{label}: '{bf}' must be true or false, got '{fm[bf]}'")
+                    errors.append(
+                        f"{label}: '{bf}' must be true or false, got '{fm[bf]}'"
+                    )
 
         # ── Context/agent fields ──
         context_val = fm.get("context", "")
         if context_val and context_val != "fork":
-            warnings.append(f"{label}: context '{context_val}' — only 'fork' is supported")
+            warnings.append(
+                f"{label}: context '{context_val}' — only 'fork' is supported"
+            )
 
         agent_val = fm.get("agent", "")
         if agent_val and "context" not in fm:
-            warnings.append(f"{label}: 'agent' field has no effect without 'context: fork'")
+            warnings.append(
+                f"{label}: 'agent' field has no effect without 'context: fork'"
+            )
 
         # ── Size limits (critical for progressive discovery) ──
         # Measure body only (excluding frontmatter) since Claude Code loads the body for discovery
@@ -1401,7 +1511,9 @@ def _run_skill_audit(plugin_root: Path) -> Tuple[List[str], List[str]]:
         try:
             depth = len(item.relative_to(plugin_root).parts)
             if depth > _SKILL_AUDIT_MAX_DEPTH:
-                warnings.append(f"skill-audit: skipped — directory nesting exceeds {_SKILL_AUDIT_MAX_DEPTH} levels")
+                warnings.append(
+                    f"skill-audit: skipped — directory nesting exceeds {_SKILL_AUDIT_MAX_DEPTH} levels"
+                )
                 return errors, warnings
         except ValueError:
             pass
@@ -1447,7 +1559,9 @@ def _run_skill_audit(plugin_root: Path) -> Tuple[List[str], List[str]]:
 
 
 def validate_plugin(
-    plugin_root: Path, ignore_fn: Optional[Callable[[Path], bool]] = None, run_security_audit: bool = True
+    plugin_root: Path,
+    ignore_fn: Optional[Callable[[Path], bool]] = None,
+    run_security_audit: bool = True,
 ):
     """Validate a plugin directory. Returns (errors, warnings).
     If ignore_fn is provided, files/dirs matched by it are skipped during validation.
@@ -1478,17 +1592,25 @@ def validate_plugin(
     if not name:
         errors.append("plugin.json: 'name' field is required")
     elif not isinstance(name, str):
-        errors.append(f"plugin.json: 'name' must be a string, got {type(name).__name__}")
+        errors.append(
+            f"plugin.json: 'name' must be a string, got {type(name).__name__}"
+        )
     elif not re.match(r"^[a-z][a-z0-9_-]*$", name):
-        warnings.append(f"plugin.json: name '{name}' should be kebab-case (lowercase, hyphens/underscores, no spaces)")
+        warnings.append(
+            f"plugin.json: name '{name}' should be kebab-case (lowercase, hyphens/underscores, no spaces)"
+        )
 
     version = manifest.get("version")
     if not version:
         warnings.append("plugin.json: 'version' field is recommended (e.g. '1.0.0')")
     elif not isinstance(version, str):
-        warnings.append(f"plugin.json: 'version' should be a string, got {type(version).__name__}")
+        warnings.append(
+            f"plugin.json: 'version' should be a string, got {type(version).__name__}"
+        )
     elif not re.match(r"^\d+\.\d+\.\d+", version):
-        warnings.append(f"plugin.json: version '{version}' doesn't follow semver (x.y.z)")
+        warnings.append(
+            f"plugin.json: version '{version}' doesn't follow semver (x.y.z)"
+        )
 
     if not manifest.get("description"):
         warnings.append("plugin.json: 'description' field is recommended")
@@ -1504,12 +1626,16 @@ def validate_plugin(
         val = manifest.get(field)
         if val is not None and not isinstance(val, expected_types):
             type_names = "/".join(t.__name__ for t in expected_types)
-            warnings.append(f"plugin.json: '{field}' should be {type_names}, got {type(val).__name__}")
+            warnings.append(
+                f"plugin.json: '{field}' should be {type_names}, got {type(val).__name__}"
+            )
 
     if isinstance(manifest.get("keywords"), list):
         for kw in manifest["keywords"]:
             if not isinstance(kw, str):
-                warnings.append(f"plugin.json: keywords must be strings, found {type(kw).__name__}")
+                warnings.append(
+                    f"plugin.json: keywords must be strings, found {type(kw).__name__}"
+                )
                 break
 
     # ── 3. Component path fields ─────────────────────────────
@@ -1524,12 +1650,22 @@ def validate_plugin(
         elif isinstance(val, list):
             for i, item in enumerate(val):
                 if not isinstance(item, str):
-                    errors.append(f"plugin.json: '{field}[{i}]' must be a string, got {type(item).__name__}")
+                    errors.append(
+                        f"plugin.json: '{field}[{i}]' must be a string, got {type(item).__name__}"
+                    )
             for item in val:
                 if isinstance(item, str) and not item.startswith("./"):
-                    warnings.append(f"plugin.json: '{field}' path '{item}' should start with './'")
-        elif isinstance(val, str) and not val.startswith("./") and field in ("commands", "agents", "hooks"):
-            warnings.append(f"plugin.json: '{field}' path '{val}' should start with './'")
+                    warnings.append(
+                        f"plugin.json: '{field}' path '{item}' should start with './'"
+                    )
+        elif (
+            isinstance(val, str)
+            and not val.startswith("./")
+            and field in ("commands", "agents", "hooks")
+        ):
+            warnings.append(
+                f"plugin.json: '{field}' path '{val}' should start with './'"
+            )
 
     # ── 4. Directory structure ───────────────────────────────
 
@@ -1553,13 +1689,17 @@ def validate_plugin(
             if not isinstance(hooks_data, dict):
                 errors.append("hooks/hooks.json: must be a JSON object")
             else:
-                h_e, h_w = _validate_hooks_structure(hooks_data, "hooks/hooks.json", plugin_root)
+                h_e, h_w = _validate_hooks_structure(
+                    hooks_data, "hooks/hooks.json", plugin_root
+                )
                 errors.extend(h_e)
                 warnings.extend(h_w)
 
     inline_hooks = manifest.get("hooks")
     if isinstance(inline_hooks, dict):
-        h_e, h_w = _validate_hooks_structure(inline_hooks, "plugin.json (inline hooks)", plugin_root)
+        h_e, h_w = _validate_hooks_structure(
+            inline_hooks, "plugin.json (inline hooks)", plugin_root
+        )
         errors.extend(h_e)
         warnings.extend(h_w)
     elif isinstance(inline_hooks, str):
@@ -1592,7 +1732,9 @@ def validate_plugin(
                 if not isinstance(srv_config, dict):
                     errors.append(f".mcp.json: server '{srv_name}' must be an object")
                 elif not srv_config.get("command") and not srv_config.get("url"):
-                    warnings.append(f".mcp.json: server '{srv_name}' has no 'command' or 'url'")
+                    warnings.append(
+                        f".mcp.json: server '{srv_name}' has no 'command' or 'url'"
+                    )
 
     inline_mcp = manifest.get("mcpServers")
     if isinstance(inline_mcp, dict):
@@ -1600,7 +1742,9 @@ def validate_plugin(
             if not isinstance(srv_config, dict):
                 errors.append(f"plugin.json mcpServers: '{srv_name}' must be an object")
             elif not srv_config.get("command") and not srv_config.get("url"):
-                warnings.append(f"plugin.json mcpServers: '{srv_name}' has no 'command' or 'url'")
+                warnings.append(
+                    f"plugin.json mcpServers: '{srv_name}' has no 'command' or 'url'"
+                )
 
     # ── 7. Script permissions and existence ──────────────────
 
@@ -1617,7 +1761,11 @@ def validate_plugin(
             missing_shebang.append(rel)
 
     if non_executable:
-        fix_note = "auto-fixed during install" if not IS_WINDOWS else "ensure shebangs are present"
+        fix_note = (
+            "auto-fixed during install"
+            if not IS_WINDOWS
+            else "ensure shebangs are present"
+        )
         warnings.append(
             f"Scripts not executable ({fix_note}): "
             + ", ".join(non_executable[:5])
@@ -1636,7 +1784,9 @@ def validate_plugin(
 
     commands_dir = plugin_root / "commands"
     if commands_dir.exists() and commands_dir.is_dir():
-        cmd_files = [f for f in commands_dir.rglob("*.md") if not (ignore_fn and ignore_fn(f))]
+        cmd_files = [
+            f for f in commands_dir.rglob("*.md") if not (ignore_fn and ignore_fn(f))
+        ]
         if not cmd_files:
             warnings.append("commands/ directory exists but contains no .md files")
         else:
@@ -1647,7 +1797,9 @@ def validate_plugin(
 
     skills_dir = plugin_root / "skills"
     if skills_dir.exists() and skills_dir.is_dir():
-        skill_mds = [f for f in skills_dir.rglob("SKILL.md") if not (ignore_fn and ignore_fn(f))]
+        skill_mds = [
+            f for f in skills_dir.rglob("SKILL.md") if not (ignore_fn and ignore_fn(f))
+        ]
         if not skill_mds:
             warnings.append("skills/ directory exists but contains no SKILL.md files")
         else:
@@ -1662,7 +1814,9 @@ def validate_plugin(
 
     agents_dir = plugin_root / "agents"
     if agents_dir.exists() and agents_dir.is_dir():
-        agent_mds = [f for f in agents_dir.rglob("*.md") if not (ignore_fn and ignore_fn(f))]
+        agent_mds = [
+            f for f in agents_dir.rglob("*.md") if not (ignore_fn and ignore_fn(f))
+        ]
         if not agent_mds:
             warnings.append("agents/ directory exists but contains no .md files")
         else:
@@ -1687,15 +1841,21 @@ def validate_plugin(
                     errors.append(f".lsp.json: '{lang}' must be an object")
                     continue
                 if not cfg.get("command"):
-                    errors.append(f".lsp.json: '{lang}' is missing required 'command' field")
+                    errors.append(
+                        f".lsp.json: '{lang}' is missing required 'command' field"
+                    )
                 if not cfg.get("extensionToLanguage"):
-                    warnings.append(f".lsp.json: '{lang}' has no 'extensionToLanguage' mapping")
+                    warnings.append(
+                        f".lsp.json: '{lang}' has no 'extensionToLanguage' mapping"
+                    )
 
     if isinstance(manifest.get("lspServers"), dict):
         # Inline LSP in plugin.json — same checks
         for lang, cfg in manifest["lspServers"].items():
             if isinstance(cfg, dict) and not cfg.get("command"):
-                errors.append(f"plugin.json lspServers: '{lang}' is missing required 'command' field")
+                errors.append(
+                    f"plugin.json lspServers: '{lang}' is missing required 'command' field"
+                )
 
     # ── 10. Plugin settings.json ─────────────────────────────
 
@@ -1719,10 +1879,20 @@ def validate_plugin(
 
     has_content = any(
         (plugin_root / d).exists()
-        for d in ("commands", "skills", "agents", "hooks", "scripts", ".mcp.json", ".lsp.json")
+        for d in (
+            "commands",
+            "skills",
+            "agents",
+            "hooks",
+            "scripts",
+            ".mcp.json",
+            ".lsp.json",
+        )
     )
     if not has_content:
-        warnings.append("Plugin has a manifest but no commands, skills, agents, hooks, MCP, or LSP config")
+        warnings.append(
+            "Plugin has a manifest but no commands, skills, agents, hooks, MCP, or LSP config"
+        )
 
     # ── 12. Security audit via skill-audit (if available) ────
     if run_security_audit:
@@ -1757,7 +1927,11 @@ def print_validation_report(errors, warnings, _plugin_name):
 
 
 def do_install(
-    source_path: str, marketplace_name: Optional[str], force: bool = False, dry_run: bool = False, quiet: bool = False
+    source_path: str,
+    marketplace_name: Optional[str],
+    force: bool = False,
+    dry_run: bool = False,
+    quiet: bool = False,
 ):
     if dry_run and not quiet:
         info("DRY RUN — no files will be modified")
@@ -1776,7 +1950,11 @@ def do_install(
     if is_directory:
         if not quiet:
             info(f"Installing from directory: {source}")
-        plugin_root = source if (source / ".claude-plugin" / "plugin.json").exists() else find_plugin_root(source)
+        plugin_root = (
+            source
+            if (source / ".claude-plugin" / "plugin.json").exists()
+            else find_plugin_root(source)
+        )
         if not plugin_root:
             err("No plugin found in directory.")
             err("Expected: <dir>/.claude-plugin/plugin.json")
@@ -1827,7 +2005,9 @@ def do_install(
             valid = len(v_errors) == 0
         if not valid:
             if not force:
-                err("Plugin has validation errors. Fix them or use --force to install anyway.")
+                err(
+                    "Plugin has validation errors. Fix them or use --force to install anyway."
+                )
                 sys.exit(1)
             else:
                 if not quiet:
@@ -1855,7 +2035,9 @@ def do_install(
                     other_locations.append(f"{plugin_name}@{other_mp.name}")
             if other_locations:
                 print()
-                warn(f"Plugin '{plugin_name}' is also installed in other marketplace(s):")
+                warn(
+                    f"Plugin '{plugin_name}' is also installed in other marketplace(s):"
+                )
                 for loc in other_locations:
                     print(f"    {YELLOW}• {loc}{NC}")
                 print("  This may cause conflicts. Consider removing the duplicate(s):")
@@ -1869,7 +2051,9 @@ def do_install(
                 pass  # quiet mode auto-confirms
             else:
                 warn(f"Marketplace '{marketplace_name}' already exists at {mp_dir}")
-                answer = input("  Install into existing marketplace? [y/N] ").strip().lower()
+                answer = (
+                    input("  Install into existing marketplace? [y/N] ").strip().lower()
+                )
                 if answer not in ("y", "yes"):
                     info("Aborted.")
                     return
@@ -1886,7 +2070,9 @@ def do_install(
                         + (" (--force)" if force else " (dry run)" if dry_run else "")
                     )
             else:
-                warn(f"Plugin '{plugin_name}' already exists in marketplace '{marketplace_name}'")
+                warn(
+                    f"Plugin '{plugin_name}' already exists in marketplace '{marketplace_name}'"
+                )
                 answer = input("  Overwrite? [y/N] ").strip().lower()
                 if answer not in ("y", "yes"):
                     info("Aborted.")
@@ -1953,7 +2139,9 @@ def do_install(
         mj["owner"] = {"name": "local"}
     # Ensure 'metadata' exists
     if not isinstance(mj.get("metadata"), dict):
-        mj["metadata"] = {"description": "Local plugin marketplace (auto-generated by claude-plugin-install)"}
+        mj["metadata"] = {
+            "description": "Local plugin marketplace (auto-generated by claude-plugin-install)"
+        }
 
     plugins_list.append(
         {
@@ -1989,7 +2177,9 @@ def do_install(
     if not isinstance(installed.get("plugins"), dict):
         installed["plugins"] = {}
     plugins_map = installed["plugins"]
-    now = datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
+    now = (
+        datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
+    )
     plugins_map[plugin_key] = {
         "version": plugin_version,
         "installedAt": now,
@@ -2013,14 +2203,20 @@ def do_install(
         print(f"  Settings:      {SETTINGS_TARGET}")
         print()
         print(f"  The plugin is {GREEN}enabled{NC} by default — no action needed.")
-        print(f"  {BOLD}Run /reload-plugins or restart Claude Code for changes to take effect.{NC}")
+        print(
+            f"  {BOLD}Run /reload-plugins or restart Claude Code for changes to take effect.{NC}"
+        )
         print()
 
         # Warn if the plugin references a different marketplace or repository
         origin_refs = _detect_plugin_origin_refs(dest_plugin_dir)
         if origin_refs:
-            print(f"  {YELLOW}{BOLD}NOTE:{NC}{YELLOW} This plugin contains references to an origin")
-            print(f"  marketplace or repository that differs from '{marketplace_name}':{NC}")
+            print(
+                f"  {YELLOW}{BOLD}NOTE:{NC}{YELLOW} This plugin contains references to an origin"
+            )
+            print(
+                f"  marketplace or repository that differs from '{marketplace_name}':{NC}"
+            )
             for ref in origin_refs:
                 print(f"    {YELLOW}• {ref}{NC}")
             print()
@@ -2078,11 +2274,17 @@ def do_uninstall(plugin_key: str, quiet: bool = False, dry_run: bool = False):
     mp_json = mp_dir / ".claude-plugin" / "marketplace.json"
     if mp_json.exists():
         mj = load_json_safe(mp_json)
-        mj["plugins"] = [p for p in mj.get("plugins", []) if p.get("name") != plugin_name]
+        mj["plugins"] = [
+            p for p in mj.get("plugins", []) if p.get("name") != plugin_name
+        ]
         save_json_safe(mp_json, mj)
 
     plugins_parent = mp_dir / "plugins"
-    remaining = [d for d in (plugins_parent.iterdir() if plugins_parent.exists() else []) if d.is_dir()]
+    remaining = [
+        d
+        for d in (plugins_parent.iterdir() if plugins_parent.exists() else [])
+        if d.is_dir()
+    ]
 
     # Load settings once, make all modifications, save once
     settings = load_json_safe(SETTINGS_TARGET)
@@ -2129,7 +2331,9 @@ def do_uninstall(plugin_key: str, quiet: bool = False, dry_run: bool = False):
 
     if not quiet:
         ok(f"Uninstalled {plugin_key}")
-        print("  Run /reload-plugins or restart Claude Code for changes to take effect.")
+        print(
+            "  Run /reload-plugins or restart Claude Code for changes to take effect."
+        )
 
 
 # ── Enable / Disable ─────────────────────────────────────
@@ -2162,7 +2366,9 @@ def do_enable(plugin_key: str, quiet: bool = False, dry_run: bool = False):
     save_json_safe(SETTINGS_TARGET, settings)
     if not quiet:
         ok(f"Enabled {plugin_key}")
-        print("  Run /reload-plugins or restart Claude Code for changes to take effect.")
+        print(
+            "  Run /reload-plugins or restart Claude Code for changes to take effect."
+        )
 
 
 def do_disable(plugin_key: str, quiet: bool = False, dry_run: bool = False):
@@ -2192,14 +2398,20 @@ def do_disable(plugin_key: str, quiet: bool = False, dry_run: bool = False):
     save_json_safe(SETTINGS_TARGET, settings)
     if not quiet:
         ok(f"Disabled {plugin_key}")
-        print("  Run /reload-plugins or restart Claude Code for changes to take effect.")
+        print(
+            "  Run /reload-plugins or restart Claude Code for changes to take effect."
+        )
 
 
 # ── Update ───────────────────────────────────────────────
 
 
 def do_update(
-    source_path: str, marketplace_name: Optional[str], force: bool = False, dry_run: bool = False, quiet: bool = False
+    source_path: str,
+    marketplace_name: Optional[str],
+    force: bool = False,
+    dry_run: bool = False,
+    quiet: bool = False,
 ):  # noqa: ARG001 (force accepted from argparse but update always forces reinstall)
     """Update a plugin by uninstalling the old version and reinstalling from a new source."""
     # Resolve the source to find the plugin name
@@ -2211,7 +2423,11 @@ def do_update(
     # Extract plugin name from the new source
     tmp_cleanup = None
     if source.is_dir():
-        plugin_root = source if (source / ".claude-plugin" / "plugin.json").exists() else find_plugin_root(source)
+        plugin_root = (
+            source
+            if (source / ".claude-plugin" / "plugin.json").exists()
+            else find_plugin_root(source)
+        )
         if not plugin_root:
             err("No plugin found in directory.")
             err("Expected: <dir>/.claude-plugin/plugin.json")
@@ -2309,7 +2525,13 @@ def do_list():
             plugin_key = f"{meta['name']}@{mp_name}"
 
             enabled = settings.get("enabledPlugins", {}).get(plugin_key, None)
-            status = f"{GREEN}enabled{NC}" if enabled else f"{YELLOW}disabled{NC}" if enabled is False else ""
+            status = (
+                f"{GREEN}enabled{NC}"
+                if enabled
+                else f"{YELLOW}disabled{NC}"
+                if enabled is False
+                else ""
+            )
 
             components = []
             for comp, glob_pat, label in [
@@ -2329,7 +2551,9 @@ def do_list():
 
             comp_str = f"  [{', '.join(components)}]" if components else ""
 
-            print(f"  {GREEN}{meta['name']}{NC}@{mp_name}  v{meta['version']}  {status}{comp_str}")
+            print(
+                f"  {GREEN}{meta['name']}{NC}@{mp_name}  v{meta['version']}  {status}{comp_str}"
+            )
             if meta["description"]:
                 print(f"    {meta['description']}")
             print(f"    {CYAN}{plug_dir}{NC}")
@@ -2361,7 +2585,11 @@ def do_validate(source_path: str):
             sys.exit(1)
     elif p.is_dir():
         info(f"Validating plugin directory: {p}")
-        found_root = p if (p / ".claude-plugin" / "plugin.json").exists() else find_plugin_root(p)
+        found_root = (
+            p
+            if (p / ".claude-plugin" / "plugin.json").exists()
+            else find_plugin_root(p)
+        )
         if not found_root:
             err("No plugin found in directory. Expected: .claude-plugin/plugin.json")
             sys.exit(1)
@@ -2374,7 +2602,9 @@ def do_validate(source_path: str):
         extract_archive(source_path, Path(tmpdir))
         found_archive_root = find_plugin_root(Path(tmpdir))
         if not found_archive_root:
-            err("No plugin found in archive. Expected: <dir>/.claude-plugin/plugin.json")
+            err(
+                "No plugin found in archive. Expected: <dir>/.claude-plugin/plugin.json"
+            )
             print("\nArchive contents:")
             for f in sorted(Path(tmpdir).rglob("*")):
                 if f.is_file():
@@ -2428,7 +2658,10 @@ def do_doctor(verbose: bool = False):
     ok(f"Claude directory: {CLAUDE_DIR}")
 
     # 2. Check settings files
-    for label, path in [("settings.json", SETTINGS_FILE), ("settings.local.json", SETTINGS_LOCAL_FILE)]:
+    for label, path in [
+        ("settings.json", SETTINGS_FILE),
+        ("settings.local.json", SETTINGS_LOCAL_FILE),
+    ]:
         if path.exists():
             try:
                 data = load_jsonc(path)
@@ -2489,7 +2722,9 @@ def do_doctor(verbose: bool = False):
             issues += 1
             mj_valid = False
         if not isinstance(mj.get("owner"), dict) or not mj["owner"].get("name"):
-            err('  marketplace.json: missing or invalid \'owner\' field (must be {"name": "..."})')
+            err(
+                '  marketplace.json: missing or invalid \'owner\' field (must be {"name": "..."})'
+            )
             issues += 1
             mj_valid = False
         # metadata is optional per the Anthropic spec
@@ -2518,7 +2753,9 @@ def do_doctor(verbose: bool = False):
                 src_type = p_src.get("source", "")
                 if not src_type:
                     # Object sources (github, url, npm, git-subdir, archive, command) need a "source" type field
-                    warn(f"  marketplace.json: plugin '{p_name_display}' source object missing 'source' type field")
+                    warn(
+                        f"  marketplace.json: plugin '{p_name_display}' source object missing 'source' type field"
+                    )
                 issues += 1
             # String sources like "./plugins/name" are valid relative paths per the Anthropic spec
 
@@ -2530,12 +2767,16 @@ def do_doctor(verbose: bool = False):
             registered_path = ekm[mp_name].get("source", {}).get("path", "")
             actual_path = _portable_path(mp_dir)
             if registered_path and registered_path != actual_path:
-                warn(f"  Path mismatch in settings: registered='{registered_path}' actual='{actual_path}'")
+                warn(
+                    f"  Path mismatch in settings: registered='{registered_path}' actual='{actual_path}'"
+                )
                 issues += 1
             else:
                 ok("  Registered in settings")
         else:
-            info("  Not in extraKnownMarketplaces (may be loaded via '/plugin marketplace add')")
+            info(
+                "  Not in extraKnownMarketplaces (may be loaded via '/plugin marketplace add')"
+            )
 
         # Determine where plugins live based on marketplace.json source paths
         # Not all marketplaces use a plugins/ directory — some use ./ or other structures
@@ -2544,7 +2785,10 @@ def do_doctor(verbose: bool = False):
             # Check if plugins are at the marketplace root (source: "./" pattern)
             has_root_plugins = any(
                 isinstance(p.get("source"), str)
-                and (p.get("source") == "./" or not p.get("source", "").startswith("./plugins/"))
+                and (
+                    p.get("source") == "./"
+                    or not p.get("source", "").startswith("./plugins/")
+                )
                 for p in mj.get("plugins", [])
                 if isinstance(p, dict)
             )
@@ -2554,7 +2798,9 @@ def do_doctor(verbose: bool = False):
             else:
                 continue
 
-        declared_plugins = {p.get("name") for p in mj.get("plugins", []) if isinstance(p, dict)}
+        declared_plugins = {
+            p.get("name") for p in mj.get("plugins", []) if isinstance(p, dict)
+        }
 
         # Resolve actual plugin directories from marketplace.json source paths
         # rather than blindly scanning all subdirectories (avoids false positives
@@ -2618,7 +2864,9 @@ def do_doctor(verbose: bool = False):
                 else f"{CYAN}managed by Claude Code{NC}"
             )
 
-            print(f"    {meta['name']} v{meta['version']}  [{en_str}]  [{', '.join(status_parts)}]")
+            print(
+                f"    {meta['name']} v{meta['version']}  [{en_str}]  [{', '.join(status_parts)}]"
+            )
 
             # Show full validation details in verbose mode
             if verbose and (v_errors or v_warnings):
@@ -2630,7 +2878,9 @@ def do_doctor(verbose: bool = False):
 
             # Check if declared in marketplace.json
             if meta["name"] not in declared_plugins:
-                warn("    Not listed in marketplace.json — may not be discovered by Claude Code")
+                warn(
+                    "    Not listed in marketplace.json — may not be discovered by Claude Code"
+                )
                 issues += 1
 
     # 5. Check for orphaned entries in settings
@@ -2641,7 +2891,9 @@ def do_doctor(verbose: bool = False):
             mp_path = Path(source.get("path", ""))
             if not mp_path.exists():
                 print()
-                warn(f"Orphaned marketplace in settings: '{mp_name}' points to non-existent path: {mp_path}")
+                warn(
+                    f"Orphaned marketplace in settings: '{mp_name}' points to non-existent path: {mp_path}"
+                )
                 issues += 1
 
     ep = settings.get("enabledPlugins", {})
@@ -2651,12 +2903,20 @@ def do_doctor(verbose: bool = False):
             # Check both marketplace dir and cache — GitHub-sourced plugins live in cache only
             plug_in_marketplace = MARKETPLACES_DIR / mpname / "plugins" / pname
             plug_in_cache = CACHE_DIR / mpname / pname
-            if not plug_in_marketplace.exists() and not plug_in_cache.exists() and enabled:
+            if (
+                not plug_in_marketplace.exists()
+                and not plug_in_cache.exists()
+                and enabled
+            ):
                 # Also check if the marketplace itself exists (could be managed externally)
-                mp_exists = (MARKETPLACES_DIR / mpname).exists() or (CACHE_DIR / mpname).exists()
+                mp_exists = (MARKETPLACES_DIR / mpname).exists() or (
+                    CACHE_DIR / mpname
+                ).exists()
                 if not mp_exists:
                     print()
-                    warn(f"Orphaned entry in enabledPlugins: '{pkey}' — marketplace '{mpname}' not found")
+                    warn(
+                        f"Orphaned entry in enabledPlugins: '{pkey}' — marketplace '{mpname}' not found"
+                    )
                     issues += 1
 
     # Summary
@@ -2836,40 +3096,79 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=HELP_EPILOG,
     )
-    parser.add_argument("--version", action="version", version=f"%(prog)s {TOOL_VERSION}")
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s {TOOL_VERSION}"
+    )
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
-        "archive", nargs="?", help="Plugin source: archive (.tar.gz, .tgz, .zip, etc.) or directory path"
+        "archive",
+        nargs="?",
+        help="Plugin source: archive (.tar.gz, .tgz, .zip, etc.) or directory path",
     )
-    group.add_argument("--uninstall", metavar="NAME@MARKETPLACE", help="Remove a plugin and clean up settings")
     group.add_argument(
-        "--validate", metavar="PATH", help="Validate an archive, directory, or installed plugin (name@marketplace)"
+        "--uninstall",
+        metavar="NAME@MARKETPLACE",
+        help="Remove a plugin and clean up settings",
     )
-    group.add_argument("--list", action="store_true", help="Show all plugins installed by this tool")
-    group.add_argument("--doctor", action="store_true", help="Run health checks on all installed plugins and settings")
+    group.add_argument(
+        "--validate",
+        metavar="PATH",
+        help="Validate an archive, directory, or installed plugin (name@marketplace)",
+    )
+    group.add_argument(
+        "--list", action="store_true", help="Show all plugins installed by this tool"
+    )
+    group.add_argument(
+        "--doctor",
+        action="store_true",
+        help="Run health checks on all installed plugins and settings",
+    )
     group.add_argument(
         "--update",
         nargs=2,
         metavar=("SOURCE", "MARKETPLACE"),
         help="Update a plugin from a new archive or directory (uninstalls old, reinstalls)",
     )
-    group.add_argument("--enable", metavar="NAME@MARKETPLACE", help="Enable a disabled plugin")
-    group.add_argument("--disable", metavar="NAME@MARKETPLACE", help="Disable an installed plugin without removing it")
+    group.add_argument(
+        "--enable", metavar="NAME@MARKETPLACE", help="Enable a disabled plugin"
+    )
+    group.add_argument(
+        "--disable",
+        metavar="NAME@MARKETPLACE",
+        help="Disable an installed plugin without removing it",
+    )
 
     parser.add_argument(
-        "marketplace", nargs="?", default=None, help="Marketplace name to install into (required for install)"
+        "marketplace",
+        nargs="?",
+        default=None,
+        help="Marketplace name to install into (required for install)",
     )
     parser.add_argument(
-        "-f", "--force", action="store_true", help="Install despite validation errors; skip overwrite prompt"
+        "-f",
+        "--force",
+        action="store_true",
+        help="Install despite validation errors; skip overwrite prompt",
     )
     parser.add_argument(
-        "-n", "--dry-run", action="store_true", help="Preview what would happen without writing any files"
+        "-n",
+        "--dry-run",
+        action="store_true",
+        help="Preview what would happen without writing any files",
     )
     parser.add_argument(
-        "-q", "--quiet", action="store_true", help="Suppress non-error output and auto-confirm all prompts"
+        "-q",
+        "--quiet",
+        action="store_true",
+        help="Suppress non-error output and auto-confirm all prompts",
     )
-    parser.add_argument("-v", "--verbose", action="store_true", help="Show full validation details (use with --doctor)")
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Show full validation details (use with --doctor)",
+    )
 
     args = parser.parse_args()
 
@@ -2878,7 +3177,13 @@ def main():
     elif args.uninstall:
         do_uninstall(args.uninstall, quiet=args.quiet, dry_run=args.dry_run)
     elif args.update:
-        do_update(args.update[0], args.update[1], force=args.force, dry_run=args.dry_run, quiet=args.quiet)
+        do_update(
+            args.update[0],
+            args.update[1],
+            force=args.force,
+            dry_run=args.dry_run,
+            quiet=args.quiet,
+        )
     elif args.enable:
         do_enable(args.enable, quiet=args.quiet, dry_run=args.dry_run)
     elif args.disable:
@@ -2888,7 +3193,13 @@ def main():
     elif args.doctor:
         do_doctor(verbose=args.verbose)
     elif args.archive:
-        do_install(args.archive, args.marketplace, force=args.force, dry_run=args.dry_run, quiet=args.quiet)
+        do_install(
+            args.archive,
+            args.marketplace,
+            force=args.force,
+            dry_run=args.dry_run,
+            quiet=args.quiet,
+        )
     else:
         parser.print_help()
         sys.exit(1)

@@ -16,7 +16,7 @@
       },
       {
         "_id": "amia-issue-closure-gate",
-        "_description": "Blocks premature issue closure - requires merged PR, checkboxes, evidence, TDD. All progress prints route to stderr to keep stdout reserved for future JSON response payloads.",
+        "_description": "Blocks premature issue closure - requires merged PR, checkboxes, TDD; warns (does not block) on missing evidence file. All progress prints route to stderr to keep stdout reserved for future JSON response payloads.",
         "matcher": "Bash",
         "hooks": [
           {
