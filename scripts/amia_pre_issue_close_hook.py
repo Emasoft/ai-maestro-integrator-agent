@@ -94,7 +94,9 @@ def log_message(level: str, message: str, log_file: Path) -> None:
         # tz-AWARE local time, and the %z offset is not optional: a bare
         # "YYYY-MM-DD HH:MM:SS" is ambiguous across machines and DST boundaries, so a
         # log line cannot be correlated with anything. (ruff DTZ005)
-        timestamp = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S%z")
+        timestamp = (
+            datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S%z")
+        )
         entry = f"[{timestamp}] [{level}] [pre-issue-close] {message}\n"
         with open(log_file, "a", encoding="utf-8") as f:
             f.write(entry)
@@ -261,8 +263,20 @@ def verify_tdd_sequence(commits: list[str]) -> tuple[bool, str, int, int]:
     Returns:
         Tuple of (is_valid, error_message, red_count, green_count)
     """
-    red_commits = [i for i, msg in enumerate(commits) if msg.startswith("RED:")]
-    green_commits = [i for i, msg in enumerate(commits) if msg.startswith("GREEN:")]
+    # gh pr view returns commits NEWEST-FIRST. Normalize to chronological
+    # (oldest-first) up front so the comparison below reads exactly like the
+    # domain rule "RED before GREEN". The original code kept the newest-first
+    # list, wrote the index arithmetic correctly in a comment, and then used
+    # the comparison as if the list were oldest-first — inverting the gate:
+    # it BLOCKED correct RED->GREEN histories and PASSED wrong GREEN->RED ones
+    # (TRDD-ONCGHA1Q, proven by executing the shipped function). Normalizing
+    # first removes the mental inversion the next editor would trip on too.
+    chronological = list(reversed(commits))
+
+    red_commits = [i for i, msg in enumerate(chronological) if msg.startswith("RED:")]
+    green_commits = [
+        i for i, msg in enumerate(chronological) if msg.startswith("GREEN:")
+    ]
 
     red_count = len(red_commits)
     green_count = len(green_commits)
@@ -273,17 +287,12 @@ def verify_tdd_sequence(commits: list[str]) -> tuple[bool, str, int, int]:
     if green_count == 0:
         return False, "No GREEN (implementation) commit found", red_count, 0
 
-    # gh pr view shows commits newest-first: index 0 = newest commit
-    # In TDD, RED must come BEFORE GREEN chronologically.
-    # newest-first means RED (older) has HIGHER index than GREEN (newer).
-    # So GREEN index should be LESS than RED index for correct TDD order.
-    first_red = red_commits[0]
-    first_green = green_commits[0]
-
-    if first_green < first_red:
+    # In chronological order the rule is literal: the first RED must be
+    # committed before the first GREEN.
+    if green_commits[0] < red_commits[0]:
         return (
             False,
-            "GREEN commit appears BEFORE RED commit in history",
+            "GREEN commit was made BEFORE the RED commit — tests must fail first",
             red_count,
             green_count,
         )
