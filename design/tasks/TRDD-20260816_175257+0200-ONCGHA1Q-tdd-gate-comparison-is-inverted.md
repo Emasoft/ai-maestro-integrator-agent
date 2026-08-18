@@ -1,15 +1,18 @@
 ---
 trdd-id: ONCGHA1Q
 title: The TDD issue-closure gate enforces the exact opposite of RED-before-GREEN
-column: todo
+column: testing
 created: 2026-08-16T17:52:57+0200
-updated: 2026-08-16T17:52:57+0200
+updated: 2026-08-18T20:08:29+0200
 current-owner: integrator
 task-type: bugfix
 min-approval-requirement: none
 scope: project
 severity: high
 relevant-rules: []
+implementation-commits: [b201375]
+last-test-result: pass
+last-test-at: 2026-08-18T20:08:29+0200
 ---
 
 # The TDD gate blocks correct sequences and passes incorrect ones
