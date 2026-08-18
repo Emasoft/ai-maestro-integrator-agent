@@ -263,20 +263,16 @@ def verify_tdd_sequence(commits: list[str]) -> tuple[bool, str, int, int]:
     Returns:
         Tuple of (is_valid, error_message, red_count, green_count)
     """
-    # gh pr view returns commits NEWEST-FIRST. Normalize to chronological
-    # (oldest-first) up front so the comparison below reads exactly like the
-    # domain rule "RED before GREEN". The original code kept the newest-first
-    # list, wrote the index arithmetic correctly in a comment, and then used
-    # the comparison as if the list were oldest-first — inverting the gate:
-    # it BLOCKED correct RED->GREEN histories and PASSED wrong GREEN->RED ones
-    # (TRDD-ONCGHA1Q, proven by executing the shipped function). Normalizing
-    # first removes the mental inversion the next editor would trip on too.
-    chronological = list(reversed(commits))
-
-    red_commits = [i for i, msg in enumerate(chronological) if msg.startswith("RED:")]
-    green_commits = [
-        i for i, msg in enumerate(chronological) if msg.startswith("GREEN:")
-    ]
+    # `gh pr view --json commits` returns commits CHRONOLOGICAL (oldest-first).
+    # Verified live 2026-08-18 against facebook/react#37143 and
+    # microsoft/vscode#200000: committedDate ascends in the returned array.
+    # Do NOT "normalize" by reversing: an earlier fix (TRDD-ONCGHA1Q) did
+    # exactly that on the strength of a stale comment claiming newest-first,
+    # and inverted a behaviorally-correct gate. If the ordering premise ever
+    # needs revisiting, verify against a real PR, never against a comment —
+    # tests/test_tdd_gate_sequence.py encodes the verified shape.
+    red_commits = [i for i, msg in enumerate(commits) if msg.startswith("RED:")]
+    green_commits = [i for i, msg in enumerate(commits) if msg.startswith("GREEN:")]
 
     red_count = len(red_commits)
     green_count = len(green_commits)
