@@ -44,8 +44,8 @@ KNOWN_BOT_TRIGGERS = {"claude", "copilot", "dependabot"}
 # closing quote (or end of line for an unterminated multi-line body), so a trailing
 # `--assignee "@me"` on the same line never falls inside the captured body text —
 # `@me` passes by POSITION (it is not inside a body argument), never by a name check.
-BODY_ARG_DQ = re.compile(r'--body\s+"([^"]*)')
-BODY_ARG_SQ = re.compile(r"--body\s+'([^']*)")
+BODY_ARG_DQ = re.compile(r'(?:--body|-b|-F\s+body=)\s*"([^"]*)')
+BODY_ARG_SQ = re.compile(r"(?:--body|-b|-F\s+body=)\s*'([^']*)")
 # Negative lookbehind excludes `pkg@version` specifiers (e.g. `biome@latest`) where the
 # `@` is glued to a preceding word — a real handle is always preceded by whitespace/start.
 HANDLE = re.compile(r"(?<![\w/])@([a-zA-Z][a-zA-Z0-9_-]*)")
@@ -114,6 +114,14 @@ def check_non_vacuity_fails_on_injected_placeholder() -> str:
     hits_after_removal = find_placeholder_handles(clean)
     if hits_after_removal:
         return f"FAIL: clean body still flagged — got {hits_after_removal}"
+    # gh's short alias and the raw-API form are postable too (AI-review MINOR,
+    # 2026-08-18): a body reaches GitHub identically through -b and -F body=.
+    alias_hits = find_placeholder_handles(
+        'gh pr comment 2 -b "@someone look"\n'
+        'gh api repos/o/r/issues/3/comments -F body="@other hi"'
+    )
+    if alias_hits != ["@someone", "@other"]:
+        return f"FAIL: -b / -F body= aliases not scanned — got {alias_hits}"
     return "PASS"
 
 

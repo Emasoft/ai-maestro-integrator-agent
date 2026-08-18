@@ -1,7 +1,7 @@
 ---
 trdd-id: ONCGHA1Q
 title: The TDD issue-closure gate enforces the exact opposite of RED-before-GREEN
-column: ai_review
+column: complete
 created: 2026-08-16T17:52:57+0200
 updated: 2026-08-18T20:08:29+0200
 current-owner: integrator
@@ -107,3 +107,18 @@ calls it, the exit code blocks. The only way to see the defect was to run it on 
 known-good input and a known-bad input and check which one it rejected. Two inputs.
 That is what an enforcement claim costs to verify, and why "cite the guard" is not
 the same as "check the guard".
+
+## Approval log
+
+- 2026-08-18T20:35:00+0200 — COMPLETED, with the original finding PARTIALLY REFUTED
+  by ai_review and the refutation verified first-hand. `gh pr view --json commits`
+  returns commits CHRONOLOGICAL (oldest-first) — verified live on facebook/react#37143
+  and microsoft/vscode#200000, committedDate ascends — so the original gate's BEHAVIOR
+  was correct and only its COMMENT was wrong. This card's first fix (b201375) inverted
+  a correct gate for one commit; ce4813c reverted to behavior proven identical to the
+  original on all 6 table cases (both versions executed, original extracted verbatim
+  from git). Net delivered: truthful comments pinning the VERIFIED ordering + the
+  previously-missing both-direction test, its inputs now encoding gh's real shape.
+  Lesson recorded on the card: the code comment, the audit worker, the card author,
+  and the first test all shared ONE unverified premise — synthetic inputs derived
+  from a premise "prove" the premise, not the code.

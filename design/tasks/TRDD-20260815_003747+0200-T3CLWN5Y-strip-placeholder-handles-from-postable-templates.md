@@ -1,7 +1,7 @@
 ---
 trdd-id: T3CLWN5Y
 title: Strip placeholder GitHub handles from postable templates without breaking the real bot triggers
-column: ai_review
+column: complete
 created: 2026-08-15T00:37:47+0200
 updated: 2026-08-18T11:19:25+0200
 current-owner: integrator
@@ -125,3 +125,13 @@ while this session began measuring them; the same file read twice seconds apart
 gave 3 hits then 0. What caught it was re-measuring rather than trusting the
 first read — and the correct response was to stop editing and let the agent
 land, not to merge two diffs by hand.
+
+## Approval log
+
+- 2026-08-18T20:36:00+0200 — COMPLETED after ai_review. Review found 0 CRITICAL
+  against this card, 2 MINOR: (1) the guard missed gh's `-b` short alias and
+  `gh api -F body=` — latent, zero current exploitation; FIXED same day by widening
+  the body-position regexes and asserting both aliases in the non-vacuity check.
+  (2) two rewritten template lines read stiffer than the original — cosmetic,
+  meaning preserved, not acted on. Attack angles that failed: --title (GitHub does
+  not notify on title mentions), KNOWN_BOT_TRIGGERS loophole, heredoc bodies.
