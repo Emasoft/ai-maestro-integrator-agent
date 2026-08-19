@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.1] — 2026-08-19
+
+### Refactor
+
+- Extract duplicated gh CLI helpers into shared/gh_utils.py
+
+### Styling
+
+- Sort import blocks after gh_utils extraction (ruff I001)
 ## [1.7.0] — 2026-08-18
 
 ### Bug Fixes
