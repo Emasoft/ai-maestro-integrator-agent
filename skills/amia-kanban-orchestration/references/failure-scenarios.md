@@ -277,18 +277,12 @@ Before approving re-integration:
 
 ### Failure Report Format
 
-> **Note**: Use the `agent-messaging` skill to send messages. The JSON structure below shows the message content.
+> **Note**: Send via `amp-send`. The command below shows the message content.
 
-```json
-{
-  "to": "amcos-main",
-  "subject": "FAILED: GH-42 - Authentication Module (please forward to Orchestrator)",
-  "priority": "high",
-  "content": {
-    "type": "failure_report",
-    "message": "[FAILED] GH-42 auth_module\nReason: OAuth library incompatible with Python 3.12\nTests: 15 passing, 8 failures\nBlocker: Library version constraint\nDetails: See GitHub issue #42"
-  }
-}
+```bash
+amp-send amcos-main "FAILED: GH-42 - Authentication Module (please forward to Orchestrator)" \
+  '{"type": "failure_report", "message": "[FAILED] GH-42 auth_module\nReason: OAuth library incompatible with Python 3.12\nTests: 15 passing, 8 failures\nBlocker: Library version constraint\nDetails: See GitHub issue #42"}' \
+  --type notification --priority high
 ```
 
 ### Orchestrator Response Pattern
@@ -354,12 +348,11 @@ gh issue comment 42 --body "Task failed: OAuth library incompatible. Creating re
 gh issue edit 43 --add-label "blocked"
 gh issue comment 43 --body "Blocked by GH-42 failure. Awaiting recovery."
 
-# Step 3: Notify COS to forward blocker notice to agent-2 using the agent-messaging skill:
-#   Recipient: amcos-main (COS will forward to agent-2)
-#   Subject: GH-43 Blocked - notify agent-2
-#   Priority: high
-#   Content: {"type": "blocker", "message": "GH-43 is blocked due to GH-42 failure. Please forward to agent-2: Pause work until unblocked."}
-#   Verify: Confirm delivery via the agent-messaging skill send confirmation.
+# Step 3: Notify COS to forward blocker notice to agent-2:
+amp-send amcos-main "GH-43 Blocked - notify agent-2" \
+  '{"type": "blocker", "message": "GH-43 is blocked due to GH-42 failure. Please forward to agent-2: Pause work until unblocked."}' \
+  --type notification --priority high
+#   Verify: amp-send exits 0 and prints the message id.
 
 # Step 4: Create recovery task
 gh issue create --title "Recovery: Fix OAuth compatibility in auth module" \
@@ -381,12 +374,11 @@ gh issue create --title "Resolve merge conflicts for feature X integration" \
 # Step 3: Assign to conflict resolver
 gh issue edit 51 --add-assignee conflict-resolver-agent
 
-# Step 4: Notify COS to forward assignment to resolver using the agent-messaging skill:
-#   Recipient: amcos-main (COS will forward to conflict-resolver-agent)
-#   Subject: ASSIGNMENT: Resolve conflicts for GH-50 - assign to conflict-resolver-agent
-#   Priority: high
-#   Content: {"type": "assignment", "message": "Please forward to conflict-resolver-agent: Resolve merge conflicts following strategy in GH-51."}
-#   Verify: Confirm delivery via the agent-messaging skill send confirmation.
+# Step 4: Notify COS to forward assignment to resolver:
+amp-send amcos-main "ASSIGNMENT: Resolve conflicts for GH-50 - assign to conflict-resolver-agent" \
+  '{"type": "assignment", "message": "Please forward to conflict-resolver-agent: Resolve merge conflicts following strategy in GH-51."}' \
+  --type notification --priority high
+#   Verify: amp-send exits 0 and prints the message id.
 ```
 
 ---

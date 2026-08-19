@@ -106,23 +106,23 @@ Sub-agents do NOT:
 
 ### AI Maestro Messaging Protocol
 
-When sub-agents need to communicate violations or findings to remote developers, send a message using the `agent-messaging` skill with:
+When sub-agents need to communicate violations or findings to remote developers, send via `amp-send` with:
 
 - **Recipient**: The remote developer session name
 - **Subject**: `[<SUB-AGENT-NAME>] <violation-type>`
 - **Priority**: `high`
 - **Content**: `{"type": "violation", "message": "<brief-description>", "report_path": "<path-to-detailed-report>"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 **Example:**
 
-Send a message using the `agent-messaging` skill with:
+Send via `amp-send` with:
 
 - **Recipient**: `remote-dev-alice`
 - **Subject**: `[amia-code-reviewer] Code quality violations found`
 - **Priority**: `high`
 - **Content**: `{"type": "violation", "message": "PR #123: 3 critical issues, 2 major issues. Review report attached.", "report_path": "docs_dev/reviews/review-20260205-143022.md"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### GitHub Projects Integration
 

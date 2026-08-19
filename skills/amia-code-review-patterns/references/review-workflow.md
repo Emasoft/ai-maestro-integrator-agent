@@ -466,13 +466,16 @@ Verification: After fix, run tests/test_auth_security.py::test_username_validati
 
 **Step 7: Communicate with Developer**
 
-Send a message to the remote developer agent using the `agent-messaging` skill with:
+Send a message to the remote developer agent:
+
+```bash
+amp-send developer-agent-name "PR#123 Review Complete - Fixes Required" \
+  '{"type": "code-review", "message": "PR#123 review complete. Gate 1: PASS, Gate 2: FAIL\n5 issues found (2 critical)\nFix instructions: fix-instructions/fix-instructions-PR123-{timestamp}.md"}' \
+  --type request --priority high
+```
 
 - **Recipient**: `developer-agent-name`
-- **Subject**: `PR#123 Review Complete - Fixes Required`
-- **Priority**: `high`
-- **Content**: `{"type": "code-review", "message": "PR#123 review complete. Gate 1: PASS, Gate 2: FAIL\n5 issues found (2 critical)\nFix instructions: fix-instructions/fix-instructions-PR123-{timestamp}.md"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### 7.2 Including Report File References
 

@@ -263,4 +263,4 @@ After validation, the payload should be safe to send:
 ./validate_handoff.sh "$PAYLOAD"
 ```
 
-If valid (exit code 0), proceed with handoff by sending the payload as a message using the `agent-messaging` skill. The payload contents become the message content. Verify delivery by checking the `agent-messaging` skill send confirmation.
+If valid (exit code 0), proceed with handoff by sending the payload as a message via `amp-send`. The payload contents become the message content. Verify delivery: `amp-send` exits 0 and prints the message id.

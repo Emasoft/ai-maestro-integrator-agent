@@ -45,7 +45,7 @@ Track progress of delegated subagents without blocking. Use polling to check sta
    - Review the output file path specified in delegation
    - Check `docs_dev/` for task reports
 
-2. **Check AI Maestro for messages**: Check your inbox using the `agent-messaging` skill. Filter for messages where `content.data.task_id` matches the task being monitored. **Verify**: Confirm message delivery via the `agent-messaging` skill's sent messages feature.
+2. **Check AI Maestro for messages**: Check your inbox with `amp-inbox`. Filter for messages where `content.data.task_id` matches the task being monitored. **Verify**: `amp-inbox` lists the message.
 
 3. **Evaluate progress state**:
 
@@ -96,7 +96,7 @@ A task is considered stale if:
 
 ## Example
 
-Check for completion messages by checking your inbox using the `agent-messaging` skill. Filter for messages where the subject contains "PR #123".
+Check for completion messages by checking your inbox with `amp-inbox`. Filter for messages where the subject contains "PR #123".
 
 Also check the output file:
 

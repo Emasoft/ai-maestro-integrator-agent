@@ -145,7 +145,7 @@ INTEGRATOR implements it as specified and records it in the PRRD / TRDD.
 
 ## AI Maestro Communication
 
-Use the `agent-messaging` skill for all inter-agent communication. Key message types:
+Use the `amp-send` AMP CLI for all inter-agent communication. Key message types:
 
 | Scenario | Recipient | Priority | Content Type |
 |----------|-----------|----------|--------------|
@@ -154,7 +154,12 @@ Use the `agent-messaging` skill for all inter-agent communication. Key message t
 | Release blocker escalation | `orchestrator-amoa` | urgent | `release-blocked` |
 | Rollback notification | `orchestrator-amoa` | urgent | `rollback-initiated` |
 
-Always verify message delivery via the skill's send confirmation.
+```bash
+amp-send orchestrator-amoa "<subject>" '{"type": "<content-type>", "message": "<message>"}' \
+  --type notification --priority <priority>
+```
+
+Always verify: `amp-send` exits 0 and prints the message id.
 
 ## Examples
 

@@ -263,13 +263,15 @@ Blockers: [none/description]
 
 ### AI Maestro Message Format
 
-All templates should be sent via AI Maestro using the `agent-messaging` skill with:
+All templates should be sent with `amp-send`:
 
-- **Recipient**: The target agent session name
-- **Subject**: The subject line from the template
-- **Priority**: `high` (or as specified in the template)
-- **Content**: `{"type": "assignment|request|approval", "message": "TEMPLATE_CONTENT_HERE"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send <target-agent-session-name> "<subject line from the template>" \
+  '{"type": "assignment|request|approval", "message": "TEMPLATE_CONTENT_HERE"}' \
+  --type request --priority high
+```
+
+(`--priority` as specified in the template.) **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Template Customization
 

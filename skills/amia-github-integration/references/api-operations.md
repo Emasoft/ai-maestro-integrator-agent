@@ -750,12 +750,16 @@ gh api rate_limit | jq '.resources.core'
 | 10-100 | Orange | Only critical operations |
 | < 10 | Red | STOP all operations, wait for reset |
 
-1. **If in Yellow or Orange zone**, send warning to orchestrator using the `agent-messaging` skill with:
-   - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-   - **Subject**: `GitHub Rate Limit Warning`
-   - **Priority**: `high`
-   - **Content**: `{"type": "warning", "message": "GitHub API rate limit in YELLOW zone: <REMAINING> remaining"}`
-   - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+1. **If in Yellow or Orange zone**, send warning to orchestrator:
+
+   ```bash
+   amp-send amcos-main "GitHub Rate Limit Warning" \
+     '{"type": "warning", "message": "GitHub API rate limit in YELLOW zone: <REMAINING> remaining"}' \
+     --type notification --priority high
+   ```
+
+   (COS will forward to Orchestrator)
+   - **Verify**: `amp-send` exits 0 and prints the message id.
 
 2. **If in Red zone**, calculate wait time:
 
@@ -1246,9 +1250,9 @@ echo "Gate 5: Rate limit check PASS ($REMAINING remaining)"
 
 **Procedure**:
 
-1. **Check for unread messages**: Check your inbox using the `agent-messaging` skill.
+1. **Check for unread messages**: Check your inbox with `amp-inbox`.
 
-2. **Filter for API requests**: Filter inbox messages for `content.type == "api-request"` using the `agent-messaging` skill.
+2. **Filter for API requests**: Filter the `amp-inbox` output for `content.type == "api-request"`.
 
 3. **Parse request message**:
 
@@ -1283,7 +1287,7 @@ CALLBACK=$(echo "$MESSAGE" | jq -r '.content.callback_agent')
 PRIORITY=$(echo "$MESSAGE" | jq -r '.priority')
 ```
 
-1. **Mark message as read**: Mark the message as read using the `agent-messaging` skill.
+1. **Mark message as read**: Mark the message as read via `amp-inbox`.
 
 2. **Execute the operation** (proceed to section 1.8).
 
@@ -1295,29 +1299,35 @@ PRIORITY=$(echo "$MESSAGE" | jq -r '.priority')
 
 **Purpose**: Close the request-response loop via AI Maestro messaging.
 
-**Procedure for successful operations**: Send a message using the `agent-messaging` skill with:
+**Procedure for successful operations**:
 
-- **Recipient**: The callback agent
-- **Subject**: `API Operation Complete: <OPERATION>`
-- **Priority**: `normal`
-- **Content**: `{"type": "api-response", "operation": "<OPERATION>", "status": "success", "result": {"issue_number": 456, "issue_url": "https://github.com/owner/repo/issues/456"}}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send "<CALLBACK>" "API Operation Complete: <OPERATION>" \
+  '{"type": "api-response", "operation": "<OPERATION>", "status": "success", "result": {"issue_number": 456, "issue_url": "https://github.com/owner/repo/issues/456"}}' \
+  --type response --priority normal
+```
 
-**Procedure for failed operations**: Send a message using the `agent-messaging` skill with:
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
-- **Recipient**: The callback agent
-- **Subject**: `API Operation Failed: <OPERATION>`
-- **Priority**: `high`
-- **Content**: `{"type": "api-response", "operation": "<OPERATION>", "status": "failed", "error": "Gate 2 failed: insufficient permissions", "details_file": "logs/api-operations-20250205.log"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+**Procedure for failed operations**:
 
-**Procedure for rate-limited operations**: Send a message using the `agent-messaging` skill with:
+```bash
+amp-send "<CALLBACK>" "API Operation Failed: <OPERATION>" \
+  '{"type": "api-response", "operation": "<OPERATION>", "status": "failed", "error": "Gate 2 failed: insufficient permissions", "details_file": "logs/api-operations-20250205.log"}' \
+  --type response --priority high
+```
 
-- **Recipient**: The callback agent
-- **Subject**: `API Operation Queued: <OPERATION>`
-- **Priority**: `normal`
-- **Content**: `{"type": "api-response", "operation": "<OPERATION>", "status": "rate-limited", "message": "Operation queued due to rate limit pressure. Will retry when limit resets.", "retry_after": "2025-02-05T12:00:00Z"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
+
+**Procedure for rate-limited operations**:
+
+```bash
+amp-send "<CALLBACK>" "API Operation Queued: <OPERATION>" \
+  '{"type": "api-response", "operation": "<OPERATION>", "status": "rate-limited", "message": "Operation queued due to rate limit pressure. Will retry when limit resets.", "retry_after": "2025-02-05T12:00:00Z"}' \
+  --type response --priority normal
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ---
 
@@ -1390,7 +1400,7 @@ PRIORITY=$(echo "$MESSAGE" | jq -r '.priority')
    - AI Maestro message (see section 1.7.1)
    - Direct orchestrator delegation (via Task tool invocation)
 
-2. **Extract operation details**: Read the incoming message from your inbox using the `agent-messaging` skill. Filter for messages with `content.type == "api-request"`. Extract the following fields from the message:
+2. **Extract operation details**: Read the incoming message from your inbox with `amp-inbox`. Filter for messages with `content.type == "api-request"`. Extract the following fields from the message:
    - `OPERATION` = `content.operation`
    - `PARAMS` = `content.params`
    - `CALLBACK` = `content.callback_agent`
@@ -1733,33 +1743,39 @@ fi
 
 **Purpose**: Close the request-response loop by notifying the requesting agent of the outcome.
 
-**Procedure for success**: Send a message using the `agent-messaging` skill with:
+**Procedure for success**:
 
-- **Recipient**: The callback agent
-- **Subject**: `API Operation Complete: <OPERATION>`
-- **Priority**: `normal`
-- **Content**: `{"type": "api-response", "operation": "<OPERATION>", "status": "success", "result": <RESULT_JSON>, "details_file": "<LOG_FILE>"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send "<CALLBACK>" "API Operation Complete: <OPERATION>" \
+  '{"type": "api-response", "operation": "<OPERATION>", "status": "success", "result": <RESULT_JSON>, "details_file": "<LOG_FILE>"}' \
+  --type response --priority normal
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 Then output: `[DONE] api-coordinator - <OPERATION> completed successfully`
 
-**Procedure for failure**: Send a message using the `agent-messaging` skill with:
+**Procedure for failure**:
 
-- **Recipient**: The callback agent
-- **Subject**: `API Operation Failed: <OPERATION>`
-- **Priority**: `high`
-- **Content**: `{"type": "api-response", "operation": "<OPERATION>", "status": "failed", "error": "<FAILURE_REASON>", "failed_gate": "<FAILED_GATE>", "details_file": "<LOG_FILE>"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send "<CALLBACK>" "API Operation Failed: <OPERATION>" \
+  '{"type": "api-response", "operation": "<OPERATION>", "status": "failed", "error": "<FAILURE_REASON>", "failed_gate": "<FAILED_GATE>", "details_file": "<LOG_FILE>"}' \
+  --type response --priority high
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 Then output: `[FAILED] api-coordinator - <OPERATION> failed: <FAILURE_REASON>`
 
-**Procedure for rate-limited/queued**: Send a message using the `agent-messaging` skill with:
+**Procedure for rate-limited/queued**:
 
-- **Recipient**: The callback agent
-- **Subject**: `API Operation Queued: <OPERATION>`
-- **Priority**: `normal`
-- **Content**: `{"type": "api-response", "operation": "<OPERATION>", "status": "rate-limited", "message": "Operation queued due to rate limit. Will retry after limit resets.", "retry_after": "<RESET_ISO>", "details_file": "<LOG_FILE>"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send "<CALLBACK>" "API Operation Queued: <OPERATION>" \
+  '{"type": "api-response", "operation": "<OPERATION>", "status": "rate-limited", "message": "Operation queued due to rate limit. Will retry after limit resets.", "retry_after": "<RESET_ISO>", "details_file": "<LOG_FILE>"}' \
+  --type response --priority normal
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 Then output: `[QUEUED] api-coordinator - <OPERATION> queued due to rate limit`
 

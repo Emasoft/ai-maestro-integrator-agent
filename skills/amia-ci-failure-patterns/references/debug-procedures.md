@@ -536,21 +536,16 @@ Section: {specific section showing the fix pattern}
 
 ### 1.5.2 AI Maestro message format
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:**
+
+```bash
+amp-send {remote-agent-name} "[FIX REQUEST] CI failure - {pattern_category}" \
+  '{"type": "fix_request", "message": "Root cause: {one_line_summary}\nFix spec: docs_dev/ci-debug/CI-DEBUG-{timestamp}.md\nReference: amia-ci-failure-patterns/references/{pattern-file}.md"}' \
+  --type request --priority high
+```
 
 - **Recipient**: `{remote-agent-name}` (see routing table below)
-- **Subject**: `[FIX REQUEST] CI failure - {pattern_category}`
-- **Priority**: `high`
-- **Content**:
-
-  ```json
-  {
-    "type": "fix_request",
-    "message": "Root cause: {one_line_summary}\nFix spec: docs_dev/ci-debug/CI-DEBUG-{timestamp}.md\nReference: amia-ci-failure-patterns/references/{pattern-file}.md"
-  }
-  ```
-
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 **Agent routing by fix category:**
 

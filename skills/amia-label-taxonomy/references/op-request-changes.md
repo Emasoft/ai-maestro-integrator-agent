@@ -80,13 +80,15 @@ Get the PR author:
 AUTHOR=$(gh pr view $PR_NUMBER --json author --jq '.author.login')
 ```
 
-If author is an agent, send a message using the `agent-messaging` skill with:
+If author is an agent, send a message with the AMP CLI:
 
-- **Recipient**: The PR author agent
-- **Subject**: `Changes requested on PR #<PR_NUMBER>`
-- **Priority**: `high`
-- **Content**: `{"type": "review-feedback", "message": "Changes requested on your PR. Please review feedback and address issues.", "pr_number": <PR_NUMBER>}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send "$AUTHOR" "Changes requested on PR #$PR_NUMBER" \
+  '{"type": "review-feedback", "message": "Changes requested on your PR. Please review feedback and address issues.", "pr_number": '"$PR_NUMBER"'}' \
+  --type notification --priority high
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Step 4: Verify Label Update
 

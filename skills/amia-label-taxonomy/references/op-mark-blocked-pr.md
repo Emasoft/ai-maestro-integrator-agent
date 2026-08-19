@@ -85,13 +85,15 @@ Get the PR author:
 AUTHOR=$(gh pr view $PR_NUMBER --json author --jq '.author.login')
 ```
 
-Then send a message using the `agent-messaging` skill with:
+Then send a message with the AMP CLI:
 
-- **Recipient**: The PR author agent
-- **Subject**: `PR #<PR_NUMBER> blocked`
-- **Priority**: `high`
-- **Content**: `{"type": "review-blocked", "message": "Your PR is blocked: <BLOCKER_REASON>. Please address and notify when ready.", "pr_number": <PR_NUMBER>}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send "$AUTHOR" "PR #$PR_NUMBER blocked" \
+  '{"type": "review-blocked", "message": "Your PR is blocked: '"$BLOCKER_REASON"'. Please address and notify when ready.", "pr_number": '"$PR_NUMBER"'}' \
+  --type notification --priority high
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Step 5: Verify Label Update
 

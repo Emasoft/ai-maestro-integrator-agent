@@ -165,13 +165,15 @@ The record of which AI agent was working in this worktree.
 
 **Option A - AI Maestro messaging (via COS):**
 
-Send a message using the `agent-messaging` skill with:
+Send a message with the AMP frozen CLI:
 
-- **Recipient**: `amcos-main` (COS will forward to the affected agent)
-- **Subject**: `Worktree review-GH-42 removed - notify code-reviewer-1`
-- **Priority**: `normal`
-- **Content**: `{"type": "notification", "message": "Please forward to code-reviewer-1: Worktree review-GH-42 has been removed. You are now available for new assignments."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send amcos-main "Worktree review-GH-42 removed - notify code-reviewer-1" \
+  "Please forward to code-reviewer-1: Worktree review-GH-42 has been removed. You are now available for new assignments." \
+  --type notification --priority normal
+```
+
+- **Verify**: amp-send exits 0 and prints the message id.
 
 **Option B - Update agent registry:**
 
@@ -317,15 +319,12 @@ jq "del(.worktrees[] | select(.worktree_id == \"$WORKTREE_ID\"))" \
   "$REGISTRY_PATH" > "$REGISTRY_PATH.tmp" && \
   mv "$REGISTRY_PATH.tmp" "$REGISTRY_PATH"
 
-# Step 6: Notify agent (if assigned)
-# Use the agent-messaging skill to send this notification.
+# Step 6: Notify agent (if assigned) via the AMP frozen CLI
 if [[ "$AGENT" != "none" ]] && [[ "$AGENT" != "null" ]]; then
   echo "→ Notifying agent: $AGENT..."
-  echo "  ACTION REQUIRED: Send a message using the agent-messaging skill:"
-  echo "    Recipient: $AGENT"
-  echo "    Subject: Worktree $WORKTREE_ID removed"
-  echo "    Content: {\"type\":\"notification\",\"message\":\"Worktree $WORKTREE_ID has been removed.\"}"
-  echo "    Priority: normal"
+  amp-send "$AGENT" "Worktree $WORKTREE_ID removed" \
+    "Worktree $WORKTREE_ID has been removed." \
+    --type notification --priority normal
 fi
 
 # Step 7: Log removal

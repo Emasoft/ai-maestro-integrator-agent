@@ -193,13 +193,16 @@ git push origin main
 
 ### Notification
 
-Send a message using the `agent-messaging` skill with:
+Send a message with the AMP CLI:
 
-- **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
-- **Subject**: `[CRITICAL] Main Branch Broken - PR #<NUMBER>`
-- **Priority**: `urgent`
-- **Content**: `{"type": "post-merge-failure", "message": "PR #<NUMBER> broke main branch. CI failing. Revert recommended."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send amcos-main "[CRITICAL] Main Branch Broken - PR #<NUMBER>" \
+  '{"type": "post-merge-failure", "message": "PR #<NUMBER> broke main branch. CI failing. Revert recommended."}' \
+  --type notification --priority urgent
+```
+
+(COS will escalate to Orchestrator/Manager.)
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ## Error Handling
 

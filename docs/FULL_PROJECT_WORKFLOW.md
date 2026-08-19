@@ -68,7 +68,7 @@ AMOA ◄────────────────────────
 ### AI Maestro Task Statuses (Authoritative)
 
 AI Maestro's task system uses **5 statuses**. All agents MUST report task progress using these statuses through the **frozen CLI layer** (the `aimaestro-teams` kanban/task verb), never the server API directly:
-<!-- DECOUPLE-BLOCKED ai-maestro#36 — the kanban/status-set verb lands with ai-maestro#36; until it deploys, route status updates through the agent-messaging skill, never the server API. Frozen-CLI rule (USER 2026-06-15): no ai-maestro plugin calls the server API directly. -->
+<!-- DECOUPLE-BLOCKED ai-maestro#36 — the kanban/status-set verb lands with ai-maestro#36; until it deploys, route status updates through `amp-send`, never the server API. Frozen-CLI rule (USER 2026-06-15): no ai-maestro plugin calls the server API directly. -->
 
 | Status | Code | Description |
 |--------|------|-------------|
@@ -301,7 +301,7 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 **Actor**: AMOA (Orchestrator) + IMPLEMENTER AGENTS
 **Action**:
 
-- Send to each agent a notification using the `agent-messaging` skill that their first task has been assigned
+- Send each agent a notification (`amp-send`) that their first task has been assigned
 - Ask each agent if they need clarifications
 - The Orchestrator is the team lead with full project understanding (along with Architect)
 
@@ -395,7 +395,7 @@ GitHub Projects V2 uses an **8-column display** that maps onto the 5 AI Maestro 
 **Actor**: AMOA (Orchestrator)
 **Action**:
 
-- Send message using the `agent-messaging` skill to Integrator agent (AMIA) to evaluate all PRs of completed tasks
+- Send message (`amp-send`) to Integrator agent (AMIA) to evaluate all PRs of completed tasks
 - Request merge if they pass all checks
 
 **Communication**:

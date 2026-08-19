@@ -52,19 +52,17 @@ See `references/status-management.md` for complete policy.
 
 ## AI Maestro Integration
 
-For all inter-agent messaging, refer to the official AI Maestro skill:
+For background on inter-agent messaging, refer to the official AI Maestro skill: `ai-maestro-plugin:agent-messaging`.
 
+Send notifications with `amp-send`. For example, to notify the orchestrator:
+
+```bash
+amp-send amcos-main "Your notification subject" \
+  '{"type": "TYPE", "message": "MSG"}' \
+  --type notification --priority <appropriate-priority>
 ```
-~/.claude/skills/agent-messaging/SKILL.md
-```
 
-Use the `agent-messaging` skill to send notifications. For example, to notify the orchestrator, send a message using the `agent-messaging` skill with:
-
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-- **Subject**: Your notification subject
-- **Content**: `{"type": "TYPE", "message": "MSG"}`
-- **Priority**: The appropriate priority level
-- **Verify**: Confirm message delivery via the `agent-messaging` skill's sent messages feature.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ## Threshold Configuration
 

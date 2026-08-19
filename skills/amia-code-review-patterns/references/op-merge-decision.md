@@ -194,13 +194,16 @@ gh pr close <NUMBER>
 
 ### Notify Stakeholders
 
-Send a notification using the `agent-messaging` skill with:
+Send a notification:
+
+```bash
+amp-send amcos-main "PR #<NUMBER> Review Complete: <DECISION>" \
+  '{"type": "review-complete", "message": "PR #<NUMBER> review completed. Decision: <DECISION>. Confidence: XX%. Report: <PATH>"}' \
+  --type notification --priority normal
+```
 
 - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-- **Subject**: `PR #<NUMBER> Review Complete: <DECISION>`
-- **Priority**: `normal`
-- **Content**: `{"type": "review-complete", "message": "PR #<NUMBER> review completed. Decision: <DECISION>. Confidence: XX%. Report: <PATH>"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Update Related Issues
 

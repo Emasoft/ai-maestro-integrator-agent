@@ -234,7 +234,7 @@ tail -f /var/log/github-webhook-handler.log
 pm2 logs github-webhook
 ```
 
-**Check AI Maestro connectivity:** Check your inbox using the `agent-messaging` skill. If messages can be retrieved, connectivity is confirmed.
+**Check AI Maestro connectivity:** Check your inbox with `amp-inbox`. If messages can be retrieved, connectivity is confirmed.
 
 **Verify event routing:**
 

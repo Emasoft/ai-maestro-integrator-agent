@@ -239,11 +239,7 @@ gh api graphql -f query='
 
 ## AI Maestro Messaging
 
-For complete messaging documentation, see the official AI Maestro skill:
-
-```
-~/.claude/skills/agent-messaging/SKILL.md
-```
+For complete messaging documentation, see the official AI Maestro skill: `ai-maestro-plugin:agent-messaging`.
 
 ### Event Notification Types
 
@@ -257,13 +253,15 @@ For complete messaging documentation, see the official AI Maestro skill:
 
 ### Sending Notifications
 
-Send notifications using the `agent-messaging` skill. For example, to send a task blocked notification:
+Send notifications with `amp-send`. For example, to send a task blocked notification:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-- **Subject**: `Task Blocked: #42`
-- **Priority**: `high`
-- **Content**: `{"type": "task_blocked", "issue": 42, "reason": "Waiting for API spec"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send amcos-main "Task Blocked: #42" \
+  '{"type": "task_blocked", "issue": 42, "reason": "Waiting for API spec"}' \
+  --type notification --priority high
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ## Claude Tasks Task Sync
 

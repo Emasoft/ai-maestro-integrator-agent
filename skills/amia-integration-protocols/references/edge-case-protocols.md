@@ -45,23 +45,23 @@ The Integrator uses AI Maestro to communicate with the COS (Chief of Staff), who
 
 | Check | Method | Failure Indicator |
 |-------|--------|-------------------|
-| API Health | Use the `agent-messaging` skill to check service health | HTTP 503/504 or timeout |
-| Connection Test | Use the `agent-messaging` skill to check inbox (with 10s timeout) | Connection timeout after 10 seconds |
-| Agent Registry | Use the `agent-messaging` skill to list known agents | Registry unreachable or empty response |
+| API Health | Run `amp-send` to check service health | HTTP 503/504 or timeout |
+| Connection Test | Run `amp-inbox` (with 10s timeout) | Connection timeout after 10 seconds |
+| Agent Registry | Use `amp-send`'s agent registry lookup to list known agents | Registry unreachable or empty response |
 
 ### 1.2 Response Workflow
 
 When AI Maestro is unavailable:
 
 1. **Log the failure**:
-   > **Note**: The log entry below records service unavailability for diagnostics. The `agent-messaging` skill handles all messaging; AMP handles routing automatically.
+   > **Note**: The log entry below records service unavailability for diagnostics. The AMP frozen CLI (`amp-send`/`amp-inbox`/`amp-reply`) handles all messaging; AMP handles routing automatically.
 
    ```bash
    echo "$(date -Iseconds) | AIMAESTRO_UNAVAILABLE | AMP_SERVICE | HTTP $STATUS_CODE" >> .claude/logs/maestro-failures.log
    ```
 
 2. **Queue outgoing messages**:
-   > **Note**: This offline fallback is ONLY for when AI Maestro is completely unreachable. Under normal conditions, always use the `agent-messaging` skill to send messages.
+   > **Note**: This offline fallback is ONLY for when AI Maestro is completely unreachable. Under normal conditions, always use `amp-send` to send messages.
 
    ```bash
    mkdir -p .claude/queue/outbox
@@ -213,19 +213,19 @@ AI agents collaborate asynchronously and may be hibernated for extended periods.
 
 **Step 1: First Reminder (when state = No ACK or No Progress)**
 
-Send a message using the `agent-messaging` skill with:
+Send via `amp-send` with:
 
 - **Recipient**: The assigned reviewer agent
 - **Subject**: `Review Check: PR #<PR_NUMBER>`
 - **Priority**: `high`
 - **Content**: `{"type": "status_request", "message": "Please provide status update for PR #<PR_NUMBER> review."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 **Step 2: Urgent Reminder (when state = Unresponsive after Step 1)**
 
-- Send urgent priority message using the `agent-messaging` skill
+- Send urgent priority message via `amp-send`
 - Note: "Review may be reassigned if no response"
-- **Verify**: Confirm message delivery via the `agent-messaging` skill's sent messages feature.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 **Step 3: Reassign or escalate to Orchestrator**
 

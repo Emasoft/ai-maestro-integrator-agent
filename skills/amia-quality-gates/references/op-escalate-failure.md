@@ -126,12 +126,16 @@ Follow the appropriate escalation path when a quality gate fails. Ensures proper
 
 2. **Document findings in review report**
 
-3. **Notify author and assigned reviewers:** Send a message using the `agent-messaging` skill with:
-   - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-   - **Subject**: `Review Gate Failed: PR #<NUMBER>`
-   - **Priority**: `high`
-   - **Content**: `{"type": "gate-failure", "message": "PR #<NUMBER> failed review gate. Confidence: XX%. Issues: <SUMMARY>"}`
-   - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+3. **Notify author and assigned reviewers:** Send a message with the AMP CLI:
+
+   ```bash
+   amp-send amcos-main "Review Gate Failed: PR #<NUMBER>" \
+     '{"type": "gate-failure", "message": "PR #<NUMBER> failed review gate. Confidence: XX%. Issues: <SUMMARY>"}' \
+     --type notification --priority high
+   ```
+
+   (COS will forward to Orchestrator.)
+   - **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Override Authority Matrix
 
@@ -189,12 +193,16 @@ For urgent cases, overrides may be requested:
 
 2. **Assess severity and rollback need**
 
-3. **Notify maintainers immediately:** Send a message using the `agent-messaging` skill with:
-   - **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
-   - **Subject**: `[CRITICAL] Post-Merge Failure: PR #<NUMBER>`
-   - **Priority**: `urgent`
-   - **Content**: `{"type": "post-merge-failure", "message": "CRITICAL: PR #<NUMBER> broke main branch. Immediate action required."}`
-   - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+3. **Notify maintainers immediately:** Send a message with the AMP CLI:
+
+   ```bash
+   amp-send amcos-main "[CRITICAL] Post-Merge Failure: PR #<NUMBER>" \
+     '{"type": "post-merge-failure", "message": "CRITICAL: PR #<NUMBER> broke main branch. Immediate action required."}' \
+     --type notification --priority urgent
+   ```
+
+   (COS will escalate to Orchestrator/Manager.)
+   - **Verify**: `amp-send` exits 0 and prints the message id.
 
 4. **Initiate revert if necessary**
 
@@ -246,12 +254,10 @@ EOF
 )"
 
 # Step 3: Notify via AI Maestro
-# Send a message using the agent-messaging skill with:
-#   Recipient: amcos-main (COS will forward to Orchestrator)
-#   Subject: Security Gate Failure: PR #123
-#   Priority: high
-#   Content: {"type": "security-gate-failure", "message": "PR #123 failed security gate (65%). SQL injection and hardcoded credentials found. Requires fixes before merge."}
-#   Verify: Confirm delivery via the agent-messaging skill send confirmation.
+amp-send amcos-main "Security Gate Failure: PR #123" \
+  '{"type": "security-gate-failure", "message": "PR #123 failed security gate (65%). SQL injection and hardcoded credentials found. Requires fixes before merge."}' \
+  --type notification --priority high
+# (COS will forward to Orchestrator.) Verify: amp-send exits 0 and prints the message id.
 ```
 
 ## Error Handling

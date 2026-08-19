@@ -92,7 +92,7 @@ This document provides step-by-step procedures for each integration phase. Follo
 
 ### 2. Send to Sub-Agent
 
-- Send message using the `agent-messaging` skill
+- Send message via `amp-send`
 - Wait for acknowledgment (30 second timeout)
 - **Verification**: Sub-agent acknowledged
 
@@ -142,7 +142,7 @@ This document provides step-by-step procedures for each integration phase. Follo
 
 ### 2. Send to AMOA
 
-- Send message to `amcos-main` (COS will forward to Orchestrator) using the `agent-messaging` skill
+- Send message to `amcos-main` (COS will forward to Orchestrator) via `amp-send`
 - Include link to detailed report file
 - **Verification**: Message sent
 

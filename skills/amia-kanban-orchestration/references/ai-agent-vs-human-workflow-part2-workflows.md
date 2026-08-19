@@ -164,9 +164,10 @@ gh issue edit 42 --remove-assignee implementer-1
 # 3. Assign new agent
 gh issue edit 42 --add-assignee implementer-2
 
-# 4. Notify COS to forward assignment to new agent using the agent-messaging skill
-# Send a message with Recipient: amcos-main, Subject: Assignment handoff for implementer-2, Priority: high
-# (COS will forward to the new assignee)
+# 4. Notify COS to forward assignment to new agent (COS forwards to the new assignee)
+amp-send amcos-main "Assignment handoff for implementer-2" \
+  '{"type": "assignment", "message": "Issue #42 reassigned to implementer-2."}' \
+  --type notification --priority high
 ```
 
 ### AI to Human Handoff
@@ -306,13 +307,15 @@ When AI agents cannot proceed.
 
 ### Escalation Process
 
-**Step 1: AI agent reports blocker via COS.** Send a message using the `agent-messaging` skill with:
+**Step 1: AI agent reports blocker via COS.**
 
-- **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
-- **Subject**: `Escalation: Issue #42 Blocked`
-- **Priority**: `urgent`
-- **Content**: `{"type": "escalation", "message": "Cannot proceed on #42. Need human decision.", "data": {"issue_number": 42, "blocker": "Design ambiguity in API spec", "question": "Should auth tokens be stateless or server-validated?", "impact": "Cannot proceed with implementation", "options": ["Stateless JWT", "Server-side session", "Hybrid"]}}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send amcos-main "Escalation: Issue #42 Blocked" \
+  '{"type": "escalation", "message": "Cannot proceed on #42. Need human decision.", "data": {"issue_number": 42, "blocker": "Design ambiguity in API spec", "question": "Should auth tokens be stateless or server-validated?", "impact": "Cannot proceed with implementation", "options": ["Stateless JWT", "Server-side session", "Hybrid"]}}' \
+  --type request --priority urgent
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id. (COS will escalate to Orchestrator/Manager.)
 
 ```bash
 # 2. Orchestrator escalates to human

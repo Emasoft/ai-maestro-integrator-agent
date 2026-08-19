@@ -183,13 +183,16 @@ echo "Rollback issue created"
 
 ### Step 8: Notify stakeholders
 
-Send a message using the `agent-messaging` skill with:
+Send a message with the AMP CLI:
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-- **Subject**: `[ROLLBACK COMPLETE] v<ROLLBACK_FROM> -> v<ROLLBACK_TO>`
-- **Priority**: `urgent`
-- **Content**: `{"type": "rollback-complete", "message": "Rollback from v<ROLLBACK_FROM> to v<ROLLBACK_TO> completed. Reason: <REASON>"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send amcos-main "[ROLLBACK COMPLETE] v<ROLLBACK_FROM> -> v<ROLLBACK_TO>" \
+  '{"type": "rollback-complete", "message": "Rollback from v<ROLLBACK_FROM> to v<ROLLBACK_TO> completed. Reason: <REASON>"}' \
+  --type notification --priority urgent
+```
+
+(COS will forward to Orchestrator.)
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Step 9: Verify rollback success
 

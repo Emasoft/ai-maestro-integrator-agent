@@ -112,35 +112,44 @@ All scripts support `--output-file <path>`:
 
 ### Template 1: Receiving PR Review Request
 
-When receiving a PR review request from AMOA or another agent, check your inbox using the `agent-messaging` skill. Filter for messages with `content.type == "pr-review-request"`.
+When receiving a PR review request from AMOA or another agent, check your inbox with `amp-inbox`. Filter for messages with `content.type == "pr-review-request"`.
 
 ### Template 2: Reporting Review Completion
 
-After completing a code review, notify the requesting agent. Send a message using the `agent-messaging` skill with:
+After completing a code review, notify the requesting agent:
+
+```bash
+amp-send amcos-main "Code Review Complete: PR #123" \
+  '{"type": "review-complete", "message": "PR #123 review completed. Confidence: 85%. Decision: APPROVED. Details: docs_dev/integration/reports/pr-123-review.md"}' \
+  --type status --priority normal
+```
 
 - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-- **Subject**: `Code Review Complete: PR #123`
-- **Priority**: `normal`
-- **Content**: `{"type": "review-complete", "message": "PR #123 review completed. Confidence: 85%. Decision: APPROVED. Details: docs_dev/integration/reports/pr-123-review.md"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Template 3: Requesting Clarification from Author
 
-When review requires author input, send a message using the `agent-messaging` skill with:
+When review requires author input:
+
+```bash
+amp-send amcos-main "Review Question: PR #123" \
+  '{"type": "clarification-request", "message": "During review of PR #123, need clarification on: [SPECIFIC QUESTION]. Please respond with context."}' \
+  --type request --priority normal
+```
 
 - **Recipient**: `amcos-main` (COS will forward to the PR author)
-- **Subject**: `Review Question: PR #123`
-- **Priority**: `normal`
-- **Content**: `{"type": "clarification-request", "message": "During review of PR #123, need clarification on: [SPECIFIC QUESTION]. Please respond with context."}`
 
 ### Template 4: Escalating Quality Gate Failure
 
-When a critical quality gate fails, send a message using the `agent-messaging` skill with:
+When a critical quality gate fails:
+
+```bash
+amp-send amcos-main "[QUALITY GATE FAILED] PR #123" \
+  '{"type": "quality-gate-failure", "message": "PR #123 failed quality gate: SECURITY. Issue: SQL injection in auth.py:42. Action required: reject and request fix."}' \
+  --type request --priority urgent
+```
 
 - **Recipient**: `amcos-main` (COS will escalate to Orchestrator)
-- **Subject**: `[QUALITY GATE FAILED] PR #123`
-- **Priority**: `urgent`
-- **Content**: `{"type": "quality-gate-failure", "message": "PR #123 failed quality gate: SECURITY. Issue: SQL injection in auth.py:42. Action required: reject and request fix."}`
 
 ---
 

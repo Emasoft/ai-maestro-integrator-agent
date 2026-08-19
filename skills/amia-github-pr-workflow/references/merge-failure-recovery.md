@@ -104,13 +104,13 @@ git push origin main
 
 ### Step 5: Notify Author
 
-Send a message using the `agent-messaging` skill with:
+```bash
+amp-send PR_AUTHOR_AGENT "Merge Conflict Resolved: PR #123" \
+  '{"type": "merge-conflict-resolved", "message": "Merge conflicts in PR #123 have been resolved. Files affected: [LIST]. Please verify the resolution."}' \
+  --type notification --priority normal
+```
 
-- **Recipient**: `PR_AUTHOR_AGENT`
-- **Subject**: `Merge Conflict Resolved: PR #123`
-- **Priority**: `normal`
-- **Content**: `{"type": "merge-conflict-resolved", "message": "Merge conflicts in PR #123 have been resolved. Files affected: [LIST]. Please verify the resolution."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ## CI Failure During Merge
 
@@ -168,21 +168,25 @@ git push origin main
 
 ### Step 4: Notify Stakeholders
 
-**Notify author of failure:** Send a message using the `agent-messaging` skill with:
+**Notify author of failure:**
 
-- **Recipient**: `PR_AUTHOR_AGENT`
-- **Subject**: `[CI FAILURE] PR #123 merge caused test failures`
-- **Priority**: `urgent`
-- **Content**: `{"type": "ci-failure-post-merge", "message": "PR #123 merge to main caused CI failures. Action taken: [REVERT/HOTFIX]. Failures: [SUMMARY]. Please investigate and resubmit."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send PR_AUTHOR_AGENT "[CI FAILURE] PR #123 merge caused test failures" \
+  '{"type": "ci-failure-post-merge", "message": "PR #123 merge to main caused CI failures. Action taken: [REVERT/HOTFIX]. Failures: [SUMMARY]. Please investigate and resubmit."}' \
+  --type notification --priority urgent
+```
 
-**Notify COS (for forwarding to Orchestrator):** Send a message using the `agent-messaging` skill with:
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-- **Subject**: `[CI FAILURE] Main branch temporarily broken`
-- **Priority**: `urgent`
-- **Content**: `{"type": "main-branch-issue", "message": "Main branch CI failing after PR #123 merge. Recovery action: [REVERT/HOTFIX]. ETA for resolution: [TIME]."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+**Notify COS (for forwarding to Orchestrator):**
+
+```bash
+amp-send amcos-main "[CI FAILURE] Main branch temporarily broken" \
+  '{"type": "main-branch-issue", "message": "Main branch CI failing after PR #123 merge. Recovery action: [REVERT/HOTFIX]. ETA for resolution: [TIME]."}' \
+  --type notification --priority urgent
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ## Partial Merge Recovery
 
@@ -273,33 +277,37 @@ Always notify the PR author when:
 - CI fails after merge
 - Merge is reverted
 
-Send a message using the `agent-messaging` skill with:
+```bash
+amp-send PR_AUTHOR_AGENT "[MERGE ISSUE] PR #123 - Action Required" \
+  '{"type": "merge-issue", "message": "Issue with PR #123 merge: [DESCRIPTION]. Required action: [ACTION]. Please respond within [TIMEFRAME]."}' \
+  --type notification --priority high
+```
 
-- **Recipient**: `PR_AUTHOR_AGENT`
-- **Subject**: `[MERGE ISSUE] PR #123 - Action Required`
-- **Priority**: `high`
-- **Content**: `{"type": "merge-issue", "message": "Issue with PR #123 merge: [DESCRIPTION]. Required action: [ACTION]. Please respond within [TIMEFRAME]."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Notify Code Reviewer
 
-Notify reviewer if their approved PR caused issues. Send a message using the `agent-messaging` skill with:
+Notify reviewer if their approved PR caused issues.
 
-- **Recipient**: `REVIEWER_AGENT`
-- **Subject**: `[FYI] PR #123 post-merge issue`
-- **Priority**: `normal`
-- **Content**: `{"type": "review-followup", "message": "PR #123 which you reviewed encountered post-merge issues: [SUMMARY]. This is for awareness only - author has been notified."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send REVIEWER_AGENT "[FYI] PR #123 post-merge issue" \
+  '{"type": "review-followup", "message": "PR #123 which you reviewed encountered post-merge issues: [SUMMARY]. This is for awareness only - author has been notified."}' \
+  --type notification --priority normal
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Notify Orchestrator
 
-Always notify COS of significant merge issues (COS will forward to Orchestrator). Send a message using the `agent-messaging` skill with:
+Always notify COS of significant merge issues (COS will forward to Orchestrator).
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-- **Subject**: `[MERGE STATUS] PR #123`
-- **Priority**: `high`
-- **Content**: `{"type": "merge-status", "message": "PR #123 merge status: [FAILED/REVERTED/RECOVERED]. Reason: [REASON]. Next steps: [STEPS]."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send amcos-main "[MERGE STATUS] PR #123" \
+  '{"type": "merge-status", "message": "PR #123 merge status: [FAILED/REVERTED/RECOVERED]. Reason: [REASON]. Next steps: [STEPS]."}' \
+  --type notification --priority high
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ## Rollback If Merge Corrupts Main
 
@@ -318,12 +326,11 @@ Rollback immediately if:
 # Prevent further merges
 # (If using branch protection, CI failure should block this automatically)
 
-# Alert team: Send a message using the agent-messaging skill with:
-#   Recipient: amcos-main (COS will forward to Orchestrator)
-#   Subject: [CRITICAL] Main branch corrupted - Rollback in progress
-#   Priority: urgent
-#   Content: {"type": "critical-rollback", "message": "Main branch corrupted by PR #123. Initiating immediate rollback. All merges blocked until resolved."}
-#   Verify: Confirm delivery via the agent-messaging skill send confirmation.
+# Alert team:
+amp-send amcos-main "[CRITICAL] Main branch corrupted - Rollback in progress" \
+  '{"type": "critical-rollback", "message": "Main branch corrupted by PR #123. Initiating immediate rollback. All merges blocked until resolved."}' \
+  --type notification --priority urgent
+#   Verify: amp-send exits 0 and prints the message id.
 ```
 
 ### Step 2: Identify Good State

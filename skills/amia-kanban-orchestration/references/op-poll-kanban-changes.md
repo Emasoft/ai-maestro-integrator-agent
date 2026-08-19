@@ -108,23 +108,23 @@ save_state(current_state)
 
 ### Assignment Notification
 
-Send a message using the `agent-messaging` skill with:
+```bash
+amp-send <assigned-agent> "Kanban Update: Issue #123 assigned to you" \
+  '{"type": "kanban-assignment", "message": "Issue #123 has been assigned to you. Current status: Todo. Please move to In Progress when starting."}' \
+  --type notification --priority normal
+```
 
-- **Recipient**: The assigned agent
-- **Subject**: `Kanban Update: Issue #123 assigned to you`
-- **Priority**: `normal`
-- **Content**: `{"type": "kanban-assignment", "message": "Issue #123 has been assigned to you. Current status: Todo. Please move to In Progress when starting."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Status Change Notification
 
-Send a message using the `agent-messaging` skill with:
+```bash
+amp-send amcos-main "Kanban Update: Issue #123 moved to AI Review" \
+  '{"type": "kanban-status-change", "message": "Issue #123 moved from In Progress to AI Review by agent-name. PR likely created."}' \
+  --type notification --priority normal
+```
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-- **Subject**: `Kanban Update: Issue #123 moved to AI Review`
-- **Priority**: `normal`
-- **Content**: `{"type": "kanban-status-change", "message": "Issue #123 moved from In Progress to AI Review by agent-name. PR likely created."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id. (COS will forward to Orchestrator.)
 
 ## Output
 

@@ -965,12 +965,15 @@ Gate 3 (Test Quality): [PASS/WARN/FAIL]
    echo "$REPORT_CONTENT" > "$REPORT_FILE"
    ```
 
-2. **Send AI Maestro message to developer:** Send a message using the `agent-messaging` skill with:
-   - **Recipient**: The developer agent name
-   - **Subject**: `TDD Compliance Report for PR #<PR_NUMBER>`
-   - **Priority**: `high`
-   - **Content**: `{"type": "test_report", "message": "TDD enforcement complete. Status: [PASS/FAIL]. Details: <REPORT_FILE>"}`
-   - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+2. **Send AI Maestro message to developer:** Send a message with the AMP CLI:
+
+   ```bash
+   amp-send "$DEVELOPER_AGENT" "TDD Compliance Report for PR #${PR_NUMBER}" \
+     '{"type": "test_report", "message": "TDD enforcement complete. Status: [PASS/FAIL]. Details: '"$REPORT_FILE"'"}' \
+     --type notification --priority high
+   ```
+
+   - **Verify**: `amp-send` exits 0 and prints the message id.
 
 3. **Post PR comment:**
 
@@ -1115,12 +1118,16 @@ Apply consistent rejection criteria to determine if code can proceed to merge.
    - Include all relevant context
    - Provide recommendation
 
-2. **Surface up the chain via AI Maestro:** Send a message using the `agent-messaging` skill with:
-   - **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager, ultimately the MAESTRO)
-   - **Subject**: `ESCALATION: Test enforcement decision required`
-   - **Priority**: `urgent`
-   - **Content**: `{"type": "escalation", "message": "Decision required from the MANAGER (via the chain) for PR #<PR>. See: reports/escalations/escalation-<timestamp>.md"}`
-   - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+2. **Surface up the chain via AI Maestro:** Send a message with the AMP CLI:
+
+   ```bash
+   amp-send amcos-main "ESCALATION: Test enforcement decision required" \
+     '{"type": "escalation", "message": "Decision required from the MANAGER (via the chain) for PR #<PR>. See: reports/escalations/escalation-<timestamp>.md"}' \
+     --type notification --priority urgent
+   ```
+
+   (COS will escalate to Orchestrator/Manager, ultimately the MAESTRO.)
+   - **Verify**: `amp-send` exits 0 and prints the message id.
 
 3. **Wait for the response from the chain:**
    - Do NOT proceed with automated decision
@@ -1484,8 +1491,8 @@ Define proper usage of Read, Write, and Bash tools for TDD enforcement tasks.
    ```
 
 5. **Send AI Maestro messages:**
-   Send a message using the `agent-messaging` skill with the appropriate Recipient, Subject, Priority, and Content fields.
-   - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+   Send a message with `amp-send <recipient> "<subject>" "<message>" --type <request|response|notification|task|status> --priority <low|normal|high|urgent>`.
+   - **Verify**: `amp-send` exits 0 and prints the message id.
 
 6. **Update GitHub PR:**
 
@@ -1573,12 +1580,10 @@ echo "Report generated: $REPORT_FILE"
 
 # Step 5: Send AI Maestro message
 echo "Step 5: Sending notification..."
-# Send a message using the `agent-messaging` skill with:
-# - Recipient: `amcos-main` (COS will forward to Orchestrator)
-# - Subject: `TDD Report for PR #$PR_NUMBER`
-# - Priority: `high`
-# - Content: `{"type": "test_report", "message": "G1:$TDD_STATUS G2:$COV_STATUS | Coverage: $LINE_COV% | Report: $REPORT_FILE"}`
-# - Verify: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+amp-send amcos-main "TDD Report for PR #$PR_NUMBER" \
+  '{"type": "test_report", "message": "G1:'"$TDD_STATUS"' G2:'"$COV_STATUS"' | Coverage: '"$LINE_COV"'% | Report: '"$REPORT_FILE"'"}' \
+  --type notification --priority high
+# (COS will forward to Orchestrator.) Verify: amp-send exits 0 and prints the message id.
 
 echo "=== Test Enforcement Complete ==="
 ```
@@ -1817,12 +1822,10 @@ Tests run successfully but coverage is below threshold.
 
    ```bash
    # Send AI Maestro message to developer
-   Send a message using the `agent-messaging` skill with:
-   - **Recipient**: `developer-agent`
-   - **Subject**: `Coverage gaps in PR #123`
-   - **Priority**: `high`
-   - **Content**: `{"type": "coverage_gap", "message": "Coverage is 65%, below 80% threshold. Uncovered: src/module.py lines 45-52, 78-85. See: reports/coverage-gaps-PR123-timestamp.md"}`
-   - **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+   amp-send developer-agent "Coverage gaps in PR #123" \
+     '{"type": "coverage_gap", "message": "Coverage is 65%, below 80% threshold. Uncovered: src/module.py lines 45-52, 78-85. See: reports/coverage-gaps-PR123-timestamp.md"}' \
+     --type notification --priority high
+   # Verify: amp-send exits 0 and prints the message id.
 
 5. **Block merge until fixed:**
 
@@ -1885,12 +1888,11 @@ Cannot definitively determine if TDD was followed.
 3. **Ask developer for TDD evidence:**
 
    ```bash
-   # Send AI Maestro message using the `agent-messaging` skill with:
-   # - Recipient: `developer-agent`
-   # - Subject: `TDD verification needed for PR #123`
-   # - Priority: `high`
-   # - Content: `{"type": "request", "message": "Cannot verify TDD compliance from git history. Please confirm: Were tests written before implementation? Can you provide evidence?"}`
-   # - Verify: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+   # Send AI Maestro message via the AMP CLI:
+   amp-send developer-agent "TDD verification needed for PR #123" \
+     '{"type": "request", "message": "Cannot verify TDD compliance from git history. Please confirm: Were tests written before implementation? Can you provide evidence?"}' \
+     --type request --priority high
+   # Verify: amp-send exits 0 and prints the message id.
    ```
 
 4. **Document uncertainty:**

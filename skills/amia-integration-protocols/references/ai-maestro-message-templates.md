@@ -22,11 +22,11 @@
 
 ---
 
-This document contains all AI Maestro messaging templates for AI Maestro Integrator Agent (AMIA) communication patterns. For the exact messaging commands and syntax, always refer to the `agent-messaging` skill.
+This document contains all AI Maestro messaging templates for AI Maestro Integrator Agent (AMIA) communication patterns. For the exact messaging commands and syntax, always use the AMP frozen CLI (`amp-send`, `amp-inbox`, `amp-reply`).
 
 ## 1.0 Standard AI Maestro Messaging Approach
 
-All AI Maestro messages are sent using the `agent-messaging` skill. When sending a message, specify these fields:
+All AI Maestro messages are sent using `amp-send`. When sending a message, specify these fields:
 
 | Field | Description |
 |-------|-------------|
@@ -35,7 +35,13 @@ All AI Maestro messages are sent using the `agent-messaging` skill. When sending
 | **Content** | A JSON object with `type` and `message` fields |
 | **Priority** | One of: `urgent`, `high`, `normal`, `low` |
 
-To send a message, use the `agent-messaging` skill with the above fields. To verify delivery, check that the skill confirms the message was sent successfully.
+To send a message, run:
+
+```bash
+amp-send <recipient> "<subject>" "<message>" --type <request|response|notification|task|status> --priority <low|normal|high|urgent>
+```
+
+To verify delivery, confirm `amp-send` exits 0 and prints the message id.
 
 ---
 
@@ -45,7 +51,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Scenario**: COS forwards a PR review request, CI fix task, or integration verification task (originally from AMOA or another team agent).
 
-**To check for incoming messages:** Check your inbox using the `agent-messaging` skill. Filter for messages with `content.type == "integration-request"`.
+**To check for incoming messages:** Check your inbox with `amp-inbox`. Filter for messages with `content.type == "integration-request"`.
 
 **Expected Message Format (forwarded by COS):**
 
@@ -75,7 +81,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Scenario**: Received handoff document fails validation (missing UUID, invalid references, TBD placeholders).
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will forward to the originating agent)
 - **Subject**: `[HANDOFF REJECTED] Invalid handoff document`
@@ -94,7 +100,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ---
 
@@ -104,7 +110,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Scenario**: Requesting COS to route a task (PR review, bug investigation, code review) to a specialized team agent.
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will delegate to the appropriate team agent)
 - **Subject**: `Review PR #456: Add auth module`
@@ -128,7 +134,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 **Valid Sub-Agent Targets:**
 
@@ -151,7 +157,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Scenario**: PR review completed successfully, all quality gates passed, ready to merge.
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `Integration Status: PR #456 - COMPLETED`
@@ -173,13 +179,13 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### 4.2 Integration Status Report (In Progress)
 
 **Scenario**: Integration task in progress, awaiting sub-agent completion.
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `Integration Status: PR #456 - IN PROGRESS`
@@ -201,13 +207,13 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### 4.3 Integration Status Report (Failed)
 
 **Scenario**: Integration task failed due to quality gate failure or technical issue.
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `Integration Status: PR #456 - FAILED`
@@ -230,13 +236,13 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### 4.4 Blocker Escalation (Critical Issues)
 
 **Scenario**: Critical blocker prevents integration (security vulnerability, resource conflict, policy unclear).
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
 - **Subject**: `[BLOCKER] PR #456 Security Issue`
@@ -258,7 +264,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 **Valid Blocker Types:**
 
@@ -275,7 +281,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 
 **Scenario**: PR review finished, all quality gates passed, no issues found.
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `PR Review Complete: PR #456 - ALL GATES PASSED`
@@ -303,13 +309,13 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### 5.2 PR Review Complete (Tests Failed)
 
 **Scenario**: PR review found test failures or insufficient test coverage.
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `PR Review Complete: PR #456 - TESTS FAILED`
@@ -341,13 +347,13 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### 5.3 Merge Approved
 
 **Scenario**: Quality gates passed, PR approved for merge into main branch.
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `Merge Approved: PR #456`
@@ -368,13 +374,13 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### 5.4 Merge Rejected
 
 **Scenario**: Quality gates failed, PR rejected and cannot be merged.
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `Merge Rejected: PR #456`
@@ -405,13 +411,13 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### 5.5 Release Ready Notification
 
 **Scenario**: All PRs merged, tests passed, release candidate ready for tagging.
 
-**Action:** Send a message using the `agent-messaging` skill with:
+**Action:** Send via `amp-send` with:
 
 - **Recipient**: `amcos-main` (COS will forward to Orchestrator)
 - **Subject**: `Release Ready: v1.2.0`
@@ -436,7 +442,7 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
   }
   ```
 
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ---
 
@@ -448,4 +454,4 @@ To send a message, use the `agent-messaging` skill with the above fields. To ver
 - Use `callback_agent` field when delegating to sub-agents to specify who should receive the response
 - All file paths should be relative to project root or absolute paths
 - Message content must be a JSON object with `type` and `message` fields, NOT a plain string
-- For the exact commands to send and receive messages, refer to the `agent-messaging` skill
+- For the exact commands to send and receive messages, use `amp-send` / `amp-inbox` / `amp-reply` (AMP frozen CLI)

@@ -64,23 +64,27 @@ save_state(current_state)
 
 ## M.6 AI Maestro Notifications
 
-When changes are detected, notify relevant agents using the `agent-messaging` skill.
+When changes are detected, notify relevant agents with `amp-send`.
 
-**Assignment notification:** Send a message using the `agent-messaging` skill with:
+**Assignment notification:**
 
-- **Recipient**: The assigned agent
-- **Subject**: `Kanban Update: Issue #123 assigned to you`
-- **Priority**: `normal`
-- **Content**: `{"type": "kanban-assignment", "message": "Issue #123 has been assigned to you. Current status: Todo. Please move to In Progress when starting."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send <assigned-agent> "Kanban Update: Issue #123 assigned to you" \
+  '{"type": "kanban-assignment", "message": "Issue #123 has been assigned to you. Current status: Todo. Please move to In Progress when starting."}' \
+  --type notification --priority normal
+```
 
-**Status change notification:** Send a message using the `agent-messaging` skill with:
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
-- **Recipient**: `amcos-main` (COS will forward to Orchestrator)
-- **Subject**: `Kanban Update: Issue #123 moved to AI Review`
-- **Priority**: `normal`
-- **Content**: `{"type": "kanban-status-change", "message": "Issue #123 moved from In Progress to AI Review by agent-name. PR likely created."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+**Status change notification:**
+
+```bash
+amp-send amcos-main "Kanban Update: Issue #123 moved to AI Review" \
+  '{"type": "kanban-status-change", "message": "Issue #123 moved from In Progress to AI Review by agent-name. PR likely created."}' \
+  --type notification --priority normal
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id. (COS will forward to Orchestrator.)
 
 ## M.7 Proactive Monitoring Checklist
 

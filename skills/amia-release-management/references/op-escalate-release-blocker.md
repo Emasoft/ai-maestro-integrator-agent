@@ -155,13 +155,16 @@ fi
 
 ### Step 5: Notify via AI Maestro
 
-Send a message using the `agent-messaging` skill with:
+Send a message with the AMP CLI:
 
-- **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
-- **Subject**: `[RELEASE BLOCKED] v<VERSION>`
-- **Priority**: `urgent`
-- **Content**: `{"type": "release-blocked", "message": "Release v<VERSION> is blocked. Type: <BLOCKER_TYPE>. Severity: <SEVERITY>. Issue: #<ISSUE_NUM>. Decision required."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send amcos-main "[RELEASE BLOCKED] v<VERSION>" \
+  '{"type": "release-blocked", "message": "Release v<VERSION> is blocked. Type: <BLOCKER_TYPE>. Severity: <SEVERITY>. Issue: #<ISSUE_NUM>. Decision required."}' \
+  --type notification --priority urgent
+```
+
+(COS will escalate to Orchestrator/Manager.)
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Step 6: Update release state
 
@@ -308,12 +311,11 @@ ISSUE=$(gh issue create \
 
 echo "Created issue #$ISSUE"
 
-# Notify using the agent-messaging skill:
-#   Recipient: amcos-main (COS will escalate to Orchestrator/Manager)
-#   Subject: [BLOCKED] v$VERSION
-#   Priority: urgent
-#   Content: {"type": "release-blocked", "message": "v$VERSION blocked. $BLOCKER_TYPE: $DESCRIPTION. Issue #$ISSUE"}
-#   Verify: Confirm delivery via the agent-messaging skill send confirmation.
+# Notify via AMP CLI (COS will escalate to Orchestrator/Manager):
+amp-send amcos-main "[BLOCKED] v$VERSION" \
+  '{"type": "release-blocked", "message": "v$VERSION blocked. '"$BLOCKER_TYPE"': '"$DESCRIPTION"'. Issue #'"$ISSUE"'"}' \
+  --type notification --priority urgent
+#   Verify: amp-send exits 0 and prints the message id.
 
 echo "Notification sent"
 echo ""
@@ -329,7 +331,7 @@ After escalation:
 # Verify issue created
 gh issue view "$ISSUE_NUM"
 
-# Check notification sent: verify via the agent-messaging skill that the last sent message was delivered.
+# Check notification sent: verify the amp-send call above exited 0 and printed a message id.
 
 # Monitor for response
 gh issue view "$ISSUE_NUM" --comments

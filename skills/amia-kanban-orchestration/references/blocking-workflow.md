@@ -193,13 +193,13 @@ gh issue comment 42 --body "Blocked by #$BLOCKER_ISSUE"
 
 ### Step 5: Notify Orchestrator
 
-Send a message using the `agent-messaging` skill with:
+```bash
+amp-send amcos-main "Issue #42 Blocked" \
+  '{"type": "blocker", "message": "Issue #42 is blocked. Blocker issue #BLOCKER_ISSUE created. Need DBA action.", "data": {"issue_number": 42, "blocker_issue_number": "BLOCKER_ISSUE", "blocker_type": "access", "what_needed": "DBA to provide credentials"}}' \
+  --type notification --priority high
+```
 
-- **Recipient**: `amcos-main` (COS will escalate to Orchestrator/Manager)
-- **Subject**: `Issue #42 Blocked`
-- **Priority**: `high`
-- **Content**: `{"type": "blocker", "message": "Issue #42 is blocked. Blocker issue #BLOCKER_ISSUE created. Need DBA action.", "data": {"issue_number": 42, "blocker_issue_number": "BLOCKER_ISSUE", "blocker_type": "access", "what_needed": "DBA to provide credentials"}}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id. (COS will escalate to Orchestrator/Manager.)
 
 ---
 
@@ -358,12 +358,11 @@ gh issue edit 42 --remove-label "blocked"
 # IMPORTANT: Read the "Previous Status" from the blocker comment to determine target column
 # [GraphQL mutation to set status - use PREVIOUS_STATUS from blocker comment, not hardcoded "In Progress"]
 
-# Notify COS to forward to agent (COS will forward to agent-1):
-#   Recipient: amcos-main (COS will forward to agent-1)
-#   Subject: Issue #42 Unblocked - notify agent-1
-#   Priority: high
-#   Content: {"type": "unblocked", "message": "Issue #42 is unblocked. Credentials are now in vault. Please resume work.", "data": {"issue_number": 42, "returned_to_column": "In Progress"}}
-#   Verify: Confirm delivery via the agent-messaging skill send confirmation.
+# Notify COS to forward to agent-1:
+amp-send amcos-main "Issue #42 Unblocked - notify agent-1" \
+  '{"type": "unblocked", "message": "Issue #42 is unblocked. Credentials are now in vault. Please resume work.", "data": {"issue_number": 42, "returned_to_column": "In Progress"}}' \
+  --type notification --priority high
+#   Verify: amp-send exits 0 and prints the message id.
 ```
 
 ---

@@ -229,15 +229,17 @@ AMIA **CANNOT** reference or load skills from other plugins:
 
 ### Cross-Role Communication
 
-**ONLY via AI Maestro messaging.** Use the `agent-messaging` skill for all cross-role communication.
+**ONLY via AI Maestro messaging.** Use the AMP frozen CLI (`amp-send`) for all cross-role communication.
 
-**Example:** To request information from AMOA, send a message using the `agent-messaging` skill with:
+**Example:** To request information from AMOA:
 
-- **Recipient**: `orchestrator-amoa`
-- **Subject**: `Need task details for PR #456`
-- **Priority**: `high`
-- **Content**: `{"type": "information-request", "message": "Please provide task requirements document for PR #456"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send orchestrator-amoa "Need task details for PR #456" \
+  '{"type": "information-request", "message": "Please provide task requirements document for PR #456"}' \
+  --type request --priority high
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 ### Why This Matters
 
@@ -335,13 +337,13 @@ For detailed boundaries, see: [docs/ROLE_BOUNDARIES.md](./ROLE_BOUNDARIES.md)
 
 ## 7. AI Maestro Communication
 
-All AI Maestro communication is done through the `agent-messaging` skill. For the exact commands and syntax, always refer to that skill. Below are the communication patterns with the message content structures.
+All AI Maestro communication is done through the AMP frozen CLI (`amp-send`, `amp-inbox`, `amp-reply`). Below are the communication patterns with the message content structures.
 
 ### Communication Patterns
 
 #### 1. Receiving Integration Requests (from AMOA)
 
-**Check inbox:** Check your inbox using the `agent-messaging` skill. Filter for messages with `content.type == "integration-request"`.
+**Check inbox:** Run `amp-inbox`. Filter for messages with `content.type == "integration-request"`.
 
 **Expected message format:**
 
@@ -368,37 +370,44 @@ All AI Maestro communication is done through the `agent-messaging` skill. For th
 
 #### 2. Routing to Sub-Agents
 
-**Send delegation:** Send a message using the `agent-messaging` skill with:
+**Send delegation:**
+
+```bash
+amp-send <sub-agent> "Review PR #456: Add auth module" \
+  '{"type": "task-delegation", "task": "review-pr", "context": {...}, "success_criteria": "...", "callback_agent": "ai-maestro-integrator"}' \
+  --type task --priority high
+```
 
 - **Recipient**: The appropriate sub-agent (e.g., `amia-code-reviewer`)
-- **Subject**: `Review PR #456: Add auth module`
-- **Priority**: `high`
-- **Content**: `{"type": "task-delegation", "task": "review-pr", "context": {...}, "success_criteria": "...", "callback_agent": "ai-maestro-integrator"}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 See `amia-integration-protocols` skill reference `ai-maestro-message-templates.md` for the complete content structure.
 
 #### 3. Reporting Status to AMOA
 
-**Send status report:** Send a message using the `agent-messaging` skill with:
+**Send status report:**
 
-- **Recipient**: `orchestrator-amoa`
-- **Subject**: `Integration Status: PR #456`
-- **Priority**: `normal`
-- **Content**: `{"type": "integration-status", "task_id": "pr-456-review", "status": "COMPLETED", "result": {...}, "next_steps": "..."}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send orchestrator-amoa "Integration Status: PR #456" \
+  '{"type": "integration-status", "task_id": "pr-456-review", "status": "COMPLETED", "result": {...}, "next_steps": "..."}' \
+  --type status --priority normal
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 See `amia-integration-protocols` skill reference `ai-maestro-message-templates.md` for the complete content structure.
 
 #### 4. Escalating Blockers
 
-**Send escalation:** Send a message using the `agent-messaging` skill with:
+**Send escalation:**
 
-- **Recipient**: `orchestrator-amoa`
-- **Subject**: `[BLOCKER] PR #456 Security Issue`
-- **Priority**: `urgent`
-- **Content**: `{"type": "blocker-escalation", "task_id": "pr-456-review", "blocker_type": "QUALITY_GATE_FAILED", "details": {...}, "requires_decision": true}`
-- **Verify**: Confirm the message was delivered by checking the `agent-messaging` skill send confirmation.
+```bash
+amp-send orchestrator-amoa "[BLOCKER] PR #456 Security Issue" \
+  '{"type": "blocker-escalation", "task_id": "pr-456-review", "blocker_type": "QUALITY_GATE_FAILED", "details": {...}, "requires_decision": true}' \
+  --type request --priority urgent
+```
+
+- **Verify**: `amp-send` exits 0 and prints the message id.
 
 See `amia-integration-protocols` skill reference `ai-maestro-message-templates.md` for the complete content structure.
 
@@ -443,7 +452,7 @@ Example:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| AI Maestro messaging | Accessed via the `agent-messaging` skill | Configured automatically |
+| AI Maestro messaging | Accessed via the AMP frozen CLI (`amp-send`/`amp-inbox`/`amp-reply`) | Configured automatically |
 
 ### Session Variables
 
@@ -1103,8 +1112,8 @@ GitHub Projects V2 may use additional columns for visual workflow management. Th
 
 ### AI Maestro Task API Integration
 
-AMIA SHOULD report integration results to AI Maestro's task system **via the frozen CLI layer** (the `aimaestro-teams` kanban/task verb), never the server API directly, in addition to file-based tracking. When a PR is merged, CI passes, or a release is tagged, update the corresponding task status via the `agent-messaging` skill.
-<!-- DECOUPLE-BLOCKED ai-maestro#36 — the kanban/status-set verb lands with ai-maestro#36; until it deploys, status updates route through the agent-messaging skill, never the server API. Frozen-CLI rule (USER 2026-06-15): no ai-maestro plugin calls the server API directly. -->
+AMIA SHOULD report integration results to AI Maestro's task system **via the frozen CLI layer** (the `aimaestro-teams` kanban/task verb), never the server API directly, in addition to file-based tracking. When a PR is merged, CI passes, or a release is tagged, update the corresponding task status via `amp-send`.
+<!-- DECOUPLE-BLOCKED ai-maestro#36 — the kanban/status-set verb lands with ai-maestro#36; until it deploys, status updates route through amp-send, never the server API. Frozen-CLI rule (USER 2026-06-15): no ai-maestro plugin calls the server API directly. -->
 
 ---
 
