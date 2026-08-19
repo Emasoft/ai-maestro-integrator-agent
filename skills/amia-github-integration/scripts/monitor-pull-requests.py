@@ -51,7 +51,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 from shared.gh_utils import run_gh_command
 from shared.thresholds import write_output
 
-
 # Map gh check conclusion values to simplified states
 STATE_MAP = {
     "SUCCESS": "success",

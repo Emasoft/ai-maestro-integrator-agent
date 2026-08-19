@@ -46,7 +46,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 from shared.gh_utils import run_gh_command
 from shared.thresholds import write_output
 
-
 # Conventional commit prefix to human-readable category
 CATEGORY_MAP = {
     "feat": "Features",
