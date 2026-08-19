@@ -36,11 +36,11 @@ Exit codes (standardized):
 import argparse
 import json
 import os
-import subprocess
 import sys
 from typing import Any
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.gh_utils import run_gh_command
 from shared.thresholds import write_output
 
 # Default configurations for common labels
@@ -60,12 +60,6 @@ DEFAULT_LABEL_CONFIGS: dict[str, dict[str, str]] = {
     "human-review": {"color": "1d76db", "description": "Ready for human review"},
     "merge-release": {"color": "5319e7", "description": "Ready for merge/release"},
 }
-
-
-def run_gh_command(args: list[str]) -> tuple[bool, str]:
-    """Execute a gh CLI command and return success status and output."""
-    result = subprocess.run(["gh"] + args, capture_output=True, text=True)
-    return result.returncode == 0, result.stdout.strip() if result.returncode == 0 else result.stderr.strip()
 
 
 def get_existing_labels(repo: str) -> set[str]:

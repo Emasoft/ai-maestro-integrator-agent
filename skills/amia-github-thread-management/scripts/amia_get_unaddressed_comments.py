@@ -29,39 +29,13 @@ Exit codes (standardized):
 """
 
 import argparse
-import json
 import os
-import subprocess
 import sys
 from typing import Any
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+from shared.gh_utils import run_graphql_with_variables
 from shared.thresholds import write_output
-
-
-def run_graphql_with_variables(query: str, variables: dict[str, str]) -> dict[str, Any]:
-    """Execute a GraphQL query/mutation using gh CLI with proper variable binding.
-
-    Uses -f parameter binding to prevent GraphQL injection attacks.
-    Variables are passed securely via subprocess arguments, NOT string interpolation.
-    """
-    # Build command with query and all variables as separate -f arguments
-    cmd = ["gh", "api", "graphql", "-f", f"query={query}"]
-    for var_name, var_value in variables.items():
-        cmd.extend(["-f", f"{var_name}={var_value}"])
-
-    result = subprocess.run(
-        cmd,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-
-    if result.returncode != 0:
-        error_msg = result.stderr.strip() or "Unknown error"
-        raise RuntimeError(f"GraphQL query failed: {error_msg}")
-
-    return json.loads(result.stdout)
 
 
 def get_unaddressed_comments(
