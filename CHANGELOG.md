@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.2] — 2026-08-21
+
+### Bug Fixes
+
+- Sweep bare agent-messaging invocations to frozen amp-* CLIs (TRDD-TNZ8RCOE)
+
+### Documentation
+
+- Add TRDD-TNZ8RCOE — sweep bare agent-messaging invocations to amp-* CLIs
+- Archive 6 completed Phase-2 TRDDs (T3CLWN5Y, 62UP8NJS, ONCGHA1Q, J097QZ54, K3HJQG7U, LBAN7T2K)
 ## [1.7.1] — 2026-08-19
 
 ### Refactor
