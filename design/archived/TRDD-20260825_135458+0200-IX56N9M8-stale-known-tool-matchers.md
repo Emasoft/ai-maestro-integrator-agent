@@ -1,12 +1,14 @@
 ---
 trdd-id: IX56N9M8
 title: KNOWN_TOOL_MATCHERS in claude-plugin-install.py is stale - cosmetic, validator unused
-column: backburner
+column: complete
 created: 2026-08-25T13:54:58+0200
-updated: 2026-08-25T13:54:58+0200
+updated: 2026-08-25T14:07:00+0200
 current-owner: integrator-claude
 task-type: refactor
 relevant-rules: []
+min-approval-requirement: none
+implementation-commits: [684cf4e]
 ---
 
 # `KNOWN_TOOL_MATCHERS` is stale — cosmetic, and its validator is unused
@@ -38,6 +40,18 @@ Default recommendation when picked up: option 1, after a repo-wide grep for
 
 ## Acceptance
 
-- [ ] Either zero references to `KNOWN_TOOL_MATCHERS` remain, or the validator
+- [x] Either zero references to `KNOWN_TOOL_MATCHERS` remain, or the validator
       has a real caller plus a non-hand-typed (or warn-only) tool list.
-- [ ] `tests/run-all-tests.py` still green.
+      → OPTION 2, because verification OVERTURNED option 1's premise: the
+      validator IS called — `_validate_matcher` → hooks validation →
+      `do_validate` → the `--validate` CLI flag (claude-plugin-install.py:3220).
+      "publish.py never invokes it" was true but incomplete. List refreshed
+      with 16 names copied from a live CC 2.1.240 harness (not from memory);
+      the set was already warn-only; the miss message no longer overclaims.
+- [x] `tests/run-all-tests.py` still green. → 16/16, ruff 0, mypy 0.
+
+## Approval log
+
+- 2026-08-25T14:07:00+0200 — COMPLETED by integrator-claude
+  (min-approval-requirement: none; USER delegated completion of pending
+  TRDDs on verified facts, 2026-08-25). Implemented in commit 684cf4e.

@@ -1,12 +1,14 @@
 ---
 trdd-id: L3XIKYMO
 title: Stop-hook Check 3 is inert - nothing ever writes .claude/tasks
-column: backburner
+column: complete
 created: 2026-08-25T13:54:58+0200
-updated: 2026-08-25T13:54:58+0200
+updated: 2026-08-25T14:07:00+0200
 current-owner: integrator-claude
 task-type: refactor
 relevant-rules: []
+min-approval-requirement: none
+implementation-commits: [d3d52c8]
 ---
 
 # Stop-hook Check 3 is inert — nothing ever writes `.claude/tasks/`
@@ -34,6 +36,17 @@ before deleting (references in prose count).
 
 ## Acceptance
 
-- [ ] `check_claude_tasks` either removed (with its call site and any prose
+- [x] `check_claude_tasks` either removed (with its call site and any prose
       naming it) or fed by a real writer with a test that exercises both.
-- [ ] `tests/run-all-tests.py` still green.
+      → REMOVED (option 1): function, call site, docstring line, and the
+      phantom-store prose in github-sync-procedure.md §1.5.4/§1.8 + the
+      amia-github-sync agent's mirrored TOC. Repo-wide grep confirmed no
+      writer exists; remaining "Claude Tasks" prose elsewhere refers to the
+      distinct personal-tasks concept, not this store, and was left alone.
+- [x] `tests/run-all-tests.py` still green. → 16/16, ruff 0, mypy 0.
+
+## Approval log
+
+- 2026-08-25T14:07:00+0200 — COMPLETED by integrator-claude
+  (min-approval-requirement: none; USER delegated completion of pending
+  TRDDs on verified facts, 2026-08-25). Implemented in commit d3d52c8.
