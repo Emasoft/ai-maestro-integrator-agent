@@ -59,11 +59,11 @@ Prefer these over reading large files into your context:
     - 1.5.1 Reading orchestrator's task modifications
     - 1.5.2 Converting task state to GitHub issue updates
     - 1.5.3 Applying label changes via gh CLI
-    - 1.5.4 Updating issue bodies with Claude Tasks state
+    - 1.5.4 Updating issue bodies with task checklist state
     - 1.5.5 Moving issues on Project V2 board using GraphQL mutations
   - 1.6 Managing GitHub issue labels across priority, status, and type dimensions
   - 1.7 Syncing Project V2 custom fields bidirectionally
-  - 1.8 Integrating Claude Tasks with GitHub issue checklists
+  - 1.8 Maintaining task checklists in GitHub issue bodies
   - 1.9 Handling sync errors and conflicts
   - 1.10 Generating sync reports and logs
   - 1.11 Troubleshooting API rate limits, label conflicts, and task parse errors

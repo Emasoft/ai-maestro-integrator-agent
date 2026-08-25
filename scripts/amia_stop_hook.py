@@ -5,8 +5,7 @@ amia_stop_hook.py - Stop Hook for Integrator Agent.
 Blocks the integrator agent from exiting with incomplete work. Checks:
 1. Pending PRs awaiting review (via gh pr list)
 2. GitHub Projects items in "In Progress" or "AI Review" status
-3. Claude Tasks with pending/in_progress status (if transcript available)
-4. Incomplete quality gates
+3. Incomplete quality gates
 
 IMPORTANT: This is a Stop hook. It receives hook data via stdin as JSON.
 The script checks for incomplete work and blocks exit if found.
@@ -430,54 +429,6 @@ def get_project_items_in_progress(project_number: int | None, log_file: Path) ->
         return []
 
 
-def check_claude_tasks(log_file: Path) -> list[dict]:
-    """Check for pending Claude Tasks in project directory.
-
-    Looks for .claude/tasks/ directory and checks task status files.
-
-    Args:
-        log_file: Path to log file
-
-    Returns:
-        List of incomplete tasks with id, status, description
-    """
-    debug("Checking Claude Tasks...", log_file)
-
-    # Must go through get_project_root() so $CLAUDE_PROJECT_DIR (the Claude Code
-    # standard var) wins over the legacy $CLAUDE_PROJECT_ROOT — a bare legacy
-    # lookup here would resolve to cwd in 2.1.139+ sessions and miss the tasks.
-    project_root = get_project_root()
-    tasks_dir = project_root / ".claude" / "tasks"
-
-    if not tasks_dir.exists():
-        debug("No .claude/tasks directory found", log_file)
-        return []
-
-    incomplete = []
-    active_statuses = {"pending", "in_progress", "blocked", "running"}
-
-    try:
-        for task_file in tasks_dir.glob("*.json"):
-            try:
-                with open(task_file, "r", encoding="utf-8") as f:
-                    task = json.load(f)
-
-                status = task.get("status", "").lower()
-                if status in active_statuses:
-                    incomplete.append({
-                        "id": task.get("id", task_file.stem),
-                        "status": status,
-                        "description": task.get("description", task.get("title", "Unknown")),
-                    })
-            except (json.JSONDecodeError, OSError):
-                continue
-
-        debug(f"Found {len(incomplete)} incomplete Claude Tasks", log_file)
-        return incomplete
-    except OSError:
-        return []
-
-
 def check_quality_gates(log_file: Path) -> list[str]:
     """Check for incomplete quality gates.
 
@@ -491,8 +442,8 @@ def check_quality_gates(log_file: Path) -> list[str]:
     """
     debug("Checking quality gates...", log_file)
 
-    # Same as check_claude_tasks(): the unified helper prefers $CLAUDE_PROJECT_DIR
-    # and falls back to the legacy $CLAUDE_PROJECT_ROOT, then cwd.
+    # The unified helper prefers $CLAUDE_PROJECT_DIR and falls back to the
+    # legacy $CLAUDE_PROJECT_ROOT, then cwd.
     project_root = get_project_root()
     gates_file = project_root / ".claude" / "quality-gates.json"
 
@@ -665,13 +616,11 @@ def main() -> int:
         issues.append(f"{len(project_items)} item(s) in progress")
         details["project_items"] = project_items
 
-    # Check 3: Claude Tasks
-    claude_tasks = check_claude_tasks(log_file)
-    if claude_tasks:
-        issues.append(f"{len(claude_tasks)} Claude Task(s) pending")
-        details["claude_tasks"] = claude_tasks
-
-    # Check 4: Quality gates
+    # Check 3: Quality gates
+    # (The former Check 3 — a ".claude/tasks/" reader — was removed 2026-08-25,
+    # TRDD-L3XIKYMO: nothing in this plugin or Claude Code ever wrote that
+    # directory, so the check had always returned empty. Do not re-add a reader
+    # without also adding the writer and a test that exercises both.)
     quality_gates = check_quality_gates(log_file)
     if quality_gates:
         issues.append(f"{len(quality_gates)} quality gate(s) incomplete")

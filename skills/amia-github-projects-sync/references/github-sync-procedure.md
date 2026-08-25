@@ -14,11 +14,11 @@
   - 1.5.1 Reading orchestrator's task modifications
   - 1.5.2 Converting task state to GitHub issue updates
   - 1.5.3 Applying label changes via gh CLI
-  - 1.5.4 Updating issue bodies with Claude Tasks state
+  - 1.5.4 Updating issue bodies with task checklist state
   - 1.5.5 Moving issues on Project V2 board using GraphQL mutations
 - 1.6 Managing GitHub issue labels across priority, status, and type dimensions
 - 1.7 Syncing Project V2 custom fields bidirectionally
-- 1.8 Integrating Claude Tasks with GitHub issue checklists
+- 1.8 Maintaining task checklists in GitHub issue bodies
 - 1.9 Handling sync errors and conflicts
 - 1.10 Generating sync reports and logs
 - 1.11 Troubleshooting API rate limits, label conflicts, and task parse errors
@@ -226,7 +226,7 @@ gh issue edit <issue_number> --remove-label "status:todo"
 - Group label updates to minimize API calls
 - Apply changes in priority order (status → priority → type)
 
-### 1.5.4 Updating issue bodies with Claude Tasks state
+### 1.5.4 Updating issue bodies with task checklist state
 
 When task checklist state changes locally:
 
@@ -337,31 +337,30 @@ Before pushing updates:
 
 ---
 
-## 1.8 Integrating Claude Tasks with GitHub issue checklists
+## 1.8 Maintaining task checklists in GitHub issue bodies
 
-Two distinct stores are involved here, and conflating them is the classic error:
-
-- **GitHub issue checklists** — `- [ ]` / `- [x]` Markdown inside an issue body. Binary state.
-- **Claude Tasks** — the orchestrator's own local task records under `.claude/tasks/`, which
-  the Stop hook reads. These carry richer status values.
+The issue body's checklist IS the task store — one source of truth. (Until
+2026-08-25 this section described a second, local store under `.claude/tasks/`
+that the Stop hook read; nothing ever wrote that directory, so the store was a
+phantom and the hook check was removed — TRDD-L3XIKYMO.)
 
 > **Do not reach for a Claude Code todo tool here.** `TaskCreate`, `TaskGet`, `TaskUpdate`,
 > `TaskList` and `TodoWrite` are unavailable on Opus 4.8, Sonnet 5, Fable 5, Mythos 5 and
 > newer (Claude Code 2.1.233) — which is what this plugin's agents run on. Read and write
-> both stores directly instead.
+> the issue-body checklist directly instead.
 
 ### Task Status Values
 
-Claude Tasks records use: `completed`, `in_progress`, `pending`, `blocked`.
-GitHub checkboxes have only two states and cannot express the middle ones.
+GitHub checkboxes are binary (`- [ ]` / `- [x]`). Express intermediate states
+(in progress, blocked) as text on the checklist line, never as a third
+checkbox state — renderers and parsers only understand the two.
 
 ### Integration Workflow
 
 1. **Read checklist state** from the issue body (§1.4.3 — plain Markdown parsing)
 2. **Extract checklist items** with completion state
-3. **Update the orchestrator's local task records** directly
-4. **Link subtasks to parent issues** based on indentation hierarchy
-5. **Propagate task completion** back to GitHub issue bodies via `gh issue edit`
+3. **Link subtasks to parent issues** based on indentation hierarchy
+4. **Propagate task completion** back to GitHub issue bodies via `gh issue edit`
 
 ### Task Parsing
 
