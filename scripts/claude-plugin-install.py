@@ -821,6 +821,27 @@ KNOWN_TOOL_MATCHERS = {
     "TodoWrite",
     "LSP",
     "Agent",
+    # Refreshed 2026-08-25 (TRDD-IX56N9M8) against a live CC 2.1.240 tool
+    # surface — not hand-typed from memory, because a wrong name here turns
+    # into a false "unknown tool" warning on a valid matcher. Retired names
+    # (TaskCreate/TodoWrite era) stay: this set only SUGGESTS, never blocks,
+    # and hooks in the wild still match them on older models.
+    "SendMessage",
+    "ListAgents",
+    "Monitor",
+    "Artifact",
+    "ScheduleWakeup",
+    "ReportFindings",
+    "TaskOutput",
+    "CronCreate",
+    "CronDelete",
+    "CronList",
+    "DesignSync",
+    "RemoteTrigger",
+    "Workflow",
+    "ExitWorktree",
+    "EndConversation",
+    "PushNotification",
 }
 NOTIFICATION_MATCHERS = {
     "permission_prompt",
@@ -906,7 +927,7 @@ def _validate_matcher(matcher: str, event_name: str, path: str) -> list:
                     )
                 else:
                     warnings.append(
-                        f"{path}: matcher '{part}' doesn't match any known tool. Known tools: {', '.join(sorted(KNOWN_TOOL_MATCHERS))}. MCP tools use pattern: mcp__<server>__<tool>"
+                        f"{path}: matcher '{part}' is not in this validator's known-tool list (the list can lag newly added Claude Code tools — this is a warning, never a block). Known tools: {', '.join(sorted(KNOWN_TOOL_MATCHERS))}. MCP tools use pattern: mcp__<server>__<tool>"
                     )
     elif event_name == "Notification":
         for part in [p.strip() for p in matcher.split("|")]:
