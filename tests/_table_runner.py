@@ -25,7 +25,38 @@ same fail-open inversion those suites exist to prevent.
 
 from __future__ import annotations
 
+import importlib.util
 from collections.abc import Callable, Sequence
+from pathlib import Path
+from types import ModuleType
+
+SCRIPTS_DIR = Path(__file__).resolve().parent.parent / "scripts"
+
+
+def load_claude_plugin_install() -> ModuleType:
+    """Import `claude-plugin-install.py` (a dashed filename — no plain `import` works).
+
+    `main()` in that file is guarded by `if __name__ == "__main__":`, so a real
+    `spec.loader.exec_module()` import runs only module-level code (imports, constant
+    tables, function/class definitions) — no CLI side effects. Verified by reading the
+    file's tail before relying on this loader; if that guard is ever removed this import
+    would start executing the CLI, so prefer the real import over re-parsing the source
+    with regex — it exercises the actual code, not a text approximation of it.
+
+    Lives here, not in a test file, because it is needed by more than one suite and the
+    CI duplication gate (MegaLinter jscpd) is python-only: a second copy of these ~18
+    lines is exactly the kind of paste that pushed this repo over the 5% threshold once
+    already (see this module's header). Each call returns a FRESH module object — the
+    spec is never registered in `sys.modules` — so one suite monkeypatching the module's
+    path constants cannot leak into another.
+    """
+    path = SCRIPTS_DIR / "claude-plugin-install.py"
+    spec = importlib.util.spec_from_file_location("claude_plugin_install", path)
+    if spec is None or spec.loader is None:
+        raise AssertionError(f"could not build an import spec for {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def classify(outcome: str) -> str:

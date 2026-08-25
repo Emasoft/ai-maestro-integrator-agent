@@ -8,7 +8,7 @@
 - 1.4 Synchronizing GitHub issues to local task state
   - 1.4.1 Querying project issues with GraphQL
   - 1.4.2 Extracting labels and custom fields from issues
-  - 1.4.3 Parsing task checklists from issue bodies using TaskList API
+  - 1.4.3 Parsing task checklists from issue bodies
   - 1.4.4 Updating orchestrator's internal task tracking
 - 1.5 Synchronizing local changes back to GitHub
   - 1.5.1 Reading orchestrator's task modifications
@@ -146,16 +146,18 @@ Parse the response to extract:
 - Map custom fields to corresponding labels
 - Validate field values before processing
 
-### 1.4.3 Parsing task checklists from issue bodies using TaskList API
+### 1.4.3 Parsing task checklists from issue bodies
 
-Use the TaskList API to extract and check task status from GitHub issue bodies:
+GitHub issue checklists are plain Markdown. Parse the issue body text directly — there is
+no tool call for this, and no Claude Code tool has ever parsed issue bodies:
 
-1. **Call TaskList API** with issue body text
+1. **Match checklist lines** — `- [ ]` (open) and `- [x]` (done); accept `X` as well as `x`
 2. **Extract task metadata**:
-   - Task description
-   - Completion status: `completed`, `in_progress`, `pending`, `blocked`
-   - Task hierarchy (parent/subtask relationships)
-3. **Validate task syntax** before processing
+   - Task description: the text following the marker
+   - Completion status: `[x]` → done, `[ ]` → open. **GitHub checkboxes are binary** —
+     there is no `in_progress` or `blocked` state to read out of an issue body
+   - Task hierarchy: leading indentation (2 spaces per level) gives subtask depth
+3. **Validate checklist syntax** before processing
 
 ### 1.4.4 Updating orchestrator's internal task tracking
 
@@ -337,28 +339,35 @@ Before pushing updates:
 
 ## 1.8 Integrating Claude Tasks with GitHub issue checklists
 
-Use Claude Code's TaskList API to synchronize task checklists:
+Two distinct stores are involved here, and conflating them is the classic error:
+
+- **GitHub issue checklists** — `- [ ]` / `- [x]` Markdown inside an issue body. Binary state.
+- **Claude Tasks** — the orchestrator's own local task records under `.claude/tasks/`, which
+  the Stop hook reads. These carry richer status values.
+
+> **Do not reach for a Claude Code todo tool here.** `TaskCreate`, `TaskGet`, `TaskUpdate`,
+> `TaskList` and `TodoWrite` are unavailable on Opus 4.8, Sonnet 5, Fable 5, Mythos 5 and
+> newer (Claude Code 2.1.233) — which is what this plugin's agents run on. Read and write
+> both stores directly instead.
 
 ### Task Status Values
 
-- `completed`: Task finished
-- `in_progress`: Currently being worked on
-- `pending`: Not yet started
-- `blocked`: Waiting on dependency
+Claude Tasks records use: `completed`, `in_progress`, `pending`, `blocked`.
+GitHub checkboxes have only two states and cannot express the middle ones.
 
 ### Integration Workflow
 
-1. **Use TaskList API to check task status** from issue body
+1. **Read checklist state** from the issue body (§1.4.3 — plain Markdown parsing)
 2. **Extract checklist items** with completion state
-3. **Update orchestrator's task tracking** with TaskCreate and TaskUpdate
-4. **Link subtasks to parent issues** based on hierarchy
-5. **Propagate task completion** back to GitHub issue bodies
+3. **Update the orchestrator's local task records** directly
+4. **Link subtasks to parent issues** based on indentation hierarchy
+5. **Propagate task completion** back to GitHub issue bodies via `gh issue edit`
 
 ### Task Parsing
 
 When reading issue bodies:
 
-1. Validate task syntax with TaskList API before processing
+1. Validate checklist syntax (`- [ ]` / `- [x]`) before processing
 2. Log unparseable issues for manual review
 3. Provide clear error messages in sync report
 
@@ -499,7 +508,7 @@ Details: docs_dev/github-sync-20250131-143022.log
 
 **Solutions**:
 
-1. **Validate task syntax** with TaskList API before processing
+1. **Validate checklist syntax** (`- [ ]` / `- [x]`) before processing
 2. **Log unparseable issues** to sync report with issue numbers
 3. **Provide clear error messages** indicating syntax problems
 4. **Skip malformed tasks** and continue with remaining tasks
@@ -512,7 +521,7 @@ Details: docs_dev/github-sync-20250131-143022.log
 
 **Validation process**:
 
-1. Test parse issue body with TaskList API
+1. Test parse the issue body against the `- [ ]` / `- [x]` pattern
 2. If parse fails, log error and skip task extraction
 3. Continue sync operation with remaining valid tasks
 4. Report parse failures in sync log

@@ -53,7 +53,7 @@ Prefer these over reading large files into your context:
   - 1.4 Synchronizing GitHub issues to local task state
     - 1.4.1 Querying project issues with GraphQL
     - 1.4.2 Extracting labels and custom fields from issues
-    - 1.4.3 Parsing task checklists from issue bodies using TaskList API
+    - 1.4.3 Parsing task checklists from issue bodies
     - 1.4.4 Updating orchestrator's internal task tracking
   - 1.5 Synchronizing local changes back to GitHub
     - 1.5.1 Reading orchestrator's task modifications
@@ -154,7 +154,7 @@ assistant: I'll perform bidirectional synchronization between GitHub and local s
 1. Verified GitHub authentication (gh auth status: logged in)
 2. Fetched Project V2 data via GraphQL (45 issues found)
 3. Extracted labels and custom fields from all issues
-4. Used TaskList API to check task status from issue bodies
+4. Parsed `- [ ]` / `- [x]` checklists from issue bodies to read task status
 5. Updated local task tracking with GitHub state
 6. Pushed 3 local changes back to GitHub (label updates)
 7. Generated sync log with full details

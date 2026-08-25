@@ -111,6 +111,12 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
   consecutive-block cap added in 2.1.143 (default 8). Older Claude Code
   versions still work — the env vars are simply absent and `$CLAUDE_PROJECT_ROOT`
   is the legacy fallback for `$CLAUDE_PROJECT_DIR`.
+- **From Claude Code 2.1.233** the todo/task tools (`TaskCreate`, `TaskGet`,
+  `TaskUpdate`, `TaskList`, `TodoWrite`) are unavailable on Opus 4.8, Sonnet 5,
+  Fable 5, Mythos 5 and newer — the models this plugin's agents pin. The skills
+  therefore read GitHub issue checklists as plain `- [ ]` / `- [x]` Markdown and
+  write task records directly, with no todo-tool call. Setting
+  `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` restores the tools but is not required.
 
 ## Installation
 

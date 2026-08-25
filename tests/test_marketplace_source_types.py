@@ -28,10 +28,8 @@ Standalone exit: 0 all pass, 1 any failure.
 
 from __future__ import annotations
 
-import importlib.util
 import sys
 from pathlib import Path
-from types import ModuleType
 
 PLUGIN_ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS_DIR = PLUGIN_ROOT / "scripts"
@@ -39,31 +37,12 @@ sys.path.insert(0, str(PLUGIN_ROOT / "tests"))
 sys.path.insert(0, str(SCRIPTS_DIR))
 
 import validate_marketplace as vm  # noqa: E402  # pyright: ignore[reportMissingImports]
-from _table_runner import (
-    run_table,  # noqa: E402  # pyright: ignore[reportMissingImports]
+from _table_runner import (  # pyright: ignore[reportMissingImports]
+    load_claude_plugin_install,
+    run_table,
 )
 
-
-def _load_claude_plugin_install() -> ModuleType:
-    """Import `claude-plugin-install.py` (a dashed filename — no plain `import` works).
-
-    `main()` in that file is guarded by `if __name__ == "__main__":`, so a real
-    `spec.loader.exec_module()` import runs only module-level code (imports, constant
-    tables, function/class definitions) — no CLI side effects. Verified by reading the
-    file's tail before relying on this loader; if that guard is ever removed this import
-    would start executing the CLI, so prefer the real import over re-parsing the source
-    with regex — it exercises the actual code, not a text approximation of it.
-    """
-    path = SCRIPTS_DIR / "claude-plugin-install.py"
-    spec = importlib.util.spec_from_file_location("claude_plugin_install", path)
-    if spec is None or spec.loader is None:
-        raise AssertionError(f"could not build an import spec for {path}")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
-CPI = _load_claude_plugin_install()
+CPI = load_claude_plugin_install()
 
 
 # ── The checks (shared by pytest wrappers and the standalone runner) ──

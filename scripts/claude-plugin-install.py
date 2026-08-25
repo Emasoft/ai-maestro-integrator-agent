@@ -2250,6 +2250,38 @@ def do_uninstall(plugin_key: str, quiet: bool = False, dry_run: bool = False):
     mp_dir = MARKETPLACES_DIR / marketplace_name
     plug_dir = mp_dir / "plugins" / plugin_name
 
+    # Ownership gate — never mutate settings for a plugin this script did not install.
+    #
+    # Claude Code 2.1.239 made `<name>@synced` a real plugin-key namespace that Claude
+    # Code itself manages for plugins synced from claude.ai. Without this gate an unknown
+    # key still reached the settings writes below: a missing plugin dir only warns (see
+    # the `else` branch further down), so `remaining` came out empty and we popped
+    # `extraKnownMarketplaces[<mp>]` and `enabledPlugins[<key>]` for state we do not own.
+    #
+    # Gate on OWNERSHIP, not on the literal name "synced" — a blocklist would miss the
+    # next namespace Claude Code adds. This also makes `do_uninstall` consistent with
+    # `do_enable`/`do_disable`, which already refuse before touching anything.
+    #
+    # Ownership is a record in INSTALLED_FILE *or* an existing local marketplace dir —
+    # deliberately NOT `plug_dir.exists()`, because a half-removed install (directory
+    # already gone, settings entries left behind) must stay cleanable. That is exactly
+    # why the missing-directory case below warns instead of exiting.
+    #
+    # This sits BEFORE the --dry-run return on purpose, so `--dry-run --uninstall
+    # <unowned-key>` now exits 1 instead of printing "would uninstall" and exiting 0.
+    # That is a deliberate CLI contract change: a dry run must predict the real
+    # outcome, and the old exit 0 promised an uninstall that would never happen.
+    installed = load_json_safe(INSTALLED_FILE)
+    if "version" not in installed:
+        installed = {"version": 1, "plugins": installed}
+    if not isinstance(installed.get("plugins"), dict):
+        installed["plugins"] = {}
+    if plugin_key not in installed["plugins"] and not mp_dir.exists():
+        err(f"Not installed by this script: {plugin_key}")
+        info("  Plugins synced from claude.ai use the '<name>@synced' key and are")
+        info("  managed by Claude Code itself: claude plugin uninstall <plugin-key>")
+        sys.exit(1)
+
     if dry_run:
         if not quiet:
             info(f"DRY RUN — would uninstall {plugin_key}")
@@ -2298,12 +2330,8 @@ def do_uninstall(plugin_key: str, quiet: bool = False, dry_run: bool = False):
     settings.get("enabledPlugins", {}).pop(plugin_key, None)
     save_json_safe(SETTINGS_TARGET, settings)
 
-    installed = load_json_safe(INSTALLED_FILE)
-    if "version" not in installed:
-        installed = {"version": 1, "plugins": installed}
-    # Guard against corrupt file where "plugins" is not a dict
-    if not isinstance(installed.get("plugins"), dict):
-        installed["plugins"] = {}
+    # `installed` was loaded and normalized by the ownership gate above (including the
+    # corrupt-"plugins" guard); re-reading here would discard that normalization.
     plugins_map = installed["plugins"]
     plugins_map.pop(plugin_key, None)
     save_json_safe(INSTALLED_FILE, installed)

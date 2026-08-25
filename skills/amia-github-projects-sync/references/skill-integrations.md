@@ -285,11 +285,14 @@ GitHub Projects is for team/project tasks. Claude Tasks is for orchestrator pers
 
 When a GitHub issue needs orchestrator attention:
 
-```bash
-# Add Claude Tasks task to review an issue
-# Use TodoWrite tool in Claude Code
+```markdown
+# Record it as an orchestrator-local Claude Task (NOT a GitHub issue)
 - [ ] Review blocked issue #42 - API dependency (priority: high, due: tomorrow)
 ```
+
+Write the record directly. Do not reach for `TodoWrite` — it is unavailable on Opus 4.8,
+Sonnet 5, Fable 5, Mythos 5 and newer (Claude Code 2.1.233), which is what this plugin's
+agents run on.
 
 ### Linking Pattern
 
