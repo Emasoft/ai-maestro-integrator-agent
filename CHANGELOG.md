@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.3] — 2026-08-25
+
+### Bug Fixes
+
+- Align with Claude Code 2.1.233-2.1.240 (todo-tool removal + uninstall ownership gate)
+- Remove inert Stop-hook Check 3 and its phantom .claude/tasks store (TRDD-L3XIKYMO)
+- Refresh KNOWN_TOOL_MATCHERS from a live CC 2.1.240 tool surface (TRDD-IX56N9M8)
+
+### Documentation
+
+- Re-stamp GOV-VER-02 governance currency (spec v2.6.0, rules v5.5.0)
+- Add TRDD-L3XIKYMO and TRDD-IX56N9M8 - park two verified-benign defects from the 233-240 audit
+- Advance GOV-VER-02 governance-spec blob to post-push b96efb43adc9
+- Archive TRDD-L3XIKYMO and TRDD-IX56N9M8 -> complete (implemented in d3d52c8, 684cf4e)
 ## [1.7.2] — 2026-08-21
 
 ### Bug Fixes
