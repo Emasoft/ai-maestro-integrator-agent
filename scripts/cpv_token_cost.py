@@ -38,9 +38,11 @@ from pathlib import Path
 # Re-read the live docs before trusting these multipliers in a new context.
 # Consequence: any agent carrying `experimental.cacheTtl: "1h"` would be
 # UNDER-estimated here by 1.6x on its cache writes. NO agent in this plugin
-# carries it — the hint was added and then reverted on measurement (93% of
-# 17,888 real assistant-turn gaps on this machine were under 5 minutes, the
-# band where the 5m TTL refreshes for free and 1h is pure surcharge). So this
+# carries it — the hint was added and then reverted on measurement: of 14,590
+# start-to-start gaps between DISTINCT REQUESTS (deduped by requestId, sidechain
+# streams kept separate, no upper filter), 91% were under 5 minutes and 8% in
+# the 5-60min band where a 1h TTL earns its 2x write; median 11s, p90 284s. So
+# this
 # ceiling is LATENT, not active: it bites the day someone sets that frontmatter
 # key, and it will not announce itself, because the estimator has no way to
 # know the TTL it is mispricing.
