@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.4] — 2026-08-29
+
+### Documentation
+
+- Re-stamp GOV-VER-02 to governance-spec v2.6.1 / GOVERNANCE-RULES v5.5.1
+- Name the 5m-only cache_write ceiling that the 1h cacheTtl commit made real
+- Correct f1057c1 — the transcripts DO carry the per-TTL split
+- Fix the gap statistic in 8f7ae9b — wrong unit, right conclusion
+
+### Features
+
+- Align with Claude Code 2.1.238-2.1.248 (cacheTtl, Sonnet 5 rate, headersHelper)
+
+### Revert
+
+- Drop experimental.cacheTtl "1h" from the 10 amia-* agents — measured, not reasoned
 ## [1.7.3] — 2026-08-25
 
 ### Bug Fixes
