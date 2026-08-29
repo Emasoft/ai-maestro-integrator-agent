@@ -29,6 +29,16 @@ from pathlib import Path
 # "claude-sonnet-4" keys stay last within their family.
 #
 # cache_write = 1.25x input (5-minute TTL); cache_read = 0.10x input.
+#
+# CEILING: one cache_write column, hardcoded to the 5m multiplier. A 1-hour TTL
+# bills cache_write at 2x input, not 1.25x, so any agent carrying
+# `experimental.cacheTtl: "1h"` in its frontmatter is UNDER-estimated here by
+# 1.6x on its cache writes. Ten of this plugin's agents now do (see the 2.1.248
+# alignment commit), so the gap is real, not hypothetical — it is accepted
+# because the transcripts this script reads do not record which TTL was in
+# force, so a second column could not be filled in from the data we have.
+# Upgrade path: if a transcript ever carries the TTL, add a `cache_write_1h`
+# column (2.0x input) and pick per entry.
 MODEL_PRICING: dict[str, dict[str, float]] = {
     # Current generation (1M context).
     "claude-fable-5":    {"input": 10.0, "output": 50.0, "cache_write": 12.50, "cache_read": 1.00},
