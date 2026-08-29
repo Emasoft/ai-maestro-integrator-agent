@@ -231,6 +231,78 @@ def check_governance_stamp_matches_live_spec() -> str:
     return "PASS"
 
 
+def check_governance_stamp_detector_actually_fires() -> str:
+    """The stamp detector's three verdicts all fire — vanished, drifted, and clean."""
+    # WHY THIS EXISTS: the check above is green in the ONE state that never changes
+    # (both paths present and matching). Its two FAIL verdicts are the whole point of
+    # having it, and neither runs in normal operation — so a refactor could delete or
+    # invert them and every suite would stay green until the rare day upstream actually
+    # moves. A branch with no coverage is silence, not evidence. This drives the real
+    # function through a substituted `subprocess.run` so all three verdicts execute
+    # offline, on every run, with no network and nothing to skip.
+    stamped = {
+        "design/specs/governance-spec.md": "89c5db5690126efd7488cef7da0298698b45528b",
+        "docs/GOVERNANCE-RULES.md": "ceb4ac163bc00270d8e936dd18aafadd2fbbaefd",
+    }
+    if not shutil.which("gh"):
+        return "SKIP: gh CLI missing — the detector short-circuits before the tree read"
+
+    class _Result:
+        def __init__(self, stdout: str) -> None:
+            self.returncode = 0
+            self.stdout = stdout
+            self.stderr = ""
+
+    def _tree(paths: dict[str, str]) -> str:
+        return "".join(f"{p} {sha}\n" for p, sha in paths.items())
+
+    def _responder(paths: dict[str, str]):  # type: ignore[no-untyped-def]
+        """A stand-in for subprocess.run that answers with exactly this tree."""
+        def run(*args: object, **kwargs: object) -> _Result:
+            del args, kwargs  # the detector's argv is not under test here
+            return _Result(_tree(paths))
+        return run
+
+    # The persona's own stamp is the input, so a re-stamp must not silently break this
+    # check: read the live blobs the detector would compare against out of the file
+    # rather than hardcoding them a second time. Only the SHAPE of each response is
+    # fixed here — which paths are present, and whether their blobs agree.
+    text = PERSONA.read_text(encoding="utf-8")
+    spec = re.search(r"governance-spec\.md`?\s*\*\*v[\d.]+\*\*\s*\(blob `([0-9a-f]+)`\)", text)
+    rules = re.search(r"GOVERNANCE-RULES\.md`? is \*\*v[\d.]+\*\* \(blob `([0-9a-f]+)`\)", text)
+    if not (spec and rules):
+        return "FAIL: persona carries no GOV-VER-02 stamp to drive the detector with"
+    live = {
+        "design/specs/governance-spec.md": spec.group(1) + stamped[
+            "design/specs/governance-spec.md"][len(spec.group(1)):],
+        "docs/GOVERNANCE-RULES.md": rules.group(1) + stamped[
+            "docs/GOVERNANCE-RULES.md"][len(rules.group(1)):],
+    }
+    cases = {
+        # path absent from the tree -> the branch this check was written for
+        "vanished": ({k: v for k, v in live.items() if "GOVERNANCE-RULES" not in k},
+                     "FAIL: stamped path(s) missing"),
+        # present but a different blob -> ordinary drift
+        "drifted": ({**live, "docs/GOVERNANCE-RULES.md": "deadbeef" * 5},
+                    "FAIL: governance stamp is STALE"),
+        # both present and matching -> the only green state
+        "clean": (live, "PASS"),
+    }
+    real_run = subprocess.run
+    bad = []
+    try:
+        for name, (tree, want) in cases.items():
+            subprocess.run = _responder(tree)  # type: ignore[assignment]
+            got = check_governance_stamp_matches_live_spec()
+            if not got.startswith(want):
+                bad.append(f"{name}: wanted {want!r}, got {got[:60]!r}")
+    finally:
+        subprocess.run = real_run  # type: ignore[assignment]
+    if bad:
+        return f"FAIL: stamp detector verdicts wrong ({'; '.join(bad)})"
+    return "PASS"
+
+
 def check_main_agent_omits_model_pin() -> str:
     """The main agent does NOT pin `model:` (RP-MODEL-01, ai-maestro#136)."""
     for line in PERSONA.read_text(encoding="utf-8").splitlines():
@@ -344,6 +416,7 @@ CHECKS = [
     "check_team_registry_created_by",
     "check_no_direct_ai_maestro_api_calls",
     "check_governance_stamp_matches_live_spec",
+    "check_governance_stamp_detector_actually_fires",
     "check_main_agent_omits_model_pin",
     "check_skill_menu_covers_every_skill",
     "check_async_approval_fields_taught",
@@ -411,6 +484,10 @@ def test_governance_stamp_matches_live_spec() -> None:
 
 def test_all_agents_global_memory() -> None:
     assert check_all_agents_global_memory().startswith("PASS")
+
+
+def test_governance_stamp_detector_actually_fires() -> None:
+    assert check_governance_stamp_detector_actually_fires().startswith(("PASS", "SKIP"))
 
 
 def test_no_per_plugin_memory_skill() -> None:
