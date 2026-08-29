@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.5] — 2026-08-29
+
+### Bug Fixes
+
+- GOV-VER-02 must FAIL, not PASS, when a stamped path vanishes upstream
 ## [1.7.4] — 2026-08-29
 
 ### Documentation
