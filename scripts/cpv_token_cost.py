@@ -30,15 +30,25 @@ from pathlib import Path
 #
 # cache_write = 1.25x input (5-minute TTL); cache_read = 0.10x input.
 #
-# CEILING: one cache_write column, hardcoded to the 5m multiplier. A 1-hour TTL
-# bills cache_write at 2x input, not 1.25x, so any agent carrying
-# `experimental.cacheTtl: "1h"` in its frontmatter is UNDER-estimated here by
-# 1.6x on its cache writes. Ten of this plugin's agents now do (see the 2.1.248
-# alignment commit), so the gap is real, not hypothetical — it is accepted
-# because the transcripts this script reads do not record which TTL was in
-# force, so a second column could not be filled in from the data we have.
-# Upgrade path: if a transcript ever carries the TTL, add a `cache_write_1h`
-# column (2.0x input) and pick per entry.
+# CEILING: one cache_write column, hardcoded to the 5m multiplier. Anthropic
+# bills cache writes at 1.25x input for a 5-minute TTL and 2x for a 1-hour TTL
+# (bundled claude-api skill, shared/prompt-caching.md "Economics"), so any agent
+# carrying `experimental.cacheTtl: "1h"` is UNDER-estimated here by 1.6x on its
+# cache writes. Ten of this plugin's agents now do, so the gap is real.
+#
+# The reason is NOT that the data lacks the discriminator — it has it. The
+# Messages API `usage` object carries a nested `cache_creation` with
+# `ephemeral_5m_input_tokens` and `ephemeral_1h_input_tokens`, and Claude Code
+# transcripts record it (verified: both keys occur across the local transcript
+# corpus, with non-zero 1h values). `parse_transcript` simply does not read it —
+# it sums the flat `cache_creation_input_tokens` and loses the split.
+#
+# So the upgrade path is UNBLOCKED TODAY, not waiting on anything: read
+# usage["cache_creation"]["ephemeral_{5m,1h}_input_tokens"], carry both on
+# TokenUsage, add a `cache_write_1h` column at 2.0x input, and bill each bucket
+# at its own rate. Left undone deliberately — it is a behaviour change to a cost
+# estimator and belongs in its own commit with its own tests, not smuggled into
+# a comment fix. Do not restate this as "the data doesn't have it".
 MODEL_PRICING: dict[str, dict[str, float]] = {
     # Current generation (1M context).
     "claude-fable-5":    {"input": 10.0, "output": 50.0, "cache_write": 12.50, "cache_read": 1.00},
