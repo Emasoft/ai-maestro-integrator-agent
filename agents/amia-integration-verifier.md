@@ -12,6 +12,8 @@ auto_skills:
   - amia-tdd-enforcement
   - amia-integration-protocols
 memory_requirements: medium
+experimental:
+  cacheTtl: "1h"
 ---
 
 > **AMP Communication Restriction:** This is a sub-agent. You MUST NOT send AMP messages (`amp-send`, `amp-reply`, `amp-inbox`). Only the main agent can communicate with other agents. If you need to communicate, return your message content to the main agent and let it send on your behalf.

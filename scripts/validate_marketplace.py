@@ -148,6 +148,7 @@ OPTIONAL_PLUGIN_FIELDS = {
     "mcpServers",
     "lspServers",
     "outputStyles",
+    "headersHelper",  # mints HTTP headers for catalog/archive fetches (v2.1.238+)
 }
 
 # Source-specific required fields

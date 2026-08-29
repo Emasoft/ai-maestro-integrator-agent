@@ -37,11 +37,10 @@ MODEL_PRICING: dict[str, dict[str, float]] = {
     "claude-opus-4-7":   {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
     "claude-opus-4-6":   {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
     "claude-opus-4-5":   {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
-    # Sonnet 5 carries a $2.00/$10.00 introductory rate through 2026-08-31. We
-    # bill it at the standard $3.00/$15.00 on purpose: an estimate that errs HIGH
-    # is the safe direction for a cost report, and the standard rate needs no
-    # dated maintenance to stay correct once the intro window closes.
-    "claude-sonnet-5":   {"input": 3.0,  "output": 15.0, "cache_write": 3.75,  "cache_read": 0.30},
+    # Correction (Claude Code changelog 2.1.243): $3.00/$15.00 was only a
+    # limited-time promo that has now ended. $2.00/$10.00 is Sonnet 5's
+    # standard list price, so it's cheaper than the sonnet-4-x rows below it.
+    "claude-sonnet-5":   {"input": 2.0,  "output": 10.0, "cache_write": 2.50,  "cache_read": 0.20},
     "claude-sonnet-4-6": {"input": 3.0,  "output": 15.0, "cache_write": 3.75,  "cache_read": 0.30},
     "claude-sonnet-4-5": {"input": 3.0,  "output": 15.0, "cache_write": 3.75,  "cache_read": 0.30},
     "claude-haiku-4-5":  {"input": 1.0,  "output": 5.0,  "cache_write": 1.25,  "cache_read": 0.10},

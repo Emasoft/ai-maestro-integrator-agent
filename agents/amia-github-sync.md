@@ -12,6 +12,8 @@ triggers:
   - GitHub issues/PRs need synchronization
   - Project board needs updating
   - Orchestrator assigns GitHub management task
+experimental:
+  cacheTtl: "1h"
 ---
 
 > **AMP Communication Restriction:** This is a sub-agent. You MUST NOT send AMP messages (`amp-send`, `amp-reply`, `amp-inbox`). Only the main agent can communicate with other agents. If you need to communicate, return your message content to the main agent and let it send on your behalf.
