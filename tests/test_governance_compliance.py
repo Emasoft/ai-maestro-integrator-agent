@@ -207,10 +207,22 @@ def check_governance_stamp_matches_live_spec() -> str:
         return "SKIP: gh could not read the ai-maestro tree (auth or network)"
 
     live = dict(line.split() for line in r.stdout.strip().splitlines() if " " in line)
+    # A stamped path ABSENT from the live tree is drift, not a pass. gh already
+    # answered (returncode 0), so this is the API's real view: upstream deleted or
+    # renamed the file. Without this branch the comprehension below skips it on
+    # `p in live` and the check returns PASS — the stamp would certify a document
+    # that no longer exists. That is the one way this detector could report
+    # conformance while knowing nothing, so it is spelled out rather than folded
+    # into the drift list, whose message ("stamped X != live Y") would be a lie here.
+    vanished = sorted(p for p in declared if p not in live)
+    if vanished:
+        return (f"FAIL: stamped path(s) missing from the live governance-rules tree: {vanished}. "
+                "Upstream deleted or renamed them — re-read the spec and re-stamp against "
+                "wherever the content moved. Do NOT drop the stamp to make this green.")
     drifted = [
         f"{p}: stamped {sha} != live {live[p][:len(sha)]}"
         for p, sha in declared.items()
-        if p in live and not live[p].startswith(sha)
+        if not live[p].startswith(sha)
     ]
     if drifted:
         return (f"FAIL: governance stamp is STALE ({'; '.join(drifted)}). "
