@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.6] — 2026-08-29
+
+### Testing
+
+- Cover the stamp detector's two FAIL verdicts, which never ran
 ## [1.7.5] — 2026-08-29
 
 ### Bug Fixes
