@@ -885,6 +885,36 @@ def run_gate(root: Path) -> int:
         return 1
     cprint(f"  {GREEN}Tests passed.{NC}")
 
+    # Gate 5: Secret scan (adopted from CPV v5.21.1 canon git-hooks/pre-push,
+    # _run_feature_secret_gate). Canon scans FEATURE pushes because its hook
+    # allows them; this repo's pre-push (.githooks, ancestry-gated) refuses
+    # everything not routed through publish.py, so the RELEASE push is this
+    # repo's unscanned path — hence the scan lives HERE, fail-closed: a scan
+    # that cannot run has not proven the push clean. Scoped to the new commits
+    # since origin/main so already-pushed history is not re-scanned.
+    cprint(f"\n{BLUE}[G5] Secret scan (trufflehog, new commits only)...{NC}")
+    if shutil.which("trufflehog") is None:
+        cprint(f"  {RED}BLOCKED: trufflehog is not installed.{NC}")
+        cprint(f"  {RED}Install: https://github.com/trufflesecurity/trufflehog{NC}")
+        return 1
+    base = subprocess.run(
+        ["git", "rev-parse", "--verify", "--quiet", "origin/main"],
+        capture_output=True, text=True, cwd=str(root), timeout=10,
+    ).stdout.strip() or "HEAD~10"
+    scan_cmd = ["trufflehog", "git", f"file://{root}", "--no-update", "--fail"]
+    if base and base != "HEAD~10":
+        scan_cmd += ["--since-commit", base]
+    try:
+        se = subprocess.run(scan_cmd, cwd=str(root), timeout=600).returncode
+    except subprocess.TimeoutExpired:
+        cprint(f"  {RED}BLOCKED: secret scan timed out after 600s.{NC}")
+        return 1
+    if se != 0:
+        cprint(f"  {RED}BLOCKED: secret scan flagged this push.{NC}")
+        cprint(f"  {RED}Remove the secret(s) before pushing.{NC}")
+        return 1
+    cprint(f"  {GREEN}Secret scan clean.{NC}")
+
     cprint(f"\n{GREEN}{BOLD}All gates passed.{NC}")
     return 0
 
