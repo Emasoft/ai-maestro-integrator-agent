@@ -49,9 +49,9 @@ from cpv_token_cost import (  # noqa: E402  # pyright: ignore[reportMissingImpor
 
 # Published rates (USD per 1M tokens) for the current generation, as (input, output).
 CURRENT_RATES = {
-    "claude-fable-5": (10.0, 50.0),
-    "claude-opus-5": (5.0, 25.0),
-    "claude-sonnet-5": (2.0, 10.0),
+    "claude-fable-5-1": (10.0, 50.0),
+    "claude-opus-5-5": (4.0, 20.0),
+    "claude-sonnet-5-5": (2.0, 10.0),
     "claude-haiku-4-5": (1.0, 5.0),
 }
 RETIRED_OPUS_INPUT = 15.0  # Opus 4.0/4.1 — must never be charged for a newer id.
@@ -70,11 +70,24 @@ def check_current_generation_rates() -> str:
 
 
 def check_derived_cache_rates() -> str:
-    """Cache rates stay derived from input: write = 1.25x, read = 0.10x."""
+    """Cache rates stay derived from input: write = 1.25x; read = 0.10x except where documented otherwise."""
+    # The 0.10x read uniformity held until the 2026-09 point releases:
+    # Fable 5.1 (CC 2.1.257) reads at $0.25 = 0.025x and Opus 5.5 (2.1.280) at
+    # $0.20 = 0.05x — both VERIFIED against the bundled claude-api skill's
+    # model-migration.md ("cache reads at $0.25 per MTok (0.025x base input)",
+    # "cache reads $0.20 per MTok (0.05x base input)"). A deeper read discount
+    # makes warm-cache sessions cheaper and misses relatively dearer, so a
+    # uniform 0.10x would OVER-estimate reads for those two models. The
+    # exceptions live here as data, keyed by id, so a new row that silently
+    # reverts to 0.10x still fails.
+    READ_OVERRIDES = {
+        "claude-fable-5-1": 0.025,  # $0.25 of $10 input
+        "claude-opus-5-5": 0.05,    # $0.20 of $4 input
+    }
     for model in MODEL_PRICING:
         p = MODEL_PRICING[model]
         want_write = round(p["input"] * 1.25, 4)
-        want_read = round(p["input"] * 0.10, 4)
+        want_read = round(p["input"] * READ_OVERRIDES.get(model, 0.10), 4)
         if round(p["cache_write"], 4) != want_write:
             return f"FAIL: {model} cache_write {p['cache_write']}, expected {want_write}"
         if round(p["cache_read"], 4) != want_read:

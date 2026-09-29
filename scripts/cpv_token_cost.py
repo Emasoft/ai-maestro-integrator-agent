@@ -63,8 +63,14 @@ from pathlib import Path
 # cost estimator and belongs in its own commit with its own tests, not smuggled
 # into a comment fix. Do not restate this as "the data doesn't have it".
 MODEL_PRICING: dict[str, dict[str, float]] = {
-    # Current generation (1M context).
+    # Current generation (1M context). The point-release rows (fable-5-1,
+    # opus-5-5, sonnet-5-5) precede their family keys: most-specific-first is
+    # what makes "claude-sonnet-5-5" match its own row instead of "…-5".
+    # Sources: Claude Code changelog 2.1.257 (Fable 5.1), 2.1.280 (Opus 5.5),
+    # 2.1.284 (Sonnet 5.5) — each "$X/$Y per Mtok with $Z/Mtok cache reads".
+    "claude-fable-5-1":  {"input": 10.0, "output": 50.0, "cache_write": 12.50, "cache_read": 0.25},
     "claude-fable-5":    {"input": 10.0, "output": 50.0, "cache_write": 12.50, "cache_read": 1.00},
+    "claude-opus-5-5":   {"input": 4.0,  "output": 20.0, "cache_write": 5.00,  "cache_read": 0.20},
     "claude-opus-5":     {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
     "claude-opus-4-8":   {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
     "claude-opus-4-7":   {"input": 5.0,  "output": 25.0, "cache_write": 6.25,  "cache_read": 0.50},
@@ -73,6 +79,8 @@ MODEL_PRICING: dict[str, dict[str, float]] = {
     # Correction (Claude Code changelog 2.1.243): $3.00/$15.00 was only a
     # limited-time promo that has now ended. $2.00/$10.00 is Sonnet 5's
     # standard list price, so it's cheaper than the sonnet-4-x rows below it.
+    # Sonnet 5.5 (2.1.284) holds that same $2/$10 with $0.20 cache reads.
+    "claude-sonnet-5-5": {"input": 2.0,  "output": 10.0, "cache_write": 2.50,  "cache_read": 0.20},
     "claude-sonnet-5":   {"input": 2.0,  "output": 10.0, "cache_write": 2.50,  "cache_read": 0.20},
     "claude-sonnet-4-6": {"input": 3.0,  "output": 15.0, "cache_write": 3.75,  "cache_read": 0.30},
     "claude-sonnet-4-5": {"input": 3.0,  "output": 15.0, "cache_write": 3.75,  "cache_read": 0.30},

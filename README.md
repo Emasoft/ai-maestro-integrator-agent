@@ -114,12 +114,24 @@ through the core `ai-maestro-plugin` `ama-*` skills (`ama-prrd-*`, `ama-trdd-*`,
   consecutive-block cap added in 2.1.143 (default 8). Older Claude Code
   versions still work — the env vars are simply absent and `$CLAUDE_PROJECT_ROOT`
   is the legacy fallback for `$CLAUDE_PROJECT_DIR`.
-- **From Claude Code 2.1.233** the todo/task tools (`TaskCreate`, `TaskGet`,
-  `TaskUpdate`, `TaskList`, `TodoWrite`) are unavailable on Opus 4.8, Sonnet 5,
-  Fable 5, Mythos 5 and newer — the models this plugin's agents pin. The skills
-  therefore read GitHub issue checklists as plain `- [ ]` / `- [x]` Markdown and
-  write task records directly, with no todo-tool call. Setting
-  `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` restores the tools but is not required.
+- **From Claude Code 2.1.233** (tightened by the 2.1.268 tool-surface gating) the
+  todo/task tools (`TaskCreate`, `TaskGet`, `TaskUpdate`, `TaskList`, `TodoWrite`)
+  are unavailable on Opus 4.8+, Sonnet 5+, Fable 5+ — the models this plugin's
+  agents run on. The skills therefore read GitHub issue checklists as plain
+  `- [ ]` / `- [x]` Markdown and write task records directly, with no todo-tool
+  call. Setting `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` restores the tools but is not
+  required.
+- **Aligned through Claude Code 2.1.284.** Notable platform changes this plugin
+  accounts for: hooks on Claude 2.1.251+ gain `PreModelSwitch`/`PostModelSwitch`;
+  project `.claude/settings.json` can no longer set
+  `CLAUDE_CONFIG_DIR`/`CLAUDE_CODE_TMPDIR`/`TMPDIR` (2.1.261) or enable
+  OpenTelemetry export (2.1.282); `"type": "sdk"` MCP entries in plugin files are
+  skipped with a warning (2.1.274) — this plugin declares none; agent-type hooks
+  no longer fire on PermissionRequest (2.1.280) — this plugin's hooks are all
+  command-type; skills named in the reserved `anthropic-skills` namespace do not
+  load (2.1.282) — none shipped here. Model pricing in
+  `scripts/cpv_token_cost.py` carries Fable 5.1 (2.1.257), Opus 5.5 (2.1.280)
+  and Sonnet 5.5 (2.1.284) with their documented cache-read exceptions.
 
 ## Installation
 
