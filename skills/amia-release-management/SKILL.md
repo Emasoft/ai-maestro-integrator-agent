@@ -51,6 +51,29 @@ Copy this checklist and track your progress:
 - [ ] Verify deployment; INTEGRATOR validates the artifact, then flips the column
 - [ ] Rollback if needed (`--execute` is also Tier-2 gated); report completion
 
+## The async approval model (R41) — `min-approval-requirement:` and `mandate:`
+
+The release column transitions this skill drives (`publish → published`,
+`deploy → live`) are governed moves on the TRDD that carries them. Every TRDD
+declares its approval floor as `min-approval-requirement:`
+(`none | orchestrator | chief-of-staff | manager | user`; an ABSENT field means
+`none`). Authorization arrives in exactly one of two shapes:
+
+- **Mandate** — the card sits in `design/tasks/` with `mandate: true`: it was
+  born approved by the authority at or above its floor. Execute it; you may
+  flag a genuine problem and pause, but you may not refuse it. R41: never
+  approve a card you authored.
+- **Proposal** — the card sits in `design/proposals/` with
+  `column: proposal`: it is WAITING. Do not act on it and do not transition it;
+  the approving authority sets `column: planned` and records the decision in
+  the `## Approval log` (asynchronous — keep working meanwhile).
+
+Before any governed transition, self-classify: if the card's floor is higher
+than the authorization your dispatch carries, stop and route the request
+upward (INTEGRATOR → CHIEF-OF-STAFF). Authoring an approval that never happened
+is the failure this model exists to prevent — an approval is CHECKABLE, not
+merely readable (verify the `## Approval log` entry matches the dispatch).
+
 ## Output
 
 | Output Type | Format | Contents |

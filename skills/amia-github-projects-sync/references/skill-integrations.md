@@ -20,7 +20,7 @@ GitHub Projects Sync integrates with other AMOA (AI Maestro Orchestration Agent)
 - Report Generator: Project status in reports
 - AI Maestro: Notification delivery
 
-> **Note:** See `amia-kanban-orchestration` skill for the canonical 8-column system definition.
+> **Note:** See the core `ama-kanban-render` skill (ai-maestro-plugin) for the canonical board-column vocabulary — columns live in the installed `trddgrep` CLI and its rules, not in a local copy.
 
 ## Remote Agent Coordinator
 

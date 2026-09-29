@@ -133,6 +133,8 @@ If marker exists (no duplicate created):
 ### Status Update
 
 ```markdown
+_Posted by the Claude responsible for this project's integration work (INTEGRATOR role), via the shared owner gh auth._
+
 ## Status Update
 
 **Date:** 2024-01-15
@@ -153,6 +155,8 @@ Complete task C, then submit PR.
 ### Blocker Report
 
 ```markdown
+_Posted by the Claude responsible for this project's integration work (INTEGRATOR role), via the shared owner gh auth._
+
 ## Blocker Reported
 
 **Date:** 2024-01-15
@@ -172,6 +176,8 @@ DevOps team to provision credentials.
 ### Completion Notice
 
 ```markdown
+_Posted by the Claude responsible for this project's integration work (INTEGRATOR role), via the shared owner gh auth._
+
 ## Task Completed
 
 **Date:** 2024-01-15

@@ -18,12 +18,13 @@ auto_skills:
   - amia-github-pr-merge
   - amia-github-thread-management
   - amia-github-integration
-  - amia-kanban-orchestration
   - amia-github-projects-sync
 memory_requirements: medium
 ---
 
 > **AMP Communication Restriction:** This is a sub-agent. You MUST NOT send AMP messages (`amp-send`, `amp-reply`, `amp-inbox`). Only the main agent can communicate with other agents. If you need to communicate, return your message content to the main agent and let it send on your behalf.
+
+> **3-pillars ops (sub-agent scope):** any TRDD/PRRD/kanban operation you need goes through the **core `ai-maestro-plugin` `ama-*` skills** — `ama-trdd-find` to locate the card, `ama-trdd-update` to record your result in its STATE block, `ama-trdd-transition` only if INTEGRATOR's dispatch authorized the column move (these CLIs — `trddgrep`, `prrdgrep` — are the frozen execution layer; never edit a card file by hand). A column transition is a governed action: transition only the column your dispatch names, and return the card id + new column in your result so INTEGRATOR can audit it. Your `updated:` field is bumped by the write verb, never by hand.
 
 # GitHub API Coordinator Agent
 

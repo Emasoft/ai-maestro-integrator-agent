@@ -79,7 +79,7 @@ python scripts/sync_tasks.py \
 ```markdown
 # Sprint 5 Tasks
 
-- [ ] Implement login endpoint #labels:type:feature,priority:high @dev-agent-1
+- [ ] Implement login endpoint #labels:type:feature,priority:high assigned:dev-agent-1
 - [ ] Fix password validation bug #labels:type:bug,priority:critical
 - [ ] Add user documentation #labels:type:docs
 - [ ] Refactor auth module #labels:type:refactor

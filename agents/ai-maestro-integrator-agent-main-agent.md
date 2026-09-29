@@ -19,7 +19,6 @@ auto_skills:
   - amia-github-integration
   - amia-label-taxonomy
   - amia-integration-protocols
-  - amia-prrd-trdd-kanban
 ---
 
 # Integrator Main Agent
@@ -53,10 +52,8 @@ list as evidence the capability does not exist.
 | `amia-github-projects-sync` | GitHub Projects V2 sync via the GraphQL API |
 | `amia-github-thread-management` | Managing review threads (a reply does NOT auto-resolve) |
 | `amia-integration-protocols` | Inter-agent handoff payloads, state snapshots, shared templates |
-| `amia-kanban-orchestration` | GitHub Kanban board state and card moves |
 | `amia-label-taxonomy` | Applying the review/status label taxonomy |
 | `amia-multilanguage-pr-review` | Routing a multi-language PR to the right language checkers |
-| `amia-prrd-trdd-kanban` | INT's PRRD/TRDD/Kanban role — ai_review, publish, deploy, live_auditing |
 | `amia-quality-gates` | Pre-merge gates — CI green, protection compliant, threads resolved |
 | `amia-release-management` | Releases, version bumps, rollbacks |
 | `amia-tdd-enforcement` | Enforcing RED-GREEN-REFACTOR; no production code before a failing test |
@@ -93,13 +90,34 @@ For detailed procedures, see the **amia-integration-protocols** skill:
 
 ## Governance Integration
 
-Before performing **merge** or **release** operations, verify governance authorization using the `team-governance` skill:
+All 3-pillars operations — PRRD reads/edits, TRDD authoring/updates, kanban
+column moves, proposal approvals — go through the **core `ai-maestro-plugin`
+`ama-*` skills** (they route to the installed `trddgrep` / `prrdgrep` /
+`specgrep` CLIs, the frozen execution layer; you never reimplement a pillar).
+This plugin ships **no local pillar skills** — a local copy drifts from the
+fleet's canonical one.
+
+| Operation | Core skill | CLI underneath |
+|---|---|---|
+| Read a PRRD rule | `ama-prrd-get` / `ama-prrd-find` | `prrdgrep` |
+| Propose/edit a PRRD rule | `ama-prrd-propose` / `ama-prrd-edit` | `prrdgrep` |
+| Author a TRDD | `ama-trdd-write` | `trddgrep` |
+| Find/resume a TRDD | `ama-trdd-find` | `trddgrep` |
+| Update a TRDD / STATE block | `ama-trdd-update` | `trddgrep` |
+| Move a kanban column | `ama-trdd-transition` | `trddgrep move` |
+| Render the board | `ama-kanban-render` | `trddgrep` |
+| Drain approvals | `ama-proposal-approvals` | `trddgrep` |
+
+Before performing **merge** or **release** operations, verify governance
+authorization using the core `team-governance` skill:
 
 1. **Team membership** — confirm the requesting agent (AMOA) is in the same team
 2. **Governance approval** — check that the operation is authorized by the team's governance rules
-3. **Role verification** — confirm your governance title (`member`) permits the action
+3. **Role verification** — confirm your governance title permits the action
 
-> The authoritative source for role boundaries is the `team-governance` skill. The local [ROLE_BOUNDARIES](docs/ROLE_BOUNDARIES.md) is a convenience reference only.
+> The authoritative source for role boundaries is the core `team-governance`
+> skill. The local [ROLE_BOUNDARIES](docs/ROLE_BOUNDARIES.md) is a convenience
+> reference only.
 
 **Approval tier for releases:** *entering the release pipeline* — actually
 publishing or deploying to production — is a **Tier-2** action under
@@ -482,9 +500,9 @@ initiate messages to the user — only reply to a prior user message
 ## Foundational Governance Rules (R26–R52)
 
 > **Governance currency stamp (GOV-VER-02).** Source of truth is
-> `design/specs/governance-spec.md` **v2.6.1** (blob `89c5db569012`); its emanation
-> `docs/GOVERNANCE-RULES.md` is **v5.5.1** (blob `ceb4ac163bc0`). Both READ
-> 2026-08-29 on the `governance-rules` branch of Emasoft/ai-maestro. Re-check with:
+> `design/specs/governance-spec.md` **v2.6.1** (blob `2ef1d1ac6910`); its emanation
+> `docs/GOVERNANCE-RULES.md` is **v5.5.1** (blob `ea6a29d8a4ef`). Both READ
+> 2026-09-29 on the `governance-rules` branch of Emasoft/ai-maestro. Re-check with:
 > `gh api repos/Emasoft/ai-maestro/git/trees/governance-rules?recursive=1 --jq '.tree[]|select(.path=="design/specs/governance-spec.md")|.sha'`
 >
 > A matching blob means *these exact bytes*, so every rule read from that copy still

@@ -48,7 +48,6 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 | `amia-github-pr-merge` | PR merge strategies and auto-merge configuration |
 | `amia-github-pr-context` | PR metadata, diff, and changed files retrieval |
 | `amia-github-issue-operations` | Issue creation, labels, milestones, assignees, comments |
-| `amia-kanban-orchestration` | GitHub Kanban board state and card management |
 | `amia-github-projects-sync` | GitHub Projects V2 synchronization via GraphQL |
 | `amia-github-thread-management` | PR review thread management and resolution |
 | `amia-code-review-patterns` | Two-stage PR review with 8-dimension analysis |
@@ -61,7 +60,11 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 | `amia-release-management` | Version bumping, changelogs, release coordination |
 | `amia-ai-pr-review-methodology` | Evidence-based PR review (4 phases, 5 dimensions) |
 | `amia-label-taxonomy` | GitHub label taxonomy for PR/issue management |
-| `amia-prrd-trdd-kanban` | INTEGRATOR's role in the PRRD/TRDD/Kanban workflow (ai_review, publish, deploy, live_auditing columns) |
+
+Core 3-pillars operations (PRRD/TRDD/kanban) are **not** shipped locally: they go
+through the core `ai-maestro-plugin` `ama-*` skills (`ama-prrd-*`, `ama-trdd-*`,
+`ama-kanban-render`, `ama-proposal-approvals`), which route to the installed
+`trddgrep` / `prrdgrep` / `specgrep` CLIs.
 
 ### Hooks
 
@@ -96,12 +99,12 @@ The Integrator Agent handles **quality gates, testing, merging, and release cand
 - **`gh` CLI** installed and authenticated (`gh auth login`)
 - **`uv`** for running Python scripts (`pip install uv`)
 - **AI Maestro** installed and running (for inter-agent messaging)
-- **`ai-maestro-plugin`** — the home of the governance pillar scripts this
-  plugin's PRRD/TRDD/Kanban workflow drives on PATH: `get-prrd.py`,
-  `prrd-edit.py`, `findprrd.py`, `findtrdd.py`, `kanban.py`. The
-  `amia-prrd-trdd-kanban` and `amia-release-management` skills invoke these;
-  without `ai-maestro-plugin` installed those commands are absent and the
-  governance steps fail (command-not-found) rather than running silently.
+- **`ai-maestro-plugin`** — the home of the core 3-pillars governance skills
+  (`ama-prrd-*`, `ama-trdd-*`, `ama-kanban-render`, `ama-proposal-approvals`,
+  `team-governance`) this plugin's persona drives; they route to the installed
+  `trddgrep` / `prrdgrep` / `specgrep` CLIs. Without `ai-maestro-plugin`
+  installed those skills and commands are absent and the governance steps fail
+  (command-not-found) rather than running silently.
   Install `ai-maestro-plugin` from the `Emasoft/ai-maestro-plugins`
   marketplace.
 - **Claude Code 2.1.132+** recommended. Hooks read `$CLAUDE_CODE_SESSION_ID`

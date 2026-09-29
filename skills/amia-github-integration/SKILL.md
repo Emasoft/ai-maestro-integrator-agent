@@ -30,7 +30,7 @@ Routes GitHub integration tasks to specialized skills (PRs, Projects V2, Kanban,
 2. Route by task type:
    - **PRs** --> `amia-github-pr-workflow`
    - **Projects V2** --> `amia-github-projects-sync`
-   - **Kanban** --> `amia-kanban-orchestration`
+   - **Kanban** --> core `ama-kanban-render` (ai-maestro-plugin)
    - **Worktrees** --> `amia-git-worktree-operations`
    - **API ops** --> [api-operations](references/api-operations.md)
    - **Multi-user** --> [multi-user-workflow](references/multi-user-workflow.md)

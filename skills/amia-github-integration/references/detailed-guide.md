@@ -48,7 +48,7 @@ Covers:
 
 ### Kanban Board Operations
 
-**Use skill: `amia-kanban-orchestration`**
+**Use core skill: `ama-kanban-render`** (ai-maestro-plugin — routes to the `trddgrep` CLI)
 
 Covers:
 

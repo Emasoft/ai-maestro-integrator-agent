@@ -641,4 +641,4 @@ Recovery checkpoint: `.claude/recovery/integrator-checkpoint-{timestamp}.json`
 - [ci-status-interpretation.md](../../amia-github-pr-checks/references/ci-status-interpretation.md) - CI status handling
 - [merge-strategies.md](../../amia-github-pr-merge/references/merge-strategies.md) - Merge options
 - [troubleshooting.md](../../amia-github-integration/references/troubleshooting.md) - GitHub troubleshooting
-- [blocking-workflow.md](../../amia-kanban-orchestration/references/blocking-workflow.md) - Blocking patterns
+- Core `ama-kanban-render` skill (ai-maestro-plugin) - Board state and blocking patterns

@@ -69,7 +69,7 @@ Template for documenting task completion with verification evidence.
 
 ### Code Review
 - **PR**: #123
-- **Reviewer**: @user
+- **Reviewer**: user (reviewer role; no handle — an @name outside a code span pages a real account, R22.2)
 - **Status**: ✅ Approved
 - **Comments**: "LGTM, clean implementation"
 

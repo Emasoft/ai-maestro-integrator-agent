@@ -547,7 +547,7 @@ The Integrator Agent (AMIA) has 20 skills covering code review, quality gates, G
 - **amia-github-thread-management**: PR review thread management
 - **amia-github-integration**: GitHub Projects integration and label setup
 - **amia-github-projects-sync**: GitHub Projects V2 synchronization via GraphQL
-- **amia-kanban-orchestration**: GitHub Kanban board state and card management
+- core `ama-kanban-render` (ai-maestro-plugin): board state and card moves via the `trddgrep` CLI
 - **amia-git-worktree-operations**: Parallel PR processing with git worktrees
 - **amia-integration-protocols**: Shared utilities and cross-skill protocols
 - **amia-label-taxonomy**: GitHub label taxonomy for PR/issue management

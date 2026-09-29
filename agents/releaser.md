@@ -7,6 +7,8 @@ metadata:
   version: "1.0.0"
 ---
 
+> **3-pillars ops (sub-agent scope):** any TRDD/PRRD/kanban operation you need goes through the **core `ai-maestro-plugin` `ama-*` skills** — `ama-trdd-find` to locate the card, `ama-trdd-update` to record your result in its STATE block, `ama-trdd-transition` only if INTEGRATOR's dispatch authorized the column move (these CLIs — `trddgrep`, `prrdgrep` — are the frozen execution layer; never edit a card file by hand). A column transition is a governed action: transition only the column your dispatch names, and return the card id + new column in your result so INTEGRATOR can audit it. Your `updated:` field is bumped by the write verb, never by hand.
+
 ## Overview
 
 RELEASER is INTEGRATOR's specialist subagent for the `publish →
@@ -101,6 +103,18 @@ INTEGRATOR reads this result and:
   AMP-sends success up the chain
 - On `ok: false`: edits the TRDD `column: failed`, body grows
   `## Publish failure post-mortem`, AMP-sends failure up the chain
+
+**Approval tier (self-classify before the transition).** The
+`publish → published` column move is a governed release transition under
+`min-approval-requirement:` — entering the release pipeline is **manager**-tier
+(first production deploy of a new service, or a breaking public-API change,
+escalates to **user**-tier). INTEGRATOR's dispatch to you IS the recorded
+authorization when the card carries `mandate: true`; if the card instead sits
+in `design/proposals/` with `column: proposal`, the dispatch must NOT trigger a
+transition — report `ok: false` with reason `approval-required` and let
+INTEGRATOR route the proposal through its CHIEF-OF-STAFF. Never transition a
+card whose `min-approval-requirement:` floor exceeds the authorization your
+dispatch carries.
 
 ## Coordination chain
 

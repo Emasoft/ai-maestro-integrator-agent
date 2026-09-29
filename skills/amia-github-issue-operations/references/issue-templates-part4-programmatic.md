@@ -60,7 +60,7 @@ ${description}
 # Using string.Template for safe substitution
 t = string.Template(template)
 body = t.safe_substitute(
-    reporter="@username",
+    reporter="username",  # plain name — an @handle here pages a real account (R22.2)
     date=datetime.now().strftime("%Y-%m-%d"),
     version="2.1.0",
     description="Application crashes when clicking save button"
@@ -92,7 +92,7 @@ template = Template("""
 """)
 
 body = template.render(
-    reporter="@username",
+    reporter="username",  # plain name — an @handle here pages a real account (R22.2)
     date="2024-01-15",
     version="2.1.0",
     description="Application crashes on save",

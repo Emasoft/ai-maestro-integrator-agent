@@ -158,7 +158,6 @@ ai-maestro-integrator-agent/
 │   ├── amia-release-management/
 │   ├── amia-github-pr-workflow/
 │   ├── amia-github-pr-merge/
-│   ├── amia-kanban-orchestration/
 │   ├── amia-github-projects-sync/
 │   ├── amia-github-integration/
 │   ├── amia-github-issue-operations/
@@ -284,8 +283,8 @@ Skills are **automatically loaded** from the `skills/` directory. You do NOT nee
 | **amia-quality-gates** | Quality gate enforcement |
 | **amia-release-management** | Release preparation and tagging |
 | **amia-github-pr-workflow** | PR creation, review, merge |
-| **amia-github-pr-merge** | PR merge strategies |
-| **amia-kanban-orchestration** | Kanban coordination (read-only for AMIA) |
+| **amia-github-merge** | PR merge strategies |
+| core `ama-kanban-render` (ai-maestro-plugin) | Kanban coordination (read-only for AMIA) |
 | **amia-github-projects-sync** | Sync between issues and projects |
 | **amia-github-integration** | GitHub API integration |
 | **amia-github-issue-operations** | Issue creation, updates, closure |
@@ -1128,7 +1127,7 @@ The following skills were added to AMIA (2026-02-06 — 2026-02-07):
 | `amia-release-management` | Version management, changelog generation, release automation |
 | `amia-quality-gates` | Code quality enforcement, linting, type checking |
 | `amia-github-projects-sync` | GitHub Projects kanban synchronization |
-| `amia-kanban-orchestration` | Kanban column management and task routing |
+| core `ama-kanban-render` (ai-maestro-plugin) | Kanban column management and task routing |
 
 ---
 

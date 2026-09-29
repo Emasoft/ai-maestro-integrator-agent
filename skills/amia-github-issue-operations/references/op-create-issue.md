@@ -107,6 +107,8 @@ Feature details here" \
 ### Feature Request
 
 ```markdown
+_Posted by the Claude responsible for this project's integration work (INTEGRATOR role), via the shared owner gh auth._
+
 ## Description
 <What the feature does>
 
@@ -124,6 +126,8 @@ Feature details here" \
 ### Bug Report
 
 ```markdown
+_Posted by the Claude responsible for this project's integration work (INTEGRATOR role), via the shared owner gh auth._
+
 ## Description
 <What is happening>
 
