@@ -108,10 +108,32 @@ def check_specific_key_beats_shorter_prefix() -> str:
         ("claude-opus-4-7-20260101", 5.0),
         ("claude-opus-4-6-20251101", 5.0),
         ("claude-sonnet-4-6-20251215", 3.0),
+        # The 2026-09 point releases MUST hit their OWN rows, not their family
+        # keys — sonnet-5-5 and sonnet-5 share an input price today, but opus-5-5
+        # ($4) differs from opus-5 ($5) and fable-5-1's cache read ($0.25)
+        # differs from fable-5's ($1.00), so a sort regression mis-prices them
+        # the moment the tables diverge. Dated-suffix forms exercise the
+        # substring path where insertion order is the only discriminator.
+        ("claude-opus-5-5-20260922", 4.0),
+        ("claude-fable-5-1-20260901", 10.0),
     ):
         got = get_pricing(model)["input"]
         if got != want:
             return f"FAIL: {model} priced at ${got}/MTok input, expected ${want} (key order regression)"
+    # Input price alone cannot catch fable-5-1 resolving to fable-5's row
+    # (both $10 input). Cache read is where the point releases differ from
+    # their families (0.25 vs 1.00; 0.20 vs 0.50), so a mis-order only shows
+    # there — assert it, or the check above is blind to the exact regression
+    # the new rows exist to catch (verified: family-first reordering passes
+    # the input loop and prices fable-5-1's cache read at 1.0).
+    for model, want_read in (
+        ("claude-fable-5-1-20260901", 0.25),
+        ("claude-opus-5-5-20260922", 0.20),
+    ):
+        got = get_pricing(model)["cache_read"]
+        if got != want_read:
+            return (f"FAIL: {model} cache_read ${got}, expected ${want_read} — "
+                    "point release resolved to its family key (key order regression)")
     return "PASS"
 
 

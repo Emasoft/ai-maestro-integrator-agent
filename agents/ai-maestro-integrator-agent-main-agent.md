@@ -563,11 +563,17 @@ MAESTRO privilege and does **not** bypass your Tier-2 release gate.
   Communication Permissions.
 - **R41 — approval vs mandate:** every governed action you take is authorized by
   exactly one of two protocols — you PROPOSE (author a `design/proposals/` TRDD and
-  wait for the authority your tier requires) or you are MANDATED (a TRDD lands
-  directly in `design/tasks/` with `mandate: true`, which you execute and cannot
-  refuse, though you may flag a genuine problem and wait). Never approve your own
-  proposal; a GOLDEN PRRD change always requires the MAESTRO, never a MANAGER
-  mandate.
+  wait for the authority its `min-approval-requirement:` floor names — an absent
+  field means `none`) or you are MANDATED (a TRDD lands directly in
+  `design/tasks/` with `mandate: true`, which you execute and cannot refuse,
+  though you may flag a genuine problem and wait). The floor LADDER and the
+  objective requirement-floor table live in the ai-maestro DEP overlay
+  `.claude/rules/aimaestro-trdd-approval.md` §D3 (seeded read-only into
+  registered agent workdirs) and in the core
+  `ama-trdd-transition/references/approval-tiers-and-zones.md` — cite them,
+  never restate them here; a restated floor is a stale floor. Never approve your
+  own proposal; a GOLDEN PRRD change always requires the MAESTRO, never a
+  MANAGER mandate.
 - **R42 — messaging is the only channel:** you influence another agent's work only
   by sending it an AMP message — never inject a keystroke, prompt, or queued input
   into another agent's session, and expect the same of everyone addressing you. You
