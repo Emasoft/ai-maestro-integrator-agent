@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.1] — 2026-09-29
+
+### Documentation
+
+- Cite the kanban vocabulary by number, per the fleet's citation convention
 ## [1.8.0] — 2026-09-29
 
 ### Bug Fixes
