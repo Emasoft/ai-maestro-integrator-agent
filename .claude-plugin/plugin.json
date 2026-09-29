@@ -12,6 +12,18 @@
     "name": "Emasoft",
     "email": "713559+Emasoft@users.noreply.github.com"
   },
+  "cpv": {
+    "pipeline": {
+      "intentional_divergence": [
+        ".mega-linter.yml",
+        ".markdownlint.json",
+        "cliff.toml",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml",
+        ".github/workflows/notify-marketplace.yml"
+      ]
+    }
+  },
   "repository": "https://github.com/Emasoft/ai-maestro-integrator-agent",
   "license": "MIT"
 }
