@@ -106,6 +106,11 @@ fleet's canonical one.
 | Update a TRDD / STATE block | `ama-trdd-update` | `trddgrep` |
 | Move a kanban column | `ama-trdd-transition` | `trddgrep move` |
 | Render the board | `ama-kanban-render` | `trddgrep` |
+
+> Kanban vocabulary per the IND base rule `~/.claude/rules/universal-kanban.md`
+> (22 ratified lifecycle+exception columns, 3P-KAN-17..21; legal `column:` set is
+> 27 including the five bracket values) — cite it, never restate the enum here; a
+> second copy drifts. The board IS the TRDD corpus; `trddgrep` is the board.
 | Drain approvals | `ama-proposal-approvals` | `trddgrep` |
 
 Before performing **merge** or **release** operations, verify governance
