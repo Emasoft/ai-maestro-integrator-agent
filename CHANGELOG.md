@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0] — 2026-09-29
+
+### Bug Fixes
+
+- RC-164 all 21 doc findings; re-baseline CPV pin v5.3.0 -> v5.21.1; re-stamp governance
+- Review-fork blockers — comment provenance, exit-scheme truth, doc read-back
+
+### Features
+
+- G5 secret-scan gate on the release path; annotate the inert hook source
+
+### Testing
+
+- Sharpen prefix test for the point releases; R41 cites the floor table instead of implying it
 ## [1.8.1] — 2026-09-29
 
 ### Documentation
