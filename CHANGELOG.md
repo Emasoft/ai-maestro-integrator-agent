@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] — 2026-09-29
+
+### Bug Fixes
+
+- Separate the two sub-agent blockquotes so MD028 does not fire
+
+### Features
+
+- Adopt core ama-* 3-pillars skills; strip local pillar copies (issues #21, #25)
+- Align with Claude Code 2.1.250-2.1.284; add the 2026-09 model point releases
+
+### Miscellaneous Tasks
+
+- Declare intentional CPV-pipeline divergences in plugin.json (CPV#144Ba)
 ## [1.7.6] — 2026-08-29
 
 ### Testing
