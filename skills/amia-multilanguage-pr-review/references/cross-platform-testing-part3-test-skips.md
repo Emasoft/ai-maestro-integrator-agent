@@ -21,9 +21,11 @@ import sys
 
 # Skip on specific platform
 @pytest.mark.skipif(sys.platform == 'win32', reason="Not supported on Windows")
-def test_unix_permissions():
+def test_unix_permissions(tmp_path):
     import os
-    os.chmod('file.txt', 0o755)
+    target = tmp_path / "file.txt"
+    target.write_text("x")
+    os.chmod(str(target), 0o755)
 
 # Skip unless on specific platform
 @pytest.mark.skipif(sys.platform != 'darwin', reason="macOS-specific test")

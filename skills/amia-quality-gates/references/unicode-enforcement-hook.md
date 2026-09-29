@@ -41,10 +41,12 @@ A BOM is an invisible marker at the start of a file. Some Windows editors add it
 
 **Fix options**:
 
-Option 1 -- Using Python:
+Option 1 -- Using Python (run as `python3 fix_bom.py /path/to/your-project/file.py`,
+so the snippet never hardcodes a path):
 
 ```python
-path = "path/to/file.py"
+import sys
+path = sys.argv[1]
 with open(path, "rb") as f:
     content = f.read()
 # Remove UTF-8 BOM
@@ -86,10 +88,12 @@ Option 2 -- Using dos2unix:
 dos2unix path/to/file.py
 ```
 
-Option 3 -- Using Python:
+Option 3 -- Using Python (run as `python3 fix_crlf.py /path/to/your-project/file.py`,
+so the snippet never hardcodes a path):
 
 ```python
-path = "path/to/file.py"
+import sys
+path = sys.argv[1]
 content = open(path, "rb").read()
 content = content.replace(b"\r\n", b"\n")
 open(path, "wb").write(content)
@@ -118,9 +122,9 @@ naive_approach = True
 **Fix**: Convert the file to UTF-8:
 
 ```bash
-# Using iconv
-iconv -f WINDOWS-1252 -t UTF-8 file.py > file_utf8.py
-mv file_utf8.py file.py
+# Using iconv (output to /tmp so the intermediate never overwrites the original)
+iconv -f WINDOWS-1252 -t UTF-8 /path/to/your-project/file.py > /tmp/file_utf8.py
+mv /tmp/file_utf8.py /path/to/your-project/file.py
 ```
 
 ---

@@ -401,10 +401,10 @@ for i in "${!TITLES[@]}"; do
 done
 ```
 
-Run the script:
+Run the script (from your project repo):
 
 ```bash
-chmod +x create-issues.sh
+chmod +x /path/to/repo/create-issues.sh
 ./create-issues.sh
 ```
 

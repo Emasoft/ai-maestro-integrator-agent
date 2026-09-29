@@ -143,10 +143,10 @@ exit 0
 
 ### 2.2. Making the hook executable
 
-On Unix-like systems (Linux, macOS):
+On Unix-like systems (Linux, macOS), in the repository that owns the hook:
 
 ```sh
-chmod +x .git/hooks/pre-push
+chmod +x /path/to/repo/.git/hooks/pre-push
 ```
 
 On Windows, if using Git Bash (MSYS2), the same command works. If using PowerShell, the executable bit is not relevant -- git for Windows handles this automatically.

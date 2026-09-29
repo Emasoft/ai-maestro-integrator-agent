@@ -191,8 +191,8 @@ echo "  DB:  localhost:$PORT_DB"
 **Usage:**
 
 ```bash
-# Make script executable
-chmod +x scripts/docker_start.sh
+# Make script executable (in your worktree checkout)
+chmod +x /path/to/worktree/scripts/docker_start.sh
 
 # Run from worktree directory
 ./scripts/docker_start.sh
@@ -230,8 +230,8 @@ echo "Services stopped and ports released"
 **Usage:**
 
 ```bash
-# Make script executable
-chmod +x scripts/docker_stop.sh
+# Make script executable (in your worktree checkout)
+chmod +x /path/to/worktree/scripts/docker_stop.sh
 
 # Run from worktree directory
 ./scripts/docker_stop.sh

@@ -505,8 +505,8 @@ initiate messages to the user — only reply to a prior user message
 ## Foundational Governance Rules (R26–R52)
 
 > **Governance currency stamp (GOV-VER-02).** Source of truth is
-> `design/specs/governance-spec.md` **v2.6.1** (blob `2ef1d1ac6910`); its emanation
-> `docs/GOVERNANCE-RULES.md` is **v5.5.1** (blob `ea6a29d8a4ef`). Both READ
+> `design/specs/governance-spec.md` **v2.7.0** (blob `5e4a1a860859`); its emanation
+> `docs/GOVERNANCE-RULES.md` is **v5.6.0** (blob `e6ebbae8b761`). Both READ
 > 2026-09-29 on the `governance-rules` branch of Emasoft/ai-maestro. Re-check with:
 > `gh api repos/Emasoft/ai-maestro/git/trees/governance-rules?recursive=1 --jq '.tree[]|select(.path=="design/specs/governance-spec.md")|.sha'`
 >

@@ -622,7 +622,7 @@ def install_branch_rules(root: Path) -> int:
 
     REFUSES on a repo that already carries the ratified baseline, because
     `cpv-setup-branch-rules` does NOT bring that baseline to spec — verified in
-    its source at v5.3.0 (claude-plugins-validation#203):
+    its source at v5.21.1 (claude-plugins-validation#203):
 
       * `scripts/setup_branch_rules.py:110` — `RULESET_NAME = "cpv-branch-rules"`
         is hardcoded, and the file contains ZERO occurrences of `baseline-`, so
@@ -665,7 +665,7 @@ def install_branch_rules(root: Path) -> int:
             [
                 "uvx",
                 "--from",
-                "git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0",
+                "git+https://github.com/Emasoft/claude-plugins-validation@v5.21.1",
                 "--with",
                 "pyyaml",
                 "cpv-setup-branch-rules",
@@ -852,7 +852,7 @@ def run_gate(root: Path) -> int:
         return 1
     ve = subprocess.run(
         ["uvx", "--from",
-         "git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0",
+         "git+https://github.com/Emasoft/claude-plugins-validation@v5.21.1",
          "--with", "pyyaml",
          "cpv-remote-validate", "plugin", ".", "--strict"],
         cwd=str(root), timeout=600).returncode
@@ -1114,7 +1114,7 @@ def stage_validate(root: Path) -> None:
 
     Cornerstone rule: a plugin cannot be pushed unless validation passes
     with 0 issues (WARNING allowed). The validator is ALWAYS fetched from
-    GitHub (git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0)
+    GitHub (git+https://github.com/Emasoft/claude-plugins-validation@v5.21.1)
     via uvx so a local tampered copy cannot weaken the rules. No exceptions.
 
     Order: runs AFTER lint + tests so behavioral regressions fail fast
@@ -1139,6 +1139,13 @@ def stage_validate(root: Path) -> None:
     # gate). Measured on v5.3.0 after fixing them: CRITICAL=0 MAJOR=0 MINOR=0
     # NIT=0, 3m26s cold — no hang.
     #
+    # RE-BASELINED v5.3.0 -> v5.21.1 on 2026-09-29 (goal directive: keep the
+    # publishing pipeline current). v5.20.0 admitted the RC-164 in-plugin write
+    # guard to the gate; our tree needed 11 MAJOR + 10 MINOR doc-path fixes
+    # before it measured clean. Measured on v5.21.1 after fixing them:
+    # CRITICAL=0 MAJOR=0 MINOR=0 WARNING=~66 (advisory), ~3 min cold — no hang.
+    # (A --strict run reporting only WARNINGs exits 5+, which the gate passes.)
+    #
     # A pin is a baseline to RE-MEASURE, not a workaround to carry forward. When
     # bumping it, re-run the validate and read the SUMMARY line from a captured
     # file — uvx caches aggressively, so use --refresh or you will measure the
@@ -1151,7 +1158,7 @@ def stage_validate(root: Path) -> None:
     # like a verdict.
     run([
         "uvx", "--from",
-        "git+https://github.com/Emasoft/claude-plugins-validation@v5.3.0",
+        "git+https://github.com/Emasoft/claude-plugins-validation@v5.21.1",
         "--with", "pyyaml",
         "cpv-remote-validate", "plugin", ".", "--strict",
     ], cwd=root, timeout=1200)

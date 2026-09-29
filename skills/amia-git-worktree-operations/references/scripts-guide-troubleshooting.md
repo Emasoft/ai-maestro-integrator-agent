@@ -319,8 +319,8 @@ $ python scripts/worktree_create.py --purpose review --identifier test --branch 
 # Check file permissions
 ls -la scripts/worktree_create.py
 
-# Make executable if needed
-chmod +x scripts/worktree_create.py
+# Make executable if needed (in your project checkout)
+chmod +x /path/to/project/scripts/worktree_create.py
 
 # Run with explicit Python interpreter
 python3 scripts/worktree_create.py --purpose review --identifier test --branch test

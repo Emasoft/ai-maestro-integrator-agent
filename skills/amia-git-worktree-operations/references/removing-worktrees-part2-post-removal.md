@@ -337,10 +337,10 @@ echo "  Released ports: $PORTS"
 echo "  Agent freed: $AGENT"
 ```
 
-**Making script executable:**
+**Making the script executable** (in your project checkout, never inside the plugin):
 
 ```bash
-chmod +x scripts/cleanup-worktree.sh
+chmod +x /path/to/repo/scripts/cleanup-worktree.sh
 ```
 
 **Integration with task agents:**

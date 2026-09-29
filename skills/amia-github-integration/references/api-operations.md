@@ -79,10 +79,10 @@ ISSUE_URL=$(gh issue create --repo owner/repo --title "..." --body "..." --label
 ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oE '[0-9]+$')
 ```
 
-1. **Log the operation** to `logs/api-operations-YYYYMMDD.log`:
+1. **Log the operation** to `logs/api-operations-YYYYMMDD.log` in the project repo where the API call runs:
 
 ```bash
-echo "$(date -Iseconds) | CREATE_ISSUE | owner/repo | #$ISSUE_NUMBER | SUCCESS" >> logs/api-operations-$(date +%Y%m%d).log
+echo "$(date -Iseconds) | CREATE_ISSUE | owner/repo | #$ISSUE_NUMBER | SUCCESS" >> /path/to/project/logs/api-operations-$(date +%Y%m%d).log
 ```
 
 1. **Return the issue number and URL** to the caller.
@@ -1426,7 +1426,7 @@ fi
 1. **Log the request**:
 
 ```bash
-echo "$(date -Iseconds) | REQUEST | $OPERATION | from: $CALLBACK | priority: $PRIORITY" >> logs/api-operations-$(date +%Y%m%d).log
+echo "$(date -Iseconds) | REQUEST | $OPERATION | from: $CALLBACK | priority: $PRIORITY" >> /path/to/project/logs/api-operations-$(date +%Y%m%d).log
 ```
 
 1. **Proceed to Gate 1** (section 1.6.1).
@@ -1508,7 +1508,7 @@ echo "Gate 5: PASS - Rate limit OK ($REMAINING remaining)"
 1. **Log gate results**:
 
 ```bash
-echo "$(date -Iseconds) | GATES_PASS | $OPERATION | All quality gates passed" >> logs/api-operations-$(date +%Y%m%d).log
+echo "$(date -Iseconds) | GATES_PASS | $OPERATION | All quality gates passed" >> /path/to/project/logs/api-operations-$(date +%Y%m%d).log
 ```
 
 1. **Proceed to execute API call** (section 1.8.3).
@@ -1599,7 +1599,7 @@ ISSUE_URL=$(echo "$RESULT" | jq -r '.url')
 1. **Log the execution**:
 
 ```bash
-echo "$(date -Iseconds) | EXECUTE_SUCCESS | $OPERATION | attempts: $ATTEMPT | result: $RESULT" >> logs/api-operations-$(date +%Y%m%d).log
+echo "$(date -Iseconds) | EXECUTE_SUCCESS | $OPERATION | attempts: $ATTEMPT | result: $RESULT" >> /path/to/project/logs/api-operations-$(date +%Y%m%d).log
 ```
 
 1. **Proceed to process response** (section 1.8.4).
@@ -1667,7 +1667,7 @@ fi
 1. **Log the processed response**:
 
 ```bash
-echo "$(date -Iseconds) | PROCESS_SUCCESS | $OPERATION | result: $RESULT_JSON" >> logs/api-operations-$(date +%Y%m%d).log
+echo "$(date -Iseconds) | PROCESS_SUCCESS | $OPERATION | result: $RESULT_JSON" >> /path/to/project/logs/api-operations-$(date +%Y%m%d).log
 ```
 
 1. **Proceed to logging** (section 1.8.5).

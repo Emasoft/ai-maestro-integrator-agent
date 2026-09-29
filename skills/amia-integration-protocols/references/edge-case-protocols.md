@@ -57,15 +57,15 @@ When AI Maestro is unavailable:
    > **Note**: The log entry below records service unavailability for diagnostics. The AMP frozen CLI (`amp-send`/`amp-inbox`/`amp-reply`) handles all messaging; AMP handles routing automatically.
 
    ```bash
-   echo "$(date -Iseconds) | AIMAESTRO_UNAVAILABLE | AMP_SERVICE | HTTP $STATUS_CODE" >> .claude/logs/maestro-failures.log
+   echo "$(date -Iseconds) | AIMAESTRO_UNAVAILABLE | AMP_SERVICE | HTTP $STATUS_CODE" >> /path/to/project/.claude/logs/maestro-failures.log
    ```
 
 2. **Queue outgoing messages**:
    > **Note**: This offline fallback is ONLY for when AI Maestro is completely unreachable. Under normal conditions, always use `amp-send` to send messages.
 
    ```bash
-   mkdir -p .claude/queue/outbox
-   cat > ".claude/queue/outbox/${RECIPIENT_AGENT}-$(date +%s).json" <<EOF
+   mkdir -p /path/to/project/.claude/queue/outbox
+   cat > "/path/to/project/.claude/queue/outbox/${RECIPIENT_AGENT}-$(date +%s).json" <<EOF
    {
      "to": "${RECIPIENT_AGENT}",
      "subject": "${SUBJECT}",
@@ -165,8 +165,8 @@ When AI Maestro is down, report via:
 Queue PR operations when GitHub is unavailable:
 
 ```bash
-mkdir -p .claude/queue/github/pr
-cat > ".claude/queue/github/pr/op-$(date +%s).json" <<EOF
+mkdir -p /path/to/project/.claude/queue/github/pr
+cat > "/path/to/project/.claude/queue/github/pr/op-$(date +%s).json" <<EOF
 {
   "operation": "pr_review",
   "pr_number": 123,
@@ -182,8 +182,8 @@ EOF
 Queue Issue operations when GitHub is unavailable:
 
 ```bash
-mkdir -p .claude/queue/github/issue
-cat > ".claude/queue/github/issue/op-$(date +%s).json" <<EOF
+mkdir -p /path/to/project/.claude/queue/github/issue
+cat > "/path/to/project/.claude/queue/github/issue/op-$(date +%s).json" <<EOF
 {
   "operation": "issue_close|issue_comment|label_add",
   "issue_number": 456,
@@ -273,7 +273,7 @@ When handing off a review to another reviewer:
 2. **Log failure details**:
 
    ```bash
-   gh run view $RUN_ID --log-failed > .claude/logs/ci-failure-$RUN_ID.log
+   gh run view $RUN_ID --log-failed > /path/to/project/.claude/logs/ci-failure-$RUN_ID.log
    ```
 
 3. **Create actionable report**:
@@ -306,7 +306,7 @@ When handing off a review to another reviewer:
 1. **Extract failing tests**:
 
    ```bash
-   gh run view $RUN_ID --log | grep -E "FAILED|ERROR" > .claude/logs/test-failures-$RUN_ID.log
+   gh run view $RUN_ID --log | grep -E "FAILED|ERROR" > /path/to/project/.claude/logs/test-failures-$RUN_ID.log
    ```
 
 2. **Categorize failures**:
