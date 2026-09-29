@@ -158,6 +158,10 @@ jobs:
               cpv-remote-validate plugin . --strict
           exit_code=$?
           set -e
+          # v5.21.1 exit scheme (verified in cpv_validation_common.py): 0=pass
+          # (WARNING-only runs ALSO exit 0), 1=CRITICAL, 2=MAJOR, 3=MINOR,
+          # 4=NIT. The >=5 branch is kept as a defensive no-op for any future
+          # scheme that reintroduces a WARNING exit.
           if [ $exit_code -eq 0 ]; then
             echo "Validation passed"
             exit 0

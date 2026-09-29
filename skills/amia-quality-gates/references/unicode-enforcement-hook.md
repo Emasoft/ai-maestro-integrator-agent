@@ -61,7 +61,7 @@ syntax differs between macOS and Linux, so use Python with the stdlib
 `codecs.BOM_UTF8` constant instead):
 
 ```bash
-python3 -c "import codecs, pathlib, sys; p = pathlib.Path(sys.argv[1]); p.write_bytes(p.read_bytes().removeprefix(codecs.BOM_UTF8))" path/to/file.py
+python3 -c "import codecs, pathlib, sys; p = pathlib.Path(sys.argv[1]); p.write_bytes(p.read_bytes().removeprefix(codecs.BOM_UTF8))" /path/to/your-project/file.py
 ```
 
 Option 3 -- Configure your editor to save without BOM. In VS Code: set `"files.encoding": "utf8"` (not `"utf8bom"`).

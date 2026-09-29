@@ -620,23 +620,27 @@ def install_branch_rules(root: Path) -> int:
     is bypassable with `git push --no-verify`, but a ruleset is enforced by
     GitHub itself.
 
-    REFUSES on a repo that already carries the ratified baseline, because
-    `cpv-setup-branch-rules` does NOT bring that baseline to spec — verified in
-    its source at v5.21.1 (claude-plugins-validation#203):
+    The local refuse-guard below STAYED even though the pin moved past the
+    version that justified it. History, verified in
+    `scripts/setup_branch_rules.py` at v5.3.0 (claude-plugins-validation#203):
 
-      * `scripts/setup_branch_rules.py:110` — `RULESET_NAME = "cpv-branch-rules"`
-        is hardcoded, and the file contains ZERO occurrences of `baseline-`, so
-        it cannot target the ratified pair even in principle.
-      * `:326 fetch_legacy_protection_rulesets()` classifies as "legacy" any
-        ruleset whose rules intersect {pull_request, required_status_checks,
-        required_signatures, code_quality} — which `baseline-pr-and-checks`
-        always does.
-      * `:694` then prints `gh api --method DELETE …/rulesets/<id>` for each.
+      * v5.3.0 hardcoded `RULESET_NAME = "cpv-branch-rules"` with ZERO
+        occurrences of `baseline-`, and `fetch_legacy_protection_rulesets()`
+        classified any ruleset intersecting {pull_request,
+        required_status_checks, required_signatures, code_quality} as "legacy",
+        then printed `gh api --method DELETE …/rulesets/<id>` for each. On a
+        baselined repo it ADDED a non-ratified ruleset (§F NON-EXEMPT) and
+        advised DELETING the ratified one — the command was actually run here
+        and produced exactly that outcome, which is why the guard exists.
+      * v5.21.1 INVERTED that behavior (re-verified in its source 2026-09-29):
+        it now targets the ratified trio BY NAME and UPDATES it in place
+        (`BASELINE_*_NAME` constants; idempotent, non-destructive, fail-closed
+        on unreadable ruleset state). The hazard is gone upstream.
 
-    So on a baselined repo the command ADDS a non-ratified ruleset (§F
-    NON-EXEMPT) and advises DELETING the ratified one. Do not remove this guard
-    as over-caution: it was added after the command was actually run here and
-    produced exactly that outcome.
+    The guard remains as a cheap belt-and-suspenders check: on a baselined repo
+    it still refuses BEFORE shelling out, so a future CPV regression or a pin
+    rollback cannot silently reintroduce the delete-advice path. Do not remove
+    it as over-caution.
     """
     cprint(f"\n{BOLD}Installing branch-protection ruleset...{NC}")
     slug = _get_origin_slug(root)
@@ -856,7 +860,9 @@ def run_gate(root: Path) -> int:
          "--with", "pyyaml",
          "cpv-remote-validate", "plugin", ".", "--strict"],
         cwd=str(root), timeout=600).returncode
-    # Exit codes: 0=pass, 1=CRITICAL, 2=MAJOR, 3=MINOR, 4=NIT, 5+=WARNING
+    # Exit codes (verified in cpv_validation_common.py at v5.21.1):
+    # 0=pass (WARNING-only runs ALSO exit 0 — EXIT_OK covers "only WARNING"),
+    # 1=CRITICAL, 2=MAJOR, 3=MINOR, 4=NIT (--strict only).
     if ve != 0 and ve < 5:
         labels = {1: "CRITICAL", 2: "MAJOR", 3: "MINOR", 4: "NIT"}
         cprint(f"  {RED}BLOCKED: {labels.get(ve, f'exit {ve}')} issues found{NC}")
@@ -1143,8 +1149,10 @@ def stage_validate(root: Path) -> None:
     # publishing pipeline current). v5.20.0 admitted the RC-164 in-plugin write
     # guard to the gate; our tree needed 11 MAJOR + 10 MINOR doc-path fixes
     # before it measured clean. Measured on v5.21.1 after fixing them:
-    # CRITICAL=0 MAJOR=0 MINOR=0 WARNING=~66 (advisory), ~3 min cold — no hang.
-    # (A --strict run reporting only WARNINGs exits 5+, which the gate passes.)
+    # CRITICAL=0 MAJOR=0 MINOR=0 WARNING=66, exit 0 (WARNING-only runs exit 0
+    # in v5.21.1 — see the exit-code note at the G3 call). NOT re-timed on the
+    # new pin — the 3m26s figure above belongs to v5.3.0; the publish run
+    # itself will show the real duration.
     #
     # A pin is a baseline to RE-MEASURE, not a workaround to carry forward. When
     # bumping it, re-run the validate and read the SUMMARY line from a captured
